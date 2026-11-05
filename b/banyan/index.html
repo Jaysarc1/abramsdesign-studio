@@ -1,0 +1,561 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!--
+ALIGNMENT NOTES
+Grid: 12 columns, max width 1344px, 32px gutter, page gutter max(24px, safe-area) (16px floor on phones).
+All headlines, copy and the form start on column 1 or column 7. Photos run full bleed or sit edge to edge of the grid.
+Intentional offsets:
+- Hero headline sits low, on the waterline of the photo, so the roots hang above it and point down to it.
+- The nursery tag in the hero hangs from the top edge on its own string, right aligned to column 12, like a real tag tied to a tree.
+- The poinciana band runs full bleed with no grid: it is the one red moment on the page, the reason to plant in spring.
+- Chart labels sit beside the points they describe, not on the grid, so each reads as a note on the line.
+- Growth section (pinned while it scrubs): the chart takes columns 1 to 5 and the scale scene columns 6 to 12. They share one ground line and one foot scale, so the 28 ft line runs straight from the chart into the scene and the sapling's crown sits level with its point on the curve. At year 14 the sapling's canopy meets column 6's left edge and the Banyan Row tree's canopy stops on column 12's right edge, so the two grown trees frame the scene. Between them, each in its own space on the one ground line: the person, then the house. The year counter is right aligned to column 12 on the headline's baseline.
+- Hero opening: the sun layer and its dapples are free of the grid on purpose; they are light, not layout.
+- Indoors: six studio shots in three columns of four grid columns each; the greenhouse strip below uses four columns of three, so its photos are smaller and read as the raw stock behind the styled ones.
+
+SELLS
+Buyer: Palm Beach estate owner, landscape architect or builder who wants a finished landscape now.
+Fear: a new house that looks bare for a decade.
+Outcome: mature shade the week the house is done.
+Proof: acres, specimens in the ground, tallest delivery, one-day planting.
+One CTA: "Book a walk-through".
+-->
+<title>Banyan Row</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: the photo is the product. Deep canopy green and bone, one red band for bloom season */
+:root{
+  --canopy:#0E2419;
+  --deep:#091A12;
+  --moss:#5F7D52;
+  --bone:#EFEADF;
+  --paper:#F7F4EC;
+  --ink:#16251C;
+  --ink-2:#4A5A4F;
+  --rule:#D9D3C4;
+  --sun:#E5C07B;
+  --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --sans:"Hanken Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Space Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--deep)}
+.wrap{max-width:1344px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
+.eyebrow{font-family:var(--mono);font-size:14px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--moss)}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--bone);color:var(--canopy);font-family:var(--sans);font-weight:600;font-size:18px;padding:19px 30px;text-decoration:none;border:0;border-radius:999px;cursor:pointer;transition:background .3s,transform .3s}
+.btn:hover,.btn:focus-visible{background:#fff}
+.btn:focus-visible{outline:2px solid var(--bone);outline-offset:4px}
+.btn svg{width:18px;height:18px;transition:transform .3s}
+.btn:hover svg{transform:translateX(4px)}
+
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:9;color:var(--bone);transition:background .5s,color .5s}
+header.solid{background:rgba(9,26,18,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+header .wrap{display:flex;align-items:center;height:88px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.logo svg{width:30px;height:30px}
+.logo b{font-family:var(--serif);font-weight:400;font-size:32px;line-height:1;letter-spacing:.005em}
+nav{margin-left:auto;display:flex;align-items:center;gap:40px;font-size:17px;font-weight:500}
+nav a.t{text-decoration:none;color:rgba(239,234,223,.82)}
+nav a.t:hover{color:var(--bone)}
+nav .btn{padding:13px 22px;font-size:16px;transition:background .3s,opacity .5s}
+header:not(.solid) nav .btn{opacity:0;pointer-events:none}
+
+/* hero */
+.hero{position:relative;height:100svh;min-height:640px;background:var(--deep);color:var(--bone);overflow:hidden}
+.hero .ph{position:absolute;inset:0;overflow:hidden;transform-origin:50% 30%}
+.hero .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block;transform-origin:50% 0}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,26,18,.55) 0%,rgba(9,26,18,0) 22%,rgba(9,26,18,0) 45%,rgba(9,26,18,.82) 82%,rgba(9,26,18,.94) 100%)}
+.hero .wrap{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(48px,8vh,96px)}
+h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(60px,8vw,128px);line-height:.95;letter-spacing:-.01em}
+h1 span{display:block}
+h1 em{font-style:italic;color:var(--sun)}
+.hero .row{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-top:40px;flex-wrap:wrap}
+.hero .lede{margin:0;font-size:21px;line-height:1.5;color:rgba(239,234,223,.86);max-width:30ch}
+.tag{position:absolute;top:0;right:max(24px,env(safe-area-inset-right,0px),calc((100vw - 1344px)/2 + 24px));display:flex;flex-direction:column;align-items:center;transform-origin:50% 0}
+.tag i{display:block;width:1px;height:clamp(150px,24vh,250px);background:rgba(239,234,223,.7)}
+.tag div{background:var(--bone);color:var(--ink);padding:16px 20px 18px;border-radius:4px;text-align:left;min-width:200px;box-shadow:0 18px 40px rgba(0,0,0,.25);position:relative}
+.tag div::before{content:"";position:absolute;top:10px;left:50%;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:var(--deep)}
+.tag small{display:block;margin-top:14px;font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.tag b{display:block;font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.1}
+.tag em{display:block;font-family:var(--serif);font-size:19px;color:var(--ink-2)}
+
+/* growth chart */
+.grow{position:relative;height:330vh}
+.gstick{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;padding-top:clamp(108px,14.5vh,136px);padding-bottom:clamp(24px,4.5vh,48px);overflow:hidden}
+.gstick > .wrap{width:100%}
+.ghead{align-items:end}
+.grow .eyebrow{grid-column:1 / span 8;grid-row:1}
+.grow h2{grid-row:2}
+.yr{grid-column:9 / span 4;grid-row:1 / span 2;justify-self:end;align-self:end;margin:0;text-align:right;line-height:1}
+.yr small{display:block;margin-bottom:10px;font-family:var(--mono);font-size:14px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--moss)}
+.yr b{display:inline-block;min-width:1.05em;font-family:var(--serif);font-weight:400;font-size:clamp(46px,5.2vw,84px);line-height:1;font-variant-numeric:lining-nums tabular-nums;color:var(--ink)}
+.gstage{flex:1;min-height:0;margin-top:clamp(20px,4.5vh,48px)}
+.gstage svg{display:block;width:100%;height:100%;overflow:visible}
+.ref{stroke:#C9C2B1;stroke-width:1.2;stroke-dasharray:2 6}
+.track{fill:none;stroke:var(--moss);stroke-width:2;stroke-dasharray:1 7;stroke-linecap:round;opacity:.45}
+.guide{stroke:var(--moss);stroke-width:1;opacity:.55}
+.house{fill:none;stroke:#BDB5A3;stroke-width:1.25;stroke-linejoin:round}
+.dim{font-family:var(--mono);font-size:13px;fill:var(--ink-2);letter-spacing:.04em}
+.gl{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;fill:var(--ink-2)}
+.fade{transition:opacity .9s cubic-bezier(.2,.7,.2,1)}
+.grow h2,.spec h2{grid-column:1 / span 7;margin:16px 0 0;font-family:var(--serif);font-weight:400;font-size:clamp(46px,5.2vw,84px);line-height:1;text-wrap:balance}
+.grow .eyebrow,.spec .eyebrow{grid-column:1 / -1}
+.chart{grid-column:1 / -1;margin-top:64px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.ax{stroke:var(--rule);stroke-width:1.2}
+.tk{font-family:var(--mono);font-size:14px;fill:var(--ink-2)}
+.sap{fill:none;stroke:var(--moss);stroke-width:3;stroke-linecap:round}
+.gap{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:3 8;stroke-linecap:round}
+.cl{font-family:var(--serif);font-size:30px;fill:var(--ink)}
+.cs{font-family:var(--sans);font-size:17px;fill:var(--ink-2)}
+.big{font-family:var(--serif);font-size:64px;fill:var(--ink)}
+
+/* specimens */
+.spec{padding-block:0 128px}
+.cards{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;margin-top:64px}
+.card figure{margin:0;overflow:hidden;aspect-ratio:6/5;background:var(--rule)}
+.card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.card:hover img{transform:scale(1.03)}
+.card .meta{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding-top:24px;border-bottom:1px solid var(--rule);padding-bottom:22px}
+.card b{font-family:var(--serif);font-weight:400;font-size:38px;line-height:1.05}
+.card em{display:block;font-family:var(--serif);font-size:20px;color:var(--ink-2)}
+.card span{font-family:var(--mono);font-size:15px;color:var(--ink-2);white-space:nowrap;text-align:right}
+.card:nth-child(1) img{object-position:50% 60%}
+.card:nth-child(2) img{object-position:52% 50%}
+
+.bloom{position:relative;height:clamp(340px,46vh,500px);overflow:hidden;background:#ddd}
+.bloom img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.bloom .wrap{position:relative;height:100%;display:flex;align-items:flex-end;padding-bottom:48px}
+.bloom p{margin:0;background:var(--paper);padding:22px 28px;font-family:var(--serif);font-size:clamp(28px,2.6vw,38px);line-height:1.15}
+.bloom p em{display:block;font-family:var(--mono);font-style:normal;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+
+
+/* indoors: studio shots on travertine, then the greenhouse as it is */
+.indoor{padding-block:136px 128px}
+.indoor .eyebrow{grid-column:1 / -1}
+.indoor h2{grid-column:1 / span 7;margin:16px 0 0;font-family:var(--serif);font-weight:400;font-size:clamp(46px,5.2vw,84px);line-height:1}
+.pots{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px;row-gap:64px;margin-top:64px}
+.pot figure{margin:0;overflow:hidden;aspect-ratio:800/992;background:#E9DCC6}
+.pot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.pot:hover img{transform:scale(1.03)}
+.pot .meta{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-top:20px;padding-bottom:18px;border-bottom:1px solid var(--rule)}
+.pot b{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1.05}
+.pot em{display:block;font-family:var(--serif);font-size:18px;color:var(--ink-2)}
+.pot span{font-family:var(--mono);font-size:14px;color:var(--ink-2);white-space:nowrap}
+.gh{grid-column:1 / -1;margin-top:120px}
+.gh .eyebrow{margin:0 0 24px}
+.ghrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px}
+.ghrow figure{margin:0}
+.ghrow img{display:block;width:100%;aspect-ratio:640/794;object-fit:cover}
+.ghrow figcaption{margin-top:12px;font-family:var(--mono);font-size:14px;color:var(--ink-2);display:flex;justify-content:space-between;gap:12px}
+
+/* numbers */
+.nums{background:var(--canopy);color:var(--bone);padding-block:120px}
+.nums .row{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px}
+.stat{border-top:1px solid rgba(239,234,223,.22);padding-top:28px}
+.stat b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(64px,6.4vw,104px);line-height:1;font-variant-numeric:lining-nums tabular-nums}
+.stat > span{display:block;margin-top:14px;color:rgba(239,234,223,.74);max-width:20ch}
+
+/* booking */
+.book{background:var(--deep);color:var(--bone);padding-block:128px 136px}
+.book .lt{grid-column:1 / span 5}
+.book h2{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(56px,6.4vw,104px);line-height:.95}
+.book .side{margin-top:32px;color:rgba(239,234,223,.78);font-size:20px}
+.book .phone{display:block;margin-top:28px;font-family:var(--serif);font-size:36px;color:var(--bone);user-select:all;text-decoration:none}
+.book .addr{margin-top:40px;font-family:var(--mono);font-size:15px;color:rgba(239,234,223,.6)}
+form{grid-column:7 / span 6;display:grid;gap:22px;align-self:start}
+label{display:grid;gap:8px;font-size:16px;color:rgba(239,234,223,.74)}
+input,select{font:inherit;font-size:19px;color:var(--bone);background:transparent;border:0;border-bottom:1px solid rgba(239,234,223,.3);padding:12px 0;outline:none;border-radius:0;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--bone) 50%),linear-gradient(135deg,var(--bone) 50%,transparent 50%);background-position:calc(100% - 14px) 52%,calc(100% - 8px) 52%;background-size:6px 6px;background-repeat:no-repeat}
+select option{color:var(--ink)}
+input:focus,select:focus{border-color:var(--bone)}
+form .btn{justify-self:start;margin-top:12px}
+.thanks{font-family:var(--serif);font-size:34px;line-height:1.2}
+footer{padding-block:36px;background:var(--deep);color:rgba(239,234,223,.55);border-top:1px solid rgba(239,234,223,.12);font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+.rv{transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .rv.pre{opacity:.001;transform:translateY(28px)}
+.js .hero .in{opacity:0;transform:translateY(32px);transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .hero .in.on{opacity:1;transform:none}
+.hero .ph img{filter:brightness(.92) saturate(.98) contrast(1.07) hue-rotate(10deg)}
+.sun{display:none;position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.js .sun{display:block}
+.js .hero .ph{transform:scale(1.05)}
+.js .hero .ph img{filter:brightness(2.3) saturate(.22) contrast(.6) sepia(.06)}
+.js .hero .shade{opacity:0}
+.js .tag{transform:translateY(-120%)}
+
+@media (max-width:900px){
+  nav a.t{display:none}
+  .grow h2,.spec h2,.book .lt,form{grid-column:1 / -1}
+  .grow h2{grid-row:2}
+  .grow .eyebrow{grid-column:1 / span 7;align-self:end}
+  .yr{grid-column:8 / span 5;grid-row:1}
+  .yr small{margin-bottom:4px;font-size:12px}
+  .yr b{font-size:44px}
+  .grow{height:300vh}
+  .cards{grid-template-columns:1fr;row-gap:56px}
+  .pots{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px;row-gap:48px}
+  .ghrow{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px;row-gap:32px}
+  .indoor h2{grid-column:1 / -1}
+  .indoor{padding-block:96px 88px}
+  .gh{margin-top:88px}
+  .nums .row{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:48px}
+  form{margin-top:48px}
+  .spec{padding-bottom:88px}.nums,.book{padding-block:88px}
+  .tag div{min-width:0}
+}
+@media (max-width:520px){
+  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .tag{right:max(16px,env(safe-area-inset-right,0px))}
+  .tag i{height:120px}
+  .tag div{padding:14px 16px 16px}
+  .tag b{font-size:24px}
+  .hero .lede{font-size:19px}
+  nav .btn{padding:12px 16px;font-size:15px}
+  .card b{font-size:32px}
+  .pot b{font-size:24px}
+  .pot em{font-size:16px}
+  .pot .meta{flex-direction:column;gap:6px}
+  .ghrow figcaption{flex-direction:column;gap:2px;font-size:13px}
+  .card .meta{flex-direction:column;gap:8px}
+  .card span{text-align:left}
+  .nums .row{grid-template-columns:1fr}
+  .bloom p{font-size:26px}
+  h1{font-size:clamp(46px,13vw,60px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .rv,.js .hero .in,.js .hero .ph img,.js .tag{transition:none}
+  .js .rv.pre,.js .hero .in{opacity:1;transform:none}
+  .js .hero .ph img{filter:brightness(.92) saturate(.98) contrast(1.07) hue-rotate(10deg)}
+  .js .hero .ph{transform:none}
+  .js .sun{display:none}
+  .js .hero .shade{opacity:1}
+  .js .tag{transform:none}
+  .grow{height:auto}
+  .gstick{position:relative;height:auto;min-height:0}
+  .gstage{height:clamp(520px,62vh,640px);flex:none}
+}
+</style>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Banyan Row home">
+      <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 9c4-5 20-5 24 0"/><path d="M8 7.6V27M15 6.2V27M22 7.6V27M11.5 6.7V20M18.5 6.7V20"/></svg>
+      <b>Banyan Row</b>
+    </a>
+    <nav>
+      <a class="t" href="#trees">Trees</a>
+      <a class="t" href="#indoor">Indoors</a>
+      <a class="t" href="#grow">Why mature</a>
+      <a class="btn" href="#book">Book a walk-through</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero" aria-label="Banyan Row">
+    <div class="ph"><img src="b/banyan/img/roots.jpg" alt="Aerial roots of a mature banyan hanging over still green water" fetchpriority="high"><canvas class="sun" id="sun" aria-hidden="true"></canvas></div>
+    <div class="shade"></div>
+    <div class="tag" id="tag" aria-hidden="true"><i></i><div><small>Row 14 · No. 0611</small><b>Burmese banyan</b><em>Ficus kurzii</em></div></div>
+    <div class="wrap">
+      <h1><span class="in">Decades of shade.</span><span class="in"><em>Planted in a day.</em></span></h1>
+      <div class="row">
+        <p class="lede in">Specimen trees, grown on sixty acres west of Palm Beach.</p>
+        <a class="btn in" href="#book">Book a walk-through <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="grow" id="grow">
+    <div class="gstick">
+      <div class="wrap grid ghead">
+        <p class="eyebrow rv">Height over time</p>
+        <h2 class="rv">Skip the first fourteen years.</h2>
+        <p class="yr rv" aria-hidden="true"><small>Year</small><b id="yr">0</b></p>
+      </div>
+      <div class="wrap gstage" id="chart"><svg id="csvg" role="img" aria-label="A nursery sapling takes about fourteen years to reach 28 feet. A Banyan Row specimen arrives at 28 feet on day one."><g id="cg"></g></svg></div>
+    </div>
+  </section>
+
+  <section class="spec" id="trees">
+    <div class="wrap grid">
+      <p class="eyebrow rv">In the rows now</p>
+      <h2 class="rv">Every tree, ready to move.</h2>
+      <div class="cards">
+        <article class="card rv">
+          <figure><img src="b/banyan/img/bismarck.jpg" alt="Silver Bismarck palm standing alone on a lawn" loading="lazy"></figure>
+          <div class="meta"><div><b>Bismarck palm</b><em>Bismarckia nobilis</em></div><span>18 ft · 300 gal</span></div>
+        </article>
+        <article class="card rv">
+          <figure><img src="b/banyan/img/ficus.jpg" alt="Wide domed green canopy of a mature ficus against a clear blue sky" loading="lazy"></figure>
+          <div class="meta"><div><b>Indian laurel fig</b><em>Ficus microcarpa</em></div><span>26 ft · 65 in box</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloom" aria-label="Royal poinciana in bloom">
+    <img src="b/banyan/img/poinciana.jpg" alt="Royal poinciana canopy in full red bloom" loading="lazy">
+    <div class="wrap"><p class="rv"><em>Delonix regia</em>Royal poinciana. Red by June.</p></div>
+  </section>
+
+  <section class="indoor" id="indoor">
+    <div class="wrap grid">
+      <p class="eyebrow rv">From our greenhouses</p>
+      <h2 class="rv">Indoors, too.</h2>
+      <div class="pots">
+        <article class="pot rv"><figure><img src="b/banyan/img/in-acacia.webp" alt="Small acacia tree with yellow pom-pom blooms in a stone planter" loading="lazy"></figure><div class="meta"><div><b>Golden wattle</b><em>Acacia</em></div><span>4 ft</span></div></article>
+        <article class="pot rv"><figure><img src="b/banyan/img/in-pink-princess.webp" alt="Pink princess philodendron with dark and pink leaves in a red glazed pot" loading="lazy"></figure><div class="meta"><div><b>Pink princess</b><em>Philodendron erubescens</em></div><span>10 in</span></div></article>
+        <article class="pot rv"><figure><img src="b/banyan/img/in-ghost-plant.webp" alt="Silver blue ghost plant rosettes spilling from a dark stone bowl" loading="lazy"></figure><div class="meta"><div><b>Ghost plant</b><em>Graptopetalum</em></div><span>12 in bowl</span></div></article>
+        <article class="pot rv"><figure><img src="b/banyan/img/in-ti-plant.webp" alt="Red ti plant in a tall black cylinder pot" loading="lazy"></figure><div class="meta"><div><b>Red ti plant</b><em>Cordyline fruticosa</em></div><span>3 ft</span></div></article>
+        <article class="pot rv"><figure><img src="b/banyan/img/in-boxwood.webp" alt="Boxwood ball standard in a terracotta urn" loading="lazy"></figure><div class="meta"><div><b>Boxwood standard</b><em>Buxus</em></div><span>4 ft</span></div></article>
+        <article class="pot rv"><figure><img src="b/banyan/img/in-devils-backbone.webp" alt="Variegated devil's backbone in a low clay bowl" loading="lazy"></figure><div class="meta"><div><b>Devil's backbone</b><em>Euphorbia tithymaloides</em></div><span>14 in bowl</span></div></article>
+      </div>
+      <div class="gh">
+        <p class="eyebrow rv">Under the shade cloth this week</p>
+        <div class="ghrow">
+          <figure class="rv"><img src="b/banyan/img/gh-monstera.webp" alt="Swiss cheese vine trailing from a hanging basket in the greenhouse" loading="lazy"><figcaption><span>Swiss cheese vine</span><span>10 in basket</span></figcaption></figure>
+          <figure class="rv"><img src="b/banyan/img/gh-prince-orange.webp" alt="Philodendron with a bright orange new leaf in a black nursery pot" loading="lazy"><figcaption><span>Prince of Orange</span><span>3 gal</span></figcaption></figure>
+          <figure class="rv"><img src="b/banyan/img/gh-lemon-lime.webp" alt="Bright lime philodendron in a black nursery pot" loading="lazy"><figcaption><span>Lemon lime</span><span>3 gal</span></figcaption></figure>
+          <figure class="rv"><img src="b/banyan/img/gh-plumeria.webp" alt="Pink plumeria in bloom in a black nursery pot on the growing floor" loading="lazy"><figcaption><span>Pink plumeria</span><span>7 gal</span></figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="nums">
+    <div class="wrap grid">
+      <div class="row">
+        <div class="stat rv"><b data-n="60">60</b><span>acres under cultivation</span></div>
+        <div class="stat rv"><b data-n="1200">1,200</b><span>specimen trees in the ground</span></div>
+        <div class="stat rv"><b data-n="40" data-s=" ft">40 ft</b><span>tallest tree we deliver</span></div>
+        <div class="stat rv"><b data-n="1" data-s=" day">1 day</b><span>from our rows to your lawn</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div class="wrap grid">
+      <div class="lt">
+        <h2 class="rv">Walk the rows.</h2>
+        <p class="side rv">Pick your trees in person. We tag, dig and plant them.
+          <a class="phone" href="tel:5615550193">(561) 555-0193</a></p>
+        <p class="addr rv">Loxahatchee Groves, Florida<br>hello@banyanrow.com</p>
+      </div>
+      <form id="f" class="rv">
+        <label>Name<input name="name" autocomplete="name" required></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
+        <label>Email<input name="email" type="email" autocomplete="email"></label>
+        <label>Planting for<select name="for"><option>A home</option><option>A new build</option><option>A client project</option><option>A club or community</option></select></label>
+        <button class="btn" type="submit">Book a walk-through <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>Banyan Row · Specimen trees since 1987</span><span>Loxahatchee Groves, Florida</span></div></footer>
+
+<script>
+document.documentElement.classList.add('js');
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+
+
+/* hero: the photo opens overexposed in hard midday sun, then the canopy's shade sweeps down over it,
+   leaf shadows running ahead and sun flecks caught behind; the tag drops in on its string; words last */
+(()=>{
+  const hero=document.getElementById('hero'),ph=hero.querySelector('.ph'),img=ph.querySelector('img'),shade=hero.querySelector('.shade'),ins=[...hero.querySelectorAll('.in')],tag=document.getElementById('tag'),cv=document.getElementById('sun');
+  if(RM){ins.forEach(e=>e.classList.add('on'));return}
+  const ctx=cv.getContext('2d'),K=innerWidth<700?1:2,lit=document.createElement('canvas'),lx=lit.getContext('2d');let cw=0,ch=0;
+  /* the sunlit photo: the same crop as the img (cover, 50% 30%), overexposed, bleached and warm */
+  function size(){
+    cw=Math.ceil(hero.clientWidth/K);ch=Math.ceil(hero.clientHeight/K);AR=Math.min(1,cw/ch/1.6);cv.width=lit.width=cw;cv.height=lit.height=ch;
+    const iw=img.naturalWidth,ih=img.naturalHeight;if(!iw)return;
+    const s=Math.max(cw/iw,ch/ih),dw=iw*s,dh=ih*s;lx.drawImage(img,(cw-dw)*.5,(ch-dh)*.3,dw,dh);
+    const d=lx.getImageData(0,0,cw,ch),p=d.data;
+    for(let i=0;i<p.length;i+=4){let r=p[i]/255,g=p[i+1]/255,b=p[i+2]/255;
+      const l=.3*r+.59*g+.11*b;r=l+(r-l)*.26;g=l+(g-l)*.26;b=l+(b-l)*.26;
+      r=1-Math.pow(1-r,3.6);g=1-Math.pow(1-g,3.6);b=1-Math.pow(1-b,3.6);
+      p[i]=Math.min(255,r*270);p[i+1]=Math.min(255,g*266);p[i+2]=Math.min(255,b*250)}
+    lx.putImageData(d,0,0);
+    /* halation: the highlights bloom the way film does in hard sun */
+    if('filter' in lx){lx.save();lx.filter=`blur(${Math.round(cw/90)}px)`;lx.globalCompositeOperation='screen';lx.globalAlpha=.75;lx.drawImage(lit,0,0);lx.restore()}
+  }
+  let sd=7;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
+  const leaves=[],flecks=[];
+  /* leaves come in clumps, the way a canopy throws them */
+  for(let c=0;c<120;c++){const cx=rnd()*1.1-.05,cy=rnd()*2-.5,n=5+Math.floor(rnd()*9),sp=.012+rnd()*.03;
+    for(let i=0;i<n;i++)leaves.push({x:cx+(rnd()-.5)*sp*2,y:cy+(rnd()-.5)*sp*1.6,r:.005+Math.pow(rnd(),2)*.016,e:.28+rnd()*.34,a:rnd()*3.14,ph:rnd()*6.28})}
+  for(let c=0;c<60;c++){const cx=rnd(),cy=rnd()*2-.5,n=2+Math.floor(rnd()*4);
+    for(let i=0;i<n;i++)flecks.push({x:cx+(rnd()-.5)*.04,y:cy+(rnd()-.5)*.03,r:.006+Math.pow(rnd(),2)*.016,e:.45+rnd()*.4,a:rnd()*3.14,ph:rnd()*6.28})}
+  const cl=t=>t<0?0:t>1?1:t,eio=t=>-(Math.cos(Math.PI*t)-1)/2,eo=t=>1-Math.pow(1-t,3),mix=(a,b,t)=>a+(b-a)*t;
+  const S0=380,SD=2000,BAND=.05;let AR=1;
+  const edge=(x,t)=>AR*((x-.5)*.14+.045*Math.sin(x*6.1+.7)+.026*Math.sin(x*13.7+2.1)+.008*Math.sin(x*29+t*2.4));
+  const sweep=ms=>{const u=cl((ms-S0)/SD);return mix(-.2,1.42,u<.5?2*u*u*(1.2-.4*u):eio(u))};
+  function blob(b,x,y,a,t){
+    const r=b.r*cw*(1+.12*Math.sin(t*2.2+b.ph));
+    ctx.setTransform(Math.cos(b.a),Math.sin(b.a),-Math.sin(b.a)*b.e,Math.cos(b.a)*b.e,x*cw,y*ch);
+    const rg=ctx.createRadialGradient(0,0,0,0,0,r);rg.addColorStop(0,`rgba(0,0,0,${a})`);rg.addColorStop(.5,`rgba(0,0,0,${a*.8})`);rg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=rg;ctx.beginPath();ctx.arc(0,0,r,0,6.2832);ctx.fill();
+  }
+  function paint(ms){
+    const t=ms/1000,F=sweep(ms),fk=1-cl((ms-(S0+SD-300))/650);
+    ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation='source-over';ctx.clearRect(0,0,cw,ch);
+    /* where the sun still is: everything below the shade's dappled front */
+    for(let x=0;x<cw;x+=2){const f=F+edge(x/cw,t),y0=(f-BAND/2)*ch,y1=(f+BAND/2)*ch;
+      if(y0>ch)continue;if(y1<0){ctx.fillStyle='#000';ctx.fillRect(x,0,2,ch);continue}
+      const g=ctx.createLinearGradient(0,y0,0,y1);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'#000');
+      ctx.fillStyle=g;ctx.fillRect(x,Math.max(0,y0),2,ch)}
+    ctx.globalCompositeOperation='destination-out';
+    for(const b of leaves){const bx=b.x+.005*Math.sin(t*1.7+b.ph),by=b.y+.004*Math.cos(t*1.3+b.ph),d=by-(F+edge(bx,t));
+      if(d<=-.01||d>.22)continue;blob(b,bx,by,Math.pow(1-Math.max(0,d)/.22,1.3)*.9,t)}
+    ctx.globalCompositeOperation='source-over';
+    if(fk>0)for(const b of flecks){const bx=b.x+.004*Math.sin(t*2.1+b.ph),by=b.y,d=by-(F+edge(bx,t));
+      if(d>-.01||d<-.3)continue;const a=Math.pow(1+d/.3,1.6)*.7*(.6+.4*Math.sin(t*3.6+b.ph))*fk;if(a>.01)blob(b,bx,by,a,t)}
+    ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation='source-in';ctx.drawImage(lit,0,0);
+  }
+  const G0=[.82,1,1.08,12],G1=[.92,.98,1.07,10];
+  const grade=p=>{const v=G0.map((a,i)=>mix(a,G1[i],p));return`brightness(${v[0].toFixed(3)}) saturate(${v[1].toFixed(3)}) contrast(${v[2].toFixed(3)}) hue-rotate(${v[3].toFixed(2)}deg)`};
+  let t0=0,sunOn=true;
+  function frame(n){
+    const ms=n-t0;
+    if(sunOn){paint(ms);if(ms>S0+SD+500){sunOn=false;cv.style.display='none'}}
+    img.style.filter=grade(eio(cl((ms-500)/2600)));
+    ph.style.transform=`scale(${mix(1.05,1,eo(cl(ms/4400))).toFixed(4)})`;
+    shade.style.opacity=eio(cl((ms-900)/1900)).toFixed(3);
+    const tau=(ms-1550)/1000;
+    tag.style.transform=tau<0?'translateY(-120%)':`translateY(${(-120*(1-eo(cl(tau/1.05)))).toFixed(2)}%) rotate(${(-8*Math.exp(-tau/.8)*Math.cos(6.2832*tau/1.5)).toFixed(3)}deg)`;
+    if(ms<5600)requestAnimationFrame(frame);else{tag.style.transform='none';ph.style.transform='none'}
+  }
+  function start(){
+    size();paint(0);cv.style.background='none';img.style.filter=grade(0);
+    requestAnimationFrame(n=>{t0=n;requestAnimationFrame(frame)});
+    ins.forEach((e,i)=>setTimeout(()=>e.classList.add('on'),[2000,2300,2650,2800][i]));
+    addEventListener('resize',()=>{if(sunOn)size()});
+  }
+  let started=false;const go=()=>{if(!started){started=true;start()}};
+  (img.decode?img.decode():Promise.resolve()).then(go,go);setTimeout(go,1800);
+})();
+
+/* growth: scrubbed by scroll. The chart (cols 1 to 5) and a true-scale scene (cols 6 to 12) share one ground line and one foot scale */
+(()=>{
+  const sec=document.getElementById('grow'),svg=document.getElementById('csvg'),cg=document.getElementById('cg'),yrEl=document.getElementById('yr');
+  const h=t=>4+32/(1+Math.exp(-.28*(t-10)));
+  let cross=0;for(let t=0;t<=20;t+=.005){if(h(t)>=28){cross=t;break}}
+  const CR=Math.round(cross),A=.62,asp=f=>.44+.18*Math.min(1,Math.max(0,(f-4)/24));
+  /* an elevation tree in hairline, in unit space: x across its spread (-.5 to .5), y up its height (0 to 1).
+     The canopy is soft overlapping lobes; only their outer edge is inked (stroke layer under an opaque tint layer). */
+  const A0=.62,ex=x=>(x/A0).toFixed(4);
+  let sd=11;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
+  const lobes=[];
+  for(let i=0;i<=24;i++){const th=Math.PI*(i/24)*1.1-.05*Math.PI;lobes.push([.255*Math.cos(th)+(rnd()-.5)*.016,.71+.235*Math.sin(th)+(rnd()-.5)*.016,.046+rnd()*.022])}
+  for(let i=0;i<10;i++){const x=-.22+i*.049;lobes.push([x+(rnd()-.5)*.012,.515+.02*Math.abs(x)/.22+(rnd()-.5)*.012,.038+rnd()*.012])}
+  lobes.push([0,.72,.22],[-.13,.62,.12],[.13,.62,.12],[0,.56,.1],[-.17,.72,.12],[.17,.72,.12]);
+  const LOBE=lobes.map(([x,y,r])=>`<ellipse cx="${ex(x)}" cy="${y.toFixed(4)}" rx="${ex(r)}" ry="${r.toFixed(4)}"/>`).join('');
+  const TRUNK=`M${ex(-.05)},0Q${ex(-.026)},.02 ${ex(-.024)},.1L${ex(-.016)},.44Q${ex(-.06)},.5 ${ex(-.11)},.52M${ex(.05)},0Q${ex(.026)},.02 ${ex(.024)},.1L${ex(.016)},.44Q${ex(.06)},.5 ${ex(.12)},.52`;
+  const pl=a=>'M'+a.map(([x,y])=>ex(x)+','+y).join('L');
+  const LIMBS=[[[-.008,.44],[-.11,.55],[-.19,.64],[-.23,.74]],[[-.11,.55],[-.06,.68],[-.08,.82]],[[0,.45],[-.02,.6],[0,.84]],[[.008,.44],[.07,.56],[.05,.76]],[[.07,.56],[.15,.67],[.2,.76]],[[.01,.44],[.13,.52],[.21,.6]],[[-.19,.64],[-.14,.76]],[[.05,.76],[.1,.87]],[[-.06,.68],[.01,.72]],[[0,.6],[.06,.66]]].map(pl).join('');
+  const ROOTS=[[-.42,.5,.0],[-.34,.5,.22],[-.27,.47,0],[-.19,.47,.3],[-.12,.47,.05],[.12,.47,.12],[.2,.47,0],[.28,.47,.34],[.35,.5,0],[.43,.52,.2]].map(([x,y,e])=>`M${x},${y}V${e}`).join('');
+  const tree=(ink,tint,roots)=>`<g fill="none" stroke="${ink}" stroke-linejoin="round" stroke-linecap="round">`+
+    (roots?`<path d="${ROOTS}" stroke-width=".9" opacity=".7" vector-effect="non-scaling-stroke"/>`:'')+
+    `<path d="M${ex(-.05)},0L${ex(-.016)},.5L${ex(.016)},.5L${ex(.05)},0Z" fill="${tint}" stroke="none"/><path d="${TRUNK}" stroke-width="1.1" vector-effect="non-scaling-stroke"/>`+
+    `<g stroke-width="2.3">${LOBE.replace(/<ellipse /g,'<ellipse vector-effect="non-scaling-stroke" ')}</g>`+
+    `<g fill="${tint}" stroke="none">${LOBE}</g>`+
+    `<path d="${LIMBS}" stroke-width=".9" opacity=".55" vector-effect="non-scaling-stroke"/></g>`;
+  /* a standing person, 5.8 ft, in feet */
+  const PERSON='M-.13,5.02L-.6,4.86Q-.72,4.8-.73,4.6L-.76,3.3L-.69,2.6L-.6,2.62L-.61,3.3L-.55,4.12L-.5,3L-.46,1.6L-.42,.25L-.5,.04L-.47,0L-.13,0L-.15,.3L-.08,1.6L0,2.55L.08,1.6L.15,.3L.13,0L.47,0L.5,.04L.42,.25L.46,1.6L.5,3L.55,4.12L.61,3.3L.6,2.62L.69,2.6L.76,3.3L.73,4.6Q.72,4.8.6,4.86L.13,5.02ZM0,5.06m-.36,.37a.36,.36 0 1,0 .72,0a.36,.36 0 1,0-.72,0';
+  let G=null;
+  function build(){
+    const W=svg.clientWidth,H=svg.clientHeight;if(!W||!H)return;
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    const N=W<640;let L,R,T,B,ppf,SL,SR,SB,sp,spX;
+    if(!N){const col=(W-11*32)/12;L=64;R=5*col+4*32;T=10;B=H-44;ppf=(B-T)/40;SL=R+32;SR=W;SB=B;sp=ppf}
+    else{const sh=Math.round(H*.5);SL=0;SR=W;SB=sh-30;sp=Math.min((SB-22)/32,W/62);L=54;R=W-2;T=sh+28;B=H-36;ppf=(B-T)/40}
+    const X=t=>L+(R-L)*t/20,Y=f=>B-f*ppf,Ys=f=>SB-f*sp,brS=28*A*sp,brX=SR-brS/2;
+    /* left to right on one ground: sapling (room for its year-14 spread), person, house, Banyan Row tree */
+    spX=SL+brS/2;const pX=SL+brS+3.3*sp;
+    const fs=N?.9:1,cy=Y(28),sx=X(0),cx=X(cross);
+    let s='';
+    for(let f=10;f<=(N?30:40);f+=10)s+=`<line class="ax" x1="${L}" x2="${R}" y1="${Y(f)}" y2="${Y(f)}" stroke-dasharray="2 6"/><text class="tk" x="0" y="${Y(f)+5}" style="font-size:${14*fs}px">${f} ft</text>`;
+    for(let y=0;y<=20;y+=5)s+=`<text class="tk" x="${X(y)}" y="${B+32}" text-anchor="${y===0?'start':y===20?'end':'middle'}" style="font-size:${14*fs}px">${y===0?'Year 0':y}</text>`;
+    /* a one-story house in its own space between the person and the Banyan Row tree */
+    const hx0=pX+3.6*sp,hx1=brX-brS/2-3*sp,hy=f=>Ys(f),hw=hx1-hx0,dx=hx0+hw*.3;
+    {const o=1.2*sp,ri=Math.max(1.5*sp,Math.min(5*sp,hw/2-2*sp)),dw=3*sp;
+      s+=`<path class="house" d="M${hx0},${SB}V${hy(9)}M${hx1},${SB}V${hy(9)}M${hx0-o},${hy(9)}H${hx1+o}L${hx1-ri},${hy(14)}H${hx0+ri}Z M${dx-dw/2},${SB}V${hy(7)}H${dx+dw/2}V${SB} M${hx0+hw*.58},${hy(3)}h${Math.min(4.5*sp,hw*.3)}v${-4*sp}h${-Math.min(4.5*sp,hw*.3)}Z"/>`}
+    s+=N?`<line class="ax" x1="${L}" x2="${R}" y1="${B}" y2="${B}"/><line class="ax" x1="0" x2="${W}" y1="${SB}" y2="${SB}"/>`:`<line class="ax" x1="${L}" x2="${W}" y1="${B}" y2="${B}"/>`;
+    /* the 28 ft line: day one for a Banyan Row tree */
+    s+=N?`<line class="ref" x1="${sx}" x2="${R}" y1="${cy}" y2="${cy}"/><line class="ref" x1="0" x2="${W}" y1="${Ys(28)}" y2="${Ys(28)}"/>`:`<line class="ref" x1="${sx}" x2="${brX}" y1="${cy}" y2="${cy}"/>`;
+    const tp=[];for(let t=0;t<=20.001;t+=.25)tp.push(X(t).toFixed(1)+','+Y(h(t)).toFixed(1));
+    s+=`<path class="track" d="M${tp.join(' L')}"/><path class="sap" id="sapc" d=""/><path class="gap" id="gap" d=""/>`;
+    if(!N)s+=`<line class="guide" id="gd"/>`;
+    s+=`<circle cx="${sx}" cy="${cy}" r="${N?8:9}" fill="#16251C"/><circle id="xdot" class="fade" cx="${cx}" cy="${cy}" r="${N?7:7}" fill="#5F7D52" opacity="0"/><circle id="cdot" r="${N?5:6}" fill="#5F7D52"/>`;
+    s+=`<g><text class="cl" x="${sx+(N?0:22)}" y="${cy-(N?34:52)}" style="font-size:${N?21:30}px">Banyan Row, day one</text><text class="cs" x="${sx+(N?0:22)}" y="${cy-(N?13:22)}" style="font-size:${N?14:17}px">28 ft, planted</text></g>`;
+    s+=`<g id="lab2" class="fade" opacity="0">${N?`<text class="cs" x="${cx+12}" y="${cy+26}" style="font-size:14px">Sapling,</text><text class="cs" x="${cx+12}" y="${cy+45}" style="font-size:14px">year ${CR}</text>`:`<text class="cs" x="${cx+16}" y="${cy+36}" style="font-size:16px">A nursery sapling</text><text class="cs" x="${cx+16}" y="${cy+58}" style="font-size:16px">gets there</text><text class="cs" x="${cx+16}" y="${cy+80}" style="font-size:16px">in year ${CR}</text>`}</g>`;
+    s+=`<text class="big" id="lab3" x="${N?X(5.2):X(5)}" y="${N?cy+42:cy+70}" text-anchor="middle" opacity="0" style="font-size:${N?38:56}px">${CR} years</text>`;
+    /* scene */
+    s+=`<ellipse cx="${brX}" cy="${SB}" rx="${brS*.56}" ry="${Math.max(3,sp*.55)}" fill="#0E2419" opacity=".07"/><ellipse id="spool" cy="${SB}" fill="#0E2419" opacity=".07"/>`;
+    s+=`<g transform="translate(${brX},${SB}) scale(${brS},${-28*sp})">${tree('#16251C','#E4E8DF',true)}</g>`;
+    s+=`<g id="sapt">${tree('#5F7D52','#ECEEE3',false)}</g>`;
+    s+=`<path d="${PERSON}" fill="#4A5A4F" transform="translate(${pX},${SB}) scale(${sp},${-sp})"/>`;
+    s+=`<text class="dim" x="${brX}" y="${Ys(28)-12}" text-anchor="middle">28 ft</text><text class="dim" id="sdim" text-anchor="middle"></text>`;
+    s+=`<text class="gl" x="${brX}" y="${SB+(N?22:32)}" text-anchor="middle"${N?' style="font-size:11px"':''}>Banyan Row</text><text class="gl" x="${spX}" y="${SB+(N?22:32)}" text-anchor="middle"${N?' style="font-size:11px"':''}>${N?'Sapling':'Nursery sapling'}</text>`;
+    cg.innerHTML=s;
+    G={N,X,Y,Ys,sp,spX,sx,cx,cy,spool:cg.querySelector('#spool'),sapc:cg.querySelector('#sapc'),gap:cg.querySelector('#gap'),gd:cg.querySelector('#gd'),cdot:cg.querySelector('#cdot'),xdot:cg.querySelector('#xdot'),lab2:cg.querySelector('#lab2'),lab3:cg.querySelector('#lab3'),sapt:cg.querySelector('#sapt'),sdim:cg.querySelector('#sdim')};
+    render(cur.y,cur.g,true);
+  }
+  let cur={y:RM?cross:0,g:RM?1:0},tgt={y:cur.y,g:cur.g},shown=-1;
+  function render(yv,gp){
+    if(!G)return;const{X,Y,Ys,sp,spX}=G,hv=h(yv);
+    const pts=[];for(let t=0;t<yv;t+=.2)pts.push(X(t).toFixed(1)+','+Y(h(t)).toFixed(1));pts.push(X(yv).toFixed(1)+','+Y(hv).toFixed(1));
+    G.sapc.setAttribute('d','M'+pts.join(' L'));
+    G.cdot.setAttribute('cx',X(yv));G.cdot.setAttribute('cy',Y(hv));
+    if(G.gd){G.gd.setAttribute('x1',X(yv)+12);G.gd.setAttribute('x2',spX);G.gd.setAttribute('y1',Y(hv));G.gd.setAttribute('y2',Y(hv));G.gd.style.opacity=yv>=cross-.01?0:''}
+    G.sapt.setAttribute('transform',`translate(${spX},${Ys(0)}) scale(${(hv*asp(hv)*sp).toFixed(2)},${(-hv*sp).toFixed(2)})`);
+    G.spool.setAttribute('cx',spX);G.spool.setAttribute('rx',(hv*asp(hv)*sp*.56).toFixed(1));G.spool.setAttribute('ry',Math.max(2,sp*.55*Math.min(1,hv/28)).toFixed(1));
+    G.sdim.setAttribute('x',spX);G.sdim.setAttribute('y',Ys(hv)-12);G.sdim.textContent=Math.round(hv)+' ft';
+    const done=yv>=cross-.01;
+    G.xdot.setAttribute('opacity',done?1:0);G.lab2.setAttribute('opacity',done?1:0);
+    G.gap.setAttribute('d',gp>0?`M${G.sx},${G.cy} H${(G.sx+(G.cx-G.sx)*gp).toFixed(1)}`:'');
+    G.lab3.setAttribute('opacity',Math.max(0,(gp-.35)/.65).toFixed(3));
+    const yr=done?CR:Math.floor(yv);if(yr!==shown){shown=yr;yrEl.textContent=yr}
+  }
+  const cl=t=>t<0?0:t>1?1:t;
+  function target(){const r=sec.getBoundingClientRect(),span=sec.offsetHeight-innerHeight;const p=span>0?cl(-r.top/span):1;tgt.y=cross*cl((p-.05)/.63);tgt.g=cl((p-.73)/.15)}
+  let raf=0,last=0;
+  function loop(n){raf=0;const dt=last?Math.min(100,n-last):16;last=n;const k=1-Math.exp(-dt/110);
+    cur.y+=(tgt.y-cur.y)*k;cur.g+=(tgt.g-cur.g)*k;
+    if(Math.abs(tgt.y-cur.y)<.01&&Math.abs(tgt.g-cur.g)<.004){cur.y=tgt.y;cur.g=tgt.g;last=0}else raf=requestAnimationFrame(loop);
+    render(cur.y,cur.g)}
+  build();
+  addEventListener('resize',build);
+  if(RM)return;
+  const kick=()=>{target();if(!raf)raf=requestAnimationFrame(loop)};
+  addEventListener('scroll',kick,{passive:true});kick();
+})();
+
+/* reveals and counters */
+(()=>{
+  if(RM)return;
+  const els=[...document.querySelectorAll('.rv')];
+  els.forEach(e=>{if(e.getBoundingClientRect().top>innerHeight*.9)e.classList.add('pre')});
+  const io=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io.unobserve(e.target);setTimeout(()=>e.target.classList.remove('pre'),i*550)})},{threshold:.25});
+  els.forEach(e=>io.observe(e));
+  const ns=[...document.querySelectorAll('[data-n]')];
+  const fmt=(el,v)=>Math.round(v).toLocaleString('en-US')+(el.dataset.s||'');
+  const io2=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io2.unobserve(e.target);const el=e.target,N=+el.dataset.n;
+    if(N<2)return;
+    setTimeout(()=>{const t0=performance.now(),D=2000;const f=n=>{const p=Math.min(1,(n-t0)/D);el.textContent=fmt(el,N*ease(p));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)},i*550)})},{threshold:.4});
+  ns.forEach(n=>io2.observe(n));
+})();
+{const h=document.querySelector('header'),hero=document.getElementById('hero');const f=()=>h.classList.toggle('solid',scrollY>hero.offsetHeight-100);addEventListener('scroll',f,{passive:true});f()}
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();e.target.innerHTML='<p class="thanks">Thank you. We will call to set a time to walk the rows.</p>'});
+</script>
+
+</body></html>

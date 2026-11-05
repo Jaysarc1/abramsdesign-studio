@@ -1,0 +1,482 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!--
+ALIGNMENT NOTES
+Grid: 12 columns, max width 1280px, 32px gutter, page gutter max(24px, safe-area) (16px floor on phones).
+Every band's inner wrapper shares the same left edge (.wrap). Hero headline, numbers band, service rows and form all start on column 1.
+Intentional offsets:
+- Hero temperature readout sits on columns 9-12, its bottom on the CTA's bottom edge and its right edge on the nav button's: it is the answer to the headline, read on one line of sight with the button.
+- The cold-front line in the hero is free-moving by design: it is weather, it crosses the grid.
+- Chart readouts "Outside" and "Inside" ride at the tip of each line, beside the moving time cursor, not on the grid, so each number is touching what it names. The cursor's time label replaces the axis tick it passes.
+- The day section pins below the header (sticky, top 88px = header height) while scroll moves the time cursor from 6 AM to midnight; the pinned block is centred in the space under the header, so its top edge is not on a fixed baseline.
+
+SELLS
+Buyer: Palm Beach County homeowner whose AC just quit or is struggling in summer heat.
+Fear: a hot house overnight, a no-show tech, a surprise replacement quote.
+Outcome: cool home tonight, a fair, clear price.
+Proof: arrival time, live dispatch, homes on plans, the 94/72 day chart.
+One CTA: "Book a technician".
+-->
+<title>Coldfront Air</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800;900&family=Red+Hat+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one dark night-sky field; a weather front crosses the hero, then everything settles onto a calm 12-col grid */
+:root{
+  --night:#08111F;
+  --deep:#0D1A2E;
+  --line:#1E3150;
+  --ice:#BFE6FF;
+  --ice-2:#7FC4F2;
+  --heat:#FF9B54;
+  --paper:#EAF4FB;
+  --mute:#9DB3C9;
+  --display:"Schibsted Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Red Hat Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--paper);font-family:var(--display);font-size:19px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--night)}
+.wrap{max-width:1344px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
+.mono{font-family:var(--mono);font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+a{color:inherit}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--ice);color:var(--night);font-weight:700;font-size:18px;padding:18px 28px;text-decoration:none;border:0;border-radius:12px;cursor:pointer;font-family:var(--display);transition:background .3s}
+.btn:hover,.btn:focus-visible{background:#fff}
+.btn:focus-visible{outline:2px solid var(--ice);outline-offset:4px}
+.btn svg{width:18px;height:18px}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:transparent;transition:background .5s,border-color .5s;border-bottom:1px solid transparent}
+header.solid{background:rgba(8,17,31,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+header .wrap{display:flex;align-items:center;height:88px}
+.logo{display:flex;align-items:center;gap:14px;font-weight:900;font-size:22px;letter-spacing:-.01em;text-decoration:none}
+.logo svg{width:44px;height:24px}
+nav{margin-left:auto;display:flex;align-items:center;gap:40px;font-size:17px;font-weight:500}
+nav a.t{text-decoration:none;color:var(--mute);transition:color .3s}
+nav a.t:hover{color:var(--paper)}
+nav .btn{padding:13px 20px;font-size:16px;border-radius:10px}
+
+/* hero */
+.hero{position:relative;height:min(860px,calc(100svh - 0px));min-height:640px;margin-top:-88px;overflow:hidden}
+#wx{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-block:0 88px}
+.hero .grid{align-items:end}
+h1{margin:0;font-weight:900;font-size:clamp(64px,9.4vw,156px);line-height:.9;letter-spacing:-.035em;text-wrap:balance}
+h1 .ice{color:var(--ice)}
+h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.16em;margin-bottom:-.16em}
+h1 .w>i{display:inline-block;font-style:normal}
+.lede{margin:32px 0 40px;font-size:22px;line-height:1.45;color:#CFE0EE;max-width:30ch}
+.hl{grid-column:1 / span 8}
+.readout{grid-column:9 / span 4;justify-self:end;text-align:right}
+.readout .mono{display:block;margin-bottom:6px}
+.temp{font-family:var(--display);font-weight:800;font-size:clamp(88px,10vw,168px);line-height:.82;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:var(--heat)}
+.js .hero:not(.go) .w>i{transform:translateY(150%)}
+.hero .w>i{transition:transform 1.15s cubic-bezier(.16,1,.3,1)}
+.hero .w:nth-child(2)>i{transition-delay:.09s}.hero .w:nth-child(3)>i{transition-delay:.18s}
+.hero .lede,.hero .hl .btn,.coord{transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.hero .lede{transition-delay:.42s}.hero .hl .btn{transition-delay:.56s}
+.js .hero:not(.go) .lede,.js .hero:not(.go) .hl .btn{opacity:0;transform:translateY(18px)}
+.js .hero:not(.cf) .coord{opacity:0}
+.coordw{position:absolute!important;left:0;right:0;top:120px;height:auto!important;display:block!important;padding-block:0!important}.coord{text-align:right}
+
+/* numbers band */
+.day{padding-block:0 120px;border-top:1px solid var(--line)}
+.scrub{position:relative;height:calc(100svh - 88px + 150vh)}
+.pin{position:sticky;top:88px;height:calc(100svh - 88px);display:flex;align-items:center;overflow:hidden}
+.pin .wrap{width:100%}
+.day h2{grid-column:1 / span 7;margin:0;font-size:clamp(40px,4.6vw,68px);line-height:1;letter-spacing:-.03em;font-weight:800;text-wrap:balance}
+.day h2 em{font-style:normal;color:var(--ice)}
+.day .k{grid-column:1 / span 12;margin-bottom:28px}
+.chart{grid-column:1 / span 12;margin-top:56px}
+.chart svg{width:100%;height:auto;max-height:calc(100svh - 88px - 200px);display:block;overflow:visible}
+.ghost{fill:none;stroke-width:2;stroke-dasharray:2 7;stroke-linecap:round;opacity:.32}
+.ghost.o{stroke:var(--heat)}.ghost.i{stroke:var(--ice)}
+.cur{stroke:var(--paper);stroke-opacity:.5;stroke-width:1}
+.tk{transition:opacity .35s}
+.now{fill:var(--paper);font-family:var(--mono);font-size:14px;letter-spacing:.08em}
+.stats{grid-column:1 / span 12;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px;margin-top:0;border-top:1px solid var(--line)}
+.ax{stroke:var(--line);stroke-width:1}
+.tk{fill:var(--mute);font-family:var(--mono);font-size:14px;letter-spacing:.06em}
+.out{fill:none;stroke:var(--heat);stroke-width:3;stroke-linecap:round}
+.in{fill:none;stroke:var(--ice);stroke-width:3;stroke-linecap:round}
+.gap{fill:url(#gapfill)}
+.lab{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:-.02em}
+.lab.h{fill:var(--heat)}.lab.c{fill:var(--ice)}
+.sub{fill:var(--mute);font-family:var(--mono);font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.stat{padding-top:32px}
+.stat b{display:block;font-size:clamp(56px,6vw,96px);line-height:.95;letter-spacing:-.04em;font-weight:800;font-variant-numeric:tabular-nums}
+.stat b .cm{font-variant-numeric:normal;letter-spacing:-.06em;margin-right:.02em}
+.stat b small{font-size:.42em;letter-spacing:-.01em;color:var(--ice);margin-left:6px}
+.stat > span{display:block;margin-top:14px;font-size:19px;color:#CFE0EE;max-width:22ch}
+
+/* services */
+.svc{padding-block:40px 120px}
+.row{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px;align-items:center;padding-block:40px;border-top:1px solid var(--line)}
+.row:last-child{border-bottom:1px solid var(--line)}
+.row .ico{grid-column:1 / span 1}
+.row .ico svg{width:56px;height:56px;stroke:var(--ice);fill:none;stroke-width:1.6}
+.row h3{grid-column:2 / span 4;margin:0;font-size:clamp(36px,3.6vw,56px);font-weight:800;letter-spacing:-.03em;line-height:1}
+.row p{grid-column:6 / span 4;margin:0;color:#CFE0EE}
+.row .when{grid-column:10 / span 3;justify-self:end}
+
+/* book */
+.book{padding-block:120px 140px;background:var(--deep);border-top:1px solid var(--line)}
+.book h2{grid-column:1 / span 6;margin:0;font-size:clamp(48px,6vw,96px);line-height:.92;letter-spacing:-.035em;font-weight:900}
+.book h2 span{color:var(--ice)}
+.book .side{grid-column:1 / span 5;margin-top:32px;color:#CFE0EE}
+.book .phone{display:block;margin-top:28px;font-size:28px;font-weight:700;color:var(--paper);font-variant-numeric:tabular-nums;user-select:all}
+form{grid-column:7 / span 6;grid-row:1 / span 3;display:grid;gap:20px;align-self:start}
+label{display:grid;gap:8px}
+label .mono{font-size:13px}
+input,textarea{font:inherit;font-size:19px;color:var(--paper);background:transparent;border:0;border-bottom:1px solid #35507A;padding:12px 0;outline:none;border-radius:0}
+textarea{resize:vertical;min-height:96px}
+input:focus,textarea:focus{border-color:var(--ice)}
+form .btn{justify-self:start;margin-top:12px}
+.thanks{font-size:22px;color:var(--ice)}
+footer{padding-block:40px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+/* reveal: visible at rest, gently lifts in */
+.rv{transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .rv.pre{opacity:.001;transform:translateY(28px)}
+
+@media (min-width:901px) and (max-height:820px){
+  .day .k{margin-bottom:18px}
+  .day h2{font-size:min(4.6vw,6.6vh)}
+  .chart{margin-top:32px}
+}
+@media (max-width:900px){
+  nav a.t{display:none}
+  .hero{min-height:700px}
+  .hl{grid-column:1 / -1}
+  .readout{grid-column:1 / -1;justify-self:start;text-align:left;margin-top:40px}
+  .coord{display:none}
+  .day h2,.chart{grid-column:1 / -1}
+  .stats{grid-template-columns:1fr}
+  .row{grid-template-columns:56px 1fr;row-gap:12px}
+  .row .ico{grid-column:1;grid-row:1 / span 2}
+  .row h3,.row p,.row .when{grid-column:2;justify-self:start}
+  .book h2,.book .side,form{grid-column:1 / -1;grid-row:auto}
+  form{margin-top:48px}
+}
+@media (max-width:520px){
+  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .lede{font-size:20px}
+  .tk{font-size:24px}.now{font-size:24px}.lab{font-size:46px}.sub{font-size:22px}
+  .chart{margin-top:36px}
+  .day h2{font-size:38px}
+  .chart svg{max-height:none}
+  nav .btn{padding:12px 16px;font-size:15px}
+  .logo{font-size:19px}
+}
+@media (prefers-reduced-motion:reduce){.rv{transition:none}.js .rv.pre{opacity:1;transform:none}.js .hero:not(.go) .w>i,.js .hero:not(.go) .lede,.js .hero:not(.go) .hl .btn{transform:none;opacity:1}.js .hero:not(.cf) .coord{opacity:1}.scrub{height:auto}.pin{position:relative;top:0;height:auto;padding-block:140px 96px}}
+</style>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Coldfront Air">
+      <svg viewBox="0 0 44 24" aria-hidden="true"><path d="M1 18 C 12 14, 30 22, 43 12" fill="none" stroke="#BFE6FF" stroke-width="2.4" stroke-linecap="round"/><path d="M8 16.2 l4.5-8 2.6 9.3z M22 18.4 l3.8-8.6 3.6 8.9z" fill="#BFE6FF"/></svg>
+      COLDFRONT
+    </a>
+    <nav>
+      <a class="t" href="#services">Services</a>
+      <a class="t" href="#day">Why us</a>
+      <a class="btn" href="#book">Book a technician</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" aria-label="Coldfront Air">
+  <canvas id="wx" aria-hidden="true"></canvas>
+  <div class="wrap coordw" aria-hidden="true"><div class="mono coord">26.71°N &nbsp;80.05°W</div></div>
+  <div class="wrap">
+    <div class="grid">
+      <div class="hl">
+        <h1><span class="w"><i>Cold</i></span> <span class="w"><i>by</i></span> <span class="w"><i class="ice">tonight.</i></span></h1>
+        <p class="lede">Same-day AC repair and replacement across Palm Beach County.</p>
+        <a class="btn" href="#book">Book a technician <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M10 4l5 5-5 5"/></svg></a>
+      </div>
+      <div class="readout">
+        <span class="mono">Indoor</span>
+        <div class="temp" id="temp">94°</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="day" id="day">
+  <div class="scrub" id="scrub"><div class="pin" id="pin">
+  <div class="wrap grid">
+    <div class="mono k rv">A July day</div>
+    <h2 class="rv">Outside climbs to 94°. <em>Inside never moves.</em></h2>
+    <div class="chart" id="chart">
+      <svg id="csvg" viewBox="0 0 1280 440" preserveAspectRatio="xMinYMid meet" role="img" aria-label="Outdoor temperature rises from 79 degrees at 6 AM to 94 at 3 PM while indoor stays at 72 all day">
+        <defs>
+          <linearGradient id="span" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FF9B54"/><stop offset="1" stop-color="#BFE6FF"/></linearGradient>
+          <linearGradient id="gapfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9B54" stop-opacity=".16"/><stop offset="1" stop-color="#BFE6FF" stop-opacity=".06"/></linearGradient>
+          <clipPath id="reveal"><rect id="revealRect" x="0" y="0" width="1280" height="440"/></clipPath>
+        </defs>
+        <g id="ticks"></g>
+        <path class="ghost o" id="gout"/><path class="ghost i" id="gin"/>
+        <g clip-path="url(#reveal)">
+          <path class="gap" id="gap"/>
+          <path class="out" id="out"/>
+          <path class="in" id="in"/>
+        </g>
+        <line class="cur" id="cur"/><line id="spanl" stroke="url(#span)" stroke-width="2"/>
+        <g id="peak" style="transition:opacity .5s"><circle r="5" fill="#FF9B54"/><text class="sub" id="peakt" text-anchor="middle" style="fill:#FF9B54">94°</text></g>
+        <circle id="halo" r="18" fill="#FF9B54" opacity=".18"/>
+        <circle id="dOut" r="7" fill="#FF9B54"/><circle id="dIn" r="7" fill="#BFE6FF"/>
+        <g id="lOut"><text class="lab h" id="vOut">79°</text><text class="sub" id="sOut">Outside</text></g>
+        <g id="lIn"><text class="lab c" id="vIn">72°</text><text class="sub" id="sIn">Inside</text></g>
+        <text class="now" id="now" text-anchor="middle">6:00 AM</text>
+      </svg>
+    </div>
+  </div>
+  </div></div>
+  <div class="wrap grid">
+    <div class="stats">
+      <div class="stat rv"><b><span data-n="22">0</span>°</b><span>cooler inside, all afternoon</span></div>
+      <div class="stat rv"><b><span data-n="47">0</span><small>min</small></b><span>average time to your door</span></div>
+      <div class="stat rv"><b><span data-n="4812">0</span></b><span>homes on our maintenance plan</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="svc" id="services" aria-label="Services">
+  <div class="wrap">
+    <div class="row rv">
+      <div class="ico"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="20"/><path d="M28 14v14l9 6"/></svg></div>
+      <h3>Repair</h3>
+      <p>A technician at your door today, with the common parts on the truck.</p>
+      <div class="mono when">Same day</div>
+    </div>
+    <div class="row rv">
+      <div class="ico"><svg viewBox="0 0 56 56"><path d="M10 40 C 20 30, 36 46, 46 20"/><path d="M14 36l4-9 3 10zM28 37l4-10 3 9z"/></svg></div>
+      <h3>Replace</h3>
+      <p>One fixed price, written before we start. Most installs finished in a day.</p>
+      <div class="mono when">Next day</div>
+    </div>
+    <div class="row rv">
+      <div class="ico"><svg viewBox="0 0 56 56"><rect x="12" y="12" width="32" height="32"/><path d="M12 22h32M22 12v32"/></svg></div>
+      <h3>Maintain</h3>
+      <p>Two visits a year and first place in line when the heat comes.</p>
+      <div class="mono when">Twice a year</div>
+    </div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap grid">
+    <h2 class="rv">Back to <span>72°.</span></h2>
+    <div class="side rv">Tell us what's happening. A dispatcher calls you back within 15 minutes, day or night.
+      <span class="phone">(561) 555-0172</span>
+    </div>
+    <form id="f" class="rv" novalidate>
+      <label for="n"><span class="mono">Name</span><input id="n" name="n" autocomplete="name"></label>
+      <label for="p"><span class="mono">Phone</span><input id="p" name="p" type="tel" autocomplete="tel"></label>
+      <label for="q"><span class="mono">What's going on?</span><textarea id="q" name="q" rows="3"></textarea></label>
+      <button class="btn" type="submit">Book a technician <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M10 4l5 5-5 5"/></svg></button>
+    </form>
+  </div>
+</section>
+</main>
+<footer><div class="wrap mono"><span>Coldfront Air · West Palm Beach</span><span>24/7 dispatch · (561) 555-0172</span></div></footer>
+
+<script>
+document.documentElement.classList.add('js');
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+
+/* ---------- hero: a hot isobar field; a cold front sweeps it to 72 ---------- */
+(()=>{
+  const hero=document.querySelector('.hero'),c=document.getElementById('wx'),x=c.getContext('2d'),temp=document.getElementById('temp');
+  let W,H,dpr,cols,rows,step,vals,fxr,run=true,t0=performance.now(),words=false;
+  const LEVELS=18,LO=-2.7,HI=1.9,DELAY=320,DUR=2650;
+  function size(){dpr=Math.min(devicePixelRatio||1,1.5);W=c.clientWidth;H=c.clientHeight;c.width=W*dpr;c.height=H*dpr;step=W<600?12:16;cols=Math.ceil(W/step)+1;rows=Math.ceil(H/step)+1;vals=new Float32Array(cols*rows);fxr=new Float32Array(rows)}
+  size();addEventListener('resize',size);
+  function frontX(y,F,t){return F+W*.03*Math.sin(y/H*3.2+t*.0005)+W*.07*(y/H-.5)}
+  function field(t,F,live){
+    const s=t*.00006,w=Math.max(W*.055,46);
+    for(let j=0;j<rows;j++)fxr[j]=frontX(j*step,F,t);
+    for(let j=0;j<rows;j++){const py=j*step/520,fj=fxr[j];
+      for(let i=0;i<cols;i++){
+        const px=i*step/520;
+        let v=Math.sin(px*2.1+s*1.3+Math.sin(py*1.7+s))*.9+Math.sin(py*2.6-s*1.1+px*.8)*.7+Math.sin((px+py)*1.3+s*.7)*.5+Math.cos(px*4.2-py*1.1+s*.5)*.18;
+        if(live){
+          const d=(i*step-fj)/w;
+          const heat=1/(1+Math.exp(-d*1.6));                      // 1 ahead of the front, 0 behind it
+          v+=heat*.065*Math.sin(py*15+t*.0052+Math.sin(px*4.5+t*.0011)*1.1); // rising heat shimmer
+          v-=1.05*Math.exp(-d*d);                                  // the trough the front rides in
+        }
+        vals[j*cols+i]=v;
+      }}
+  }
+  let par,cnt,deg,SX,SY,SE;
+  function find(q){while(par[q]!==q){par[q]=par[par[q]];q=par[q]}return q}
+  function contours(){
+    // marching squares; each level's pieces are stitched by shared cell edges so tiny closed islands can be dropped
+    const p=new Path2D(),NE=2*cols*rows,MIN=W<600?14:20;
+    if(!par||par.length!==NE){par=new Int32Array(NE);cnt=new Int32Array(NE);deg=new Uint8Array(NE);SX=new Float32Array(cols*rows*4);SY=new Float32Array(cols*rows*4);SE=new Int32Array(cols*rows*2)}
+    for(let l=0;l<LEVELS;l++){
+      const v=LO+l*((HI-LO)/(LEVELS-1));
+      let n=0;
+      const seg=(m,mi,o,oi)=>{SX[2*n]=m[0];SY[2*n]=m[1];SX[2*n+1]=o[0];SY[2*n+1]=o[1];SE[2*n]=mi;SE[2*n+1]=oi;n++};
+      for(let j=0;j<rows-1;j++)for(let i=0;i<cols-1;i++){
+        const a=vals[j*cols+i],b=vals[j*cols+i+1],cc=vals[(j+1)*cols+i+1],d=vals[(j+1)*cols+i];
+        const k=(a>v?8:0)|(b>v?4:0)|(cc>v?2:0)|(d>v?1:0);
+        if(k===0||k===15)continue;
+        const X=i*step,Y=j*step,hT=j*cols+i,hB=hT+cols,vL=cols*rows+j*cols+i,vR=vL+1;
+        const T=[X+step*(v-a)/(b-a),Y],R=[X+step,Y+step*(v-b)/(cc-b)],B=[X+step*(v-d)/(cc-d),Y+step],L=[X,Y+step*(v-a)/(d-a)];
+        switch(k){case 1:case 14:seg(L,vL,B,hB);break;case 2:case 13:seg(B,hB,R,vR);break;case 3:case 12:seg(L,vL,R,vR);break;case 4:case 11:seg(T,hT,R,vR);break;case 5:seg(L,vL,T,hT);seg(B,hB,R,vR);break;case 6:case 9:seg(T,hT,B,hB);break;case 7:case 8:seg(L,vL,T,hT);break;case 10:seg(L,vL,B,hB);seg(T,hT,R,vR);break;}
+      }
+      for(let q=0;q<2*n;q++){const e=SE[q];par[e]=e;cnt[e]=0;deg[e]=0}
+      for(let q=0;q<n;q++){const x1=find(SE[2*q]),x2=find(SE[2*q+1]);if(x1!==x2)par[x1]=x2}
+      for(let q=0;q<2*n;q++){const e=SE[q];deg[e]++}
+      for(let q=0;q<2*n;q++){const e=SE[q],r=find(e);if(q%2===0)cnt[r]+=1;if(deg[e]===1)cnt[r]+=100000}  // an open end means the line leaves the screen: keep it
+      for(let q=0;q<n;q++){if(cnt[find(SE[2*q])]<MIN)continue;p.moveTo(SX[2*q],SY[2*q]);p.lineTo(SX[2*q+1],SY[2*q+1])}
+    }
+    return p;
+  }
+  const mix=(a,b,k)=>a.map((v,i)=>Math.round(v+(b[i]-v)*k));
+  const HOT=[255,155,84],ICE=[191,230,255];
+  function frame(now){
+    if(!run){requestAnimationFrame(frame);return}
+    const t=now-t0;
+    const pr=RM?1:Math.min(1,Math.max(0,(t-DELAY)/DUR));
+    const e=ease(pr),live=pr<1;
+    const F=-W*.14+e*W*1.32;
+    x.setTransform(dpr,0,0,dpr,0,0);
+    // cold air: night navy with an ice glow low on the left
+    x.fillStyle='#08111F';x.fillRect(0,0,W,H);
+    const g2=x.createRadialGradient(W*.18,H*.8,0,W*.18,H*.8,W*.85);g2.addColorStop(0,'rgba(127,196,242,.13)');g2.addColorStop(1,'rgba(127,196,242,0)');x.fillStyle=g2;x.fillRect(0,0,W,H);
+    field(RM?0:t,F,live);
+    const P=contours();
+    // front geometry
+    const fy=[];for(let y=-20;y<=H+20;y+=10)fy.push([frontX(y,F,t),y]);
+    const cold=new Path2D(),warm=new Path2D();
+    cold.moveTo(-20,-20);fy.forEach(q=>cold.lineTo(q[0],q[1]));cold.lineTo(-20,H+20);cold.closePath();
+    warm.moveTo(W+20,-20);fy.forEach(q=>warm.lineTo(q[0],q[1]));warm.lineTo(W+20,H+20);warm.closePath();
+    x.lineWidth=1.1;
+    x.save();x.clip(cold);
+    if(live){const lg=x.createLinearGradient(F-W*.3,0,F+W*.04,0);lg.addColorStop(0,'rgba(191,230,255,0)');lg.addColorStop(1,"rgba(191,230,255,.09)");x.fillStyle=lg;x.fillRect(0,0,W,H)}
+    x.strokeStyle='rgba(191,230,255,.36)';x.stroke(P);x.restore();
+    if(live){
+      x.save();x.clip(warm);
+      const wg=x.createLinearGradient(0,0,0,H);wg.addColorStop(0,'#2A1207');wg.addColorStop(1,'#150A07');x.fillStyle=wg;x.fillRect(0,0,W,H);
+      const r1=x.createRadialGradient(W*.8,H*.42,0,W*.8,H*.42,Math.max(W,H)*.75);r1.addColorStop(0,'rgba(255,138,58,.42)');r1.addColorStop(.5,'rgba(255,120,48,.13)');r1.addColorStop(1,'rgba(255,120,48,0)');x.fillStyle=r1;x.fillRect(0,0,W,H);
+      x.strokeStyle='rgba(255,170,110,.5)';x.stroke(P);x.restore();
+      // the front: soft cold edge, then the line, triangles pointing the way it moves
+      if(pr>0){
+        const line=new Path2D();fy.forEach((q,i)=>i?line.lineTo(q[0],q[1]):line.moveTo(q[0],q[1]));
+        x.strokeStyle='rgba(191,230,255,.07)';x.lineWidth=44;x.stroke(line);
+        x.strokeStyle='rgba(191,230,255,.14)';x.lineWidth=12;x.stroke(line);
+        x.strokeStyle='#DDF1FF';x.lineWidth=2.6;x.stroke(line);
+        x.fillStyle='#DDF1FF';
+        const sp=W<600?84:104,th=W<600?20:26,tw=W<600?14:18;
+        for(let y=24;y<H;y+=sp){const a=frontX(y,F,t),b=frontX(y+th,F,t);x.beginPath();x.moveTo(a,y);x.lineTo(b,y+th);x.lineTo((a+b)/2+tw,y+th/2);x.closePath();x.fill()}
+      }
+    }
+    // readout falls as the front reaches it
+    const rr=temp.getBoundingClientRect(),hr=hero.getBoundingClientRect();
+    const e0=.14/1.32,at=Math.max(e0+.2,((rr.right-hr.left)/W+.14)/1.32);
+    const k=RM?1:Math.min(1,Math.max(0,(e-e0)/(at-e0)));
+    temp.textContent=Math.round(94-22*k)+'°';
+    temp.style.color=`rgb(${mix(HOT,ICE,Math.min(1,k*1.05))})`;
+    if(!words&&(RM||t>DELAY+DUR*.7)){words=true;hero.classList.add('go')}
+    requestAnimationFrame(frame);
+  }
+  setTimeout(()=>hero.classList.add('cf'),RM?0:200);
+  new IntersectionObserver(es=>{run=es[0].isIntersecting},{threshold:0}).observe(c);
+  requestAnimationFrame(frame);
+})();
+
+/* ---------- chart: a July day, scrubbed by scroll, 6 AM to midnight ---------- */
+(()=>{
+  const $=id=>document.getElementById(id);
+  const NARROW=innerWidth<600,W=NARROW?640:1280,H=NARROW?620:440,L=NARROW?84:72,R=W-(NARROW?140:120),T=NARROW?110:96,B=NARROW?520:380,H0=6,H1=24;
+  $('csvg').setAttribute('viewBox',`0 0 ${W} ${H}`);$('revealRect').setAttribute('height',H);
+  const hrs=[6,8,10,12,14,15,16,18,20,22,24],out=[79,83,88,91,93,94,93,90,86,83,82];
+  const X=h=>L+(R-L)*(h-H0)/(H1-H0),Y=v=>B-(B-T)*(v-68)/(96-68),V=y=>68+(B-y)*(96-68)/(B-T);
+  const P=hrs.map((h,i)=>[X(h),Y(out[i])]);
+  const segs=[];for(let i=0;i<P.length-1;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;segs.push([p1,[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6],[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6],p2])}
+  const d=`M${P[0]}`+segs.map(s=>` C${s[1]} ${s[2]} ${s[3]}`).join('');
+  const bz=(a,b,c,e,t)=>{const u=1-t;return u*u*u*a+3*u*u*t*b+3*u*t*t*c+t*t*t*e};
+  const yAt=px=>{const s=segs.find(s=>px<=s[3][0])||segs[segs.length-1];let lo=0,hi=1;
+    for(let k=0;k<24;k++){const m=(lo+hi)/2;bz(s[0][0],s[1][0],s[2][0],s[3][0],m)<px?lo=m:hi=m}
+    const m=(lo+hi)/2;return bz(s[0][1],s[1][1],s[2][1],s[3][1],m)};
+  $('out').setAttribute('d',d);$('gout').setAttribute('d',d);
+  $('in').setAttribute('d',`M${X(H0)},${Y(72)} L${X(H1)},${Y(72)}`);$('gin').setAttribute('d',`M${X(H0)},${Y(72)} L${X(H1)},${Y(72)}`);
+  $('gap').setAttribute('d',d+` L${X(H1)},${Y(72)} L${X(H0)},${Y(72)} Z`);
+  let s='';
+  [72,80,88,96].forEach(v=>{s+=`<line class="ax" x1="${L}" x2="${R}" y1="${Y(v)}" y2="${Y(v)}"/><text class="tk" x="0" y="${Y(v)+5}">${v}°</text>`});
+  const TK=NARROW?[['6A',6],['NOON',12],['6P',18],['12A',24]]:[['6 AM',6],['NOON',12],['6 PM',18],['MIDNIGHT',24]];
+  const ty=B+(NARROW?60:42);
+  TK.forEach(([l,h])=>{s+=`<text class="tk xt" data-x="${X(h)}" x="${X(h)}" y="${ty}" text-anchor="middle">${l}</text>`});
+  $('ticks').innerHTML=s;
+  const xts=[...document.querySelectorAll('.xt')];
+  const rr=$('revealRect'),cur=$('cur'),dO=$('dOut'),dI=$('dIn'),halo=$('halo'),vO=$('vOut'),sO=$('sOut'),vI=$('vIn'),sI=$('sIn'),now=$('now');
+  rr.setAttribute('x',0);cur.setAttribute('y1',T-28);cur.setAttribute('y2',B+(NARROW?14:10));now.setAttribute('y',ty);
+  const fmt=h=>{const m=Math.round(h*4)/4,hh=Math.floor(m)%24,mm=Math.round((m-Math.floor(m))*60);
+    if(hh===0)return NARROW?'12A':'MIDNIGHT';if(hh===12&&!mm)return 'NOON';
+    const h12=hh%12||12;return NARROW?`${h12}:${String(mm).padStart(2,'0')}${hh<12?'A':'P'}`:`${h12}:${String(mm).padStart(2,'0')} ${hh<12?'AM':'PM'}`};
+  const gx=NARROW?22:18,px=X(15),py=yAt(px),pk=$('peak'),sp=$('spanl'),spg=$('span');
+  pk.firstChild.setAttribute('cx',px);pk.firstChild.setAttribute('cy',py);$('peakt').setAttribute('x',px);$('peakt').setAttribute('y',py-(NARROW?24:18));
+  sp.setAttribute('y2',Y(72));spg.setAttribute('y2',Y(72));
+  function draw(h){
+    const cx=X(h),oy=yAt(cx),iy=Y(72);
+    rr.setAttribute('width',cx);
+    cur.setAttribute('x1',cx);cur.setAttribute('x2',cx);
+    dO.setAttribute('cx',cx);dO.setAttribute('cy',oy);halo.setAttribute('cx',cx);halo.setAttribute('cy',oy);
+    dI.setAttribute('cx',cx);dI.setAttribute('cy',iy);
+    vO.textContent=Math.round(V(oy))+'°';
+    vO.setAttribute('x',cx+gx);vO.setAttribute('y',oy+(NARROW?6:2));sO.setAttribute('x',cx+gx);sO.setAttribute('y',oy+(NARROW?34:26));
+    vI.setAttribute('x',cx+gx);vI.setAttribute('y',iy+(NARROW?16:10));sI.setAttribute('x',cx+gx);sI.setAttribute('y',iy+(NARROW?46:36));
+    now.setAttribute('x',cx);now.textContent=fmt(h);
+    sp.setAttribute('x1',cx);sp.setAttribute('x2',cx);sp.setAttribute('y1',oy);spg.setAttribute('y1',oy);
+    pk.style.opacity=h>15&&cx-px>(NARROW?150:130)?1:0;
+    xts.forEach(t=>t.style.opacity=Math.abs(+t.dataset.x-cx)<(NARROW?70:80)?0:1);
+  }
+  if(RM){draw(15);return}
+  const scrub=$('scrub'),pin=$('pin');
+  let target=H0,shown=H0,raf=0;
+  const read=()=>{const r=scrub.getBoundingClientRect(),top=parseFloat(getComputedStyle(pin).top)||0,dist=r.height-pin.offsetHeight;
+    const p=Math.min(1,Math.max(0,(top-r.top)/dist));const q=Math.min(1,Math.max(0,(p-.06)/.86));
+    target=H0+(H1-H0)*q;if(!raf)raf=requestAnimationFrame(tick)};
+  function tick(){raf=0;shown+=(target-shown)*.14;if(Math.abs(target-shown)<.004)shown=target;draw(shown);if(shown!==target)raf=requestAnimationFrame(tick)}
+  addEventListener('scroll',read,{passive:true});addEventListener('resize',read);
+  draw(H0);read();
+})();
+
+/* ---------- reveals + counters, one beat each ---------- */
+(()=>{
+  const els=[...document.querySelectorAll('.rv')];
+  if(RM)return;
+  els.forEach(e=>{const r=e.getBoundingClientRect();if(r.top>innerHeight*.9)e.classList.add('pre')});
+  const io=new IntersectionObserver(es=>{
+    const vis=es.filter(e=>e.isIntersecting).map(e=>e.target);
+    vis.forEach((el,i)=>{io.unobserve(el);setTimeout(()=>el.classList.remove('pre'),i*600)});
+  },{threshold:.3});
+  els.forEach(e=>io.observe(e));
+})();
+(()=>{
+  const ns=[...document.querySelectorAll('[data-n]')];
+  const fmt=v=>v.toLocaleString('en-US').replace(/,/g,'<span class="cm">,</span>');
+  if(RM){ns.forEach(n=>n.innerHTML=fmt(+n.dataset.n));return}
+  ns.forEach(n=>n.innerHTML=fmt(+n.dataset.n));
+  const io=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io.unobserve(e.target);const el=e.target,N=+el.dataset.n;
+    setTimeout(()=>{const t0=performance.now(),D=2200;const f=n=>{const p=Math.min(1,(n-t0)/D);el.innerHTML=fmt(Math.round(N*ease(p)));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)},i*600)})},{threshold:.4});
+  ns.forEach(n=>io.observe(n));
+})();
+
+/* ---------- header ---------- */
+{const h=document.querySelector('header');const f=()=>h.classList.toggle('solid',scrollY>innerHeight*.6);addEventListener('scroll',f,{passive:true});f()}
+/* ---------- form ---------- */
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();const f=e.target;f.innerHTML='<p class="thanks">Thanks. A dispatcher will call you within 15 minutes.</p>'});
+</script>
+
+</body></html>

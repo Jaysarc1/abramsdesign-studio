@@ -1,0 +1,427 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!--
+ALIGNMENT NOTES
+Grid: 12 columns, max width 1344px, 32px gutter, page gutter max(24px, safe-area) (16px floor on phones).
+Copy, lists and the form start on column 1 or column 7.
+Intentional offsets:
+- The photo fills the hero and is pinned to its right side (object-position 78%), so she sits on columns 8 to 12 looking left, straight at the headline on columns 1 to 6. A white haze lifts the sea behind the words so they stay legible.
+- Opening: the band of morning light and the edge where the portrait comes into focus are tilted 10 degrees off vertical, the same lean as the Bodoni italic, so the light, the focus and the writing of "refined." all travel on one angle.
+- "refined." carries padding with an equal negative margin (0.14em sides, 0.26em below) so its writing mask covers the italic overhang of the f and the period; the word itself does not move.
+- Recovery (pinned): the day counter sits on columns 9 to 12, right-aligned to the grid edge, its numeral's baseline set on the baseline of the headline's last line.
+- The timeline's day labels start at the left edge of their own dot (the last one ends at its dot's right edge), so the first label lands on column 1 and the last on column 12.
+- The first two weeks take 52% of the line and a pale band behind it, and most of the scroll: that is the promise. Day 14 to Day 90 is compressed into a hairline.
+- The button's arrow sits in its own filled circle, inset 6px from the pill's right end; the label is centred on the circle's middle line.
+
+SELLS
+Buyer: Palm Beach woman or man, 40 to 70, considering a facelift, eyes or nose.
+Fear: looking "done", a long recovery, the wrong surgeon.
+Outcome: looking like themselves, rested and happy; back to life in two weeks.
+Proof: years, procedures, rating, one surgeon start to finish.
+One CTA: "Book a consultation".
+-->
+<title>Aurelle</title>
+<script>document.documentElement.classList.add('js')</script>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,300..600;1,300..500&family=Mulish:wght@400..600&display=swap">
+<style>
+/* Layout: a bright, happy portrait by the sea that comes into focus under a band of morning light, then white and pale blue pages */
+:root{
+  --white:#FBFDFE;
+  --mist:#EEF4F8;
+  --sky:#DCEAF3;
+  --ink:#1E3140;
+  --ink-2:#566B7A;
+  --rule:#CFDDE7;
+  --blue:#4F86A8;
+  --serif:"Noto Serif Display",Didot,"Bodoni 72",Georgia,serif;
+  --sans:"Mulish",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--ink);font-family:var(--sans);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--mist)}
+.wrap{max-width:1344px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+/* outline pill, arrow in a filled circle */
+.btn{display:inline-flex;align-items:center;gap:20px;background:transparent;color:var(--ink);font-family:var(--sans);font-weight:600;font-size:18px;line-height:1;padding:6px 6px 6px 30px;border:1.5px solid var(--ink);border-radius:999px;text-decoration:none;cursor:pointer;transition:background .35s,color .35s}
+.btn i{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--white);transition:background .35s,color .35s}
+.btn svg{width:18px;height:18px;transition:transform .35s}
+.btn:hover,.btn:focus-visible{background:var(--ink);color:var(--white)}
+.btn:hover i,.btn:focus-visible i{background:var(--white);color:var(--ink)}
+.btn:hover svg{transform:translateX(3px)}
+.btn:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:9;color:var(--ink);transition:background .5s,box-shadow .5s}
+header.solid{background:rgba(251,253,254,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--rule)}
+header .wrap{display:flex;align-items:center;height:88px}
+.logo{text-decoration:none;color:inherit;font-family:var(--serif);font-size:28px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;font-variation-settings:"opsz" 20}
+nav{margin-left:auto;display:flex;align-items:center;gap:40px;font-size:17px;font-weight:500}
+nav a.t{text-decoration:none;color:var(--ink-2)}
+nav a.t:hover{color:var(--ink)}
+nav .btn{font-size:16px;padding:4px 4px 4px 22px;gap:14px;transition:background .35s,color .35s,opacity .5s}
+nav .btn i{width:36px;height:36px}
+nav .btn svg{width:15px;height:15px}
+header:not(.solid) nav .btn{opacity:0;pointer-events:none}
+
+/* hero */
+.hero{position:relative;height:100svh;min-height:680px;background:#E4EEF5;overflow:hidden}
+.ph{position:absolute;inset:0;overflow:hidden}
+.ph .lyr{position:absolute;inset:0}
+.ph img{display:block;width:100%;height:100%;object-fit:cover;object-position:78% 40%}
+.ph .soft{display:none}
+.ph .beam{display:none;position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen}
+.ph::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(244,249,252,.78) 0%,rgba(244,249,252,.5) 34%,rgba(244,249,252,0) 56%);pointer-events:none}
+.hero .wrap{position:relative;height:100%;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px;align-content:center}
+.hl{grid-column:1 / span 6;padding-top:40px}
+h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(60px,7.6vw,124px);line-height:.98;letter-spacing:-.015em;color:var(--ink)}
+h1 > span{display:block}
+h1 em{font-style:italic;color:var(--blue);display:inline-block;padding:0 .14em .26em;margin:0 -.14em -.26em}
+.lede{margin:32px 0 44px;font-size:21px;line-height:1.5;color:var(--ink-2);max-width:24ch}
+
+/* recovery: pinned, scrubbed by scroll */
+.time{position:relative}
+.run{position:relative;height:270vh}
+.pin{position:sticky;top:0;height:100vh;display:flex;align-items:center;padding-top:88px;overflow:hidden}
+.pin .wrap{width:100%}
+.time .eyebrow{grid-column:1 / span 7;grid-row:1;margin:0}
+.time h2,.care h2{grid-column:1 / span 7;margin:16px 0 0;font-family:var(--serif);font-weight:400;font-size:clamp(46px,5.2vw,84px);line-height:1.02;letter-spacing:-.01em;text-wrap:balance}
+.time h2{grid-row:2}
+.tw{transition:color .9s cubic-bezier(.2,.7,.2,1)}
+.time.wk .tw{color:var(--blue)}
+.ctr{grid-column:9 / span 4;grid-row:1 / span 2;align-self:end;justify-self:end;text-align:right;line-height:1;margin-bottom:.078em}
+.ctr .cl{display:block;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-bottom:30px}
+.ctr b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(120px,14.4vw,232px);line-height:.74;letter-spacing:-.02em;font-variant-numeric:lining-nums tabular-nums;font-variation-settings:"opsz" 96;color:var(--ink)}
+.ctr .ct{display:none}
+.line{grid-column:1 / -1;margin-top:clamp(56px,8vh,96px)}
+.line svg{display:block;width:100%;height:auto;overflow:visible}
+.tb{fill:none;stroke:var(--rule);stroke-width:1.4}
+.tp{fill:none;stroke:var(--blue);stroke-linecap:round}
+.tp.a{stroke-width:3.2}
+.tp.b{stroke-width:1.4}
+.band{fill:var(--sky)}
+.tn{fill:var(--white);stroke:var(--rule);stroke-width:1.6;transition:fill .6s,stroke .6s}
+.pt.on .tn{fill:var(--ink);stroke:var(--ink)}
+.pt.on .tn.end{fill:var(--blue);stroke:var(--blue)}
+.lab{opacity:.32;transform:translateY(14px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.pt.on .lab{opacity:1;transform:none}
+.mk .halo{fill:var(--blue);opacity:.16}
+.mk .dot{fill:var(--blue)}
+.mk .core{fill:var(--white)}
+.td{font-family:var(--sans);font-weight:500;font-size:30px;fill:var(--ink);font-variant-numeric:lining-nums}
+.tt{font-family:var(--sans);font-size:18px;fill:var(--ink-2)}
+.after{padding-block:24px 120px}
+.stats{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px}
+.stat{border-top:1px solid var(--rule);padding-top:28px}
+.stat b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(60px,5.8vw,96px);line-height:1;font-variant-numeric:lining-nums tabular-nums}
+.stat > span{display:block;margin-top:14px;color:var(--ink-2);max-width:20ch}
+
+/* care */
+.care{background:var(--mist);padding-block:128px}
+.care h2{grid-column:1 / span 5;margin:0}
+.list{grid-column:7 / span 6;margin:0;padding:0;list-style:none;border-top:1px solid var(--rule)}
+.list li{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:baseline;padding-block:26px;border-bottom:1px solid var(--rule)}
+.list b{font-family:var(--serif);font-weight:400;font-size:34px;line-height:1.15}
+.list span{color:var(--ink-2);font-size:17px;text-align:right}
+
+/* book */
+.book{background:var(--sky);color:var(--ink);padding-block:128px 136px}
+.book .lt{grid-column:1 / span 5}
+.book h2{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(52px,6vw,96px);line-height:1;letter-spacing:-.01em}
+.book h2 em{color:var(--blue)}
+.book .side{margin-top:32px;color:var(--ink-2);font-size:20px}
+.book .phone{display:block;margin-top:28px;font-family:var(--serif);font-size:36px;color:var(--ink);text-decoration:none;user-select:all}
+.book .addr{margin-top:40px;font-size:16px;color:var(--ink-2)}
+form{grid-column:7 / span 6;display:grid;gap:22px;align-self:start}
+label{display:grid;gap:8px;font-size:16px;color:var(--ink-2)}
+input,select{font:inherit;font-size:19px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid rgba(30,49,64,.28);padding:12px 0;outline:none;border-radius:0;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 14px) 52%,calc(100% - 8px) 52%;background-size:6px 6px;background-repeat:no-repeat}
+input:focus,select:focus{border-color:var(--blue)}
+form .btn{justify-self:start;margin-top:12px}
+.thanks{font-family:var(--serif);font-size:34px;line-height:1.2}
+footer{padding-block:36px;background:var(--white);color:var(--ink-2);border-top:1px solid var(--rule);font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+.time h2,.care h2,.book h2,.list b,.phone,.stat b{font-variation-settings:"opsz" 28}
+.rv{transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .rv.pre{opacity:.001;transform:translateY(28px)}
+
+/* opening: a lens finds her, a band of morning light passes and leaves her crisp, then the words; "refined." is written last */
+.js .hero .in{opacity:0;transform:translateY(24px);transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.js .hero .in.on{opacity:1;transform:none}
+.js .hero.go .ph .soft,.js .hero.go .ph .beam{display:block}
+.js .hero.go .ph .soft img{filter:blur(12px) brightness(1.03) saturate(.66) contrast(.9)}
+.js .hero.go .ph .soft.far img{filter:blur(34px) brightness(1.24) saturate(.45)}
+.js .hero.go .ph .sharp{opacity:0}
+.js h1 .wr em{-webkit-mask-image:linear-gradient(100deg,#000 0,#000 34%,transparent 37%,transparent 100%);mask-image:linear-gradient(100deg,#000 0,#000 34%,transparent 37%,transparent 100%);-webkit-mask-size:300% 100%;mask-size:300% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:100% 0;mask-position:100% 0}
+.js h1 .wr.on em{-webkit-mask-position:0 0;mask-position:0 0;transition:-webkit-mask-position 1.15s cubic-bezier(.45,.05,.3,1),mask-position 1.15s cubic-bezier(.45,.05,.3,1)}
+
+@media (max-width:900px){
+  nav a.t{display:none}
+  .hero{height:auto;min-height:100svh;display:flex;flex-direction:column}
+  .hero .wrap{order:-1;height:auto;align-content:start;padding-top:128px;padding-bottom:8px}
+  .hl{grid-column:1 / -1;padding-top:0}
+  .ph{position:relative;inset:auto;flex:1;min-height:48vh;width:100%;-webkit-mask:linear-gradient(180deg,transparent 0,#000 16%);mask:linear-gradient(180deg,transparent 0,#000 16%)}
+  .ph img{position:absolute;inset:0;object-position:88% 30%}
+  .ph::after{display:none}
+  .hero{background:linear-gradient(180deg,#F2F7FA,#E4EEF5)}
+  .time h2,.care h2,.list,.book .lt,form,.time .eyebrow{grid-column:1 / -1}
+  .run{height:240vh}
+  .pin{height:100svh;padding-top:88px}
+  .ctr{grid-column:1 / -1;grid-row:auto;justify-self:start;text-align:left;margin:44px 0 0;display:grid;grid-template-columns:auto 1fr;column-gap:20px;align-items:end}
+  .ctr .cl{grid-column:1 / -1;margin-bottom:22px}
+  .ctr b{font-size:clamp(112px,36vw,160px)}
+  .ctr .ct{display:block;position:relative;height:1.5em;font-size:18px;color:var(--ink-2);margin-bottom:.15em;line-height:1.5}
+  .ctr .ct span{position:absolute;left:0;bottom:0;white-space:nowrap;opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s cubic-bezier(.2,.7,.2,1)}
+  .ctr .ct span.on{opacity:1;transform:none}
+  .line{margin-top:56px}
+  .after{padding-block:16px 88px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:48px}
+  .list{margin-top:40px}
+  form{margin-top:48px}
+  .care,.book{padding-block:88px}
+}
+@media (max-width:520px){
+  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .logo{font-size:24px}
+  nav .btn{font-size:15px;padding:3px 3px 3px 16px;gap:10px}
+  nav .btn i{width:32px;height:32px}
+  h1{font-size:clamp(48px,14vw,62px);font-variation-settings:"opsz" 32}
+  .time h2,.care h2,.book h2,.list b,.phone{font-variation-settings:"opsz" 18}
+  .lede{font-size:19px;margin:24px 0 32px}
+  .stats{grid-template-columns:1fr}
+  .list li{grid-template-columns:1fr;gap:6px}
+  .list span{text-align:left}
+  .list b{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv,.js .hero .in{transition:none}
+  .js .rv.pre,.js .hero .in{opacity:1;transform:none}
+  .js .hero.go .ph .soft,.js .hero.go .ph .beam{display:none}
+  .js .hero.go .ph .sharp{opacity:1}
+  .js h1 .wr em{-webkit-mask-image:none;mask-image:none}
+  .run{height:auto}
+  .pin{position:relative;height:auto;padding-block:136px 40px}
+  .lab,.tn,.tw,.ctr .ct span{transition:none}
+}
+</style>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Aurelle home">Aurelle</a>
+    <nav>
+      <a class="t" href="#care">Procedures</a>
+      <a class="t" href="#time">Recovery</a>
+      <a class="btn" href="#book">Book a consultation <i><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></i></a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero" aria-label="Aurelle">
+    <div class="ph">
+      <div class="lyr sharp"><img src="b/aurelle/img/woman.webp" alt="A woman in a white robe smiling by a bright window over the ocean" fetchpriority="high"></div>
+      <div class="lyr soft" aria-hidden="true"><img src="b/aurelle/img/woman.webp" alt=""></div>
+      <div class="lyr soft far" aria-hidden="true"><img src="b/aurelle/img/woman.webp" alt=""></div>
+      <div class="beam" aria-hidden="true"></div>
+    </div>
+    <div class="wrap">
+      <div class="hl">
+        <h1><span class="in">Yourself,</span><span class="wr"><em>refined.</em></span></h1>
+        <p class="lede in">Facial plastic surgery. Natural results, one surgeon, start to finish.</p>
+        <a class="btn in" href="#book">Book a consultation <i><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="time" id="time">
+    <div class="run" id="run">
+      <div class="pin">
+        <div class="wrap grid">
+          <p class="eyebrow rv">Recovery</p>
+          <h2 class="rv">Back to your life in <span class="tw">two weeks.</span></h2>
+          <div class="ctr rv" aria-hidden="true"><span class="cl">Day</span><b id="dn">1</b><span class="ct" id="ct"></span></div>
+          <div class="line" id="line"><svg id="lsvg" role="img" aria-label="Day one, home the same day. Day seven, sutures out. Day fourteen, back to work. Day ninety, your final result."><g id="lg"></g></svg></div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap grid after">
+      <div class="stats">
+        <div class="stat rv"><b data-n="21">21</b><span>years in practice</span></div>
+        <div class="stat rv"><b data-n="6400">6,400</b><span>procedures performed</span></div>
+        <div class="stat rv"><b data-n="4.9" data-d="1">4.9</b><span>from 1,100 patient reviews</span></div>
+        <div class="stat rv"><b>1</b><span>surgeon, consult to final visit</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="care" id="care">
+    <div class="wrap grid">
+      <h2 class="rv">What we do.</h2>
+      <ul class="list">
+        <li class="rv"><b>Face and neck lift</b><span>Home the same day</span></li>
+        <li class="rv"><b>Eyelids</b><span>Back to work in a week</span></li>
+        <li class="rv"><b>Rhinoplasty</b><span>Shaped to your face</span></li>
+        <li class="rv"><b>Skin and injectables</b><span>No downtime</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div class="wrap grid">
+      <div class="lt">
+        <h2 class="rv">Begin with a <em>conversation.</em></h2>
+        <p class="side rv">An hour with the surgeon, never a salesperson.
+          <a class="phone" href="tel:5615550127">(561) 555-0127</a></p>
+        <p class="addr rv">Palm Beach Gardens, Florida<br>hello@aurelle.com</p>
+      </div>
+      <form id="f" class="rv">
+        <label>Name<input name="name" autocomplete="name" required></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
+        <label>Email<input name="email" type="email" autocomplete="email"></label>
+        <label>Interested in<select name="for"><option>Face and neck</option><option>Eyelids</option><option>Rhinoplasty</option><option>Skin and injectables</option><option>Not sure yet</option></select></label>
+        <button class="btn" type="submit">Book a consultation <i><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></i></button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>Aurelle Facial Plastic Surgery</span><span>Palm Beach Gardens, Florida</span></div></footer>
+
+<script>
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const eo=t=>1-Math.pow(1-t,3);
+const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const seg=(t,a,b)=>cl((t-a)/(b-a));
+// the light crosses the empty window briskly and slows as it passes over her face: time per unit of travel is
+// higher around her (s near .66) and at both ends; integrated once into a lookup table
+const sweep=(()=>{const N=240,acc=[0];for(let i=1;i<=N;i++){const s=(i-.5)/N;acc.push(acc[i-1]+1+3.2*Math.exp(-(((s-.66)/.1)**2))+2.4*Math.exp(-((s/.07)**2))+2.4*Math.exp(-(((1-s)/.07)**2)))}
+  const tot=acc[N];return t=>{const v=t*tot;let i=1;while(i<N&&acc[i]<v)i++;return cl((i-1+(v-acc[i-1])/(acc[i]-acc[i-1]))/N)}})();
+
+/* opening: soft and luminous, the lens finds her, a band of morning light passes and leaves her crisp; the words arrive last */
+(()=>{
+  const hero=document.getElementById('hero'),ph=hero.querySelector('.ph');
+  const ins=[...hero.querySelectorAll('.in')],wr=hero.querySelector('.wr');
+  if(RM){ins.forEach(e=>e.classList.add('on'));wr.classList.add('on');return}
+  const sharp=ph.querySelector('.sharp'),near=ph.querySelector('.soft:not(.far)'),far=ph.querySelector('.soft.far'),beam=ph.querySelector('.beam');
+  const ANG=100,rad=ANG*Math.PI/180;
+  ph.style.opacity=0;
+  hero.classList.add('go');
+  const run=()=>{
+    const w=ph.clientWidth,h=ph.clientHeight;
+    const L=Math.abs(w*Math.sin(rad))+Math.abs(h*Math.cos(rad));   // length of the gradient line at this angle
+    const FE=Math.max(120,L*.09);                                     // feather of the focus edge
+    const t0=performance.now();
+    const T={fade:[0,700],pull:[150,1250],sweep:[800,2700],breath:[0,3400]};
+    const f=n=>{
+      const t=n-t0;
+      ph.style.opacity=eo(seg(t,...T.fade));
+      // lens breathing: the frame settles as focus is found
+      const b=ease(seg(t,...T.breath));
+      ph.style.transform=`scale(${1.055-.055*b})`;
+      // the lens hunts: far blur gives way to near blur
+      far.style.opacity=1-ease(seg(t,...T.pull));
+      // morning light sweeps across; behind it she is crisp
+      const s=sweep(seg(t,...T.sweep));
+      const x=-L*.18+s*L*1.36;
+      sharp.style.opacity=t>T.sweep[0]-60?1:0;
+      const m=`linear-gradient(${ANG}deg,transparent ${x-FE}px,#000 ${x+FE*.4}px)`;
+      near.style.webkitMaskImage=m;near.style.maskImage=m;
+      const a=Math.sin(Math.PI*s)*.95;  // the light is brightest mid-frame
+      beam.style.background=`linear-gradient(${ANG}deg,rgba(255,246,228,0) ${x-L*.17}px,rgba(255,246,228,${(.2*a).toFixed(3)}) ${x-L*.08}px,rgba(255,248,234,${(.46*a).toFixed(3)}) ${x-L*.01}px,rgba(255,246,228,${(.2*a).toFixed(3)}) ${x+L*.05}px,rgba(255,246,228,0) ${x+L*.11}px)`;
+      if(t<3450)requestAnimationFrame(f);
+      else{hero.classList.remove('go');ph.style.transform='';beam.style.background='';near.style.maskImage=near.style.webkitMaskImage='';sharp.style.opacity='';far.style.opacity=''}
+    };
+    requestAnimationFrame(f);
+    // the words: "Yourself," rises, "refined." is written on the light's angle, then the line and the button
+    setTimeout(()=>ins[0].classList.add('on'),1700);
+    setTimeout(()=>wr.classList.add('on'),2350);
+    setTimeout(()=>ins[1].classList.add('on'),2950);
+    setTimeout(()=>ins[2].classList.add('on'),3250);
+  };
+  const img=sharp.querySelector('img');
+  img.complete&&img.naturalWidth?requestAnimationFrame(run):img.addEventListener('load',()=>requestAnimationFrame(run),{once:true});
+})();
+
+/* recovery: scroll carries a marker from Day 1 to Day 90; the first two weeks get most of the line and most of the scroll */
+(()=>{
+  const sec=document.getElementById('time'),runEl=document.getElementById('run');
+  const svg=document.getElementById('lsvg'),g=document.getElementById('lg'),dn=document.getElementById('dn'),ct=document.getElementById('ct');
+  const P=[{d:'Day 1',t:'Home the same day',n:1},{d:'Day 7',t:'Sutures out',n:7},{d:'Day 14',t:'Back to work',n:14},{d:'Day 90',t:'Your final result',n:90}];
+  const F=[0,.24,.52,1];
+  let narrow,xs,y,html,W;
+  const build=()=>{
+    narrow=innerWidth<640;
+    let H,x0,x1,dy;
+    if(narrow){W=400;H=96;x0=11;x1=W-11;y=26;dy=58;svg.setAttribute('viewBox',`0 0 ${W} ${H}`)}
+    else{W=1280;H=210;x0=10;x1=W-10;y=46;dy=82;svg.setAttribute('viewBox',`0 0 ${W} ${H}`)}
+    xs=F.map(f=>x0+(x1-x0)*f);
+    const bh=narrow?30:56;
+    html=`<rect class="band" id="band" x="${x0-bh/2}" y="${y-bh/2}" width="0" height="${bh}" rx="${bh/2}"/>`;
+    html+=`<path class="tb" d="M${x0},${y} H${x1}"/>`;
+    html+=`<path class="tp a" id="pa" d="M${x0},${y} H${xs[2]}"/><path class="tp b" id="pb" d="M${xs[2]},${y} H${x1}"/>`;
+    P.forEach((p,i)=>{const a=i===3?'end':'start',lx=xs[i]+(i===3?9:-9);
+      html+=`<g class="pt"><circle class="tn${i===3?' end':''}" cx="${xs[i]}" cy="${y}" r="${narrow?7:9}"/><g class="lab"><text class="td" x="${lx}" y="${y+dy}" text-anchor="${a}"${narrow?' style="font-size:19px"':''}>${p.d}</text>${narrow?'':`<text class="tt" x="${lx}" y="${y+dy+34}" text-anchor="${a}">${p.t}</text>`}</g></g>`});
+    const r=narrow?1:1.25;
+    html+=`<g class="mk" id="mk"><circle class="halo" r="${22*r}"/><circle class="dot" r="${11*r}"/><circle class="core" r="${3.5*r}"/></g>`;
+    g.innerHTML=html;
+    ct.innerHTML=P.map(p=>`<span>${p.t}</span>`).join('');
+  };
+  build();
+  let pts,mk,pa,pb,band,La,Lb,cts,last=-1,lastStage=-1;
+  const grab=()=>{pts=[...g.querySelectorAll('.pt')];mk=g.querySelector('#mk');pa=g.querySelector('#pa');pb=g.querySelector('#pb');band=g.querySelector('#band');
+    La=pa.getTotalLength();Lb=pb.getTotalLength();pa.style.strokeDasharray=La;pb.style.strokeDasharray=Lb;cts=[...ct.children];last=-1;lastStage=-1};
+  grab();
+  // day (continuous) -> x on the line
+  const xOf=d=>{for(let i=0;i<3;i++){const a=P[i].n,b=P[i+1].n;if(d<=b)return xs[i]+(xs[i+1]-xs[i])*cl((d-a)/(b-a))}return xs[3]};
+  // scroll progress -> day: a beat at Day 1, a steady day-by-day walk to Day 14, a quickening run to Day 90, a beat at the end
+  const dayOf=p=>{
+    if(p<.07)return 1;
+    if(p<.66)return 1+13*((p-.07)/.59);
+    if(p<.9){const k=(p-.66)/.24;return 14+76*(k*k*(3-2*k))}
+    return 90;
+  };
+  const paint=d=>{
+    const x=xOf(d);
+    mk.setAttribute('transform',`translate(${x.toFixed(2)},${y})`);
+    pa.style.strokeDashoffset=La*(1-cl((x-xs[0])/(xs[2]-xs[0])));
+    pb.style.strokeDashoffset=Lb*(1-cl((x-xs[2])/(xs[3]-xs[2])));
+    band.setAttribute('width',Math.max(0,Math.min(x,xs[2])-xs[0]+ +band.getAttribute('height')).toFixed(2));
+    const n=Math.floor(d+1e-6);
+    if(n!==last){dn.textContent=n;last=n}
+    let st=0;P.forEach((p,i)=>{const on=d>=p.n-1e-6;pts[i].classList.toggle('on',on);if(on)st=i});
+    if(st!==lastStage){cts.forEach((c,i)=>c.classList.toggle('on',i===st));lastStage=st}
+    sec.classList.toggle('wk',d>=14-1e-6);
+  };
+  if(RM){paint(90);return}
+  let tick=false;
+  const upd=()=>{tick=false;const r=runEl.getBoundingClientRect(),span=runEl.offsetHeight-innerHeight;
+    // the move starts once the pinned panel has settled at the top
+    paint(dayOf(cl(-r.top/span)))};
+  addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});
+  let wN=narrow;addEventListener('resize',()=>{if((innerWidth<640)!==wN){wN=innerWidth<640;build();grab()}upd()});
+  upd();
+})();
+
+/* reveals and counters */
+(()=>{
+  if(RM)return;
+  const els=[...document.querySelectorAll('.rv')];
+  els.forEach(e=>{if(e.getBoundingClientRect().top>innerHeight*.9)e.classList.add('pre')});
+  const io=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io.unobserve(e.target);setTimeout(()=>e.target.classList.remove('pre'),i*450)})},{threshold:.25});
+  els.forEach(e=>io.observe(e));
+  const ns=[...document.querySelectorAll('[data-n]')];
+  const fmt=(el,v)=>el.dataset.d?v.toFixed(1):Math.round(v).toLocaleString('en-US');
+  const io2=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io2.unobserve(e.target);const el=e.target,N=+el.dataset.n;
+    setTimeout(()=>{const t0=performance.now(),D=2000;const f=n=>{const p=Math.min(1,(n-t0)/D);el.textContent=fmt(el,N*ease(p));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)},i*550)})},{threshold:.4});
+  ns.forEach(n=>io2.observe(n));
+})();
+{const h=document.querySelector('header'),hero=document.getElementById('hero');const f=()=>h.classList.toggle('solid',scrollY>hero.offsetHeight-100);addEventListener('scroll',f,{passive:true});f()}
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();e.target.innerHTML='<p class="thanks">Thank you. Our patient coordinator will call you within one business day.</p>'});
+</script>
+
+</body></html>

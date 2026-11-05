@@ -1,0 +1,570 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!--
+ALIGNMENT NOTES
+Grid: 12 columns, max width 1344px, 32px gutter, page gutter max(24px, safe-area) (16px floor on phones).
+Copy, lists and the form start on column 1 or column 7. The hero section drawing spans columns 5 to 12.
+Intentional offsets:
+- The hero sketch is a true perspective, so it follows its own vanishing points, not the grid. Its construction lines run left out of the drawing and stop just short of the headline column, the way a hand sketch spills onto the page.
+- The ground line and the palm run past column 12 to the page edge: the site continues beyond the house.
+- The underline under each "Start a project" overshoots the words on the right, like a pen stroke that keeps going.
+- The hero's sun-path arc and its disc follow the drawing's sky, not the grid: the arc is centered over the house so the sun rises over the palm and sets beside the word "sun.". The cast shadows are projected from the house's own 3D volumes, so they follow the light, not the grid.
+- Sun band (pinned): the wall section's back wall sits on column 1 and the glass on column 5; the overhang depth is sized to the frame height and the wall keeps the true 1 : 1.38 depth-to-height ratio, so its tip lands between columns. The live readout starts on column 10, the same line as the fourth stat below. The sun disc, rays and protractor arc sit on the true noon angle, not the grid.
+
+SELLS
+Buyer: Palm Beach County homeowner commissioning a modern house; also builders and developers looking for an architect.
+Want: a house that is beautiful and works in this climate.
+Outcome: a house shaped by the sun: shaded glass in summer, warm floors in winter, lower cooling bills.
+Proof: houses built, awards, cooling saved, one principal on every house.
+One CTA: "Start a project".
+-->
+<title>Studio Sabal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400..700&family=Azeret+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a drafting sheet. The section draws itself in blueprint blue, then resolves into the finished house at dusk */
+:root{
+  --paper:#F2F1EC;
+  --sheet:#FAF9F6;
+  --graphite:#1F2328;
+  --ink-2:#5D636B;
+  --rule:#D6D4CC;
+  --blue:#2F5D9E;
+  --warm:#F2B766;
+  --sans:"Familjen Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Azeret Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--graphite);font-family:var(--sans);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:1344px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
+.eyebrow{font-family:var(--mono);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+.btn{position:relative;display:inline-flex;align-items:center;gap:14px;background:none;color:var(--graphite);font-family:var(--sans);font-weight:500;font-size:20px;padding:10px 2px 16px;text-decoration:none;border:0;cursor:pointer}
+.btn::after{content:"";position:absolute;left:0;right:-22px;bottom:0;height:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'%3E%3Cpath d='M1 6.5 Q50 3 104 5.6 T199 3.4' fill='none' stroke='%231F2328' stroke-width='1.6' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M30 8 Q90 6 150 7.4' fill='none' stroke='%231F2328' stroke-opacity='.45' stroke-width='1' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") no-repeat;background-size:100% 100%;transition:transform .5s cubic-bezier(.2,.7,.2,1);transform-origin:left}
+.btn:hover::after{transform:scaleX(1.06)}
+.btn:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.btn svg{width:18px;height:18px;transition:transform .3s}
+.btn:hover svg{transform:translateX(4px)}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:rgba(242,241,236,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid transparent;transition:border-color .5s}
+header.solid{border-bottom-color:var(--rule)}
+header .wrap{display:flex;align-items:center;height:88px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--graphite);font-weight:500;font-size:21px;letter-spacing:-.01em}
+.logo svg{width:28px;height:28px}
+nav{margin-left:auto;display:flex;align-items:center;gap:40px;font-size:17px;font-weight:400}
+nav a.t{text-decoration:none;color:var(--ink-2)}
+nav a.t:hover{color:var(--graphite)}
+nav .btn{padding:8px 2px 13px;font-size:17px}
+nav .btn::after{right:0}
+
+/* hero */
+.hero{padding-block:40px 64px;overflow:hidden;min-height:calc(100svh - 88px);display:grid;align-content:center}
+.hero .grid{align-items:center}
+.hl{grid-column:1 / span 4}
+h1{margin:0;font-weight:300;font-size:clamp(54px,5.8vw,96px);line-height:1;letter-spacing:-.035em}
+h1 span{display:block}
+h1 em{font-style:normal;color:var(--blue)}
+.lede{margin:28px 0 40px;font-size:21px;line-height:1.5;color:var(--ink-2);max-width:24ch}
+.art{grid-column:5 / span 8;position:relative}
+.art svg{display:block;width:calc(100% + max(24px,(100vw - 1296px)/2));max-width:none;height:auto;overflow:visible}
+.hl{position:relative;z-index:2}
+.d{fill:none;stroke:#1E2227;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:.88}
+.c{fill:none;stroke:#1E2227;stroke-width:.8;stroke-opacity:.2;stroke-linecap:round}
+.pp{fill:var(--paper)}
+.gl{stroke:var(--paper);stroke-width:5;stroke-linecap:round;opacity:0;transition:opacity 1.8s ease}
+.gl.on{opacity:.75}
+.w{filter:url(#wc);mix-blend-mode:multiply;opacity:0;transition:opacity 1.8s ease}
+.w.on{opacity:1}
+.gz{fill:url(#gzg);mix-blend-mode:multiply}
+.sh{fill:#3E5583;fill-opacity:.42;mix-blend-mode:multiply}
+.shh{fill:url(#hh);mix-blend-mode:multiply}
+
+/* sun band: pinned while the scroll carries the noon sun from June to December */
+.sun{background:var(--sheet);border-block:1px solid var(--rule);padding-block:0 128px}
+.pin{position:relative;height:calc(250svh - 88px)}
+.stick{position:sticky;top:88px;height:calc(100svh - 88px);padding-top:44px;overflow:hidden}
+.sun .eyebrow{grid-column:1 / -1}
+.sun h2,.work h2{grid-column:1 / span 7;margin:16px 0 0;font-weight:300;font-size:clamp(44px,4.8vw,76px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
+.ro{grid-column:10 / span 3;align-self:end;display:grid}
+.ro-m{font-family:var(--mono);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.ro b{font-weight:300;font-size:clamp(60px,5.8vw,96px);line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin:10px 0 12px}
+.ro-s{color:var(--ink-2);font-size:17px;transition:color .6s}
+.ro-s.win{color:#B8701F}
+.diag{grid-column:1 / -1;margin-top:40px}
+.diag svg{display:block;width:100%;height:auto;overflow:visible}
+.s-ln{fill:none;stroke:var(--graphite);stroke-width:1.6}
+.s-thin{fill:none;stroke:var(--graphite);stroke-width:1;stroke-opacity:.5}
+.s-slab{fill:var(--graphite)}
+.s-glass{stroke:var(--blue);stroke-width:3}
+.s-lab{font-family:var(--sans);font-size:24px;fill:var(--graphite)}
+.s-sub{font-family:var(--mono);font-size:15px;fill:var(--ink-2)}
+.stats{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px;margin-top:64px}
+.stat{border-top:1px solid var(--rule);padding-top:28px}
+.stat b{display:block;font-weight:300;font-size:clamp(60px,5.8vw,96px);line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.stat > span{display:block;margin-top:14px;color:var(--ink-2);max-width:20ch}
+
+/* work */
+.work{padding-block:128px}
+.work h2{grid-column:1 / span 5;margin:0}
+.list{grid-column:7 / span 6;margin:0;padding:0;list-style:none;border-top:1px solid var(--rule)}
+.list li{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:baseline;padding-block:26px;border-bottom:1px solid var(--rule)}
+.list b{font-weight:400;font-size:30px;letter-spacing:-.02em;line-height:1.2}
+.list span{font-family:var(--mono);color:var(--ink-2);font-size:15px;text-align:right}
+
+/* book */
+.book{background:var(--graphite);color:var(--sheet);padding-block:128px 136px}
+.book .lt{grid-column:1 / span 5}
+.book h2{margin:0;font-weight:300;font-size:clamp(52px,6vw,96px);line-height:1;letter-spacing:-.035em}
+.book h2 em{font-style:normal;color:#8FB0DE}
+.book .side{margin-top:32px;color:#C4C8CE;font-size:20px}
+.book .phone{display:block;margin-top:28px;font-weight:300;font-size:36px;letter-spacing:-.02em;color:var(--sheet);text-decoration:none;user-select:all}
+.book .addr{margin-top:40px;font-family:var(--mono);font-size:15px;color:#8C929A}
+form{grid-column:7 / span 6;display:grid;gap:22px;align-self:start}
+label{display:grid;gap:8px;font-size:16px;color:#AEB3BA}
+input,select{font:inherit;font-size:19px;color:var(--sheet);background:transparent;border:0;border-bottom:1px solid #454B53;padding:12px 0;outline:none;border-radius:0;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--sheet) 50%),linear-gradient(135deg,var(--sheet) 50%,transparent 50%);background-position:calc(100% - 14px) 52%,calc(100% - 8px) 52%;background-size:6px 6px;background-repeat:no-repeat}
+select option{color:var(--graphite)}
+input:focus,select:focus{border-color:#8FB0DE}
+form .btn{color:var(--sheet);justify-self:start;margin-top:12px}
+form .btn::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'%3E%3Cpath d='M1 6.5 Q50 3 104 5.6 T199 3.4' fill='none' stroke='%23FAF9F6' stroke-width='1.6' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M30 8 Q90 6 150 7.4' fill='none' stroke='%23FAF9F6' stroke-opacity='.45' stroke-width='1' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E")}
+.thanks{font-weight:300;font-size:32px;line-height:1.25;letter-spacing:-.02em}
+footer{padding-block:36px;background:var(--graphite);color:#8C929A;border-top:1px solid #33383F;font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+.rv{transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .rv.pre{opacity:.001;transform:translateY(28px)}
+.js .hero .in{opacity:0;transform:translateY(24px);transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .hero .in.on{opacity:1;transform:none}
+
+@media (max-width:900px){
+  nav a.t{display:none}
+  .hero{padding-block:32px 72px;min-height:0}
+  .hl,.art{grid-column:1 / -1}
+  .art{margin-top:40px}
+  .art svg{width:calc(100% + max(24px,env(safe-area-inset-right,0px)))}
+  .sun h2,.work h2,.list,.book .lt,form{grid-column:1 / -1}
+  .list{margin-top:40px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:48px;margin-top:72px}
+  form{margin-top:48px}
+  .work,.book{padding-block:88px}
+  .sun{padding-block:0 88px}
+  .ro{grid-column:1 / -1;margin-top:20px}
+  .ro b{font-size:56px;margin:6px 0 6px}
+  .diag{margin-top:20px}
+}
+@media (max-width:520px){
+  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .art svg{width:calc(100% + max(16px,env(safe-area-inset-right,0px)))}
+  h1{font-size:clamp(46px,13vw,58px)}
+  .lede{font-size:19px}
+  nav .btn{padding:8px 2px 13px;font-size:16px}
+  .stats{grid-template-columns:1fr}
+  .list li{grid-template-columns:1fr;gap:6px}
+  .list span{text-align:left}
+  .list b{font-size:26px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rv,.js .hero .in,.f,.d{transition:none}
+  .js .rv.pre,.js .hero .in{opacity:1;transform:none}
+  .pin{height:auto}
+  .stick{position:static;height:auto;padding-block:128px 0}
+}
+</style>
+
+<script>document.documentElement.classList.add('js')</script>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Studio Sabal home">
+      <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M14 26V11"/><path d="M14 11L4 6M14 11L7 3M14 11L14 2M14 11L21 3M14 11L24 6"/><path d="M2 26H26"/></svg>
+      Studio Sabal
+    </a>
+    <nav>
+      <a class="t" href="#sun">Approach</a>
+      <a class="t" href="#work">Houses</a>
+      <a class="btn" href="#book">Start a project</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero">
+    <div class="wrap grid">
+      <div class="hl">
+        <h1><span class="in">Houses shaped</span><span class="in">by the <em>sun.</em></span></h1>
+        <p class="lede in">Modern homes for South Florida, drawn for the light and the heat.</p>
+        <a class="btn in" href="#book">Start a project <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></a>
+      </div>
+      <div class="art" id="art">
+        <svg id="hsvg" viewBox="0 0 1200 760" role="img" aria-label="An ink and watercolor sketch of a modern house whose upper floor cantilevers out over the pool, with sabal palms">
+          <defs>
+            <filter id="wc" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+              <feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="4" seed="4" result="n"/>
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="18" xChannelSelector="R" yChannelSelector="G" result="d"/>
+              <feGaussianBlur in="d" stdDeviation="1.3" result="b"/>
+              <feMorphology in="b" operator="erode" radius="3" result="e"/>
+              <feGaussianBlur in="e" stdDeviation="4" result="eb"/>
+              <feComposite in="b" in2="eb" operator="arithmetic" k1="0" k2="1" k3="-.42" k4="0" result="edge"/>
+              <feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="9" result="g"/>
+              <feColorMatrix in="g" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.7 1.25" result="ga"/>
+              <feComposite in="edge" in2="ga" operator="in"/>
+            </filter>
+            <pattern id="hh" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)"><path d="M0,0 V6" stroke="#28313B" stroke-width=".7" stroke-opacity=".55"/></pattern>
+            <radialGradient id="hglowg"><stop offset="0" stop-color="#F6C27A" stop-opacity=".62"/><stop offset=".35" stop-color="#F6C98A" stop-opacity=".26"/><stop offset="1" stop-color="#F6D3A0" stop-opacity="0"/></radialGradient>
+            <linearGradient id="gzg" gradientUnits="userSpaceOnUse" x1="40" y1="0" x2="1150" y2="0"><stop offset="0" stop-color="#EA9440"/><stop offset=".55" stop-color="#F0AE5E" stop-opacity=".7"/><stop offset="1" stop-color="#F4C37E" stop-opacity=".35"/></linearGradient>
+            <radialGradient id="gzr"><stop offset="0" stop-color="#EDA24C" stop-opacity=".75"/><stop offset=".6" stop-color="#F0B060" stop-opacity=".35"/><stop offset="1" stop-color="#F4C37E" stop-opacity="0"/></radialGradient>
+            <radialGradient id="gfade"><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+            <mask id="gm" maskUnits="userSpaceOnUse" x="-400" y="300" width="2000" height="700"><ellipse id="gme" fill="url(#gfade)"/></mask>
+          </defs>
+          <g id="sk"></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="sun" id="sun">
+    <div class="pin" id="pin">
+      <div class="stick" id="stick">
+        <div class="wrap grid">
+          <p class="eyebrow rv">The overhang</p>
+          <h2 class="rv">Shade in summer. Sun in winter.</h2>
+          <div class="ro rv" aria-hidden="true"><span class="ro-m" id="rom">June noon</span><b id="rod">87°</b><span class="ro-s" id="ros">glass stays in shade</span></div>
+          <div class="diag" id="diag"><svg id="ssvg" role="img" aria-label="At noon in June the sun stands at 87 degrees and the overhang keeps it off the glass. At noon in December it stands at 40 degrees and reaches across the floor."><g id="sg"></g></svg></div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap grid">
+      <div class="stats">
+        <div class="stat rv"><b data-n="64">64</b><span>houses built</span></div>
+        <div class="stat rv"><b data-n="31">31</b><span>design awards</span></div>
+        <div class="stat rv"><b data-n="38" data-s="%">38%</b><span>less cooling than a typical new home</span></div>
+        <div class="stat rv"><b>1</b><span>principal on every house</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work" id="work">
+    <div class="wrap grid">
+      <h2 class="rv">Recent houses.</h2>
+      <ul class="list">
+        <li class="rv"><b>Coquina House</b><span>Jupiter Island · 2025</span></li>
+        <li class="rv"><b>Two Courts</b><span>Palm Beach · 2024</span></li>
+        <li class="rv"><b>Mangrove Pavilion</b><span>Hobe Sound · 2023</span></li>
+        <li class="rv"><b>Breezeway House</b><span>Delray Beach · 2022</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div class="wrap grid">
+      <div class="lt">
+        <h2 class="rv">Start with <em>the site.</em></h2>
+        <p class="side rv">Send us your lot. We'll walk it at the hour the light matters most.
+          <a class="phone" href="tel:5615550184">(561) 555-0184</a></p>
+        <p class="addr rv">West Palm Beach, Florida<br>studio@studiosabal.com</p>
+      </div>
+      <form id="f" class="rv">
+        <label>Name<input name="name" autocomplete="name" required></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
+        <label>Email<input name="email" type="email" autocomplete="email"></label>
+        <label>Project<select name="for"><option>A new house</option><option>A renovation</option><option>A development</option></select></label>
+        <button class="btn" type="submit">Start a project <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>Studio Sabal Architecture</span><span>West Palm Beach, Florida</span></div></footer>
+
+<script>
+document.documentElement.classList.add('js');
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* hero: an ink and watercolor sketch of a house whose upper floor cantilevers over the pool.
+   The construction lines spill out across the page first, then the ink, then the washes bleed in */
+(()=>{
+  const ins=[...document.querySelectorAll('.hero .in')],svg=document.getElementById('hsvg'),sk=document.getElementById('sk');
+  let sd=23;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647,rr=(a,b)=>a+(b-a)*rnd();
+  /* camera in feet, eye level, no tilt, so verticals stay vertical like a hand perspective */
+  const C=[104,5,80],T=[30,5,4],F=1120,CX=520,CY=560;
+  const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2],
+    cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],nrm=a=>{const l=Math.hypot(...a);return a.map(v=>v/l)};
+  const f=nrm(sub(T,C)),r=nrm(cross(f,[0,1,0])),u=cross(r,f);
+  const P=p=>{const d=sub(p,C),z=dot(d,f);return [CX+F*dot(d,r)/z,CY-F*dot(d,u)/z]};
+  const VX=[CX+F*r[0]/f[0],CY],VZ=[CX+F*r[2]/f[2],CY];
+  const n1=v=>v.toFixed(1),pt=p=>n1(p[0])+','+n1(p[1]);
+  const groups=[];let cur=null;
+  const grp=(name,cls='')=>{cur={name,lines:[],w:[],html:''};groups.push(cur);return cur};
+  /* one hand-drawn stroke: overshoots both ends, bows a little, weight varies */
+  const line=(a,b,o={})=>{const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1,ux=dx/l,uy=dy/l,os=o.os??rr(3,11),bw=(o.bow??rr(-1,1))*(l/260+.4);
+    const A=[a[0]-ux*os*rr(.2,1),a[1]-uy*os*rr(.2,1)],B=[b[0]+ux*os*rr(.2,1),b[1]+uy*os*rr(.2,1)],M=[(A[0]+B[0])/2-uy*bw,(A[1]+B[1])/2+ux*bw];
+    cur.html+=`<path class="${o.c||'d'}" style="stroke-width:${n1(o.w??rr(1,1.55))}" d="M${pt(A)} Q${pt(M)} ${pt(B)}"/>`};
+  const L3=(a,b,o)=>line(P(a),P(b),o);
+  const poly=pts=>'M'+pts.map(pt).join(' L')+'Z';
+  const wash=(d,col,op)=>{cur.html+=`<path class="w" d="${d}" style="fill:${col};fill-opacity:${op}"/>`};
+  const paper=pts=>{cur.html+=`<path class="pp" d="${poly(pts)}"/>`};
+  const blob=(cx,cy,rx,ry,k=12)=>{const ps=[];for(let i=0;i<k;i++){const a=i/k*Math.PI*2,m=rr(.72,1.12);ps.push([cx+Math.cos(a)*rx*m,cy+Math.sin(a)*ry*m])}
+    let d=`M${pt([(ps[0][0]+ps[k-1][0])/2,(ps[0][1]+ps[k-1][1])/2])}`;for(let i=0;i<k;i++){const a=ps[i],b=ps[(i+1)%k];d+=` Q${pt(a)} ${pt([(a[0]+b[0])/2,(a[1]+b[1])/2])}`}return d+'Z'};
+  const face=(pts3,col,op,edges=true,pp=true)=>{const p2=pts3.map(P);if(pp)paper(p2);if(col)wash(poly(p2.map(q=>[q[0]+rr(-3,3),q[1]+rr(-2,3)])),col,op);
+    if(edges)for(let i=0;i<p2.length;i++){const a=p2[i],b=p2[(i+1)%p2.length];line(a,b);if(rnd()<.55)line([a[0]+rr(-1.6,1.6),a[1]+rr(-1.6,1.6)],[b[0]+rr(-1.6,1.6),b[1]+rr(-1.6,1.6)],{w:.6,os:rr(6,16)})}};
+
+  /* the sun: a sun-path arc over the house; its glow sits behind everything */
+  const SA={cx:560,cy:430,rx:520,ry:372,t0:56,t1:166};
+  const arcPt=th=>{const a=th*Math.PI/180;return [SA.cx+Math.cos(a)*SA.rx,SA.cy-Math.sin(a)*SA.ry]};
+  grp('glow');
+  cur.html+=`<circle id="hglow" r="190" fill="url(#hglowg)" style="opacity:0"/>`;
+
+  /* construction: the horizon and the vanishing lines run out past the drawing, under the words */
+  grp('cons');
+  const H=CY;cur.html+=`<path class="c" style="stroke-opacity:.13" d="M-760,${H} L1500,${H}"/>`;
+  for(const q of [[-6,21.8,31],[72,11.5,30],[0,0,26],[80,0,30],[73,21.8,31]]){const p=P(q);
+    const k=Math.min(1.08,(p[0]+170)/(p[0]-VX[0]));cur.html+=`<path class="c" d="M${pt(p)} L${pt([p[0]+(VX[0]-p[0])*k,p[1]+(VX[1]-p[1])*k])}"/>`;
+    if(q[0]>60)cur.html+=`<path class="c" d="M${pt(p)} L${pt([p[0]+(VZ[0]-p[0])*.7,p[1]+(VZ[1]-p[1])*.7])}"/>`}
+
+  /* landscape behind: sky, a sea grape mass, the far palm */
+  grp('back');
+  {const a=P([40,30,-10]);wash(blob(a[0]+120,a[1]-30,250,95,14),'#9DC0D8',.42)}
+  {const a=P([-26,9,-6]);wash(blob(a[0],a[1],120,78,13),'#97AE6E',.5);wash(blob(a[0]+30,a[1]+26,80,46,11),'#6E8A4E',.42);
+   for(let i=0;i<5;i++)line([a[0]+rr(-60,40),a[1]+rr(30,70)],[a[0]+rr(-80,60),a[1]+rr(-40,10)],{w:rr(.7,1),os:2})}
+  const palm=(b,h,lean,s)=>{const b2=P(b),t2=P([b[0]+lean,b[1]+h,b[2]]),sc=(b2[1]-t2[1])/h;
+    line(b2,t2,{bow:rr(4,7),os:1,w:1.2});line([b2[0]+sc*.7,b2[1]],[t2[0]+sc*.5,t2[1]],{bow:rr(4,7),os:1,w:.8});
+    for(let y=b2[1]-sc*2;y>t2[1]+sc*2;y-=sc*rr(1.1,1.8)){const k=(b2[1]-y)/(b2[1]-t2[1]),x=b2[0]+(t2[0]-b2[0])*k;line([x-sc*.1,y],[x+sc*.7,y-sc*.4],{os:0,w:.6,bow:0})}
+    wash(blob(t2[0],t2[1]-sc*1.5,sc*7.5,sc*4.6,11),'#88A25F',.55);
+    for(let i=0;i<15;i++){const a=-Math.PI*rr(.04,.96)+(i%3?0:Math.PI*.12),len=sc*rr(5,8.5),e=[t2[0]+Math.cos(a)*len,t2[1]+Math.sin(a)*len*.62+sc*rr(0,2.2)];
+      line(t2,e,{os:0,w:rr(.7,1.1),bow:rr(-6,6)});const m=[(t2[0]+e[0])/2,(t2[1]+e[1])/2];for(let j=0;j<3;j++)line(m,[e[0]+rr(-sc,sc),e[1]+rr(-sc,sc)],{os:0,w:.55,bow:rr(-3,3)})}};
+  {const a=P([4,24,-26]);wash(blob(a[0],a[1],150,60,13),'#97AE6E',.5);wash(blob(a[0]+50,a[1]+20,90,34,11),'#6E8A4E',.4)}
+
+  grp('sun');
+  {let d='';for(let t=SA.t0-8;t<=SA.t1+6;t+=1.5)d+=(d?' L':'M')+pt(arcPt(t));cur.html+=`<path id="harc" d="${d}" fill="none" stroke="#1E2227" stroke-width=".9" stroke-opacity=".32" stroke-dasharray="1.2 7" stroke-linecap="round" style="opacity:0"/>`;
+   for(let t=SA.t0;t<=SA.t1+.1;t+=(SA.t1-SA.t0)/8){const a=arcPt(t),r=t*Math.PI/180,nx=Math.cos(r)*SA.ry,ny=-Math.sin(r)*SA.rx,l=Math.hypot(nx,ny);
+     cur.html+=`<path class="htk" d="M${pt(a)} L${pt([a[0]+nx/l*7,a[1]+ny/l*7])}" stroke="#1E2227" stroke-width=".9" stroke-opacity=".4" style="opacity:0"/>`}}
+  cur.html+=`<g id="hsun" style="opacity:0"><circle r="19" fill="#F4B868" fill-opacity=".2"/><circle id="hdisc" r="9" fill="#EEAE5A"/></g>`;
+
+  /* the ground under the sun: a warm glaze, then the house's true cast shadow (wash plus pen hatching) */
+  grp('gsh');
+  const gz=(pts,id)=>{cur.html+=`<path class="gz" ${id?`id="${id}"`:''} d="${poly(pts.map(P))}" style="opacity:0"/>`};
+  {const c=P([34,0,40]);cur.html+=`<ellipse class="gz" cx="${n1(c[0]+190)}" cy="${n1(c[1]-4)}" rx="600" ry="78" fill="url(#gzr)" style="fill:url(#gzr);opacity:0"/>`}
+  gz([[44,0,6],[80,0,6],[80,0,30],[44,0,30]]);
+  cur.html+=`<g mask="url(#gm)"><path class="sh" id="gsh" fill-rule="nonzero"/><path class="shh" id="gshh" fill-rule="nonzero"/></g>`;
+
+  /* the house, far faces first so near faces cover them */
+  grp('soffit');
+  face([[-6,11.5,-2],[72,11.5,-2],[72,11.5,30],[-6,11.5,30]],'#C47F43',.8,false);
+  for(const z of [4,10,16,22,28])L3([40,11.5,z],[72,11.5,z],{w:.7,os:2});
+  grp('lower');
+  face([[40,0,26],[40,0,0],[40,11,0],[40,11,26]],'#6F8798',.7);
+  L3([40,0,13],[40,11,13],{w:.9});
+  cur.html+=`<path class="sh" id="s40" d="${poly([[40,0,26],[40,0,0],[40,11,0],[40,11,26]].map(P))}" style="opacity:0"/>`;
+  face([[0,0,26],[40,0,26],[40,11,26],[0,11,26]],'#86A0B2',.62);
+  for(const x of [10,20,30])L3([x,0,26],[x,11,26],{w:.9});
+  wash(poly([[4,.6,26],[17,.6,26],[17,9.6,26],[4,9.6,26]].map(P)),'#D8964F',.55);wash(poly([[40,.6,22],[40,.6,15],[40,9.6,15],[40,9.6,22]].map(P)),'#C9874A',.5);
+  gz([[0,0,26],[40,0,26],[40,11,26],[0,11,26]],'glz');
+  cur.html+=`<path class="sh" id="glsh"/><path class="shh" id="glshh"/>`;
+  grp('ground');
+  L3([-30,0,36],[96,0,36],{w:1,os:14});L3([-24,0,30],[0,0,30],{w:.8});
+  face([[44,0,6],[80,0,6],[80,0,30],[44,0,30]],'#4FA3B8',.72,true,false);
+  L3([46,0,8],[78,0,8],{w:.7});
+  for(let i=0;i<16;i++){const z=-1+i*1.9;L3([41.5,0,z],[44,0,z+3.2],{w:.55,os:1,bow:0})}
+  {const g=[[-30,0,34],[92,0,34],[92,0,46],[-30,0,46]].map(P);wash(poly(g),'#9DB276',.42)}
+  grp('upper');
+  face([[72,11.5,30],[72,11.5,-2],[72,21,-2],[72,21,30]],'#A5ABB1',.42);
+  cur.html+=`<path class="sh" id="sdsh" d="${poly([[72,11.5,30],[72,11.5,-2],[72,21,-2],[72,21,30]].map(P))}" style="opacity:0"/>`;
+  face([[-6,11.5,30],[72,11.5,30],[72,21,30],[-6,21,30]],null,0);
+  gz([[-6,11.5,30],[72,11.5,30],[72,21,30],[-6,21,30]]);
+  face([[4,13.5,30],[64,13.5,30],[64,19,30],[4,19,30]],'#232A31',.86);
+  for(const x of [16,28,40,52])L3([x,13.5,30],[x,19,30],{w:.8});
+  for(const [x0,x1] of [[8,13],[22,25],[44,50],[56,59]]){const a=P([x0,14,30]),b=P([x1,18.6,30]);cur.html+=`<path class="gl" d="M${pt(a)} L${pt(b)}"/>`}
+  {const a=P([72,14.2,22]),b=P([72,18.4,16]);cur.html+=`<path class="gl" d="M${pt(a)} L${pt(b)}"/>`}
+  face([[72,13.5,26],[72,13.5,4],[72,19,4],[72,19,26]],'#2B333A',.8);
+  grp('roof');
+  face([[-7,21,31],[73,21,31],[73,21.8,31],[-7,21.8,31]],'#1E2227',.85);
+  face([[73,21,31],[73,21,-3],[73,21.8,-3],[73,21.8,31]],'#BFC4C8',.4);
+  grp('front');
+  palm([77,0,12],27,-1);
+  {const a=P([79,0,15]);wash(blob(a[0],a[1]-6,70,22,10),'#7E9A55',.5);for(let i=0;i<9;i++)line([a[0]+rr(-60,60),a[1]+rr(-4,6)],[a[0]+rr(-60,60),a[1]-rr(10,30)],{os:0,w:.6,bow:rr(-4,4)})}
+  {const a=P([60,40,-20]);for(let i=0;i<5;i++){const x=a[0]+rr(-80,140),y=a[1]+rr(-60,20),s=rr(4,8);line([x-s,y-s*.5],[x,y],{os:0,w:.8,bow:-1});line([x,y],[x+s*1.1,y-s*.6],{os:0,w:.8,bow:-1})}}
+
+  sk.innerHTML=groups.map(g=>`<g data-g="${g.name}">${g.html}</g>`).join('');
+  if(innerWidth<640){let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const g of ['soffit','lower','upper','roof','front','sun']){const b=sk.querySelector(`[data-g="${g}"]`).getBBox();x0=Math.min(x0,b.x);y0=Math.min(y0,b.y);x1=Math.max(x1,b.x+b.width);y1=Math.max(y1,b.y+b.height)}
+    svg.setAttribute('viewBox',`${x0-24} ${y0-16} ${x1-x0+48} ${y1-y0+60}`)}
+
+  /* the sun's light, in true geometry: a disc on the arc sets the sun's altitude and bearing,
+     and every shadow is the house's own volume projected along that ray */
+  const $=id=>document.getElementById(id);
+  const hull=ps=>{ps=ps.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);const cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]),lo=[],up=[];
+    for(const p of ps){while(lo.length>1&&cr(lo[lo.length-2],lo[lo.length-1],p)<=0)lo.pop();lo.push(p)}
+    for(const p of ps.reverse()){while(up.length>1&&cr(up[up.length-2],up[up.length-1],p)<=0)up.pop();up.push(p)}return lo.slice(0,-1).concat(up.slice(0,-1))};
+  const clipR=(sub,[x0,y0,x1,y1])=>{let out=sub;for(const [k,v,sg] of [[0,x0,1],[0,x1,-1],[1,y0,1],[1,y1,-1]]){const inp=out;out=[];
+    for(let i=0;i<inp.length;i++){const a=inp[i],b=inp[(i+1)%inp.length],ia=(a[k]-v)*sg>=0,ib=(b[k]-v)*sg>=0;if(ia)out.push(a);if(ia!==ib){const t=(v-a[k])/(b[k]-a[k]);out.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t])}}}return out};
+  const box=(x0,x1,y0,y1,z0,z1)=>{const o=[];for(const x of [x0,x1])for(const y of [y0,y1])for(const z of [z0,z1])o.push([x,y,z]);return o};
+  const UP=box(-7,73,11.5,21.8,-3,31),LO=box(0,40,0,11,0,26),CANT=box(-7,73,11.5,21.8,26,31);
+  const sm=(a,b,x)=>{const t=Math.min(1,Math.max(0,(x-a)/(b-a)));return t*t*(3-2*t)};
+  {const c=P([36,0,22]),e=$('gme');e.setAttribute('cx',c[0]);e.setAttribute('cy',c[1]);e.setAttribute('rx',640);e.setAttribute('ry',150)}
+  const glow=$('hglow'),hsun=$('hsun'),disc=$('hdisc'),gzs=[...sk.querySelectorAll('.gz')],sdsh=$('sdsh');
+  const ids=['gsh','gshh','glsh','glshh','s40'].map($);
+  let shA=0;
+  const setSun=u=>{
+    const th=SA.t0+(SA.t1-SA.t0)*u,[dx,dy]=arcPt(th),R=Math.PI/180;
+    const alt=70*Math.sin(th*R)*R,az=(90-th)*.82*R;
+    const s=[Math.sin(az)*Math.cos(alt),Math.sin(alt),Math.cos(az)*Math.cos(alt)];
+    hsun.setAttribute('transform',`translate(${n1(dx)},${n1(dy)})`);
+    const gold=sm(.35,1,u);
+    glow.setAttribute('cx',n1(dx));glow.setAttribute('cy',n1(dy));glow.style.opacity=(.25+.75*gold)*shA;
+    disc.setAttribute('fill',`rgb(${Math.round(242-8*gold)},${Math.round(186-40*gold)},${Math.round(104-44*gold)})`);
+    gzs.forEach(g=>g.style.opacity=(.12+.88*gold)*shA*.42);
+    sdsh.style.opacity=sm(0,.6,-s[0])*shA*.9;
+    /* ground: both volumes projected to y=0, unioned by drawing them with the same winding */
+    const g=v=>hull(v.map(p=>[p[0]-s[0]*p[1]/s[1],p[2]-s[2]*p[1]/s[1]])).map(q=>P([q[0],0,q[1]]));
+    const gd=poly(g(UP))+poly(g(LO));ids[0].setAttribute('d',gd);ids[1].setAttribute('d',gd);
+    /* glass: the cantilever's 4 ft lip projected onto the glass plane z=26, clipped to the glass */
+    let gp=s[2]<.02?[[0,0],[40,0],[40,11],[0,11]]:clipR(hull(CANT.map(p=>{const k=(p[2]-26)/s[2];return [p[0]-s[0]*k,p[1]-s[1]*k]})),[0,0,40,11]);
+    const gl=gp.length>2?poly(gp.map(q=>P([q[0],q[1],26]))):'';ids[2].setAttribute('d',gl);ids[3].setAttribute('d',gl);
+    ids.forEach((e,i)=>e.style.opacity=i===4?shA*.7:shA);
+  };
+
+  const lines=g=>[...sk.querySelectorAll(`[data-g="${g}"] .d,[data-g="${g}"] .c`)],washes=[...sk.querySelectorAll('.w')];
+  const arcBits=[$('harc'),...sk.querySelectorAll('.htk')];
+  if(RM){ins.forEach(e=>e.classList.add('on'));washes.forEach(w=>w.classList.add('on'));arcBits.forEach(e=>e.style.opacity=1);hsun.style.opacity=1;shA=1;setSun(1);return}
+  shA=0;setSun(0);
+
+  /* one clock for the whole opening (ms): construction lines spill out, the ink follows group by group,
+     the washes bleed in as the sun crosses and the shadow sweeps, the words arrive last */
+  const tl=[];
+  const sched=(ps,t0,dur,spread)=>ps.forEach((p,i)=>{const L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L;tl.push({p,L,t0:t0+(ps.length>1?i/(ps.length-1):0)*spread,dur})});
+  sched(lines('cons'),120,620,320);
+  sched(lines('soffit'),420,480,260);sched(lines('lower'),560,480,320);sched(lines('upper'),700,480,380);
+  sched(lines('roof'),900,440,160);sched(lines('ground'),820,520,420);
+  sched(lines('back'),1050,520,520);sched(lines('front'),1100,520,560);
+  const T0=performance.now(),SUN0=1050,SUN1=3750;
+  arcBits.forEach((e,i)=>{e.style.transition='opacity .9s ease';setTimeout(()=>e.style.opacity=1,760+i*40)});
+  setTimeout(()=>{hsun.style.transition='opacity .6s ease';hsun.style.opacity=1},900);
+  washes.forEach((w,i)=>{w.style.transitionDuration='1.1s';setTimeout(()=>w.classList.add('on'),1250+i/washes.length*900)});
+  [1500,1760,2250,2550].forEach((t,i)=>ins[i]&&setTimeout(()=>ins[i].classList.add('on'),t));
+  const tick=now=>{const t=now-T0;let live=false;
+    for(const o of tl){if(o.done)continue;const k=Math.min(1,Math.max(0,(t-o.t0)/o.dur));o.p.style.strokeDashoffset=o.L*(1-ease(k));
+      if(k>=1){o.p.style.strokeDasharray='';o.p.style.strokeDashoffset='';o.done=1}else live=true}
+    shA=sm(1250,2200,t);
+    const u=Math.min(1,Math.max(0,(t-SUN0)/(SUN1-SUN0)));setSun(ease(u));
+    if(live||t<SUN1+50)requestAnimationFrame(tick)};
+  requestAnimationFrame(tick);
+})();
+
+/* sun band: a wall section through the overhang. Scroll carries the noon sun from the June solstice to the December one.
+   Altitude = 90 - 26.7 (Palm Beach latitude) + the sun's declination for that day, so June reads 87 deg and December 40 deg.
+   Every ray, the shadow line on the floor and the light on the glass come from that one angle. */
+(()=>{
+  const svg=document.getElementById('ssvg'),pin=document.getElementById('pin'),stick=document.getElementById('stick'),diag=document.getElementById('diag');
+  let G,W,inL,gx,edge,top,floor,R,sp,k0,k1,y0,h;const rad=Math.PI/180;
+  const f1=v=>v.toFixed(1);
+  let rayEls=[];
+  const altOf=day=>90-26.7-23.44*Math.cos(2*Math.PI*(day+10)/365);
+  const D0=172,D1=355; /* June 21 to December 21 */
+  const monthAt=day=>new Date(2026,0,Math.round(day)).toLocaleString('en-US',{month:'long'});
+  /* geometry in CSS px of the frame: the back wall sits on column 1, the glass on column 5;
+     the overhang depth is sized to the height the pinned frame has, and the wall height keeps the house's true 1 : 1.38 */
+  const build=()=>{
+    const narrow=innerWidth<640,inner=stick.firstElementChild;inner.style.marginTop='';svg.setAttribute('viewBox','0 0 10 1');svg.style.height='1px';
+    const cw=diag.clientWidth,sr=stick.getBoundingClientRect(),dr=diag.getBoundingClientRect();
+    const avail=RM?(narrow?420:560):Math.max(300,sr.bottom-dr.top-(narrow?16:32));
+    const colW=(cw-11*32)/12;
+    inL=narrow?1:0;gx=narrow?Math.round(cw*.34):4*(colW+32);
+    const d=Math.max(90,Math.min(narrow?cw*.33:2*(colW+32),(avail-86)/2.6));
+    edge=gx+d;h=d*1.378;R=d*(narrow?1.1:1.2);y0=Math.round(30+R+14);top=y0-12;floor=Math.round(y0+h);
+    sp=d*(narrow?.19:.2);k0=-3;k1=narrow?6:7;W=cw;const H=floor+46;
+    svg.setAttribute('viewBox',`0 0 ${f1(W)} ${H}`);svg.style.height=H+'px';svg.style.overflow=narrow?'hidden':'visible';
+    /* month ticks on the protractor arc, one per 21st */
+    let ticks='';for(const d of [172,202,233,264,294,325,355]){const a=altOf(d)*rad;
+      ticks+=`<path class="s-thin" style="stroke-opacity:.45" d="M${f1(edge+Math.cos(a)*(R+4))},${f1(y0-Math.sin(a)*(R+4))} L${f1(edge+Math.cos(a)*(R+11))},${f1(y0-Math.sin(a)*(R+11))}"/>`}
+    let arc='';for(let t=34;t<=90.01;t+=1)arc+=(arc?' L':'M')+f1(edge+Math.cos(t*rad)*R)+','+f1(y0-Math.sin(t*rad)*R);
+    let rays='';for(let k=k0;k<=k1;k++)rays+=`<path class="ray" data-k="${k}"/>`;
+    document.getElementById('sg').innerHTML=`
+      <defs>
+        <pattern id="shp" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0,0 V7" stroke="#2F5D9E" stroke-width="1" stroke-opacity=".38"/></pattern>
+        <pattern id="poche" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0,0 V9" stroke="#1F2328" stroke-width=".9" stroke-opacity=".28"/></pattern>
+        <linearGradient id="beam" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F2B766" stop-opacity="0"/><stop offset=".55" stop-color="#F2B766" stop-opacity=".16"/><stop offset="1" stop-color="#F0A850" stop-opacity=".42"/></linearGradient>
+      </defs>
+      <path id="sbeam" fill="url(#beam)"/>
+      <path id="sshade" fill="url(#shp)"/><path id="sshade2" fill="#2F5D9E" fill-opacity=".06"/>
+      <path d="${arc}" fill="none" stroke="#1F2328" stroke-width="1" stroke-opacity=".2"/>
+      ${ticks}
+      <g id="srays" fill="none" stroke="#D98A2B" stroke-width="1" stroke-opacity=".55">${rays}</g>
+      <rect x="${inL}" y="${floor}" width="${W-inL}" height="16" fill="url(#poche)"/>
+      <path class="s-ln" d="M${inL},${floor} H${W}"/>
+      <path class="s-ln" d="M${inL},${top} V${floor}"/>
+      <rect class="s-slab" x="${inL}" y="${top}" width="${edge-inL}" height="12"/>
+      <path id="sfloor" fill="none" stroke="#EFA54E" stroke-width="5" stroke-linecap="butt"/>
+      <path class="s-glass" d="M${gx},${y0} V${floor}"/>
+      <path id="sglit" fill="none" stroke="#E79A3F" stroke-width="3.4"/>
+      <path id="stip" fill="none" stroke="#D98A2B" stroke-width="2"/>
+      <path id="sang" fill="none" stroke="#1F2328" stroke-width="1" stroke-opacity=".55"/>
+      <g id="smark"><path class="s-ln" d="M0,-11 V11" style="stroke-width:1.4"/><circle r="3.6" fill="#1F2328"/></g>
+      <g id="ssun"><circle r="27" fill="#F2B766" fill-opacity=".2"/><circle r="11.5" fill="#EBA54F"/></g>
+      <text class="s-sub" x="${gx-12}" y="${floor+38}" text-anchor="end">inside</text><text class="s-sub" x="${gx+12}" y="${floor+38}">outside</text>`;
+    rayEls=[...document.querySelectorAll('#srays .ray')];
+    if(!RM){const left=stick.getBoundingClientRect().bottom-diag.getBoundingClientRect().bottom-(narrow?16:32);if(left>0)inner.style.marginTop=Math.round(left/2)+'px'}
+  };
+  const $=id=>document.getElementById(id);
+  const rom=$('rom'),rod=$('rod'),ros=$('ros');
+  let lastKey='';
+  const render=p=>{
+    const day=D0+(D1-D0)*p,altD=altOf(day),a=altD*rad,ca=Math.cos(a),sa=Math.sin(a);
+    const Dx=edge+ca*R,Dy=y0-sa*R,px=sa,py=ca;               /* disc, and the beam's cross direction */
+    const xs=edge-h/Math.tan(a),yG=y0+(edge-gx)*Math.tan(a);   /* shadow line on the floor; where the tip ray meets the glass */
+    const win=xs<gx;
+    $('ssun').setAttribute('transform',`translate(${f1(Dx)},${f1(Dy)})`);
+    $('stip').setAttribute('d',`M${f1(Dx)},${f1(Dy)} L${f1(xs)},${floor}`);
+    $('smark').setAttribute('transform',`translate(${f1(xs)},${floor})`);
+    const r0=42;$('sang').setAttribute('d',`M${f1(xs+r0)},${floor} A${r0},${r0} 0 0 0 ${f1(xs+ca*r0)},${f1(floor-sa*r0)}`);
+    let far=xs;
+    rayEls.forEach(el=>{const k=+el.dataset.k;if(!k){el.setAttribute('d','');return}
+      const Sx=Dx+k*sp*px-ca*30,Sy=Dy+k*sp*py+sa*30;let t=(floor-Sy)/sa;
+      if(k<0&&Sy<top){const tt=(top-Sy)/sa,xt=Sx-ca*tt;if(xt>=inL&&xt<=edge)t=tt}
+      let Ex=Sx-ca*t,Ey=Sy+sa*t;if(Ex>W){const tw=(Sx-W)/ca;if(tw>0){Ex=W;Ey=Sy+sa*tw}}
+      if(k>0&&Ey>=floor-.5)far=Math.max(far,Ex);
+      el.setAttribute('d',`M${f1(Sx)},${f1(Sy)} L${f1(Ex)},${f1(Ey)}`);
+      el.style.strokeOpacity=k<0?.32:.55});
+    const S1x=Dx+k1*sp*px-ca*30,S1y=Dy+k1*sp*py+sa*30,L1x=Math.min(W,S1x-ca*(floor-S1y)/sa);
+    $('sbeam').setAttribute('d',`M${f1(Dx)},${f1(Dy)} L${f1(S1x)},${f1(S1y)} L${f1(L1x)},${floor} L${f1(xs)},${floor}Z`);
+    const bm=$('beam');bm.setAttribute('x1',f1(Dx));bm.setAttribute('y1',f1(Dy));bm.setAttribute('x2',f1(Dx-ca*(floor-Dy)/sa));bm.setAttribute('y2',floor);
+    $('sfloor').setAttribute('d',`M${f1(xs)},${floor-2.5} H${f1(Math.max(far,L1x))}`);
+    const sh=win?`M${gx},${y0} L${edge},${y0} L${gx},${f1(yG)}Z`:`M${gx},${y0} L${edge},${y0} L${f1(xs)},${floor} L${gx},${floor}Z`;
+    $('sshade').setAttribute('d',sh);$('sshade2').setAttribute('d',sh);
+    $('sglit').setAttribute('d',win?`M${gx},${f1(yG)} V${floor}`:'');
+    const key=monthAt(day)+Math.round(altD)+win;
+    if(key!==lastKey){lastKey=key;rom.textContent=monthAt(day)+' noon';rod.textContent=Math.round(altD)+'°';
+      ros.textContent=win?'sun warms the floor':'glass stays in shade';ros.classList.toggle('win',win)}
+  };
+  build();
+  addEventListener('resize',()=>{build();render(cur)});
+  let cur=0,tgt=0,raf=0;
+  if(RM){cur=1;render(1);return}
+  const read=()=>{const r=pin.getBoundingClientRect(),d=pin.offsetHeight-stick.offsetHeight,top0=parseFloat(getComputedStyle(stick).top)||0;
+    const p=Math.min(1,Math.max(0,(top0-r.top)/Math.max(1,d)));tgt=Math.min(1,Math.max(0,(p-.08)/.84))};
+  const loop=()=>{cur+=(tgt-cur)*.16;if(Math.abs(tgt-cur)<.0004)cur=tgt;render(cur);raf=cur!==tgt?requestAnimationFrame(loop):0};
+  const on=()=>{read();if(!raf)raf=requestAnimationFrame(loop)};
+  addEventListener('scroll',on,{passive:true});addEventListener('resize',on);
+  read();cur=tgt;render(cur);
+})();
+
+/* reveals and counters */
+(()=>{
+  if(RM)return;
+  const els=[...document.querySelectorAll('.rv')];
+  els.forEach(e=>{if(e.getBoundingClientRect().top>innerHeight*.9)e.classList.add('pre')});
+  const io=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io.unobserve(e.target);setTimeout(()=>e.target.classList.remove('pre'),i*550)})},{threshold:.25});
+  els.forEach(e=>io.observe(e));
+  const ns=[...document.querySelectorAll('[data-n]')];
+  const fmt=(el,v)=>Math.round(v)+(el.dataset.s||'');
+  const io2=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io2.unobserve(e.target);const el=e.target,N=+el.dataset.n;
+    setTimeout(()=>{const t0=performance.now(),D=2000;const f=n=>{const p=Math.min(1,(n-t0)/D);el.textContent=fmt(el,N*ease(p));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)},300+i*550)})},{threshold:.4});
+  ns.forEach(n=>io2.observe(n));
+})();
+{const h=document.querySelector('header');const f=()=>h.classList.toggle('solid',scrollY>40);addEventListener('scroll',f,{passive:true});f()}
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();e.target.innerHTML='<p class="thanks">Thank you. We will be in touch to plan a visit to your site.</p>'});
+</script>
+
+</body></html>

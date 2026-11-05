@@ -1,0 +1,1488 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Rail Rush</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Kaushan+Script&display=swap">
+<style>
+/* Layout: a store wall. The bag receipt hangs from a wire in the left column; logo, rail and caption share one axis, centred on the stage rather than the window. */
+:root{
+  --wall:#E6E7E1; --wall-hi:#F5F5F1; --wall-lo:#D2D3CB;
+  --ink:#10110E; --ink-2:#54564E; --ink-3:#8C8E85; --rule:rgba(16,17,14,.14);
+  --lime:#43E61F; --paper:#FBFAF5;
+  --f-disp:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --col:248px; --gap:32px; --top:68px; --mq:34px; --gut:28px;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{margin:0;background:var(--wall);color:var(--ink);font-family:var(--f-disp);overflow:hidden;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:999px}
+.app{position:relative;height:100%;display:grid;grid-template-rows:var(--top) minmax(0,1fr) var(--mq);
+  background:radial-gradient(90% 80% at 58% 34%,var(--wall-hi) 0%,var(--wall) 48%,var(--wall-lo) 100%);overflow:hidden}
+.app::before{content:"";position:absolute;inset:0;background-image:var(--grain);opacity:.32;mix-blend-mode:multiply;pointer-events:none;z-index:0}
+.bgword{position:absolute;left:var(--sx,50%);top:var(--sy,50%);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;z-index:0;animation:bgIn 1.6s var(--ease) .2s both}
+.bgword span{font:900 clamp(90px,13vw,250px)/.82 var(--f-disp);font-stretch:125%;letter-spacing:-.02em;text-transform:uppercase;color:transparent;-webkit-text-stroke:1px rgba(16,17,14,.035);white-space:nowrap}
+@keyframes bgIn{from{opacity:0}}
+
+/* header */
+.top,.main{display:grid;grid-template-columns:var(--col) minmax(0,1fr);column-gap:var(--gap);position:relative;box-sizing:border-box;width:100%;max-width:var(--frame,100%);margin-inline:auto;
+  padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px))}
+.top{align-items:center;z-index:6}
+.main{z-index:2}
+.lbl{font:500 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.hl{display:flex;align-items:center;justify-content:center}
+.hl .lbl{display:none}
+.o-lbl{margin:0 0 40px;padding-left:.16em;text-align:center}
+.hl .lbl b{color:var(--ink);font-weight:600}
+.bagbtn{display:none}
+/* logo, rack and caption share one axis: the centre of the stage column */
+.hc{grid-area:1/2;justify-self:center;display:flex}
+.logo{width:124px;height:42px;display:block;border-radius:999px}
+.logo svg{width:100%;height:100%;overflow:visible;transition:transform .6s var(--ease)}
+.logo:hover svg{transform:rotate(-3deg) scale(1.04)}
+/* the mark: a tight pill, and a word too big for it. Inside the pill the letters are ink; where they break out they carry the lime with them */
+.logo .push{transform-box:view-box;transform-origin:66px 22px}
+.hr{grid-area:1/2;justify-self:start;margin-left:var(--al,0px);display:flex;align-items:center;gap:10px}
+/* wide desktop: the logo sits on the page centre, the nav pair centres over the info column */
+.sym .hc{grid-column:1/-1}
+/* the top row drops onto the SS26 label's line */
+.hc,.hr{translate:0 var(--hy,0px)}
+.sym .hr{grid-area:auto;position:absolute;top:50%;left:var(--nx);margin:0;transform:translate(-50%,-50%);transition:left .9s var(--ease)}
+.sym.is-focus .hr{left:var(--nxF)}
+/* back / forward, as in the app: one word shows, the other side is just its arrow; hovering a usable side hands it the word */
+.hist{display:flex;align-items:center;height:44px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--rule);background:rgba(251,250,245,.35);animation:navIn .6s var(--ease) both}
+.navb{display:flex;align-items:center;height:44px;padding:0 15px;border-radius:999px;font:600 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;transition:background .3s,opacity .35s,padding .7s var(--ease)}
+.navb .lb{display:block;overflow:hidden;white-space:nowrap;max-width:0;opacity:0;margin:0;transition:max-width .7s var(--ease),opacity .45s,margin .7s var(--ease)}
+#btnShop:not(:disabled){padding:0 16px 0 14px}#btnShop:not(:disabled) .lb{max-width:7.2em;opacity:1;margin-left:8px}
+#btnShop:disabled~#btnLast:not(:disabled),#btnLast:not(:disabled):hover{padding:0 14px 0 16px}
+#btnShop:disabled~#btnLast:not(:disabled) .lb,#btnLast:not(:disabled):hover .lb{max-width:7.2em;opacity:1;margin-right:8px}
+.hist:has(#btnLast:not(:disabled):hover) #btnShop{padding:0 15px}
+.hist:has(#btnLast:not(:disabled):hover) #btnShop .lb{max-width:0;opacity:0;margin:0}
+.navb:hover:not(:disabled){background:rgba(251,250,245,.9)}
+.navb:disabled{opacity:.3;cursor:default}
+.navb svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.7;fill:none;transition:transform .5s var(--ease)}
+#btnShop:hover:not(:disabled) svg{transform:translateX(-3px)}#btnLast:hover:not(:disabled) svg{transform:translateX(3px)}
+.hist i{width:1px;height:16px;background:var(--rule);flex:none}
+@keyframes navIn{from{opacity:0;transform:translateX(-6px)}}
+
+/* audio pill */
+.audio{position:relative;display:flex;align-items:center;height:44px;padding:0 4px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--rule);background:rgba(251,250,245,.35)}
+.mute{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;transition:background .3s}
+.mute:hover{background:rgba(16,17,14,.06)}
+.mute svg{width:20px;height:20px;overflow:visible}
+.mute svg path{stroke:var(--ink)}
+.spk .w{opacity:.3;transition:opacity .6s}
+.audio.playing .spk .w1{animation:wv 1.6s ease-in-out infinite}
+.audio.playing .spk .w2{animation:wv 1.6s ease-in-out .25s infinite}
+@keyframes wv{0%,100%{opacity:.3}50%{opacity:1}}
+.mute .off{display:none}
+.audio.muted .mute .spk{display:none}.audio.muted .mute .off{display:block}
+.vol{display:flex;align-items:center;width:0;overflow:hidden;opacity:0;transition:width .55s var(--ease),opacity .4s,padding .55s var(--ease)}
+.audio:hover .vol,.audio:focus-within .vol,.audio.open .vol{width:118px;padding:0 14px 0 8px;opacity:1}
+.vol input{-webkit-appearance:none;appearance:none;width:96px;height:18px;margin:0;background:transparent;cursor:pointer;touch-action:none}
+.vol input::-webkit-slider-runnable-track{height:3px;border-radius:3px;background:linear-gradient(90deg,var(--ink) var(--v,70%),rgba(16,17,14,.16) 0)}
+.vol input::-moz-range-track{height:3px;border-radius:3px;background:rgba(16,17,14,.16)}
+.vol input::-moz-range-progress{height:3px;border-radius:3px;background:var(--ink)}
+.vol input::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;margin-top:-5px;border-radius:50%;background:var(--ink);border:2px solid var(--paper);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.vol input::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:var(--ink);border:2px solid var(--paper)}
+.audio.muted .vol input{opacity:.35}
+
+/* main + bag */
+.main{min-height:0;padding-block:6px 18px}
+.orders{position:relative;display:flex;flex-direction:column;min-height:0;margin-top:var(--oy,0px)}
+.o-wire{height:1px;margin-top:2px;background:linear-gradient(90deg,rgba(16,17,14,.5),rgba(16,17,14,.22));box-shadow:0 1px 0 rgba(255,255,255,.7)}
+.receipt{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}
+.r-in{position:relative;padding-top:34px;min-height:0;display:flex;flex-direction:column;filter:drop-shadow(0 14px 20px rgba(20,22,15,.14)) drop-shadow(0 1px 1px rgba(20,22,15,.12));transform-origin:50% 0}
+.clip{position:absolute;top:0;left:50%;width:46px;height:50px;margin-left:-23px;z-index:2;overflow:visible;transform-origin:50% 30%;transition:transform .7s var(--ease)}
+.orders:hover .clip{transform:rotate(-4deg)}
+.r-paper{position:relative;background:var(--paper);padding:18px 16px 26px;display:flex;flex-direction:column;gap:12px;min-height:0;
+  -webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - 7px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/11px 7px repeat-x;
+  mask:linear-gradient(#000 0 0) top/100% calc(100% - 7px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/11px 7px repeat-x}
+.ln{animation:prt .36s steps(5,end) both;animation-delay:calc(var(--i,0) * 110ms + 160ms)}
+@keyframes prt{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.r-brand{display:flex;justify-content:space-between;font:500 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.r-head{display:flex;justify-content:space-between;align-items:flex-end}
+.r-title{font-weight:900;font-stretch:125%;font-size:30px;line-height:.9;letter-spacing:-.01em;text-transform:uppercase}
+.r-count{font:600 11px/1 var(--f-mono);letter-spacing:.1em;font-variant-numeric:tabular-nums;padding:5px 7px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--ink);transition:background .4s}
+.r-count.bump{animation:bump .6s var(--ease)}
+@keyframes bump{40%{transform:scale(1.25);background:var(--lime)}}
+.r-meta{font:400 11px/1.4 var(--f-mono);color:var(--ink-2);letter-spacing:.04em}
+.r-rule{height:0;border-top:1px dashed rgba(16,17,14,.26);flex:none}
+.r-lines{display:flex;flex-direction:column;gap:12px;overflow-y:auto;min-height:0;margin-right:-6px;padding-right:6px;scrollbar-width:thin}
+.r-empty{margin:4px 0;font:500 11px/1.5 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.bl{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:start}
+.bl-th{width:30px;height:42px}
+.bl-th img{display:block;width:100%;height:100%;object-fit:contain}
+.bl-th svg{width:100%;height:100%;overflow:visible}
+.bl-tx{display:flex;flex-direction:column;gap:4px;min-width:0}
+.bl-tx b{font-weight:700;font-size:12.5px;line-height:1.15}
+.bl-tx span{font:500 10px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.qty{display:flex;align-items:center;gap:2px;margin-top:2px}
+.qty button{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font:500 13px/1 var(--f-mono);transition:background .3s}
+.qty button:hover{background:rgba(16,17,14,.08)}
+.qty i{font:600 11px/1 var(--f-mono);font-style:normal;min-width:16px;text-align:center;font-variant-numeric:tabular-nums}
+.bl-pr{font:600 12px/1.2 var(--f-mono);font-variant-numeric:tabular-nums}
+.r-row{display:flex;align-items:baseline;gap:8px;font:500 11px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.06em}
+.r-row span:nth-child(2){flex:1;border-bottom:1px dotted rgba(16,17,14,.3);transform:translateY(-3px)}
+.r-row b{font-weight:600;font-variant-numeric:tabular-nums}
+.r-total{display:flex;justify-content:space-between;align-items:baseline}
+.r-total span{font:500 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase}
+.r-total b{font-weight:800;font-stretch:115%;font-size:26px;font-variant-numeric:tabular-nums}
+.go{height:46px;flex:none;border-radius:999px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;gap:10px;font:700 12px/1 var(--f-disp);letter-spacing:.16em;text-transform:uppercase;transition:background .35s,color .35s,transform .5s var(--ease),opacity .4s}
+.go:hover{background:var(--lime);color:var(--ink)}
+.go:active{transform:scale(.97)}
+.go:disabled{opacity:.3;pointer-events:none}
+.go svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none}
+.r-stamp{position:absolute;right:16px;top:58px;font:800 18px/1 var(--f-disp);font-stretch:118%;letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border:2px solid var(--ink);border-radius:4px;background:var(--lime);mix-blend-mode:multiply;transform:rotate(-12deg);animation:stamp .5s cubic-bezier(.3,1.6,.5,1) both .9s}
+@keyframes stamp{from{opacity:0;transform:rotate(-12deg) scale(1.9)}to{opacity:.94;transform:rotate(-12deg) scale(1)}}
+
+/* stage + rail */
+.stage{position:relative;min-width:0;min-height:0}
+.rail{position:absolute;left:calc(50% + var(--cx,0px));top:calc(var(--ry) + var(--rd,0px));width:var(--bw);margin-left:calc(var(--bw) / -2);transition:opacity .7s,filter .8s}
+.is-focus .rail{opacity:0;filter:blur(16px);pointer-events:none}
+.bar{position:relative;height:var(--bt);border-radius:var(--bt);background:linear-gradient(180deg,#fbfbf9 0%,#c4c6bf 38%,#8b8d86 62%,#d9dad5 100%);box-shadow:0 2px 3px rgba(16,17,14,.18),0 10px 22px rgba(16,17,14,.06)}
+/* each end bends back into the wall and is screwed to it on a round plate */
+.mt{position:absolute;top:calc(var(--bt) * -1);width:calc(var(--bt) * 6);height:calc(var(--bt) * 8);overflow:visible;pointer-events:none}
+.mt.r{left:calc(100% - var(--bt) * 4)}.mt.l{left:calc(var(--bt) * -2);transform:scaleX(-1)}
+.items{position:absolute;left:50%;top:calc(var(--bt) / 2 - var(--rh) * .018);display:flex;padding-left:calc(var(--rw) * .3);transform:translateX(-50%)}
+.ri{position:relative;z-index:var(--z,1);width:var(--rw);height:var(--rh);margin-left:calc(var(--rw) * -.3);transform:translateX(var(--x,0px)) scale(calc(var(--s,1) * var(--b,1)));transform-origin:50% 1.8%;transition:transform .9s var(--ease)}
+.ri.hov{z-index:30}
+.ri:focus-visible{outline:none}
+.drop,.sway{display:block;position:absolute;inset:0;transform-origin:50% 1.8%}
+.sway{animation:sway var(--sw,6s) ease-in-out var(--d,0s) infinite alternate}
+@keyframes sway{from{transform:rotate(-.7deg)}to{transform:rotate(.7deg)}}
+.c3{position:absolute;inset:0}
+.face{position:absolute;top:0;left:0;width:100%;height:100%;visibility:hidden;will-change:transform}
+.face.on{visibility:visible}
+.face.f,.face.b{left:-50%;width:200%}
+.face img{width:100%;height:100%;display:block;-webkit-user-drag:none;user-select:none;filter:drop-shadow(calc(var(--rh) * .005) calc(var(--rh) * .014) calc(var(--rh) * .016) rgba(16,17,14,.24)) drop-shadow(calc(var(--rh) * .018) calc(var(--rh) * .055) calc(var(--rh) * .07) rgba(16,17,14,.2))}
+.layer img{width:100%;height:100%;display:block;-webkit-user-drag:none;user-select:none}
+.ri.gone .drop{opacity:0}
+/* keep shopping down the rack */
+.rk{position:absolute;top:calc(var(--rh) * .44);width:var(--ak);height:var(--ak);margin-top:calc(var(--ak) / -2);border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(16,17,14,.28);background:rgba(255,255,255,.22);z-index:40;transition:background .35s,box-shadow .35s}
+.rk.l{left:calc(var(--az) / -2 - var(--ak) / 2)}.rk.r{right:calc(var(--az) / -2 - var(--ak) / 2)}
+.rk svg{width:34%;height:34%;stroke:var(--ink);stroke-width:1.3;fill:none;transition:transform .5s var(--ease)}
+.rk:hover{background:rgba(255,255,255,.8);box-shadow:inset 0 0 0 1px var(--ink)}
+.rk.l:hover svg{transform:translateX(-3px)}.rk.r:hover svg{transform:translateX(3px)}
+.rk:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+/* caption under the rail */
+.cap{position:absolute;left:50%;top:calc(var(--rh) * 1.1 + clamp(14px,2.6vh,30px) - var(--rd,0px));width:min(86vw,820px);margin-left:max(-43vw,-410px);display:grid}
+.cb{grid-area:1/1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
+.cb > *{transition:opacity .45s,transform .7s var(--ease)}
+.cb.out > *{opacity:0;transform:translateY(-8px)}
+.cb.in > *{animation:rise .8s var(--ease) both}
+.cb.in > :nth-child(2){animation-delay:.07s}.cb.in > :nth-child(3){animation-delay:.14s}.cb.in > :nth-child(4){animation-delay:.21s}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
+.c-eye{margin:0 0 16px;padding-left:.22em;font:500 11px/1 var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2);display:flex;gap:14px;align-items:center}
+.c-eye i{width:28px;height:1px;background:var(--ink-3)}
+.c-name{position:relative;margin:0;font-weight:900;font-stretch:122%;font-size:clamp(26px,3.1vw,46px);line-height:.95;letter-spacing:-.015em;text-transform:uppercase;text-wrap:balance}
+.c-price{position:absolute;left:100%;top:-.62em;margin-left:-.32em;font:800 15px/1 var(--f-disp);font-stretch:112%;letter-spacing:.02em;padding:6px 10px 5px;background:var(--lime);border-radius:999px;box-shadow:0 0 0 1.5px var(--ink);transform:rotate(-7deg);white-space:nowrap}
+.c-story{margin:14px 0 0;font:400 16px/1.5 var(--f-disp);color:var(--ink-2);max-width:none;text-wrap:balance;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chips{margin:20px 0 0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.chips span{font:500 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;padding:11px 16px 10px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(16,17,14,.22);background:rgba(251,250,245,.4)}
+
+/* product page */
+.pv{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1fr) clamp(300px,25vw,360px);column-gap:clamp(32px,3vw,56px);pointer-events:none}
+.is-focus .pv{pointer-events:auto}
+.pane{position:relative;min-width:0;min-height:0}
+.pane.zoomed{overflow:hidden;cursor:zoom-out;touch-action:none}
+.fg{position:absolute;left:var(--fx,50%);top:var(--ft);width:var(--fw);height:var(--fh);margin-left:calc(var(--fw) / -2);visibility:hidden;cursor:zoom-in}
+.pane.zoomed .fg{cursor:inherit}
+.fg.on{visibility:visible}
+.zm{position:absolute;left:0;top:0;width:100%;height:100%}
+.flip,.layer{position:absolute;inset:0}
+.layer.wipe{clip-path:inset(0 0 100% 0)}
+.hs{position:absolute;inset:0;transition:opacity .4s}
+.pane.zoomed .hs,.flipping .hs{opacity:0;pointer-events:none}
+.hot{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;display:grid;place-items:center;opacity:0;transform:scale(.5);transition:opacity .5s,transform .7s var(--ease)}
+.is-focus .hot{opacity:1;transform:none;transition-delay:calc(var(--k) * 90ms + 900ms)}
+.hot::before{content:"";position:absolute;inset:7px;border-radius:50%;background:rgba(251,250,245,.92);box-shadow:0 0 0 1px rgba(16,17,14,.35),0 3px 8px rgba(0,0,0,.18)}
+.hot::after{content:"";position:absolute;inset:3px;border-radius:50%;box-shadow:0 0 0 1px rgba(251,250,245,.8);animation:hp 2.6s ease-out infinite;animation-delay:calc(var(--k) * .4s)}
+@keyframes hp{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+.hot svg{position:relative;width:9px;height:9px;stroke:var(--ink);stroke-width:1.6}
+.hot span{position:absolute;left:calc(100% + 4px);top:50%;transform:translate(-4px,-50%);white-space:nowrap;font:600 10px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:6px 8px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .3s,transform .4s var(--ease)}
+.hot:hover span,.hot:focus-visible span{opacity:1;transform:translate(0,-50%)}
+.tags{position:absolute;left:var(--tl);top:calc(var(--ft) + var(--fh) * .02 - var(--lift,20px));display:flex;gap:16px;align-items:flex-start;transition:opacity .4s}
+.pane.zoomed .tags,.pane.zoomed .ctrl{opacity:0;pointer-events:none}
+.tag{display:flex;flex-direction:column;align-items:center;transform-origin:50% 0;opacity:0;transform:translateY(-30px);transition:opacity .5s,transform .8s var(--ease)}
+.tags.show .tag{opacity:1;transform:none;transition-delay:calc(var(--k) * 110ms + 380ms)}
+.tag .str{width:1px;height:var(--len);background:linear-gradient(180deg,rgba(16,17,14,.15),rgba(16,17,14,.55))}
+.tag .card{position:relative;width:37px;height:var(--h,80px);border-radius:4px;background:var(--c);box-shadow:0 6px 12px rgba(16,17,14,.16),inset 0 0 0 1px rgba(16,17,14,.12);transition:transform .6s var(--ease),box-shadow .6s}
+.tag .card::before{content:"";position:absolute;left:50%;top:7px;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--wall);box-shadow:inset 0 1px 1px rgba(0,0,0,.35)}
+.tag .card span{position:absolute;left:50%;top:50%;transform:translate(-50%,-38%) rotate(90deg);white-space:nowrap;font:600 9.75px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--t)}
+.tag:hover .card{transform:rotate(-4deg)}
+.tag[aria-pressed="true"] .card{transform:translateY(8px) scale(1.08);box-shadow:0 12px 20px rgba(16,17,14,.22),inset 0 0 0 1.5px var(--ink)}
+.ctrl{position:absolute;left:var(--fx,50%);transform:translateX(-50%);white-space:nowrap;top:calc(var(--ft) + var(--fh) + 18px);display:flex;justify-content:center;align-items:center;gap:14px;transition:opacity .4s}
+.ctrl > *{opacity:0;transform:translateY(10px);transition:opacity .5s,transform .7s var(--ease)}
+.is-focus .ctrl > *{opacity:1;transform:none;transition-delay:.55s}
+.seg{position:relative;display:flex;padding:3px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(16,17,14,.3)}
+.seg i{position:absolute;top:3px;bottom:3px;left:3px;width:64px;border-radius:999px;background:var(--ink);transition:transform .55s var(--ease)}
+.seg.b i{transform:translateX(64px)}
+.seg button{position:relative;width:64px;height:26px;font:600 10px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;transition:color .4s;border-radius:999px}
+.seg button[aria-pressed="true"]{color:var(--paper)}
+.arw{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(16,17,14,.28);background:rgba(255,255,255,.22);transition:opacity .6s,background .3s,transform .6s var(--ease)!important}
+.arw svg{width:15px;height:15px;stroke:var(--ink);stroke-width:1.5;fill:none}
+.arw:hover{background:rgba(255,255,255,.75)}
+.zchip{position:absolute;left:50%;bottom:16px;transform:translate(-50%,12px);display:flex;align-items:center;gap:14px;padding:8px 8px 8px 16px;border-radius:999px;background:rgba(16,17,14,.88);color:var(--paper);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .45s,transform .6s var(--ease);white-space:nowrap;max-width:calc(100% - 24px)}
+.pane.zoomed .zchip{opacity:1;transform:translate(-50%,0);pointer-events:auto;transition-delay:.35s}
+.pane.zleave .zchip{opacity:0;transform:translate(-50%,12px);transition-delay:0s}
+.zchip b{font:600 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--lime)}
+.zchip span{font:400 13px/1.2 var(--f-disp);overflow:hidden;text-overflow:ellipsis}
+.zchip button{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(251,250,245,.14);flex:none}
+.zchip button svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.6}
+.back{display:none}
+.info{align-self:center;min-height:0;max-height:100%;overflow-x:hidden;overflow-y:auto;padding-right:4px;margin-right:-4px;display:flex;flex-direction:column;gap:18px;scrollbar-width:thin}
+.info > *{opacity:0;transform:translateX(18px);transition:opacity .4s,transform .5s var(--ease)}
+.app:not(.is-focus) .info{overflow:hidden}
+.is-focus .info > *{opacity:1;transform:none;transition:opacity .7s,transform .9s var(--ease);transition-delay:calc(var(--k) * 80ms + 380ms)}
+.info.swap > *{opacity:0!important;transform:translateY(8px)!important;transition:opacity .3s,transform .4s!important;transition-delay:0s!important}
+.i-eye{margin:0;font:500 11px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
+.i-name{margin:-4px 0 0;font-weight:900;font-stretch:122%;font-size:clamp(28px,2.9vw,44px);line-height:.95;letter-spacing:-.015em;text-transform:uppercase;text-wrap:balance}
+.i-price{display:flex;align-items:center;gap:12px}
+.i-price b{margin-left:1.5px;font:800 22px/1 var(--f-disp);font-stretch:112%;padding:8px 12px 7px;background:var(--lime);border-radius:999px;box-shadow:0 0 0 1.5px var(--ink);font-variant-numeric:tabular-nums}
+.i-price span{font:500 10px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.i-story{margin:0;font:400 15px/1.6 var(--f-disp);color:var(--ink-2);text-wrap:pretty}
+.i-opt{display:flex;flex-direction:column;gap:10px}
+.i-lbl{display:flex;justify-content:space-between;font:500 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.i-lbl b{color:var(--ink);font-weight:600}
+/* the colour name sits in the specs' value column below, not out at the right edge */
+.i-lbl-g{display:grid;grid-template-columns:96px 1fr;gap:12px}
+.sw{display:flex;gap:8px}
+.sw button{width:26px;height:26px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(16,17,14,.2);transition:box-shadow .35s,transform .5s var(--ease)}
+.sw button[aria-pressed="true"]{box-shadow:inset 0 0 0 1px rgba(16,17,14,.2),0 0 0 2px var(--wall),0 0 0 3.5px var(--ink)}
+.sizes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sizes button{height:38px;border-radius:8px;font:600 11px/1 var(--f-mono);letter-spacing:.08em;box-shadow:inset 0 0 0 1px rgba(16,17,14,.22);transition:background .3s,color .3s,box-shadow .3s}
+.sizes button:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.sizes button[aria-pressed="true"]{background:var(--ink);color:var(--paper);box-shadow:none}
+.sizes button:disabled{opacity:.3;text-decoration:line-through;pointer-events:none}
+.add{height:54px;border-radius:999px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 24px;font:700 12px/1 var(--f-disp);letter-spacing:.16em;text-transform:uppercase;transition:background .35s,color .35s,transform .5s var(--ease)}
+.add:hover{background:var(--lime);color:var(--ink)}
+.add:active{transform:scale(.98)}
+.add em{font-style:normal;height:38px;padding:0 14px;border-radius:999px;display:grid;place-items:center;background:rgba(251,250,245,.12);font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.add:hover em{background:rgba(16,17,14,.1)}
+.add.done{background:var(--lime);color:var(--ink)}
+.specs{margin:0;display:grid}
+.specs div{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--rule);font-size:13px;line-height:1.4}
+.specs div:last-child{border-bottom:1px solid var(--rule)}
+.specs dt{font:500 10px/1.5 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.specs dd{margin:0}
+
+/* Drop 05: one piece on its own wall hook, still in its garment bag, mirroring the receipt across the page */
+.d05{position:absolute;left:var(--dx,0px);top:var(--dy,0px);width:var(--dw,190px);height:calc(var(--dw,240px) * 1.6667);display:none;pointer-events:none;z-index:1;transition:opacity .7s,filter .8s}
+.sym .d05{display:block}
+.is-focus .d05,.is-cart .d05{opacity:0;filter:blur(16px)}
+.d05 svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.d05 .bagw{position:absolute;inset:0;transform-origin:55% 4%;animation:sway 7.6s ease-in-out -2.4s infinite alternate}
+.d05 .bagw svg{filter:drop-shadow(0 calc(var(--dw) * .04) calc(var(--dw) * .07) rgba(16,17,14,.07))}
+.d05 .d05h{position:absolute;left:55%;top:12.6%;margin-left:-15px}
+.d05 .tag{opacity:1;transform:none;animation:sway 5.2s ease-in-out -1s infinite alternate}
+.d05 .tag .card{width:30px;height:var(--h,66px);border-radius:3px;box-shadow:0 3px 6px rgba(16,17,14,.06),inset 0 0 0 1px rgba(16,17,14,.18)}
+.d05 .tag .str{background:rgba(16,17,14,.22)}
+.d05 .tag .card::before{top:6px;width:6px;height:6px;margin-left:-3px}
+.d05 .tag .card span{font-size:8px}
+
+/* the bag reads as a button: it lifts and shows its count on hover */
+.clip{padding:0;cursor:pointer;border-radius:12px}
+.clip svg{display:block;width:100%;height:100%;overflow:visible;transition:transform .6s var(--ease),filter .6s}
+.clip:hover svg,.clip:focus-visible svg{transform:translateY(-3px) scale(1.1);filter:drop-shadow(0 6px 8px rgba(16,17,14,.22))}
+.clip-n{position:absolute;right:-6px;top:4px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;display:grid;place-items:center;background:var(--lime);box-shadow:0 0 0 1.5px var(--ink);font:700 10px/1 var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);transform:scale(0);transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.clip:hover .clip-n,.clip:focus-visible .clip-n{transform:scale(1)}
+.r-head{cursor:pointer;border-radius:4px}
+.r-title{position:relative}
+.r-title::after{content:"";position:absolute;left:0;bottom:-5px;width:100%;height:2px;background:var(--ink);transform:scaleX(0);transform-origin:0 50%;transition:transform .6s var(--ease)}
+.r-head:hover .r-title::after,.r-head:focus-visible .r-title::after{transform:scaleX(1)}
+.r-head:hover .r-count,.r-head:focus-visible .r-count{background:var(--lime)}
+.app.is-cart .orders{opacity:0;transform:translateX(-24px);filter:blur(10px);pointer-events:none}
+.orders{transition:opacity .6s,transform .8s var(--ease),filter .7s}
+.is-cart .rail,.is-cart .pv{opacity:0!important;filter:blur(16px);pointer-events:none!important}
+.pv{transition:opacity .6s,filter .7s}
+
+/* cart page: the bag at full size, laid out like a product page */
+.cart{position:absolute;inset:6px max(var(--gut),env(safe-area-inset-right,0px)) 18px max(var(--gut),env(safe-area-inset-left,0px));display:grid;grid-template-columns:minmax(0,1fr) clamp(300px,25vw,360px);column-gap:clamp(32px,3vw,56px);pointer-events:none;visibility:hidden}
+.is-cart .cart{pointer-events:auto;visibility:visible}
+.cart-l{position:relative;min-width:0;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;display:flex}
+.cgrid{margin:auto;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:clamp(28px,3vw,56px) clamp(36px,4vw,72px);padding:12px 8px 24px}
+.ci{position:relative;width:var(--cw,230px);display:flex;flex-direction:column;align-items:center;text-align:center;opacity:0;transform:translateY(26px);transition:opacity .6s,transform .9s var(--ease)}
+.is-cart .ci{opacity:1;transform:none;transition-delay:calc(var(--k) * 90ms + 260ms)}
+.ci-img{position:relative;width:100%;aspect-ratio:2/3;display:block;cursor:pointer}
+.ci-img img{width:100%;height:100%;display:block;object-fit:contain;-webkit-user-drag:none;transition:transform .8s var(--ease);filter:drop-shadow(0 calc(var(--cw) * .02) calc(var(--cw) * .03) rgba(16,17,14,.22)) drop-shadow(0 calc(var(--cw) * .08) calc(var(--cw) * .12) rgba(16,17,14,.18))}
+.ci-img:hover img{transform:translateY(-6px) rotate(-1deg)}
+.ci-name{margin:14px 0 0;font-weight:900;font-stretch:122%;font-size:clamp(17px,1.5vw,22px);line-height:1;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+.ci-meta{margin:9px 0 0;font:500 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.ci-row{margin-top:16px;display:flex;align-items:center;gap:14px}
+.ci-q{display:flex;align-items:center;height:36px;padding:0 3px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(16,17,14,.26)}
+.ci-q button{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:500 15px/1 var(--f-mono);transition:background .3s}
+.ci-q button:hover{background:rgba(16,17,14,.08)}
+.ci-q i{min-width:22px;text-align:center;font:600 12px/1 var(--f-mono);font-style:normal;font-variant-numeric:tabular-nums}
+.ci-pr{font:800 17px/1 var(--f-disp);font-stretch:112%;padding:8px 11px 7px;background:var(--lime);border-radius:999px;box-shadow:0 0 0 1.5px var(--ink);font-variant-numeric:tabular-nums;transform:rotate(-4deg)}
+.ci-x{position:absolute;right:0;top:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--rule);background:rgba(251,250,245,.6);opacity:0;transition:opacity .35s,background .3s}
+.ci:hover .ci-x,.ci-x:focus-visible{opacity:1}
+.ci-x:hover{background:var(--paper)}
+.ci-x svg{width:11px;height:11px;stroke:var(--ink);stroke-width:1.6;fill:none}
+.c-empty{margin:auto;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center}
+.c-empty b{font-weight:900;font-stretch:125%;font-size:clamp(34px,4vw,60px);line-height:.9;text-transform:uppercase;letter-spacing:-.015em}
+.c-empty .go{padding:0 26px}
+.cart-r{align-self:center;min-height:0;max-height:100%;overflow-x:hidden;overflow-y:auto;padding-right:4px;margin-right:-4px;display:flex;flex-direction:column;gap:18px;scrollbar-width:thin}
+.cart-r > *{opacity:0;transform:translateX(18px);transition:opacity .4s,transform .5s var(--ease)}
+.is-cart .cart-r > *{opacity:1;transform:none;transition:opacity .7s,transform .9s var(--ease);transition-delay:calc(var(--k) * 80ms + 380ms)}
+.cs{display:flex;flex-direction:column;gap:13px;padding:18px 0;border-block:1px solid var(--rule)}
+.cs .r-row{font-size:12px}
+.cs .r-total{padding-top:6px}
+.cs .r-total b{font-size:34px}
+.cart-r .add{justify-content:space-between}
+.cart-r .add:disabled{opacity:.3;pointer-events:none}
+.cart-r .add em svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none}
+.cart{transition:visibility 0s .8s}.is-cart .cart{transition-delay:0s}
+.c-paid{position:relative;display:inline-flex;align-self:flex-start;font:800 22px/1 var(--f-disp);font-stretch:118%;letter-spacing:.08em;text-transform:uppercase;padding:9px 14px;border:2px solid var(--ink);border-radius:4px;background:var(--lime);transform:rotate(-6deg);animation:stamp .5s cubic-bezier(.3,1.6,.5,1) both .5s}
+
+/* wide desktop: the info column mirrors the receipt's column (same width, same gap), so the piece and the bag
+   sit on the page's centre axis, under the logo, with equal air either side */
+.sym .pv,.sym .cart{grid-template-columns:minmax(0,1fr) var(--col);column-gap:var(--gap)}
+.sym .pv{grid-template-columns:minmax(0,1fr) calc(var(--col) + var(--wf,56px))}
+.sym .info{margin-top:var(--it,0px);max-height:calc(100% - var(--it,0px))}
+.sym .cart-l{margin-left:calc(var(--col) + var(--gap))}
+.sym .i-name{font-size:clamp(26px,2.1vw,36px)}
+.sym .i-price{flex-wrap:wrap;row-gap:8px}
+.sym .specs div,.sym .i-lbl-g{grid-template-columns:76px 1fr;gap:10px}
+.sym .sizes{gap:5px}
+
+.flyer{position:fixed;left:0;top:0;pointer-events:none;z-index:70}
+.flyer svg{width:100%;height:100%;overflow:visible}
+
+/* marquee */
+.mq{position:relative;z-index:2;background:var(--lime);overflow:hidden;display:flex;align-items:center;box-shadow:0 -1px 0 rgba(16,17,14,.12)}
+.mq-t{display:flex;white-space:nowrap;animation:mq 60s linear infinite}
+.mq-t span{font:700 11px/1 var(--f-disp);font-stretch:112%;letter-spacing:.16em;text-transform:uppercase;padding-right:.6em;color:#0B2604}
+@keyframes mq{to{transform:translateX(-50%)}}
+.scrim{display:none}
+
+/* mid widths: the slider drops below the speaker so it never reaches the logo */
+@media (min-width:761px) and (max-width:1000px){
+  .navb{padding:0 15px!important}.navb .lb{max-width:0!important;opacity:0!important;margin:0!important}
+}
+@media (min-width:761px) and (max-width:1200px){
+  .vol{position:absolute;left:0;top:calc(100% + 8px);height:44px;border-radius:999px;background:rgba(251,250,245,.92);box-shadow:inset 0 0 0 1px var(--rule),0 8px 24px rgba(16,17,14,.08)}
+  .audio:hover .vol,.audio:focus-within .vol,.audio.open .vol{padding:0 14px}
+  .audio::after{content:"";position:absolute;left:0;right:0;top:100%;height:10px}
+}
+
+@media (max-width:760px){
+  :root{--top:60px;--gut:16px;--gap:0px}
+  .top{grid-template-columns:1fr auto 1fr}
+  .hl{grid-column:1;justify-content:flex-start}.hl .lbl{display:none}
+  .bagbtn{display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--rule);font:600 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase}
+  .bagbtn b{min-width:18px;height:18px;border-radius:999px;display:grid;place-items:center;background:var(--ink);color:var(--paper);font-size:10px}
+  .hc{grid-area:1/2}
+  .hr{grid-area:1/3;justify-self:end}
+  .hist{display:none}
+  .hc,.hr{translate:none}
+  .bgword{display:none}
+  .o-lbl{display:none}
+  .rk.l{left:0}.rk.r{right:0}
+  .rk{background:rgba(251,250,245,.7)}
+  .audio{height:36px}.mute{width:28px;height:28px}.mute svg{width:17px;height:17px}
+  .audio:hover .vol,.audio:focus-within .vol{width:0;padding:0;opacity:0}
+  .audio.open .vol{width:92px;padding:0 8px 0 6px;opacity:1}
+  .vol input{width:78px}
+  .logo{width:96px;height:32px}
+  .main{grid-template-columns:minmax(0,1fr);padding-block:4px 10px}
+  .orders{position:fixed;left:50%;top:50%;width:min(340px,calc(100vw - 32px));max-height:calc(100% - 120px);transform:translate(-50%,-46%);opacity:0;pointer-events:none;z-index:60;transition:opacity .45s,transform .7s var(--ease)}
+  .bag-open .orders{opacity:1;transform:translate(-50%,-50%);pointer-events:auto}
+  .o-wire{display:none}
+  .scrim{display:block;position:fixed;inset:0;z-index:55;background:rgba(230,231,225,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .5s}
+  .bag-open .scrim{opacity:1;pointer-events:auto}
+  .bag-open .main{z-index:7}
+  .c-price{position:static;display:inline-block;margin:10px 0 0;font-size:14px}
+  .c-name{display:flex;flex-direction:column;align-items:center}
+  .c-story{margin-top:12px;font-size:14px}
+  .c-eye{margin-bottom:12px;font-size:10px}
+  .c-eye i{width:20px}
+  .chips{margin-top:16px;gap:6px}
+  .chips span{font-size:10px;padding:9px 12px 8px}
+  .pv{grid-template-columns:minmax(0,1fr);grid-template-rows:var(--ph) auto;overflow-y:auto;overflow-x:hidden;row-gap:8px;padding-bottom:24px}
+  .info{align-self:start;max-height:none;overflow:visible;padding:0 2px;margin-right:0}
+  .back{display:flex;position:absolute;left:0;top:4px;z-index:5;align-items:center;gap:6px;font:500 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;padding:8px 10px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--rule);opacity:0;transition:opacity .5s}
+  .is-focus .back{opacity:1}
+  .back svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.6;fill:none}
+  .tags{gap:6px;--lift:40px}
+  .tag .card{width:29px;height:var(--h,66px)}
+  .zchip span{max-width:46vw}
+  .cart{inset:0 16px 0;display:block;overflow-y:auto;padding:44px 0 28px}
+  .cart-l{overflow:visible;display:block}
+  .cgrid{gap:28px 18px;padding:8px 0 28px}
+  .ci{--cw:min(42vw,200px)}
+  .ci-x{opacity:1}
+  .cart-r{max-height:none;overflow:visible;padding:0;margin-right:0}
+  .c-empty{min-height:50vh;justify-content:center}
+  .is-cart .back{opacity:1}
+  .cart .back{top:4px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.12s!important;transition-delay:0s!important}
+  .mq-t{animation:none}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs id="defs">
+  <linearGradient id="mtFade" gradientUnits="userSpaceOnUse" x1="-3" y1="0" x2="-1.2" y2="0"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient>
+  <mask id="mtTube" maskUnits="userSpaceOnUse" x="-6" y="-3" width="10" height="12"><path d="M-3 0 L-0.2 0 C0.9 0 1.2 1 0.7 1.5 L-1.2 3.4" fill="none" stroke="url(#mtFade)" stroke-width="1"/></mask>
+  <linearGradient id="mtDk" gradientUnits="userSpaceOnUse" x1="0.8" y1="1.2" x2="-1.2" y2="3.4"><stop offset="0" stop-color="#14160f" stop-opacity="0"/><stop offset="1" stop-color="#14160f" stop-opacity=".34"/></linearGradient>
+  <radialGradient id="mtFl" cx=".36" cy=".28" r=".8"><stop offset="0" stop-color="#fdfdfb"/><stop offset=".55" stop-color="#d3d4ce"/><stop offset="1" stop-color="#9c9e97"/></radialGradient>
+  <radialGradient id="mtCo" cx=".4" cy=".32" r=".75"><stop offset="0" stop-color="#f1f1ee"/><stop offset=".6" stop-color="#a9aba4"/><stop offset="1" stop-color="#7c7e77"/></radialGradient>
+  <filter id="mtBl" filterUnits="userSpaceOnUse" x="-7" y="-3" width="12" height="12"><feGaussianBlur stdDeviation=".5"/></filter>
+  <filter id="mtBs" filterUnits="userSpaceOnUse" x="-7" y="-3" width="12" height="12"><feGaussianBlur stdDeviation=".45"/></filter>
+  <symbol id="mtS" viewBox="-4 -1.5 6 8" overflow="visible">
+    <circle cx="-1" cy="3.95" r="2.45" fill="rgba(16,17,14,.26)" filter="url(#mtBs)"/>
+    <path d="M0.7 1.5 L-1.2 3.4" transform="translate(.35 .7)" fill="none" stroke="rgba(16,17,14,.14)" stroke-width="1" stroke-linecap="round" filter="url(#mtBl)"/>
+    <circle cx="-1.2" cy="3.4" r="2.3" fill="url(#mtFl)" stroke="rgba(16,17,14,.26)" stroke-width=".07"/>
+    <circle cx="-1.2" cy="3.4" r="1.95" fill="none" stroke="rgba(255,255,255,.65)" stroke-width=".08"/>
+    <circle cx="-2.75" cy="3.4" r=".2" fill="#8d8f88"/><circle cx=".35" cy="3.4" r=".2" fill="#8d8f88"/>
+    <circle cx="-1.2" cy="3.4" r=".82" fill="url(#mtCo)" stroke="rgba(16,17,14,.3)" stroke-width=".06"/>
+    <g mask="url(#mtTube)">
+      <rect x="-6" y="-3" width="10" height="12" fill="#b4b6af"/>
+      <rect x="-6" y="-3" width="10" height="12" fill="url(#mtDk)"/>
+      <path d="M-3 0 L-0.2 0 C0.9 0 1.2 1 0.7 1.5 L-1.2 3.4" transform="translate(0 .2)" fill="none" stroke="#8d8f88" stroke-width=".34"/>
+      <path d="M-3 0 L-0.2 0 C0.9 0 1.2 1 0.7 1.5 L-1.2 3.4" transform="translate(-.06 -.26)" fill="none" stroke="#fbfbf9" stroke-width=".34" stroke-opacity=".9"/>
+    </g>
+  </symbol>
+</defs></svg>
+
+<div class="app" id="app">
+  <header class="top">
+    <div class="hl">
+      <span class="lbl">SS26 · <b>Drop 04</b></span>
+      <button type="button" class="bagbtn" id="bagBtn" aria-label="Bag">Bag <b id="bagN">0</b></button>
+    </div>
+    <div class="hc">
+      <button type="button" class="logo" id="home" aria-label="Soft Riot, home">
+        <svg viewBox="0 0 132 44"><defs><clipPath id="lgInS"><path d="M9 11C11 4 31 3 66 5c36-2 57-1 60 8 4 8 2 17-2 23-6 7-32 6-58 5-30 2-54 2-59-6-4-7-2-19 2-24z" transform="translate(66 22) rotate(-6) scale(.72 .9) translate(-66 -22)"/></clipPath><mask id="lgOutS" maskUnits="userSpaceOnUse" x="-40" y="-20" width="212" height="84"><rect x="-40" y="-20" width="212" height="84" fill="#fff"/><path d="M9 11C11 4 31 3 66 5c36-2 57-1 60 8 4 8 2 17-2 23-6 7-32 6-58 5-30 2-54 2-59-6-4-7-2-19 2-24z" transform="translate(66 22) rotate(-6) scale(.72 .9) translate(-66 -22)" fill="#000"/></mask></defs><path d="M9 11C11 4 31 3 66 5c36-2 57-1 60 8 4 8 2 17-2 23-6 7-32 6-58 5-30 2-54 2-59-6-4-7-2-19 2-24z" transform="translate(66 22) rotate(-6) scale(.72 .9) translate(-66 -22)" style="fill:var(--lime);stroke:var(--ink)" stroke-width="2"/><g class="push"><g mask="url(#lgOutS)"><text x="66" y="29.4" text-anchor="middle" transform="skewX(-9) translate(4.6 0)" style="font:900 21px Archivo,sans-serif;font-stretch:118%;letter-spacing:.02em;fill:var(--lime)" stroke="var(--ink)" stroke-width="1.7" paint-order="stroke" stroke-linejoin="round">SOFT RIOT</text></g><g clip-path="url(#lgInS)"><text x="66" y="29.4" text-anchor="middle" transform="skewX(-9) translate(4.6 0)" style="font:900 21px Archivo,sans-serif;font-stretch:118%;letter-spacing:.02em;fill:var(--ink)">SOFT RIOT</text></g></g></svg>
+      </button>
+    </div>
+    <div class="hr">
+      <div class="hist">
+        <button type="button" class="navb" id="btnShop" aria-label="Back" disabled><svg viewBox="0 0 16 16"><path d="M13 8H3M7 4 3 8l4 4"/></svg><span class="lb">Back</span></button><i></i>
+        <button type="button" class="navb" id="btnLast" aria-label="Forward" disabled><span class="lb">Forward</span><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      </div>
+      <div class="audio" id="audio">
+        <button type="button" class="mute" id="btnMute" aria-label="Mute" aria-pressed="false">
+          <svg class="spk" viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.2L11.5 6v12l-4.3-3.5H4z"/><path class="w w1" d="M15 9.2a4 4 0 0 1 0 5.6"/><path class="w w2" d="M17.8 6.5a7.8 7.8 0 0 1 0 11"/></svg>
+          <svg class="off" viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.2L11.5 6v12l-4.3-3.5H4z"/><path d="m15.5 9.5 5 5M20.5 9.5l-5 5"/></svg>
+        </button>
+        <label class="vol"><input type="range" id="musicVol" min="0" max="100" step="1" value="70" aria-label="Music volume"></label>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="scrim" id="scrim"></div>
+    <aside class="orders" aria-label="Bag">
+      <span class="lbl o-lbl">SS26 · <b>Drop 04</b></span>
+            <div class="receipt" id="receipt"></div>
+    </aside>
+    <section class="stage" id="stage">
+      <div class="d05" id="d05" role="img" aria-label="Drop 05, coming soon">
+        <svg class="mnt" viewBox="0 0 240 400" aria-hidden="true"><defs><filter id="dbB" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="1.6"/></filter></defs>
+          <circle cx="133" cy="19" r="8.5" fill="rgba(16,17,14,.22)" filter="url(#dbB)"/>
+          <circle cx="132" cy="16" r="8" fill="url(#mtFl)" stroke="rgba(16,17,14,.24)" stroke-width=".5"/>
+          <circle cx="132" cy="16" r="4" fill="url(#mtCo)" stroke="rgba(16,17,14,.28)" stroke-width=".4"/>
+        </svg>
+        <div class="bagw">
+          <svg viewBox="0 0 240 400" aria-hidden="true"><defs>
+            <linearGradient id="dbV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbfaf5" stop-opacity=".62"/><stop offset="1" stop-color="#fbfaf5" stop-opacity=".34"/></linearGradient>
+            <filter id="dbF" x="-.5" y="-.2" width="2" height="1.4"><feGaussianBlur stdDeviation="5"/></filter>
+            <clipPath id="dbC"><path d="M112 44 H128 C132 44 136 47 142 50 L214 84 C224 89 230 98 230 110 V378 C230 388 222 396 212 396 H28 C18 396 10 388 10 378 V110 C10 98 16 89 26 84 L98 50 C104 47 108 44 112 44 Z"/></clipPath></defs>
+            <path d="M120 46 V28 C120 17 125 11.6 132 11.6 C139 11.6 142 15.5 142 20.5" fill="none" stroke="#9a9c95" stroke-width="2" stroke-linecap="round"/>
+            <path d="M112 44 H128 C132 44 136 47 142 50 L214 84 C224 89 230 98 230 110 V378 C230 388 222 396 212 396 H28 C18 396 10 388 10 378 V110 C10 98 16 89 26 84 L98 50 C104 47 108 44 112 44 Z" fill="url(#dbV)"/>
+            <g clip-path="url(#dbC)">
+              <path d="M54 120 C64 220 56 310 66 400" fill="none" stroke="#10110e" stroke-opacity=".035" stroke-width="12" filter="url(#dbF)"/>
+              <path d="M186 124 C176 226 184 316 172 400" fill="none" stroke="#10110e" stroke-opacity=".03" stroke-width="12" filter="url(#dbF)"/>
+              <path d="M120 112 V392" stroke="#10110e" stroke-opacity=".2" stroke-width="1" stroke-dasharray="1 2.6"/>
+            </g>
+            <rect x="117.5" y="112" width="5" height="12" rx="2" fill="none" stroke="#10110e" stroke-opacity=".28" stroke-width=".8"/>
+            <text x="120" y="94" text-anchor="middle" style="font:500 6.5px var(--f-mono);letter-spacing:3px;fill:rgba(16,17,14,.32)">SOFT RIOT</text>
+            <path d="M112 44 H128 C132 44 136 47 142 50 L214 84 C224 89 230 98 230 110 V378 C230 388 222 396 212 396 H28 C18 396 10 388 10 378 V110 C10 98 16 89 26 84 L98 50 C104 47 108 44 112 44 Z" fill="none" stroke="#10110e" stroke-opacity=".3" stroke-width="1"/>
+          </svg>
+          <div class="d05h"><div class="tag" style="--len:22px;--h:152px;--c:var(--paper);--t:rgba(16,17,14,.5)"><span class="str"></span><span class="card"><span>Drop 05 · Coming soon</span></span></div></div>
+        </div>
+      </div>
+      <div class="rail" id="rail">
+        <div class="bar"></div>
+        <svg class="mt r" viewBox="-4 -1.5 6 8" aria-hidden="true"><use href="#mtS" x="-4" y="-1.5" width="6" height="8"/></svg><svg class="mt l" viewBox="-4 -1.5 6 8" aria-hidden="true"><use href="#mtS" x="-4" y="-1.5" width="6" height="8"/></svg>
+        <div class="items" id="items"></div>
+        <button type="button" class="rk l" id="rkL" aria-label="Back along the rack"><svg viewBox="0 0 16 16"><path d="M14 8H2M6 4 2 8l4 4"/></svg></button>
+        <button type="button" class="rk r" id="rkR" aria-label="Further down the rack"><svg viewBox="0 0 16 16"><path d="M2 8h12M10 4l4 4-4 4"/></svg></button>
+        <div class="cap" id="cap"><div class="cb" id="cbA"></div><div class="cb out" id="cbB"></div></div>
+      </div>
+      <div class="pv" id="pv">
+        <div class="pane" id="pane">
+          <div class="fg" id="fg"><div class="zm" id="zm"><div class="flip" id="flip"><div class="layer" id="lyBase"></div><div class="layer wipe" id="lyWipe"></div></div><div class="hs" id="hs"></div></div></div>
+          <div class="tags" id="tags"></div>
+          <div class="ctrl">
+            <button type="button" class="arw" id="prev" aria-label="Previous piece"><svg viewBox="0 0 16 16"><path d="M13 8H3M7 4 3 8l4 4"/></svg></button>
+            <div class="seg" id="seg"><i></i><button type="button" data-s="f" aria-pressed="true">Front</button><button type="button" data-s="b" aria-pressed="false">Back</button></div>
+            <button type="button" class="arw" id="next" aria-label="Next piece"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+          </div>
+          <div class="zchip" id="zchip"><b id="zLbl"></b><span id="zTx"></span><button type="button" id="zOut" aria-label="Zoom out"><svg viewBox="0 0 12 12"><path d="M2 6h8"/></svg></button></div>
+          <button type="button" class="back" id="btnBack"><svg viewBox="0 0 16 16"><path d="M13 8H3M7 4 3 8l4 4"/></svg>Rail</button>
+        </div>
+        <div class="info" id="info">
+          <p class="i-eye" id="iEye" style="--k:0"></p>
+          <h1 class="i-name" id="iName" style="--k:1"></h1>
+          <div class="i-price" style="--k:2"><b id="iPrice"></b><span>Free shipping over $150</span></div>
+          <p class="i-story" id="iStory" style="--k:3"></p>
+          <div class="i-opt" style="--k:4"><div class="i-lbl i-lbl-g"><span>Colour</span><b id="iCol"></b></div></div>
+          <div class="i-opt" style="--k:5"><div class="sizes" id="sizes" role="group" aria-label="Size"></div></div>
+          <button type="button" class="add" id="add" style="--k:6"><span id="addTx">Add to bag</span><em id="addPr"></em></button>
+          <dl class="specs" id="specs" style="--k:7"></dl>
+        </div>
+      </div>
+    </section>
+    <section class="cart" id="cart" aria-label="Your bag">
+      <button type="button" class="back" id="cBack"><svg viewBox="0 0 16 16"><path d="M13 8H3M7 4 3 8l4 4"/></svg>Back</button>
+      <div class="cart-l" id="cartL"></div>
+      <div class="cart-r" id="cartR"></div>
+    </section>
+  </main>
+
+  <footer class="mq" aria-hidden="true"><div class="mq-t" id="mq"></div></footer>
+</div>
+
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const D = ms => RM ? Math.min(ms, 140) : ms;
+const rand = (a, b) => a + Math.random() * (b - a), pick = a => a[Math.floor(Math.random() * a.length)];
+const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function mulberry(s) { return () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function rgb(hex) { const n = parseInt(hex.slice(1), 16); return [n >> 16, n >> 8 & 255, n & 255]; }
+function shade(hex, a) { const t = a < 0 ? 0 : 255, k = Math.abs(a); return 'rgb(' + rgb(hex).map(v => Math.round(v + (t - v) * k)).join(',') + ')'; }
+function isDark(hex) { const [r, g, b] = rgb(hex); return (r * .299 + g * .587 + b * .114) < 120; }
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+/* ---------- texture ---------- */
+function noiseURL(n, spread, alpha) {
+  const c = document.createElement('canvas'); c.width = c.height = n; const x = c.getContext('2d'), d = x.createImageData(n, n);
+  for (let i = 0; i < n * n; i++) { const v = 128 + (Math.random() - .5) * spread; d.data[i * 4] = d.data[i * 4 + 1] = d.data[i * 4 + 2] = v; d.data[i * 4 + 3] = alpha; }
+  x.putImageData(d, 0, 0); return c.toDataURL();
+}
+
+/* ---------- audio ---------- */
+const AU = { ctx: null, muted: store.get('softriot-sound2') === 'off', mvol: 0.7 };
+{ const v = parseFloat(store.get('softriot-music')); if (v >= 0 && v <= 1) AU.mvol = v; }
+const musicLevel = v => v <= 0 ? 0 : 0.42 * Math.pow(v / 0.7, 1.6);
+function audioStart() {
+  if (AU.ctx || AU.muted) return;
+  const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+  let ctx; try { ctx = new AC(); } catch (e) { return; }
+  AU.ctx = ctx;
+  const filt = (type, f, q = 0.7) => { const b = ctx.createBiquadFilter(); b.type = type; b.frequency.value = f; b.Q.value = q; return b; };
+  const gain = v => { const g = ctx.createGain(); g.gain.value = v; return g; };
+  const chain = (...n) => { for (let i = 0; i < n.length - 1; i++) n[i].connect(n[i + 1]); return n[0]; };
+  Object.assign(AU, { filt, gain, chain });
+  const out = ctx.createDynamicsCompressor(); out.threshold.value = -16; out.ratio.value = 3; out.connect(ctx.destination);
+  const master = AU.master = gain(0); master.connect(out); master.gain.setTargetAtTime(0.9, ctx.currentTime + .05, 1);
+  const bed = AU.bed = gain(1); bed.connect(master);
+  const music = AU.music = gain(musicLevel(AU.mvol)); chain(music, filt('lowpass', 5200, .4), bed);
+  AU.fx = gain(0.85); AU.fx.connect(master);
+  const white = AU.white = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+  { const d = white.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+
+  // a soft amapiano groove: log drum, shakers, rims, rhodes and a sparse marimba
+  const BPM = 112, S16 = 60 / BPM / 4;
+  const keys = gain(.8); chain(keys, filt('lowpass', 2200, .5), music);
+  const trem = ctx.createOscillator(), tremG = gain(.12); trem.frequency.value = 3.6; chain(trem, tremG, keys.gain); trem.start();
+  const drums = gain(.9); chain(drums, filt('lowpass', 9000, .5), music);
+  const shape = ctx.createWaveShaper(); { const k = new Float32Array(1024); for (let i = 0; i < 1024; i++) { const x = i / 512 - 1; k[i] = Math.tanh(2.2 * x); } shape.curve = k; }
+  const logBus = gain(.85); chain(logBus, shape, filt('lowpass', 900, .7), music);
+  const delay = ctx.createDelay(1.5), fb = gain(.3), wet = gain(.32); delay.delayTime.value = S16 * 3; chain(delay, fb, delay); chain(delay, wet, music);
+  const mallet = gain(1); chain(mallet, filt('lowpass', 3400, .5), music); mallet.connect(delay);
+  const air = ctx.createBufferSource(); air.buffer = white; air.loop = true; chain(air, filt('lowpass', 900, .3), filt('highpass', 140, .4), gain(.006), music); air.start();
+  function ep(m, t, dur, v) {
+    const f = mtof(m), g = ctx.createGain(), o1 = ctx.createOscillator(), o2 = ctx.createOscillator(), g2 = gain(.14);
+    o1.frequency.value = f; o1.detune.value = rand(-6, 6); o2.frequency.value = f * 2; chain(o2, g2, g); chain(o1, g, keys);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .012); g.gain.setTargetAtTime(v * .3, t + .03, .35); g.gain.setTargetAtTime(0, t + dur, .25);
+    o1.start(t); o2.start(t); o1.stop(t + dur + 1.4); o2.stop(t + dur + 1.4);
+  }
+  function logdrum(m, t, v, slide) {
+    const f = mtof(m), o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine';
+    o.frequency.setValueAtTime(f * 2.1, t); o.frequency.exponentialRampToValueAtTime(f, t + .045);
+    if (slide) o.frequency.exponentialRampToValueAtTime(f * slide, t + .32);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .006); g.gain.exponentialRampToValueAtTime(.001, t + .5);
+    chain(o, g, logBus); o.start(t); o.stop(t + .55);
+  }
+  function kick(t, v) {
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(44, t + .12);
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + .32); chain(o, g, drums); o.start(t); o.stop(t + .34);
+  }
+  function hit(t, type, f, q, v, dec, dest = drums) {
+    const s = ctx.createBufferSource(), g = ctx.createGain(); s.buffer = white;
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + dec); chain(s, filt(type, f, q), g, dest);
+    s.start(t, Math.random() * .5); s.stop(t + dec + .05);
+  }
+  function rim(t, v) {
+    hit(t, 'bandpass', 1700, 6, v, .06);
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = 820; g.gain.setValueAtTime(v * .5, t); g.gain.exponentialRampToValueAtTime(.001, t + .05); chain(o, g, drums); o.start(t); o.stop(t + .06);
+  }
+  function marimba(m, t) {
+    const f = mtof(m);
+    [[1, .07, .5], [3.98, .016, .12]].forEach(([k, v, d]) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = f * k; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .004); g.gain.exponentialRampToValueAtTime(.0008, t + d); chain(o, g, mallet); o.start(t); o.stop(t + d + .05); });
+  }
+  const CH = [[57, 60, 64, 67, 71], [53, 57, 60, 64, 67], [48, 52, 55, 59, 62], [55, 59, 62, 64, 69]], RT = [33, 29, 36, 31];
+  const LOG = [[0, 0, 0], [3, 0, 0], [6, 7, 0], [10, 0, 1.5], [12, 12, 0], [14, 10, 0]];
+  const PENTA = [69, 72, 74, 76, 79, 81];
+  let nextT = ctx.currentTime + .25, n16 = 0;
+  AU.timer = setInterval(() => {
+    while (nextT < ctx.currentTime + .2) {
+      const st = n16 % 16, bar = Math.floor(n16 / 16) % 4, t = nextT + (st % 2 ? S16 * .18 : 0);
+      if (st === 0) CH[bar].forEach((m, i) => ep(m, t + i * .012, S16 * 6, .06));
+      if ((st === 7 || st === 10) && Math.random() < .75) CH[bar].slice(1, 4).forEach((m, i) => ep(m + 12, t + i * .008, S16 * 1.2, .035));
+      LOG.forEach(([s, iv, sl]) => { if (s === st && (s !== 12 || bar % 2)) logdrum(RT[bar] + iv, t, .42, sl || 0); });
+      if (st === 0 || st === 8) kick(t, .34);
+      if (st === 4 || st === 12 || (st === 15 && Math.random() < .35)) rim(t, .1);
+      hit(t, 'highpass', 6800, .7, st % 4 === 2 ? .05 : .022, .04);
+      if (st % 2 === 0 && Math.random() < .1) marimba(pick(PENTA), t);
+      nextT += S16; n16++;
+    }
+  }, 40);
+}
+function tone(f, v, t0, dur, type = 'sine', dest) {
+  const ctx = AU.ctx, o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.value = f;
+  const t = ctx.currentTime + t0; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .006); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  o.connect(g); g.connect(dest || AU.fx); o.start(t); o.stop(t + dur + .05); return o;
+}
+function noiseHit(t0, type, f, q, v, dur, f2) {
+  const ctx = AU.ctx, s = ctx.createBufferSource(), b = AU.filt(type, f, q), g = ctx.createGain(), t = ctx.currentTime + t0; s.buffer = AU.white; s.loop = true;
+  if (f2) { b.frequency.setValueAtTime(f, t); b.frequency.exponentialRampToValueAtTime(f2, t + dur); }
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + Math.min(.02, dur * .3)); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  AU.chain(s, b, g, AU.fx); s.start(t, Math.random() * .5); s.stop(t + dur + .05);
+}
+function sfx(type, n) {
+  const ctx = AU.ctx; if (!ctx || AU.muted || ctx.state !== 'running') return;
+  if (type === 'hover') { tone(rand(3100, 3500), .006, 0, .09); tone(5200, .003, 0, .06); }
+  else if (type === 'turn') noiseHit(0, 'bandpass', 650, 1.4, .016, .6, 1500);
+  else if (type === 'open') { noiseHit(0, 'bandpass', 1800, 2, .035, .4, 4200); tone(2900, .02, .02, .35); tone(4400, .008, .03, .2); }
+  else if (type === 'close') noiseHit(0, 'bandpass', 3000, 2, .03, .35, 1200);
+  else if (type === 'tag') { noiseHit(0, 'highpass', 3200, .7, .05, .03); tone(1250, .025, 0, .07, 'triangle'); }
+  else if (type === 'flip') noiseHit(0, 'bandpass', 420, 1.2, .07, .42, 1700);
+  else if (type === 'swipe') noiseHit(0, 'bandpass', 900, 1.4, .05, .32, 2600);
+  else if (type === 'zin') { noiseHit(0, 'bandpass', 500, 1.2, .04, .5, 2400); tone(1568, .012, .12, .4); }
+  else if (type === 'zout') noiseHit(0, 'bandpass', 2400, 1.2, .035, .45, 500);
+  else if (type === 'tick') tone(2300, .014, 0, .05, 'triangle');
+  else if (type === 'print') { const k = n || 12; for (let i = 0; i < k; i++) noiseHit(i * .045, 'bandpass', 2600 + (i % 3) * 300, 3, .045, .025); tone(140, .02, 0, k * .045, 'square', AU.chain(AU.filt('lowpass', 400), AU.fx)); }
+  else if (type === 'ding') { tone(1319, .04, 0, .5); tone(1976, .035, .1, .8); tone(2637, .015, .1, .6); }
+  else if (type === 'paid') { tone(110, .14, 0, .14); noiseHit(0, 'bandpass', 600, 1, .07, .06); [1047, 1319, 1568, 2093].forEach((f, i) => tone(f, .03, .12 + i * .08, .7)); }
+}
+function audioUI() {
+  const a = $('#audio'), r = $('#musicVol'), on = !AU.muted;
+  a.classList.toggle('muted', AU.muted); a.classList.toggle('playing', on);
+  r.value = Math.round(AU.mvol * 100); r.style.setProperty('--v', AU.mvol * 100 + '%');
+  const b = $('#btnMute'); b.setAttribute('aria-pressed', String(AU.muted)); b.setAttribute('aria-label', AU.muted ? 'Unmute' : 'Mute');
+}
+function setMuted(m) {
+  AU.muted = m; store.set('softriot-sound2', m ? 'off' : 'on');
+  if (m) { if (AU.ctx) { AU.master.gain.setTargetAtTime(0, AU.ctx.currentTime, .08); clearTimeout(AU.susT); AU.susT = setTimeout(() => { if (AU.muted) AU.ctx.suspend(); }, 500); } }
+  else if (!AU.ctx) { audioStart(); if (AU.ctx) AU.ctx.onstatechange = audioUI; }
+  else { clearTimeout(AU.susT); AU.ctx.resume(); AU.master.gain.setTargetAtTime(.9, AU.ctx.currentTime, .25); }
+  audioUI();
+}
+// music is on by default: try at load; if the browser holds it, the first click, tap or key starts it
+function audioBoot() {
+  if (AU.muted) return;
+  if (!AU.ctx) { audioStart(); if (AU.ctx) AU.ctx.onstatechange = audioUI; }
+  if (AU.ctx && AU.ctx.state === 'suspended' && !document.hidden) AU.ctx.resume();
+  audioUI();
+}
+
+/* ---------- catalogue ---------- */
+// hotspots sit in the photo's own frame: [x, y] as fractions of width and height
+const ITEMS = [
+  { id: 'ember', line: 'Heavy cotton, hand-painted at the pocket. No two shirts come out the same.', name: 'Ember Memory LS Shirt', price: 142, type: 'shirt', colors: [{ n: 'Chalk', hex: '#F2F1EC' }], cat: 'Shirt',
+    story: 'Heavy cotton with a hand-painted red splash at the pocket. It runs down the front and flecks both sleeves, so no two shirts come out the same.', chips: ['Heavy cotton', 'Hand-painted', 'Relaxed fit'],
+    specs: [['Fabric', '10 oz cotton canvas or indigo denim'], ['Fit', 'Relaxed, dropped shoulder'], ['Paint', 'Hand-applied pigment, heat-set'], ['Made in', 'Lisbon, Portugal'], ['Care', 'Cold wash, inside out']],
+    hot: { f: [[.65, .36, 'Paint', 'Pigment splashed by hand at the pocket'], [.49, .13, 'Collar', 'Soft-set point collar'], [.49, .56, 'Placket', 'Snaps down a clean placket'], [.83, .66, 'Sleeve', 'Paint flecks on the sleeve']], b: [[.14, .43, 'Sleeve', 'Paint flecks carried round the back'], [.5, .15, 'Yoke', 'Single back yoke'], [.5, .87, 'Hem', 'Curved shirttail hem']] } },
+  { id: 'never', line: 'Our heaviest tee, cut boxy and washed black, with a cracked chest print.', name: 'Never Still Tee', price: 68, type: 'tee', colors: [{ n: 'Washed Black', hex: '#2A2A28' }], cat: 'Tee',
+    story: 'Our heaviest tee, cut boxy and washed black. A cracked NEVER STILL print sits on the chest, the back stays clean, and the hem is left raw.', chips: ['240 gsm', 'Boxy fit', 'Cracked print'],
+    specs: [['Fabric', '240 gsm combed cotton jersey'], ['Fit', 'Boxy, cropped'], ['Collar', '1×1 rib, 2 cm'], ['Print', 'Cracked plastisol'], ['Made in', 'Porto, Portugal']],
+    hot: { f: [[.5, .44, 'Print', 'Cracked plastisol, aged on purpose'], [.5, .13, 'Collar', '1×1 rib and a woven label'], [.88, .43, 'Sleeve', 'Dropped shoulder, wide sleeve'], [.64, .93, 'Hem', 'Raw-cut hem']], b: [[.5, .12, 'Collar', 'Taped back neck'], [.66, .93, 'Hem', 'Raw-cut hem']] } },
+  { id: 'tank', line: 'Washed black, hand-distressed with pin holes and paint. Already lived in.', name: 'Riot Paint Tank Top', price: 74, type: 'tank', colors: [{ n: 'Washed Black', hex: '#2D2D2B' }], cat: 'Tank',
+    story: 'Washed black and distressed by hand with pin holes and paint splatter, with SOFT RIOT brushed across the chest. It comes off the line already lived in.', chips: ['220 gsm', 'Garment-dyed', 'Hand-distressed'],
+    specs: [['Fabric', '220 gsm cotton jersey'], ['Fit', 'Regular, deep armhole'], ['Finish', 'Garment-dyed, distressed by hand'], ['Made in', 'Porto, Portugal'], ['Care', 'Wash cold, line dry']],
+    hot: { f: [[.5, .45, 'Print', 'Brushed type, painted by hand'], [.5, .18, 'Binding', 'Self-fabric binding'], [.36, .27, 'Holes', 'Pin holes, opened by hand'], [.68, .7, 'Splatter', 'Paint flicked on, one at a time']], b: [[.29, .2, 'Holes', 'Pin holes at the shoulder'], [.66, .71, 'Splatter', 'Splatter runs round the back']] } },
+  { id: 'varsity', line: 'Wool melton body, cream leather sleeves and a chenille SR patch.', name: 'SR Varsity Jacket', price: 320, type: 'jacket', colors: [{ n: 'Black / Cream', hex: '#161718' }], cat: 'Jacket',
+    story: 'A wool melton body with cream leather sleeves. Chenille SR patch on the chest, chain-stitched script beside it, finished in striped rib at the collar, cuffs and hem.', chips: ['Wool melton', 'Leather sleeves', 'Snap front'],
+    specs: [['Body', 'Wool melton, quilted lining'], ['Sleeves', 'Cream leather'], ['Trim', 'Striped rib collar, cuffs, hem'], ['Closure', 'Metal snap front'], ['Made in', 'Guimarães, Portugal']],
+    hot: { f: [[.67, .37, 'Patch', 'Chenille SR, edged in felt'], [.34, .37, 'Script', 'Chain-stitched Riot'], [.5, .64, 'Snaps', 'Metal snap front'], [.5, .14, 'Collar', 'Striped rib collar'], [.89, .89, 'Cuff', 'Striped rib cuff']], b: [[.15, .45, 'Sleeve', 'Cream leather, panelled'], [.5, .84, 'Hem', 'Striped rib hem']] } },
+  { id: 'wash', line: 'Pigment-dyed denim blue, stone-washed twice, with a faded yellow logo.', name: 'Washwater Logo Tee', price: 64, type: 'tee', colors: [{ n: 'Denim', hex: '#5E7DA6' }], cat: 'Tee',
+    story: 'Pigment-dyed denim blue, then stone-washed twice, so the colour sits soft and a little uneven. A faded yellow SOFT RIOT runs across the chest.', chips: ['Pigment-dyed', 'Stone-washed', 'Regular fit'],
+    specs: [['Fabric', '200 gsm cotton jersey'], ['Fit', 'Regular'], ['Finish', 'Pigment dye, double stone wash'], ['Print', 'Water-based, washed back'], ['Made in', 'Porto, Portugal']],
+    hot: { f: [[.5, .38, 'Logo', 'Water-based ink, washed back'], [.5, .14, 'Collar', '1×1 rib and a woven label'], [.88, .5, 'Sleeve', 'Twin-needle sleeve hem'], [.66, .93, 'Hem', 'Twin-needle hem']], b: [[.5, .12, 'Collar', 'Taped back neck'], [.5, .55, 'Wash', 'Stone wash, twice over'], [.66, .93, 'Hem', 'Twin-needle hem']] } },
+  { id: 'kit', line: 'A piqué football kit in sun yellow with green trim and a big 10.', name: 'Kit 10 Jersey', price: 88, type: 'vtee', colors: [{ n: 'Sun', hex: '#F2CE1C' }], cat: 'Jersey',
+    story: 'A football kit cut in breathable piqué, sun yellow with green trim. RIOT and a big 10 up front, 10 again on the back.', chips: ['Piqué knit', 'V-neck', 'Contrast panels'],
+    specs: [['Fabric', 'Breathable cotton piqué'], ['Fit', 'Regular, athletic'], ['Collar', 'Ribbed V trim'], ['Print', 'Flock lettering and numbers'], ['Made in', 'Braga, Portugal']],
+    hot: { f: [[.5, .38, 'Riot', 'Flock lettering, raised to the touch'], [.5, .58, '10', 'Flock numerals'], [.5, .2, 'V trim', 'Ribbed V in green'], [.26, .7, 'Panel', 'Contrast side panel']], b: [[.5, .44, '10', 'Flock numerals'], [.5, .12, 'Collar', 'Ribbed back neck']] } },
+  { id: 'signal', line: 'The quiet one. Soft white jersey with a small embroidered rose.', name: 'Signal Tee', price: 52, type: 'tee', colors: [{ n: 'Chalk', hex: '#F3F2ED' }], cat: 'Tee',
+    story: 'The quiet one. Soft white jersey with a small embroidered rose on the chest. Wears with everything.', chips: ['200 gsm', 'Embroidered', 'Regular fit'],
+    specs: [['Fabric', '200 gsm cotton jersey'], ['Fit', 'Regular'], ['Detail', 'Embroidered rose'], ['Collar', '1×1 rib'], ['Made in', 'Porto, Portugal']],
+    hot: { f: [[.66, .36, 'Rose', 'Satin-stitch embroidery'], [.5, .15, 'Collar', '1×1 rib collar'], [.65, .93, 'Hem', 'Twin-needle hem']], b: [[.5, .12, 'Collar', 'Taped back neck'], [.65, .93, 'Hem', 'Twin-needle hem']] } }
+];
+const CW = {"ember":[{"n":"Chalk","hex":"#E1DAD6","k":"chalk"},{"n":"Indigo","hex":"#1E2639","k":"indigo"}],"never":[{"n":"Washed Black","hex":"#212021","k":"black"},{"n":"Faded Olive","hex":"#51503D","k":"olive"},{"n":"Slate","hex":"#323845","k":"slate"}],"tank":[{"n":"Washed Black","hex":"#282727","k":"black"},{"n":"Faded Olive","hex":"#52503D","k":"olive"}],"varsity":[{"n":"Black / Cream","hex":"#171616","k":"black"},{"n":"Navy / Cream","hex":"#242D3D","k":"navy"},{"n":"Forest / Cream","hex":"#27352F","k":"forest"}],"wash":[{"n":"Denim","hex":"#47596F","k":"denim"},{"n":"Sage","hex":"#747E69","k":"sage"},{"n":"Washed Black","hex":"#252525","k":"black"}],"kit":[{"n":"Sun","hex":"#DAA423","k":"sun"},{"n":"Bone","hex":"#DBD1BE","k":"bone"}],"signal":[{"n":"Chalk","hex":"#E4DEE1","k":"chalk"},{"n":"Stone","hex":"#DCD3BF","k":"stone"},{"n":"Washed Black","hex":"#464643","k":"black"}]};
+ITEMS.forEach(it => { it.colors = CW[it.id]; });
+const L = ITEMS.length, NR = L;
+const SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
+// a button-up shirt runs longer than a tee, so on the rack it hangs a size up from its hook (its hem lands below the tees, above the jacket)
+const BASE = { ember: 1.11 };
+const AR_S = 1110 / 3330, AR_F = 2220 / 3330, HOOK = 60 / 3330, HEM = .986;   // HEM: the lowest hem on the rack shots, as a share of the frame   // photo frames; the hook rests on the rail 60/3330 down
+const money = v => '$' + (Math.round(v * 100) % 100 ? v.toFixed(2) : String(v));
+const pad = n => String(n).padStart(2, '0');
+const IV = '?v=14';   // bump when the image files change, so browsers don't keep old copies
+// a colourway's shots are named after the piece, plus the colour for every colourway but the first
+const ik = (it, ci) => ci ? `${it.id}-${it.colors[ci].k}` : it.id;
+const IMG = id => ({ s: `play/soft-riot/img/${id}-s.webp${IV}`, f: `play/soft-riot/img/${id}-f.webp${IV}`, b: `play/soft-riot/img/${id}-b.webp${IV}` });
+const BIG = (id, v) => v === 's' ? IMG(id).s : `play/soft-riot/img/${id}-${v}-l.webp${IV}`;
+const pic = (it, v, cls, ci = 0) => `<img src="${IMG(ik(it, ci))[v]}" alt="" draggable="false" decoding="async"${cls ? ` class="${cls}"` : ''}>`;
+// product page: the full-size shot, with the rack-size one underneath until it lands
+const picL = (it, v, ci = ST.ci) => `<img src="${BIG(ik(it, ci), v)}" alt="" draggable="false" decoding="async" style="background:url(${IMG(ik(it, ci))[v]}) 0 0/100% 100% no-repeat">`;
+const HOTFIX = {"ember":{"f":[0.0089,0.0667,0.9308,0.8924,0.0625,0.0571,0.8288,0.7821],"b":[0.0424,0.0576,0.9174,0.8424,0.0675,0.0554,0.8562,0.7725]},"never":{"f":[0.058,0.0697,0.8951,0.8803,0.0712,0.0617,0.8606,0.8317],"b":[0.0446,0.0652,0.9219,0.8303,0.0362,0.0621,0.9275,0.8217]},"tank":{"f":[0.154,0.0667,0.7098,0.8864,0.1475,0.0604,0.7169,0.8812],"b":[0.1652,0.0667,0.6808,0.8303,0.1469,0.065,0.7194,0.8638]},"varsity":{"f":[0.0513,0.0652,0.9018,0.8636,0.0469,0.0604,0.9025,0.8533],"b":[0.0714,0.0652,0.8839,0.8197,0.0481,0.0633,0.9325,0.8488]},"wash":{"f":[0.058,0.0682,0.8951,0.8924,0.05,0.0608,0.91,0.8975],"b":[0.0714,0.0636,0.8772,0.8394,0.0388,0.0625,0.9388,0.8808]},"kit":{"f":[0.0268,0.0652,0.9621,0.8924,0.0469,0.0571,0.9194,0.8354],"b":[0.0446,0.0606,0.9241,0.8394,0.0462,0.0571,0.9212,0.8238]},"signal":{"f":[0.0469,0.0682,0.9241,0.8864,0.0881,0.0588,0.8331,0.7867],"b":[0.0513,0.0621,0.9018,0.8333,0.0706,0.0588,0.8556,0.775]}};
+// hotspots were placed on the first renders; carry them onto the full-size framing
+ITEMS.forEach(it => ['f', 'b'].forEach(v => { const q = HOTFIX[it.id][v]; it.hot[v] = it.hot[v].map(([x, y, l, t]) => [Math.min(Math.max(q[4] + (x - q[0]) / q[2] * q[6], q[4] + .03), q[4] + q[6] - .03), Math.min(q[5] + (y - q[1]) / q[3] * q[7], q[5] + q[7] - .03), l, t]); }));
+
+/* ---------- elements & state ---------- */
+const app = $('#app'), stage = $('#stage'), itemsEl = $('#items'), pane = $('#pane'), fg = $('#fg'), zm = $('#zm'), flipEl = $('#flip'), lyBase = $('#lyBase');
+const lyWipe = $('#lyWipe'), tagsEl = $('#tags'), RC = ITEMS.map(() => 0);
+const hsEl = $('#hs'), receiptEl = $('#receipt'), infoEl = $('#info');
+const ST = { mode: 'rail', cur: 0, ci: 0, side: 'f', size: 'M', busy: false, hover: -1, flipping: false, kb: false };
+const VIEW = ITEMS.map(() => 's');
+let MOB = innerWidth <= 760, DIM = { rw: 120, rh: 350, fw: 300, fh: 440, pw: 600, ph: 600 };
+
+/* ---------- rail ---------- */
+function buildRail() {
+  itemsEl.innerHTML = ITEMS.map((it, i) => `<button type="button" class="ri" data-i="${i}" aria-label="${it.name}, ${money(it.price)}" style="--b:${BASE[it.id] || 1};--sw:${(5.4 + (i % 3) * .9).toFixed(1)}s;--d:${(-i * 1.37).toFixed(2)}s"><span class="drop"><span class="sway"><span class="c3"><span class="face s on">${pic(it, 's')}</span><span class="face f">${pic(it, 'f')}</span><span class="face b">${pic(it, 'b')}</span></span></span></span></button>`).join('');
+}
+const ORDER = ITEMS.map((_, i) => i), posOf = i => ORDER.indexOf(i);
+// fronts face left, so each piece hangs in front of the one on its right
+const applyOrder = () => ORDER.forEach((i, p) => { riEl(i).style.order = p; riEl(i).style.setProperty('--z', NR - p); });
+const riEl = i => itemsEl.children[i], faceEl = (i, v) => riEl(i).querySelector('.face.' + v);
+// a turn: the visible face swings out to edge-on, the next one swings in from the other edge.
+// Each hanger keeps its own angle, so a turn interrupted at any point carries on from where it is.
+const TURN = ITEMS.map(() => ({ vis: 's', ang: 0, ph: null }));
+const EIN = p => p * p * p, EOUT = p => 1 - Math.pow(1 - p, 3), EDGE = 88;
+function paintFace(i) {
+  const T = TURN[i], el = faceEl(i, T.vis), a = T.ang;
+  el.style.transform = a ? `perspective(900px) rotateY(${a.toFixed(2)}deg)` : '';
+  el.style.filter = a ? `brightness(${(1 - .18 * Math.abs(a) / EDGE).toFixed(3)})` : '';
+}
+function swapFace(i, v) {
+  const T = TURN[i], old = faceEl(i, T.vis);
+  old.classList.remove('on'); old.style.transform = ''; old.style.filter = '';
+  T.vis = v; faceEl(i, v).classList.add('on');
+}
+function plan(i, now) {
+  const T = TURN[i], v = VIEW[i], a = T.ang, k = Math.abs(a) / EDGE;
+  if (T.vis === v) T.ph = a ? { from: a, to: 0, t0: now, dur: 160 + 480 * k, ez: EOUT } : null;
+  else {
+    const dir = a ? Math.sign(a) : (T.vis === 's' || v === 'b') ? 1 : -1;
+    T.ph = { from: a, to: EDGE * dir, t0: now, dur: 80 + 360 * (1 - k), ez: k ? (p => p) : EIN };
+  }
+  if (T.ph) turnLoop();
+}
+let turnRaf = 0;
+function turnLoop() {
+  if (turnRaf) return;
+  const step = now => {
+    turnRaf = 0; let live = false;
+    TURN.forEach((T, i) => {
+      const ph = T.ph; if (!ph) return;
+      const p = Math.min(1, Math.max(0, (now - ph.t0) / ph.dur));
+      T.ang = ph.from + (ph.to - ph.from) * ph.ez(p);
+      if (p >= 1) {
+        T.ang = ph.to; T.ph = null;
+        if (ph.to !== 0) { swapFace(i, VIEW[i]); T.ang = -ph.to; plan(i, now); }
+      }
+      paintFace(i); if (T.ph) live = true;
+    });
+    if (live && !turnRaf) turnRaf = requestAnimationFrame(step);
+  };
+  turnRaf = requestAnimationFrame(step);
+}
+function show(i, v, instant) {
+  VIEW[i] = v; const T = TURN[i];
+  if (instant || RM) { T.ph = null; if (T.vis !== v) swapFace(i, v); T.ang = 0; paintFace(i); return; }
+  plan(i, performance.now());
+}
+let spinT = 0;
+function spinStart(i) {
+  clearInterval(spinT);
+  show(i, 'f'); sfx('turn');
+  spinT = setInterval(() => { if (ST.hover !== i || ST.mode !== 'rail') return clearInterval(spinT); show(i, VIEW[i] === 'f' ? 'b' : 'f'); sfx('turn'); }, RM ? 3400 : 3000);
+}
+function spinStop(i) { clearInterval(spinT); if (i >= 0) show(i, 's'); }
+
+/* caption */
+function capHTML(k) {
+  if (k < 0) return `<div class="c-eye"><i></i>SS26 — Drop 04<i></i></div><h2 class="c-name">Never Still<span class="c-price">New in</span></h2><p class="c-story">Seven pieces, one small run. Hand-painted, garment-dyed and stitched in Portugal.</p>`;
+  const it = ITEMS[k];
+  return `<div class="c-eye"><i></i>No. ${pad(k + 1)} — ${it.cat}<i></i></div><h2 class="c-name">${it.name}<span class="c-price">${money(it.price)}</span></h2><p class="c-story">${it.line}</p>`;
+}
+let capKey = null, capTimer = 0;
+function setCap(k) {
+  if (capKey === k) return; capKey = k;
+  const a = $('#cbA'), b = $('#cbB'), [cur, nxt] = a.classList.contains('out') ? [b, a] : [a, b];
+  nxt.innerHTML = capHTML(k);
+  cur.classList.add('out'); cur.classList.remove('in');
+  nxt.classList.remove('out', 'in'); void nxt.offsetWidth; nxt.classList.add('in');
+}
+// fetch a piece's full-size shots as soon as someone shows interest in it
+const PRE = new Set();
+function preKey(key) { if (PRE.has(key)) return; PRE.add(key); ['f', 'b'].forEach(v => { const im = new Image(); im.decoding = 'async'; im.src = BIG(key, v); }); }
+function preBig(i) { i = (i + L) % L; const it = ITEMS[i]; if (it) preKey(ik(it, RC[i])); }
+function setHover(k, instant) {
+  if (k >= 0) preBig(k);
+  if (k === ST.hover) return;
+  const prev = ST.hover; ST.hover = k; spinStop(prev);
+  [...itemsEl.children].forEach((el, j) => {
+    if (instant) el.style.transition = 'none';
+    el.classList.toggle('hov', j === k);
+    el.style.setProperty('--x', k < 0 || j === k ? '0px' : (posOf(j) < posOf(k) ? -1 : 1) * DIM.rw * (DIM.sp || .6) + 'px');
+    el.style.setProperty('--s', j === k ? '1.05' : '1');
+    if (instant) { el.getBoundingClientRect(); el.style.transition = ''; }
+  });
+  if (k >= 0) spinStart(k);
+  clearTimeout(capTimer);
+  if (k >= 0) capTimer = setTimeout(() => { if (ST.hover === k) setCap(k); }, 90); else capTimer = setTimeout(() => { if (ST.hover < 0) setCap(-1); }, 320);
+}
+itemsEl.addEventListener('pointerover', e => { const b = e.target.closest('.ri'); if (!b || e.pointerType === 'touch' || ST.mode !== 'rail' || ST.walking) return; const i = +b.dataset.i; if (i !== ST.hover) { setHover(i); sfx('hover'); } });
+itemsEl.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') setHover(-1); });
+itemsEl.addEventListener('focusin', e => { const b = e.target.closest('.ri'); if (b && ST.mode === 'rail' && b.matches(':focus-visible')) setHover(+b.dataset.i); });
+itemsEl.addEventListener('click', e => { const b = e.target.closest('.ri'); if (b) { ST.kb = e.detail === 0; openFocus(+b.dataset.i); } });
+
+/* ---------- product page ---------- */
+const curIt = () => ITEMS[ST.cur];
+const sizesFor = it => it.type === 'jacket' ? ['S', 'M', 'L', 'XL'] : SIZES;
+// the box a hanger's front photo fills on the rail, for flying between rail and page
+function railBox(i) { const r = riEl(i).querySelector('.drop').getBoundingClientRect(); return { left: r.left - r.width / 2, top: r.top, width: r.width * 2, height: r.height }; }
+const flipT = (r, f) => { const s = r.height / f.height, dx = (r.left + r.width / 2) - (f.left + f.width / 2), dy = (r.top + r.height / 2) - (f.top + f.height / 2); return `translate(${dx}px,${dy}px) scale(${s})`; };
+function renderHot() {
+  const list = curIt().hot[ST.side];
+  hsEl.innerHTML = list.map(([x, y, l, t], k) => `<button type="button" class="hot" data-k="${k}" style="left:${x * 100}%;top:${y * 100}%;--k:${k}" aria-label="${l}: ${t}"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg><span>${l}</span></button>`).join('');
+  hsEl._list = list;
+}
+function syncSide() {
+  const seg = $('#seg'); seg.classList.toggle('b', ST.side === 'b');
+  seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.s === ST.side)));
+}
+function syncSize() {
+  $('#sizes').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.s === ST.size)));
+}
+function fillInfo() {
+  const it = curIt(), sz = sizesFor(it), c = it.colors[ST.ci];
+  if (!sz.includes(ST.size)) ST.size = 'M';
+  $('#iEye').textContent = `No. ${pad(ST.cur + 1)} / ${pad(L)} — ${it.cat}`;
+  $('#iName').textContent = it.name;
+  $('#iPrice').textContent = money(it.price);
+  $('#iStory').textContent = it.story;
+  $('#iCol').textContent = c.n;
+  $('#sizes').innerHTML = SIZES.map(s => `<button type="button" data-s="${s}"${sz.includes(s) ? '' : ' disabled'}>${s}</button>`).join('');
+  $('#addPr').textContent = money(it.price);
+  $('#specs').innerHTML = it.specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+  syncSize();
+}
+function renderFocus() { preBig(ST.cur - 1); preBig(ST.cur + 1); endWipe(); lyBase.innerHTML = picL(curIt(), ST.side); renderTags(); renderHot(); syncSide(); fillInfo(); layoutFocus(); }
+
+/* ---------- colour tags ---------- */
+// one swing tag per colourway, hung on strings of different lengths from the hook line
+function renderTags() {
+  const it = curIt(), up = MOB ? 40 : 20, lens = [29, 56, 41].map(v => v + up);
+  tagsEl.classList.remove('show');
+  tagsEl.innerHTML = it.colors.length < 2 ? '' : it.colors.map((c, k) => `<button type="button" class="tag" data-k="${k}" aria-label="${c.n}" aria-pressed="${k === ST.ci}" style="--k:${k};--len:${lens[k]}px;--c:${c.hex};${tagH(c.n) ? `--h:${tagH(c.n)}px;` : ''}--t:${isDark(c.hex) ? 'rgba(255,255,255,.75)' : 'rgba(16,17,14,.6)'}"><span class="str"></span><span class="card"><span>${c.n}</span></span></button>`).join('');
+}
+// a long name stretches its card (the phone's cards are smaller)
+function tagH(n) { const h = Math.round(n.length * (MOB ? 5.92 : 7.22) + (MOB ? 28 : 34)); return h > (MOB ? 66 : 80) ? h : 0; }
+const dropTags = () => requestAnimationFrame(() => { tagsEl.getBoundingClientRect(); tagsEl.classList.add('show'); });
+function setRackColor(i) {
+  const it = ITEMS[i], src = IMG(ik(it, RC[i]));
+  ['s', 'f', 'b'].forEach(v => { faceEl(i, v).querySelector('img').src = src[v]; });
+}
+function endWipe() {
+  if (!ST.wipeA) return;
+  const a = ST.wipeA; ST.wipeA = null; a.cancel(); lyWipe.innerHTML = '';
+}
+function setColor(k) {
+  const it = curIt();
+  if (ST.mode !== 'focus' || ST.flipping || k === ST.ci || k >= it.colors.length || pane.classList.contains('zoomed')) return;
+  if (ST.wipeA) { lyBase.innerHTML = lyWipe.innerHTML; endWipe(); }
+  ST.ci = RC[ST.cur] = k; sfx('tag'); setRackColor(ST.cur);
+  tagsEl.querySelectorAll('.tag').forEach(t => t.setAttribute('aria-pressed', String(+t.dataset.k === k)));
+  $('#iCol').textContent = it.colors[k].n;
+  // the new colour washes down the piece from the hook
+  lyWipe.innerHTML = picL(it, ST.side, k);
+  const a = ST.wipeA = lyWipe.animate([{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)' }], { duration: D(1100), easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
+  a.finished.then(() => { if (ST.wipeA !== a) return; lyBase.innerHTML = lyWipe.innerHTML; endWipe(); }).catch(() => {});
+}
+tagsEl.addEventListener('click', e => { const t = e.target.closest('.tag'); if (t) setColor(+t.dataset.k); });
+tagsEl.addEventListener('pointerover', e => { const t = e.target.closest('.tag'); if (t && e.pointerType !== 'touch') { preKey(ik(curIt(), +t.dataset.k)); sfx('hover'); } });
+async function openFocus(i) {
+  if (ST.busy || ST.mode !== 'rail' || ST.walking) return;
+  ST.busy = true; ST.mode = 'opening'; FWD = null; syncHist();
+  const v0 = VIEW[i], r = railBox(i);
+  ST.cur = i; ST.ci = RC[i]; ST.side = v0 === 'b' ? 'b' : 'f';
+  clearTimeout(capTimer); setHover(-1, true); show(i, ST.side, true);
+  renderFocus(); riEl(i).classList.add('gone');
+  app.classList.add('is-focus'); fg.classList.add('on');
+  const f = fg.getBoundingClientRect();
+  sfx('open');
+  const ez = 'cubic-bezier(.2,.75,.15,1)', dur = D(1150);
+  const a = fg.animate([{ transform: flipT(r, f) }, { transform: 'none' }], { duration: dur, easing: ez });
+  if (v0 === 's') flipEl.animate([{ transform: 'perspective(1600px) rotateY(70deg)', opacity: .4 }, { transform: 'perspective(1600px) rotateY(0deg)', opacity: 1 }], { duration: dur, easing: ez });
+  dropTags();
+  await a.finished.catch(() => {});
+  ST.mode = 'focus'; ST.busy = false; syncHist();
+}
+async function closeFocus() {
+  if (ST.busy || ST.mode !== 'focus') return;
+  if (pane.classList.contains('zoomed')) zoomOut(true);
+  ST.busy = true; ST.mode = 'closing'; sfx('close');
+  const i = ST.cur, ri = riEl(i); LAST = i; FWD = null; syncHist();
+  show(i, ST.side, true); tagsEl.classList.remove('show');
+  app.classList.remove('is-focus');
+  const r = railBox(i), f = fg.getBoundingClientRect();
+  const a = fg.animate([{ transform: 'none' }, { transform: flipT(r, f) }], { duration: D(1000), easing: 'cubic-bezier(.55,0,.15,1)', fill: 'forwards' });
+  await a.finished.catch(() => {});
+  ri.classList.remove('gone'); fg.classList.remove('on'); a.cancel();
+  ST.mode = 'rail'; ST.busy = false; syncHist();
+  if (ST.kb) { ri.focus({ preventScroll: true }); setHover(i); }
+  else setTimeout(() => { if (ST.hover !== i && ST.mode === 'rail') show(i, 's'); }, D(450));
+}
+async function go(dir) {
+  if (ST.busy || ST.mode !== 'focus') return;
+  if (pane.classList.contains('zoomed')) zoomOut(true);
+  ST.busy = true; sfx('swipe');
+  const n = (ST.cur + dir + L) % L;
+  infoEl.classList.add('swap'); tagsEl.classList.remove('show');
+  const out = fg.animate([{ transform: 'none', filter: 'blur(0px)', opacity: 1 }, { transform: `translateX(${-dir * 70}px)`, filter: 'blur(12px)', opacity: 0 }], { duration: D(440), easing: 'cubic-bezier(.5,0,.75,0)', fill: 'forwards' });
+  await out.finished.catch(() => {});
+  const old = ST.cur; riEl(old).classList.remove('gone'); show(old, 's', true);
+  ST.cur = n; ST.ci = RC[n]; ST.side = 'f'; riEl(n).classList.add('gone');
+  renderFocus(); dropTags();
+  const inn = fg.animate([{ transform: `translateX(${dir * 90}px)`, filter: 'blur(14px)', opacity: 0 }, { transform: 'none', filter: 'blur(0px)', opacity: 1 }], { duration: D(820), easing: 'cubic-bezier(.2,.8,.2,1)' });
+  out.cancel();
+  requestAnimationFrame(() => infoEl.classList.remove('swap'));
+  if (MOB) $('#pv').scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' });
+  await inn.finished.catch(() => {});
+  ST.busy = false;
+}
+async function setSide(s) {
+  if (ST.mode !== 'focus' || ST.flipping || s === ST.side || pane.classList.contains('zoomed')) return;
+  if (ST.wipeA) { lyBase.innerHTML = lyWipe.innerHTML; endWipe(); }
+  ST.flipping = true; ST.side = s; sfx('flip'); syncSide(); pane.classList.add('flipping');
+  const a = flipEl.animate([{ transform: 'perspective(1600px) rotateY(0deg)', filter: 'brightness(1)' }, { transform: 'perspective(1600px) rotateY(90deg)', filter: 'brightness(.8)' }], { duration: D(360), easing: 'cubic-bezier(.55,0,1,.45)', fill: 'forwards' });
+  await a.finished.catch(() => {});
+  lyBase.innerHTML = picL(curIt(), ST.side); renderHot();
+  const b = flipEl.animate([{ transform: 'perspective(1600px) rotateY(-90deg)', filter: 'brightness(.8)' }, { transform: 'perspective(1600px) rotateY(0deg)', filter: 'brightness(1)' }], { duration: D(600), easing: 'cubic-bezier(0,.55,.45,1)' });
+  a.cancel(); await b.finished.catch(() => {});
+  pane.classList.remove('flipping'); ST.flipping = false;
+}
+function setSize(s) { if (s === ST.size) return; ST.size = s; syncSize(); sfx('tick'); }
+$('#sizes').addEventListener('click', e => { const b = e.target.closest('button'); if (b && !b.disabled) setSize(b.dataset.s); });
+$('#seg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setSide(b.dataset.s); });
+$('#prev').addEventListener('click', () => go(-1));
+$('#next').addEventListener('click', () => go(1));
+// header history: back to the shop from a piece, forward again to the last piece viewed
+let LAST = -1, FWD = null;   // FWD: 'cart' once the bag page has been left with Back
+function syncHist() {
+  const m = ST.mode;
+  $('#btnShop').disabled = !(m === 'focus' || m === 'opening' || m === 'cart');
+  $('#btnLast').disabled = !((m === 'rail' && (FWD === 'cart' || LAST >= 0)) || (m === 'focus' && FWD === 'cart'));
+}
+$('#btnShop').addEventListener('click', () => { if (ST.mode === 'cart') closeCart(); else closeFocus(); });
+$('#home').addEventListener('click', () => {
+  app.classList.remove('bag-open');
+  if (ST.mode === 'cart') closeCart();
+  if (ST.mode === 'focus') closeFocus(); else if (ST.mode === 'rail') setHover(-1);
+});
+// walking the rack: the end piece slips off one side and comes back on the other in its next colourway
+function loadSrc(src) { return new Promise(r => { const im = new Image(); im.onload = im.onerror = r; im.src = src; setTimeout(r, 900); }); }
+let WALK = null;   // the slide in flight: its animations and the colour swap it still owes
+function walkSettle() {
+  if (!WALK) return;
+  const w = WALK; WALK = null;
+  clearTimeout(w.t); w.swap(); w.anims.forEach(a => { try { a.finish(); } catch (e) {} });
+}
+async function walk(dir) {
+  if (ST.mode !== 'rail') return;
+  walkSettle();   // a quick second click lands the first slide at once instead of queueing
+  ST.walking = true; setHover(-1); sfx('swipe');
+  const i = dir > 0 ? ORDER[0] : ORDER[NR - 1], it = ITEMS[i], n = it.colors.length;
+  const ci = (RC[i] + dir + n) % n;
+  loadSrc(IMG(ik(it, ci)).s);
+  const step = DIM.rw * .7, span = step * (NR - 1), dur = D(560), ez = 'cubic-bezier(.22,.8,.3,1)';
+  if (dir > 0) ORDER.push(ORDER.shift()); else ORDER.unshift(ORDER.pop());
+  applyOrder();
+  const anims = [];
+  ORDER.forEach((j, p) => {
+    const d = riEl(j).querySelector('.drop');
+    if (j === i) {
+      const from = -dir * span;   // where it hung before the reorder
+      anims.push(d.animate([
+        { transform: `translateX(${from}px)`, opacity: 1 },
+        { transform: `translateX(${from - dir * step * .9}px)`, opacity: 0, offset: .34 },
+        { transform: `translateX(${dir * step * .9}px)`, opacity: 0, offset: .4 },
+        { transform: 'none', opacity: 1 }
+      ], { duration: D(680), easing: 'cubic-bezier(.4,0,.2,1)' }));
+    } else {
+      anims.push(d.animate([{ transform: `translateX(${dir * step}px)` }, { transform: 'none' }], { duration: dur, delay: D((dir > 0 ? p : NR - 1 - p) * 14), easing: ez, fill: 'backwards' }));
+    }
+  });
+  let swapped = false;
+  const w = WALK = { anims, swap: () => { if (swapped) return; swapped = true; RC[i] = ci; setRackColor(i); } };
+  w.t = setTimeout(w.swap, D(250));
+  await Promise.all(anims.map(a => a.finished)).catch(() => {});
+  if (WALK === w) { WALK = null; w.swap(); ST.walking = false; }
+}
+$('#rkL').addEventListener('click', () => walk(-1));
+$('#rkR').addEventListener('click', () => walk(1));
+$('#btnLast').addEventListener('click', () => { if (FWD === 'cart') openCart(); else if (LAST >= 0) openFocus(LAST); });
+$('#btnBack').addEventListener('click', closeFocus);
+$('#add').addEventListener('click', addToBag);
+
+/* ---------- zoom ---------- */
+const Z = { k: 1, tk: 1, x: .5, y: .5, tx: .5, ty: .5, raf: 0, ax: null, ay: null, x0: .5, y0: .5, down: null, key: '' };
+const clampP = v => Math.max(.1, Math.min(.9, v));
+// zoom resizes the image itself rather than scaling a layer, so the browser draws it from the full-size file
+function zApply() {
+  const z = zm.style;
+  if (Z.k === 1 && Z.x === .5 && Z.y === .5) { z.left = z.top = z.width = z.height = ''; return; }
+  z.left = `${DIM.fw * .5 - Z.x * DIM.fw * Z.k}px`; z.top = `${DIM.fh * .5 - Z.y * DIM.fh * Z.k}px`;
+  z.width = `${DIM.fw * Z.k}px`; z.height = `${DIM.fh * Z.k}px`;
+}
+// never enlarge past the file's own pixels on this screen
+const zCap = k => Math.min(k, Math.max(1.6, 3330 / (DIM.fh * (devicePixelRatio || 1))));
+function nearest(x, y) {
+  const list = hsEl._list || []; let best = null, bd = .13;
+  list.forEach(h => { const d = Math.hypot(h[0] - x, (h[1] - y) * 1.47); if (d < bd) { bd = d; best = h; } });
+  return best;
+}
+function zLabel() {
+  const h = nearest(Z.tx, Z.ty), it = curIt(), key = h ? h[2] : '_';
+  if (key === Z.key) return; Z.key = key;
+  $('#zLbl').textContent = h ? h[2] : it.specs[0][0];
+  $('#zTx').textContent = h ? h[3] : it.specs[0][1];
+}
+function zTick() {
+  const e = RM ? 1 : .12;
+  Z.k += (Z.tk - Z.k) * e; Z.x += (Z.tx - Z.x) * e; Z.y += (Z.ty - Z.y) * e;
+  const done = Math.abs(Z.tk - Z.k) < .002 && Math.abs(Z.tx - Z.x) < .0006 && Math.abs(Z.ty - Z.y) < .0006;
+  if (done) { Z.k = Z.tk; Z.x = Z.tx; Z.y = Z.ty; }
+  zApply();
+  if (done) { Z.raf = 0; if (Z.tk === 1) pane.classList.remove('zoomed', 'zleave'); return; }
+  Z.raf = requestAnimationFrame(zTick);
+}
+const zRun = () => { if (!Z.raf) Z.raf = requestAnimationFrame(zTick); };
+function zoomIn(x, y, k, h) {
+  if (ST.mode !== 'focus' || ST.busy || ST.flipping) return;
+  Z.tk = zCap(k); Z.tx = clampP(x); Z.ty = clampP(y); Z.x0 = Z.tx; Z.y0 = Z.ty; Z.ax = null; Z.key = '';
+  pane.classList.remove('zleave'); pane.classList.add('zoomed');
+  if (h) { Z.key = h[2]; $('#zLbl').textContent = h[2]; $('#zTx').textContent = h[3]; } else zLabel();
+  sfx('zin'); zRun();
+}
+function zoomOut(instant) {
+  if (!pane.classList.contains('zoomed')) return;
+  Z.tk = 1; Z.tx = .5; Z.ty = .5; pane.classList.add('zleave');
+  if (instant) { Z.k = 1; Z.x = Z.y = .5; zApply(); pane.classList.remove('zoomed', 'zleave'); cancelAnimationFrame(Z.raf); Z.raf = 0; return; }
+  sfx('zout'); zRun();
+}
+hsEl.addEventListener('click', e => {
+  const b = e.target.closest('.hot'); if (!b) return; e.stopPropagation();
+  const h = hsEl._list[+b.dataset.k]; zoomIn(h[0], h[1], 2.5, h);
+});
+pane.addEventListener('pointerdown', e => { Z.down = { x: e.clientX, y: e.clientY, moved: false, x0: Z.tx, y0: Z.ty }; if (Z.ax === null) { Z.ax = e.clientX; Z.ay = e.clientY; } });
+pane.addEventListener('pointermove', e => {
+  if (Z.down && Math.hypot(e.clientX - Z.down.x, e.clientY - Z.down.y) > 6) Z.down.moved = true;
+  if (!pane.classList.contains('zoomed') || pane.classList.contains('zleave')) return;
+  if (e.pointerType === 'mouse') {
+    if (Z.ax === null) { Z.ax = e.clientX; Z.ay = e.clientY; }
+    Z.tx = clampP(Z.x0 + (e.clientX - Z.ax) / DIM.pw * 1.1); Z.ty = clampP(Z.y0 + (e.clientY - Z.ay) / DIM.ph * 1.1);
+  } else if (Z.down) {
+    Z.tx = clampP(Z.down.x0 - (e.clientX - Z.down.x) / (DIM.fw * Z.k)); Z.ty = clampP(Z.down.y0 - (e.clientY - Z.down.y) / (DIM.fh * Z.k));
+  } else return;
+  zLabel(); zRun();
+});
+pane.addEventListener('pointerup', e => {
+  const d = Z.down; Z.down = null; if (!d || d.moved) return;
+  if (e.target.closest('.hot,.zchip,.ctrl,.back')) return;
+  if (pane.classList.contains('zoomed')) { if (!pane.classList.contains('zleave')) zoomOut(); return; }
+  if (!e.target.closest('#fg')) return;
+  const f = fg.getBoundingClientRect();
+  zoomIn((e.clientX - f.left) / f.width, (e.clientY - f.top) / f.height, 2.2, null);
+});
+pane.addEventListener('pointercancel', () => { Z.down = null; });
+$('#zOut').addEventListener('click', e => { e.stopPropagation(); zoomOut(); });
+
+/* ---------- bag ---------- */
+let BAG = [], PAID = null;
+const lineIt = l => ITEMS.find(it => it.id === l.id);
+try { const b = JSON.parse(store.get('softriot-bag') || '[]'); if (Array.isArray(b)) BAG = b.filter(l => ITEMS.some(it => it.id === l.id) && l.q > 0).map(l => ({ ...l, ci: l.ci > 0 && l.ci < lineIt(l).colors.length ? l.ci : 0 })); } catch (e) {}
+const saveBag = () => store.set('softriot-bag', JSON.stringify(BAG));
+const lineKey = l => `${l.id}|${l.ci || 0}|${l.size}`;
+const count = () => BAG.reduce((s, l) => s + l.q, 0);
+const subtotal = () => BAG.reduce((s, l) => s + lineIt(l).price * l.q, 0);
+const shipping = st => st === 0 || st >= 150 ? 0 : 8;
+const TAX = .07;   // Palm Beach County, FL: 6% state + 1% county, on the goods
+const taxOf = st => Math.round(st * TAX * 100) / 100;
+function fmtDate() { const d = new Date(); return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${String(d.getFullYear()).slice(2)} · ${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+const ARROW = '<svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+let lastCount = -1;
+function renderBag(mode, newKey) {
+  // mode: 'print' or 'paid' prints the whole receipt in; no mode is a quiet update
+  let i = 0;
+  const lnc = (cls, force) => (mode || force) ? `class="${cls} ln" style="--i:${force ? 0 : i++}"` : `class="${cls}"`;
+  const st = PAID ? PAID.st : subtotal(), sh = PAID ? PAID.sh : shipping(st), tx = PAID ? PAID.tx : taxOf(st), n = PAID ? PAID.n : count();
+  const lines = (PAID ? PAID.lines : BAG).map(l => {
+    const it = lineIt(l), key = lineKey(l);
+    return `<div ${lnc('bl', key === newKey)} data-key="${key}"><span class="bl-th">${pic(it, 'f', '', l.ci || 0)}</span><span class="bl-tx"><b>${it.name}</b><span>${it.colors[l.ci || 0].n} · ${l.size}</span>${PAID ? `<span>Qty ${l.q}</span>` : `<span class="qty"><button type="button" data-a="-1" aria-label="One less">−</button><i>${l.q}</i><button type="button" data-a="1" aria-label="One more">+</button></span>`}</span><span class="bl-pr">${money(it.price * l.q)}</span></div>`;
+  }).join('');
+  receiptEl.innerHTML = `<div class="r-in"><button type="button" class="clip" data-open aria-label="Open your bag"><svg viewBox="0 0 46 50" aria-hidden="true"><path d="M15.5 21v-8a7.5 7.5 0 0 1 15 0v8" fill="none" stroke="#10110e" stroke-width="2.4" stroke-linecap="round"/><path d="M8.5 18h29l3.5 30H5z" fill="#10110e"/><path d="M8.1 22.5h29.8" stroke="rgba(251,250,245,.16)" stroke-width="1"/><circle cx="15.5" cy="22.5" r="1.9" style="fill:var(--lime)"/><circle cx="30.5" cy="22.5" r="1.9" style="fill:var(--lime)"/></svg><b class="clip-n">${n}</b></button><div class="r-paper">
+    <div ${lnc('r-brand')}><span>Soft Riot</span><span>${PAID ? PAID.no : 'Reg 04'}</span></div>
+    <div ${lnc('r-head')} data-open role="button" tabindex="0" aria-label="Open your bag"><div class="r-title">${PAID ? 'Thank<br>you' : 'Your<br>bag'}</div><span class="r-count" id="rCount"${PAID ? ' style="visibility:hidden"' : ''}>${pad(n)}</span></div>
+    <div ${lnc('r-meta')}>${PAID ? PAID.date : fmtDate()}</div>
+    <div ${lnc('r-rule')}></div>
+    <div class="r-lines">${lines || `<p ${lnc('r-empty')}>Your bag is empty</p>`}</div>
+    <div ${lnc('r-rule')}></div>
+    <div ${lnc('r-row')}><span>Subtotal</span><span></span><b>${money(st)}</b></div>
+    <div ${lnc('r-row')}><span>Shipping</span><span></span><b>${n ? (sh ? money(sh) : 'Free') : '—'}</b></div>
+    <div ${lnc('r-row')}><span>Sales tax 7%</span><span></span><b>${n ? money(tx) : '—'}</b></div>
+    <div ${lnc('r-total')}><span>Total</span><b>${money(Math.round((st + (n ? sh + tx : 0)) * 100) / 100)}</b></div>
+    ${PAID ? `<button type="button" ${lnc('go')} data-go="again">Keep shopping ${ARROW}</button><span class="r-stamp">Paid</span>` : `<button type="button" ${lnc('go')} data-go="pay"${n ? '' : ' disabled'}>Checkout ${ARROW}</button>`}
+  </div></div>`;
+  $('#bagN').textContent = count();
+  if (lastCount >= 0 && n !== lastCount && !PAID) $('#rCount').classList.add('bump');
+  lastCount = n;
+  if (newKey) { const el = receiptEl.querySelector(`[data-key="${newKey}"]`); if (el) el.scrollIntoView({ block: 'nearest', behavior: RM ? 'auto' : 'smooth' }); }
+  if (ST.mode === 'cart') renderCart();
+  return i;
+}
+receiptEl.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.r-head')) { e.preventDefault(); openCart(); } });
+
+/* ---------- cart page ---------- */
+// the bag at full size: every piece large on the wall, the totals and checkout in the info column
+const cartL = $('#cartL'), cartR = $('#cartR');
+const X_ICON = '<svg viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8"/></svg>';
+function renderCart() {
+  const lines = PAID ? PAID.lines : BAG, st = PAID ? PAID.st : subtotal(), sh = PAID ? PAID.sh : shipping(st), tx = PAID ? PAID.tx : taxOf(st), n = PAID ? PAID.n : count();
+  const tot = Math.round((st + (n ? sh + tx : 0)) * 100) / 100;
+  cartL.innerHTML = !lines.length ? `<div class="c-empty"><b>Your bag<br>is empty</b><button type="button" class="go" data-c="shop">Back to the rack ${ARROW}</button></div>`
+    : `<div class="cgrid" id="cgrid">${lines.map((l, k) => {
+      const it = lineIt(l), ci = l.ci || 0;
+      return `<div class="ci" style="--k:${k}" data-key="${lineKey(l)}"><button type="button" class="ci-img" data-c="view" aria-label="${it.name}">${picL(it, 'f', ci)}</button>${PAID ? '' : `<button type="button" class="ci-x" data-a="x" aria-label="Remove ${it.name}">${X_ICON}</button>`}
+        <h3 class="ci-name">${it.name}</h3><p class="ci-meta">${it.colors[ci].n} · ${l.size}</p>
+        <div class="ci-row">${PAID ? `<span class="ci-meta">Qty ${l.q}</span>` : `<span class="ci-q"><button type="button" data-a="-1" aria-label="One less">−</button><i>${l.q}</i><button type="button" data-a="1" aria-label="One more">+</button></span>`}<b class="ci-pr">${money(it.price * l.q)}</b></div></div>`;
+    }).join('')}</div>`;
+  cartR.innerHTML = `<p class="i-eye" style="--k:0">${PAID ? PAID.no : 'SS26 · Drop 04'} — ${pad(n)} ${n === 1 ? 'piece' : 'pieces'}</p>
+    <h1 class="i-name" style="--k:1">${PAID ? 'Thank you' : 'Your bag'}</h1>${PAID ? '<span class="c-paid" style="--k:2">Paid</span>' : ''}
+    <div class="cs" style="--k:3"><div class="r-row"><span>Subtotal</span><span></span><b>${money(st)}</b></div><div class="r-row"><span>Shipping</span><span></span><b>${n ? (sh ? money(sh) : 'Free') : '—'}</b></div><div class="r-row"><span>Sales tax 7%</span><span></span><b>${n ? money(tx) : '—'}</b></div><div class="r-total"><span>Total</span><b>${money(tot)}</b></div></div>
+    ${PAID ? `<button type="button" class="add" data-c="again" style="--k:4"><span>Keep shopping</span><em>${ARROW}</em></button>` : `<button type="button" class="add" data-c="pay" style="--k:4"${n ? '' : ' disabled'}><span>Checkout</span><em>${money(tot)}</em></button>`}
+    <dl class="specs" style="--k:5"><div><dt>Delivery</dt><dd>${n && !sh ? 'Free, tracked' : 'Tracked. Free over $150'}</dd></div><div><dt>Returns</dt><dd>Free within 30 days</dd></div><div><dt>Made in</dt><dd>Portugal</dd></div></dl>`;
+  layoutCart();
+}
+// size the pieces so the whole bag fits on the page where it can, as large as it fits
+function layoutCart() {
+  const g = $('#cgrid'); if (!g || ST.mode !== 'cart') return;
+  const W = cartL.clientWidth - 16, H = cartL.clientHeight - 36, n = g.children.length;
+  const gx = Math.min(72, Math.max(36, innerWidth * .04)), gy = Math.min(56, Math.max(28, innerWidth * .03));
+  let best = 150;
+  for (let c = 1; c <= n; c++) {
+    const r = Math.ceil(n / c), w = (W - (c - 1) * gx) / c, h = ((H - (r - 1) * gy) / r - 120) / 1.5;
+    best = Math.max(best, Math.min(w, h, 300));
+  }
+  g.style.setProperty('--cw', best + 'px');
+}
+function openCart() {
+  if (ST.busy || ST.walking || !(ST.mode === 'rail' || ST.mode === 'focus')) return;
+  if (pane.classList.contains('zoomed')) zoomOut(true);
+  if (ST.mode === 'rail') setHover(-1, true);
+  ST.prev = ST.mode; ST.mode = 'cart'; FWD = null;
+  app.classList.remove('bag-open');
+  renderCart(); cartL.scrollTop = 0; $('#cart').scrollTop = 0;
+  app.classList.add('is-cart'); sfx('open'); syncHist();
+}
+function closeCart() {
+  if (ST.mode !== 'cart') return;
+  app.classList.remove('is-cart'); sfx('close');
+  ST.mode = ST.prev || 'rail'; FWD = 'cart'; syncHist();
+}
+async function viewFromCart(key) {
+  const l = (PAID ? PAID.lines : BAG).find(x => lineKey(x) === key); if (!l) return;
+  const i = ITEMS.findIndex(it => it.id === l.id), from = ST.prev;
+  closeCart();
+  if (from === 'focus') { await new Promise(r => setTimeout(r, D(120))); await closeFocus(); }
+  if (RC[i] !== (l.ci || 0)) { RC[i] = l.ci || 0; setRackColor(i); }
+  ST.size = l.size;
+  setTimeout(() => openFocus(i), D(260));
+}
+$('#cart').addEventListener('click', e => {
+  if (e.target.closest('#cBack')) { closeCart(); return; }
+  const card = e.target.closest('.ci'), b = e.target.closest('button'); if (!b) return;
+  if (card && b.dataset.a) {
+    const l = BAG.find(x => lineKey(x) === card.dataset.key); if (!l || PAID) return;
+    if (b.dataset.a === 'x') l.q = 0; else l.q += +b.dataset.a;
+    if (l.q <= 0) BAG = BAG.filter(x => x !== l);
+    saveBag(); sfx('tick'); renderBag(); return;
+  }
+  const c = b.dataset.c;
+  if (c === 'view' && card) viewFromCart(card.dataset.key);
+  else if (c === 'shop') closeCart();
+  else if (c === 'pay' && BAG.length) { checkout(); renderCart(); }
+  else if (c === 'again') { PAID = null; lastCount = -1; const k = renderBag('print'); sfx('print', k * 2); closeCart(); }
+});
+receiptEl.addEventListener('click', e => {
+  if (e.target.closest('[data-open]')) { openCart(); return; }
+  const q = e.target.closest('.qty button');
+  if (q) {
+    const key = q.closest('.bl').dataset.key, l = BAG.find(x => lineKey(x) === key); if (!l) return;
+    l.q += +q.dataset.a; if (l.q <= 0) BAG = BAG.filter(x => x !== l);
+    saveBag(); sfx('tick'); renderBag(); return;
+  }
+  const g = e.target.closest('.go'); if (!g) return;
+  if (g.dataset.go === 'pay' && BAG.length) checkout();
+  else if (g.dataset.go === 'again') { PAID = null; lastCount = -1; const k = renderBag('print'); sfx('print', k * 2); }
+});
+function checkout() {
+  const st = subtotal();
+  PAID = { no: 'No. SR-' + String(Math.floor(10000 + Math.random() * 89999)), date: fmtDate(), lines: BAG.map(l => ({ ...l })), st, sh: shipping(st), tx: taxOf(st), n: count() };
+  const k = renderBag('paid'); sfx('print', k * 3);
+  setTimeout(() => sfx('paid'), D(900));
+}
+async function addToBag() {
+  if (ST.mode !== 'focus' || ST.busy) return;
+  const it = curIt(), l0 = { id: it.id, ci: ST.ci, size: ST.size }, key = lineKey(l0);
+  if (PAID) { PAID = null; lastCount = -1; renderBag(); }
+  const btn = $('#add'); btn.classList.add('done'); $('#addTx').textContent = 'Added';
+  clearTimeout(addToBag.t); addToBag.t = setTimeout(() => { btn.classList.remove('done'); $('#addTx').textContent = 'Add to bag'; }, 1800);
+  sfx('tag');
+  // a copy of the piece arcs from the stage into the bag
+  const f = fg.getBoundingClientRect(), fl = document.createElement('div');
+  fl.className = 'flyer'; fl.innerHTML = pic(it, ST.side, '', ST.ci);
+  Object.assign(fl.style, { width: f.width + 'px', height: f.height + 'px', transform: `translate(${f.left}px,${f.top}px)`, transformOrigin: '0 0' });
+  document.body.appendChild(fl);
+  let t;
+  if (MOB) t = $('#bagBtn').getBoundingClientRect();
+  else {
+    const lr = receiptEl.querySelector('.r-lines').getBoundingClientRect(), last = receiptEl.querySelector('.bl:last-child');
+    const y = Math.min(lr.bottom - 42, last ? last.getBoundingClientRect().bottom + 12 : lr.top);
+    t = { left: lr.left, top: y, width: 30, height: 42 };
+  }
+  const s = Math.max(t.height / f.height, .04), tx = t.left + t.width / 2 - f.width * s / 2, ty = t.top + t.height / 2 - f.height * s / 2;
+  const mx = (f.left + tx) / 2, my = Math.min(f.top, ty) - 70;
+  fg.animate([{ transform: 'none' }, { transform: 'scale(.97)', offset: .25 }, { transform: 'none' }], { duration: D(700), easing: 'cubic-bezier(.3,.7,.3,1)' });
+  const a = fl.animate([
+    { transform: `translate(${f.left}px,${f.top}px) scale(1)`, opacity: 0 },
+    { transform: `translate(${f.left}px,${f.top - 18}px) scale(.92)`, opacity: 1, offset: .14 },
+    { transform: `translate(${mx}px,${my}px) scale(${(s + .92) / 2.6}) rotate(-8deg)`, opacity: 1, offset: .55 },
+    { transform: `translate(${tx}px,${ty}px) scale(${s}) rotate(-2deg)`, opacity: 1, offset: .94 },
+    { transform: `translate(${tx}px,${ty}px) scale(${s})`, opacity: 0 }
+  ], { duration: D(1150), easing: 'cubic-bezier(.45,0,.3,1)', fill: 'forwards' });
+  await a.finished.catch(() => {});
+  fl.remove();
+  const ex = BAG.find(x => lineKey(x) === key);
+  if (ex) ex.q++; else BAG.push({ ...l0, q: 1 });
+  saveBag(); renderBag(undefined, ex ? null : key); sfx('print', 6); setTimeout(() => sfx('ding'), D(320));
+  if (ex) { const el = receiptEl.querySelector(`[data-key="${key}"]`); if (el) el.animate([{ background: 'rgba(67,230,31,.5)' }, { background: 'transparent' }], { duration: D(900) }); }
+  if (MOB) $('#bagBtn').animate([{ transform: 'scale(1)' }, { transform: 'scale(1.15)' }, { transform: 'scale(1)' }], { duration: D(500), easing: 'cubic-bezier(.3,1.6,.5,1)' });
+}
+$('#bagBtn').addEventListener('click', () => { app.classList.toggle('bag-open'); sfx('tag'); });
+$('#scrim').addEventListener('click', () => app.classList.remove('bag-open'));
+
+/* ---------- layout ---------- */
+function layout() {
+  MOB = innerWidth <= 760;
+  // desktop: one composed frame, as wide as the height allows. On wide screens the rack and logo sit on the page centre,
+  // and the frame grows by the bag column's width so the rack keeps its size and the bag moves out to the left
+  // (only when there's room for the full extra width; narrower windows keep the logo on the rack's own axis)
+  const side = 248 + 32, base = Math.max(1180, app.clientHeight * 1.34), SYM = !MOB && innerWidth >= base + side;
+  app.classList.toggle('sym', SYM);
+  const capH = MOB ? 238 : 214, ak = MOB ? 36 : 56, az = MOB ? 0 : ak + 28;
+  // the rod is long enough that the end hangers stay on it when the rack spreads on hover, with a little rod to spare before the bends
+  // (on narrower windows the hover spread tightens before the rack shrinks)
+  const n = itemsEl.children.length || NR, rodK = MOB ? 5.4 : .7 * (n - 1) + 2 * (.85 + .25), rodM = MOB ? 5.4 : .7 * (n - 1) + 2 * (.5 + .25);
+  // the rack runs 15% larger than the composed frame's own size; the frame widens to make room where the window allows
+  const fr0 = MOB ? 0 : Math.min(innerWidth, base + (SYM ? side : 0));
+  app.style.setProperty('--frame', MOB ? '100%' : fr0 + 'px');
+  const sh = stage.clientHeight, sw00 = stage.clientWidth, swA = SYM ? sw00 - side : sw00, hfit = (sh - capH - 20) * AR_S / 1.05;
+  let rw0 = Math.min(swA / 7, (swA - 2 * az) / 5.6, hfit, sh * .52 * AR_S); rw0 = Math.max(54, Math.min(190, rw0));
+  const rwT = MOB ? rw0 : Math.min(rw0 * 1.15, hfit), extra = MOB ? 0 : Math.max(0, rodK * rwT + 2 * az - swA);
+  const fr = MOB ? 0 : Math.min(innerWidth, fr0 + extra);
+  if (!MOB) app.style.setProperty('--frame', fr + 'px');
+  const sw0 = stage.clientWidth, s = app.style;
+  const sw = SYM ? sw0 - side : sw0, cx = SYM ? -side / 2 : 0;
+  s.setProperty('--cx', cx + 'px');
+  // desktop: the arrows get their own lane beside the bar; phone: they sit in the bar's empty ends
+  let rw = MOB ? rw0 : Math.min(rwT, (sw - 2 * az) / rodM); rw = Math.max(54, Math.min(220, rw));
+  const rh = rw / AR_S, bt = Math.max(3, rh * .012), bw = Math.max(rw * rodM, Math.min(rw * 7, sw - 2 * az));
+  DIM.sp = Math.max(.5, Math.min(.85, bw / 2 / rw - .35 * (n - 1) - .25));
+  s.setProperty('--ak', ak + 'px'); s.setProperty('--az', az + 'px');
+  DIM.rw = rw; DIM.rh = rh;
+  s.setProperty('--rw', rw + 'px'); s.setProperty('--rh', rh + 'px'); s.setProperty('--bt', bt + 'px'); s.setProperty('--bw', bw + 'px');
+  const ry = Math.max(14, (sh - rh * 1.05 - capH) / 2);
+  s.setProperty('--ry', ry + 'px');
+  // shared lines: the receipt's top edge sits on the rail, and the nav pill starts where the rail starts
+  s.setProperty('--oy', MOB ? '0px' : Math.max(0, ry + bt / 2 - 34 - 50) + 'px');
+  // the big outlined words sit on the rack's centre line, behind everything
+  { const ar = app.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    s.setProperty('--sx', sr.left - ar.left + sw0 / 2 + cx + 'px'); s.setProperty('--sy', sr.top - ar.top + ry + rh * .5 + 'px'); }
+  s.setProperty('--al', MOB ? '0px' : Math.max(0, (sw - bw) / 2) + 'px');
+  s.setProperty('--ph', Math.min(innerHeight * .64, 560) + 'px');
+  // the rack (rail, pieces, arrows, wall mounts, Drop 05) drops so the air from the logo down to the rail matches the air
+  // from the lowest hem down to the caption; the logo, receipt and caption hold their places
+  let rd = 0;
+  if (!MOB) {
+    const lgB = $('#home').getBoundingClientRect().bottom, stT = stage.getBoundingClientRect().top;
+    const railY = stT + ry + bt / 2, hem = railY + rh * (HEM - .018);
+    const capT = stT + ry + rh * 1.1 + Math.min(30, Math.max(14, innerHeight * .026));
+    rd = Math.max(14 - ry, ((capT - hem) - (railY - lgB)) / 2);
+  }
+  s.setProperty('--rd', rd + 'px');
+  // Drop 05 hangs in the right-hand column, centred where the receipt's column sits on the left, its wall hook on the rail's line;
+  // a shirt-width bag, its body about the receipt's width
+  if (SYM) { const dw = Math.min(242, rh * .8 / 1.6667); s.setProperty('--dw', dw + 'px'); s.setProperty('--dx', sw0 - 124 - dw / 2 + 'px'); s.setProperty('--dy', ry + rd + bt / 2 - 16 / 400 * dw * 1.6667 + 'px'); }
+  // measured from layout boxes, not transformed ones (the info column slides in on the product page)
+  // the rail view keeps the pill over the receipt-width column; the product view centres it over the wider info column
+  if (SYM) { const tr = $('.top').getBoundingClientRect(), pr = $('#pv').getBoundingClientRect(), ie = $('#info'), nxF = pr.left + ie.offsetLeft + (ie.offsetWidth - 4) / 2 - tr.left; s.setProperty('--nxF', nxF + 'px'); s.setProperty('--nx', nxF + 28 + 'px'); }
+  if (!MOB) { const tr = $('.top').getBoundingClientRect(), lb = $(".o-lbl"), mt = $('.main').getBoundingClientRect().top;
+    // the label's resting line: its top in the bag column plus half its height (layout box, so the entrance doesn't skew it)
+    const ly = mt + parseFloat(getComputedStyle($('.main')).paddingTop) + parseFloat(getComputedStyle($('.orders')).marginTop) + lb.offsetHeight / 2;
+    const hy = Math.max(0, ly - (tr.top + tr.height / 2)); s.setProperty('--hy', hy + 'px');
+    // the info column starts a clear gap below the back / forward pill
+    s.setProperty('--it', SYM ? Math.max(0, tr.top + tr.height / 2 + hy + 22 - $('#pv').getBoundingClientRect().top + 28) + 'px' : '0px'); }
+  else s.setProperty('--hy', '0px');
+  // desktop: the hover spread stops a clear 24px short of the arrows, measured from the outer pieces' visible edges (layout boxes, so a live hover doesn't skew it)
+  if (!MOB && itemsEl.children.length) {
+    // each piece's resting left edge: its box centre less any hover shift, then its unscaled width
+    const cs = [...itemsEl.children].map(el => { const r = el.getBoundingClientRect(); return r.left + r.width / 2 - (parseFloat(el.style.getPropertyValue('--x')) || 0); });
+    const hw = [...itemsEl.children].map(el => { const id = ITEMS[+el.dataset.i].id; return rw * (BASE[id] || 1) * ((RIGHT[id] || .95) - .5); });
+    const lo = Math.min(...cs.map((c, j) => c - hw[j])), hi = Math.max(...cs.map((c, j) => c + hw[j]));
+    const rl = $('.rk.l').getBoundingClientRect(), rr = $('.rk.r').getBoundingClientRect(), room = Math.min(lo - rl.right, rr.left - hi) - 24;
+    DIM.sp = Math.max(.3, Math.min(DIM.sp, room / rw));
+  }
+  [...itemsEl.children].forEach((el, j) => { if (ST.hover >= 0 && j !== ST.hover) el.style.setProperty('--x', (posOf(j) < posOf(ST.hover) ? -1 : 1) * rw * DIM.sp + 'px'); });
+  layoutFocus(); layoutCart();
+}
+// each piece's right edge in its front image, as a share of the image width
+const RIGHT = { ember: .9, kit: .966, never: .935, signal: .922, tank: .863, varsity: .949, wash: .962 };
+function layoutFocus() {
+  const s = app.style, pw = pane.clientWidth, ph = pane.clientHeight;
+  const n = curIt().colors.length, tw = n > 1 ? n * (MOB ? 35 : 53) + 18 : 20;
+  const ctrl = 76;
+  // desktop: centre the piece and its colour tags together, so the tags no longer cost the shirt its size
+  // desktop: the piece is centred between the bag's right edge and the info column, so the air either side matches;
+  // its colour tags hang in the air on the right
+  // wide desktop: the piece sits on the logo's axis, sized to the nearer side
+  const L0 = -32, R0 = pw + (parseFloat(getComputedStyle($('#pv')).columnGap) || 40), sym = app.classList.contains('sym');
+  let fx = MOB ? pw / 2 : (L0 + R0) / 2;
+  if (sym) { const lg = $('#home').getBoundingClientRect(); fx = lg.left + lg.width / 2 - pane.getBoundingClientRect().left; }
+  const half = Math.min(fx - L0, R0 - fx);
+  // desktop: the hook starts a clear gap below the logo, which drops onto the label line and so reaches down into the page
+  let top0 = 0;
+  if (!MOB) { const lg = $('#home').getBoundingClientRect(), pr = pane.getBoundingClientRect(); top0 = Math.max(0, lg.bottom - pr.top + 24); }
+  const fh = Math.max(240, Math.min(ph - ctrl - (MOB ? 40 : 24) - top0, MOB ? (pw - 2 * tw) / AR_F : (half - 24 - tw) / .36 / AR_F, 860)), fw = fh * AR_F;
+  s.setProperty('--fx', fx + 'px');
+  const ft = Math.max(MOB ? 36 : 8, top0, (ph - fh - ctrl) / 2);
+  Object.assign(DIM, { fw, fh, pw, ph });
+  s.setProperty('--fh', fh + 'px'); s.setProperty('--fw', fw + 'px'); s.setProperty('--ft', ft + 'px');
+  // desktop: the tags centre in the open wall between the piece's right edge (measured from its front image) and the info column
+  // phone: there's no room beside the piece on the right, so the tags hang just clear of its left edge
+  if (MOB) { const g = n * 29 + (n - 1) * 6; s.setProperty('--tl', Math.max(6, fx - ((RIGHT[curIt().id] || .95) - .5) * fw - 10 - g) + 'px'); }
+  else { const g = n * 37 + (n - 1) * 16, x1 = fx + ((RIGHT[curIt().id] || .95) - .5) * fw, x2 = R0;
+    s.setProperty('--tl', Math.max(x1 + 12, Math.min(x2 - g - 12, (x1 + x2 - g) / 2)) + 'px'); }
+  if (Z.k !== 1) zApply();
+}
+addEventListener('resize', () => { if (pane.classList.contains('zoomed')) zoomOut(true); layout(); });
+
+/* ---------- keys & chrome ---------- */
+addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key, inField = e.target.matches && e.target.matches('input');
+  if (k === 'Escape') {
+    $('#audio').classList.remove('open');
+    if (ST.mode === 'cart') { closeCart(); return; }
+    if (app.classList.contains('bag-open')) app.classList.remove('bag-open');
+    else if (pane.classList.contains('zoomed')) zoomOut();
+    else if (ST.mode === 'focus') closeFocus();
+    return;
+  }
+  if (inField) return;
+  if (ST.mode === 'focus') {
+    if (pane.classList.contains('zoomed')) return;
+    if (k === 'ArrowLeft') { e.preventDefault(); go(-1); }
+    else if (k === 'ArrowRight') { e.preventDefault(); go(1); }
+    else if (k === 'f' || k === 'F') setSide(ST.side === 'f' ? 'b' : 'f');
+  } else if (ST.mode === 'rail') {
+    if (k === 'ArrowLeft' || k === 'ArrowRight') {
+      e.preventDefault();
+      const n = ORDER[ST.hover < 0 ? (k === 'ArrowLeft' ? NR - 1 : 0) : (posOf(ST.hover) + (k === 'ArrowLeft' ? -1 : 1) + NR) % NR];
+      riEl(n).focus({ preventScroll: true }); setHover(n); sfx('hover');
+    }
+  }
+});
+$('#btnMute').addEventListener('click', () => {
+  // on touch the first tap brings the slider out; the speaker mutes once it's showing
+  if (MOB && !$('#audio').classList.contains('open')) { const a = $('#audio'); a.classList.add('open'); clearTimeout(a._t); a._t = setTimeout(() => a.classList.remove('open'), 5000); return; }
+  setMuted(!AU.muted);
+  if (MOB) { const a = $('#audio'); a.classList.add('open'); clearTimeout(a._t); a._t = setTimeout(() => a.classList.remove('open'), 5000); }
+});
+$('#musicVol').addEventListener('input', e => {
+  AU.mvol = e.target.value / 100; store.set('softriot-music', String(AU.mvol));
+  if (AU.muted && AU.mvol > 0) setMuted(false);
+  if (AU.music) AU.music.gain.setTargetAtTime(musicLevel(AU.mvol), AU.ctx.currentTime, .06);
+  const a = $('#audio'); clearTimeout(a._t); a._t = setTimeout(() => a.classList.remove('open'), 5000);
+  audioUI();
+});
+document.addEventListener('pointerdown', e => { if (!$('#audio').contains(e.target)) $('#audio').classList.remove('open'); });
+addEventListener('pointerdown', audioBoot, true);
+['click', 'touchend', 'mousedown'].forEach(t => addEventListener(t, audioBoot, true));
+audioBoot();
+addEventListener('keydown', audioBoot, true);
+document.addEventListener('visibilitychange', () => { if (!AU.ctx) return; if (document.hidden) AU.ctx.suspend(); else if (!AU.muted) AU.ctx.resume(); });
+
+/* ---------- entrance ---------- */
+// the signature open: logo lands, the rail draws out from the centre, the pieces load onto it one by one from the left,
+// then the caption, bag and controls settle in
+function entrance() {
+  const ez = 'cubic-bezier(.16,.84,.24,1)', bk = 'backwards';
+  $('#home svg').animate([{ transform: 'translateY(-14px) rotate(-10deg) scale(.6)', opacity: 0, filter: 'blur(6px)' }, { transform: 'rotate(2deg) scale(1.06)', opacity: 1, filter: 'blur(0)', offset: .62 }, { transform: 'none', opacity: 1, filter: 'blur(0)' }], { duration: D(1300), delay: D(250), easing: 'cubic-bezier(.3,.7,.3,1)', fill: bk });
+  // as it lands, the word pushes out through the pill
+  $('#home .push').animate([{ transform: 'scaleX(.66)' }, { transform: 'none' }], { duration: D(1600), delay: D(700), easing: 'cubic-bezier(.22,1,.36,1)', fill: bk });
+  $('.bar').animate([{ transform: 'scaleX(0)', opacity: 0 }, { opacity: 1, offset: .2 }, { transform: 'none', opacity: 1 }], { duration: D(1100), delay: D(650), easing: ez, fill: bk });
+  // pieces arrive the way a new one loads from the rack arrows: a short slide in from the right as it fades up
+  const L = itemsEl.children.length, step = DIM.rw * .7;
+  [...itemsEl.children].forEach((el, i) => {
+    el.querySelector('.drop').animate([{ transform: `translateX(${step * .9}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }],
+      { duration: D(820), delay: D(1250 + posOf(i) * 150), easing: 'cubic-bezier(.22,.8,.3,1)', fill: bk });
+  });
+  const late = D(1250 + (L - 1) * 150 + 600);
+  receiptEl.querySelector('.r-in').animate([{ transform: 'translateY(-30px) rotate(-2deg)', opacity: 0 }, { transform: 'rotate(.8deg)', opacity: 1, offset: .6 }, { transform: 'none', opacity: 1 }], { duration: D(1100), delay: D(1700), easing: 'cubic-bezier(.3,.7,.3,1)', fill: bk });
+  // opacity only: the nav and arrows carry their own positioning transforms
+  document.querySelectorAll('.mt').forEach(m => m.animate([{ opacity: 0 }, { opacity: 1 }], { duration: D(700), delay: D(1250), easing: ez, fill: bk }));
+  ['.o-lbl', '.hr', '#rkL', '#rkR', '#d05'].forEach((q, k) => { const e = $(q); if (e) e.animate([{ opacity: 0 }, { opacity: 1 }], { duration: D(900), delay: late + D(k * 90), easing: ez, fill: bk }); });
+  setTimeout(() => { if (capKey === null) setCap(-1); }, late);
+}
+
+/* ---------- boot ---------- */
+function boot() {
+  document.documentElement.style.setProperty('--grain', `url(${noiseURL(180, 70, 40)})`);
+  buildRail(); applyOrder();
+  const words = ['New drops', 'Soft Riot', 'Never still', 'Drop 04', 'Free shipping over $150', 'SS26'];
+  const run = words.map(w => `<span>${w}</span><span>✦</span>`).join('');
+  $('#mq').innerHTML = run.repeat(4) + run.repeat(4);
+  audioUI(); layout();
+  renderBag('print');
+  entrance();
+  if (document.fonts) document.fonts.ready.then(layout);
+}
+boot();
+</script></body></html>
+</body></html>

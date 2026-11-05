@@ -1,0 +1,388 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!--
+ALIGNMENT NOTES
+Grid: 12 columns, max width 1344px, 32px gutter, page gutter max(24px, safe-area) (16px floor on phones).
+Copy, lists and the form start on column 1 or column 7.
+Intentional offsets:
+- The hero words sit high, on the bare plaster wall above the sofa (top third of the frame), not centred: the wall is the room's one empty surface, so the words take it and leave the furniture whole.
+- The photo is pinned 22% from its left edge, so the doorway arch on the left is trimmed on narrow screens before the sofa or the lacquer console ever is.
+- The fourteen-week strip runs full width, columns 1 to 12, days grouped in sevens; its one tall bar (install day) ends exactly on the column 12 edge.
+- Desktop (pinned): the week counter is set large on columns 1 to 6, its baseline on the frame's bottom edge, so the count and the room it is building read as one line; at landing it becomes "Install day" in brass. The small labels under the bars are dropped there.
+- Phones: the small counter rides under the first day of the week being filled; "Install day" sits flush right on the last column edge.
+- The header turns solid after the first 40px of scroll, before the hero words can slide under it.
+- The finished-room frame (the room, unlit until install day) spans columns 8 to 12 (it shares column 8 with the headline's last column, but sits below the headline's last line), right edge on the column 12 edge, the same edge as the install-day bar, so the bar rises straight up into the frame's corner and the room opens out of that day. On desktop it stands from the eyebrow's top line down to the top of the risen bar, so its height follows the screen while its columns never change.
+- In the hero, the morning light comes from the right because the windows in the photo are on the right; it crosses the room and reaches the words last.
+
+SELLS
+Buyer: Palm Beach homeowner, second home or new build, wants it done and done well.
+Fear: months of half-finished rooms, boxes, deliveries and decisions.
+Outcome: walk into a finished home, every room complete, on one day.
+Proof: weeks start to finish, homes finished, one install day, nothing left behind.
+One CTA: "Begin a project".
+-->
+<title>Linen &amp; Lacquer</title>
+<script>document.documentElement.classList.add('js')</script>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@400;500&display=swap">
+<style>
+/* Layout: a finished room wakes in morning light, then ivory pages and one lacquer-black band */
+:root{
+  --ivory:#F7F3EC;
+  --linen:#EDE6DA;
+  --lacquer:#121110;
+  --ink:#1B1A18;
+  --ink-2:#5F5A52;
+  --rule:#DCD3C5;
+  --brass:#B89A6A;
+  --serif:"Petrona",Georgia,serif;
+  --sans:"Jost",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ivory)}
+.wrap{max-width:1344px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
+.eyebrow{margin:0;font-size:13px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2)}
+/* slim lacquer-black square, spaced capitals; a slow sheen crosses it on hover */
+.btn{position:relative;display:inline-block;overflow:hidden;background:var(--lacquer);color:var(--ivory);font-family:var(--sans);font-weight:500;font-size:13px;letter-spacing:.24em;text-transform:uppercase;line-height:1;padding:20px 34px;border:0;border-radius:0;text-decoration:none;cursor:pointer}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);transform:translateX(-110%);transition:transform .9s cubic-bezier(.3,.7,.2,1)}
+.btn:hover::after,.btn:focus-visible::after{transform:translateX(110%)}
+.btn:focus-visible{outline:1px solid var(--lacquer);outline-offset:4px}
+
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:9;color:var(--ink);transition:background .5s,box-shadow .5s}
+header.solid{background:rgba(247,243,236,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--rule)}
+header .wrap{display:flex;align-items:center;height:88px}
+.logo{text-decoration:none;color:inherit;font-size:15px;font-weight:500;letter-spacing:.3em;text-transform:uppercase}
+.logo i{font-family:var(--serif);font-style:italic;font-weight:300;letter-spacing:0;text-transform:none;font-size:20px;margin:0 .35em}
+nav{margin-left:auto;display:flex;align-items:center;gap:40px;font-size:16px}
+nav a.t{text-decoration:none;color:var(--ink)}
+nav a.t:hover{color:var(--ink-2)}
+nav .btn{padding:15px 22px;font-size:12px;transition:opacity .5s}
+header:not(.solid) nav .btn{opacity:0;pointer-events:none}
+
+/* hero */
+.hero{position:relative;height:100svh;min-height:700px;background:#B4A68F;overflow:hidden}
+.js .ph{background:#3d424b}
+.ph{position:absolute;inset:0;margin:0}
+.ph img{display:block;width:100%;height:100%;object-fit:cover;object-position:22% 50%}
+/* morning light: one photo, three layers. A cool dusk (multiply) and a grey wash (color) hold the room before sunrise; a warm band (screen) crosses it from the windows */
+.dawn,.beam,.cool{position:absolute;inset:0;pointer-events:none;display:none}
+.js .dawn,.js .beam,.js .cool{display:block}
+.dawn,.beam,.cool{left:0;right:auto;width:300%;will-change:transform}
+.dawn{mix-blend-mode:multiply;background:linear-gradient(100deg,#4d586b 0 33%,rgba(112,124,144,.62) 36%,rgba(255,255,255,0) 40% 100%)}
+.cool{mix-blend-mode:color;background:linear-gradient(100deg,rgba(125,135,150,.62) 0 36%,rgba(125,135,150,.3) 40%,rgba(125,135,150,0) 46% 100%)}
+.beam{mix-blend-mode:screen;background:linear-gradient(100deg,rgba(255,190,120,0) 32%,rgba(255,180,105,.22) 35%,rgba(255,212,158,.6) 37.4%,rgba(255,198,136,.3) 40%,rgba(255,192,128,.12) 45%,rgba(255,192,128,0) 52%)}
+.ph{overflow:hidden}
+.hero .wrap{position:relative;height:100%;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px;align-content:start;padding-top:max(150px,19vh)}
+.hl{grid-column:1 / span 6}
+h1{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(58px,7vw,112px);line-height:.98;letter-spacing:-.02em;font-variation-settings:"opsz" 72}
+h1 span{display:block}
+h1 em{font-style:italic}
+.lede{margin:26px 0 34px;font-size:20px;line-height:1.5;max-width:31ch;color:var(--ink)}
+
+/* fourteen weeks, one day */
+.weeks{background:var(--lacquer);color:var(--ivory);padding-block:136px 128px}
+/* desktop: the section holds still while the fourteen weeks fill with scroll */
+.stage{position:relative}
+.frame{grid-column:8 / -1;position:relative;margin:48px 0 0;aspect-ratio:16/9}
+/* the room is there all along, unlit; as the weeks fill it gathers a little shape, and on install day the light comes in from its windows */
+.room{position:absolute;inset:0;margin:0;overflow:hidden;background:#171513}
+.room img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:40% 60%}
+.room .rd{display:none}
+.js .room .rd{display:block;filter:brightness(var(--d,.1)) saturate(.35);transform:scale(1.04)}
+.js .room .rl{-webkit-mask-image:linear-gradient(100deg,transparent 0 42%,#000 58% 100%);mask-image:linear-gradient(100deg,transparent 0 42%,#000 58% 100%);-webkit-mask-size:300% 100%;mask-size:300% 100%;-webkit-mask-position:0% 0;mask-position:0% 0;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;transform:scale(1.04)}
+.js .landed .room .rl{-webkit-mask-position:100% 0;mask-position:100% 0;transform:none;transition:-webkit-mask-position 1.7s cubic-bezier(.45,.05,.25,1),mask-position 1.7s cubic-bezier(.45,.05,.25,1),transform 2.6s cubic-bezier(.2,.7,.2,1)}
+@media (min-width:901px) and (min-height:620px){
+  .weeks{padding-block:0 128px}
+  .pin{height:300vh}
+  .stage{position:sticky;top:0;height:100vh;padding:136px 0 64px;display:flex}
+  .stage .wrap{width:100%;grid-template-rows:auto auto minmax(0,1fr) auto}
+  .stage .eyebrow{grid-row:1;grid-column:1 / span 7}.weeks .stage h2{grid-row:2;grid-column:1 / span 7;font-size:clamp(44px,4.6vw,76px)}
+  .frame{grid-row:1 / 4;align-self:stretch;aspect-ratio:auto;width:100%;margin:0}
+  .room img{object-position:36% 60%}
+  .stage .strip{grid-row:4;margin-top:0}
+  .stage .sl{display:none}
+  .stage .wk{display:block;grid-row:3;grid-column:1 / span 6;align-self:end;margin:0 0 -.255em;font-family:var(--serif);font-weight:300;font-size:clamp(60px,6.4vw,104px);line-height:1;letter-spacing:-.02em;color:var(--ivory);font-variant-numeric:lining-nums tabular-nums;font-variation-settings:"opsz" 72;white-space:nowrap;transition:opacity .35s,color .6s}
+  .stage .wk.b{color:var(--brass);font-style:italic}
+  .wk.out{opacity:0}
+  .weeks .stats{margin-top:56px}
+}
+.weeks .eyebrow{grid-column:1 / -1;color:rgba(247,243,236,.6)}
+.weeks h2,.list-h{margin:16px 0 0;font-family:var(--serif);font-weight:300;font-size:clamp(46px,5.2vw,84px);line-height:1.02;letter-spacing:-.015em;text-wrap:balance}
+.weeks h2{grid-column:1 / span 8}
+.weeks h2 em{font-style:italic;color:var(--brass)}
+.strip{grid-column:1 / -1;margin-top:88px}
+.strip svg{display:block;width:100%;height:auto;overflow:visible}
+.day{fill:rgba(247,243,236,.22)}
+.js .day{fill:rgba(247,243,236,.075)}
+.fill{fill:rgba(247,243,236,.4)}
+.day.inst{fill:var(--brass)}
+.sl{font-family:var(--sans);font-size:15px;letter-spacing:.18em;text-transform:uppercase;fill:rgba(247,243,236,.6)}
+.sl.b{fill:var(--brass)}
+.sl.cur{fill:var(--ivory)}
+.wk{display:none}
+.sl{transition:opacity .35s}
+.landed .sl.b{transition:opacity .8s .3s}
+.stats{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px;margin-top:104px}
+.stat{border-top:1px solid rgba(247,243,236,.18);padding-top:28px}
+.stat b{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(60px,5.8vw,96px);line-height:1;font-variant-numeric:lining-nums tabular-nums}
+.stat > span{display:block;margin-top:14px;color:rgba(247,243,236,.66);max-width:20ch}
+
+/* services */
+.svc{padding-block:128px}
+.list-h{grid-column:1 / span 5;margin:0}
+.list{grid-column:7 / span 6;margin:0;padding:0;list-style:none;border-top:1px solid var(--rule)}
+.list li{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:baseline;padding-block:26px;border-bottom:1px solid var(--rule)}
+.list b{font-family:var(--serif);font-weight:400;font-size:34px;line-height:1.15}
+.list span{color:var(--ink-2);font-size:17px;text-align:right}
+
+/* book */
+.book{background:var(--linen);padding-block:128px 136px}
+.book .lt{grid-column:1 / span 5}
+.book h2{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(52px,6vw,96px);line-height:1;letter-spacing:-.015em}
+.book h2 em{font-style:italic}
+.book .side{margin-top:32px;color:var(--ink-2);font-size:20px}
+.book .phone{display:block;margin-top:28px;font-family:var(--serif);font-size:36px;color:var(--ink);text-decoration:none;user-select:all}
+.book .addr{margin-top:40px;font-size:16px;color:var(--ink-2)}
+form{grid-column:7 / span 6;display:grid;gap:22px;align-self:start}
+label{display:grid;gap:8px;font-size:15px;color:var(--ink-2)}
+input,select{font:inherit;font-size:19px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid rgba(27,26,24,.28);padding:12px 0;outline:none;border-radius:0;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 14px) 52%,calc(100% - 8px) 52%;background-size:6px 6px;background-repeat:no-repeat}
+input:focus,select:focus{border-color:var(--ink)}
+form .btn{justify-self:start;margin-top:12px}
+.thanks{font-family:var(--serif);font-weight:300;font-size:36px;line-height:1.2}
+footer{padding-block:36px;background:var(--ivory);color:var(--ink-2);border-top:1px solid var(--rule);font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+.rv{transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .rv.pre{opacity:.001;transform:translateY(28px)}
+.js .hero .in{opacity:0;transform:translateY(24px);transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .hero .in.on{opacity:1;transform:none}
+/* the room wakes: the dusk slides off toward the left as a warm band of window light crosses it; the grey lifts; the camera eases in */
+.js .dawn,.js .cool,.js .beam{transform:translateX(0)}
+.js .hero.up .dawn,.js .hero.up .cool{transform:translateX(-50%);transition:transform 2.5s cubic-bezier(.45,.05,.25,1)}
+.js .hero.up .dawn{opacity:.78;transition:transform 2.5s cubic-bezier(.45,.05,.25,1),opacity 2s ease-out}
+.js .hero.up .beam{transform:translateX(-50%);opacity:0;transition:transform 2.5s cubic-bezier(.45,.05,.25,1),opacity 1.1s cubic-bezier(.4,0,.6,1) 1.9s}
+.js .ph img{transform-origin:46% 66%}
+.js .hero.up .ph img{transform:scale(1.035);transition:transform 7s cubic-bezier(.25,.4,.3,1)}
+.js header{opacity:0;transition:opacity 1s,background .5s,box-shadow .5s}
+.js header.on{opacity:1}
+.js .hero .in{transition-duration:1s}
+
+@media (max-width:900px){
+  nav a.t{display:none}
+  .hero{height:auto;min-height:100svh;display:flex;flex-direction:column;background:var(--ivory)}
+  .hero .wrap{height:auto;padding-top:128px;padding-bottom:40px;order:-1}
+  .hl{grid-column:1 / -1}
+  .ph{position:relative;flex:1;min-height:50vh}
+  .ph img{position:absolute;inset:0;object-position:40% 70%}
+  .weeks h2,.list-h,.list,.book .lt,form{grid-column:1 / -1}
+  .list{margin-top:40px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:48px;margin-top:80px}
+  .strip{margin-top:64px}
+  .frame{grid-column:1 / -1;margin-top:40px;order:2}
+  .strip{order:1}
+  form{margin-top:48px}
+  .weeks{padding-block:96px 88px}.svc,.book{padding-block:88px}
+}
+@media (max-width:520px){
+  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .logo{font-size:13px;letter-spacing:.24em}
+  .logo i{font-size:17px}
+  nav .btn{padding:13px 14px;font-size:11px;letter-spacing:.18em}
+  h1{font-size:clamp(48px,14vw,62px)}
+  .lede{font-size:19px}
+  .stats{grid-template-columns:1fr}
+  .list li{grid-template-columns:1fr;gap:6px}
+  .list span{text-align:left}
+  .list b{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  .js header{opacity:1}
+  .rv,.js .hero .in,.js .ph img{transition:none}
+  .js .rv.pre,.js .hero .in{opacity:1;transform:none}
+  .js .dawn,.js .beam,.js .cool{display:none}
+  .js .ph img{transform:none}
+  .pin{height:auto!important}.stage{position:relative!important;height:auto!important}
+  .frame{aspect-ratio:16/9!important;align-self:end!important}
+  .js .room .rd{display:none}.js .room .rl{-webkit-mask-image:none;mask-image:none;transform:none}
+}
+</style>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Linen and Lacquer home">Linen<i>&amp;</i>Lacquer</a>
+    <nav>
+      <a class="t" href="#svc">Services</a>
+      <a class="t" href="#weeks">How it works</a>
+      <a class="btn" href="#book">Begin a project</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero" aria-label="Linen and Lacquer">
+    <figure class="ph"><img src="b/linen/img/room.webp" alt="A calm ivory living room with a curved sofa, a black lacquer console and sheer curtains" fetchpriority="high"><div class="dawn" aria-hidden="true"></div><div class="cool" aria-hidden="true"></div><div class="beam" aria-hidden="true"></div></figure>
+    <div class="wrap">
+      <div class="hl">
+        <h1><span class="in">Quiet,</span><span class="in"><em>finished</em> rooms.</span></h1>
+        <p class="lede in">Interior design, every room delivered complete in one day.</p>
+        <a class="btn in" href="#book">Begin a project</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="weeks" id="weeks">
+    <div class="pin" id="pin"><div class="stage" id="stage">
+    <div class="wrap grid">
+      <p class="eyebrow rv">How it works</p>
+      <h2 class="rv">Fourteen weeks of work. <em>One day</em> of moving in.</h2>
+      <p class="wk" id="wk" aria-hidden="true">Week 1</p>
+      <div class="frame" id="frame"><figure class="room"><img class="rd" src="b/linen/img/room.webp" alt="" loading="lazy"><img class="rl" src="b/linen/img/room.webp" alt="The finished room on install day" loading="lazy"></figure></div>
+      <div class="strip" id="strip"><svg id="ssvg" role="img" aria-label="Ninety-eight days, from the first meeting to install day. Everything arrives and is placed on the last day."><g id="sg"></g></svg></div>
+    </div>
+    </div></div>
+    <div class="wrap grid">
+      <div class="stats">
+        <div class="stat rv"><b data-n="14">14</b><span>weeks, first meeting to move in</span></div>
+        <div class="stat rv"><b>1</b><span>install day, every room at once</span></div>
+        <div class="stat rv"><b data-n="180">180</b><span>homes finished on the island</span></div>
+        <div class="stat rv"><b>0</b><span>boxes left behind</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="svc" id="svc">
+    <div class="wrap grid">
+      <h2 class="list-h rv">What we do.</h2>
+      <ul class="list">
+        <li class="rv"><b>Whole homes</b><span>Designed and installed</span></li>
+        <li class="rv"><b>Single rooms</b><span>From one wall to one floor</span></li>
+        <li class="rv"><b>Furnishing and styling</b><span>Down to the last cushion</span></li>
+        <li class="rv"><b>Seasonal homes</b><span>Ready when you land</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div class="wrap grid">
+      <div class="lt">
+        <h2 class="rv">Begin a <em>project.</em></h2>
+        <p class="side rv">A first walk through your home, with the designer who will finish it.
+          <a class="phone" href="tel:5615550142">(561) 555-0142</a></p>
+        <p class="addr rv">Palm Beach, Florida<br>studio@linenandlacquer.com</p>
+      </div>
+      <form id="f" class="rv">
+        <label>Name<input name="name" autocomplete="name" required></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
+        <label>Email<input name="email" type="email" autocomplete="email"></label>
+        <label>The project<select name="for"><option>A whole home</option><option>A few rooms</option><option>One room</option><option>Not sure yet</option></select></label>
+        <button class="btn" type="submit">Begin a project</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>Linen &amp; Lacquer Interiors</span><span>Palm Beach, Florida</span></div></footer>
+
+<script>
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* hero: the room wakes. Pre-dawn grey, then a band of window light crosses from the right and the room warms to its own colours; the words come last */
+(()=>{
+  const hero=document.getElementById('hero'),ins=[...hero.querySelectorAll('.in')],hd=document.querySelector('header');
+  if(RM){ins.forEach(e=>e.classList.add('on'));hd.classList.add('on');return}
+  const img=hero.querySelector('.ph img');
+  const go=()=>{
+    getComputedStyle(hero.querySelector('.dawn')).transform;
+    setTimeout(()=>hero.classList.add('up'),350);
+    setTimeout(()=>hd.classList.add('on'),2200);
+    ins.forEach((e,i)=>setTimeout(()=>e.classList.add('on'),2250+i*260));
+  };
+  img.complete?go():(img.addEventListener('load',go,{once:true}),img.addEventListener('error',go,{once:true}));
+})();
+
+/* ninety-eight days. Scroll fills them week by week; the last one, install day, rises in brass and the finished room opens out of it */
+(()=>{
+  const narrow=innerWidth<640;
+  const svg=document.getElementById('ssvg'),g=document.getElementById('sg'),stage=document.getElementById('stage'),pin=document.getElementById('pin'),frame=document.getElementById('frame');
+  const N=98;let html='';const geo=[];let W,base,instH,cur,inst,instTxt;
+  if(narrow){
+    // phones: fourteen rows of seven days, one row a week
+    W=420;const cols=7,cw=W/cols,rh=22,H=14*rh+70;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    for(let i=0;i<N;i++){const r=Math.floor(i/cols),c=i%cols,last=i===N-1;geo.push({x:c*cw,y:r*rh,w:cw-6,h:rh-6});
+      html+=last?`<rect class="day inst" x="${c*cw}" y="${r*rh}" width="${cw-6}" height="${rh-6}"/>`:`<rect class="day" x="${c*cw}" y="${r*rh}" width="${cw-6}" height="${rh-6}"/><rect class="fill" x="${c*cw}" y="${r*rh+rh-6}" width="${cw-6}" height="0"/>`}
+    html+=`<text class="sl cur" x="0" y="${14*rh+30}">Week 1</text><text class="sl b" x="${W}" y="${14*rh+30}" text-anchor="end">Install day</text>`;
+  }else{
+    // days in fourteen groups of seven: 3px between days, 14px between weeks
+    W=1280;const gp=3,G=14,bw=(W-gp*(N-14)-G*13)/N,H=200;base=150;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    const X=i=>i*bw+(i-Math.floor(i/7))*gp+Math.floor(i/7)*G;
+    for(let i=0;i<N;i++){const last=i===N-1,h=last?150:44;geo.push({x:X(i),y:base-h,w:bw,h});
+      html+=last?`<rect class="day inst" x="${X(i).toFixed(2)}" y="${base-h}" width="${bw.toFixed(2)}" height="${h}"/>`:`<rect class="day" x="${X(i).toFixed(2)}" y="${base-h}" width="${bw.toFixed(2)}" height="${h}"/><rect class="fill" x="${X(i).toFixed(2)}" y="${base}" width="${bw.toFixed(2)}" height="0"/>`}
+    html+=`<text class="sl cur" x="0" y="${base+40}">Week 1</text><text class="sl b" x="${W}" y="${base+40}" text-anchor="end">Install day</text>`;
+  }
+  g.innerHTML=html;
+  const wkEl=document.getElementById('wk');let wkT=0;
+  const fills=[...g.querySelectorAll('.fill')];inst=g.querySelector('.inst');cur=g.querySelector('.sl.cur');instTxt=g.querySelector('.sl.b');
+  const ig=geo[N-1];
+  if(RM){fills.forEach((f,i)=>{f.setAttribute('y',geo[i].y);f.setAttribute('height',geo[i].h)});cur.textContent='Week 14';cur.style.opacity=0;wkEl.textContent='Install day';wkEl.classList.add('b');stage.classList.add('landed');return}
+  const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),sm=t=>t*t*(3-2*t);
+  let lastF=-1,lastWk=0,landed=false;
+  // the install bar rises from the baseline up into the frame's corner (desktop), or fills its own cell (phones)
+  const instTop=()=>{
+    if(narrow)return ig.y;
+    const sr=svg.getBoundingClientRect(),fr=frame.getBoundingClientRect(),k=W/sr.width;
+    const top=(fr.bottom-sr.top)*k;return Math.min(base-150,top);
+  };
+  const setInst=t=>{const bottom=narrow?ig.y+ig.h:base,full=bottom-instTop(),h=full*t;inst.setAttribute('y',(bottom-h).toFixed(2));inst.setAttribute('height',h.toFixed(2))};
+  instTxt.style.opacity=0;
+  const pinned=()=>getComputedStyle(stage).position==='sticky';
+  const prog=()=>{
+    if(pinned()){const r=pin.getBoundingClientRect(),span=pin.offsetHeight-innerHeight;return cl(-r.top/span)}
+    const r=svg.getBoundingClientRect();return cl((innerHeight*.92-r.top)/(innerHeight*.82));
+  };
+  const draw=()=>{
+    const p=prog();
+    // 0.04 to 0.64: ninety-seven days fill, one after another
+    const f=cl((p-.04)/.6)*(N-1);
+    if(Math.abs(f-lastF)>.001){lastF=f;
+      for(let i=0;i<N-1;i++){const t=sm(cl(f-i)),q=geo[i],h=q.h*t;const el=fills[i];
+        if(narrow){el.setAttribute('y',q.y+q.h-h);el.setAttribute('height',h)}else{el.setAttribute('y',(base-h).toFixed(2));el.setAttribute('height',h.toFixed(2))}}
+      const wk=Math.min(14,Math.max(1,Math.ceil((f+.001)/7)));
+      if(wk!==lastWk){lastWk=wk;cur.textContent='Week '+wk;if(!landed)wkEl.textContent='Week '+wk;
+        if(!narrow){let x=geo[(wk-1)*7].x;const tw=cur.getComputedTextLength();cur.setAttribute('x',Math.min(x,ig.x-24-tw).toFixed(2))}}
+    }
+    frame.style.setProperty('--d',(.09+.17*sm(cl((p-.04)/.62))).toFixed(3));
+    // 0.66 to 0.8: install day rises; it lands at 0.8 and the room opens
+    const r=cl((p-.66)/.14);setInst(1-Math.pow(1-r,3));
+    const L=r>=1;if(L!==landed){landed=L;stage.classList.toggle('landed',L);instTxt.style.opacity=L?1:0;cur.style.opacity=L?0:1;
+      // the big counter gives way to install day, in brass, as the room lights
+      clearTimeout(wkT);wkEl.classList.add('out');wkT=setTimeout(()=>{wkEl.textContent=L?'Install day':'Week '+lastWk;wkEl.classList.toggle('b',L);wkEl.classList.remove('out')},L?380:200)}
+  };
+  setInst(0);
+  let tick=false;addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(()=>{tick=false;draw()})}},{passive:true});
+  addEventListener('resize',draw);draw();
+})();
+
+/* reveals and counters */
+(()=>{
+  if(RM)return;
+  const els=[...document.querySelectorAll('.rv')];
+  els.forEach(e=>{if(e.getBoundingClientRect().top>innerHeight*.9)e.classList.add('pre')});
+  const io=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io.unobserve(e.target);setTimeout(()=>e.target.classList.remove('pre'),i*550)})},{threshold:.25});
+  els.forEach(e=>io.observe(e));
+  const ns=[...document.querySelectorAll('[data-n]')];
+  const io2=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io2.unobserve(e.target);const el=e.target,N=+el.dataset.n;
+    setTimeout(()=>{const t0=performance.now(),D=2000;const f=n=>{const p=Math.min(1,(n-t0)/D);el.textContent=Math.round(N*ease(p)).toLocaleString('en-US');if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)},i*550)})},{threshold:.4});
+  ns.forEach(n=>io2.observe(n));
+})();
+{const h=document.querySelector('header'),hero=document.getElementById('hero');const f=()=>h.classList.toggle('solid',scrollY>40);addEventListener('scroll',f,{passive:true});f()}
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();e.target.innerHTML='<p class="thanks">Thank you. We will call within one business day to set a time to walk through your home.</p>'});
+</script>
+
+</body></html>

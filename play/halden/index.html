@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Halden House Residents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@200..700&family=Gilda+Display&family=Martian+Mono:wght@300..500&family=Plus+Jakarta+Sans:wght@400..600&display=swap">
+<style>
+/* Halden House: the resident's phone on the left, the owner's board on the right. Whatever happens on one shows up on the other. */
+:root{
+  --night:#16120D;--night-2:#211B14;--sand:#D9BC8C;--sand-2:#E9D6B4;--cream:#F3EDE3;--paper:#FAF6EF;--sheet:#FFFFFF;
+  --ink:#1B1712;--ink-2:#5E554A;--ink-3:#8A8072;--rule:rgba(27,23,18,.1);--rule-on:rgba(243,237,227,.14);
+  --ok:#3F7A57;--ok-bg:#E5EFE7;--due:#9A6A1E;--due-bg:#F6ECDA;--late:#A3412C;--late-bg:#F6E3DD;
+  --display:"Lexend Exa","Helvetica Neue",Arial,sans-serif;--serif:"Gilda Display",Georgia,serif;--mono:"Martian Mono",ui-monospace,Menlo,monospace;--ui:"Plus Jakarta Sans",-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{overflow:hidden;font-family:var(--ui);color:var(--ink);-webkit-font-smoothing:antialiased;
+  background:radial-gradient(60% 70% at 30% 40%,rgba(217,188,140,.09),rgba(0,0,0,0) 70%),radial-gradient(120% 100% at 70% 0%,#2A2219 0%,#1A150F 50%,#110E0A 100%)}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+
+/* the room: phone and board side by side, scaled together to fit */
+.room{position:fixed;inset:0;display:grid;place-items:center}
+.duo{display:flex;gap:56px;align-items:center;transform-origin:50% 50%}
+.side{display:flex;flex-direction:column;gap:18px;align-items:center}
+.side>.mono{color:rgba(243,237,227,.55)}
+
+.phone{position:relative;width:397px;height:802px;padding:11px;border-radius:58px;background:linear-gradient(145deg,#2c2a27,#0c0b0a 40%,#1e1c19);box-shadow:0 0 0 1px rgba(255,255,255,.07),inset 0 0 0 1.5px rgba(255,255,255,.06),0 60px 120px rgba(0,0,0,.6),0 20px 40px rgba(0,0,0,.45)}
+.island{position:absolute;left:50%;top:22px;width:112px;height:32px;margin-left:-56px;border-radius:20px;background:#000;z-index:60}
+.screen{position:relative;width:375px;height:780px;border-radius:47px;overflow:hidden;background:var(--paper);transform:translateZ(0)}
+
+/* status bar */
+.sb{position:absolute;inset:0 0 auto;height:54px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 34px;font:600 15px/1 var(--ui);color:var(--ink);pointer-events:none;transition:color .5s}
+.sb.on{color:var(--cream)}
+.sb i{display:flex;gap:6px;align-items:center}
+.sb svg{height:12px;fill:currentColor}
+
+/* views */
+.views{position:absolute;inset:0;bottom:84px}
+.view{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:0 0 28px;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .5s var(--ease),transform .6s var(--ease),visibility 0s .5s;scrollbar-width:none}
+.view::-webkit-scrollbar{display:none}
+.view.on{opacity:1;visibility:visible;transform:none;transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.pad{padding:0 22px}
+.top{padding:64px 22px 0;display:flex;align-items:center;justify-content:space-between}
+.wm{font-family:var(--display);font-weight:300;font-variation-settings:normal;font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink)}
+.av{width:36px;height:36px;border-radius:12px;background:var(--night);color:var(--sand);display:grid;place-items:center;font:500 12px/1 var(--mono);letter-spacing:.06em}
+h1,h2,h3{margin:0;font-weight:300;font-family:var(--serif);font-optical-sizing:auto;letter-spacing:-.01em}
+.hi{padding:26px 22px 0}
+.hi h1{font-size:34px;line-height:1.05}
+.hi h1 em{font-style:italic}
+.hi .mono{display:block;margin-top:12px;color:var(--ink-3)}
+.h{padding:30px 22px 14px;display:flex;justify-content:space-between;align-items:baseline}
+.h h2{font-size:24px}
+.h .mono{color:var(--ink-3)}
+
+/* rent card */
+.rent{position:relative;margin:22px 22px 0;height:240px;border-radius:12px;overflow:hidden;color:var(--cream);background:var(--night)}
+.rent img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.82;transform:scale(1.04);transition:transform 6s var(--ease)}
+.rent.in img{transform:none}
+.rent::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,18,13,.15),rgba(22,18,13,.05) 30%,rgba(22,18,13,.82))}
+.rent .c{position:absolute;inset:auto 18px 18px;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.rent .mono{color:rgba(243,237,227,.72)}
+.rent .amt{display:block;margin-top:8px;font:300 40px/1 var(--serif);letter-spacing:-.02em;font-variant-numeric:lining-nums}
+.rent .sub{display:block;margin-top:8px;font-size:13px;color:rgba(243,237,227,.82)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:46px;padding:0 20px;border-radius:12px;background:var(--sand);color:var(--ink);font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:transform .3s var(--ease),background .3s}
+.btn:active{transform:scale(.97)}
+.btn.dark{background:var(--ink);color:var(--cream)}
+.btn.ghost{background:transparent;box-shadow:inset 0 0 0 1px var(--rule);color:var(--ink)}
+.btn.full{width:100%}
+.paid{display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 16px;border-radius:12px;background:rgba(243,237,227,.16);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.paid svg{width:14px;height:14px}
+
+/* quick tiles */
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 22px 0}
+.q{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:14px 12px 13px;border-radius:12px;background:var(--sheet);box-shadow:0 1px 0 var(--rule),0 8px 18px -14px rgba(27,23,18,.4);text-align:left}
+.q svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.4}
+.q b{font-weight:500;font-size:13px;line-height:1.2}
+.q small{display:block;margin-top:3px;font-size:12px;color:var(--ink-3)}
+.q .dot{position:absolute;top:12px;right:12px;min-width:20px;height:20px;padding:0 6px;border-radius:12px;background:var(--sand);font:500 12px/20px var(--mono);text-align:center}
+
+/* notices */
+.list{margin:0 22px;border-radius:12px;background:var(--sheet);box-shadow:0 1px 0 var(--rule)}
+.row{display:flex;align-items:center;gap:14px;padding:15px 16px;border-top:1px solid var(--rule)}
+.row:first-child{border-top:0}
+.row .t{flex:1;min-width:0}
+.row b{display:block;font-weight:500;font-size:14px;line-height:1.3}
+.row small{display:block;margin-top:3px;font-size:12px;color:var(--ink-3)}
+.row .ic{flex:none;width:36px;height:36px;border-radius:12px;background:var(--cream);display:grid;place-items:center}
+.row .ic svg{width:17px;height:17px;stroke:var(--ink);fill:none;stroke-width:1.4}
+.chev{flex:none;width:14px;height:14px;stroke:var(--ink-3);fill:none;stroke-width:1.5}
+
+/* repairs */
+.req{margin:0 22px 12px;padding:16px;border-radius:12px;background:var(--sheet);box-shadow:0 1px 0 var(--rule),0 10px 22px -18px rgba(27,23,18,.45)}
+.req.new{animation:pop .8s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.req-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.req-h b{font-weight:500;font-size:15px;line-height:1.3}
+.req-h small{display:block;margin-top:4px;font-size:12px;color:var(--ink-3)}
+.chip{flex:none;display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:12px;font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;background:var(--due-bg);color:var(--due);white-space:nowrap}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}
+.chip.late{background:var(--late-bg);color:var(--late)}
+.chip.mute{background:var(--cream);color:var(--ink-2)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:16px}
+.steps span{display:block}
+.steps i{display:block;height:3px;border-radius:2px;background:var(--rule);overflow:hidden;position:relative}
+.steps i::after{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleX(0);transform-origin:0 50%;transition:transform 1.2s var(--ease)}
+.steps .done i::after{transform:none}
+.steps em{display:block;margin-top:8px;font-style:normal;font-size:12px;color:var(--ink-3)}
+.steps .done em{color:var(--ink)}
+.req .when{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-2)}
+.req .when svg{width:15px;height:15px;stroke:var(--ink-2);fill:none;stroke-width:1.4}
+
+/* amenities */
+.am{position:relative;display:block;width:calc(100% - 44px);margin:0 22px 12px;height:150px;border-radius:12px;overflow:hidden;background:var(--night);color:var(--cream);text-align:left}
+.am img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.86;transition:transform 1.2s var(--ease)}
+.am:active img{transform:scale(1.03)}
+.am::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,18,13,0) 35%,rgba(22,18,13,.78))}
+.am>span{position:absolute;left:16px;right:16px;bottom:14px;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.am b{font:300 24px/1 var(--serif)}
+.am small{display:block;margin-top:6px;font-size:12px;color:rgba(243,237,227,.8)}
+.am .chip{background:rgba(243,237,227,.18);color:var(--cream);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+
+/* lease */
+.lease{margin:0 22px;padding:20px 18px;border-radius:12px;background:var(--night);color:var(--cream);display:flex;gap:18px;align-items:center}
+.ring{flex:none;position:relative;width:86px;height:86px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:4}
+.ring .bg{stroke:rgba(243,237,227,.14)}
+.ring .fg{stroke:var(--sand);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s var(--ease)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font:300 28px/1 var(--serif)}
+.lease .mono{color:rgba(243,237,227,.6)}
+.lease p{margin:8px 0 0;font:300 20px/1.2 var(--serif)}
+.offer{margin:12px 22px 0;padding:18px;border-radius:12px;background:var(--sheet);box-shadow:0 1px 0 var(--rule),0 10px 22px -18px rgba(27,23,18,.45)}
+.offer .mono{color:var(--ink-3)}
+.offer h3{margin-top:10px;font-size:22px;line-height:1.15}
+.offer h3 em{font-style:italic}
+.offer p{margin:8px 0 16px;font-size:13px;line-height:1.5;color:var(--ink-2)}
+
+/* tab bar */
+.tabs{position:absolute;inset:auto 0 0;height:84px;z-index:40;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 10px 26px;background:rgba(250,246,239,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--rule)}
+.tabs button{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--ink-3);font:500 12px/1 var(--ui);transition:color .3s}
+.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.4}
+.tabs button[aria-selected="true"]{color:var(--ink)}
+
+/* sheets */
+.scrim{position:absolute;inset:0;z-index:70;background:rgba(22,18,13,.38);opacity:0;visibility:hidden;transition:opacity .45s,visibility 0s .45s}
+.scrim.on{opacity:1;visibility:visible;transition:opacity .45s}
+.sheet{position:absolute;inset:auto 0 0;z-index:80;max-height:86%;overflow-y:auto;padding:12px 22px 34px;border-radius:28px 28px 0 0;background:var(--paper);transform:translateY(102%);transition:transform .6s var(--ease);scrollbar-width:none}
+.sheet::-webkit-scrollbar{display:none}
+.sheet.on{transform:none}
+.grab{width:40px;height:5px;margin:0 auto 18px;border-radius:3px;background:var(--rule)}
+.sheet h2{font-size:28px;line-height:1.1}
+.sheet h2 em{font-style:italic}
+.sheet .lead{margin:8px 0 0;font-size:13px;color:var(--ink-3)}
+.fld{margin-top:22px}
+.fld>.mono{display:block;margin-bottom:10px;color:var(--ink-3)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{height:38px;padding:0 14px;border-radius:12px;background:var(--sheet);box-shadow:inset 0 0 0 1px var(--rule);font-size:13px;color:var(--ink-2);transition:background .3s,color .3s,box-shadow .3s}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--cream);box-shadow:none}
+textarea{width:100%;min-height:84px;resize:none;padding:12px 14px;border:0;border-radius:12px;background:var(--sheet);box-shadow:inset 0 0 0 1px var(--rule);font:400 14px/1.45 var(--ui);color:var(--ink);outline:none}
+textarea:focus{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.photo{display:flex;gap:10px;align-items:center}
+.photo button{width:74px;height:74px;border-radius:12px;box-shadow:inset 0 0 0 1px var(--rule);background:var(--sheet);display:grid;place-items:center;overflow:hidden}
+.photo button svg{width:22px;height:22px;stroke:var(--ink-3);fill:none;stroke-width:1.4}
+.photo img{width:100%;height:100%;object-fit:cover}
+.photo small{font-size:12px;color:var(--ink-3)}
+.tog{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:22px;padding:14px 16px;border-radius:12px;background:var(--sheet);box-shadow:inset 0 0 0 1px var(--rule);font-size:14px}
+.sw{flex:none;position:relative;width:46px;height:28px;border-radius:12px;background:var(--rule);transition:background .3s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:9px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .3s var(--ease)}
+.sw[aria-checked="true"]{background:var(--ok)}
+.sw[aria-checked="true"]::after{transform:translateX(18px)}
+.sheet .btn.full{margin-top:26px}
+.sum{margin-top:22px;border-radius:12px;background:var(--sheet);box-shadow:inset 0 0 0 1px var(--rule)}
+.sum div{display:flex;justify-content:space-between;padding:14px 16px;border-top:1px solid var(--rule);font-size:14px}
+.sum div:first-child{border-top:0}
+.sum span{color:var(--ink-3)}
+.sum .tot{font-weight:600}
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.days button{height:62px;border-radius:12px;background:var(--sheet);box-shadow:inset 0 0 0 1px var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--ink-3)}
+.days button b{font:300 20px/1 var(--serif);color:var(--ink)}
+.days button[aria-pressed="true"]{background:var(--ink);color:rgba(243,237,227,.7);box-shadow:none}
+.days button[aria-pressed="true"] b{color:var(--cream)}
+.done{text-align:center;padding:24px 0 6px}
+.check{width:76px;height:76px;margin:0 auto 18px}
+.check circle{fill:none;stroke:var(--ok);stroke-width:2;stroke-dasharray:240;stroke-dashoffset:240;animation:dr 1s var(--ease) forwards}
+.check path{fill:none;stroke:var(--ok);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:dr .6s var(--ease) .6s forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+.done h2{font-size:28px}
+.done p{margin:10px auto 0;max-width:26ch;font-size:13px;line-height:1.5;color:var(--ink-3)}
+
+/* notification on the phone */
+.toast{position:absolute;left:12px;right:12px;top:58px;z-index:90;display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:20px;background:rgba(250,246,239,.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 18px 40px -16px rgba(0,0,0,.5);transform:translateY(calc(-100% - 90px));opacity:0;transition:transform .7s var(--ease),opacity .4s}
+.toast.on{transform:none;opacity:1}
+.toast .ic{flex:none;width:36px;height:36px;border-radius:12px;background:var(--night);color:var(--sand);display:grid;place-items:center;font:500 12px/1 var(--mono)}
+.toast b{display:block;font-weight:600;font-size:13px}
+.toast span{display:block;margin-top:2px;font-size:12px;color:var(--ink-2);line-height:1.35}
+
+/* ---------- the owner's board ---------- */
+.board{width:640px;height:802px;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;background:var(--paper);box-shadow:0 0 0 1px rgba(255,255,255,.06),0 50px 110px -30px rgba(0,0,0,.65)}
+.bd-top{flex:none;display:flex;align-items:center;justify-content:space-between;padding:22px 26px;background:var(--night);color:var(--cream)}
+.bd-top .wm{color:var(--cream)}
+.bd-top .mono{color:rgba(243,237,227,.6)}
+.bd-body{flex:1;min-height:0;overflow-y:auto;padding:22px 26px 26px;scrollbar-width:thin}
+.kpis{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px}
+.kpi{padding:16px;border-radius:12px;background:var(--sheet);box-shadow:0 1px 0 var(--rule)}
+.kpi .mono{color:var(--ink-3)}
+.kpi b{display:block;margin-top:10px;font:300 30px/1 var(--serif);letter-spacing:-.015em;font-variant-numeric:lining-nums tabular-nums}
+.kpi small{display:block;margin-top:8px;font-size:12px;color:var(--ink-3)}
+.bar{margin-top:12px;height:4px;border-radius:2px;background:var(--rule);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok);transition:width 1.4s var(--ease)}
+.bd-h{display:flex;justify-content:space-between;align-items:baseline;margin:26px 0 12px}
+.bd-h h3{font-size:20px}
+.bd-h .mono{color:var(--ink-3)}
+.tbl{border-radius:12px;background:var(--sheet);box-shadow:0 1px 0 var(--rule)}
+.tr{display:grid;grid-template-columns:58px minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:13px 16px;border-top:1px solid var(--rule);font-size:13px}
+.tr:first-child{border-top:0}
+.tr .u{font:500 12px/1 var(--mono);letter-spacing:.06em}
+.tr .d{min-width:0}
+.tr .d b{display:block;font-weight:500;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr .d small{display:block;margin-top:3px;font-size:12px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr .act{height:32px;padding:0 12px;border-radius:12px;background:var(--ink);color:var(--cream);font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.tr .act[disabled]{background:var(--cream);color:var(--ink-3);cursor:default}
+.tr.flash{animation:flash 2.4s var(--ease)}
+@keyframes flash{0%{background:rgba(217,188,140,.45)}100%{background:rgba(217,188,140,0)}}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feed{list-style:none;margin:0;padding:6px 16px;border-radius:12px;background:var(--sheet);box-shadow:0 1px 0 var(--rule)}
+.feed li{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--rule);font-size:13px;line-height:1.35}
+.feed li:first-child{border-top:0}
+.feed time{flex:none;width:44px;font:400 12px/1.35 var(--mono);color:var(--ink-3)}
+.feed li.new{animation:pop .8s var(--ease)}
+
+/* narrow screens: one side at a time, with a switch */
+.switch{display:none}
+@media (max-width:999px){
+  .duo{gap:0}
+  .side>.mono{display:none}
+  .side.owner{display:none}
+  body.owner .side.owner{display:flex}
+  body.owner .side.res{display:none}
+  .switch{position:fixed;z-index:5;left:50%;top:max(12px,env(safe-area-inset-top,0px));transform:translateX(-50%);display:flex;padding:4px;border-radius:12px;background:rgba(243,237,227,.1);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  .switch button{height:34px;padding:0 16px;border-radius:9px;font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(243,237,227,.7)}
+  .switch button[aria-selected="true"]{background:var(--cream);color:var(--ink)}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div class="switch" role="tablist" aria-label="View"><button role="tab" aria-selected="true" data-s="res">Resident</button><button role="tab" aria-selected="false" data-s="owner">Owner</button></div>
+<div class="room"><div class="duo" id="duo">
+
+  <div class="side res">
+    <span class="mono">Resident</span>
+    <div class="phone"><div class="island"></div><div class="screen" id="scr">
+      <div class="sb" id="sb"><span>9:41</span><i><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="24" y="4" width="2" height="4" rx="1" opacity=".45"/></svg></i></div>
+
+      <div class="toast" id="toast"><span class="ic">HH</span><div><b id="tt">Halden House</b><span id="tb"></span></div></div>
+
+      <div class="views">
+        <!-- home -->
+        <section class="view on" data-v="home">
+          <div class="top"><span class="wm">Halden House</span><span class="av">MR</span></div>
+          <div class="hi"><h1>Good evening,<br><em>Maya.</em></h1><span class="mono">Residence 12B</span></div>
+          <div class="rent" id="rentCard"><img src="img/lobby.webp" alt="">
+            <div class="c"><div><span class="mono">November rent</span><span class="amt">$3,450</span><span class="sub" id="rentSub">Due November 1</span></div><span id="rentAct"><button class="btn" data-open="pay">Pay rent</button></span></div>
+          </div>
+          <div class="quick">
+            <button class="q" data-open="pkg"><span class="dot" id="pkgN">2</span><svg viewBox="0 0 24 24"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg><span><b>Packages</b><small>At the desk</small></span></button>
+            <button class="q" data-go="repairs" data-then="fix"><svg viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3z"/><path d="m5 19 2-2"/></svg><span><b>Repair</b><small>Report it</small></span></button>
+            <button class="q" data-open="guest"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-3.6 3.8-5.5 7-5.5s6 1.9 7 5.5"/></svg><span><b>Guest</b><small>Send a pass</small></span></button>
+          </div>
+          <div class="h"><h2>The building</h2><span class="mono">This week</span></div>
+          <div class="list">
+            <div class="row"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 18h16M6 18V9l6-4 6 4v9"/></svg></span><span class="t"><b>The roof terrace reopens Friday</b><small>New planters and lighting</small></span></div>
+            <div class="row"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 5 6.6 5 9.5a5 5 0 0 1-10 0C7 9.6 9 7 12 3z"/></svg></span><span class="t"><b>Water off Thursday, 10 to 11</b><small>Floors 10 to 14</small></span></div>
+            <div class="row"><span class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><span class="t"><b>Wine night in the lounge</b><small>Saturday at 7</small></span></div>
+          </div>
+        </section>
+
+        <!-- repairs -->
+        <section class="view" data-v="repairs">
+          <div class="top"><span class="wm">Halden House</span><span class="av">MR</span></div>
+          <div class="hi"><h1>Repairs</h1><span class="mono">We answer within the hour</span></div>
+          <div class="pad" style="margin-top:22px"><button class="btn dark full" data-open="fix">New request</button></div>
+          <div class="h"><h2>Open</h2><span class="mono" id="openN">1 open</span></div>
+          <div id="reqs">
+            <article class="req" data-id="r1">
+              <div class="req-h"><div><b>Dishwasher not draining</b><small>Appliance &middot; Sent Oct 30</small></div><span class="chip ok">Scheduled</span></div>
+              <div class="steps"><span class="done"><i></i><em>Received</em></span><span class="done"><i></i><em>Scheduled</em></span><span><i></i><em>Fixed</em></span></div>
+              <div class="when"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Thursday, 9 to 11</div>
+            </article>
+          </div>
+          <div class="h"><h2>Done</h2><span class="mono">This year</span></div>
+          <div class="list">
+            <div class="row"><span class="t"><b>Bathroom fan replaced</b><small>Fixed Sep 12</small></span><span class="chip mute">Done</span></div>
+            <div class="row"><span class="t"><b>Front door closer adjusted</b><small>Fixed Jul 3</small></span><span class="chip mute">Done</span></div>
+          </div>
+        </section>
+
+        <!-- amenities -->
+        <section class="view" data-v="amen">
+          <div class="top"><span class="wm">Halden House</span><span class="av">MR</span></div>
+          <div class="hi"><h1>Reserve</h1><span class="mono" id="bookN">Nothing booked yet</span></div>
+          <div style="height:22px"></div>
+          <button class="am" data-book="Roof terrace"><img src="img/terrace.webp" alt=""><span><span><b>Roof terrace</b><small>Up to 12 guests</small></span><span class="chip">Friday on</span></span></button>
+          <button class="am" data-book="Residents&rsquo; lounge"><img src="img/lounge.webp" alt=""><span><span><b>Residents&rsquo; lounge</b><small>Private hire, evenings</small></span><span class="chip">Open</span></span></button>
+          <button class="am" data-book="Guest suite"><img src="img/living.webp" alt=""><span><span><b>Guest suite</b><small>For family in town</small></span><span class="chip">Open</span></span></button>
+        </section>
+
+        <!-- lease -->
+        <section class="view" data-v="lease">
+          <div class="top"><span class="wm">Halden House</span><span class="av">MR</span></div>
+          <div class="hi"><h1>Your lease</h1><span class="mono">Residence 12B &middot; Two bedrooms</span></div>
+          <div class="lease" style="margin-top:22px"><div class="ring"><svg viewBox="0 0 86 86"><circle class="bg" cx="43" cy="43" r="40"/><circle class="fg" id="ringFg" cx="43" cy="43" r="40" pathLength="1"/></svg><b>10</b></div><div><span class="mono">Months left</span><p>Ends August 31,<br>2027</p></div></div>
+          <div class="offer" id="offer"><span class="mono">Renewal</span><h3>Stay another year, <em>same rent.</em></h3><p>Renew now and your rent stays at $3,450 through August 2028.</p><button class="btn dark full" data-open="renew">Renew for 12 months</button></div>
+          <div class="h"><h2>Documents</h2></div>
+          <div class="list">
+            <div class="row"><span class="t"><b>Lease agreement</b><small>Signed Aug 2, 2025</small></span><svg class="chev" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5"/></svg></div>
+            <div class="row"><span class="t"><b>Move-in checklist</b><small>14 photos</small></span><svg class="chev" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5"/></svg></div>
+            <div class="row"><span class="t"><b>Building rules</b><small>Updated October</small></span><svg class="chev" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5"/></svg></div>
+          </div>
+        </section>
+      </div>
+
+      <nav class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-go="home"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-5.5h-5V20H4z"/></svg>Home</button>
+        <button role="tab" aria-selected="false" data-go="repairs"><svg viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3z"/><path d="m5 19 2-2"/></svg>Repairs</button>
+        <button role="tab" aria-selected="false" data-go="amen"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Reserve</button>
+        <button role="tab" aria-selected="false" data-go="lease"><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20.5H7z"/><path d="M14 3.5v4h4M10 12h5M10 15.5h5"/></svg>Lease</button>
+      </nav>
+
+      <div class="scrim" id="scrim"></div>
+      <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+    </div></div>
+  </div>
+
+  <div class="side owner">
+    <span class="mono">Owner</span>
+    <div class="board">
+      <div class="bd-top"><span class="wm">Halden House</span><span class="mono" id="bdDate">Sunday, Nov 2</span></div>
+      <div class="bd-body">
+        <div class="kpis">
+          <div class="kpi"><span class="mono">Rent in, November</span><b id="kRent">$151,800</b><div class="bar"><i id="kBar" style="width:91.7%"></i></div><small id="kRentS">44 of 48 residences paid</small></div>
+          <div class="kpi"><span class="mono">Occupied</span><b>46<span style="font-size:18px;color:var(--ink-3)"> / 48</span></b><small>2 shown this week</small></div>
+          <div class="kpi"><span class="mono">Open repairs</span><b id="kFix">3</b><small id="kFixS">Avg. fix 1.6 days</small></div>
+        </div>
+        <div class="bd-h"><h3>Repairs</h3><span class="mono">Live</span></div>
+        <div class="tbl" id="bdReqs">
+          <div class="tr" data-id="r1"><span class="u">12B</span><span class="d"><b>Dishwasher not draining</b><small>Appliance &middot; Oct 30</small></span><span class="chip ok">Thu 9&ndash;11</span><button class="act" disabled>Booked</button></div>
+          <div class="tr"><span class="u">7A</span><span class="d"><b>Bedroom outlet dead</b><small>Electrical &middot; Oct 31</small></span><span class="chip ok">Mon 1&ndash;3</span><button class="act" disabled>Booked</button></div>
+          <div class="tr"><span class="u">15C</span><span class="d"><b>Shower drips at night</b><small>Plumbing &middot; Nov 1</small></span><span class="chip">New</span><button class="act" data-sched>Schedule</button></div>
+        </div>
+        <div class="two">
+          <div>
+            <div class="bd-h"><h3>Rent</h3><span class="mono">Still out</span></div>
+            <div class="tbl" id="bdRent">
+              <div class="tr" data-u="12B" style="grid-template-columns:44px minmax(0,1fr) auto"><span class="u">12B</span><span class="d"><b>M. Reyes</b><small>$3,450</small></span><span class="chip">Due</span></div>
+              <div class="tr" style="grid-template-columns:44px minmax(0,1fr) auto"><span class="u">4D</span><span class="d"><b>J. Okafor</b><small>$2,900</small></span><span class="chip">Due</span></div>
+              <div class="tr" style="grid-template-columns:44px minmax(0,1fr) auto"><span class="u">9C</span><span class="d"><b>A. Lindqvist</b><small>$3,150</small></span><span class="chip">Due</span></div>
+              <div class="tr" style="grid-template-columns:44px minmax(0,1fr) auto"><span class="u">16A</span><span class="d"><b>R. Haddad</b><small>$4,200</small></span><span class="chip late">Late</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="bd-h"><h3>Today</h3><span class="mono">Activity</span></div>
+            <ul class="feed" id="feed">
+              <li><time>6:12</time><span>Package logged for 12B</span></li>
+              <li><time>5:40</time><span>Guest pass sent by 3A</span></li>
+              <li><time>2:05</time><span>Lounge booked by 8B, Saturday</span></li>
+              <li><time>11:20</time><span>Renewal signed, 6C</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div></div>
+
+<script>
+(function(){
+  'use strict';
+  var B='';try{if(location.href==='about:srcdoc')B='play/halden/';}catch(e){}
+  [].forEach.call(document.querySelectorAll('img'),function(i){i.src=B+i.getAttribute('src');});
+  var $=function(s,r){return (r||document).querySelector(s);},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s));};
+  var duo=$('#duo'),sheet=$('#sheet'),scrim=$('#scrim'),toast=$('#toast'),sb=$('#sb');
+  var paid=false,booked=[],nReq=1,ownerOpen=3,tToast=0;
+
+  /* fit both panes to the window */
+  function fit(){
+    var wide=innerWidth>=1000,w=wide?397+56+640:397,h=802+(wide?40:0),top=wide?0:56;
+    var s=Math.min(1,(innerWidth-24)/w,(innerHeight-24-top)/h);
+    if(!wide&&document.body.classList.contains('owner'))s=Math.min(1,(innerWidth-24)/640,(innerHeight-24-top)/802);
+    duo.style.transform='translateY('+(top/2)+'px) scale('+s+')';
+  }
+  fit();addEventListener('resize',fit);
+  $$('.switch button').forEach(function(b){b.addEventListener('click',function(){
+    $$('.switch button').forEach(function(x){x.setAttribute('aria-selected',String(x===b));});
+    document.body.classList.toggle('owner',b.dataset.s==='owner');fit();});});
+
+  function now(){var d=new Date(),h=d.getHours()%12||12,m=('0'+d.getMinutes()).slice(-2);return h+':'+m;}
+  function feed(t){var li=document.createElement('li');li.className='new';li.innerHTML='<time>'+now()+'</time><span>'+t+'</span>';$('#feed').prepend(li);}
+  function note(title,body){clearTimeout(tToast);$('#tt').textContent=title;$('#tb').textContent=body;toast.classList.add('on');tToast=setTimeout(function(){toast.classList.remove('on');},4200);}
+
+  /* tabs */
+  function go(v){
+    $$('.view').forEach(function(x){x.classList.toggle('on',x.dataset.v===v);});
+    $$('.tabs button').forEach(function(x){x.setAttribute('aria-selected',String(x.dataset.go===v));});
+    if(v==='lease')setTimeout(function(){$('#ringFg').style.strokeDashoffset=String(1-10/24);},120);
+  }
+  $$('[data-go]').forEach(function(b){b.addEventListener('click',function(){go(b.dataset.go);if(b.dataset.then)setTimeout(function(){open(b.dataset.then);},350);});});
+  requestAnimationFrame(function(){$('#rentCard').classList.add('in');});
+
+  /* sheets */
+  function close(){sheet.classList.remove('on');scrim.classList.remove('on');}
+  scrim.addEventListener('click',close);
+  function show(html){sheet.innerHTML='<div class="grab"></div>'+html;sheet.scrollTop=0;scrim.classList.add('on');sheet.classList.add('on');}
+  function picks(el){$$('.chips,.days',el).forEach(function(g){$$('button',g).forEach(function(b){b.addEventListener('click',function(){$$('button',g).forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});});});});
+    $$('.sw',el).forEach(function(s){s.addEventListener('click',function(){s.setAttribute('aria-checked',String(s.getAttribute('aria-checked')!=='true'));});});}
+  function done(title,body){sheet.innerHTML='<div class="grab"></div><div class="done"><svg class="check" viewBox="0 0 76 76"><circle cx="38" cy="38" r="36"/><path d="M24 39l9 9 19-20"/></svg><h2>'+title+'</h2><p>'+body+'</p><button class="btn ghost" style="margin-top:22px" id="ok">Done</button></div>';$('#ok').addEventListener('click',close);}
+
+  var SHEETS={
+    pay:function(){
+      if(paid)return;
+      show('<h2>Pay <em>November.</em></h2><p class="lead">Residence 12B</p><div class="sum"><div><span>Rent</span>$3,450.00</div><div><span>Parking</span>Included</div><div class="tot"><span style="color:var(--ink)">Total</span>$3,450.00</div></div><div class="fld"><span class="mono">Pay from</span><div class="chips"><button aria-pressed="true">Checking account</button><button aria-pressed="false">Card</button></div></div><div class="tog">Pay automatically each month<span class="sw" role="switch" aria-checked="false"></span></div><button class="btn dark full" id="go">Pay $3,450</button>');
+      picks(sheet);
+      $('#go').addEventListener('click',function(){
+        var auto=$('.sw',sheet).getAttribute('aria-checked')==='true';
+        paid=true;done('Paid.','$3,450 is on its way to Halden House.'+(auto?' Autopay is on from December.':' Your receipt is in Lease.'));
+        $('#rentSub').textContent='Paid November 2';
+        $('#rentAct').innerHTML='<span class="paid"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8.5l3 3 7-7"/></svg>Paid</span>';
+        var r=$('#bdRent [data-u="12B"]');r.querySelector('.chip').className='chip ok';r.querySelector('.chip').textContent='Paid';r.classList.add('flash');
+        setTimeout(function(){r.style.transition='opacity .8s';r.style.opacity='.45';},2400);
+        $('#kRent').textContent='$155,250';$('#kBar').style.width='93.75%';$('#kRentS').textContent='45 of 48 residences paid';
+        feed('Rent paid, 12B'+(auto?', autopay on':''));
+      });
+    },
+    fix:function(){
+      show('<h2>What needs <em>fixing?</em></h2><p class="lead">The building team sees it the moment you send it.</p><div class="fld"><span class="mono">Kind</span><div class="chips" id="kind"><button aria-pressed="false">Plumbing</button><button aria-pressed="false">Electrical</button><button aria-pressed="true">Heating and AC</button><button aria-pressed="false">Appliance</button><button aria-pressed="false">Other</button></div></div><div class="fld"><span class="mono">Tell us more</span><textarea id="desc">The AC in the bedroom is blowing warm air.</textarea></div><div class="fld"><span class="mono">Photo</span><div class="photo"><button id="ph" aria-label="Add a photo"><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M9 6l1.5-2h3L15 6"/></svg></button><small id="phS">Optional</small></div></div><div class="fld"><span class="mono">Best time</span><div class="chips"><button aria-pressed="true">Morning</button><button aria-pressed="false">Afternoon</button><button aria-pressed="false">Any time</button></div></div><div class="tog">Okay to enter if I&rsquo;m out<span class="sw" role="switch" aria-checked="true"></span></div><button class="btn dark full" id="go">Send request</button>');
+      picks(sheet);
+      $('#ph').addEventListener('click',function(){this.innerHTML='<img src="'+B+'img/kitchen.webp" alt="">';$('#phS').textContent='1 photo added';});
+      $('#go').addEventListener('click',function(){
+        var k=$('#kind [aria-pressed="true"]').textContent,d=($('#desc').value||'').trim()||k;
+        var t=d.length>38?d.slice(0,36).replace(/\s+\S*$/,'')+'…':d;
+        nReq++;var id='r'+nReq;
+        var a=document.createElement('article');a.className='req new';a.dataset.id=id;
+        a.innerHTML='<div class="req-h"><div><b></b><small>'+k+' &middot; Sent just now</small></div><span class="chip">Received</span></div><div class="steps"><span class="done"><i></i><em>Received</em></span><span><i></i><em>Scheduled</em></span><span><i></i><em>Fixed</em></span></div><div class="when"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>We&rsquo;ll set a time within the hour</div>';
+        a.querySelector('b').textContent=t;$('#reqs').prepend(a);
+        $('#openN').textContent=$$('#reqs .req').length+' open';
+        var r=document.createElement('div');r.className='tr flash';r.dataset.id=id;
+        r.innerHTML='<span class="u">12B</span><span class="d"><b></b><small>'+k+' &middot; just now</small></span><span class="chip">New</span><button class="act" data-sched>Schedule</button>';
+        r.querySelector('b').textContent=t;$('#bdReqs').prepend(r);wire(r);
+        ownerOpen++;$('#kFix').textContent=ownerOpen;
+        feed('Repair request from 12B');
+        done('Sent.','The building team has it. You&rsquo;ll get a time here, usually within the hour.');
+      });
+    },
+    renew:function(){
+      show('<h2>Renew for <em>a year.</em></h2><p class="lead">Residence 12B &middot; same rent</p><div class="sum"><div><span>New term</span>Sep 1, 2027 to Aug 31, 2028</div><div><span>Rent</span>$3,450 a month</div><div><span>Signing</span>In the app</div></div><button class="btn dark full" id="go">Sign and renew</button>');
+      $('#go').addEventListener('click',function(){
+        done('Renewed.','You&rsquo;re home through August 2028. A signed copy is in Documents.');
+        $('#offer').innerHTML='<span class="mono">Renewal</span><h3>Renewed <em>through August 2028.</em></h3><p style="margin-bottom:0">Signed today. Same rent.</p>';
+        feed('Renewal signed, 12B');
+      });
+    },
+    pkg:function(){show('<h2>Two packages <em>at the desk.</em></h2><p class="lead">Logged today at 6:12</p><div class="sum"><div><span>Box, medium</span>Shelf C</div><div><span>Envelope</span>Shelf A</div></div><button class="btn dark full" id="go">Ask the desk to bring them up</button>');
+      $('#go').addEventListener('click',function(){done('On the way.','The desk will bring both up within twenty minutes.');$('#pkgN').textContent='0';$('#pkgN').style.opacity='0';feed('Package delivery asked for, 12B');});},
+    guest:function(){show('<h2>Send a <em>guest pass.</em></h2><p class="lead">The desk lets them straight up.</p><div class="fld"><span class="mono">When</span><div class="chips"><button aria-pressed="true">Tonight</button><button aria-pressed="false">Tomorrow</button><button aria-pressed="false">This weekend</button></div></div><div class="fld"><span class="mono">How many</span><div class="chips"><button aria-pressed="false">1</button><button aria-pressed="true">2</button><button aria-pressed="false">3</button><button aria-pressed="false">4</button></div></div><button class="btn dark full" id="go">Send pass</button>');picks(sheet);
+      $('#go').addEventListener('click',function(){done('Pass sent.','They&rsquo;ll get a link to show at the desk.');feed('Guest pass sent by 12B');});}
+  };
+  function open(k){if(SHEETS[k])SHEETS[k]();}
+  $$('[data-open]').forEach(function(b){b.addEventListener('click',function(){open(b.dataset.open);});});
+
+  /* amenities */
+  var DAYS=['Mon','Tue','Wed','Thu','Fri'],DN=[3,4,5,6,7];
+  $$('[data-book]').forEach(function(b){b.addEventListener('click',function(){
+    var nm=b.dataset.book;
+    show('<h2>'+nm+'</h2><p class="lead">Pick a day and a time.</p><div class="fld"><span class="mono">Day</span><div class="days">'+DAYS.map(function(d,i){return '<button aria-pressed="'+(i===4)+'">'+d+'<b>'+DN[i]+'</b></button>';}).join('')+'</div></div><div class="fld"><span class="mono">Time</span><div class="chips"><button aria-pressed="false">4 to 6</button><button aria-pressed="true">6 to 8</button><button aria-pressed="false">8 to 10</button></div></div><button class="btn dark full" id="go">Reserve</button>');picks(sheet);
+    $('#go').addEventListener('click',function(){
+      var di=$$('.days button',sheet).findIndex(function(x){return x.getAttribute('aria-pressed')==='true';}),t=$('.chips [aria-pressed="true"]',sheet).textContent;
+      done('Reserved.',nm+', '+DAYS[di]+' '+DN[di]+', '+t+'. It&rsquo;s on your calendar.');
+      booked.push(nm);$('#bookN').textContent=booked.length+' booked';
+      feed(nm.replace('&rsquo;','’')+' booked by 12B, '+DAYS[di]+' '+t);
+    });
+  });});
+
+  /* the owner schedules a repair: the resident hears about it */
+  function wire(r){var b=r.querySelector('[data-sched]');if(!b)return;b.addEventListener('click',function(){
+    var slot='Tue 9–11';b.disabled=true;b.textContent='Booked';var c=r.querySelector('.chip');c.className='chip ok';c.textContent=slot;
+    ownerOpen=Math.max(0,ownerOpen);
+    feed('Repair booked for '+r.querySelector('.u').textContent+', Tuesday 9 to 11');
+    var a=r.dataset.id&&$('#reqs [data-id="'+r.dataset.id+'"]');
+    if(a){a.querySelector('.chip').className='chip ok';a.querySelector('.chip').textContent='Scheduled';a.querySelectorAll('.steps span')[1].classList.add('done');a.querySelector('.when').lastChild.textContent='Tuesday, 9 to 11';
+      note('Repair scheduled','Tuesday, 9 to 11. The team will text when they’re on the way.');}
+  });}
+  $$('#bdReqs .tr').forEach(wire);
+})();
+</script>
+</body>
+</html>

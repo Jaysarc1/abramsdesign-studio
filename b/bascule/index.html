@@ -1,0 +1,489 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!--
+ALIGNMENT NOTES
+Grid: 12 columns, max width 1344px, 32px gutter, page gutter max(24px, safe-area) (16px floor on phones).
+Copy, chart and the form start on column 1 or column 7.
+Intentional offsets:
+- The tower is a live 3D model, not on the grid: the camera frames it on the right third so the headline on columns 1 to 5 reads against open dusk sky.
+- The sales readout hangs at the tower's base on the water line, where the lit residences start, so the number sits beside what it counts.
+- On phones the readout moves to the open sky top left, opposite the tower, so neither covers the other.
+- The price chart's last label sits past its point, outside the plot, so the line ends on the number.
+- The rise: the tower is a live model, not on the grid; the camera holds it whole and slim in the left third, crown always in frame, so the view over the water opens to the right. The floor and price readout fills columns 9 to 11 against open sky (its rule spans all three so it never jumps as the numbers change), and the floor scale hangs on the right edge of column 12, its marker climbing with you.
+- On phones the rise readout sits top right under the header, over open sky, with the scale beside it; the tower stays bottom left so neither covers the other.
+
+SELLS
+Buyer: second-home and move-up buyers, and investors, looking at pre-construction waterfront condos in West Palm Beach.
+Want: a residence that is beautiful and a purchase that gains value.
+Outcome: own on the Intracoastal before completion, at today's price.
+Proof: residences sold, price per square foot rising each release, completion date.
+One CTA: "Reserve a residence".
+-->
+<title>Bascule</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600&display=swap">
+<style>
+/* Layout: a live model of the tower at dusk on the water; black and champagne */
+:root{
+  --black:#0A0A0C;
+  --ink:#141418;
+  --line:#2A2A30;
+  --champ:#D8C3A0;
+  --champ-2:#B89D74;
+  --ivory:#F3EEE6;
+  --mute:#A49E95;
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--ivory);font-family:var(--sans);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--black)}
+.wrap{max-width:1344px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--champ-2)}
+.btn{display:inline-flex;align-items:center;gap:14px;background:transparent;color:var(--champ);font-family:var(--sans);font-weight:600;font-size:18px;padding:18px 32px;text-decoration:none;border:1.5px solid var(--champ);border-radius:999px;cursor:pointer;transition:background .35s,color .35s}
+.btn:hover,.btn:focus-visible{background:var(--champ);color:var(--black)}
+.value .btn{color:#8A7352;border-color:#8A7352}
+.btn:focus-visible{outline:2px solid var(--champ);outline-offset:4px}
+.btn svg{width:18px;height:18px;transition:transform .3s}
+.btn:hover svg{transform:translateX(4px)}
+
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:9;transition:background .5s}
+header.solid{background:rgba(10,10,12,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+header .wrap{display:flex;align-items:center;height:88px}
+.logo{text-decoration:none;color:var(--ivory);font-family:var(--serif);font-size:32px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+nav{margin-left:auto;display:flex;align-items:center;gap:40px;font-size:17px;font-weight:500}
+nav a.t{text-decoration:none;color:rgba(243,238,230,.76)}
+nav a.t:hover{color:var(--ivory)}
+nav .btn{padding:12px 22px;font-size:16px;transition:background .3s,opacity .5s}
+header:not(.solid) nav .btn{opacity:0;pointer-events:none}
+
+/* hero */
+.hero{--hz:66%;position:relative;height:100svh;min-height:680px;overflow:hidden}
+.hero,.stage{background:linear-gradient(180deg,#05070C 0%,#0B0F1A calc(var(--hz)*.45),#161D2B calc(var(--hz)*.76),#283242 calc(var(--hz)*.94),#3A4556 var(--hz),#0A0E16 calc(var(--hz) + .1%),#04060A 100%)}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;padding-top:40px;padding-bottom:12vh}
+.hl{max-width:560px}
+.kick{margin:0 0 24px;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--champ)}
+h1,h2{font-variant-numeric:lining-nums}
+h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(64px,7.8vw,128px);line-height:.95;letter-spacing:-.01em}
+h1 span{display:block}
+h1 em{color:var(--champ)}
+.lede{margin:28px 0 40px;font-size:21px;line-height:1.5;color:rgba(243,238,230,.84);max-width:28ch}
+.sold{position:absolute;right:max(24px,calc((100vw - 1344px)/2 + 24px));bottom:clamp(40px,8vh,88px);text-align:right}
+.sold b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(48px,4.6vw,72px);line-height:1;font-variant-numeric:lining-nums tabular-nums}
+.sold b i{font-style:normal;color:var(--mute);font-size:.5em;margin-left:6px}
+.sold>span{display:block;margin-top:8px;font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--champ)}
+
+/* the rise: scroll lifts you up the tower, floor by floor */
+.rise{position:relative;height:460vh;background:#04060A}
+.stage{--hz:70%;position:sticky;top:0;height:100svh;min-height:680px;overflow:hidden}
+#gl2{position:absolute;inset:0;width:100%;height:100%;display:block}
+.rz{position:relative;height:100%;align-content:center}
+.meter{grid-column:9 / span 3;text-align:right;font-variant-numeric:lining-nums tabular-nums}
+.meter p{margin:0}
+.meter .k{font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--champ)}
+.meter .fl b{display:block;margin-top:6px;font-family:var(--serif);font-weight:400;font-size:clamp(132px,13.5vw,208px);line-height:.8;letter-spacing:-.02em;color:var(--ivory)}
+.meter .pp{margin-top:48px;padding-top:24px;border-top:1px solid rgba(216,195,160,.32)}
+.meter .pp b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(44px,3.9vw,60px);line-height:1;color:var(--ivory)}
+.meter .pp .k{display:block;margin-top:10px}
+.scale{grid-column:12;justify-self:end;position:relative;width:24px;height:min(62vh,560px);background:repeating-linear-gradient(0deg,rgba(243,238,230,.28) 0 1px,transparent 1px calc(100% / 35)) right / 8px 100% no-repeat}
+.scale::after{content:"";position:absolute;right:0;top:0;bottom:0;width:1px;background:rgba(243,238,230,.18)}
+.scale i{position:absolute;right:0;bottom:0;width:24px;height:2px;margin-bottom:-1px;background:var(--champ);transform:translateY(calc(var(--f,0) * min(62vh,560px) * -1))}
+
+/* value */
+.value{background:var(--ivory);color:var(--ink);padding-block:136px 128px}
+.value .eyebrow{grid-column:1 / -1;color:#8A7352}
+.value h2{grid-column:1 / span 7;margin:16px 0 0;font-family:var(--serif);font-weight:400;font-size:clamp(50px,5.6vw,92px);line-height:1;letter-spacing:-.01em;text-wrap:balance}
+.chart{grid-column:1 / -1;margin-top:72px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.c-ax{stroke:#D9D2C6;stroke-width:1}
+.c-ln{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+.c-ar{fill:url(#ca)}
+.c-dt{fill:var(--ivory);stroke:var(--ink);stroke-width:2}
+.c-tk{font-family:var(--sans);font-size:15px;fill:#7B746A}
+.c-v{font-family:var(--serif);font-size:30px;fill:var(--ink);font-variant-numeric:lining-nums}
+.c-big{font-family:var(--serif);font-size:56px;fill:#8A7352}
+.stats{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px;margin-top:104px}
+.stat{border-top:1px solid #D9D2C6;padding-top:28px}
+.stat b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(58px,5.6vw,92px);line-height:1;font-variant-numeric:lining-nums tabular-nums}
+.stat > span{display:block;margin-top:14px;color:#6F685E;max-width:20ch}
+
+/* book */
+.book{background:var(--black);padding-block:128px 136px}
+.book .lt{grid-column:1 / span 5}
+.book h2{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(56px,6.4vw,104px);line-height:.98}
+.book h2 em{color:var(--champ);margin-left:.08em}
+.book .side{margin-top:32px;color:rgba(243,238,230,.76);font-size:20px}
+.book .phone{display:block;margin-top:28px;font-family:var(--serif);font-size:40px;color:var(--ivory);text-decoration:none;user-select:all;font-variant-numeric:lining-nums}
+.book .addr{margin-top:40px;font-size:16px;color:var(--mute)}
+form{grid-column:7 / span 6;display:grid;gap:22px;align-self:start}
+label{display:grid;gap:8px;font-size:16px;color:var(--mute)}
+input,select{font:inherit;font-size:19px;color:var(--ivory);background:transparent;border:0;border-bottom:1px solid var(--line);padding:12px 0;outline:none;border-radius:0;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--ivory) 50%),linear-gradient(135deg,var(--ivory) 50%,transparent 50%);background-position:calc(100% - 14px) 52%,calc(100% - 8px) 52%;background-size:6px 6px;background-repeat:no-repeat}
+select option{color:var(--ink)}
+input:focus,select:focus{border-color:var(--champ)}
+form .btn{justify-self:start;margin-top:12px}
+.thanks{font-family:var(--serif);font-size:36px;line-height:1.2}
+footer{padding-block:36px;background:var(--black);color:var(--mute);border-top:1px solid var(--line);font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+.rv{transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .rv.pre{opacity:.001;transform:translateY(28px)}
+.js .hero .in{opacity:0;transform:translateY(28px);transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .hero .in.on{opacity:1;transform:none}
+.js header .wrap{opacity:0;transition:opacity 1.4s ease}
+.js header.up .wrap{opacity:1}
+
+@media (max-width:900px){
+  .rise{height:380vh}
+  .rz{display:flex;justify-content:flex-end;align-items:flex-start;gap:20px;padding-top:128px}
+  .meter{width:148px}
+  .meter .fl b{font-size:104px}
+  .meter .pp{margin-top:28px;padding-top:16px}
+  .meter .pp b{font-size:36px}
+  .scale{height:min(40vh,320px)}
+  .scale i{transform:translateY(calc(var(--f,0) * min(40vh,320px) * -1))}
+  nav a.t{display:none}
+  .hero .wrap{justify-content:flex-end;padding-bottom:36px;padding-top:0}
+  .hero{--hz:50%}
+  .hero .wrap,.sold{z-index:2}
+  .hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,transparent calc(var(--hz) + 3%),rgba(7,11,20,.85) calc(var(--hz) + 14%))}
+  .kick{display:none}
+  .sold{left:max(16px,env(safe-area-inset-left,0px));right:auto;text-align:left;top:104px;bottom:auto}
+  .value h2,.book .lt,form{grid-column:1 / -1}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:48px;margin-top:48px}
+  form{margin-top:48px}
+  .value{padding-block:96px 88px}.book{padding-block:88px}
+}
+@media (max-width:520px){
+  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .logo{font-size:26px}
+  nav .btn{padding:12px 16px;font-size:15px}
+  h1{font-size:clamp(52px,15vw,64px)}
+  .lede{font-size:19px;margin:20px 0 28px}
+  .stats{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .rv,.js .hero .in,.js header .wrap{transition:none}
+  .js .rv.pre,.js .hero .in,.js header .wrap{opacity:1;transform:none}
+  .rise{height:auto}.stage{position:relative}
+}
+</style>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Bascule home">Bascule</a>
+    <nav>
+      <a class="t" href="#value">Value</a>
+      <a class="t" href="#book">Residences</a>
+      <a class="btn" href="#book">Reserve a residence</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero" aria-label="Bascule">
+    <canvas id="gl" aria-label="A model of the Bascule tower at dusk on the Intracoastal, its sold residences lit"></canvas>
+    <div class="wrap">
+      <div class="hl">
+        <p class="kick in">West Palm Beach · On the Intracoastal</p>
+        <h1><span class="in">Live above</span><span class="in"><em>the water.</em></span></h1>
+        <p class="lede in">260 residences, from $2.4M. Completion in 2028.</p>
+        <a class="btn in" href="#book">Reserve a residence <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></a>
+      </div>
+    </div>
+    <div class="sold in" aria-live="polite"><b><span id="sc">212</span><i>/ 260</i></b><span>Residences sold</span></div>
+  </section>
+
+  <section class="rise" id="rise" aria-label="The view from each floor">
+    <div class="stage">
+      <canvas id="gl2" aria-hidden="true"></canvas>
+      <div class="wrap grid rz">
+        <div class="meter" aria-live="off">
+          <p class="fl"><span class="k">Floor</span><b id="rf">3</b></p>
+          <p class="pp"><b id="rp">$1,380</b><span class="k">per sq ft</span></p>
+        </div>
+        <div class="scale" aria-hidden="true"><i id="rm"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="value" id="value">
+    <div class="wrap grid">
+      <p class="eyebrow rv">Price per square foot, by release</p>
+      <h2 class="rv">Early buyers are up 43%.</h2>
+      <div class="chart rv" id="chart"><svg id="csvg" role="img" aria-label="Price per square foot rose from $1,150 at launch to $1,640 at the current release, up 43 percent."><defs><linearGradient id="ca" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8C3A0" stop-opacity=".45"/><stop offset="1" stop-color="#D8C3A0" stop-opacity="0"/></linearGradient></defs><g id="cg"></g></svg></div>
+      <div class="stats">
+        <div class="stat rv"><b data-n="260">260</b><span>residences</span></div>
+        <div class="stat rv"><b data-n="82" data-s="%">82%</b><span>sold before groundbreaking</span></div>
+        <div class="stat rv"><b data-n="38">38</b><span>floors on the Intracoastal</span></div>
+        <div class="stat rv"><b>2028</b><span>completion</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div class="wrap grid">
+      <div class="lt">
+        <h2 class="rv">Choose your <em>floor.</em></h2>
+        <p class="side rv">Visit the sales gallery, or call.
+          <a class="phone" href="tel:5615550110">(561) 555-0110</a></p>
+        <p class="addr rv">Sales gallery, Flagler Drive, West Palm Beach<br>residences@bascule.com</p>
+      </div>
+      <form id="f" class="rv">
+        <label>Name<input name="name" autocomplete="name" required></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
+        <label>Email<input name="email" type="email" autocomplete="email"></label>
+        <label>Looking for<select name="for"><option>Two bedrooms</option><option>Three bedrooms</option><option>Four bedrooms</option><option>Penthouse</option></select></label>
+        <button class="btn" type="submit">Reserve a residence <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>Bascule Residences · West Palm Beach</span><span>Renderings are artistic concepts</span></div></footer>
+
+<script>
+document.documentElement.classList.add('js');
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function draw(el,dur,delay){
+  const L=el.getTotalLength();el.style.strokeDasharray=L;el.style.strokeDashoffset=L;
+  return new Promise(res=>setTimeout(()=>{const t0=performance.now();const f=n=>{const p=Math.min(1,(n-t0)/dur);el.style.strokeDashoffset=L*(1-ease(p));if(p<1)requestAnimationFrame(f);else{el.style.strokeDasharray='';el.style.strokeDashoffset='';res()}};requestAnimationFrame(f)},delay));
+}
+/* opening: the tower rises and lights first; the words arrive last */
+{const ins=[...document.querySelectorAll('.hero .hl .in')],sold=document.querySelector('.sold'),hd=document.querySelector('header');
+ if(RM){ins.forEach(e=>e.classList.add('on'));sold.classList.add('on');hd.classList.add('up')}
+ else{setTimeout(()=>sold.classList.add('on'),1500);setTimeout(()=>hd.classList.add('up'),2900);ins.forEach((e,i)=>setTimeout(()=>e.classList.add('on'),2900+i*170))}}
+
+/* price chart, rebuilt for the width it has */
+(()=>{
+  const narrow=innerWidth<640,W=narrow?440:1280,H=narrow?380:420;
+  const svg=document.getElementById('csvg');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const D=[['Launch',1150],['II',1240],['III',1330],['IV',1420],['V',1540],['Now',1640]];
+  const L=0,R=W-(narrow?110:200),T=narrow?60:40,B=H-48,lo=1000,hi=1700;
+  const X=i=>L+(R-L)*i/(D.length-1),Y=v=>B-(B-T)*(v-lo)/(hi-lo);
+  const pts=D.map((d,i)=>[X(i),Y(d[1])]);
+  const line='M'+pts.map(p=>p.join(',')).join(' L');
+  const area=line+` L${X(D.length-1)},${B} L${X(0)},${B} Z`;
+  const fs=narrow?.92:1;
+  let ticks=D.map((d,i)=>narrow&&i>0&&i<D.length-1?'':`<text class="c-tk" x="${X(i)}" y="${B+34}" text-anchor="${i===0?'start':i===D.length-1?'end':'middle'}" style="font-size:${15*fs}px">${d[0]}</text>`).join('');
+  document.getElementById('cg').innerHTML=`
+    <line class="c-ax" x1="0" x2="${W}" y1="${B}" y2="${B}"/>
+    <path class="c-ar" id="car" d="${area}" style="opacity:0;transition:opacity 1.6s"/>
+    <path class="c-ln" id="cln" d="${line}"/>
+    ${pts.map((p,i)=>`<circle class="c-dt cdot" cx="${p[0]}" cy="${p[1]}" r="${narrow?6:6}" style="opacity:0;transition:opacity .6s"/>`).join('')}
+    <g id="cv0" style="opacity:0;transition:opacity 1s"><text class="c-v" x="${pts[0][0]}" y="${pts[0][1]+(narrow?40:-22)}" style="font-size:${narrow?24:30}px">$1,150</text></g>
+    <g id="cv1" style="opacity:0;transition:opacity 1s"><text class="c-v" x="${pts[5][0]+18}" y="${pts[5][1]+10}" style="font-size:${narrow?24:30}px">$1,640</text>
+      <text class="c-tk" x="${pts[5][0]+18}" y="${pts[5][1]+38}" style="font-size:${15*fs}px">per sq ft</text></g>
+    ${ticks}`;
+  const ln=document.getElementById('cln'),dots=[...document.querySelectorAll('.cdot')];
+  if(RM){['car','cv0','cv1'].forEach(i=>document.getElementById(i).style.opacity=1);dots.forEach(d=>d.style.opacity=1);return}
+  const Ln=ln.getTotalLength();ln.style.strokeDasharray=Ln;ln.style.strokeDashoffset=Ln;
+  let go=false;
+  new IntersectionObserver((es,o)=>{if(!es[0].isIntersecting||go)return;go=true;o.disconnect();
+    (async()=>{await wait(300);dots[0].style.opacity=1;document.getElementById('cv0').style.opacity=1;await wait(600);
+      const t0=performance.now(),Dur=3200;let k=1;const xs=pts.map(p=>p[0]);
+      await new Promise(r=>{const f=n=>{const p=Math.min(1,(n-t0)/Dur),e=ease(p);ln.style.strokeDashoffset=Ln*(1-e);const x=xs[0]+(xs[5]-xs[0])*e;while(k<6&&x>=xs[k]-1){dots[k].style.opacity=1;k++}if(p<1)requestAnimationFrame(f);else r()};requestAnimationFrame(f)});
+      document.getElementById('car').style.opacity=1;document.getElementById('cv1').style.opacity=1;
+    })();
+  },{threshold:.35}).observe(document.getElementById('chart'));
+})();
+
+/* reveals and counters */
+(()=>{
+  if(RM)return;
+  const els=[...document.querySelectorAll('.rv')];
+  els.forEach(e=>{if(e.getBoundingClientRect().top>innerHeight*.9)e.classList.add('pre')});
+  const io=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io.unobserve(e.target);setTimeout(()=>e.target.classList.remove('pre'),i*550)})},{threshold:.25});
+  els.forEach(e=>io.observe(e));
+  const ns=[...document.querySelectorAll('[data-n]')];
+  const fmt=(el,v)=>Math.round(v)+(el.dataset.s||'');
+  const io2=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io2.unobserve(e.target);const el=e.target,N=+el.dataset.n;
+    setTimeout(()=>{const t0=performance.now(),D=2000;const f=n=>{const p=Math.min(1,(n-t0)/D);el.textContent=fmt(el,N*ease(p));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)},300+i*550)})},{threshold:.4});
+  ns.forEach(n=>io2.observe(n));
+})();
+{const h=document.querySelector('header'),hero=document.getElementById('hero');const f=()=>h.classList.toggle('solid',scrollY>hero.offsetHeight-100);addEventListener('scroll',f,{passive:true});f()}
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();e.target.innerHTML='<p class="thanks">Thank you. A sales director will call you within one business day.</p>'});
+</script>
+
+<script type="module">
+/* the tower: the camera cranes up off the water as it is built floor by floor, then each sold residence lights up.
+   further down, the same model and renderer carry "the rise": scroll lifts you up the facade, floor by floor, to the top-floor view. */
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canvas=document.getElementById('gl'),hero=document.getElementById('hero'),sc=document.getElementById('sc');
+const rise=document.getElementById('rise'),stage=rise.querySelector('.stage'),gl2=document.getElementById('gl2'),c2=gl2.getContext('2d');
+const rf=document.getElementById('rf'),rp=document.getElementById('rp'),rm=document.getElementById('rm');
+let renderer;
+try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'low-power'})}catch(e){canvas.remove();gl2.remove();rise.style.height='auto';stage.style.position='relative'}
+if(renderer){
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(30,1,1,9000),camR=new THREE.PerspectiveCamera(40,1,1,9000);
+const clamp=x=>Math.max(0,Math.min(1,x)),io3=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2,sine=t=>-(Math.cos(Math.PI*t)-1)/2;
+
+/* sunset environment for the glass to reflect */
+{const es=new THREE.Scene();const geo=new THREE.SphereGeometry(100,32,16);
+ const mat=new THREE.ShaderMaterial({side:THREE.BackSide,uniforms:{},vertexShader:'varying vec3 p;void main(){p=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+ fragmentShader:'varying vec3 p;void main(){float h=normalize(p).y;vec3 top=vec3(.02,.03,.05),mid=vec3(.09,.11,.16),hor=vec3(.34,.39,.47),low=vec3(.02,.03,.05);vec3 c=h>0.?mix(hor,mix(mid,top,smoothstep(.25,.8,h)),smoothstep(0.,.25,h)):mix(hor*.5,low,smoothstep(0.,.2,-h));float sun=pow(max(dot(normalize(p),normalize(vec3(-1.,.08,.4))),0.),180.);gl_FragColor=vec4(c+vec3(.75,.8,.9)*sun*.8,1.);}'});
+ es.add(new THREE.Mesh(geo,mat));const pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(es,.02).texture;}
+
+scene.add(new THREE.HemisphereLight(0x7c8aa8,0x0c0e12,.5));
+const sun=new THREE.DirectionalLight(0xc4ccdc,1.3);sun.position.set(-60,18,40);scene.add(sun);
+
+const N=38,W0=10,D0=7,TW=.022;
+const slabG=new THREE.BoxGeometry(W0+.5,.16,D0+.5),glassG=new THREE.BoxGeometry(W0-.2,.84,D0-.2),unitG=new THREE.BoxGeometry(3.6,.66,.04);
+const slabM=new THREE.MeshStandardMaterial({color:0xe8e2d6,roughness:.55,metalness:.05});
+const glassM=new THREE.MeshStandardMaterial({color:0x26324c,roughness:.12,metalness:.75,envMapIntensity:2});
+const unitM=new THREE.MeshBasicMaterial({color:0xffffff,toneMapped:false});
+const GZ=(D0-.2)/2+.03,GX=(W0-.2)/2+.03;
+const UNITS=[];for(let f=5;f<N;f++)for(const u of [[-2.4,GZ,0],[2.4,GZ,0],[-2.4,-GZ,Math.PI],[2.4,-GZ,Math.PI],[GX,-1.6,Math.PI/2],[GX,1.6,Math.PI/2],[-GX,-1.6,-Math.PI/2],[-GX,1.6,-Math.PI/2]])UNITS.push([f,...u]);
+UNITS.length=260;
+function build(){const g=new THREE.Group();
+  const slabs=new THREE.InstancedMesh(slabG,slabM,N+1),glass=new THREE.InstancedMesh(glassG,glassM,N),units=new THREE.InstancedMesh(unitG,unitM,UNITS.length);
+  g.add(slabs,glass,units);return {g,slabs,glass,units}}
+const T=build(),M=build();M.g.scale.y=-1;scene.add(T.g,M.g);
+const off=new THREE.Color(0x1b2536),on=new THREE.Color(0xffc489),cc=new THREE.Color();
+/* sold residences light in a scattered order, low floors a little ahead of high ones, each fading up rather than snapping on */
+const order=[...UNITS.keys()].map(j=>[j,Math.random()+UNITS[j][0]/N*.9]).sort((a,b)=>a[1]-b[1]).map(a=>a[0]);
+const litAt=new Float32Array(UNITS.length).fill(-1);
+const m4=new THREE.Matrix4(),q=new THREE.Quaternion(),v=new THREE.Vector3(),s=new THREE.Vector3(),yA=new THREE.Vector3(0,1,0);
+let lastBuilt=-1;
+function setFloors(built){
+  if(built===lastBuilt)return;lastBuilt=built;
+  for(const P of [T,M]){
+    for(let i=0;i<=N;i++){const k=Math.min(1,Math.max(0,built-i));q.setFromAxisAngle(yA,i*TW);v.set(0,i,0);s.set(k>0?1:0,k,k>0?1:0);m4.compose(v,q,s);P.slabs.setMatrixAt(i,m4)}
+    for(let i=0;i<N;i++){const k=Math.min(1,Math.max(0,built-i-.15));q.setFromAxisAngle(yA,i*TW);v.set(0,i+.5,0);s.set(k>0?1:0,k,k>0?1:0);m4.compose(v,q,s);P.glass.setMatrixAt(i,m4)}
+    UNITS.forEach((u,j)=>{const [f,lx,lz,rot]=u,k=Math.min(1,Math.max(0,built-f-.2)),ang=f*TW,c=Math.cos(ang),sn=Math.sin(ang);
+      v.set(lx*c+lz*sn,f+.5,-lx*sn+lz*c);q.setFromAxisAngle(yA,ang+rot);s.set(k>0?(Math.abs(rot)===Math.PI/2?.7:1):0,k,k>0?1:0);m4.compose(v,q,s);P.units.setMatrixAt(j,m4)});
+    P.slabs.instanceMatrix.needsUpdate=P.glass.instanceMatrix.needsUpdate=P.units.instanceMatrix.needsUpdate=true;
+  }}
+let litN=0,litDone=false;
+function setLit(n,t){
+  for(;litN<n;litN++)litAt[order[litN]]=t;
+  if(litDone)return;let busy=false;
+  for(const P of [T,M])UNITS.forEach((u,j)=>{const a=litAt[j];if(a<0){P.units.setColorAt(j,off);return}const k=clamp((t-a)/260);if(k<1)busy=true;P.units.setColorAt(j,cc.copy(off).lerp(on,k*k*(3-2*k)))});
+  T.units.instanceColor.needsUpdate=M.units.instanceColor.needsUpdate=true;
+  if(n>=SOLD&&!busy)litDone=true}
+
+/* water: a tinted sheet over the mirrored tower reads as a reflection */
+const water=new THREE.Mesh(new THREE.PlaneGeometry(9000,9000),new THREE.MeshBasicMaterial({color:0x070a11,transparent:true,opacity:.74}));water.rotation.x=-Math.PI/2;water.position.y=-.02;scene.add(water);
+/* far shore: the West Palm skyline across the water, a few lights still on */
+const SKY=[];{let sd=7;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
+ const g=new THREE.BoxGeometry(1,1,1),mt=new THREE.MeshBasicMaterial({color:0x0d111a}),n=70,sk=new THREE.InstancedMesh(g,mt,n+12);
+ const wg=new THREE.PlaneGeometry(1.4,1),wm=new THREE.MeshBasicMaterial({color:0xffc489,transparent:true,opacity:.55,toneMapped:false}),WN=420,wi=new THREE.InstancedMesh(wg,wm,WN);let w=0,k=0;
+ for(let i=0;i<n;i++){const tall=rnd()<.22,h=tall?34+rnd()*36:7+rnd()*16,wd=tall?14+rnd()*10:10+rnd()*18,x=-1100+i*32+rnd()*14,z=-700-rnd()*80;
+  m4.compose(v.set(x,h/2,z),q.identity(),s.set(wd,h,12));sk.setMatrixAt(k++,m4);if(h>14)SKY.push([x,wd,h,z+6]);
+  if(tall&&rnd()<.5&&k<n+12){m4.compose(v.set(x+(rnd()-.5)*wd*.4,h+7,z),q.identity(),s.set(.9,14,.9));sk.setMatrixAt(k++,m4)}
+  const lw=Math.round(h*wd/60);for(let j=0;j<lw&&w<WN;j++){if(rnd()<.55)continue;m4.compose(v.set(x+(rnd()-.5)*wd*.8,2+rnd()*(h-4),z+6.1),q.identity(),s.set(1,1,1));wi.setMatrixAt(w++,m4)}}
+ sk.count=k;wi.count=w;scene.add(sk,wi)}
+/* the water: fine ripple lines, with the tower's light broken across them */
+const RIP=[];{let sd=11;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
+ for(let i=0;i<1100;i++){const glint=i<260,z=glint?0:-680+Math.pow(rnd(),.7)*780,x=glint?0:(rnd()-.5)*(900+(-z)*1.4);
+  if(glint){const t=.03+Math.pow(rnd(),1.6)*.8;RIP.push({t,j:(rnd()-.5)*9*(1-t),l:(.8+rnd()*2.4)*(1-t),c:.5+rnd()*.5,w:1,ph:rnd()*6.28})}
+  else RIP.push({x,z,l:(1.2+rnd()*3)*(1+(-z+100)/160),c:.12+rnd()*.22,w:0,ph:rnd()*6.28})}}
+const ripG=new THREE.BufferGeometry(),ripP=new Float32Array(RIP.length*6),ripC=new Float32Array(RIP.length*6);
+RIP.forEach((r,i)=>{const col=r.w?[1,.77,.54]:[.85,.8,.72];for(let e=0;e<2;e++)for(let c=0;c<3;c++)ripC[i*6+e*3+c]=col[c]*r.c});
+ripG.setAttribute('position',new THREE.BufferAttribute(ripP,3));ripG.setAttribute('color',new THREE.BufferAttribute(ripC,3));
+const rip=new THREE.LineSegments(ripG,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false}));rip.renderOrder=3;rip.frustumCulled=false;scene.add(rip);
+function ripple(t,glow,C){const cx=C.position.x,cz=C.position.z,cl=Math.hypot(cx,cz)||1;RIP.forEach((r,i)=>{if(r.w){r.x=cx*r.t-cz/cl*r.j;r.z=cz*r.t+cx/cl*r.j}const d=Math.sin(t*.0006+r.ph)*(r.w?.6:1.2),L=r.l*(.75+.25*Math.sin(t*.0011+r.ph*2)),o=i*6;
+  ripP[o]=r.x+d-L/2;ripP[o+1]=.01;ripP[o+2]=r.z;ripP[o+3]=r.x+d+L/2;ripP[o+4]=.01;ripP[o+5]=r.z});ripG.attributes.position.needsUpdate=true;
+  rip.material.opacity=.35+.55*glow}
+
+/* from up the tower the city's lights lie on the water as long broken streaks */
+const cityR=(()=>{let sd=23;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647,P=[],C=[];
+  for(const [x,wd,h,z] of SKY){const n=Math.round(h/3.5);for(let i=0;i<n;i++){const d=Math.pow(rnd(),1.4),zz=z+4+d*150,L=(2+rnd()*wd*.35)*(1-d*.5),xx=x+(rnd()-.5)*wd*.5,c=(.18+rnd()*.42)*(1-d*.8);
+    P.push(xx-L/2,.02,zz,xx+L/2,.02,zz);C.push(c,c*.78,c*.55,c,c*.78,c*.55)}}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P,3));g.setAttribute('color',new THREE.Float32BufferAttribute(C,3));
+  const l=new THREE.LineSegments(g,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false}));l.renderOrder=3;l.visible=false;scene.add(l);return l})();
+
+/* the CSS sky meets the model's water exactly: find the horizon on screen */
+const fw=new THREE.Vector3(),hp=new THREE.Vector3();
+function horizon(C,el){C.getWorldDirection(fw);fw.y=0;fw.normalize();hp.copy(C.position).addScaledVector(fw,4000);hp.y=0;hp.project(C);el.style.setProperty('--hz',((1-hp.y)/2*100).toFixed(2)+'%')}
+
+let narrow=false,W=1,H=1;
+function size(){W=hero.clientWidth;H=hero.clientHeight;narrow=W<900;renderer.setSize(W,H,false);camera.aspect=W/H;
+  if(narrow){camera.fov=34;camera.setViewOffset(W,H,-W*.17,0,W,H)}else{camera.fov=30;camera.setViewOffset(W,H,-W*.2,0,W,H)}
+  camera.updateProjectionMatrix();
+  const pr=renderer.getPixelRatio();gl2.width=Math.round(W*pr);gl2.height=Math.round(H*pr);
+  camR.aspect=W/H;camR.fov=narrow?40:30;camR.updateProjectionMatrix();
+  lastHero=-1;if(RM)still()}
+
+/* hero camera: k=0 sits low on the waterline, close in; k=1 is the settled framing */
+function cam(n,k){const e=io3(k),a1=-.55+Math.sin(n*.00012)*.07,r1=narrow?130:106,y1=narrow?6:7,l1=narrow?7.6:19;
+  const a0=a1-.5,r0=narrow?74:60,y0=.55,l0=narrow?6:10.5;
+  const a=a0+(a1-a0)*e,r=r0+(r1-r0)*e,y=y0+(y1-y0)*Math.pow(e,1.25),l=l0+(l1-l0)*e;
+  camera.position.set(Math.sin(a)*r,y,Math.cos(a)*r);camera.lookAt(0,l,0)}
+
+/* rise camera: holds the whole tower in the left third, base on the shoreline, crown in frame, with only a slow push in over the scroll */
+/* the floor line: a fine champagne frame around the slab edge, not a plate */
+const ring=new THREE.Group();{const rm=new THREE.MeshBasicMaterial({color:0xe6cfa6,toneMapped:false}),a=(W0+.9)/2,b=(D0+.9)/2,t=.11;
+  for(const [w,d,x,z] of [[2*a+t,t,0,b],[2*a+t,t,0,-b],[t,2*b,a,0],[t,2*b,-a,0]]){const m=new THREE.Mesh(new THREE.BoxGeometry(w,.11,d),rm);m.position.set(x,0,z);ring.add(m)}}
+ring.visible=false;scene.add(ring);
+function camRise(row,s){const R=(narrow?150:140)-s*(narrow?10:12),th=.42,y=2.5,pitch=narrow?.12:.096,phi=narrow?.084:.21;
+  const cx=Math.sin(th)*R,cz=Math.cos(th)*R,dx=-Math.sin(th),dz=-Math.cos(th),rx=-dz,rz=dx,c=Math.cos(phi),sn=Math.sin(phi);
+  camR.position.set(cx,y,cz);camR.lookAt(cx+dx*c+rx*sn,y+Math.tan(pitch),cz+dz*c+rz*sn);
+  ring.position.set(0,row,0);ring.rotation.y=row*TW}
+
+/* fine glazing for the rise: narrow panes between the slabs, lit residence by residence at varied warmth.
+   additive light, so an unlit pane leaves the dark reflective glass showing. */
+const GL=[];{let sd=31;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
+  for(let i=0;i<N;i++)for(const [face,n,len] of [[0,12,W0-.2],[1,8,D0-.2],[2,12,W0-.2],[3,8,D0-.2]]){let k=0;
+    while(k<n){const run=2+Math.floor(rnd()*3),lit=i>=2&&rnd()<.5,base=.42+rnd()*.5;
+      for(let r=0;r<run&&k<n;r++,k++)GL.push([i,face,-len/2+(k+.5)*len/n,len/n,lit?Math.max(.2,base+(rnd()-.5)*.18)*(rnd()<.2?.45:1):0])}}}
+const glazeM=new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide,toneMapped:false});
+const glaze=[T,M].map(P=>{const g=new THREE.InstancedMesh(new THREE.PlaneGeometry(1,.64),glazeM,GL.length);
+  GL.forEach(([i,face,t,w],j)=>{const rot=[0,Math.PI/2,Math.PI,-Math.PI/2][face],o=.012,lx=face===0?t:face===2?-t:face===1?GX+o:-GX-o,lz=face===0?GZ+o:face===2?-GZ-o:face===1?-t:t;
+    const ang=i*TW,c=Math.cos(ang),sn=Math.sin(ang);v.set(lx*c+lz*sn,i+.5,-lx*sn+lz*c);q.setFromAxisAngle(yA,ang+rot);s.set(w*.86,1,1);m4.compose(v,q,s);g.setMatrixAt(j,m4);g.setColorAt(j,off)});
+  g.visible=false;g.renderOrder=2;P.g.add(g);return g});
+let lastRow=-9;
+function setGlaze(row){if(Math.abs(row-lastRow)<.004)return;lastRow=row;
+  GL.forEach(([i,,,,b],j)=>{const d=row-i,below=clamp(d-.6),band=Math.max(0,1-Math.abs(d-.5)*1.4),k=Math.min(1.1,b*.82*(1-.74*below)+band*(.3+b*.5));
+    cc.setRGB(k,k*.6,k*.3);glaze[0].setColorAt(j,cc);glaze[1].setColorAt(j,cc.multiplyScalar(.7))});
+  glaze[0].instanceColor.needsUpdate=glaze[1].instanceColor.needsUpdate=true}
+const F0=3,F1=N,P0=1380,P1=2050;
+const price=fl=>Math.round((P0+(P1-P0)*Math.pow((fl-F0)/(F1-F0),1.2))/10)*10;
+let sT=0,sC=0,lastF=-1;
+function riseTarget(){const r=rise.getBoundingClientRect(),Hh=rise.offsetHeight-stage.offsetHeight;sT=Hh>0?clamp(-r.top/Hh):1}
+addEventListener('scroll',riseTarget,{passive:true});
+function renderRise(n){
+  const up=sine(clamp(sC/.9)),fl=F0+(F1-F0)*up,row=fl-1;
+  camRise(row,sine(sC));setFloors(N+1);setGlaze(row);ripple(n,1,camR);
+  const vis=x=>{ring.visible=cityR.visible=glaze[0].visible=glaze[1].visible=x;T.units.visible=M.units.visible=!x};
+  vis(true);renderer.render(scene,camR);vis(false);
+  c2.clearRect(0,0,gl2.width,gl2.height);c2.drawImage(renderer.domElement,0,0,gl2.width,gl2.height);horizon(camR,stage);
+  const f=Math.round(fl);if(f!==lastF){lastF=f;rf.textContent=f;rp.textContent='$'+price(f).toLocaleString('en-US')}
+  rm.style.setProperty('--f',((fl-F0)/(F1-F0)).toFixed(4))}
+
+let heroVis=true,riseVis=false,running=false,lastHero=-1;
+const kick=()=>{if(!running&&!RM&&(heroVis||riseVis)){running=true;requestAnimationFrame(loop)}};
+new IntersectionObserver(es=>{heroVis=es[0].isIntersecting;kick()}).observe(hero);
+new IntersectionObserver(es=>{riseVis=es[0].isIntersecting;if(riseVis){riseTarget();sC=sT}kick()}).observe(rise);
+
+/* the opening, in ms: floors rise 150-2500, the camera cranes 0-3300, residences light 1500-3500 */
+const SOLD=212;let t0=null,tp=0;
+function loop(n){if(!heroVis&&!riseVis){running=false;return}
+  if(t0===null)t0=tp=n;const t=n-t0,dt=Math.min(100,n-tp);tp=n;
+  if(riseVis){sC+=(sT-sC)*(1-Math.exp(-dt/140));if(Math.abs(sT-sC)<1e-4)sC=sT;renderRise(n)}
+  if(heroVis){
+    const built=(N+1)*sine(clamp((t-150)/2350)),k=clamp(t/3300);
+    const lit=Math.round(SOLD*sine(clamp((t-1500)/2000)));
+    setFloors(built);setLit(lit,t);cam(n,k);if(k<1||lastHero<0){horizon(camera,hero);lastHero=1}
+    ripple(n,.25+.75*lit/SOLD,camera);sc.textContent=lit;renderer.render(scene,camera)}
+  requestAnimationFrame(loop)}
+function still(){setFloors(N+1);setLit(SOLD,0);setLit(SOLD,1e4);
+  riseTarget();sC=1;renderRise(0);
+  cam(0,1);horizon(camera,hero);ripple(0,1,camera);sc.textContent=SOLD;renderer.render(scene,camera)}
+size();addEventListener('resize',size);
+if(RM)still();else{sc.textContent=0;cam(0,0);horizon(camera,hero);kick()}
+}
+</script>
+
+</body></html>

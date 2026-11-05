@@ -1,0 +1,451 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!--
+ALIGNMENT NOTES
+Grid: 12 columns, max width 1280px, 32px gutter, page gutter max(24px, safe-area) (16px floor on phones).
+All text starts on column 1. Drawings sit on columns 7-12 (hero) and span 1-12 (two-paths band).
+Intentional offsets:
+- Hero drawing's ground line runs past column 12 to the page edge: the ground the house and family stand on reads as continuous land, not a framed picture.
+- The single oxblood stroke is the signature under the drawing. It is the only red on the page: the moment the plan is signed.
+- Two-paths labels sit at the end of each line (where the estate arrives), not on the grid, so each label touches the outcome it names.
+- Hero ground line is ONE pen stroke that enters at the left page edge (x=0) and runs full-bleed to the right edge. On desktop it sits exactly on the top edge of the credentials row, replacing that row's hairline: the headline block is the letter, the ground is its rule, the credentials and the signature sit beneath it.
+- House spans columns 7-9 (left wall on the col 7 line); the family tree's trunk is centred on columns 10-12 and its widest generation fills them. The signature starts on the col 7 line; "Signed, 2026" ends on the col 12 line, on the credentials' baseline.
+- Phone: the drawing moves above the headline (it is the hero picture), house on col 1, tree ending on col 12.
+- Two-paths diagram is pinned while it plays: it sits centred in the space under the sticky header, so its vertical position is set by the viewport, not the grid.
+
+SELLS
+Buyer: Palm Beach County family with a home, a business or investments to pass on.
+Fear: probate court, a public fight, the wrong person deciding.
+Outcome: everything goes where they meant it to, privately, without court.
+Proof: years, families served, trusts drafted, board certification line.
+One CTA: "Book a private consultation".
+-->
+<title>Wrenfield Law</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital@0;1&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a clean sheet of letterhead; one navy line draws the story, one oxblood stroke signs it */
+:root{
+  --paper:#F3F4F1;
+  --sheet:#FBFBF9;
+  --ink:#16213A;
+  --ink-2:#3E4A63;
+  --rule:#D5D8DE;
+  --ox:#7B1E2C;
+  --serif:"Libre Caslon Display","Libre Caslon Text",Georgia,"Times New Roman",serif;
+  --text:"Libre Caslon Text",Georgia,serif;
+  --sans:"Public Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:1344px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
+.eyebrow{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.btn{display:inline-flex;align-items:center;gap:14px;background:transparent;color:var(--ink);font-family:var(--sans);font-weight:600;font-size:18px;padding:17px 28px;text-decoration:none;border:1.5px solid var(--ink);cursor:pointer;transition:background .3s,color .3s}
+.btn:hover,.btn:focus-visible{background:var(--ink);color:var(--sheet)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.btn svg{width:18px;height:18px}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:rgba(243,244,241,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid transparent;transition:border-color .5s}
+header.solid{border-bottom-color:var(--rule)}
+header .wrap{display:flex;align-items:center;height:92px}
+.logo{display:flex;align-items:baseline;gap:14px;text-decoration:none;color:var(--ink)}
+.logo b{font-family:var(--serif);font-weight:400;font-size:30px;letter-spacing:.01em}
+.logo span{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+nav{margin-left:auto;display:flex;align-items:center;gap:40px;font-size:17px;font-weight:500}
+nav a.t{text-decoration:none;color:var(--ink-2)}
+nav a.t:hover{color:var(--ink)}
+nav .btn{padding:14px 22px;font-size:16px}
+
+.hero{position:relative;padding-block:72px 120px;overflow:hidden}
+#pen{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.hero.grounded .cred{border-top-color:transparent}
+.js .hero.intro .hl>*{opacity:0;transform:translateY(18px)}
+.hero.words .hl>*{transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.hero.words .hl>:nth-child(2){transition-delay:.1s}.hero.words .hl>:nth-child(3){transition-delay:.26s}
+.hero.words .hl>:nth-child(4){transition-delay:.38s}.hero.words .hl>:nth-child(5){transition-delay:.48s}
+.hero .grid{align-items:center}
+.hl{grid-column:1 / span 6}
+h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(56px,6.6vw,104px);line-height:1;letter-spacing:-.01em;text-wrap:balance}
+h1 em{font-family:var(--text);font-style:italic;font-size:.92em}
+.lede{margin:32px 0 44px;font-size:22px;line-height:1.5;color:var(--ink-2);max-width:28ch}
+.cred{margin-top:40px;padding-top:24px;border-top:1px solid var(--rule);display:flex;gap:32px;flex-wrap:wrap;font-size:15px;color:var(--ink-2)}
+.cred b{color:var(--ink);font-weight:600}
+.art{grid-column:7 / span 6;position:relative}
+.ln{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.node{fill:var(--paper);stroke:var(--ink);stroke-width:2.2}
+.kin{fill:var(--ink)}
+.sig{fill:none;stroke:var(--ox);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.tag{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;fill:var(--ink-2);transition:opacity 1.2s ease}
+
+.paths{background:var(--sheet);border-block:1px solid var(--rule);padding-block:0 128px}
+.pin{position:relative;height:300vh}
+.stick{position:sticky;top:calc(92px + env(safe-area-inset-top,0px));height:calc(100vh - 92px - env(safe-area-inset-top,0px));display:flex;align-items:center;overflow:hidden}
+@supports (height:100svh){.stick{height:calc(100svh - 92px - env(safe-area-inset-top,0px))}}
+.stick>.wrap{width:100%}
+.paths h2{grid-column:1 / span 8;margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(40px,4.4vw,68px);line-height:1.05;text-wrap:balance}
+.paths .eyebrow{grid-column:1 / -1;margin-bottom:24px}
+.two{grid-column:1 / -1;margin-top:64px}
+.two svg{width:100%;height:auto;max-height:calc(100vh - 400px);display:block;overflow:visible}
+.p-long{fill:none;stroke:var(--ink-2);stroke-width:2.4;stroke-dasharray:2 9;stroke-linecap:round}
+.p-short{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.court{fill:none;stroke:var(--ink-2);stroke-width:1.6}
+.lbl{font-family:var(--serif);font-size:34px;fill:var(--ink)}
+.frz{font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;fill:var(--ink-2)}
+.cnt{font-family:var(--serif);font-size:34px;fill:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.arr{opacity:0;transform:translateX(-10px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.arr.on{opacity:1;transform:none}
+.hd{transition:opacity .4s}
+.lbl2{font-family:var(--sans);font-size:17px;fill:var(--ink-2)}
+.dot{fill:var(--ink)}
+.stats{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px;border-top:1px solid var(--rule)}
+.stat{padding-top:32px}
+.stat b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(60px,6vw,96px);line-height:1;font-variant-numeric:lining-nums tabular-nums}
+.stat > span{display:block;margin-top:12px;color:var(--ink-2);max-width:24ch}
+
+.help{padding-block:128px}
+.help h2{grid-column:1 / span 5;margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(40px,4.4vw,68px);line-height:1.05}
+.list{grid-column:7 / span 6;margin:0;padding:0;list-style:none;border-top:1px solid var(--rule)}
+.list li{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:baseline;padding-block:26px;border-bottom:1px solid var(--rule)}
+.list b{font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.15}
+.list span{color:var(--ink-2);font-size:17px;text-align:right}
+
+.book{background:var(--ink);color:var(--sheet);padding-block:128px 136px}
+.book h2{grid-column:1 / span 6;margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(48px,5.6vw,88px);line-height:1}
+.book .side{grid-column:1 / span 5;margin-top:32px;color:#C9CFDB;font-size:20px}
+.book .phone{display:block;margin-top:28px;font-family:var(--serif);font-size:34px;color:var(--sheet);user-select:all}
+.book .eyebrow{color:#C9CFDB}
+form{grid-column:7 / span 6;grid-row:1 / span 3;display:grid;gap:22px;align-self:start}
+label{display:grid;gap:8px}
+input,textarea,select{font:inherit;font-size:19px;color:var(--sheet);background:transparent;border:0;border-bottom:1px solid #4A5878;padding:12px 0;outline:none;border-radius:0}
+textarea{resize:vertical;min-height:96px}
+input:focus,textarea:focus{border-color:var(--sheet)}
+form .btn{color:var(--sheet);border-color:var(--sheet);justify-self:start;margin-top:12px}
+form .btn:hover{background:var(--sheet);color:var(--ink)}
+.thanks{font-family:var(--serif);font-size:30px}
+footer{padding-block:36px;background:var(--ink);color:#9AA4B8;border-top:1px solid #2A3757;font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+.rv{transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .rv.pre{opacity:.001;transform:translateY(24px)}
+
+@media (max-width:900px){
+  nav a.t{display:none}
+  .hero{padding-block:40px 80px}
+  .hl,.art{grid-column:1 / -1}
+  .art{order:-1;height:min(560px,calc((100vw - 48px) * .92 + 84px));margin-bottom:24px}
+  .pin{height:260vh}
+  .two{margin-top:40px}
+  .paths h2,.help h2,.list,.book h2,.book .side,form{grid-column:1 / -1;grid-row:auto}
+  .list{margin-top:40px}
+  .stats{grid-template-columns:1fr}
+  form{margin-top:48px}
+  .paths,.help,.book{padding-block:88px}
+}
+@media (max-width:520px){
+  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .logo span{display:none}
+  .lede{font-size:20px}
+  nav .btn{padding:12px 16px;font-size:15px}
+  .list li{grid-template-columns:1fr}
+  .list span{text-align:left}
+  .art{height:calc((100vw - 32px) * .92 + 84px)}
+  .lbl{font-size:25px}.lbl2{font-size:14px}.cnt{font-size:22px}.tag{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){.rv{transition:none}.js .rv.pre{opacity:1;transform:none}
+  .pin{height:auto}.stick{position:static;height:auto;padding-block:128px 64px}.arr{transition:none}}
+</style>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top"><b>Wrenfield</b><span>Trusts &amp; Estates</span></a>
+    <nav>
+      <a class="t" href="#paths">Why plan</a>
+      <a class="t" href="#help">What we do</a>
+      <a class="btn" href="#book">Book a private consultation</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap grid">
+    <div class="hl">
+      <div class="eyebrow">Estate planning</div>
+      <h1 style="margin-top:24px">Everything you built, <em>kept in the family.</em></h1>
+      <p class="lede">Wills, trusts and estate plans for Palm Beach families. Private, and out of court.</p>
+      <a class="btn" href="#book">Book a private consultation <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M10 4l5 5-5 5"/></svg></a>
+      <div class="cred"><span><b>31 years</b> in Palm Beach</span><span><b>Board certified</b> in wills, trusts &amp; estates</span></div>
+    </div>
+    <div class="art" aria-hidden="true"></div>
+  </div>
+  <svg id="pen" role="img" aria-label="One pen line draws a home and a family tree growing beside it, then signs below"></svg>
+</section>
+
+<section class="paths" id="paths">
+  <div class="pin" id="pin"><div class="stick">
+  <div class="wrap grid">
+    <div class="eyebrow rv">Your estate, two ways</div>
+    <h2 class="rv">Without a plan, a judge decides. With one, <em style="font-family:var(--text)">you</em> do.</h2>
+    <div class="two" id="two">
+      <svg id="tsvg" viewBox="0 0 1280 400" preserveAspectRatio="xMinYMid meet" role="img" aria-label="Without a trust, the estate goes through probate court for months on public record. With a trust, it goes straight to the family, privately.">
+        <g id="twog"></g>
+      </svg>
+    </div>
+  </div>
+  </div></div>
+  <div class="wrap grid">
+    <div class="stats">
+      <div class="stat rv"><b data-n="31">31</b><span>years planning estates in Palm Beach</span></div>
+      <div class="stat rv"><b data-n="2400" data-f="1">2,400</b><span>families with a Wrenfield plan</span></div>
+      <div class="stat rv"><b data-n="3.1" data-p="$" data-s="B" data-d="1">$3.1B</b><span>in family assets held in our trusts</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="help" id="help">
+  <div class="wrap grid">
+    <h2 class="rv">One plan for the house, the business and the people.</h2>
+    <ul class="list">
+      <li class="rv"><b>Wills &amp; living trusts</b><span>Kept out of probate</span></li>
+      <li class="rv"><b>Business succession</b><span>Who runs it next</span></li>
+      <li class="rv"><b>Trust administration</b><span>When the time comes</span></li>
+      <li class="rv"><b>Guardianship &amp; care</b><span>For the ones who depend on you</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap grid">
+    <h2 class="rv">Start the conversation.</h2>
+    <div class="side rv">An hour with an attorney, at our office or your home. You leave knowing exactly where your family stands.
+      <span class="phone">(561) 555-0148</span>
+    </div>
+    <form id="f" novalidate>
+      <label for="n"><span class="eyebrow">Name</span><input id="n" name="n" autocomplete="name"></label>
+      <label for="p"><span class="eyebrow">Phone or email</span><input id="p" name="p" autocomplete="email"></label>
+      <label for="q"><span class="eyebrow">What would you like to protect?</span><textarea id="q" name="q" rows="3"></textarea></label>
+      <button class="btn" type="submit">Book a private consultation <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h12M10 4l5 5-5 5"/></svg></button>
+    </form>
+  </div>
+</section>
+</main>
+<footer><div class="wrap"><span>Wrenfield Trusts &amp; Estates · 250 Royal Palm Way, Palm Beach</span><span>(561) 555-0148</span></div></footer>
+
+<script>
+document.documentElement.classList.add('js');
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function draw(el,dur,delay){
+  const L=el.getTotalLength();el.style.strokeDasharray=L;el.style.strokeDashoffset=L;
+  return new Promise(res=>setTimeout(()=>{const t0=performance.now();const f=n=>{const p=Math.min(1,(n-t0)/dur);el.style.strokeDashoffset=L*(1-ease(p));if(p<1)requestAnimationFrame(f);else{el.style.strokeDasharray='';el.style.strokeDashoffset='';res()}};requestAnimationFrame(f)},delay));
+}
+function fade(el,dur,delay){el.style.opacity=0;el.style.transition=`opacity ${dur}ms ease`;setTimeout(()=>el.style.opacity=1,delay)}
+
+/* hero: one pen line. ground from the page edge, the house without lifting, the family tree by generation, then the signature. words last */
+const NS='http://www.w3.org/2000/svg';
+const mk=(tag,at,par)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(par)par.appendChild(e);return e};
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const eio=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const eout=t=>1-Math.pow(1-t,3);
+/* pen timing: sample a stroke, slow it into turns, let it run on straights. returns len(t) for t in 0..1 */
+function penTime(pts,opt){
+  const k=opt.k||9,win=opt.win||5,sm=opt.sm||8;
+  const n=pts.length,seg=[0],ang=[];let L=0;
+  for(let i=1;i<n;i++){const dx=pts[i][0]-pts[i-1][0],dy=pts[i][1]-pts[i-1][1];L+=Math.hypot(dx,dy);seg.push(L);ang.push(Math.atan2(dy,dx))}
+  const turn=new Float32Array(n);
+  for(let i=1;i<ang.length;i++){let d=Math.abs(ang[i]-ang[i-1]);if(d>Math.PI)d=2*Math.PI-d;turn[i]=d}
+  const v=new Float32Array(n);
+  for(let i=0;i<n;i++){let c=0;for(let j=Math.max(0,i-win);j<=Math.min(n-1,i+win);j++)c+=turn[j];v[i]=(pts[i][2]||1)/(1+k*c)}
+  const vs=new Float32Array(n);
+  for(let i=0;i<n;i++){let a=0,m=0;for(let j=Math.max(0,i-sm);j<=Math.min(n-1,i+sm);j++){a+=v[j];m++}vs[i]=a/m}
+  const T=[0];for(let i=1;i<n;i++)T.push(T[i-1]+(seg[i]-seg[i-1])/Math.max(.02,(vs[i]+vs[i-1])/2));
+  const TT=T[n-1];
+  return{L,at(t){if(t>=1)return opt.full||L;const x=t*TT;let lo=0,hi=n-1;while(hi-lo>1){const md=(lo+hi)>>1;if(T[md]<x)lo=md;else hi=md}
+    const f=T[hi]>T[lo]?(x-T[lo])/(T[hi]-T[lo]):0;return seg[lo]+(seg[hi]-seg[lo])*f}};
+}
+/* dense samples of a polyline; each vertex may carry a speed multiplier for the run that leaves it */
+function poly(v,step=2){const out=[];for(let i=1;i<v.length;i++){const a=v[i-1],b=v[i],d=Math.hypot(b[0]-a[0],b[1]-a[1]),m=Math.max(1,Math.round(d/step));
+  for(let j=(i>1?1:0);j<=m;j++)out.push([a[0]+(b[0]-a[0])*j/m,a[1]+(b[1]-a[1])*j/m,a[2]||1])}return out}
+/* catmull-rom through hand points -> smooth cubic path */
+function cr(P){let d=`M${P[0][0].toFixed(1)} ${P[0][1].toFixed(1)}`;for(let i=0;i<P.length-1;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;
+  d+=`C${(p1[0]+(p2[0]-p0[0])/6).toFixed(1)} ${(p1[1]+(p2[1]-p0[1])/6).toFixed(1)} ${(p2[0]-(p3[0]-p1[0])/6).toFixed(1)} ${(p2[1]-(p3[1]-p1[1])/6).toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`}return d}
+/* the signature: the firm's single oxblood flourish (relative pen moves from its first touch) */
+const SIGC=[18,-30,34,-38,40,-26, 6,12,-14,34,-4,36, 12,2,22,-36,34,-34, 10,2,-2,30,8,30, 10,0,18,-24,28,-22, 8,2,2,20,12,20, 14,0,30,-14,50,-10, 30,6,70,8,120,-4];
+
+(()=>{
+  const hero=document.querySelector('.hero'),svg=document.getElementById('pen'),hl=document.querySelector('.hl'),art=document.querySelector('.art'),cred=document.querySelector('.cred');
+  let built=null,raf=0,finished=false;
+  function geom(){
+    const pre=hero.classList.contains('intro');hero.classList.remove('intro');
+    const hr=hero.getBoundingClientRect(),ar=art.getBoundingClientRect(),W=hr.width,H=hr.height;
+    const phone=ar.top<hl.getBoundingClientRect().top-1;
+    let ax,aw,G,T,u;
+    if(!phone){ax=ar.left-hr.left;aw=ar.width;G=cred.getBoundingClientRect().top-hr.top;T=G-(hl.getBoundingClientRect().top-hr.top)-8;u=Math.min(aw/632,T/585)}
+    else{ax=ar.left-hr.left;aw=ar.width;G=ar.top-hr.top+ar.height-84;T=ar.height-84;u=Math.min(aw/632,T/585)}
+    const c=cred.firstElementChild.getBoundingClientRect(),credMid=c.top-hr.top+c.height/2;
+    if(pre)hero.classList.add('intro');
+    return{W,H,ax,aw,G,u,phone,credMid,cr:ar.left-hr.left+ar.width};
+  }
+  function build(){
+    const g=geom(),{ax,G,u}=g;svg.innerHTML='';svg.setAttribute('width',g.W);svg.setAttribute('height',g.H);svg.setAttribute('viewBox',`0 0 ${g.W} ${g.H}`);
+    hero.classList.toggle('grounded',!g.phone);
+    const sw=g.phone?1.8:2.2;
+    /* house: left wall on the column line, three columns wide */
+    const hw=Math.round(Math.min(300*u,g.aw*.47)),x0=ax,x1=ax+hw,eave=G-210*u,ridge=G-330*u,mid=ax+hw/2;
+    const slope=(ridge-eave)/(mid-x1),ry=x=>eave+(x-x1)*slope;
+    const cA=x1-52*u,cB=x1-82*u,dL=ax+hw/2-26*u,dR=ax+hw/2+26*u,dT=G-118*u;
+    const tx=ax+g.aw-137*u;
+    const V=[[0,G],[x0,G],[x0,eave],[mid,ridge],[cB,ry(cB)],[cB,G-300*u],[cA,G-300*u],[cA,ry(cA)],[x1,eave],[x1,G],[dR,G],[dR,dT],[dL,dT],[dL,G],[x0,G,4.5],[x1,G],[tx,G]];
+    const pts=poly(V);
+    const main=mk('path',{class:'ln',d:'M'+V.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L'),'stroke-width':sw},svg);
+    const ptMain=penTime(pts,{k:4,win:4,sm:10});
+    const right=mk('path',{class:'ln',d:`M${tx} ${G}H${g.W}`,'stroke-width':sw},svg);
+    /* family tree, generation by generation */
+    const Y=[G-240*u,G-352*u,G-452*u,G-534*u];
+    const gen=[[[0,null]],[[-90,0],[90,0]],[[-130,0],[-43,0],[43,1],[130,1]],[[-150,0],[-110,0],[-43,1],[23,2],[63,2],[130,3]]];
+    const R=[11,9,7,4.6].map(r=>Math.max(g.phone?2.6:3,r*u));
+    const lines=[[]],nodes=[];
+    lines[0].push(mk('path',{class:'ln',d:`M${tx} ${G}V${Y[0]}`,'stroke-width':sw},svg));
+    for(let k=1;k<4;k++){lines[k]=[];gen[k].forEach(([dx,pi])=>{const p=gen[k-1][pi];lines[k].push(mk('path',{class:'ln',d:`M${tx+p[0]*u} ${Y[k-1]}L${tx+dx*u} ${Y[k]}`,'stroke-width':sw},svg))})}
+    gen.forEach((row,k)=>{nodes[k]=row.map(([dx])=>{const c=mk('circle',{class:k<3?'node':'kin',cx:tx+dx*u,cy:Y[k],r:R[k],'stroke-width':sw},svg);c.style.transformBox='fill-box';c.style.transformOrigin='center';return c})});
+    /* signature: starts on the column line under the house; tag ends on the last column line, on the credentials' baseline */
+    const ss=g.phone?u*1.05:Math.min(1.05,u),bx=ax+1,by=G+50*ss;
+    const sigD=`M${bx.toFixed(1)} ${by.toFixed(1)}`+SIGC.reduce((d,v,i)=>d+(i%6===0?'c':' ')+(v*ss).toFixed(2),'');
+    const sig=mk('path',{class:'sig',d:sigD,'stroke-width':g.phone?2.1:2.6},svg);
+    const SL=sig.getTotalLength(),sp=[];for(let l=0;l<=SL;l+=1.5){const q=sig.getPointAtLength(l);sp.push([q.x,q.y])}
+    const ptSig=penTime(sp,{k:2.2,win:3,sm:4,full:SL});
+    const tagY=g.phone?G+38*ss:g.credMid+4.5;
+    const tag=mk('text',{class:'tag',x:g.cr,y:tagY,'text-anchor':'end'},svg);tag.textContent='Signed, 2026';
+    return{main,ptMain,right,lines,nodes,sig,ptSig,tag};
+  }
+  const hide=(p,L)=>{L=L||p.getTotalLength();p.style.strokeDasharray=`${L} ${L+2}`;p.style.strokeDashoffset=L;p._L=L};
+  const show=(p,l)=>{p.style.strokeDashoffset=p._L-l};
+  function finalState(){finished=true;cancelAnimationFrame(raf);hero.classList.remove('intro');built=build()}
+  function play(){
+    const b=built=build();
+    [b.main,b.right,b.sig,...b.lines.flat()].forEach(p=>hide(p,p===b.main?b.ptMain.L:null));
+    b.nodes.flat().forEach(n=>{n.style.opacity=0;n.style.transform='scale(.2)'});
+    b.tag.style.opacity=0;
+    const S=180,TR=[];
+    const tr=(t0,d,f,e=x=>x)=>TR.push({t0,d,f,e,done:false});
+    tr(S,1650,p=>show(b.main,b.ptMain.at(p)),x=>x);
+    const t1=S+1650;
+    tr(t1-60,700,p=>show(b.right,b.right._L*p),eio);
+    tr(t1,300,p=>show(b.lines[0][0],b.lines[0][0]._L*p),eio);
+    const pop=(n,t)=>tr(t,380,p=>{n.style.opacity=p;n.style.transform=`scale(${.2+.8*p})`},eout);
+    pop(b.nodes[0][0],t1+250);
+    let t=t1+300;
+    for(let k=1;k<4;k++){const d=k===3?220:250;b.lines[k].forEach(l=>tr(t,d,p=>show(l,l._L*p),eio));b.nodes[k].forEach((n,i)=>pop(n,t+d-40+(k===3?[0,90,40,140,60,0][i]||0:0)));t+=d}
+    const ts=t+40;
+    tr(ts,880,p=>show(b.sig,b.ptSig.at(p)),x=>x);
+    tr(ts+300,10,()=>{hero.classList.add('words');hero.classList.remove('intro')});
+    tr(ts+1000,10,()=>{b.tag.style.opacity=1});
+    const T0=performance.now();
+    const f=n=>{const e=n-T0;let live=false;for(const x of TR){if(x.done)continue;const p=clamp((e-x.t0)/x.d);if(p>0)x.f(x.e(p));if(p>=1)x.done=true;else live=true}
+      if(live)raf=requestAnimationFrame(f);else{finished=true;b.main.style.strokeDasharray='';b.main.style.strokeDashoffset=''}};
+    raf=requestAnimationFrame(f);
+  }
+  let started=false;
+  const go=()=>{if(started)return;started=true;if(RM){finalState();return}play()};
+  if(!RM)hero.classList.add('intro');
+  Promise.race([document.fonts?document.fonts.ready:Promise.resolve(),new Promise(r=>setTimeout(r,900))]).then(()=>requestAnimationFrame(go));
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(started)finalState()},150)});
+  if(document.fonts)document.fonts.addEventListener&&document.fonts.addEventListener('loadingdone',()=>{if(finished)finalState()});
+})();
+
+/* two paths, scrubbed by scroll: the trust line arrives in weeks; probate crawls into court, loops, and the months keep climbing */
+(()=>{
+  const svg=document.getElementById('tsvg'),g=document.getElementById('twog'),box=document.getElementById('two'),pin=document.getElementById('pin');
+  let D=null;
+  function build(){
+    const W=Math.round(box.clientWidth),narrow=W<600,k=narrow?.62:1.3;
+    const x0=8,x1=narrow?W-6:W-300,yA=narrow?150:212,yB=narrow?yA+204:yA+188,H=narrow?yB+54:yB+40;
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    const cx=narrow?W*.5:x0+(x1-x0)*.47,bw=170*k,bx0=cx-bw/2,bx1=cx+bw/2,bt=yA-100*k,bb=yA+32*k;
+    // probate: straight in, four loops inside the court, straight out
+    const P=[];const add=(x,y)=>P.push([x,y]);
+    for(let x=x0;x<bx0+16*k;x+=3)add(x,yA);
+    const xs=bx0+16*k,cw=bw-32*k,loops=4,b=34*k,a=cw/(loops*2*Math.PI);
+    for(let t=0;t<=loops*2*Math.PI;t+=.05)add(xs+a*t+b*Math.sin(t),yA-b*(1-Math.cos(t)));
+    const xe=xs+cw;for(let x=xe;x<=x1;x+=3)add(x,yA);add(x1,yA);
+    const cum=[0];for(let i=1;i<P.length;i++)cum.push(cum[i-1]+Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]));
+    const L=cum[cum.length-1];let Le=0;for(let i=0;i<P.length;i++)if(P[i][0]>=xs){Le=cum[i];break}
+    const d='M'+P.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L');
+    const lx=narrow?x1:x1+28,anc=narrow?'end':'start';
+    const fz=narrow?0:22*k,ft=bt-fz,wt=narrow?bt+7*k:bt;
+    const ped=`M${bx0-12*k} ${ft}L${cx} ${ft-36*k}L${bx1+12*k} ${ft}Z`+(narrow?`M${bx0-6*k} ${bt+7*k}H${bx1+6*k}`:`M${bx0-6*k} ${bt}H${bx1+6*k}`);
+    const steps=`M${bx0-12*k} ${bb}H${bx1+12*k} M${bx0-22*k} ${bb+9*k}H${bx1+22*k}`;
+    const cy1=narrow?bb+36:bb+46,cy2=narrow?bb+68:bb+54;
+    g.innerHTML=`
+      <defs><mask id="pm" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><path id="pmk" d="${d}" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></mask></defs>
+      <text class="lbl2" x="0" y="${yA-44}">Without a trust</text>
+      <path class="court" d="M${bx0} ${wt}V${bb}M${bx1} ${wt}V${bb}M${bx0-6*k} ${wt+7*k}H${bx0+6*k}M${bx1-6*k} ${wt+7*k}H${bx1+6*k}M${bx0-6*k} ${bb-7*k}H${bx0+6*k}M${bx1-6*k} ${bb-7*k}H${bx1+6*k}"/>
+      <path class="court" d="${ped}"/><path class="court" d="${steps}"/>
+      ${narrow?`<text class="lbl2" x="${cx}" y="${cy1}" text-anchor="middle">Probate court</text>`:`<text class="frz" x="${cx}" y="${ft+fz/2+4.5}" text-anchor="middle">Probate court</text>`}
+      <text class="cnt hd" id="mc" x="${cx}" y="${cy2}" text-anchor="middle" style="opacity:0">Month 1</text>
+      <path class="p-long" d="${d}" mask="url(#pm)"/>
+      <circle class="dot" cx="${x0}" cy="${yA}" r="6"/>
+      <circle class="hd" id="ha" r="6" fill="#3E4A63" cx="${x0}" cy="${yA}"/>
+      <g class="arr" id="la"><circle cx="${x1}" cy="${yA}" r="7" fill="#3E4A63"/>
+        <text class="lbl" x="${lx}" y="${narrow?cy2+48:yA+11}" text-anchor="${anc}">Months, in public</text></g>
+      <text class="lbl2" x="0" y="${yB-(narrow?32:44)}">With a Wrenfield trust</text>
+      <path class="p-short" id="ps" d="M${x0} ${yB}H${x1}"/>
+      <circle class="dot" cx="${x0}" cy="${yB}" r="6"/>
+      <circle class="hd" id="hb" r="6" fill="#16213A" cx="${x0}" cy="${yB}"/>
+      <g class="arr" id="lb"><circle cx="${x1}" cy="${yB}" r="7" fill="#16213A"/>
+        <text class="lbl" x="${lx}" y="${narrow?yB+44:yB+11}" text-anchor="${anc}">Weeks, in private</text></g>`;
+    const ps=document.getElementById('ps'),Ls=x1-x0;ps.style.strokeDasharray=`${Ls} ${Ls+2}`;
+    const mkp=document.getElementById('pmk');mkp.style.strokeDasharray=`${L} ${L+2}`;
+    D={P,cum,L,Le,x0,x1,yB,Ls,ps,mkp,mc:document.getElementById('mc'),ha:document.getElementById('ha'),hb:document.getElementById('hb'),la:document.getElementById('la'),lb:document.getElementById('lb')};
+  }
+  function render(p){
+    if(!D)return;
+    // trust: arrives quickly
+    const qt=eio(clamp((p-.03)/.15));
+    D.ps.style.strokeDashoffset=D.Ls*(1-qt);
+    D.hb.setAttribute('cx',D.x0+D.Ls*qt);D.hb.style.opacity=qt>0&&qt<1?1:0;
+    D.lb.classList.toggle('on',qt>=1);
+    // probate: crawls the whole way
+    const qp=clamp((p-.03)/.85),l=D.L*qp;
+    D.mkp.style.strokeDashoffset=D.L-l;
+    let lo=0,hi=D.cum.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(D.cum[m]<l)lo=m;else hi=m}
+    const P=D.P[hi];D.ha.setAttribute('cx',P[0]);D.ha.setAttribute('cy',P[1]);D.ha.style.opacity=qp>0&&qp<1?1:0;
+    const inC=l>=D.Le;D.mc.style.opacity=inC?1:0;
+    if(inC){const m=1+Math.floor(17*clamp((l-D.Le)/(D.L-D.Le))+1e-6);D.mc.textContent='Month '+Math.min(18,m)}
+    D.la.classList.toggle('on',qp>=1);
+  }
+  build();
+  if(RM){render(1);addEventListener('resize',()=>{build();render(1)});return}
+  let cur=0,tgt=0,raf=0;
+  const target=()=>{const r=pin.getBoundingClientRect(),st=pin.firstElementChild.getBoundingClientRect(),top=parseFloat(getComputedStyle(pin.firstElementChild).top)||92;
+    return clamp((top-r.top)/Math.max(1,r.height-st.height))};
+  const tick=()=>{cur+=(tgt-cur)*.16;if(Math.abs(tgt-cur)<.0004)cur=tgt;render(cur);raf=cur!==tgt?requestAnimationFrame(tick):0};
+  const on=()=>{tgt=target();if(!raf)raf=requestAnimationFrame(tick)};
+  addEventListener('scroll',on,{passive:true});
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{build();cur=tgt=target();render(cur)},150)});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{build();cur=tgt=target();render(cur)});
+  cur=tgt=target();render(cur);
+})();
+
+/* reveals and counters */
+(()=>{
+  if(RM)return;
+  const els=[...document.querySelectorAll('.rv')];
+  els.forEach(e=>{if(e.getBoundingClientRect().top>innerHeight*.9)e.classList.add('pre')});
+  const io=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io.unobserve(e.target);setTimeout(()=>e.target.classList.remove('pre'),i*600)})},{threshold:.3});
+  els.forEach(e=>io.observe(e));
+  const ns=[...document.querySelectorAll('[data-n]')];
+  const fmt=(el,v)=>(el.dataset.p||'')+(el.dataset.d?v.toFixed(1):Math.round(v).toLocaleString('en-US'))+(el.dataset.s||'');
+  const io2=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io2.unobserve(e.target);const el=e.target,N=+el.dataset.n;
+    setTimeout(()=>{const t0=performance.now(),D=2200;const f=n=>{const p=Math.min(1,(n-t0)/D);el.textContent=fmt(el,N*ease(p));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)},i*600)})},{threshold:.4});
+  ns.forEach(n=>io2.observe(n));
+})();
+{const h=document.querySelector('header');const f=()=>h.classList.toggle('solid',scrollY>40);addEventListener('scroll',f,{passive:true});f()}
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();e.target.innerHTML='<p class="thanks">Thank you. An attorney will call you within one business day.</p>'});
+</script>
+
+</body></html>

@@ -1,0 +1,1985 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Soft Riot App</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: one shell, two worlds. The customer app lives on the brand's grey store wall inside a phone; the owner side is a UMB command panel with an ink rail and a paper ledger. In "both" the phone keeps its own column so an order can be watched landing on the panel. */
+:root{
+  --wall:#E6E7E1; --wall-hi:#F5F5F1; --wall-lo:#D2D3CB;
+  --ink:#10110E; --ink-2:#54564E; --ink-3:#8C8E85; --rule:rgba(16,17,14,.12); --rule-2:rgba(16,17,14,.22);
+  --lime:#43E61F; --lime-ink:#0B2604; --lime-soft:rgba(67,230,31,.16);
+  --paper:#FBFAF5; --cv:#ECEDE7;
+  --rail:#121310; --rail-2:#1D1E1A; --rail-tx:#ECECE5; --rail-mu:#8A8C83; --rail-ln:rgba(236,236,229,.09);
+  --up:#1E7F34; --down:#C2412D; --warn:#B07A06; --up-bg:rgba(30,127,52,.1); --down-bg:rgba(194,65,45,.1); --warn-bg:rgba(176,122,6,.12);
+  --f-disp:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --gut:max(16px,env(safe-area-inset-left,0px));
+  color-scheme:light;
+}
+html,body{height:100%}
+body{background:var(--wall);color:var(--ink);font-family:var(--f-disp);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+input{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:8px}
+.mono{font-family:var(--f-mono)}
+.lbl{font:500 10px/1.2 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.tn{font-variant-numeric:tabular-nums}
+
+/* ---------- shell ---------- */
+.shell{height:100%;display:grid;grid-template-rows:56px minmax(0,1fr);position:relative}
+.gbar{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--rule);background:var(--wall)}
+.g-l{display:flex;align-items:center;gap:12px}
+/* the mark's word runs past its box; the margin puts the S, not the box, on the bar's left edge */
+.g-l .logo{width:96px;height:32px;margin-left:8px}
+.g-x{font:500 11px/1 var(--f-mono);color:var(--ink-3)}
+.umbm{display:flex;align-items:center;gap:7px;font:800 13px/1 var(--f-disp);font-stretch:118%;letter-spacing:.06em}
+.umbm i{width:16px;height:16px;display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.umbm i b{border-radius:1.5px;background:currentColor}
+.umbm i b:nth-child(2){background:var(--lime)}
+.g-sw{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.seg{position:relative;display:inline-flex;padding:3px;border-radius:999px;background:rgba(16,17,14,.06);box-shadow:inset 0 0 0 1px var(--rule)}
+.seg i{position:absolute;top:3px;bottom:3px;left:0;border-radius:999px;background:var(--ink);transition:transform .6s var(--ease),width .6s var(--ease);box-shadow:0 2px 6px rgba(16,17,14,.18)}
+.seg button{position:relative;height:30px;padding:0 16px;border-radius:999px;font:600 10.5px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;transition:color .45s;white-space:nowrap}
+.seg button[aria-pressed="true"]{color:var(--paper)}
+.g-r{display:flex;align-items:center;gap:10px}
+.live{display:flex;align-items:center;gap:8px;font:500 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--up);box-shadow:0 0 0 3px rgba(30,127,52,.16);flex:none}
+.dot.pulse{animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(30,127,52,0)}}
+
+.stage{position:relative;display:grid;grid-template-columns:minmax(0,1fr);min-height:0}
+body[data-view="both"] .stage{grid-template-columns:clamp(400px,31vw,500px) minmax(0,1fr)}
+body[data-view="owner"] .stage{grid-template-columns:0 minmax(0,1fr)}
+body[data-view="app"] .pane-own{display:none}
+body[data-view="owner"] .pane-app{visibility:hidden}
+.pane-app{position:relative;min-width:0;min-height:0;overflow:hidden;display:grid;place-items:center;
+  background:radial-gradient(80% 70% at 50% 40%,var(--wall-hi) 0%,var(--wall) 55%,var(--wall-lo) 100%)}
+.pane-app::before{content:"";position:absolute;inset:0;background-image:var(--grain);opacity:.3;mix-blend-mode:multiply;pointer-events:none}
+.bgword{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;pointer-events:none;overflow:hidden}
+.bgword span{font:900 clamp(90px,15vw,240px)/.82 var(--f-disp);font-stretch:125%;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1px rgba(16,17,14,.1);white-space:nowrap}
+body[data-view="both"] .bgword{display:none}
+.pane-own{position:relative;min-width:0;min-height:0;overflow:hidden;container-type:inline-size;container-name:own;background:var(--cv);border-left:1px solid var(--rule)}
+
+/* ---------- phone ---------- */
+.phw{position:relative;width:calc(390px * var(--ps,1) + 24px * var(--ps,1));height:calc(868px * var(--ps,1))}
+.ph{position:absolute;left:0;top:0;width:414px;height:868px;box-sizing:border-box;transform:scale(var(--ps,1));transform-origin:0 0;border-radius:62px;padding:12px;
+  background:linear-gradient(145deg,#2b2c28,#0b0c09 40%,#1b1c18);
+  box-shadow:inset 0 0 0 1.5px #44463f,inset 0 0 0 5px #0b0c09,0 50px 90px -30px rgba(16,17,14,.55),0 30px 40px -20px rgba(16,17,14,.35)}
+.ph::after{content:"";position:absolute;right:-3px;top:180px;width:3px;height:86px;border-radius:0 3px 3px 0;background:#262722}
+.scr{position:relative;width:390px;height:844px;border-radius:50px;overflow:hidden;background:var(--wall);display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;isolation:isolate}
+.island{position:absolute;left:50%;top:11px;width:122px;height:35px;margin-left:-61px;border-radius:20px;background:#000;z-index:80}
+.sb{height:52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 9px 38px;font:600 15px/1 -apple-system,"SF Pro Text","Helvetica Neue",var(--f-disp);letter-spacing:.01em;position:relative;z-index:70}
+.sb svg{height:12px;width:auto;margin-left:5px}
+.sb .ic{display:flex;align-items:center}
+.homebar{position:absolute;left:50%;bottom:8px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:var(--ink);z-index:90;pointer-events:none}
+body.mob .shell{grid-template-rows:48px minmax(0,1fr)}
+body.mob .gbar{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+body.mob .g-l,body.mob .g-r{display:none}
+body.mob .seg button{height:28px;padding:0 13px}
+body.mob .pane-app{display:block}
+body.mob .bgword{display:none}
+body.mob .phw{width:100%;height:100%}
+body.mob .ph{position:static;width:100%;height:100%;transform:none;border-radius:0;padding:0;background:none;box-shadow:none}
+body.mob .ph::after,body.mob .island,body.mob .sb,body.mob .homebar{display:none}
+body.mob .scr{width:100%;height:100%;border-radius:0;grid-template-rows:auto minmax(0,1fr) auto}
+
+/* ---------- app ---------- */
+.ah{position:relative;z-index:30;height:54px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 18px}
+.ah .logo{width:92px;height:31px;justify-self:center;padding:0;border:0;background:none;cursor:pointer;transition:transform .5s var(--ease)}
+.ah .logo:hover{transform:scale(1.04)}
+.ah .logo:active{transform:scale(.97)}
+.logo svg{width:100%;height:100%;overflow:visible;display:block}
+/* the mark arrives with its word pushing out through the pill */
+.logo .push{transform-box:view-box;transform-origin:66px 22px;animation:lgPush 1.6s var(--ease) .5s both}
+@keyframes lgPush{from{transform:scaleX(.66)}}
+.a-hist{justify-self:start;display:flex;align-items:center;height:34px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--rule-2);opacity:0;transform:translateX(-6px);pointer-events:none;transition:opacity .4s,transform .6s var(--ease)}
+.hist-on .a-hist{opacity:1;transform:none;pointer-events:auto;position:relative;z-index:2}
+.a-hist i{width:1px;height:14px;background:var(--rule-2);flex:none}
+.a-nb{display:flex;align-items:center;height:34px;border-radius:999px;font:600 9.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink);transition:opacity .35s,background .3s,padding .7s var(--ease)}
+#aBack{padding:0 9px 0 10px}#aFwd{padding:0 10px 0 9px}
+.a-nb:disabled{padding:0 8px!important}
+/* the side you can use carries its word; the other settles to just its arrow so the pair sits clear of the logo */
+.a-nb .lb{display:block;overflow:hidden;white-space:nowrap;max-width:7.2em;transition:max-width .7s var(--ease),opacity .45s,margin .7s var(--ease)}
+#aBack .lb{margin-left:5px}#aFwd .lb{margin-right:5px}
+.a-nb:disabled .lb{max-width:0;opacity:0;margin:0}
+.a-nb:hover:not(:disabled){background:rgba(16,17,14,.05)}
+.a-nb:disabled{opacity:.32;cursor:default}
+.a-nb svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.7;fill:none;transition:transform .5s var(--ease)}
+#aBack:hover:not(:disabled) svg{transform:translateX(-3px)}#aFwd:hover:not(:disabled) svg{transform:translateX(3px)}
+.a-drop{justify-self:start;font:500 9.5px/1.25 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);transition:opacity .4s}
+.a-drop b{display:block;color:var(--ink);font-weight:600}
+.hist-on .a-drop{opacity:0;pointer-events:none}
+.a-hr{justify-self:end;display:flex;align-items:center;gap:8px}
+.audio{position:relative;width:38px;height:38px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--rule-2)}
+.audio:hover::after,.audio.open::after{content:"";position:absolute;left:-12px;right:-12px;top:100%;height:12px}
+.mute{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;transition:background .3s}
+.mute:hover{background:rgba(16,17,14,.05)}
+.mute svg{width:18px;height:18px;overflow:visible}
+.mute svg path{stroke:var(--ink)}
+.spk .w{opacity:.3;transition:opacity .6s}
+.audio.playing .spk .w1{animation:wv 1.6s ease-in-out infinite}
+.audio.playing .spk .w2{animation:wv 1.6s ease-in-out .25s infinite}
+@keyframes wv{0%,100%{opacity:.3}50%{opacity:1}}
+.mute .off{display:none}
+.audio.muted .mute .spk{display:none}.audio.muted .mute .off{display:block}
+.vol{position:absolute;right:-46px;top:calc(100% + 10px);height:40px;display:flex;align-items:center;width:0;overflow:hidden;opacity:0;border-radius:999px;background:rgba(251,250,245,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px var(--rule-2),0 12px 26px -12px rgba(16,17,14,.35);transition:width .6s var(--ease),opacity .45s,padding .6s var(--ease)}
+.audio:hover .vol,.audio:focus-within .vol,.audio.open .vol{width:132px;padding:0 14px;opacity:1}
+.vol input{-webkit-appearance:none;appearance:none;width:104px;height:18px;margin:0;flex:none;background:transparent;cursor:pointer;touch-action:none}
+.vol input::-webkit-slider-runnable-track{height:3px;border-radius:3px;background:linear-gradient(90deg,var(--ink) var(--v,70%),rgba(16,17,14,.16) 0)}
+.vol input::-moz-range-track{height:3px;border-radius:3px;background:rgba(16,17,14,.16)}
+.vol input::-moz-range-progress{height:3px;border-radius:3px;background:var(--ink)}
+.vol input::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;margin-top:-5px;border-radius:50%;background:var(--ink);border:2px solid var(--paper);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.vol input::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:var(--ink);border:2px solid var(--paper)}
+.audio.muted .vol input{opacity:.35}
+@media (hover:none){.audio:hover .vol,.audio:focus-within .vol{width:0;padding:0;opacity:0}.audio.open .vol{width:132px;padding:0 14px;opacity:1}}
+.a-hl{position:relative;justify-self:start;display:grid}
+.a-hl > *{grid-area:1/1}
+.a-bag{justify-self:end;position:relative;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--rule-2);transition:background .3s}
+.a-bag:hover{background:rgba(16,17,14,.05)}
+.a-bag svg{width:17px;height:17px;stroke:var(--ink);stroke-width:1.6;fill:none}
+.a-bag b{position:absolute;right:-3px;top:-3px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--lime);color:var(--lime-ink);box-shadow:0 0 0 1.5px var(--ink);font:700 10px/18px var(--f-mono);text-align:center;transform:scale(0);transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.a-bag.has b{transform:scale(1)}
+.a-bag.bump b{animation:bump .6s var(--ease)}
+@keyframes bump{40%{transform:scale(1.4)}}
+
+.views{position:relative;min-height:0;overflow:hidden}
+.v{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;opacity:0;visibility:hidden;transition:opacity .5s,visibility 0s .5s,transform .7s var(--ease),filter .7s}
+.v::-webkit-scrollbar{display:none}
+.v.on{opacity:1;visibility:visible;transition:opacity .6s .05s,visibility 0s,transform .7s var(--ease),filter .7s}
+.v.over{background:var(--wall);transform:translateX(100%);opacity:1;z-index:5;box-shadow:-20px 0 40px rgba(16,17,14,.08)}
+.v.over.on{transform:none}
+.over-on .v.on:not(.over){transform:translateX(-22%);filter:brightness(.92)}
+.vin{padding:6px 18px 28px}
+
+/* shop */
+.hero{position:relative;height:330px;border-radius:26px;overflow:hidden;background:var(--lime);box-shadow:inset 0 0 0 1.5px var(--ink);isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 80% at 78% 45%,rgba(255,255,255,.55),transparent 70%);z-index:-1}
+.h-tx{position:absolute;left:20px;top:20px;bottom:20px;width:50%;display:flex;flex-direction:column;align-items:flex-start;z-index:3}
+.h-eye{display:flex;align-items:center;gap:8px;font:600 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--lime-ink)}
+.h-eye i{width:7px;height:7px;border-radius:50%;background:var(--ink);animation:blink 1.6s steps(2) infinite}
+@keyframes blink{50%{opacity:.15}}
+.h-tx h2{margin:14px 0 0;font:900 50px/.82 var(--f-disp);font-stretch:125%;letter-spacing:-.03em;color:var(--ink);text-transform:uppercase}
+.h-tx p{margin:12px 0 0;font:400 13px/1.45 var(--f-disp);color:var(--lime-ink);max-width:24ch;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.h-cta{margin-top:auto;display:flex;white-space:nowrap;align-items:center;gap:10px;height:42px;padding:0 6px 0 16px;border-radius:999px;background:var(--ink);color:var(--paper);font:700 11px/1 var(--f-disp);letter-spacing:.14em;text-transform:uppercase;transition:transform .5s var(--ease)}
+.h-cta span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--lime);color:var(--ink)}
+.h-cta svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.8;fill:none}
+.h-cta:active{transform:scale(.97)}
+.h-img{position:absolute;right:-30px;top:78px;width:58%;height:100%;z-index:2}
+.h-img .hg{position:absolute;top:0;width:78%;transform-origin:50% 2%;animation:sway 6s ease-in-out infinite alternate}
+.h-img .hg img{width:100%;display:block;filter:drop-shadow(0 18px 18px rgba(11,38,4,.28))}
+.h-img .hg.a{left:-8%;top:10px;z-index:2;animation-delay:-1.4s}
+.h-img .hg.b{right:-12%;top:-6px;width:84%;z-index:1;animation-duration:7.2s}
+@keyframes sway{from{transform:rotate(-1.2deg)}to{transform:rotate(1.2deg)}}
+/* the countdown ticket rides on the photo, a clear step above the button's line so the two never touch */
+.h-cd{position:absolute;right:14px;bottom:76px;z-index:4;display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;background:var(--paper);box-shadow:0 0 0 1.5px var(--ink);font:600 10px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;transform:rotate(-4deg)}
+.h-cd b{font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:20px -18px 0;padding:0 18px 2px}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;height:32px;padding:0 13px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--rule-2);font:600 10px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;transition:background .35s,color .35s,box-shadow .35s}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--paper);box-shadow:none}
+.sh-h{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 12px}
+.sh-h h3{margin:0;font:900 22px/1 var(--f-disp);font-stretch:122%;text-transform:uppercase;letter-spacing:-.01em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px}
+.tile{position:relative;display:flex;flex-direction:column;align-items:stretch;text-align:left;gap:0;animation:rise .9s var(--ease) both;animation-delay:calc(var(--k) * 90ms)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+.t-img{position:relative;aspect-ratio:3/4;border-radius:18px;overflow:hidden;background:radial-gradient(90% 70% at 50% 35%,var(--wall-hi),var(--wall) 60%,var(--wall-lo));box-shadow:inset 0 0 0 1px var(--rule)}
+.t-img::before{content:"";position:absolute;left:0;right:0;top:9%;height:3px;background:linear-gradient(180deg,#fbfbf9,#9a9c95);box-shadow:0 1px 2px rgba(16,17,14,.2)}
+.t-img img{position:absolute;left:50%;top:7.4%;width:96%;margin-left:-48%;transform-origin:50% 1.5%;transition:transform 1s var(--ease);filter:drop-shadow(0 10px 10px rgba(16,17,14,.14))}
+.tile:hover .t-img img{transform:rotate(-2deg) translateY(-2px)}
+.tile:active .t-img img{transform:scale(.98)}
+.t-px{position:absolute;right:9px;top:9px;padding:5px 8px 4px;border-radius:999px;background:var(--lime);box-shadow:0 0 0 1.5px var(--ink);font:800 12px/1 var(--f-disp);font-stretch:112%;transform:rotate(-6deg);font-variant-numeric:tabular-nums}
+.t-new{position:absolute;left:9px;top:10px;font:600 9px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;padding:5px 7px;border-radius:999px;background:var(--ink);color:var(--paper)}
+.t-nm{margin-top:10px;font:800 13px/1.15 var(--f-disp);font-stretch:108%;text-transform:uppercase;letter-spacing:.005em}
+.t-mt{margin-top:5px;font:500 9.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.t-st{margin-top:6px;font:500 9.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--warn);display:flex;align-items:center;gap:5px}
+.t-st::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+.t-st.ok{color:var(--up)}
+.studio{margin-top:26px;padding:16px 16px 16px 18px;border-radius:18px;box-shadow:inset 0 0 0 1px var(--rule-2);display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center}
+.studio b{font:800 15px/1.1 var(--f-disp);font-stretch:112%;text-transform:uppercase}
+.studio span{grid-column:1;font:400 12.5px/1.45 var(--f-disp);color:var(--ink-2)}
+.studio em{grid-row:1/3;grid-column:2;font-style:normal;font:600 10px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.mq{margin:26px -18px -28px;height:30px;background:var(--lime);overflow:hidden;display:flex;align-items:center;box-shadow:0 -1px 0 var(--ink)}
+.mq div{display:flex;white-space:nowrap;animation:mq 40s linear infinite}
+.mq span{font:700 10.5px/1 var(--f-disp);font-stretch:112%;letter-spacing:.16em;text-transform:uppercase;color:var(--lime-ink);padding-right:.7em}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* product */
+.pd-stage{position:relative;height:430px;margin:0 -18px;overflow:hidden;background:radial-gradient(70% 60% at 50% 40%,var(--wall-hi),var(--wall) 65%,var(--wall-lo));border-bottom:1px solid var(--rule)}
+.pd-stage .rail{position:absolute;left:-10px;right:-10px;top:30px;height:5px;border-radius:5px;background:linear-gradient(180deg,#fbfbf9 0%,#c4c6bf 40%,#8b8d86 65%,#d9dad5 100%);box-shadow:0 2px 3px rgba(16,17,14,.18)}
+.pd-fig{position:absolute;left:50%;top:21px;width:250px;margin-left:-125px;transform-origin:50% 2%;animation:sway 7s ease-in-out infinite alternate;filter:drop-shadow(0 18px 18px rgba(16,17,14,.16))}
+.pd-fig img{position:absolute;left:0;top:0;width:100%;transition:opacity .6s,transform .9s var(--ease)}
+.pd-fig img.b{opacity:0;transform:rotateY(70deg)}
+.pd-stage.back .pd-fig img.f{opacity:0;transform:rotateY(-70deg)}
+.pd-stage.back .pd-fig img.b{opacity:1;transform:none}
+.pd-fig .ly{position:absolute;left:0;top:0;width:100%;aspect-ratio:640/943;perspective:900px}
+.tags{position:absolute;left:min(calc(50% + 90px),calc(100% - var(--n) * 38px - 6px));top:28px;z-index:3;display:flex;gap:8px;align-items:flex-start;transition:opacity .4s}
+.tag{display:flex;flex-direction:column;align-items:center;transform-origin:50% 0;opacity:0;transform:translateY(-30px);transition:opacity .5s,transform .8s var(--ease)}
+.tags.show .tag{opacity:1;transform:none;transition-delay:calc(var(--k) * 110ms + 380ms)}
+.tags.still .tag{transition:none}
+.tag .str{width:1px;height:var(--len);background:linear-gradient(180deg,rgba(16,17,14,.15),rgba(16,17,14,.55))}
+.tag .tg{position:relative;width:30px;height:var(--h,66px);border-radius:3px;background:var(--c);box-shadow:0 6px 12px rgba(16,17,14,.16),inset 0 0 0 1px rgba(16,17,14,.12);transition:transform .6s var(--ease),box-shadow .6s}
+.tag .tg::before{content:"";position:absolute;left:50%;top:6px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--wall);box-shadow:inset 0 1px 1px rgba(0,0,0,.35)}
+.tag .tg span{position:absolute;left:50%;top:50%;transform:translate(-50%,-38%) rotate(90deg);white-space:nowrap;font:600 8px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--t)}
+.tag:hover .tg{transform:rotate(-4deg)}
+.tag[aria-pressed="true"] .tg{transform:translateY(8px) scale(1.08);box-shadow:0 12px 20px rgba(16,17,14,.22),inset 0 0 0 1.5px var(--ink)}
+.pd-seg{position:absolute;left:50%;bottom:14px;transform:translateX(-50%)}
+.pd-seg.seg button{height:28px;padding:0 15px}
+.pd-nav{position:absolute;top:186px;z-index:4;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(250,250,247,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px var(--rule-2),0 8px 20px -10px rgba(16,17,14,.35);color:var(--ink);transition:transform .5s var(--ease),background .4s}
+.pd-nav.prev{left:12px}.pd-nav.next{right:12px}
+.pd-nav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pd-nav:hover{background:var(--paper)}
+.pd-nav.prev:hover{transform:translateX(-2px)}.pd-nav.next:hover{transform:translateX(2px)}
+.pd-nav:active{transform:scale(.94)}
+.pd-stage.in-r .pd-fig .ly{animation:pdInR .6s cubic-bezier(.22,.8,.3,1) both}
+.pd-stage.in-l .pd-fig .ly{animation:pdInL .6s cubic-bezier(.22,.8,.3,1) both}
+@keyframes pdInR{from{opacity:0;transform:translateX(56px)}to{opacity:1;transform:none}}
+@keyframes pdInL{from{opacity:0;transform:translateX(-56px)}to{opacity:1;transform:none}}
+.pd-px{position:absolute;right:16px;bottom:14px;padding:8px 12px 7px;border-radius:999px;background:var(--lime);box-shadow:0 0 0 1.5px var(--ink);font:800 19px/1 var(--f-disp);font-stretch:112%;transform:rotate(-7deg);font-variant-numeric:tabular-nums;z-index:2}
+.pd-body{display:flex;flex-direction:column;gap:16px;padding-top:18px}
+.pd-body > *{animation:rise .8s var(--ease) both;animation-delay:calc(var(--k,0) * 70ms + 200ms)}
+.pd-eye{font:500 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.pd-nm{margin:-6px 0 0;font:900 31px/.95 var(--f-disp);font-stretch:122%;letter-spacing:-.015em;text-transform:uppercase;text-wrap:balance}
+.pd-story{margin:0;font:400 14px/1.55 var(--f-disp);color:var(--ink-2);text-wrap:pretty;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.opt-h{display:flex;justify-content:space-between;align-items:baseline}
+.opt-h b{font:600 10px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase}
+.opt-h em{font-style:normal;font:500 10px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--warn)}
+.sizes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+.sizes button{position:relative;height:44px;border-radius:12px;font:600 12px/1 var(--f-mono);letter-spacing:.06em;box-shadow:inset 0 0 0 1px var(--rule-2);transition:background .3s,color .3s,box-shadow .3s}
+.sizes button[aria-pressed="true"]{background:var(--ink);color:var(--paper);box-shadow:none}
+.sizes button:disabled{color:var(--ink-3);cursor:default;background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(16,17,14,.05) 6px 7px)}
+.sizes button i{position:absolute;left:50%;bottom:5px;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--warn)}
+.buy{display:grid;grid-template-columns:auto 1fr;gap:10px}
+.stp{display:flex;align-items:center;height:54px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--rule-2);padding:0 6px}
+.stp button{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:500 17px/1 var(--f-mono);transition:background .3s}
+.stp button:hover{background:rgba(16,17,14,.06)}
+.stp span{min-width:22px;text-align:center;font:600 13px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.add{height:54px;border-radius:999px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:space-between;padding:0 7px 0 20px;font:700 11.5px/1 var(--f-disp);letter-spacing:.15em;text-transform:uppercase;transition:background .4s,color .4s,transform .5s var(--ease)}
+.add em{font-style:normal;height:40px;padding:0 13px;border-radius:999px;display:grid;place-items:center;background:rgba(251,250,245,.12);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.add:hover,.add.done{background:var(--lime);color:var(--ink)}
+.add:active{transform:scale(.98)}
+.add:disabled{opacity:.35;pointer-events:none}
+.note{display:flex;gap:10px;align-items:center;font:400 12.5px/1.4 var(--f-disp);color:var(--ink-2)}
+.note svg{width:16px;height:16px;flex:none;stroke:var(--ink);stroke-width:1.5;fill:none}
+.specs{margin:0;display:grid}
+.specs div{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:11px 0;border-top:1px solid var(--rule);font-size:13px;line-height:1.4}
+.specs div:last-child{border-bottom:1px solid var(--rule)}
+.specs dt{font:500 9.5px/1.6 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.specs dd{margin:0}
+
+/* bag (receipt) */
+.v-h{display:flex;justify-content:space-between;align-items:flex-end;margin:4px 0 16px}
+.v-h h2{margin:0;font:900 34px/.9 var(--f-disp);font-stretch:125%;text-transform:uppercase;letter-spacing:-.02em}
+.v-h span{font:500 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.rcpt{position:relative;background:var(--paper);padding:18px 16px 30px;display:flex;flex-direction:column;gap:14px;filter:drop-shadow(0 14px 18px rgba(20,22,15,.12)) drop-shadow(0 1px 1px rgba(20,22,15,.1));
+  -webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - 7px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/11px 7px repeat-x;
+  mask:linear-gradient(#000 0 0) top/100% calc(100% - 7px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/11px 7px repeat-x}
+.r-top{display:flex;justify-content:space-between;font:500 9.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.r-rule{border-top:1px dashed rgba(16,17,14,.26)}
+.bl{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:start}
+.bl-th{width:52px;height:68px;border-radius:10px;background:var(--wall);overflow:hidden;position:relative}
+.bl-th img{position:absolute;left:-6%;top:-2px;width:112%}
+.bl-tx{display:flex;flex-direction:column;gap:5px;min-width:0}
+.bl-tx b{font:800 12.5px/1.15 var(--f-disp);font-stretch:106%;text-transform:uppercase}
+.bl-tx span{font:500 9.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.bl .stp{height:30px;padding:0 2px;margin-top:3px;align-self:flex-start}
+.bl .stp button{width:24px;height:24px;font-size:13px}
+.bl .stp span{min-width:16px;font-size:11px}
+.bl-pr{font:600 12.5px/1.2 var(--f-mono);font-variant-numeric:tabular-nums}
+.ful{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ful button{text-align:left;padding:12px;border-radius:14px;box-shadow:inset 0 0 0 1px var(--rule-2);display:flex;flex-direction:column;gap:6px;transition:box-shadow .3s,background .3s}
+.ful button b{font:800 12px/1 var(--f-disp);font-stretch:110%;text-transform:uppercase;letter-spacing:.02em}
+.ful button span{font:400 11.5px/1.35 var(--f-disp);color:var(--ink-2)}
+.ful button[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--ink);background:var(--lime-soft)}
+.r-row{display:flex;align-items:baseline;gap:8px;font:500 10.5px/1 var(--f-mono);text-transform:uppercase;letter-spacing:.06em}
+.r-row span:nth-child(2){flex:1;border-bottom:1px dotted rgba(16,17,14,.3);transform:translateY(-3px)}
+.r-row b{font-weight:600;font-variant-numeric:tabular-nums}
+.r-tot{display:flex;justify-content:space-between;align-items:baseline}
+.r-tot span{font:500 10.5px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase}
+.r-tot b{font:800 28px/1 var(--f-disp);font-stretch:115%;font-variant-numeric:tabular-nums}
+.go{height:54px;border-radius:999px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;gap:10px;font:700 11.5px/1 var(--f-disp);letter-spacing:.16em;text-transform:uppercase;transition:background .4s,color .4s,transform .5s var(--ease)}
+.go:hover{background:var(--lime);color:var(--ink)}
+.go:active{transform:scale(.98)}
+.go svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none}
+.go.ghost{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px var(--rule-2)}
+.go.ghost:hover{background:rgba(16,17,14,.05)}
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:46px 18px 10px}
+.empty .eh{width:120px;height:150px;position:relative}
+.empty .eh::before{content:"";position:absolute;left:0;right:0;top:18px;height:4px;border-radius:4px;background:linear-gradient(180deg,#fbfbf9,#8b8d86)}
+.empty .eh svg{position:absolute;left:50%;top:6px;width:60px;margin-left:-30px;transform-origin:50% 0;animation:sway 4s ease-in-out infinite alternate}
+.empty b{font:900 22px/1 var(--f-disp);font-stretch:122%;text-transform:uppercase}
+.empty p{margin:0;font:400 13.5px/1.5 var(--f-disp);color:var(--ink-2);max-width:28ch}
+
+/* checkout sheet */
+.scrim{position:absolute;inset:0;z-index:60;background:rgba(16,17,14,.32);opacity:0;pointer-events:none;transition:opacity .5s;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:61;max-height:92%;display:flex;flex-direction:column;background:var(--paper);border-radius:28px 28px 0 0;transform:translateY(102%);transition:transform .75s var(--ease);box-shadow:0 -10px 40px rgba(16,17,14,.18)}
+.ck-on .scrim{opacity:1;pointer-events:auto}
+.ck-on .sheet{transform:none}
+.sh-grab{width:40px;height:5px;border-radius:3px;background:var(--rule-2);margin:10px auto 0;flex:none}
+.sh-in{overflow-y:auto;scrollbar-width:none;padding:12px 18px 30px;display:flex;flex-direction:column;gap:16px}
+.sh-in::-webkit-scrollbar{display:none}
+.sh-t{display:flex;justify-content:space-between;align-items:center}
+.sh-t h2{margin:0;font:900 26px/1 var(--f-disp);font-stretch:125%;text-transform:uppercase;letter-spacing:-.015em}
+.x{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--rule-2)}
+.x svg{width:11px;height:11px;stroke:var(--ink);stroke-width:1.7}
+.fld{display:flex;flex-direction:column;gap:7px;min-width:0}
+.fld label{font:500 9.5px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.fld input{width:100%;min-width:0;box-sizing:border-box;height:46px;border-radius:12px;border:0;box-shadow:inset 0 0 0 1px var(--rule-2);background:#fff;padding:0 14px;font-size:15px;outline:none;transition:box-shadow .3s}
+.fld input:focus{box-shadow:inset 0 0 0 2px var(--ink)}
+/* the sheet is always phone-width, so name and email stack: a full email address needs the whole line */
+.fld2{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.ck-sum{display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:16px;background:var(--wall)}
+.ck-items{display:flex;gap:6px}
+.ck-items span{width:42px;height:54px;border-radius:8px;background:var(--wall-hi);overflow:hidden;position:relative;box-shadow:inset 0 0 0 1px var(--rule)}
+.ck-items span img{position:absolute;left:-6%;top:-2px;width:112%}
+.ck-items em{font-style:normal;align-self:center;font:600 10px/1 var(--f-mono);color:var(--ink-2);margin-left:4px}
+.wal{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--ink);color:var(--paper)}
+.wal .card{width:38px;height:26px;border-radius:5px;background:linear-gradient(135deg,var(--lime),#2FB314);position:relative;flex:none}
+.wal .card::after{content:"";position:absolute;left:5px;top:8px;width:9px;height:7px;border-radius:2px;background:rgba(11,38,4,.45)}
+.wal b{font:700 12px/1.2 var(--f-disp);letter-spacing:.06em;text-transform:uppercase;display:block}
+.wal span{font:500 9.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--rail-mu)}
+.slide{position:relative;height:62px;border-radius:999px;background:var(--ink);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+.slide .fill{position:absolute;left:0;top:0;bottom:0;width:calc(var(--x,0px) + 62px);background:var(--lime);border-radius:999px}
+.slide .lab{position:absolute;inset:0;display:grid;place-items:center;padding-left:40px;font:700 11.5px/1 var(--f-disp);letter-spacing:.16em;text-transform:uppercase;color:var(--paper);pointer-events:none;background:linear-gradient(90deg,rgba(251,250,245,.55) 0%,var(--paper) 40%,rgba(251,250,245,.55) 80%) 0 0/200% 100% text;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3.4s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+.slide .knob{position:absolute;left:5px;top:5px;width:52px;height:52px;border-radius:50%;background:var(--lime);display:grid;place-items:center;transform:translateX(var(--x,0px));box-shadow:0 4px 12px rgba(0,0,0,.25);cursor:grab}
+.slide .knob svg{width:18px;height:18px;stroke:var(--ink);stroke-width:2;fill:none}
+.slide.snap .knob,.slide.snap .fill{transition:transform .5s var(--ease),width .5s var(--ease)}
+.slide.paid .lab{-webkit-text-fill-color:var(--ink);animation:none}
+
+/* track */
+.tk-hd{display:flex;flex-direction:column;gap:10px;padding-top:4px}
+.tk-no{font:600 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);display:flex;justify-content:space-between}
+.tk-st{margin:0;font:900 38px/.9 var(--f-disp);font-stretch:125%;letter-spacing:-.025em;text-transform:uppercase;text-wrap:balance}
+.tk-eta{font:400 14px/1.45 var(--f-disp);color:var(--ink-2)}
+.tk-bar{display:grid;gap:4px;margin-top:6px}
+.tk-bar i{height:6px;border-radius:3px;background:var(--rule-2);position:relative;overflow:hidden}
+.tk-bar i::after{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleX(0);transform-origin:0 50%;transition:transform 1.2s var(--ease)}
+.tk-bar i.done::after{transform:scaleX(1)}
+.tk-bar i.now::after{background:var(--lime);transform:scaleX(1);animation:fillp 1.8s ease-in-out infinite alternate}
+@keyframes fillp{from{opacity:.45}to{opacity:1}}
+.code{display:flex;align-items:center;gap:14px;padding:14px;border-radius:18px;background:var(--lime);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.code b{font:900 34px/1 var(--f-disp);font-stretch:125%;letter-spacing:.04em}
+.code span{font:500 10px/1.45 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--lime-ink)}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.steps li{position:relative;display:grid;grid-template-columns:22px 1fr auto;gap:12px;padding:0 0 18px;align-items:start}
+.steps li::before{content:"";position:absolute;left:10px;top:18px;bottom:0;width:1.5px;background:var(--rule-2)}
+.steps li:last-child::before{display:none}
+.steps li.done::before{background:var(--ink)}
+.steps .k{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--rule-2);background:var(--wall);display:grid;place-items:center;position:relative;z-index:1;transition:background .5s,box-shadow .5s}
+.steps .k svg{width:11px;height:11px;stroke:var(--paper);stroke-width:2.2;fill:none;opacity:0}
+.steps li.done .k{background:var(--ink);box-shadow:none}
+.steps li.done .k svg{opacity:1}
+.steps li.now .k{background:var(--lime);box-shadow:0 0 0 1.5px var(--ink),0 0 0 6px var(--lime-soft)}
+.steps b{font:800 13px/1.2 var(--f-disp);font-stretch:108%;text-transform:uppercase;display:block;margin-top:3px}
+.steps span{font:400 12.5px/1.4 var(--f-disp);color:var(--ink-2)}
+.steps li:not(.done):not(.now) b{color:var(--ink-3)}
+.steps time{font:500 10px/1 var(--f-mono);letter-spacing:.06em;color:var(--ink-2);margin-top:6px;font-variant-numeric:tabular-nums}
+.stamp{position:absolute;left:74px;bottom:16px;font:800 18px/1 var(--f-disp);font-stretch:118%;letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border:2px solid var(--ink);border-radius:4px;background:var(--lime);mix-blend-mode:multiply;transform:rotate(-12deg);animation:stamp .5s cubic-bezier(.3,1.6,.5,1) both .6s}
+@keyframes stamp{from{opacity:0;transform:rotate(-12deg) scale(1.9)}to{opacity:.94;transform:rotate(-12deg) scale(1)}}
+.print{animation:prt 1.1s steps(9,end) both}
+@keyframes prt{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+
+/* orders list */
+.olist{display:flex;flex-direction:column;gap:10px}
+.oc{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;padding:12px;border-radius:18px;background:var(--paper);box-shadow:0 1px 0 rgba(16,17,14,.06),0 8px 18px -10px rgba(16,17,14,.18);transition:transform .5s var(--ease)}
+.oc:active{transform:scale(.985)}
+.oc-th{display:flex}
+.oc-th span{width:40px;height:52px;border-radius:9px;background:var(--wall);overflow:hidden;position:relative;margin-left:-14px;box-shadow:0 0 0 2px var(--paper)}
+.oc-th span:first-child{margin-left:0}
+.oc-th img{position:absolute;left:-6%;top:-2px;width:112%}
+.oc-tx{display:flex;flex-direction:column;gap:5px;min-width:0}
+.oc-tx b{font:800 13px/1.1 var(--f-disp);font-stretch:108%;text-transform:uppercase}
+.oc-tx span{font:500 9.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font:600 9px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;background:rgba(16,17,14,.07);color:var(--ink)}
+.pill.lime{background:var(--lime);color:var(--lime-ink)}
+.pill.up{background:var(--up-bg);color:var(--up)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.down{background:var(--down-bg);color:var(--down)}
+.pill.ink{background:var(--ink);color:var(--paper)}
+
+.tabs{position:relative;z-index:40;display:grid;grid-template-columns:repeat(3,1fr);padding:8px 26px 30px;background:linear-gradient(180deg,rgba(230,231,225,0),var(--wall) 30%);border-top:1px solid var(--rule)}
+body.mob .tabs{padding-bottom:max(12px,env(safe-area-inset-bottom,0px))}
+.tabs button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 0;font:600 9px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);transition:color .4s}
+.tabs button svg{width:21px;height:21px;stroke:currentColor;stroke-width:1.6;fill:none}
+.tabs button[aria-current="true"]{color:var(--ink)}
+.tabs button .tb{position:relative}
+.tabs button .tb b{position:absolute;right:-9px;top:-5px;min-width:15px;height:15px;padding:0 4px;border-radius:999px;background:var(--lime);color:var(--lime-ink);font:700 9px/15px var(--f-mono);text-align:center;box-shadow:0 0 0 1.5px var(--ink)}
+.flyer{position:absolute;z-index:95;pointer-events:none;width:60px;border-radius:10px}
+.flyer img{width:100%;display:block}
+.atoast{position:absolute;left:18px;right:18px;top:62px;z-index:75;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:16px;background:var(--ink);color:var(--paper);font:500 12.5px/1.35 var(--f-disp);transform:translateY(-140%);opacity:0;transition:transform .7s var(--ease),opacity .5s}
+.atoast.on{transform:none;opacity:1}
+.atoast .dot{background:var(--lime);box-shadow:0 0 0 3px rgba(67,230,31,.25)}
+body.mob .atoast{top:8px}
+
+/* ---------- owner (UMB) ---------- */
+.own{position:absolute;inset:0;display:grid;grid-template-columns:232px minmax(0,1fr);min-height:0}
+.side{background:var(--rail);color:var(--rail-tx);display:flex;flex-direction:column;min-height:0;padding:18px 14px 16px}
+.s-brand{display:flex;align-items:center;justify-content:space-between;padding:4px 8px 18px;border-bottom:1px solid var(--rail-ln)}
+.s-brand .umbm{color:var(--rail-tx);font-size:15px}
+.s-brand span{font:500 9px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--rail-mu);text-align:right}
+.ws{margin:14px 0 10px;display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;background:var(--rail-2)}
+.ws .av{width:34px;height:34px;border-radius:10px;background:var(--lime);display:grid;place-items:center;font:900 12px/1 var(--f-disp);font-stretch:120%;color:var(--ink);flex:none}
+.ws b{display:block;font:700 13px/1.2 var(--f-disp)}
+.ws span{font:500 9px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--rail-mu)}
+.nav{display:flex;flex-direction:column;gap:2px;margin-top:6px;overflow-y:auto;scrollbar-width:none}
+.nav button{position:relative;display:flex;align-items:center;gap:12px;height:40px;padding:0 10px;border-radius:10px;font:500 13.5px/1 var(--f-disp);color:var(--rail-mu);transition:color .35s,background .35s;text-align:left}
+.nav button svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.6;fill:none;flex:none}
+.nav button:hover{color:var(--rail-tx);background:rgba(236,236,229,.04)}
+.nav button[aria-current="true"]{color:var(--rail-tx);background:var(--rail-2)}
+.nav button[aria-current="true"]::after{content:"";position:absolute;right:10px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--lime)}
+.nav button em{margin-left:auto;font-style:normal;font:600 9.5px/1 var(--f-mono);padding:4px 6px;border-radius:6px;background:var(--lime);color:var(--ink)}
+.nav button[aria-current="true"] em{margin-right:14px}
+.src{margin-top:auto;padding-top:14px;border-top:1px solid var(--rail-ln);display:flex;flex-direction:column;gap:9px}
+.src .lbl{color:var(--rail-mu);margin-bottom:2px}
+.src div{display:flex;align-items:center;gap:9px;font:500 12px/1.2 var(--f-disp);color:var(--rail-tx)}
+.src div span{margin-left:auto;font:500 9.5px/1 var(--f-mono);color:var(--rail-mu);letter-spacing:.04em}
+.src .dot{width:6px;height:6px;background:var(--lime);box-shadow:0 0 0 3px rgba(67,230,31,.14)}
+.main{min-width:0;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+.oh{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 28px 16px;background:linear-gradient(180deg,var(--cv) 70%,rgba(236,237,231,0))}
+.oh h1{margin:0;font:900 30px/1 var(--f-disp);font-stretch:118%;letter-spacing:-.02em;text-transform:uppercase;display:flex;align-items:flex-start}
+/* the section's sticker, slapped on the title's top corner like the store's NEW IN */
+.stk{margin:-8px 0 0 10px;padding:5px 9px 4px;border-radius:999px;background:var(--lime);color:var(--ink);box-shadow:0 0 0 1.5px var(--ink);font:800 11px/1 var(--f-disp);font-stretch:112%;letter-spacing:.02em;white-space:nowrap;transform:rotate(-6deg);animation:slap .7s cubic-bezier(.3,1.6,.5,1) both .35s}
+@keyframes slap{from{opacity:0;transform:rotate(-14deg) scale(1.6)}to{opacity:1;transform:rotate(-6deg) scale(1)}}
+.oh p{margin:6px 0 0;font:500 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.oh-r{display:flex;align-items:center;gap:14px}
+.oh .seg{background:var(--paper)}
+.sync{display:flex;align-items:center;gap:8px;font:500 10px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+.osec{padding:4px 28px 40px;display:grid;gap:16px}
+.osec > *{animation:rise .9s var(--ease) both;animation-delay:calc(var(--k,0) * 110ms)}
+.row{display:grid;gap:16px;min-width:0}
+.r-kpi{grid-template-columns:repeat(6,minmax(0,1fr))}
+.r-21{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+.r-111{grid-template-columns:repeat(3,minmax(0,1fr))}
+.r-11{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:var(--paper);border-radius:20px;padding:18px 20px;min-width:0;box-shadow:0 1px 0 rgba(16,17,14,.05),0 10px 30px -18px rgba(16,17,14,.22);display:flex;flex-direction:column;gap:14px;position:relative}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.ch h3{margin:0;font:800 14px/1.2 var(--f-disp);font-stretch:110%;text-transform:uppercase;letter-spacing:.02em}
+.ch p{margin:5px 0 0;font:400 12.5px/1.4 var(--f-disp);color:var(--ink-2)}
+.ch .lbl{white-space:nowrap}
+.kpi{gap:8px;padding:16px 16px 12px}
+.kpi .kv{font:800 27px/1 var(--f-disp);font-stretch:112%;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kpi .d{display:flex;align-items:center;gap:6px;font:500 10px/1 var(--f-mono);color:var(--ink-3);letter-spacing:.04em;white-space:nowrap;overflow:hidden}
+.dl{font-weight:600;padding:3px 5px;border-radius:5px;letter-spacing:0}
+.dl.up{color:var(--up);background:var(--up-bg)}.dl.down{color:var(--down);background:var(--down-bg)}.dl.flat{color:var(--ink-2);background:rgba(16,17,14,.06)}
+/* KPI changes read as the store's price stickers: lime for up, paper with an ink edge for down */
+.kpi .dl,.big .dl{padding:4px 7px 3px;border-radius:999px;box-shadow:0 0 0 1.5px var(--ink);transform:rotate(-4deg);font-weight:700}
+.kpi .dl.up,.big .dl.up{background:var(--lime);color:var(--lime-ink)}
+.kpi .dl.down,.big .dl.down{background:var(--paper);color:var(--down)}
+.kpi .d{overflow:visible;padding:3px 0}
+.kpi svg{display:block;width:100%;height:30px;margin-top:2px;overflow:visible}
+.chart{position:relative;min-height:240px}
+.chart svg{display:block;overflow:visible}
+.ax{font:500 9.5px/1 var(--f-mono);fill:var(--ink-3);letter-spacing:.04em}
+.gl{stroke:var(--rule);stroke-width:1}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font:500 10px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.legend span{display:flex;align-items:center;gap:7px}
+.legend i{width:16px;height:3px;border-radius:2px;background:var(--ink)}
+.legend i.p{background:repeating-linear-gradient(90deg,var(--ink-3) 0 4px,transparent 4px 7px)}
+.legend i.l{background:var(--lime);height:10px;width:10px;border-radius:3px;box-shadow:inset 0 0 0 1px var(--ink)}
+.legend i.g{background:var(--ink-3);height:10px;width:10px;border-radius:3px}
+.legend i.k{height:10px;width:10px;border-radius:3px}
+.tip{position:absolute;pointer-events:none;z-index:4;background:var(--ink);color:var(--paper);border-radius:10px;padding:8px 10px;font:500 10.5px/1.5 var(--f-mono);white-space:nowrap;opacity:0;transform:translate(-50%,calc(-100% - 12px));transition:opacity .2s}
+.tip b{font-weight:600;color:var(--lime)}
+.big{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.big b{font:800 34px/1 var(--f-disp);font-stretch:112%;font-variant-numeric:tabular-nums}
+.feed{display:flex;flex-direction:column;margin:-4px 0}
+.fi{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:start;padding:10px 0;border-top:1px solid var(--rule);text-align:left;width:100%;transition:background .3s}
+.fi:first-child{border-top:0}
+.fi:hover{background:rgba(16,17,14,.025)}
+.fi.new{animation:flash 2.4s ease-out}
+@keyframes flash{0%,30%{background:var(--lime-soft)}}
+.fi .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font:800 10px/1 var(--f-mono);background:var(--cv)}
+.fi .ic.app{background:var(--ink);color:var(--lime)}
+.fi .ic.store{background:var(--lime);color:var(--ink)}
+.fi .tx{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fi .tx b{font:700 13px/1.2 var(--f-disp);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fi .tx em{font:400 12px/1.25 var(--f-disp);font-style:normal;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fi .ic{grid-row:span 2}
+.fi .fst{grid-column:2/-1;margin-top:-6px;font:500 9.5px/1.2 var(--f-mono);letter-spacing:.06em;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fi .fst small{font:inherit;color:var(--ink-2)}
+.fi .fst small.lime{color:var(--up);font-weight:600}
+.fi .tx span{font:500 9.5px/1.2 var(--f-mono);letter-spacing:.06em;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fi .am{display:flex;flex-direction:column;align-items:flex-end;gap:5px;font:600 12.5px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.stack{display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px}
+.stack i{display:block;height:100%;transition:width 1.2s var(--ease)}
+.lrows{display:flex;flex-direction:column}
+.lr{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--rule)}
+.lr:first-child{border-top:0}
+.lr .sw{width:10px;height:10px;border-radius:3px}
+.lr b{font:600 13px/1.2 var(--f-disp)}
+.lr span{font:500 10px/1 var(--f-mono);color:var(--ink-3);letter-spacing:.04em}
+.lr em{font-style:normal;font:600 12.5px/1 var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;min-width:62px}
+.th{width:36px;height:46px;border-radius:9px;background:var(--cv);position:relative;overflow:hidden;flex:none}
+.th img{position:absolute;left:-6%;top:-2px;width:112%}
+.rk{display:grid;grid-template-columns:18px auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--rule)}
+.rk:first-child{border-top:0}
+.rk > i{font:600 10px/1 var(--f-mono);color:var(--ink-3);font-style:normal}
+.rk .nm{display:flex;flex-direction:column;gap:6px;min-width:0}
+.rk .nm b{font:700 12.5px/1.15 var(--f-disp);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:5px;border-radius:3px;background:rgba(16,17,14,.07);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:3px;background:var(--ink);transform-origin:0 50%;animation:grow 1.4s var(--ease) both .3s}
+.bar i.l{background:var(--lime);box-shadow:inset 0 0 0 1px rgba(16,17,14,.25)}
+@keyframes grow{from{transform:scaleX(0)}}
+.rk .am{text-align:right;display:flex;flex-direction:column;gap:5px;font:600 12.5px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.rk .am span{font-weight:500;font-size:10px;color:var(--ink-3)}
+.al{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--rule)}
+.al:first-child{border-top:0}
+.al .nm{display:flex;flex-direction:column;gap:5px;min-width:0}
+.al .nm b{font:700 12.5px/1.15 var(--f-disp);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.al .nm span{font:500 10px/1.2 var(--f-mono);color:var(--ink-3);letter-spacing:.03em}
+.al .r{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.al .r span{font:500 10px/1 var(--f-mono);color:var(--ink-2)}
+.heat{display:grid;grid-template-columns:30px repeat(16,minmax(0,1fr));gap:3px;align-items:center}
+.heat .hl{font:500 9.5px/1 var(--f-mono);color:var(--ink-3);letter-spacing:.04em}
+.heat .hx{font:500 9px/1 var(--f-mono);color:var(--ink-3);text-align:center;padding-top:4px}
+.heat i{display:block;aspect-ratio:1.5;border-radius:4px;background:rgba(16,17,14,var(--a));transition:transform .3s}
+.heat i.top{background:var(--lime);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.heat i:hover{transform:scale(1.18)}
+.hnote{display:flex;gap:18px;flex-wrap:wrap}
+.hnote div{display:flex;flex-direction:column;gap:6px}
+.hnote b{font:800 17px/1 var(--f-disp);font-stretch:110%}
+.sources{display:flex;flex-direction:column}
+.sr{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--rule)}
+.sr:first-child{border-top:0}
+.sr .ic{width:32px;height:32px;border-radius:9px;background:var(--cv);display:grid;place-items:center}
+.sr .ic svg{width:16px;height:16px;stroke:var(--ink);stroke-width:1.6;fill:none}
+.sr b{font:700 12.5px/1.2 var(--f-disp);display:block}
+.sr span{font:500 9.5px/1.3 var(--f-mono);color:var(--ink-3);letter-spacing:.04em}
+
+/* tables */
+.tbl{display:flex;flex-direction:column;min-width:0}
+.tr{display:grid;grid-template-columns:var(--cols);gap:14px;align-items:center;padding:11px 0;border-top:1px solid var(--rule);text-align:left;width:100%}
+.tr.h{border-top:0;padding-top:0;font:500 9.5px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.tr.h > *:not(:first-child){text-align:right}
+.tr > *{min-width:0}
+.tr .c{font:600 12.5px/1 var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.tr .c span{display:block;margin-top:5px;font-weight:500;font-size:10px;color:var(--ink-3)}
+/* a status pill in a table cell keeps its own pill shape and colours, not the cell's sub-line style */
+.tr .c span.pill{display:inline-flex;margin-top:0;font-weight:600;font-size:9px;color:var(--ink)}
+.tr .c span.pill.lime{color:var(--lime-ink)}.tr .c span.pill.up{color:var(--up)}.tr .c span.pill.warn{color:var(--warn)}.tr .c span.pill.down{color:var(--down)}.tr .c span.pill.ink{color:var(--paper)}
+.tr .nm{display:flex;align-items:center;gap:12px;min-width:0}
+.tr .nm > div{display:flex;flex-direction:column;gap:5px;min-width:0}
+.tr .nm b{font:700 13px/1.2 var(--f-disp);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr .nm span{font:500 9.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+button.tr:hover{background:rgba(16,17,14,.025)}
+.curve{display:flex;align-items:flex-end;gap:3px;height:30px;justify-content:flex-end}
+.curve i{width:9px;border-radius:2px 2px 0 0;background:var(--ink);min-height:2px}
+.curve i.pk{background:var(--lime);box-shadow:inset 0 0 0 1px rgba(16,17,14,.35)}
+.st{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.st .bar{width:100%;max-width:110px}
+.mx{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(5,minmax(0,1fr)) minmax(0,1fr) minmax(0,1.1fr);gap:8px;align-items:center}
+.mx.h,.mx.h .c{font:500 9.5px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);text-align:center}
+.mx.h > :first-child{text-align:left}
+.mx + .mx{padding-top:8px;border-top:1px solid var(--rule)}
+.mx.h + .mx{border-top:0}
+.cell{height:40px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:600 13px/1 var(--f-mono);font-variant-numeric:tabular-nums;background:var(--cv)}
+.cell span{font:500 8.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.cell.low{background:var(--warn-bg);color:var(--warn)}
+.cell.low span{color:var(--warn)}
+.cell.out{background:var(--down-bg);color:var(--down)}
+.cell.out span{color:var(--down)}
+.cell.na{background:none;color:var(--ink-3);box-shadow:inset 0 0 0 1px var(--rule)}
+.mx .c{font:600 12.5px/1 var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.mx .c span{display:block;margin-top:5px;font-weight:500;font-size:9.5px;color:var(--ink-3)}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{height:30px;padding:0 12px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--rule-2);font:600 10px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;transition:background .3s,color .3s;display:flex;align-items:center;gap:6px}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);box-shadow:none}
+.filters button em{font-style:normal;opacity:.6}
+.ledger{display:flex;flex-direction:column}
+.lg{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:16px;align-items:baseline;padding:10px 0;border-top:1px solid var(--rule)}
+.lg:first-child{border-top:0}
+.lg span{font:400 13.5px/1.3 var(--f-disp)}
+.lg b{font:600 13px/1 var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;min-width:90px}
+.lg em{font-style:normal;font:500 10px/1 var(--f-mono);color:var(--ink-3);text-align:right;min-width:48px}
+.lg.sub span{padding-left:14px;color:var(--ink-2)}
+.lg.tot{border-top:1.5px solid var(--ink)}
+.lg.tot span{font-weight:800;font-stretch:110%;text-transform:uppercase;font-size:13px}
+.lg.tot b{font-size:15px;font-weight:600}
+.lg.hd span{font:500 9.5px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.lg.hd b,.lg.hd em{font:500 9.5px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.dcard{display:flex;flex-direction:column;gap:12px}
+.dcard .dh{display:flex;justify-content:space-between;align-items:flex-start}
+.dcard .dh b{font:900 22px/1 var(--f-disp);font-stretch:122%;text-transform:uppercase;letter-spacing:-.01em;display:block;margin-top:6px}
+.dthumbs{display:flex;gap:6px}
+.dthumbs .th{width:44px;height:56px}
+.dstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.dstats div{display:flex;flex-direction:column;gap:6px}
+.dstats b{font:800 18px/1 var(--f-disp);font-stretch:110%;font-variant-numeric:tabular-nums}
+.drawer{position:absolute;top:0;right:0;bottom:0;z-index:30;width:min(420px,100%);background:var(--paper);box-shadow:-30px 0 60px -20px rgba(16,17,14,.35);transform:translateX(105%);transition:transform .7s var(--ease);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dw-in{overflow-y:auto;padding:20px 22px 30px;display:flex;flex-direction:column;gap:16px}
+.dw-h{display:flex;justify-content:space-between;align-items:flex-start}
+.dw-h h2{margin:6px 0 0;font:900 26px/1 var(--f-disp);font-stretch:120%;text-transform:uppercase;letter-spacing:-.01em}
+.act{display:flex;gap:8px;flex-wrap:wrap}
+.btn{height:42px;padding:0 16px;border-radius:999px;background:var(--ink);color:var(--paper);font:700 11px/1 var(--f-disp);letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;transition:background .35s,color .35s,transform .4s var(--ease)}
+.btn:hover{background:var(--lime);color:var(--ink)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px var(--rule-2)}
+.btn.ghost:hover{background:rgba(16,17,14,.05)}
+.otoast{position:absolute;right:24px;top:84px;z-index:40;display:flex;align-items:center;gap:12px;padding:12px 14px 12px 12px;border-radius:16px;background:var(--ink);color:var(--paper);box-shadow:0 20px 40px -16px rgba(16,17,14,.5);transform:translateX(calc(100% + 40px));transition:transform .8s var(--ease);max-width:calc(100% - 48px);text-align:left}
+.otoast.on{transform:none}
+.otoast .th{background:var(--rail-2)}
+.otoast b{display:block;font:700 13px/1.2 var(--f-disp)}
+.otoast span{font:500 10px/1.3 var(--f-mono);color:var(--rail-mu);letter-spacing:.04em}
+.otoast em{font-style:normal;margin-left:6px;font:600 13px/1 var(--f-mono);color:var(--lime)}
+.pay{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(3,minmax(0,1fr));gap:14px;align-items:center;padding:11px 0;border-top:1px solid var(--rule)}
+
+/* ---------- owner: Soft Riot touches ---------- */
+/* the drop on its rail, on the store's wall */
+.orail{flex-direction:row;align-items:stretch;gap:28px;padding:22px 26px 34px;overflow:hidden;background:radial-gradient(80% 110% at 62% 20%,var(--wall-hi) 0%,var(--wall) 58%,var(--wall-lo) 100%)}
+.or-tx{flex:none;width:200px;display:flex;flex-direction:column;justify-content:space-between;padding-bottom:4px}
+.or-n{display:block;font:900 72px/.86 var(--f-disp);font-stretch:118%;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.or-s{display:block;margin-top:10px;font:500 10px/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.or-rack{position:relative;flex:1;min-width:0;display:flex;justify-content:center;--w:132px;--h:194px}
+.or-rod{position:absolute;left:2%;right:2%;top:5px;height:3px;border-radius:2px;background:linear-gradient(180deg,#d9dad3,#8c8e86);box-shadow:0 1px 2px rgba(16,17,14,.25)}
+.or-it{position:relative;flex:none;width:var(--w);height:var(--h);margin-left:calc(var(--w) * -.32);transform-origin:50% 2%;animation:hang 1.3s var(--ease) both;animation-delay:calc(var(--k) * 130ms + 260ms)}
+.or-it:nth-child(2){margin-left:0}
+.or-img{position:absolute;inset:0;transform-origin:50% 2%;transition:transform .9s var(--ease)}
+.or-img img{width:100%;height:100%;object-fit:contain;object-position:50% 0;display:block;filter:drop-shadow(0 12px 14px rgba(16,17,14,.18))}
+.or-it:hover{z-index:3}.or-it:hover .or-img{transform:scale(1.06) rotate(-1.5deg)}
+.or-tag{position:absolute;left:50%;bottom:-18px;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:54px;padding:7px 8px 6px;border-radius:4px;background:var(--paper);box-shadow:0 4px 10px rgba(16,17,14,.14),inset 0 0 0 1px rgba(16,17,14,.14);transform:translateX(-50%) rotate(-3deg)}
+.or-it:nth-child(odd) .or-tag{transform:translateX(-50%) rotate(3deg)}
+.or-tag b{font:800 15px/1 var(--f-disp);font-stretch:112%;font-variant-numeric:tabular-nums}
+.or-tag span{font:500 8.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.or-it.top .or-tag{background:var(--lime);box-shadow:0 0 0 1.5px var(--ink),0 4px 10px rgba(16,17,14,.14)}
+.or-it.top .or-tag span{color:var(--lime-ink)}
+@keyframes hang{from{opacity:0;transform:translateY(-28px) rotate(-3deg)}60%{opacity:1}to{opacity:1;transform:none}}
+/* live orders print on the store's receipt paper */
+.rcpt{border-radius:4px;padding-bottom:30px;-webkit-mask:linear-gradient(#000,#000) top/100% calc(100% - 9px) no-repeat,radial-gradient(circle at 50% 100%,transparent 4.5px,#000 5px) bottom/12px 9px repeat-x;mask:linear-gradient(#000,#000) top/100% calc(100% - 9px) no-repeat,radial-gradient(circle at 50% 100%,transparent 4.5px,#000 5px) bottom/12px 9px repeat-x}
+.rc-brand{display:flex;justify-content:space-between;padding-bottom:12px;border-bottom:1px dashed var(--rule-2);font:500 9.5px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+
+@container own (max-width:1180px){
+  .r-kpi{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@container own (max-width:980px){
+  .own{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+  .side{flex-direction:row;align-items:center;gap:14px;padding:10px 16px;overflow-x:auto;scrollbar-width:none}
+  .s-brand{border:0;padding:0;flex:none}
+  .s-brand span,.ws,.src{display:none}
+  .nav{flex-direction:row;margin:0;gap:2px;overflow:visible}
+  .nav button{height:34px;padding:0 10px;font-size:12.5px;flex:none}
+  .nav button svg{display:none}
+  .nav button[aria-current="true"]::after{display:none}
+  .nav button[aria-current="true"] em{margin-right:0}
+  .r-21,.r-111{grid-template-columns:minmax(0,1fr)}
+  .oh{padding:16px 18px 12px;flex-wrap:wrap}
+  .osec{padding:4px 18px 32px}
+  .otoast{right:16px;top:68px}
+}
+@container own (max-width:640px){
+  .r-kpi{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi .d{flex-wrap:wrap;row-gap:7px}
+  .orail{flex-direction:column;gap:16px;padding:18px 18px 30px}
+  .or-tx{width:auto;gap:10px}
+  .or-tx > div{display:flex;align-items:baseline;gap:12px}
+  .or-n{font-size:48px}
+  .or-s{margin:0}
+  /* seven pieces fit the card's width: each overlaps the last by a third */
+  .or-rack{--w:calc((100cqw - 72px) / 5.08);--h:calc(var(--w) * 1.47)}
+  .or-tag{bottom:-14px;min-width:0;padding:5px 6px 4px}
+  .or-tag b{font-size:12px}
+  .or-tag span{display:none}
+  .r-11{grid-template-columns:minmax(0,1fr)}
+  .oh h1{font-size:24px}
+  .hide-s{display:none!important}
+  .mx{grid-template-columns:minmax(0,1.4fr) repeat(5,minmax(0,1fr))}
+  .mx > .c{display:none}
+  .pay{grid-template-columns:minmax(0,1.5fr) repeat(2,minmax(0,1fr))}
+  .pay > :nth-child(2){display:none}
+}
+@media (max-width:760px){
+  .g-r .live span{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.12s!important;transition-delay:0s!important}
+}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.8s var(--ease) forwards;animation-delay:var(--dl,0s)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.area-in{animation:fadein 1.4s .6s both}
+.pop{animation:fadein .7s 1.5s both}
+@keyframes fadein{from{opacity:0}}
+.bg rect{transform-box:fill-box;transform-origin:50% 100%;animation:growy 1.1s var(--ease) both;animation-delay:calc(var(--k) * 60ms + .2s)}
+@keyframes growy{from{transform:scaleY(0)}}
+
+</style>
+
+<div class="shell" id="shell">
+  <header class="gbar">
+    <div class="g-l">
+      <span class="logo" id="gLogo"></span>
+      <span class="g-x">×</span>
+      <span class="umbm"><i><b></b><b></b><b></b><b></b></i>UMB</span>
+    </div>
+    <div class="g-sw"><div class="seg" id="viewSeg"><i></i></div></div>
+    <div class="g-r"><span class="live"><span class="dot pulse"></span><span id="liveTx">Live sync</span></span></div>
+  </header>
+
+  <div class="stage" id="stage">
+    <section class="pane-app" id="paneApp" aria-label="Customer app">
+      <div class="bgword" aria-hidden="true"><span>SOFT RIOT</span><span>DROP 04</span></div>
+      <div class="phw" id="phw">
+        <div class="ph" id="ph">
+          <div class="scr" id="scr">
+            <div class="island"></div>
+            <div class="sb"><span id="sbTime">9:41</span><span class="ic">
+              <svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+              <svg viewBox="0 0 16 12"><path d="M8 2.2c2.3 0 4.4.9 6 2.4l1.2-1.3A10.4 10.4 0 0 0 8 .4C5.2.4 2.7 1.5.8 3.3L2 4.6a8.6 8.6 0 0 1 6-2.4zm0 3.6c1.3 0 2.5.5 3.4 1.3l1.2-1.3A6.8 6.8 0 0 0 8 4c-1.8 0-3.4.7-4.6 1.8l1.2 1.3c.9-.8 2.1-1.3 3.4-1.3zm0 3.5c-.6 0-1.1.2-1.4.6L8 11.4l1.4-1.5c-.3-.4-.8-.6-1.4-.6z"/></svg>
+              <svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="23" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="2"/><path d="M25 4v4c.8-.3 1.3-1.1 1.3-2S25.8 4.3 25 4z" opacity=".45"/></svg>
+            </span></div>
+            <header class="ah" id="ah">
+              <div class="a-hl">
+                <span class="a-drop">SS26<b>Drop 04</b></span>
+                <div class="a-hist" id="aHist">
+                  <button type="button" class="a-nb" id="aBack" aria-label="Back" disabled><svg viewBox="0 0 16 16"><path d="M13 8H3M7 4 3 8l4 4"/></svg><span class="lb">Back</span></button><i></i>
+                  <button type="button" class="a-nb" id="aFwd" aria-label="Forward" disabled><span class="lb">Forward</span><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+                </div>
+              </div>
+              <button type="button" class="logo" id="aLogo" aria-label="Soft Riot home"></button>
+              <div class="a-hr">
+                <div class="audio" id="audio">
+                  <button type="button" class="mute" id="btnMute" aria-label="Mute" aria-pressed="false">
+                    <svg class="spk" viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.2L11.5 6v12l-4.3-3.5H4z"/><path class="w w1" d="M15 9.2a4 4 0 0 1 0 5.6"/><path class="w w2" d="M17.8 6.5a7.8 7.8 0 0 1 0 11"/></svg>
+                    <svg class="off" viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.2L11.5 6v12l-4.3-3.5H4z"/><path d="m15.5 9.5 5 5M20.5 9.5l-5 5"/></svg>
+                  </button>
+                  <label class="vol"><input type="range" id="musicVol" min="0" max="100" step="1" value="70" aria-label="Music volume"></label>
+                </div>
+                <button type="button" class="a-bag" id="aBag" aria-label="Bag"><svg viewBox="0 0 20 20"><path d="M4 6.5h12l-.9 10.2a1.4 1.4 0 0 1-1.4 1.3H6.3a1.4 1.4 0 0 1-1.4-1.3z"/><path d="M7.2 6.5V5a2.8 2.8 0 0 1 5.6 0v1.5"/></svg><b id="aBagN">0</b></button>
+              </div>
+            </header>
+            <div class="views" id="views">
+              <section class="v on" id="vShop" data-v="shop"></section>
+              <section class="v" id="vBag" data-v="bag"></section>
+              <section class="v" id="vOrders" data-v="orders"></section>
+              <section class="v over" id="vProduct" data-v="product"></section>
+              <section class="v over" id="vTrack" data-v="track"></section>
+            </div>
+            <nav class="tabs" id="tabs">
+              <button type="button" data-t="shop" aria-current="true"><span class="tb"><svg viewBox="0 0 22 22"><path d="M11 3.5a1.8 1.8 0 1 1 1.8 1.8c-.8 0-1.8.5-1.8 1.4v1.1M3 16.8 11 8l8 8.8a1 1 0 0 1-.7 1.7H3.7a1 1 0 0 1-.7-1.7z"/></svg></span>Shop</button>
+              <button type="button" data-t="bag"><span class="tb"><svg viewBox="0 0 22 22"><path d="M4.5 7.5h13l-1 11.2a1.5 1.5 0 0 1-1.5 1.3H7a1.5 1.5 0 0 1-1.5-1.3z"/><path d="M8 7.5V6a3 3 0 0 1 6 0v1.5"/></svg><b id="tabBagN" hidden>0</b></span>Bag</button>
+              <button type="button" data-t="orders"><span class="tb"><svg viewBox="0 0 22 22"><path d="M5 3.5h12v15l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3-2 1.3z"/><path d="M8 8h6M8 11.5h6"/></svg></span>Orders</button>
+            </nav>
+            <div class="scrim" id="ckScrim"></div>
+            <div class="sheet" id="ckSheet" role="dialog" aria-label="Checkout"></div>
+            <div class="atoast" id="aToast"><span class="dot"></span><span id="aToastTx"></span></div>
+            <div class="homebar"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pane-own" id="paneOwn" aria-label="Owner dashboard">
+      <div class="own">
+        <aside class="side">
+          <div class="s-brand"><span class="umbm"><i><b></b><b></b><b></b><b></b></i>UMB</span><span>Financial<br>Command Center</span></div>
+          <div class="ws"><span class="av">SR</span><div><b>Soft Riot</b><span>Apparel module</span></div></div>
+          <nav class="nav" id="oNav"></nav>
+          <div class="src" id="oSrc"></div>
+        </aside>
+        <div class="main" id="oMain">
+          <header class="oh" id="oHead"></header>
+          <div class="osec" id="oSec"></div>
+        </div>
+        <div class="drawer" id="oDrawer"></div>
+        <button type="button" class="otoast" id="oToast"></button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+'use strict';
+const COLS = {"ember": [{"k": "ember", "n": "Chalk", "hex": "#E1DAD6"}, {"k": "ember-indigo", "n": "Indigo", "hex": "#1E2639"}], "never": [{"k": "never", "n": "Washed Black", "hex": "#212021"}, {"k": "never-olive", "n": "Faded Olive", "hex": "#51503D"}, {"k": "never-slate", "n": "Slate", "hex": "#323845"}], "tank": [{"k": "tank", "n": "Washed Black", "hex": "#282727"}, {"k": "tank-olive", "n": "Faded Olive", "hex": "#52503D"}], "varsity": [{"k": "varsity", "n": "Black / Cream", "hex": "#171616"}, {"k": "varsity-navy", "n": "Navy / Cream", "hex": "#242D3D"}, {"k": "varsity-forest", "n": "Forest / Cream", "hex": "#27352F"}], "wash": [{"k": "wash", "n": "Denim", "hex": "#47596F"}, {"k": "wash-sage", "n": "Sage", "hex": "#747E69"}, {"k": "wash-black", "n": "Washed Black", "hex": "#252525"}], "kit": [{"k": "kit", "n": "Sun", "hex": "#DAA423"}, {"k": "kit-bone", "n": "Bone", "hex": "#DBD1BE"}], "signal": [{"k": "signal", "n": "Chalk", "hex": "#E4DEE1"}, {"k": "signal-stone", "n": "Stone", "hex": "#DCD3BF"}, {"k": "signal-black", "n": "Washed Black", "hex": "#464643"}]};
+const IMV = 10;
+
+const $ = s => document.querySelector(s);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DAY = 864e5;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+function mulberry(s) { return () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const r2 = v => Math.round(v * 100) / 100;
+const money = (v, dec) => '$' + (dec === undefined ? (Math.round(v * 100) % 100 ? v.toFixed(2) : String(Math.round(v))) : v.toFixed(dec)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const moneyK = v => Math.abs(v) >= 10000 ? '$' + (v / 1000).toFixed(v >= 100000 ? 0 : 1) + 'k' : money(Math.round(v));
+const num = v => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const pct = (v, d = 1) => (v * 100).toFixed(d) + '%';
+const d0 = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
+const addDays = (t, n) => { const d = new Date(t); d.setDate(d.getDate() + n); return d.getTime(); };
+const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], WDL = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const clock = t => { const d = new Date(t); let h = d.getHours(); const m = d.getMinutes(); const ap = h < 12 ? 'AM' : 'PM'; h = h % 12 || 12; return h + ':' + String(m).padStart(2, '0') + ' ' + ap; };
+const dateS = t => { const d = new Date(t); return MO[d.getMonth()] + ' ' + d.getDate(); };
+const ago = (t, now = Date.now()) => { const s = Math.max(0, (now - t) / 1000); if (s < 45) return 'just now'; if (s < 3600) return Math.round(s / 60) + 'm ago'; if (s < 86400) return Math.round(s / 3600) + 'h ago'; const d = Math.round(s / 86400); return d === 1 ? 'yesterday' : d + 'd ago'; };
+const when = t => { const now = Date.now(); if (t >= d0(now)) return clock(t); if (t >= addDays(d0(now), -1)) return 'Yest ' + clock(t); return dateS(t) + ', ' + clock(t); };
+
+function noiseURL(n, spread, alpha) {
+  const c = document.createElement('canvas'); c.width = c.height = n; const x = c.getContext('2d'), d = x.createImageData(n, n);
+  for (let i = 0; i < n * n; i++) { const v = 128 + (Math.random() - .5) * spread; d.data[i * 4] = d.data[i * 4 + 1] = d.data[i * 4 + 2] = v; d.data[i * 4 + 3] = alpha; }
+  x.putImageData(d, 0, 0); return c.toDataURL();
+}
+// the mark: a tight pill, and a word too big for it; inside the pill the letters are ink, where they break out they carry the lime (k keeps each copy's clip ids apart)
+const LOGO = k => `<svg viewBox="0 0 132 44" aria-label="Soft Riot"><defs><clipPath id="lgIn${k}"><path d="M9 11C11 4 31 3 66 5c36-2 57-1 60 8 4 8 2 17-2 23-6 7-32 6-58 5-30 2-54 2-59-6-4-7-2-19 2-24z" transform="translate(66 22) rotate(-6) scale(.72 .9) translate(-66 -22)"/></clipPath><mask id="lgOut${k}" maskUnits="userSpaceOnUse" x="-40" y="-20" width="212" height="84"><rect x="-40" y="-20" width="212" height="84" fill="#fff"/><path d="M9 11C11 4 31 3 66 5c36-2 57-1 60 8 4 8 2 17-2 23-6 7-32 6-58 5-30 2-54 2-59-6-4-7-2-19 2-24z" transform="translate(66 22) rotate(-6) scale(.72 .9) translate(-66 -22)" fill="#000"/></mask></defs><path d="M9 11C11 4 31 3 66 5c36-2 57-1 60 8 4 8 2 17-2 23-6 7-32 6-58 5-30 2-54 2-59-6-4-7-2-19 2-24z" transform="translate(66 22) rotate(-6) scale(.72 .9) translate(-66 -22)" style="fill:var(--lime);stroke:var(--ink)" stroke-width="2"/><g class="push"><g mask="url(#lgOut${k})"><text x="66" y="29.4" text-anchor="middle" transform="skewX(-9) translate(4.6 0)" style="font:900 21px Archivo,sans-serif;font-stretch:118%;letter-spacing:.02em;fill:var(--lime)" stroke="var(--ink)" stroke-width="1.7" paint-order="stroke" stroke-linejoin="round">SOFT RIOT</text></g><g clip-path="url(#lgIn${k})"><text x="66" y="29.4" text-anchor="middle" transform="skewX(-9) translate(4.6 0)" style="font:900 21px Archivo,sans-serif;font-stretch:118%;letter-spacing:.02em;fill:var(--ink)">SOFT RIOT</text></g></g></svg>`;
+const ARW = '<svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+const CHK = '<svg viewBox="0 0 12 12"><path d="m2.5 6.2 2.3 2.3 4.7-5"/></svg>';
+const XIC = '<svg viewBox="0 0 10 10"><path d="M1 1l8 8M9 1 1 9"/></svg>';
+
+/* ---------- catalogue ---------- */
+const SZ5 = ['S', 'M', 'L', 'XL', 'XXL'];
+const P = [
+  { id: 'ember', name: 'Ember Memory LS Shirt', price: 142, cost: 38, cat: 'Shirts', col: 'Chalk', drop: 4, sizes: SZ5,
+    story: 'Crisp poplin with a hand-painted red splash. No two shirts come out the same.',
+    specs: [['Fabric', '120 gsm cotton poplin'], ['Fit', 'Relaxed, dropped shoulder'], ['Paint', 'Hand-applied pigment, heat-set'], ['Made in', 'Lisbon, Portugal']] },
+  { id: 'varsity', name: 'SR Varsity Jacket', price: 320, cost: 112, cat: 'Outerwear', col: 'Black / Cream', drop: 4, sizes: ['S', 'M', 'L', 'XL'],
+    story: 'Wool melton, cream leather sleeves and a chenille SR patch on the chest.',
+    specs: [['Body', 'Wool melton, quilted lining'], ['Sleeves', 'Cream leather'], ['Closure', 'Metal snap front'], ['Made in', 'Guimarães, Portugal']] },
+  { id: 'kit', name: 'Kit 10 Jersey', price: 88, cost: 24, cat: 'Jerseys', col: 'Sun', drop: 3, sizes: SZ5,
+    story: 'Breathable piqué in sun yellow with green trim. RIOT 10 front and back.',
+    specs: [['Fabric', 'Breathable cotton piqué'], ['Fit', 'Regular, athletic'], ['Print', 'Flock lettering and numbers'], ['Made in', 'Braga, Portugal']] },
+  { id: 'never', name: 'Never Still Tee', price: 68, cost: 17, cat: 'Tees', col: 'Washed Black', drop: 2, sizes: SZ5,
+    story: 'Our heaviest tee, cut boxy. A cracked NEVER STILL print and a raw hem.',
+    specs: [['Fabric', '240 gsm combed cotton jersey'], ['Fit', 'Boxy, cropped'], ['Print', 'Cracked plastisol'], ['Made in', 'Porto, Portugal']] },
+  { id: 'tank', name: 'Riot Paint Tank Top', price: 74, cost: 19, cat: 'Tanks', col: 'Washed Black', drop: 2, sizes: SZ5,
+    story: 'Distressed by hand with pin holes and paint splatter. Comes already lived in.',
+    specs: [['Fabric', '220 gsm cotton jersey'], ['Fit', 'Regular, deep armhole'], ['Finish', 'Garment-dyed, distressed by hand'], ['Made in', 'Porto, Portugal']] },
+  { id: 'wash', name: 'Washwater Logo Tee', price: 64, cost: 16, cat: 'Tees', col: 'Denim', drop: 1, sizes: SZ5,
+    story: 'Pigment-dyed, then stone-washed twice. A faded yellow SOFT RIOT across the chest.',
+    specs: [['Fabric', '200 gsm cotton jersey'], ['Fit', 'Regular'], ['Finish', 'Pigment dye, double stone wash'], ['Made in', 'Porto, Portugal']] },
+  { id: 'signal', name: 'Signal Tee', price: 52, cost: 13, cat: 'Tees', col: 'Chalk', drop: 1, sizes: SZ5,
+    story: 'The quiet one. Soft jersey with a small embroidered rose. Wears with everything.',
+    specs: [['Fabric', '200 gsm cotton jersey'], ['Fit', 'Regular'], ['Detail', 'Embroidered rose'], ['Made in', 'Porto, Portugal']] }
+];
+const PX = Object.fromEntries(P.map(p => [p.id, p]));
+const DROPS = [
+  { n: 1, name: 'Washwater', ago: 84, p: ['wash', 'signal'] },
+  { n: 2, name: 'Never Still', ago: 56, p: ['never', 'tank'] },
+  { n: 3, name: 'Kit Season', ago: 28, p: ['kit'] },
+  { n: 4, name: 'Ember', ago: 6, p: ['ember', 'varsity'] }
+];
+const dropLaunch = dr => addDays(d0(Date.now()), -dr.ago) + 12 * 3600e3;
+const NEXT_DROP = addDays(d0(Date.now()), 3) + 19 * 3600e3;
+const ckey = (id, c = 0) => (COLS[id] && COLS[id][c] ? COLS[id][c].k : id);
+const colName = (id, c = 0) => (COLS[id] && COLS[id][c] ? COLS[id][c].n : PX[id].col);
+const img = (id, v = 'f', c = 0) => `play/soft-riot-app/img/${v === v.toLowerCase() ? 's' : 'l'}/${ckey(id, c)}-${v.toLowerCase()}.webp?v=${IMV}`;
+const pic = (id, v = 'f', cls = '', c = 0) => `<img src="${img(id, v, c)}" alt=""${cls ? ` class="${cls}"` : ''} draggable="false" decoding="async">`;
+
+/* ---------- order stages ---------- */
+const STG = { ship: ['Placed', 'Packed', 'Shipped', 'Out for delivery', 'Delivered'], pickup: ['Placed', 'Preparing', 'Ready for pickup', 'Picked up'], store: ['Paid'] };
+const STG_NOTE = {
+  ship: ['The studio has your order.', 'Folded, tissue-wrapped and boxed.', 'Handed to the courier.', 'On a van in your area today.', 'Left at your door.'],
+  pickup: ['The studio has your order.', 'Pulling your pieces off the rail.', 'Bagged at the counter. Bring your code.', 'Collected. Enjoy it.'],
+  store: ['Paid at the counter.']
+};
+// live orders move in minutes so the demo plays out; history uses real-world timings
+const OFF_LIVE = { ship: [0, 40e3, 100e3, 170e3, 250e3], pickup: [0, 25e3, 70e3, 360e3], store: [0] };
+const OFF_HIST = { ship: [0, 3 * 3600e3, 20 * 3600e3, 3 * DAY, 3.4 * DAY], pickup: [0, 20 * 60e3, 60 * 60e3, 5 * 3600e3], store: [0] };
+function stageOf(o, now = Date.now()) {
+  const off = (o.live ? OFF_LIVE : OFF_HIST)[o.method]; let i = 0;
+  for (let k = 1; k < off.length; k++) if (o.t + off[k] <= now) i = k;
+  return Math.max(i, Math.min(o.stage || 0, off.length - 1));
+}
+function stageTime(o, i) {
+  const auto = o.t + (o.live ? OFF_LIVE : OFF_HIST)[o.method][i], set = o.stageAt && o.stageAt[i];
+  return set ? Math.min(set, auto) : auto;
+}
+const isFinal = (o, now) => stageOf(o, now) === STG[o.method].length - 1;
+
+/* ---------- demo UMB source: 90 seeded days of trading ---------- */
+const FIRST = ['Maya', 'Jordan', 'Ari', 'Sky', 'Nico', 'Imani', 'Theo', 'Lena', 'Kai', 'Zoe', 'Malik', 'Ivy', 'Rafa', 'Noor', 'Eli', 'Sasha', 'Dev', 'Luca', 'Priya', 'Omar', 'Tess', 'Jun', 'Bea', 'Marco', 'Ada', 'Cruz', 'Remi', 'Hana', 'Felix', 'Rio', 'Mina', 'Owen', 'Talia', 'Andre', 'Yara', 'Sam', 'Kofi', 'Elena', 'Jaden', 'Lux', 'Nadia', 'Quinn', 'Rosa', 'Tomas', 'Wren', 'Zane', 'Ines', 'Milo'];
+const LAST = 'ABCDEFGHJKLMNOPRSTVWY';
+const CITY = [['West Palm Beach', .2], ['Miami', .14], ['Brooklyn', .12], ['Los Angeles', .11], ['Atlanta', .08], ['Chicago', .07], ['Austin', .06], ['Boca Raton', .06], ['Philadelphia', .05], ['Oakland', .05], ['Toronto', .03], ['Lisbon', .03]];
+const HW = {
+  app: [.4, .25, .12, .06, .04, .06, .18, .4, .7, .9, 1, 1.2, 1.6, 1.5, 1.1, 1, 1.1, 1.3, 1.6, 2, 2.2, 2, 1.5, .9],
+  web: [.3, .2, .1, .05, .04, .06, .2, .5, .9, 1.2, 1.4, 1.5, 1.6, 1.4, 1.2, 1.1, 1.1, 1.1, 1.2, 1.4, 1.5, 1.3, .9, .5],
+  store: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, .6, 1.1, 1.4, 1.3, 1.2, 1.3, 1.5, 1.4, 1, .5, 0, 0, 0]
+};
+const DOWM = [1.05, .72, .8, .86, 1, 1.28, 1.45];
+const PW = { never: 1.25, signal: 1.1, wash: 1, kit: .85, ember: .7, tank: .6, varsity: .38 };
+const SW = { S: .14, M: .31, L: .3, XL: .18, XXL: .07 };
+function wpick(R, entries) { let s = 0; for (const [, w] of entries) s += w; let x = R() * s; for (const [k, w] of entries) { x -= w; if (x <= 0) return k; } return entries[entries.length - 1][0]; }
+
+const DEMO = (() => {
+  const R = mulberry(4110), now = Date.now(), t0 = d0(now), orders = [], custs = [];
+  const launch = {}; DROPS.forEach(dr => dr.p.forEach(id => launch[id] = dropLaunch(dr)));
+  const newCust = (t, city) => { const c = { id: 'c' + custs.length, name: FIRST[Math.floor(R() * FIRST.length)] + ' ' + LAST[Math.floor(R() * LAST.length)] + '.', city: city || wpick(R, CITY), first: t }; custs.push(c); return c; };
+  for (let d = 89; d >= 0; d--) {
+    const day = addDays(t0, -d), dow = new Date(day).getDay(), prog = (89 - d) / 89;
+    let boost = 0; const hot = {};
+    DROPS.forEach(dr => { const k = dr.ago - d; if (k < 0) return; const b = k === 0 ? 2.4 : k === 1 ? 1.3 : k === 2 ? .7 : k < 7 ? .3 * (7 - k) / 4 : 0; boost += b; dr.p.forEach(id => hot[id] = k <= 2 ? 4 : k <= 6 ? 2 : 1); });
+    const n = Math.round(24 * DOWM[dow] * (1 + prog * .5) * (1 + boost) * (.85 + R() * .3));
+    for (let i = 0; i < n; i++) {
+      const ch = wpick(R, [['app', .5], ['web', .27], ['store', .23]]);
+      const h = Number(wpick(R, HW[ch].map((w, k) => [k, w])));
+      const t = day + h * 3600e3 + Math.floor(R() * 3600e3);
+      if (t > now - 4 * 60e3) continue;
+      const avail = P.filter(p => launch[p.id] <= t).map(p => [p.id, PW[p.id] * (hot[p.id] || 1)]);
+      if (!avail.length) continue;
+      const cnt = Number(wpick(R, [[1, .6], [2, .29], [3, .11]])), items = [];
+      for (let j = 0; j < cnt; j++) {
+        const id = wpick(R, avail), sz = PX[id].sizes.includes('XXL') ? wpick(R, Object.entries(SW)) : wpick(R, Object.entries(SW).slice(0, 4));
+        const nc = COLS[id] ? COLS[id].length : 1, c = nc > 1 && R() > .58 ? 1 + Math.floor(R() * (nc - 1)) : 0;
+        const ex = items.find(x => x.p === id && x.s === sz && x.c === c); if (ex) ex.q++; else items.push({ p: id, s: sz, q: 1, c });
+      }
+      let cust = null;
+      if (ch !== 'store' || R() < .45) {
+        const p = .22 + .2 * prog;
+        if (custs.length > 30 && R() < p) cust = custs[Math.floor(Math.pow(R(), 1.8) * custs.length)];
+        else cust = newCust(t, ch === 'store' ? (R() < .8 ? 'West Palm Beach' : 'Boca Raton') : null);
+      }
+      const method = ch === 'store' ? 'store' : (R() < .22 ? 'pickup' : 'ship');
+      const sub = items.reduce((s, x) => s + PX[x.p].price * x.q, 0), ship = method === 'ship' && sub < 150 ? 8 : 0, tax = r2(sub * .07);
+      orders.push({ t, ch, cust: cust ? cust.id : null, items, sub, ship, tax, total: r2(sub + ship + tax), method });
+    }
+  }
+  orders.sort((a, b) => a.t - b.t);
+  orders.forEach((o, i) => { o.no = 'SR-' + (10001 + i); o.id = 'h' + i; });
+  // stock on hand: what was received minus what sold, with a few sizes run deliberately thin
+  const sold = {}; P.forEach(p => { sold[p.id] = {}; p.sizes.forEach(s => sold[p.id][s] = 0); });
+  orders.forEach(o => o.items.forEach(x => sold[x.p][x.s] += x.q));
+  const ST = { wash: .82, signal: .8, never: .81, tank: .66, kit: .79, ember: .58, varsity: .9 };
+  const stock = {};
+  P.forEach(p => { stock[p.id] = {}; p.sizes.forEach(s => { const st = Math.min(.95, ST[p.id] + (s === 'M' || s === 'L' ? .06 : 0) + (R() - .5) * .08); stock[p.id][s] = Math.max(0, Math.round(sold[p.id][s] * (1 / st - 1))); }); });
+  Object.assign(stock.varsity, { M: 0, L: 2 }); stock.never.L = 2; stock.kit.M = 3; stock.ember.S = 4; stock.tank.XXL = 0;
+  const cmap = Object.fromEntries(custs.map(c => [c.id, c]));
+  return { orders, custs: cmap, stock };
+})();
+/* ---------- sound: the store's groove and one-shots ---------- */
+const rand = (a, b) => a + Math.random() * (b - a), pick = a => a[Math.floor(Math.random() * a.length)];
+const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+// music is on by default for the mockup: every load starts with sound on, only the level is remembered
+const AU = { ctx: null, muted: false, mvol: 0.7 };
+{ const v = parseFloat(store.get('softriot-music')); if (v >= 0 && v <= 1) AU.mvol = v; }
+const musicLevel = v => v <= 0 ? 0 : 0.42 * Math.pow(v / 0.7, 1.6);
+function audioStart() {
+  if (AU.ctx || AU.muted) return;
+  const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+  let ctx; try { ctx = new AC(); } catch (e) { return; }
+  AU.ctx = ctx;
+  const filt = (type, f, q = 0.7) => { const b = ctx.createBiquadFilter(); b.type = type; b.frequency.value = f; b.Q.value = q; return b; };
+  const gain = v => { const g = ctx.createGain(); g.gain.value = v; return g; };
+  const chain = (...n) => { for (let i = 0; i < n.length - 1; i++) n[i].connect(n[i + 1]); return n[0]; };
+  Object.assign(AU, { filt, gain, chain });
+  const out = ctx.createDynamicsCompressor(); out.threshold.value = -16; out.ratio.value = 3; out.connect(ctx.destination);
+  const master = AU.master = gain(0); master.connect(out); master.gain.setTargetAtTime(0.9, ctx.currentTime + .05, 1);
+  const bed = AU.bed = gain(1); bed.connect(master);
+  const music = AU.music = gain(musicLevel(AU.mvol)); chain(music, filt('lowpass', 5200, .4), bed);
+  AU.fx = gain(0.85); AU.fx.connect(master);
+  const white = AU.white = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+  { const d = white.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+
+  // a soft amapiano groove: log drum, shakers, rims, rhodes and a sparse marimba
+  const BPM = 112, S16 = 60 / BPM / 4;
+  const keys = gain(.8); chain(keys, filt('lowpass', 2200, .5), music);
+  const trem = ctx.createOscillator(), tremG = gain(.12); trem.frequency.value = 3.6; chain(trem, tremG, keys.gain); trem.start();
+  const drums = gain(.9); chain(drums, filt('lowpass', 9000, .5), music);
+  const shape = ctx.createWaveShaper(); { const k = new Float32Array(1024); for (let i = 0; i < 1024; i++) { const x = i / 512 - 1; k[i] = Math.tanh(2.2 * x); } shape.curve = k; }
+  const logBus = gain(.85); chain(logBus, shape, filt('lowpass', 900, .7), music);
+  const delay = ctx.createDelay(1.5), fb = gain(.3), wet = gain(.32); delay.delayTime.value = S16 * 3; chain(delay, fb, delay); chain(delay, wet, music);
+  const mallet = gain(1); chain(mallet, filt('lowpass', 3400, .5), music); mallet.connect(delay);
+  const air = ctx.createBufferSource(); air.buffer = white; air.loop = true; chain(air, filt('lowpass', 900, .3), filt('highpass', 140, .4), gain(.006), music); air.start();
+  function ep(m, t, dur, v) {
+    const f = mtof(m), g = ctx.createGain(), o1 = ctx.createOscillator(), o2 = ctx.createOscillator(), g2 = gain(.14);
+    o1.frequency.value = f; o1.detune.value = rand(-6, 6); o2.frequency.value = f * 2; chain(o2, g2, g); chain(o1, g, keys);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .012); g.gain.setTargetAtTime(v * .3, t + .03, .35); g.gain.setTargetAtTime(0, t + dur, .25);
+    o1.start(t); o2.start(t); o1.stop(t + dur + 1.4); o2.stop(t + dur + 1.4);
+  }
+  function logdrum(m, t, v, slide) {
+    const f = mtof(m), o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine';
+    o.frequency.setValueAtTime(f * 2.1, t); o.frequency.exponentialRampToValueAtTime(f, t + .045);
+    if (slide) o.frequency.exponentialRampToValueAtTime(f * slide, t + .32);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .006); g.gain.exponentialRampToValueAtTime(.001, t + .5);
+    chain(o, g, logBus); o.start(t); o.stop(t + .55);
+  }
+  function kick(t, v) {
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(44, t + .12);
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + .32); chain(o, g, drums); o.start(t); o.stop(t + .34);
+  }
+  function hit(t, type, f, q, v, dec, dest = drums) {
+    const s = ctx.createBufferSource(), g = ctx.createGain(); s.buffer = white;
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + dec); chain(s, filt(type, f, q), g, dest);
+    s.start(t, Math.random() * .5); s.stop(t + dec + .05);
+  }
+  function rim(t, v) {
+    hit(t, 'bandpass', 1700, 6, v, .06);
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = 820; g.gain.setValueAtTime(v * .5, t); g.gain.exponentialRampToValueAtTime(.001, t + .05); chain(o, g, drums); o.start(t); o.stop(t + .06);
+  }
+  function marimba(m, t) {
+    const f = mtof(m);
+    [[1, .07, .5], [3.98, .016, .12]].forEach(([k, v, d]) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = f * k; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .004); g.gain.exponentialRampToValueAtTime(.0008, t + d); chain(o, g, mallet); o.start(t); o.stop(t + d + .05); });
+  }
+  const CH = [[57, 60, 64, 67, 71], [53, 57, 60, 64, 67], [48, 52, 55, 59, 62], [55, 59, 62, 64, 69]], RT = [33, 29, 36, 31];
+  const LOG = [[0, 0, 0], [3, 0, 0], [6, 7, 0], [10, 0, 1.5], [12, 12, 0], [14, 10, 0]];
+  const PENTA = [69, 72, 74, 76, 79, 81];
+  let nextT = ctx.currentTime + .25, n16 = 0;
+  AU.timer = setInterval(() => {
+    while (nextT < ctx.currentTime + .2) {
+      const st = n16 % 16, bar = Math.floor(n16 / 16) % 4, t = nextT + (st % 2 ? S16 * .18 : 0);
+      if (st === 0) CH[bar].forEach((m, i) => ep(m, t + i * .012, S16 * 6, .06));
+      if ((st === 7 || st === 10) && Math.random() < .75) CH[bar].slice(1, 4).forEach((m, i) => ep(m + 12, t + i * .008, S16 * 1.2, .035));
+      LOG.forEach(([s, iv, sl]) => { if (s === st && (s !== 12 || bar % 2)) logdrum(RT[bar] + iv, t, .42, sl || 0); });
+      if (st === 0 || st === 8) kick(t, .34);
+      if (st === 4 || st === 12 || (st === 15 && Math.random() < .35)) rim(t, .1);
+      hit(t, 'highpass', 6800, .7, st % 4 === 2 ? .05 : .022, .04);
+      if (st % 2 === 0 && Math.random() < .1) marimba(pick(PENTA), t);
+      nextT += S16; n16++;
+    }
+  }, 40);
+}
+function tone(f, v, t0, dur, type = 'sine', dest) {
+  const ctx = AU.ctx, o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.value = f;
+  const t = ctx.currentTime + t0; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .006); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  o.connect(g); g.connect(dest || AU.fx); o.start(t); o.stop(t + dur + .05); return o;
+}
+function noiseHit(t0, type, f, q, v, dur, f2) {
+  const ctx = AU.ctx, s = ctx.createBufferSource(), b = AU.filt(type, f, q), g = ctx.createGain(), t = ctx.currentTime + t0; s.buffer = AU.white; s.loop = true;
+  if (f2) { b.frequency.setValueAtTime(f, t); b.frequency.exponentialRampToValueAtTime(f2, t + dur); }
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + Math.min(.02, dur * .3)); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  AU.chain(s, b, g, AU.fx); s.start(t, Math.random() * .5); s.stop(t + dur + .05);
+}
+function sfx(type, n) {
+  const ctx = AU.ctx; if (!ctx || AU.muted || ctx.state !== 'running') return;
+  if (type === 'hover') { tone(rand(3100, 3500), .006, 0, .09); tone(5200, .003, 0, .06); }
+  else if (type === 'turn') noiseHit(0, 'bandpass', 650, 1.4, .016, .6, 1500);
+  else if (type === 'open') { noiseHit(0, 'bandpass', 1800, 2, .035, .4, 4200); tone(2900, .02, .02, .35); tone(4400, .008, .03, .2); }
+  else if (type === 'close') noiseHit(0, 'bandpass', 3000, 2, .03, .35, 1200);
+  else if (type === 'tag') { noiseHit(0, 'highpass', 3200, .7, .05, .03); tone(1250, .025, 0, .07, 'triangle'); }
+  else if (type === 'flip') noiseHit(0, 'bandpass', 420, 1.2, .07, .42, 1700);
+  else if (type === 'swipe') noiseHit(0, 'bandpass', 900, 1.4, .05, .32, 2600);
+  else if (type === 'zin') { noiseHit(0, 'bandpass', 500, 1.2, .04, .5, 2400); tone(1568, .012, .12, .4); }
+  else if (type === 'zout') noiseHit(0, 'bandpass', 2400, 1.2, .035, .45, 500);
+  else if (type === 'tick') tone(2300, .014, 0, .05, 'triangle');
+  else if (type === 'print') { const k = n || 12; for (let i = 0; i < k; i++) noiseHit(i * .045, 'bandpass', 2600 + (i % 3) * 300, 3, .045, .025); tone(140, .02, 0, k * .045, 'square', AU.chain(AU.filt('lowpass', 400), AU.fx)); }
+  else if (type === 'ding') { tone(1319, .04, 0, .5); tone(1976, .035, .1, .8); tone(2637, .015, .1, .6); }
+  else if (type === 'paid') { tone(110, .14, 0, .14); noiseHit(0, 'bandpass', 600, 1, .07, .06); [1047, 1319, 1568, 2093].forEach((f, i) => tone(f, .03, .12 + i * .08, .7)); }
+}
+function audioUI() {
+  const a = $('#audio'), r = $('#musicVol'), on = !AU.muted;
+  a.classList.toggle('muted', AU.muted); a.classList.toggle('playing', on);
+  r.value = Math.round(AU.mvol * 100); r.style.setProperty('--v', AU.mvol * 100 + '%');
+  const b = $('#btnMute'); b.setAttribute('aria-pressed', String(AU.muted)); b.setAttribute('aria-label', AU.muted ? 'Unmute' : 'Mute');
+}
+function setMuted(m) {
+  AU.muted = m; store.set('softriot-sound', m ? 'off' : 'on');
+  if (m) { if (AU.ctx) { AU.master.gain.setTargetAtTime(0, AU.ctx.currentTime, .08); clearTimeout(AU.susT); AU.susT = setTimeout(() => { if (AU.muted) AU.ctx.suspend(); }, 500); } }
+  else if (!AU.ctx) { audioStart(); if (AU.ctx) AU.ctx.onstatechange = audioUI; }
+  else { clearTimeout(AU.susT); AU.ctx.resume(); AU.master.gain.setTargetAtTime(.9, AU.ctx.currentTime, .25); }
+  audioUI();
+}
+function audioBoot() {
+  if (AU.muted) return;
+  if (!AU.ctx) { audioStart(); if (AU.ctx) AU.ctx.onstatechange = audioUI; }
+  if (AU.ctx && AU.ctx.state !== 'running') AU.ctx.resume().catch(() => {});
+  audioUI();
+}
+function bindAudio() {
+  const a = $('#audio'), TOUCH = matchMedia('(hover: none)').matches;
+  const peek = () => { a.classList.add('open'); clearTimeout(a._t); a._t = setTimeout(() => a.classList.remove('open'), 5000); };
+  $('#btnMute').addEventListener('click', () => {
+    // on touch the first tap brings the slider out; the speaker mutes once it's showing
+    if (TOUCH && !a.classList.contains('open')) { peek(); return; }
+    setMuted(!AU.muted); if (TOUCH) peek();
+  });
+  $('#musicVol').addEventListener('input', e => {
+    AU.mvol = e.target.value / 100; store.set('softriot-music', String(AU.mvol));
+    if (AU.muted && AU.mvol > 0) setMuted(false);
+    if (AU.music) AU.music.gain.setTargetAtTime(musicLevel(AU.mvol), AU.ctx.currentTime, .06);
+    if (TOUCH) peek();
+    audioUI();
+  });
+  document.addEventListener('pointerdown', e => { if (!a.contains(e.target)) a.classList.remove('open'); });
+  // try to play straight away; if the browser holds it back, the first touch, click, key or scroll starts it
+  audioBoot();
+  ['pointerdown', 'pointerup', 'click', 'touchend', 'keydown', 'wheel', 'scroll'].forEach(t => addEventListener(t, audioBoot, { capture: true, passive: true }));
+  document.addEventListener('visibilitychange', () => { if (!AU.ctx) return; if (document.hidden) AU.ctx.suspend(); else if (!AU.muted) AU.ctx.resume(); });
+  audioUI();
+}
+
+
+/* ---------- live orders: shared through the artifact's db when it's there, this browser otherwise ---------- */
+const DEV = (() => { let d = store.get('softriot-dev'); if (!d) { d = 'd' + Math.random().toString(36).slice(2, 10); store.set('softriot-dev', d); } return d; })();
+const LIVE = {
+  db: null, dbDocs: new Map(), local: new Map(), mode: 'local', subs: new Set(),
+  list() { const m = new Map(this.local); this.dbDocs.forEach((v, k) => m.set(k, v)); return [...m.values()]; },
+  get(id) { return this.dbDocs.get(id) || this.local.get(id); },
+  on(fn) { this.subs.add(fn); },
+  emit(ch) { this.subs.forEach(fn => fn(ch)); },
+  loadLocal() { try { const a = JSON.parse(store.get('softriot-live') || '[]'); this.local = new Map(a.map(o => [o.id, o])); } catch (e) { this.local = new Map(); } },
+  saveLocal() { store.set('softriot-live', JSON.stringify([...this.local.values()].slice(-80))); },
+  async init() {
+    this.loadLocal();
+    addEventListener('storage', e => { if (e.key === 'softriot-live') { this.loadLocal(); this.emit({ type: 'sync' }); } });
+    let db = null;
+    try { db = window.claude && window.claude.use ? await window.claude.use('db') : null; } catch (e) { db = null; }
+    if (!db) return;
+    this.db = db;
+    db.collection('orders').orderBy('t', 'desc').limit(300).onSnapshot(snap => {
+      const added = [];
+      snap.docChanges().forEach(c => { if (c.type === 'added' && !this.dbDocs.has(c.doc.id)) added.push(c.doc.id); });
+      this.dbDocs = new Map(snap.docs.map(d => [d.id, Object.assign({}, d.data(), { id: d.id, live: true })]));
+      const first = this.mode !== 'db'; this.mode = 'db'; setLiveLabel();
+      this.emit({ type: first ? 'sync' : 'snap', added: first ? [] : added });
+    }, () => { this.db = null; this.mode = 'local'; setLiveLabel(); });
+  },
+  async add(o) {
+    this.local.set(o.id, o); this.saveLocal(); this.emit({ type: 'add', id: o.id, mine: true });
+    if (!this.db) return;
+    try { await this.db.collection('orders').doc(o.id).set(o); this.local.delete(o.id); this.saveLocal(); } catch (e) { /* stays on this device */ }
+  },
+  async advance(id, stage) {
+    const o = this.get(id); if (!o) return;
+    const at = Object.assign({}, o.stageAt || {}); at[stage] = Date.now();
+    const next = Object.assign({}, o, { stage, stageAt: at });
+    if (this.dbDocs.has(id) && this.db) { this.dbDocs.set(id, next); this.emit({ type: 'stage', id }); try { await this.db.collection('orders').doc(id).update({ stage, stageAt: at }); } catch (e) {} }
+    else { this.local.set(id, next); this.saveLocal(); this.emit({ type: 'stage', id }); }
+  }
+};
+function setLiveLabel() { $('#liveTx').textContent = LIVE.mode === 'db' ? 'Live sync' : 'Live on this device'; }
+
+/* in-store sales ring up on the Square side while the panel is open, during studio hours */
+const SIM = [];
+function simStoreSale() {
+  const now = Date.now(), h = new Date(now).getHours();
+  if (h < 11 || h >= 21) return;
+  const R = Math.random, items = [], cnt = R() < .7 ? 1 : 2;
+  for (let j = 0; j < cnt; j++) {
+    const id = wpick(R, P.map(p => [p.id, PW[p.id] * (p.drop === 4 ? 2 : 1)])), sizes = PX[id].sizes.filter(s => UMB.stock(id, s) > 0);
+    if (!sizes.length) continue; const s = wpick(R, sizes.map(z => [z, SW[z]])); items.push({ p: id, s, q: 1 });
+  }
+  if (!items.length) return;
+  const sub = items.reduce((a, x) => a + PX[x.p].price * x.q, 0), tax = r2(sub * .07);
+  SIM.push({ id: 's' + now, no: 'SR-' + (30000 + SIM.length + Math.floor(R() * 900)), t: now, ch: 'store', cust: null, items, sub, ship: 0, tax, total: r2(sub + tax), method: 'store', sim: true });
+  UMB.dirty(); OWN.onLive({ type: 'sim', id: SIM[SIM.length - 1].id });
+}
+
+/* ---------- UMB adapter ----------
+   Every figure on the owner side is read through these calls. Today they are answered by DEMO (seeded history)
+   plus LIVE (orders placed in the app) and SIM (counter sales). A UMB client exposing the same calls replaces them. */
+const UMB = {
+  _all: null, _sold: null,
+  dirty() { this._all = null; this._sold = null; },
+  orders() {
+    if (!this._all) this._all = DEMO.orders.concat(LIVE.list(), SIM).sort((a, b) => a.t - b.t);
+    return this._all;
+  },
+  customer(o) {
+    if (o.live) return { id: 'L:' + (o.email || o.name), name: o.name || 'App customer', city: o.city || 'West Palm Beach', live: true };
+    return o.cust ? DEMO.custs[o.cust] : null;
+  },
+  stock(p, s) {
+    if (!this._sold) { this._sold = {}; LIVE.list().concat(SIM).forEach(o => o.items.forEach(x => { const a = this._sold[x.p] || (this._sold[x.p] = {}); a[x.s] = (a[x.s] || 0) + x.q; })); }
+    return Math.max(0, DEMO.stock[p][s] - ((this._sold[p] || {})[s] || 0));
+  },
+  staff() { return STAFF; },
+  fixed() { return FIXED; }
+};
+const STAFF = [
+  { n: 'Noa Castellano', r: 'Founder', per: 3200 },
+  { n: 'Remy Okafor', r: 'Studio manager', per: 2450 },
+  { n: 'Jules Marsh', r: 'Retail lead', rate: 21, hrs: 66 },
+  { n: 'Dani Ruiz', r: 'Retail associate', rate: 17, hrs: 52 },
+  { n: 'Theo Lindqvist', r: 'Fulfillment', rate: 18, hrs: 58 }
+];
+const FIXED = { rent: 6800, software: 640, utilities: 410, mkt: .08, shipCost: 7.4, pack: 1.1, cash: 61400 };
+
+/* ---------- shell: views ---------- */
+const SH = { view: 'app', mob: false };
+function viewsFor() { return SH.mob || innerWidth < 1200 ? [['app', SH.mob ? 'App' : 'Customer app'], ['owner', SH.mob ? 'Owner · UMB' : 'Owner · UMB']] : [['app', 'Customer app'], ['both', 'Side by side'], ['owner', 'Owner · UMB']]; }
+function buildSeg() {
+  const seg = $('#viewSeg'), opts = viewsFor();
+  seg.innerHTML = '<i></i>' + opts.map(([k, l]) => `<button type="button" data-view="${k}" aria-pressed="${k === SH.view}">${l}</button>`).join('');
+  placeSeg(seg);
+}
+function placeSeg(seg) {
+  const b = seg.querySelector('[aria-pressed="true"]'), i = seg.querySelector('i'); if (!b || !i) return;
+  i.style.width = b.offsetWidth + 'px'; i.style.transform = `translateX(${b.offsetLeft}px)`;
+}
+function setView(v, push) {
+  const ok = viewsFor().map(x => x[0]); if (!ok.includes(v)) v = ok.includes('both') && !SH.mob ? 'both' : 'app';
+  SH.view = v; document.body.dataset.view = v;
+  $('#viewSeg').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === v)));
+  placeSeg($('#viewSeg'));
+  // framed inside the studio site the page has no address of its own, so the view is kept off the URL there
+  if (push && location.hash !== '#' + v) try { history.replaceState(null, '', location.href.split('#')[0] + '#' + v); } catch (e) {}
+  fitPhone(); if (v !== 'app') OWN.show();
+}
+function fitPhone() {
+  if (SH.mob) { $('#phw').style.removeProperty('--ps'); return; }
+  const pane = $('#paneApp'), w = pane.clientWidth - 40, h = pane.clientHeight - 40;
+  const ps = Math.max(.5, Math.min(1, h / 868, w / 414));
+  $('#phw').style.setProperty('--ps', ps.toFixed(4));
+}
+function layout() {
+  const mob = innerWidth <= 600; if (mob !== SH.mob) { SH.mob = mob; document.body.classList.toggle('mob', mob); }
+  buildSeg(); setView(SH.view); OWN.resize();
+}
+
+/* ---------- customer app ---------- */
+const A = { tab: 'shop', over: null, pid: null, side: 'f', size: null, qty: 1, filter: 'all', ful: 'ship', track: null, last: null, ck: false, seen: {} };
+A.bag = (() => { try { return JSON.parse(store.get('softriot-app-bag') || '[]').filter(x => PX[x.p]); } catch (e) { return []; } })();
+const saveBag = () => store.set('softriot-app-bag', JSON.stringify(A.bag));
+A.col = (() => { try { return JSON.parse(store.get('softriot-app-col') || '{}') || {}; } catch (e) { return {}; } })();
+const curC = id => { const c = A.col[id] | 0; return COLS[id] && c < COLS[id].length ? c : 0; };
+const isDark = hex => { const n = parseInt(hex.slice(1), 16); return ((n >> 16) * .299 + (n >> 8 & 255) * .587 + (n & 255) * .114) < 140; };
+const bagCount = () => A.bag.reduce((s, x) => s + x.q, 0);
+const bagSub = () => A.bag.reduce((s, x) => s + PX[x.p].price * x.q, 0);
+const ME = { name: 'Maya Reyes', email: 'maya.reyes@inbox.co', addr: '88 Flagler Lane', city: 'West Palm Beach, FL 33401' };
+
+function stockNote(p) {
+  const left = p.sizes.map(s => [s, UMB.stock(p.id, s)]).filter(([, n]) => n > 0 && n <= 4).sort((a, b) => a[1] - b[1]);
+  if (left.length) return `<span class="t-st">${left[0][1]} left in ${left[0][0]}</span>`;
+  return `<span class="t-st ok">In stock</span>`;
+}
+function renderShop() {
+  const F = [['all', 'All'], ['drop', 'Drop 04'], ['Tees', 'Tees'], ['Shirts', 'Shirts'], ['Outerwear', 'Outerwear'], ['Jerseys', 'Jerseys'], ['Tanks', 'Tanks']];
+  const list = P.filter(p => A.filter === 'all' || (A.filter === 'drop' ? p.drop === 4 : p.cat === A.filter));
+  const word = 'Drop 04 · Ember · Hand-painted · Made in Portugal · Free shipping over $150 · Pickup at the studio · ';
+  $('#vShop').innerHTML = `<div class="vin">
+    <div class="hero">
+      <div class="h-tx">
+        <span class="h-eye"><i></i>Drop 04 · Live now</span>
+        <h2>Ember</h2>
+        <p>Hand-painted poplin and melton. A short run.</p>
+        <button type="button" class="h-cta" data-filter="drop">Shop the drop<span>${ARW}</span></button>
+      </div>
+      <div class="h-img" aria-hidden="true"><span class="hg b">${pic('varsity', 'F')}</span><span class="hg a">${pic('ember', 'F')}</span></div>
+      <div class="h-cd">Drop 05 <b id="cd">--</b></div>
+    </div>
+    <div class="chips" role="tablist">${F.map(([k, l]) => `<button type="button" data-filter="${k}" aria-pressed="${A.filter === k}">${l}</button>`).join('')}</div>
+    <div class="sh-h"><h3>${A.filter === 'all' ? 'The rail' : A.filter === 'drop' ? 'Drop 04' : esc(A.filter)}</h3><span class="lbl">${list.length} piece${list.length === 1 ? '' : 's'}</span></div>
+    <div class="grid">${list.map((p, k) => `<button type="button" class="tile" data-p="${p.id}" style="--k:${k}">
+      <span class="t-img">${pic(p.id, 'f', '', curC(p.id))}${p.drop === 4 ? '<span class="t-new">New</span>' : ''}<span class="t-px">${money(p.price)}</span></span>
+      <span class="t-nm">${esc(p.name)}</span><span class="t-mt">${esc(colName(p.id, curC(p.id)))} · ${esc(p.cat.replace(/s$/, ''))}</span>${stockNote(p)}</button>`).join('')}</div>
+    <div class="studio"><b>The studio</b><span>Pick up on Clematis St, ready in about 30 minutes. Open 11 to 9.</span><em><span class="dot pulse"></span>Open</em></div>
+    <div class="mq" aria-hidden="true"><div><span>${word.repeat(4)}</span><span>${word.repeat(4)}</span></div></div>
+  </div>`;
+  tickCountdown();
+}
+function tickCountdown() {
+  const el = $('#cd'); if (!el) return;
+  let s = Math.max(0, Math.floor((NEXT_DROP - Date.now()) / 1000)); const d = Math.floor(s / 86400); s %= 86400;
+  el.textContent = d + 'D ' + [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(v => String(v).padStart(2, '0')).join(':');
+}
+
+function renderProduct(drop) {
+  const p = PX[A.pid]; if (!p) return;
+  const c = curC(p.id), cols = COLS[p.id] || [], lens = [24, 46, 34];
+  const st = Object.fromEntries(p.sizes.map(s => [s, UMB.stock(p.id, s)]));
+  if (A.size && !st[A.size]) A.size = null;
+  const left = A.size ? st[A.size] : 0;
+  $('#vProduct').innerHTML = `<div class="vin">
+    <div class="pd-stage${A.side === 'b' ? ' back' : ''}${drop && A.enter ? ' in-' + A.enter : ''}" id="pdStage">
+      <div class="rail"></div>
+      <div class="pd-fig" id="pdFig"><div class="ly" id="pdBase">${pic(p.id, 'F', 'f', c)}${pic(p.id, 'B', 'b', c)}</div></div>
+      ${cols.length > 1 ? `<div class="tags${drop ? '' : ' show still'}" id="pdTags" style="--n:${cols.length}">${cols.map((x, k) => `<button type="button" class="tag" data-col="${k}" aria-label="${esc(x.n)}" aria-pressed="${k === c}" style="--k:${k};--len:${lens[k % 3]}px;--h:${Math.max(66, Math.round(x.n.length * 5.92 + 28))}px;--c:${x.hex};--t:${isDark(x.hex) ? 'rgba(255,255,255,.75)' : 'rgba(16,17,14,.6)'}"><span class="str"></span><span class="tg"><span>${esc(x.n)}</span></span></button>`).join('')}</div>` : ''}
+      <button type="button" class="pd-nav prev" data-step="-1" aria-label="Previous piece"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button type="button" class="pd-nav next" data-step="1" aria-label="Next piece"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <span class="pd-px">${money(p.price)}</span>
+      <div class="seg pd-seg" id="pdSeg"><i></i><button type="button" data-side="f" aria-pressed="${A.side === 'f'}">Front</button><button type="button" data-side="b" aria-pressed="${A.side === 'b'}">Back</button></div>
+    </div>
+    <div class="pd-body">
+      <span class="pd-eye" style="--k:0">Drop 0${p.drop} · ${esc(p.cat.replace(/s$/, ''))} · <span id="pdCol">${esc(colName(p.id, c))}</span></span>
+      <h1 class="pd-nm" style="--k:1">${esc(p.name)}</h1>
+      <p class="pd-story" style="--k:2">${esc(p.story)}</p>
+      <div style="--k:3"><div class="opt-h"><b>Size${A.size ? ' · ' + A.size : ''}</b>${A.size && left <= 4 ? `<em>Only ${left} left</em>` : ''}</div>
+        <div class="sizes" id="pdSizes">${p.sizes.map(s => `<button type="button" data-size="${s}" aria-pressed="${A.size === s}" ${st[s] ? '' : 'disabled aria-label="' + s + ' sold out"'}>${s}${st[s] && st[s] <= 4 ? '<i></i>' : ''}</button>`).join('')}</div></div>
+      <div class="buy" style="--k:4">
+        <div class="stp"><button type="button" data-q="-1" aria-label="One fewer">−</button><span id="pdQty">${A.qty}</span><button type="button" data-q="1" aria-label="One more">+</button></div>
+        <button type="button" class="add" id="pdAdd"><span id="pdAddTx">${A.size ? 'Add to bag' : 'Pick a size'}</span><em>${money(p.price * A.qty)}</em></button>
+      </div>
+      <div class="note" style="--k:5"><svg viewBox="0 0 16 16"><path d="M2 5.5h12v8H2zM2 5.5 4 2.5h8l2 3M6.5 8.5h3"/></svg>Free shipping over $150, or pick up at the studio today.</div>
+      <dl class="specs" style="--k:6">${p.specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+    </div></div>`;
+  placeSeg($('#pdSeg'));
+  if (drop && cols.length > 1) requestAnimationFrame(() => { const g = $('#pdTags'); if (g) { g.getBoundingClientRect(); g.classList.add('show'); } });
+}
+let WIPE = null;
+function setColor(k) {
+  const p = PX[A.pid], cols = COLS[p.id] || []; if (k === curC(p.id) || k >= cols.length) return;
+  sfx('tag');
+  const fig = $('#pdFig'), base = $('#pdBase'); if (!fig || !base) return;
+  if (WIPE) { WIPE.a.cancel(); base.innerHTML = WIPE.el.innerHTML; WIPE.el.remove(); WIPE = null; }
+  A.col[p.id] = k; store.set('softriot-app-col', JSON.stringify(A.col));
+  $('#pdTags').querySelectorAll('.tag').forEach(t => t.setAttribute('aria-pressed', String(+t.dataset.col === k)));
+  $('#pdCol').textContent = colName(p.id, k);
+  const html = pic(p.id, 'F', 'f', k) + pic(p.id, 'B', 'b', k);
+  if (RM || !fig.animate) { base.innerHTML = html; return; }
+  const el = document.createElement('div'); el.className = 'ly'; el.innerHTML = html; fig.appendChild(el);
+  const go = () => { if (!el.isConnected) return; const a = el.animate([{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)' }], { duration: 1100, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' }); WIPE = { a, el }; a.finished.then(() => { if (!WIPE || WIPE.a !== a) return; base.innerHTML = el.innerHTML; el.remove(); WIPE = null; }).catch(() => {}); };
+  el.style.clipPath = 'inset(0 0 100% 0)';
+  const im = el.querySelector(A.side === 'b' ? 'img.b' : 'img.f'); if (im && !im.complete) { im.onload = im.onerror = go; } else go();
+}
+
+function renderBag() {
+  const n = bagCount();
+  if (!n) {
+    $('#vBag').innerHTML = `<div class="vin"><div class="v-h"><h2>Bag</h2></div><div class="empty">
+      <div class="eh"><svg viewBox="0 0 60 50" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M30 14c0-4 2.5-6 5-6s4 2 4 4-2 3.5-4 4.5L30 19 4 36c-2 1.4-1 4 1.4 4h49.2c2.4 0 3.4-2.6 1.4-4L30 19"/></svg></div>
+      <b>Nothing on the hanger</b><p>Pick a piece off the rail and it lands here.</p>
+      <button type="button" class="go" data-tab="shop" style="padding:0 26px">Browse the rail ${ARW}</button></div></div>`;
+    return;
+  }
+  const sub = bagSub(), ship = A.ful === 'ship' && sub < 150 ? 8 : 0, tax = r2(sub * .07), tot = r2(sub + ship + tax);
+  $('#vBag').innerHTML = `<div class="vin"><div class="v-h"><h2>Bag</h2><span>${n} item${n === 1 ? '' : 's'}</span></div>
+    <div class="rcpt">
+      <div class="r-top"><span>Soft Riot</span><span>${dateS(Date.now())} · ${clock(Date.now())}</span></div>
+      <div class="r-rule"></div>
+      ${A.bag.map((x, i) => { const p = PX[x.p]; return `<div class="bl"><span class="bl-th">${pic(p.id, 'f', '', x.c | 0)}</span>
+        <div class="bl-tx"><b>${esc(p.name)}</b><span>${esc(colName(p.id, x.c | 0))} · ${x.s}</span><div class="stp"><button type="button" data-bq="${i}:-1" aria-label="One fewer">−</button><span>${x.q}</span><button type="button" data-bq="${i}:1" aria-label="One more">+</button></div></div>
+        <span class="bl-pr">${money(p.price * x.q)}</span></div>`; }).join('')}
+      <div class="r-rule"></div>
+      <div class="ful">
+        <button type="button" data-ful="ship" aria-pressed="${A.ful === 'ship'}"><b>Ship it</b><span>${sub >= 150 ? 'Free, 2 to 4 days' : '$8, free over $150'}</span></button>
+        <button type="button" data-ful="pickup" aria-pressed="${A.ful === 'pickup'}"><b>Pick up</b><span>Free, ready in about 30 min</span></button>
+      </div>
+      <div class="r-row"><span>Subtotal</span><span></span><b>${money(sub, 2)}</b></div>
+      <div class="r-row"><span>${A.ful === 'ship' ? 'Shipping' : 'Pickup'}</span><span></span><b>${ship ? money(ship, 2) : 'Free'}</b></div>
+      <div class="r-row"><span>Sales tax 7%</span><span></span><b>${money(tax, 2)}</b></div>
+      <div class="r-rule"></div>
+      <div class="r-tot"><span>Total</span><b>${money(tot, 2)}</b></div>
+      <button type="button" class="go" id="toCk">Checkout ${ARW}</button>
+    </div></div>`;
+}
+
+function myOrders() { return LIVE.list().filter(o => o.dev === DEV).sort((a, b) => b.t - a.t); }
+function renderOrders() {
+  const list = myOrders();
+  $('#vOrders').innerHTML = `<div class="vin"><div class="v-h"><h2>Orders</h2>${list.length ? `<span>${list.length} placed</span>` : ''}</div>${list.length ? `<div class="olist">${list.map(o => {
+    const st = stageOf(o), fin = st === STG[o.method].length - 1;
+    return `<button type="button" class="oc" data-track="${o.id}"><span class="oc-th">${o.items.slice(0, 3).map(x => `<span>${pic(x.p, 'f', '', x.c | 0)}</span>`).join('')}</span>
+      <span class="oc-tx"><b>${o.no}</b><span>${when(o.t)} · ${money(o.total, 2)}</span></span><span class="pill ${fin ? '' : 'lime'}">${STG[o.method][st]}</span></button>`; }).join('')}</div>`
+    : `<div class="empty"><div class="eh"><svg viewBox="0 0 60 50" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M30 14c0-4 2.5-6 5-6s4 2 4 4-2 3.5-4 4.5L30 19 4 36c-2 1.4-1 4 1.4 4h49.2c2.4 0 3.4-2.6 1.4-4L30 19"/></svg></div><b>No orders yet</b><p>Your orders and their tracking show up here once you check out.</p><button type="button" class="go" data-tab="shop" style="padding:0 26px">Start shopping ${ARW}</button></div>`}</div>`;
+}
+
+function renderTrack(fresh) {
+  const o = LIVE.get(A.track); if (!o) return;
+  const S = STG[o.method], st = stageOf(o), fin = st === S.length - 1;
+  const code = o.no.slice(-3).split('').map(c => 'RKTVPMZ'[c % 7] || c).join('') ;
+  const eta = o.method === 'ship' ? (fin ? 'Delivered ' + clock(stageTime(o, st)) + '.' : 'Arriving in 2 to 4 days to ' + esc(o.addr || ME.addr) + '.') : (st >= 2 ? (fin ? 'Collected at ' + clock(stageTime(o, st)) + '.' : 'Ready now at the studio on Clematis St.') : 'Ready at the studio in about 30 minutes.');
+  A.seen[o.id] = st;
+  $('#vTrack').innerHTML = `<div class="vin">
+    <div class="tk-hd">
+      <div class="tk-no"><span>${o.no}</span><span>${when(o.t)}</span></div>
+      <h2 class="tk-st">${S[st]}</h2>
+      <div class="tk-eta">${eta}</div>
+      <div class="tk-bar" style="grid-template-columns:repeat(${S.length - 1},1fr)">${S.slice(1).map((_, i) => `<i class="${i + 1 <= st ? 'done' : i + 1 === st + 1 ? 'now' : ''}"></i>`).join('')}</div>
+    </div>
+    ${o.method === 'pickup' && !fin ? `<div class="code" style="margin-top:18px"><b>${code}</b><span>Pickup code<br>Show it at the counter</span></div>` : ''}
+    <ol class="steps" style="margin-top:22px">${S.map((s, i) => `<li class="${i < st || fin ? 'done' : i === st ? 'now' : ''}"><span class="k">${CHK}</span><div><b>${s}</b><span>${STG_NOTE[o.method][i]}</span></div><time>${i <= st ? clock(stageTime(o, i)) : ''}</time></li>`).join('')}</ol>
+    <div class="rcpt${fresh ? ' print' : ''}" style="margin-top:6px">
+      <div class="r-top"><span>Soft Riot · Receipt</span><span>${o.no}</span></div>
+      ${fresh ? '<span class="stamp">Paid</span>' : ''}
+      <div class="r-rule"></div>
+      ${o.items.map(x => { const p = PX[x.p]; return `<div class="r-row"><span>${x.q} × ${esc(p.name)}${x.c ? ' · ' + esc(colName(p.id, x.c)) : ''} · ${x.s}</span><span></span><b>${money(p.price * x.q, 2)}</b></div>`; }).join('')}
+      <div class="r-row"><span>${o.method === 'ship' ? 'Shipping' : 'Pickup'}</span><span></span><b>${o.ship ? money(o.ship, 2) : 'Free'}</b></div>
+      <div class="r-row"><span>Sales tax</span><span></span><b>${money(o.tax, 2)}</b></div>
+      <div class="r-rule"></div>
+      <div class="r-tot"><span>Paid</span><b>${money(o.total, 2)}</b></div>
+    </div>
+    <button type="button" class="go ghost" data-tab="shop" style="margin-top:18px;width:100%">Keep shopping</button>
+  </div>`;
+  A.trackSig = o.id + ':' + st;
+}
+
+function setBadge(bump) {
+  const n = bagCount(), b = $('#aBag');
+  $('#aBagN').textContent = n; b.classList.toggle('has', n > 0);
+  const t = $('#tabBagN'); t.hidden = !n; t.textContent = n;
+  if (bump) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
+}
+function showV(id) { document.querySelectorAll('#views .v').forEach(v => v.classList.toggle('on', v.id === id)); }
+function goTab(t) {
+  A.tab = t; A.over = null; $('#scr').classList.remove('over-on');
+  document.querySelectorAll('#views .v.over').forEach(v => v.classList.remove('on'));
+  document.querySelectorAll('#tabs button').forEach(b => b.setAttribute('aria-current', String(b.dataset.t === t)));
+  if (t === 'bag') renderBag(); if (t === 'orders') renderOrders();
+  showV({ shop: 'vShop', bag: 'vBag', orders: 'vOrders' }[t]);
+  const v = $({ shop: '#vShop', bag: '#vBag', orders: '#vOrders' }[t]); v.scrollTop = 0;
+  syncHist();
+}
+// header history: Back leaves the open piece, Forward brings back the last piece viewed
+function syncHist() {
+  $('#scr').classList.toggle('hist-on', !!(A.over || A.last));
+  $('#aBack').disabled = !A.over; $('#aFwd').disabled = !!A.over || !A.last;
+}
+function openOver(kind, fresh) {
+  A.over = kind; $('#scr').classList.add('over-on');
+  const el = kind === 'product' ? $('#vProduct') : $('#vTrack');
+  if (kind === 'product') renderProduct(true); else renderTrack(fresh);
+  el.scrollTop = 0;
+  document.querySelectorAll('#views .v.over').forEach(v => v.classList.toggle('on', v === el));
+  if (kind === 'product') A.last = A.pid;
+  syncHist();
+}
+function stepPiece(d) {
+  const i = P.findIndex(x => x.id === A.pid), n = P[(i + d + P.length) % P.length];
+  A.pid = n.id; A.size = null; A.qty = 1; A.side = 'f'; A.enter = d > 0 ? 'r' : 'l';
+  if (WIPE) { WIPE.a.cancel(); WIPE = null; }
+  renderProduct(true); A.enter = null; $('#vProduct').scrollTop = 0;
+  A.last = A.pid; sfx('swipe');
+}
+function goHome() {
+  if (A.ck) closeCheckout();
+  if (A.tab === 'shop' && !A.over) { $('#vShop').scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }); return; }
+  goTab('shop');
+}
+function closeOver() {
+  A.over = null; $('#scr').classList.remove('over-on');
+  document.querySelectorAll('#views .v.over').forEach(v => v.classList.remove('on'));
+  if (A.tab === 'orders') renderOrders();
+  syncHist();
+}
+function aToast(tx) {
+  const t = $('#aToast'); $('#aToastTx').textContent = tx; t.classList.add('on');
+  clearTimeout(aToast.t); aToast.t = setTimeout(() => t.classList.remove('on'), 3600);
+}
+function flyToBag(fromImg) {
+  const scr = $('#scr'), r0 = scr.getBoundingClientRect(), a = fromImg.getBoundingClientRect(), b = $('#aBag').getBoundingClientRect();
+  const sc = r0.width / scr.offsetWidth;
+  const f = document.createElement('div'); f.className = 'flyer'; f.innerHTML = `<img src="${fromImg.src}" alt="">`;
+  const x0 = (a.left - r0.left) / sc + a.width / sc / 2 - 30, y0 = (a.top - r0.top) / sc + 40, x1 = (b.left - r0.left) / sc + b.width / sc / 2 - 30, y1 = (b.top - r0.top) / sc - 20;
+  f.style.left = x0 + 'px'; f.style.top = y0 + 'px'; scr.appendChild(f);
+  if (RM || !f.animate) { f.remove(); setBadge(true); return; }
+  f.animate([{ transform: 'translate(0,0) scale(1.6) rotate(0)', opacity: 1 }, { transform: `translate(${(x1 - x0) * .5}px,${(y1 - y0) * .5 - 90}px) scale(1) rotate(-12deg)`, opacity: 1, offset: .55 }, { transform: `translate(${x1 - x0}px,${y1 - y0}px) scale(.25) rotate(-20deg)`, opacity: .2 }], { duration: 1100, easing: 'cubic-bezier(.45,0,.2,1)' }).onfinish = () => { f.remove(); setBadge(true); };
+}
+function addToBag() {
+  const p = PX[A.pid]; if (!A.size) { const z = $('#pdSizes'); z.animate && z.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 380 }); return; }
+  const cc = curC(p.id), have = A.bag.filter(x => x.p === p.id && x.s === A.size).reduce((s, x) => s + x.q, 0), cap = UMB.stock(p.id, A.size) - have;
+  const q = Math.min(A.qty, cap); if (q <= 0) { aToast('That size is all in your bag already.'); return; }
+  const ex = A.bag.find(x => x.p === p.id && x.s === A.size && (x.c | 0) === cc); if (ex) ex.q += q; else A.bag.push({ p: p.id, s: A.size, q, c: cc });
+  saveBag(); sfx('print', 6); setTimeout(() => sfx('ding'), RM ? 140 : 320);
+  const btn = $('#pdAdd'); btn.classList.add('done'); $('#pdAddTx').textContent = 'Added';
+  setTimeout(() => { if ($('#pdAdd')) { btn.classList.remove('done'); $('#pdAddTx').textContent = 'Add to bag'; } }, 1600);
+  flyToBag(document.querySelector(A.side === 'b' ? '#pdStage img.b' : '#pdStage img.f'));
+}
+
+/* checkout */
+function openCheckout() {
+  const sub = bagSub(), ship = A.ful === 'ship' && sub < 150 ? 8 : 0, tax = r2(sub * .07), tot = r2(sub + ship + tax);
+  $('#ckSheet').innerHTML = `<div class="sh-grab"></div><div class="sh-in">
+    <div class="sh-t"><h2>Checkout</h2><button type="button" class="x" id="ckX" aria-label="Close">${XIC}</button></div>
+    <div class="ck-sum"><div class="ck-items">${A.bag.slice(0, 4).map(x => `<span>${pic(x.p, 'f', '', x.c | 0)}</span>`).join('')}${A.bag.length > 4 ? `<em>+${A.bag.length - 4}</em>` : ''}</div>
+      <div class="r-row"><span>${bagCount()} item${bagCount() === 1 ? '' : 's'} · ${A.ful === 'ship' ? 'Shipping' : 'Pickup'}</span><span></span><b>${money(tot, 2)}</b></div></div>
+    <div class="fld2"><div class="fld"><label for="ckName">Name</label><input id="ckName" value="${ME.name}" autocomplete="off"></div><div class="fld"><label for="ckMail">Email</label><input id="ckMail" value="${ME.email}" autocomplete="off"></div></div>
+    ${A.ful === 'ship' ? `<div class="fld"><label for="ckAddr">Ship to</label><input id="ckAddr" value="${ME.addr}, ${ME.city}" autocomplete="off"></div>` : `<div class="note"><svg viewBox="0 0 16 16"><path d="M8 14.5s5-4.2 5-8a5 5 0 0 0-10 0c0 3.8 5 8 5 8z"/><circle cx="8" cy="6.5" r="1.8"/></svg>Pick up at the studio on Clematis St. We'll text when it's bagged.</div>`}
+    <div class="wal"><span class="card"></span><div><b>Riot Pay</b><span>Wallet on this phone</span></div></div>
+    <div class="slide" id="slide" style="--x:0px"><span class="fill"></span><span class="lab" id="slideLab">Slide to pay ${money(tot, 2)}</span><button type="button" class="knob" id="knob" aria-label="Pay ${money(tot, 2)}">${ARW}</button></div>
+  </div>`;
+  A.ck = true; $('#scr').classList.add('ck-on'); bindSlide(tot); sfx('open');
+}
+function closeCheckout() { if (A.ck) sfx('close'); A.ck = false; $('#scr').classList.remove('ck-on'); }
+function bindSlide(tot) {
+  const sl = $('#slide'), kn = $('#knob'); let x0 = 0, dx = 0, drag = false, done = false;
+  const max = () => sl.clientWidth - 62;
+  const sc = () => { const r = sl.getBoundingClientRect(); return r.width / sl.offsetWidth || 1; };
+  const set = v => sl.style.setProperty('--x', v + 'px');
+  kn.addEventListener('pointerdown', e => { if (done) return; drag = true; x0 = e.clientX; sl.classList.remove('snap'); kn.setPointerCapture(e.pointerId); });
+  kn.addEventListener('pointermove', e => { if (!drag) return; dx = Math.max(0, Math.min(max(), (e.clientX - x0) / sc())); set(dx); });
+  const up = () => { if (!drag) return; drag = false; sl.classList.add('snap'); if (dx >= max() * .86) finish(); else { dx = 0; set(0); } };
+  kn.addEventListener('pointerup', up); kn.addEventListener('pointercancel', up);
+  kn.addEventListener('click', e => { if (e.detail === 0 && !done) { sl.classList.add('snap'); finish(); } });
+  function finish() { done = true; sfx('print', 9); setTimeout(() => sfx('paid'), RM ? 140 : 520); set(max()); sl.classList.add('paid'); $('#slideLab').textContent = 'Paid ' + money(tot, 2); setTimeout(placeOrder, 650); }
+}
+function placeOrder() {
+  const sub = bagSub(), ship = A.ful === 'ship' && sub < 150 ? 8 : 0, tax = r2(sub * .07), now = Date.now();
+  const name = ($('#ckName') && $('#ckName').value.trim()) || ME.name, email = ($('#ckMail') && $('#ckMail').value.trim()) || ME.email;
+  const o = { id: 'a' + now.toString(36) + Math.random().toString(36).slice(2, 6), no: 'SR-' + (20000 + Math.floor(now / 1000) % 80000), t: now, ch: 'app',
+    name, email, city: 'West Palm Beach', addr: A.ful === 'ship' ? (($('#ckAddr') && $('#ckAddr').value.split(',')[0]) || ME.addr) : '',
+    items: A.bag.map(x => ({ p: x.p, s: x.s, q: x.q, c: x.c | 0 })), sub, ship, tax, total: r2(sub + ship + tax), method: A.ful, dev: DEV, live: true, stage: 0, stageAt: {} };
+  A.bag = []; saveBag(); setBadge(); closeCheckout();
+  A.track = o.id; A.tab = 'orders';
+  document.querySelectorAll('#tabs button').forEach(b => b.setAttribute('aria-current', String(b.dataset.t === 'orders')));
+  renderOrders(); showV('vOrders');
+  LIVE.add(o);
+  setTimeout(() => openOver('track', true), 60);
+}
+
+function bindApp() {
+  $('#gLogo').innerHTML = LOGO('G'); $('#aLogo').innerHTML = LOGO('A');
+  $('#tabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) { sfx('tag'); goTab(b.dataset.t); } });
+  $('#aBag').addEventListener('click', () => { sfx('tag'); goTab('bag'); });
+  $('#aBack').addEventListener('click', () => { if (!A.over) return; sfx('close'); closeOver(); });
+  $('#aFwd').addEventListener('click', () => { if (A.over || !A.last) return; if (A.ck) closeCheckout(); A.pid = A.last; sfx('open'); openOver('product'); });
+  $('#aLogo').addEventListener('click', () => { sfx('tick'); goHome(); });
+  bindAudio();
+  // a soft tick as the pointer finds a piece, a colour or a button
+  let hov = null;
+  $('#views').addEventListener('pointerover', e => {
+    if (e.pointerType === 'touch') return;
+    const b = e.target.closest('[data-p],.tag,.pd-nav');
+    if (b && b !== hov) sfx('hover'); hov = b;
+  });
+  $('#ckScrim').addEventListener('click', closeCheckout);
+  $('#ckSheet').addEventListener('click', e => { if (e.target.closest('#ckX')) closeCheckout(); });
+  $('#views').addEventListener('click', e => {
+    const t = e.target;
+    let b;
+    if ((b = t.closest('[data-filter]'))) { sfx('tick'); A.filter = b.dataset.filter; renderShop(); if (b.classList.contains('h-cta')) { const g = $('#vShop .chips'); g && g.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); } return; }
+    if ((b = t.closest('[data-p]'))) { if (A.pid !== b.dataset.p) { A.size = null; A.qty = 1; A.side = 'f'; } A.pid = b.dataset.p; sfx('open'); openOver('product'); return; }
+    if ((b = t.closest('[data-step]'))) { stepPiece(+b.dataset.step); return; }
+    if ((b = t.closest('[data-col]'))) { setColor(+b.dataset.col); return; }
+    if ((b = t.closest('[data-side]'))) { if (b.dataset.side !== A.side) sfx('flip'); A.side = b.dataset.side; $('#pdStage').classList.toggle('back', A.side === 'b'); $('#pdSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.side === A.side))); placeSeg($('#pdSeg')); return; }
+    if ((b = t.closest('[data-size]'))) { sfx('tick'); A.size = b.dataset.size; A.qty = Math.min(A.qty, UMB.stock(A.pid, A.size)) || 1; const y = $('#vProduct').scrollTop; renderProduct(); $('#vProduct').scrollTop = y; return; }
+    if ((b = t.closest('[data-q]'))) { sfx('tick'); const p = PX[A.pid], cap = A.size ? UMB.stock(p.id, A.size) : 9; A.qty = Math.max(1, Math.min(cap, A.qty + Number(b.dataset.q))); $('#pdQty').textContent = A.qty; $('#pdAdd em').textContent = money(p.price * A.qty); return; }
+    if (t.closest('#pdAdd')) { addToBag(); return; }
+    if ((b = t.closest('[data-bq]'))) { sfx('tick'); const [i, d] = b.dataset.bq.split(':').map(Number), x = A.bag[i]; if (!x) return; const cap = UMB.stock(x.p, x.s); x.q = Math.min(cap, x.q + d); if (x.q <= 0) A.bag.splice(i, 1); saveBag(); setBadge(); renderBag(); return; }
+    if ((b = t.closest('[data-ful]'))) { sfx('tick'); A.ful = b.dataset.ful; renderBag(); return; }
+    if (t.closest('#toCk')) { openCheckout(); return; }
+    if ((b = t.closest('[data-track]'))) { A.track = b.dataset.track; sfx('open'); openOver('track'); return; }
+    if ((b = t.closest('[data-tab]'))) { goTab(b.dataset.tab); return; }
+  });
+}
+function appTick() {
+  tickCountdown();
+  const d = new Date(), h = d.getHours() % 12 || 12; $('#sbTime').textContent = h + ':' + String(d.getMinutes()).padStart(2, '0');
+  if (A.over === 'track') { const o = LIVE.get(A.track); if (o && A.trackSig !== o.id + ':' + stageOf(o)) { const y = $('#vTrack').scrollTop; renderTrack(false); $('#vTrack').scrollTop = y; } }
+  myOrders().forEach(o => { const st = stageOf(o); if (A.seen[o.id] === undefined) { A.seen[o.id] = st; return; } if (st !== A.seen[o.id]) { A.seen[o.id] = st; if (!(A.over === 'track' && A.track === o.id)) aToast(o.no + ' · ' + STG[o.method][st]); if (A.tab === 'orders' && !A.over) renderOrders(); } });
+}
+
+/* ---------- owner side (UMB · Soft Riot) ---------- */
+const NAV = [
+  ['today', 'Today', '<path d="M3 10.5 10 4l7 6.5M5 9v7.5h10V9"/>'],
+  ['orders', 'Orders', '<path d="M5 3.5h10v13l-1.7-1.1-1.6 1.1-1.7-1.1-1.7 1.1-1.6-1.1L5 16.5z"/><path d="M7.5 7.5h5M7.5 10.5h5"/>'],
+  ['products', 'Products', '<path d="M10 3.5a1.6 1.6 0 1 1 1.6 1.6c-.7 0-1.6.4-1.6 1.2v1L3 15.2a.9.9 0 0 0 .6 1.5h12.8a.9.9 0 0 0 .6-1.5L10 7.3"/>'],
+  ['inventory', 'Inventory', '<path d="M3.5 6.5 10 3l6.5 3.5v7L10 17l-6.5-3.5zM3.5 6.5 10 10l6.5-3.5M10 10v7"/>'],
+  ['customers', 'Customers', '<circle cx="8" cy="7" r="3"/><path d="M2.5 16.5c.6-3 2.8-4.5 5.5-4.5s4.9 1.5 5.5 4.5M13.5 4.2a3 3 0 0 1 0 5.6M15.5 12.4c1.2.7 2 2 2.3 4.1"/>'],
+  ['drops', 'Drops', '<path d="M10 2.5v4M10 13.5v4M2.5 10h4M13.5 10h4M4.7 4.7l2.8 2.8M12.5 12.5l2.8 2.8M4.7 15.3l2.8-2.8M12.5 7.5l2.8-2.8"/>'],
+  ['books', 'Books & payroll', '<path d="M4 3.5h9.5a2 2 0 0 1 2 2v11H6a2 2 0 0 1-2-2z"/><path d="M4 14.5a2 2 0 0 1 2-2h9.5M7.5 7h5"/>']
+];
+const TITLE = { today: 'Today', orders: 'Orders', products: 'Products', inventory: 'Inventory', customers: 'Customers', drops: 'Drops', books: 'Books & payroll' };
+const OWN = { sec: 'today', range: 'today', month: 'this', of: 'all', dw: null, shown: false, fresh: new Set(), syncAt: Date.now(), ro: null, w: 0 };
+
+const CH_L = { app: 'App', web: 'Web store', store: 'In-store' };
+const CH_C = { app: 'var(--ink)', web: 'var(--ink-3)', store: 'var(--lime)' };
+const cogs = o => o.items.reduce((s, x) => s + PX[x.p].cost * x.q, 0);
+const units = o => o.items.reduce((s, x) => s + x.q, 0);
+const needsAction = (o, now) => o.method !== 'store' && stageOf(o, now) < (o.method === 'ship' ? 2 : 2);
+
+function ranges() {
+  const now = Date.now(), t0 = d0(now);
+  if (OWN.range === 'today') return { a: t0, b: now, pa: addDays(t0, -7), pb: now - 7 * DAY, cmp: 'vs last ' + WD[new Date(now).getDay()], days: 1 };
+  const n = OWN.range === '7d' ? 7 : 30, a = addDays(t0, -(n - 1));
+  return { a, b: now, pa: addDays(a, -n), pb: now - n * DAY, cmp: 'vs prior ' + n + ' days', days: n };
+}
+function within(a, b) { const all = UMB.orders(); const out = []; for (let i = all.length - 1; i >= 0; i--) { const o = all[i]; if (o.t < a) break; if (o.t <= b) out.push(o); } return out; }
+const firstSeen = (() => { let cache = null, ver = null; return () => { const all = UMB.orders(); if (ver === all) return cache; ver = all; cache = new Map(); all.forEach(o => { const c = UMB.customer(o); if (c && !cache.has(c.id)) cache.set(c.id, o.t); }); return cache; }; })();
+function metrics(list) {
+  const fs = firstSeen(); let rev = 0, c = 0, u = 0, wc = 0, rep = 0;
+  list.forEach(o => { rev += o.sub; c += cogs(o); u += units(o); const cu = UMB.customer(o); if (cu) { wc++; if (fs.get(cu.id) < o.t) rep++; } });
+  return { rev, orders: list.length, units: u, aov: list.length ? rev / list.length : 0, margin: rev ? (rev - c) / rev : 0, repeat: wc ? rep / wc : 0, cogs: c };
+}
+function daily(n, fn) { const t0 = d0(Date.now()), out = []; for (let i = n - 1; i >= 0; i--) { const a = addDays(t0, -i), b = addDays(t0, -i + 1) - 1; out.push(fn(within(a, b), a)); } return out; }
+const delta = (c, p, inv) => { if (!p) return '<span class="dl flat">new</span>'; const d = (c - p) / p, cls = Math.abs(d) < .005 ? 'flat' : (d > 0) !== !!inv ? 'up' : 'down'; return `<span class="dl ${cls}">${d > 0 ? '+' : ''}${(d * 100).toFixed(1)}%</span>`; };
+const deltaPts = (c, p) => { const d = (c - p) * 100, cls = Math.abs(d) < .05 ? 'flat' : d > 0 ? 'up' : 'down'; return `<span class="dl ${cls}">${d > 0 ? '+' : ''}${d.toFixed(1)} pts</span>`; };
+
+function spark(vals, w = 160, h = 30) {
+  const mx = Math.max(...vals), mn = Math.min(...vals), sp = mx - mn || 1, n = vals.length;
+  const pts = vals.map((v, i) => [i / (n - 1) * w, h - 3 - (v - mn) / sp * (h - 6)]);
+  const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' '), L = pts[n - 1];
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><path d="${d} L${w} ${h} L0 ${h}Z" fill="var(--lime-soft)"/><path d="${d}" fill="none" stroke="var(--ink)" stroke-width="1.4" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="${L[0]}" cy="${L[1]}" r="2.6" fill="var(--lime)" stroke="var(--ink)" stroke-width="1.2" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function niceMax(v) { if (v <= 0) return 1; const e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * e; }
+
+/* line chart: series [{v, stroke, dash, area, w, name}], labels for tooltip, ticks [[i, text]] */
+function lineChart(el, o) {
+  const W = Math.max(260, el.clientWidth), H = o.h || 230, pl = 46, pr = 14, pt = 14, pb = 26, n = o.n;
+  const mx = niceMax(Math.max(1, ...o.series.flatMap(s => s.v)) * 1.06), X = i => pl + (n === 1 ? 0 : i / (n - 1)) * (W - pl - pr), Y = v => pt + (1 - v / mx) * (H - pt - pb);
+  let g = ''; for (let k = 0; k <= 4; k++) { const v = mx * k / 4, y = Y(v); g += `<line class="gl" x1="${pl}" x2="${W - pr}" y1="${y}" y2="${y}"/><text class="ax" x="${pl - 8}" y="${y + 3}" text-anchor="end">${o.yfmt(v)}</text>`; }
+  o.ticks.forEach(([i, t]) => g += `<text class="ax" x="${X(i)}" y="${H - 6}" text-anchor="middle">${t}</text>`);
+  let paths = '';
+  o.series.forEach((s, si) => {
+    if (!s.v.length) return;
+    const d = s.v.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' ');
+    if (s.area) paths += `<path d="${d} L${X(s.v.length - 1)} ${Y(0)} L${X(0)} ${Y(0)}Z" fill="url(#ga${el.id})" class="area-in"/>`;
+    paths += `<path d="${d}" fill="none" stroke="${s.stroke}" stroke-width="${s.w || 2}" stroke-linejoin="round" stroke-linecap="round"${s.dash ? ` stroke-dasharray="${s.dash}"` : ' pathLength="1" class="draw"'} style="--dl:${si * .15}s"/>`;
+    if (s.end) { const i = s.v.length - 1; paths += `<circle cx="${X(i)}" cy="${Y(s.v[i])}" r="9" fill="var(--lime-soft)" class="pop"/><circle cx="${X(i)}" cy="${Y(s.v[i])}" r="4.5" fill="var(--lime)" stroke="var(--ink)" stroke-width="2" class="pop"/>`; }
+  });
+  el.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs><linearGradient id="ga${el.id}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#43E61F" stop-opacity=".32"/><stop offset="1" stop-color="#43E61F" stop-opacity="0"/></linearGradient></defs>${g}${paths}<line class="xh" x1="0" x2="0" y1="${pt}" y2="${H - pb}" stroke="var(--ink)" stroke-width="1" opacity="0"/><g class="hd"></g></svg><div class="tip"></div>`;
+  const svg = el.querySelector('svg'), tip = el.querySelector('.tip'), xh = el.querySelector('.xh'), hd = el.querySelector('.hd');
+  const move = e => {
+    const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * (W / r.width); let i = Math.round((x - pl) / (W - pl - pr) * (n - 1)); i = Math.max(0, Math.min(n - 1, i));
+    xh.setAttribute('x1', X(i)); xh.setAttribute('x2', X(i)); xh.setAttribute('opacity', '.18');
+    hd.innerHTML = o.series.filter(s => s.v[i] !== undefined).map(s => `<circle cx="${X(i)}" cy="${Y(s.v[i])}" r="3.5" fill="var(--paper)" stroke="${s.stroke}" stroke-width="2"/>`).join('');
+    tip.innerHTML = `${o.labels[i]}<br>` + o.series.filter(s => s.v[i] !== undefined).map(s => `${s.name} <b>${o.tfmt(s.v[i])}</b>`).join('<br>');
+    tip.style.left = (X(i) / W * r.width) + 'px'; tip.style.top = (Y(Math.max(...o.series.map(s => s.v[i] || 0))) / H * r.height) + 'px'; tip.style.opacity = 1;
+  };
+  svg.addEventListener('pointermove', move); svg.addEventListener('pointerleave', () => { tip.style.opacity = 0; xh.setAttribute('opacity', '0'); hd.innerHTML = ''; });
+}
+function barChart(el, o) {
+  const W = Math.max(260, el.clientWidth), H = o.h || 200, pl = 40, pr = 8, pt = 10, pb = 26, n = o.data.length;
+  const mx = niceMax(Math.max(1, ...o.data.map(d => d.a + d.b)) * 1.05), bw = (W - pl - pr) / n, Y = v => pt + (1 - v / mx) * (H - pt - pb), base = Y(0);
+  let g = ''; for (let k = 0; k <= 3; k++) { const v = mx * k / 3, y = Y(v); g += `<line class="gl" x1="${pl}" x2="${W - pr}" y1="${y}" y2="${y}"/><text class="ax" x="${pl - 8}" y="${y + 3}" text-anchor="end">${num(v)}</text>`; }
+  o.data.forEach((d, i) => {
+    const x = pl + i * bw + bw * .18, w = bw * .64, ya = Y(d.a), yb = Y(d.a + d.b);
+    g += `<g class="bg" style="--k:${i}"><rect x="${x}" y="${ya}" width="${w}" height="${base - ya}" rx="2" fill="var(--ink)"/><rect x="${x}" y="${yb}" width="${w}" height="${Math.max(0, ya - yb - 1.5)}" rx="2" fill="var(--lime)" stroke="var(--ink)" stroke-width="1"/><title>${d.l}: ${d.a} new, ${d.b} returning</title></g>`;
+    if (i % 2 === 0 || n < 8) g += `<text class="ax" x="${x + w / 2}" y="${H - 6}" text-anchor="middle">${d.l}</text>`;
+  });
+  el.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${g}</svg>`;
+}
+
+/* ---------- sections ---------- */
+function secToday() {
+  const R = ranges(), cur = within(R.a, R.b), prv = within(R.pa, R.pb), m = metrics(cur), pm = metrics(prv), now = Date.now();
+  const sp = daily(14, l => metrics(l));
+  const K = [
+    ['Net sales', money(Math.round(m.rev)), delta(m.rev, pm.rev), sp.map(x => x.rev)],
+    ['Orders', num(m.orders), delta(m.orders, pm.orders), sp.map(x => x.orders)],
+    ['Avg order', money(m.aov, 2), delta(m.aov, pm.aov), sp.map(x => x.aov)],
+    ['Units', num(m.units), delta(m.units, pm.units), sp.map(x => x.units)],
+    ['Gross margin', pct(m.margin), deltaPts(m.margin, pm.margin), sp.map(x => x.margin)],
+    ['Repeat buyers', pct(m.repeat, 0), deltaPts(m.repeat, pm.repeat), sp.map(x => x.repeat)]
+  ];
+  // channel split
+  const chs = ['app', 'web', 'store'].map(c => { const l = cur.filter(o => o.ch === c), r = l.reduce((s, o) => s + o.sub, 0); return { c, n: l.length, r }; }), cr = chs.reduce((s, x) => s + x.r, 0) || 1;
+  // best sellers
+  const bs = {}; cur.forEach(o => o.items.forEach(x => { const b = bs[x.p] || (bs[x.p] = { u: 0, r: 0 }); b.u += x.q; b.r += x.q * PX[x.p].price; }));
+  const best = Object.entries(bs).sort((a, b) => b[1].u - a[1].u).slice(0, 5), bmax = best.length ? best[0][1].u : 1;
+  // restock
+  const v14 = velocity(14), alerts = [];
+  P.forEach(p => p.sizes.forEach(s => { const st = UMB.stock(p.id, s), v = v14[p.id][s], cov = v ? st / v : 99; if (st <= 4 || cov < 7) alerts.push({ p, s, st, cov, v }); }));
+  alerts.sort((a, b) => a.st - b.st || a.cov - b.cov);
+  // heat
+  const H = heat();
+  const feed = UMB.orders().slice(-7).reverse();
+  // the drop on its rail: every piece, best seller first, each with a swing tag of what it sold
+  // (before the first sale of the day it shows the last seven days, so the rail never hangs empty)
+  let rl = OWN.range === 'today' ? 'today' : OWN.range === '7d' ? '7 days' : '30 days', rs = bs, ru = m.units;
+  if (!ru) { rl = 'last 7 days'; rs = {}; within(addDays(d0(now), -6), now).forEach(o => o.items.forEach(x => { const b = rs[x.p] || (rs[x.p] = { u: 0, r: 0 }); b.u += x.q; b.r += x.q * PX[x.p].price; ru += x.q; })); }
+  const rail = P.map(p => ({ id: p.id, u: rs[p.id] ? rs[p.id].u : 0, r: rs[p.id] ? rs[p.id].r : 0 })).sort((a, b) => b.u - a.u || b.r - a.r);
+  return `
+  <div class="card orail" style="--k:0">
+    <div class="or-tx"><span class="lbl">On the rail · ${rl}</span><div><b class="or-n tn">${num(ru)}</b><span class="or-s">Pieces out the door</span></div></div>
+    <div class="or-rack"><i class="or-rod"></i>${rail.map((x, i) => `<button type="button" class="or-it${i === 0 && x.u ? ' top' : ''}" data-sec="products" aria-label="${esc(PX[x.id].name)}, ${x.u} sold" style="--k:${i}"><span class="or-img">${pic(x.id)}</span><span class="or-tag"><b>${x.u ? '×' + x.u : '—'}</b><span>${x.u ? moneyK(x.r) : 'No sales'}</span></span></button>`).join('')}</div>
+  </div>
+  <div class="row r-kpi" style="--k:1">${K.map(([l, v, d, s]) => `<div class="card kpi"><span class="lbl">${l}</span><span class="kv">${v}</span><span class="d">${d}<span>${R.cmp}</span></span>${spark(s)}</div>`).join('')}</div>
+  <div class="row r-21" style="--k:2">
+    <div class="card">
+      <div class="ch"><div><h3>${OWN.range === 'today' ? 'Today’s pace' : 'Net sales by day'}</h3><p>${OWN.range === 'today' ? 'Running total of net sales through the day, against the same day last week.' : 'Each day’s net sales, against the period before.'}</p></div>
+        <div class="legend"><span><i></i>${OWN.range === 'today' ? 'Today' : 'This period'}</span><span><i class="p"></i>${OWN.range === 'today' ? 'Last ' + WD[new Date(now).getDay()] : 'Prior period'}</span></div></div>
+      <div class="big"><b class="tn">${money(Math.round(m.rev))}</b>${delta(m.rev, pm.rev)}</div>
+      <div class="chart" id="cMain"></div>
+    </div>
+    <div class="card rcpt">
+      <div class="rc-brand"><span>Soft Riot</span><span>Reg 04</span></div>
+      <div class="ch"><div><h3>Live orders</h3><p>Every channel, as it lands in UMB.</p></div><span class="live"><span class="dot pulse"></span></span></div>
+      <div class="feed" id="feed">${feed.map(feedRow).join('')}</div>
+    </div>
+  </div>
+  <div class="row r-111" style="--k:3">
+    <div class="card"><div class="ch"><div><h3>Channels</h3><p>Where net sales came from.</p></div></div>
+      <div class="stack">${chs.map(x => `<i style="width:${x.r / cr * 100}%;background:${CH_C[x.c]};${x.c === 'store' ? 'box-shadow:inset 0 0 0 1px rgba(16,17,14,.35)' : ''}"></i>`).join('')}</div>
+      <div class="lrows">${chs.map(x => `<div class="lr"><span class="sw" style="background:${CH_C[x.c]};${x.c === 'store' ? 'box-shadow:inset 0 0 0 1px var(--ink)' : ''}"></span><div><b>${CH_L[x.c]}</b><br><span>${x.n} orders · ${money(x.n ? x.r / x.n : 0, 0)} avg</span></div><span>${pct(x.r / cr, 0)}</span><em>${moneyK(x.r)}</em></div>`).join('')}</div>
+    </div>
+    <div class="card"><div class="ch"><div><h3>Best sellers</h3><p>By units, ${OWN.range === 'today' ? 'today' : 'this period'}.</p></div></div>
+      <div>${best.length ? best.map(([id, b], i) => `<div class="rk"><i>${i + 1}</i><span class="th">${pic(id)}</span><div class="nm"><b>${esc(PX[id].name)}</b><div class="bar"><i class="${i === 0 ? 'l' : ''}" style="width:${b.u / bmax * 100}%"></i></div></div><div class="am">${b.u}<span>${moneyK(b.r)}</span></div></div>`).join('') : '<p class="lbl">No sales yet today</p>'}</div>
+    </div>
+    <div class="card"><div class="ch"><div><h3>Restock alerts</h3><p>Sizes under a week of cover.</p></div><button type="button" class="lbl" data-sec="inventory" style="color:var(--ink)">All stock →</button></div>
+      <div>${alerts.slice(0, 5).map(a => `<div class="al"><span class="th">${pic(a.p.id)}</span><div class="nm"><b>${esc(a.p.name)} · ${a.s}</b><span>${a.v ? (a.v * 7).toFixed(1) + ' sold a week' : 'No recent sales'}</span></div><div class="r">${a.st === 0 ? '<span class="pill down">Sold out</span>' : `<span class="pill ${a.st <= 2 ? 'down' : 'warn'}">${a.st} left</span>`}<span>${a.st === 0 ? 'Reorder ' + reorderQty(a) : a.cov < 99 ? Math.max(1, Math.round(a.cov)) + 'd cover' : ''}</span></div></div>`).join('')}</div>
+    </div>
+  </div>
+  <div class="row r-21" style="--k:4">
+    <div class="card"><div class="ch"><div><h3>Busy times</h3><p>Orders by hour, last four weeks, all channels.</p></div><div class="legend"><span><i class="l"></i>Peak</span></div></div>
+      <div class="heat">${H.html}</div>
+      <div class="hnote"><div><span class="lbl">Peak hour</span><b>${H.peak}</b></div><div><span class="lbl">Busiest day</span><b>${H.day}</b></div><div><span class="lbl">Counter rush</span><b>${H.store}</b></div></div>
+    </div>
+    <div class="card"><div class="ch"><div><h3>Connected to UMB</h3><p>Sources feeding this workspace.</p></div></div>
+      <div class="sources">${sourcesRows()}</div>
+    </div>
+  </div>`;
+}
+function feedRow(o) {
+  const c = UMB.customer(o), st = stageOf(o), S = STG[o.method];
+  return `<button type="button" class="fi${OWN.fresh.has(o.id) ? ' new' : ''}" data-order="${o.id}"><span class="ic ${o.ch}">${o.ch === 'app' ? 'APP' : o.ch === 'web' ? 'WEB' : 'POS'}</span>
+    <span class="tx"><b>${c ? esc(c.name) : 'Walk-in'}</b><em>${o.items.map(x => esc(PX[x.p].name.split(' ')[0]) + (x.c ? ' ' + esc(colName(x.p, x.c)) : '') + ' ' + x.s).join(', ')}</em></span>
+    <span class="am">${money(o.total, 2)}</span><span class="fst">${ago(o.t)} · <small class="${o.method !== 'store' && st < 2 ? 'lime' : ''}">${S[st].replace(' for pickup', '')}</small></span></button>`;
+}
+function sourcesRows() {
+  const live = LIVE.mode === 'db';
+  const rows = [
+    ['<path d="M5 2.5h6a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 11 13.5H5A1.5 1.5 0 0 1 3.5 12V4A1.5 1.5 0 0 1 5 2.5zM7 11.5h2"/>', 'Soft Riot app', live ? 'Live · every order' : 'Live on this device', 'up'],
+    ['<circle cx="8" cy="8" r="5.5"/><path d="M2.5 8h11M8 2.5c1.7 1.8 1.7 9.2 0 11M8 2.5c-1.7 1.8-1.7 9.2 0 11"/>', 'Web store', 'Live · Rail Rush', 'up'],
+    ['<rect x="3" y="2.5" width="10" height="11" rx="2"/><path d="M5.5 5.5h5M5.5 8h1M8 8h1M10.5 8h0M5.5 10.5h1M8 10.5h1"/>', 'Square POS', 'Synced ' + ago(OWN.syncAt - 90e3), 'up'],
+    ['<path d="M2.5 6 8 3l5.5 3M3.5 6.5v5M6.5 6.5v5M9.5 6.5v5M12.5 6.5v5M2.5 13h11"/>', 'Bank feed', 'Synced 6:02 AM', 'up'],
+    ['<path d="M3 4.5h10v8H3zM3 7h10"/><path d="M5.5 10h2"/>', 'Payroll', 'Next run ' + dateS(nextPayday()), 'up']
+  ];
+  return rows.map(([ic, n, s]) => `<div class="sr"><span class="ic"><svg viewBox="0 0 16 16">${ic}</svg></span><div><b>${n}</b><span>${s}</span></div><span class="dot"></span></div>`).join('');
+}
+function velocity(days) {
+  const v = {}; P.forEach(p => { v[p.id] = {}; p.sizes.forEach(s => v[p.id][s] = 0); });
+  within(addDays(d0(Date.now()), -(days - 1)), Date.now()).forEach(o => o.items.forEach(x => v[x.p][x.s] += x.q));
+  P.forEach(p => p.sizes.forEach(s => v[p.id][s] /= days)); return v;
+}
+const reorderQty = a => Math.max(6, Math.ceil((a.v * 45 - a.st) / 6) * 6);
+function heat() {
+  const g = Array.from({ length: 7 }, () => new Array(16).fill(0)), gs = Array.from({ length: 7 }, () => new Array(16).fill(0));
+  within(addDays(d0(Date.now()), -27), Date.now()).forEach(o => { const d = new Date(o.t), h = d.getHours(); if (h < 8) return; const r = (d.getDay() + 6) % 7; g[r][h - 8]++; if (o.ch === 'store') gs[r][h - 8]++; });
+  let mx = 0, pk = [0, 0]; g.forEach((row, r) => row.forEach((v, c) => { if (v > mx) { mx = v; pk = [r, c]; } }));
+  const DL = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], hl = h => (h % 12 || 12) + (h < 12 ? 'a' : 'p');
+  let html = '';
+  g.forEach((row, r) => { html += `<span class="hl">${DL[r]}</span>` + row.map((v, c) => `<i class="${r === pk[0] && c === pk[1] ? 'top' : ''}" style="--a:${(.04 + .86 * v / mx).toFixed(3)}" title="${DL[r]} ${hl(c + 8)}: ${v} orders"></i>`).join(''); });
+  html += '<span></span>' + Array.from({ length: 16 }, (_, c) => `<span class="hx">${c % 3 === 0 ? hl(c + 8) : ''}</span>`).join('');
+  const dsum = g.map(r => r.reduce((a, b) => a + b, 0)), bd = dsum.indexOf(Math.max(...dsum));
+  let sm = 0, sp = 0; gs.forEach(row => row.forEach((v, c) => { })); const sh = new Array(16).fill(0); gs.forEach(row => row.forEach((v, c) => sh[c] += v)); sp = sh.indexOf(Math.max(...sh));
+  return { html, peak: DL[pk[0]] + ' ' + hl(pk[1] + 8), day: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][bd], store: hl(sp + 8) + ' to ' + hl(sp + 10) };
+}
+function mainChart() {
+  const el = $('#cMain'); if (!el) return;
+  const now = Date.now(), t0 = d0(now);
+  if (OWN.range === 'today') {
+    const cum = (a, upto) => { const l = within(a, a + DAY - 1), out = []; let s = 0, k = 0; l.sort((x, y) => x.t - y.t); for (let h = 0; h <= 24; h++) { const lim = a + h * 3600e3; if (lim > upto + 3600e3) break; while (k < l.length && l[k].t <= Math.min(lim, upto)) s += l[k++].sub; out.push(s); } return out; };
+    const cur = cum(t0, now), prev = cum(addDays(t0, -7), Infinity);
+    lineChart(el, { n: 25, series: [{ v: prev, stroke: 'var(--ink-3)', dash: '4 4', w: 1.5, name: 'Last ' + WD[new Date(now).getDay()] }, { v: cur, stroke: 'var(--ink)', area: true, end: true, w: 2.2, name: 'Today' }],
+      labels: Array.from({ length: 25 }, (_, h) => 'By ' + ((h % 24) % 12 || 12) + (h % 24 < 12 ? ' AM' : ' PM')), ticks: [0, 6, 12, 18, 24].map(h => [h, (h % 12 || 12) + (h % 24 < 12 ? 'a' : 'p')]), yfmt: v => moneyK(v), tfmt: v => money(Math.round(v)) });
+  } else {
+    const n = OWN.range === '7d' ? 7 : 30, cur = daily(n, l => l.reduce((s, o) => s + o.sub, 0)), prev = [];
+    for (let i = n - 1; i >= 0; i--) { const a = addDays(t0, -i - n); prev.push(within(a, addDays(a, 1) - 1).reduce((s, o) => s + o.sub, 0)); }
+    const lab = Array.from({ length: n }, (_, i) => { const a = addDays(t0, -(n - 1 - i)); return WD[new Date(a).getDay()] + ' ' + dateS(a); });
+    const step = n === 7 ? 1 : 6;
+    lineChart(el, { n, series: [{ v: prev, stroke: 'var(--ink-3)', dash: '4 4', w: 1.5, name: 'Prior' }, { v: cur, stroke: 'var(--ink)', area: true, end: true, w: 2.2, name: 'Net sales' }],
+      labels: lab, ticks: Array.from({ length: n }, (_, i) => i).filter(i => (n - 1 - i) % step === 0).map(i => [i, n === 7 ? WD[new Date(addDays(t0, -(n - 1 - i))).getDay()] : dateS(addDays(t0, -(n - 1 - i)))]), yfmt: v => moneyK(v), tfmt: v => money(Math.round(v)) });
+  }
+}
+
+function secOrders() {
+  const now = Date.now(), all = UMB.orders(), recent = all.slice(-400).reverse();
+  const F = [['all', 'All'], ['action', 'Needs action'], ['app', 'App'], ['web', 'Web'], ['store', 'In-store']];
+  const cnt = { all: recent.length, action: recent.filter(o => needsAction(o, now)).length, app: recent.filter(o => o.ch === 'app').length, web: recent.filter(o => o.ch === 'web').length, store: recent.filter(o => o.ch === 'store').length };
+  const list = recent.filter(o => OWN.of === 'all' || (OWN.of === 'action' ? needsAction(o, now) : o.ch === OWN.of)).slice(0, 60);
+  const today = within(d0(now), now), m = metrics(today);
+  return `<div class="row r-kpi" style="--k:0">
+    ${[['Orders today', num(m.orders)], ['To pack or prep', num(cnt.action)], ['Shipping today', num(today.filter(o => o.method === 'ship').length)], ['Pickups today', num(today.filter(o => o.method === 'pickup').length)], ['Net sales today', money(Math.round(m.rev))], ['Avg order', money(m.aov, 2)]].map(([l, v]) => `<div class="card kpi"><span class="lbl">${l}</span><span class="kv">${v}</span></div>`).join('')}</div>
+  <div class="card" style="--k:1"><div class="ch"><div class="filters">${F.map(([k, l]) => `<button type="button" data-of="${k}" aria-pressed="${OWN.of === k}">${l} <em>${cnt[k]}</em></button>`).join('')}</div></div>
+    <div class="tbl" style="--cols:minmax(0,1.7fr) minmax(0,.8fr) minmax(0,1.5fr) minmax(0,.9fr) minmax(0,.7fr) minmax(0,.8fr)">
+      <div class="tr h"><span>Order</span><span class="hide-s">Channel</span><span class="hide-s">Items</span><span>Status</span><span>Total</span><span class="hide-s">Placed</span></div>
+      ${list.map(o => { const c = UMB.customer(o), st = stageOf(o, now); return `<button type="button" class="tr${OWN.fresh.has(o.id) ? ' fi new' : ''}" data-order="${o.id}">
+        <span class="nm"><span class="th">${pic(o.items[0].p, 'f', '', o.items[0].c | 0)}</span><div><b>${c ? esc(c.name) : 'Walk-in'}</b><span>${o.no}</span></div></span>
+        <span class="c hide-s" style="text-align:right">${CH_L[o.ch]}<span>${o.method === 'store' ? 'Counter' : o.method === 'ship' ? 'Ship' : 'Pickup'}</span></span>
+        <span class="c hide-s" style="white-space:normal">${o.items.map(x => esc(PX[x.p].name.split(' ').slice(0, 2).join(' ')) + (x.c ? ' ' + esc(colName(x.p, x.c)) : '') + ' ' + x.s + (x.q > 1 ? ' ×' + x.q : '')).join(', ')}</span>
+        <span class="c"><span class="pill ${o.method === 'store' ? '' : st < 2 ? 'lime' : isFinal(o, now) ? 'up' : ''}" style="margin:0">${STG[o.method][st]}</span></span>
+        <span class="c">${money(o.total, 2)}</span><span class="c hide-s">${when(o.t)}</span></button>`; }).join('')}
+    </div></div>`;
+}
+
+function secProducts() {
+  const R = ranges(), cur = within(R.a, R.b), all = UMB.orders(), now = Date.now();
+  const rows = P.map(p => {
+    let u = 0, r = 0, c = 0; const sz = Object.fromEntries(p.sizes.map(s => [s, 0]));
+    cur.forEach(o => o.items.forEach(x => { if (x.p !== p.id) return; u += x.q; r += x.q * p.price; c += x.q * p.cost; sz[x.s] += x.q; }));
+    let soldAll = 0; all.forEach(o => o.items.forEach(x => { if (x.p === p.id) soldAll += x.q; }));
+    const onHand = p.sizes.reduce((s, z) => s + UMB.stock(p.id, z), 0), st = soldAll / (soldAll + onHand);
+    const tr = daily(30, l => l.reduce((s, o) => s + o.items.filter(x => x.p === p.id).reduce((a, x) => a + x.q, 0), 0));
+    return { p, u, r, m: r ? (r - c) / r : (p.price - p.cost) / p.price, st, sz, tr, onHand };
+  }).sort((a, b) => b.r - a.r);
+  const tot = rows.reduce((s, x) => s + x.r, 0);
+  return `<div class="card" style="--k:0"><div class="ch"><div><h3>Every piece</h3><p>Sales ${OWN.range === 'today' ? 'today' : 'over the last ' + (OWN.range === '7d' ? '7' : '30') + ' days'}. Sell-through counts everything received since launch.</p></div><span class="lbl">${moneyK(tot)} net</span></div>
+    <div class="tbl" style="--cols:minmax(0,2fr) minmax(0,.6fr) minmax(0,.9fr) minmax(0,.7fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.1fr)">
+      <div class="tr h"><span>Piece</span><span>Units</span><span>Net sales</span><span class="hide-s">Margin</span><span>Sell-through</span><span class="hide-s">Size curve</span><span class="hide-s">30 days</span></div>
+      ${rows.map(x => { const mx = Math.max(1, ...Object.values(x.sz)), pk = Object.entries(x.sz).sort((a, b) => b[1] - a[1])[0][0]; return `<div class="tr">
+        <span class="nm"><span class="th">${pic(x.p.id)}</span><div><b>${esc(x.p.name)}</b><span>Drop 0${x.p.drop} · ${money(x.p.price)}</span></div></span>
+        <span class="c">${num(x.u)}</span><span class="c">${money(Math.round(x.r))}<span>${tot ? pct(x.r / tot, 0) + ' of sales' : ''}</span></span><span class="c hide-s">${pct(x.m, 0)}</span>
+        <span class="st"><span class="c">${pct(x.st, 0)}<span>${x.onHand} on hand</span></span><span class="bar"><i class="${x.st > .85 ? 'l' : ''}" style="width:${x.st * 100}%"></i></span></span>
+        <span class="curve hide-s" title="${Object.entries(x.sz).map(([s, v]) => s + ' ' + v).join(' · ')}">${x.p.sizes.map(s => `<i class="${s === pk && x.u ? 'pk' : ''}" style="height:${Math.max(2, x.sz[s] / mx * 30)}px"></i>`).join('')}</span>
+        <span class="hide-s" style="display:block;height:30px">${spark(x.tr, 120, 30)}</span></div>`; }).join('')}
+    </div></div>`;
+}
+
+function secInventory() {
+  const v = velocity(14); let units = 0, retail = 0, cost = 0, out = 0, low = 0; const reo = [];
+  P.forEach(p => p.sizes.forEach(s => { const st = UMB.stock(p.id, s); units += st; retail += st * p.price; cost += st * p.cost; if (!st) out++; else if (st <= 4) low++; const vv = v[p.id][s], cov = vv ? st / vv : 99; if (cov < 21) reo.push({ p, s, st, v: vv, cov }); }));
+  reo.sort((a, b) => a.cov - b.cov);
+  const cell = (p, s) => { if (!p.sizes.includes(s)) return '<span class="cell na">–</span>'; const st = UMB.stock(p.id, s), vv = v[p.id][s], cov = vv ? Math.round(st / vv) : null; return `<span class="cell ${!st ? 'out' : st <= 4 ? 'low' : ''}">${st}<span>${!st ? 'Out' : cov !== null && cov < 99 ? (cov < 1 ? '<1d' : cov + 'd') : '—'}</span></span>`; };
+  return `<div class="row r-kpi" style="--k:0;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+    ${[['Units on hand', num(units)], ['At retail', moneyK(retail)], ['At cost', moneyK(cost)], ['Sizes sold out', String(out)], ['Sizes running low', String(low)]].map(([l, x]) => `<div class="card kpi"><span class="lbl">${l}</span><span class="kv">${x}</span></div>`).join('')}</div>
+  <div class="card" style="--k:1"><div class="ch"><div><h3>Stock by size</h3><p>Units on hand, with days of cover at the last two weeks’ pace.</p></div><div class="legend"><span><i class="k" style="background:var(--warn-bg);box-shadow:inset 0 0 0 1px var(--warn)"></i>4 or fewer</span><span><i class="k" style="background:var(--down-bg);box-shadow:inset 0 0 0 1px var(--down)"></i>Sold out</span></div></div>
+    <div style="display:grid;gap:8px">
+      <div class="mx h"><span>Piece</span>${SZ5.map(s => `<span>${s}</span>`).join('')}<span class="c">On hand</span><span class="c">Weekly pace</span></div>
+      ${P.map(p => { const oh = p.sizes.reduce((a, s) => a + UMB.stock(p.id, s), 0), wk = p.sizes.reduce((a, s) => a + v[p.id][s], 0) * 7; return `<div class="mx"><span class="nm" style="display:flex;align-items:center;gap:10px;min-width:0"><span class="th">${pic(p.id)}</span><b style="font:700 12.5px/1.2 var(--f-disp);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.name)}</b></span>${SZ5.map(s => cell(p, s)).join('')}<span class="c">${oh}</span><span class="c">${wk.toFixed(1)}<span>units</span></span></div>`; }).join('')}
+    </div></div>
+  <div class="card" style="--k:2"><div class="ch"><div><h3>Reorder list</h3><p>Sizes with under three weeks of cover. Suggested quantity covers about 45 days, in cartons of six.</p></div><span class="lbl">${reo.length} sizes</span></div>
+    <div class="tbl" style="--cols:minmax(0,2fr) minmax(0,.7fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.9fr)">
+      <div class="tr h"><span>Piece and size</span><span>On hand</span><span class="hide-s">Weekly pace</span><span>Cover</span><span>Reorder</span></div>
+      ${reo.slice(0, 10).map(a => `<div class="tr"><span class="nm"><span class="th">${pic(a.p.id)}</span><div><b>${esc(a.p.name)}</b><span>Size ${a.s}</span></div></span><span class="c">${a.st}</span><span class="c hide-s">${(a.v * 7).toFixed(1)}</span><span class="c">${a.st ? (a.cov < 1 ? '<1 day' : Math.round(a.cov) + ' days') : '<span class="pill down" style="margin:0;display:inline-flex">Out</span>'}</span><span class="c">${reorderQty(a)}<span>${money(reorderQty(a) * a.p.cost)} at cost</span></span></div>`).join('')}
+    </div></div>`;
+}
+
+function secCustomers() {
+  const all = UMB.orders(), R = ranges(), now = Date.now(), cs = new Map();
+  all.forEach(o => { const c = UMB.customer(o); if (!c) return; const e = cs.get(c.id) || { c, n: 0, s: 0, first: o.t, last: 0 }; e.n++; e.s += o.sub; e.last = o.t; cs.set(c.id, e); });
+  const list = [...cs.values()], rep = list.filter(e => e.n > 1).length, newIn = list.filter(e => e.first >= R.a).length, ltv = list.reduce((s, e) => s + e.s, 0) / (list.length || 1);
+  const appCs = new Set(); all.forEach(o => { if (o.ch === 'app') { const c = UMB.customer(o); c && appCs.add(c.id); } });
+  const top = list.sort((a, b) => b.s - a.s).slice(0, 8);
+  const cities = {}; list.forEach(e => cities[e.c.city] = (cities[e.c.city] || 0) + 1);
+  const cl = Object.entries(cities).sort((a, b) => b[1] - a[1]).slice(0, 7), cmx = cl.length ? cl[0][1] : 1;
+  return `<div class="row r-kpi" style="--k:0;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+    ${[['Customers', num(list.length), 'all time'], ['New', num(newIn), OWN.range === 'today' ? 'today' : 'this period'], ['Repeat rate', pct(rep / (list.length || 1), 0), 'ordered twice or more'], ['Lifetime value', money(ltv, 0), 'net sales per customer'], ['On the app', pct(appCs.size / (list.length || 1), 0), 'of known customers']].map(([l, v, s]) => `<div class="card kpi"><span class="lbl">${l}</span><span class="kv">${v}</span><span class="d">${s}</span></div>`).join('')}</div>
+  <div class="row r-21" style="--k:1">
+    <div class="card"><div class="ch"><div><h3>New and returning</h3><p>Orders from known customers each week, last twelve weeks.</p></div><div class="legend"><span><i class="k" style="background:var(--ink)"></i>New</span><span><i class="l"></i>Returning</span></div></div><div class="chart" id="cCust" style="min-height:200px"></div></div>
+    <div class="card"><div class="ch"><div><h3>Where they are</h3><p>Customers by city.</p></div></div>
+      <div>${cl.map(([c, n], i) => `<div class="rk" style="grid-template-columns:minmax(0,1fr) auto"><div class="nm"><b>${esc(c)}</b><div class="bar"><i class="${i === 0 ? 'l' : ''}" style="width:${n / cmx * 100}%"></i></div></div><div class="am">${n}</div></div>`).join('')}</div></div>
+  </div>
+  <div class="card" style="--k:2"><div class="ch"><div><h3>Top customers</h3><p>By lifetime net sales.</p></div></div>
+    <div class="tbl" style="--cols:minmax(0,1.6fr) minmax(0,1fr) minmax(0,.6fr) minmax(0,.9fr) minmax(0,.9fr)">
+      <div class="tr h"><span>Customer</span><span class="hide-s">City</span><span>Orders</span><span>Lifetime</span><span class="hide-s">Last order</span></div>
+      ${top.map(e => `<div class="tr"><span class="nm"><span class="th" style="display:grid;place-items:center;width:36px;height:36px;border-radius:50%;font:800 12px/1 var(--f-disp);background:var(--cv)">${esc(e.c.name.split(' ').map(w => w[0]).join(''))}</span><div><b>${esc(e.c.name)}</b><span>Since ${dateS(e.first)}</span></div></span><span class="c hide-s">${esc(e.c.city)}</span><span class="c">${e.n}</span><span class="c">${money(Math.round(e.s))}</span><span class="c hide-s">${ago(e.last, now)}</span></div>`).join('')}
+    </div></div>`;
+}
+function custChart() {
+  const el = $('#cCust'); if (!el) return;
+  const t0 = d0(Date.now()), fs = firstSeen(), data = [];
+  for (let w = 11; w >= 0; w--) { const a = addDays(t0, -(w * 7 + 6)), b = addDays(t0, -w * 7 + 1) - 1; let n = 0, r = 0; within(a, b).forEach(o => { const c = UMB.customer(o); if (!c) return; if (fs.get(c.id) < o.t) r++; else n++; }); data.push({ l: dateS(a), a: n, b: r }); }
+  barChart(el, { data, h: 210 });
+}
+
+function secDrops() {
+  const all = UMB.orders(), now = Date.now();
+  const D = DROPS.map(dr => {
+    const L = dropLaunch(dr), days = Math.min(14, Math.floor((now - L) / DAY) + 1), cum = []; let s = 0, rev = 0, u72 = 0, sold = 0;
+    const per = new Array(days).fill(0);
+    all.forEach(o => { if (o.t < L) return; o.items.forEach(x => { if (!dr.p.includes(x.p)) return; sold += x.q; rev += x.q * PX[x.p].price; const d = Math.floor((o.t - L) / DAY); if (d < days) per[d] += x.q; if (o.t - L < 3 * DAY) u72 += x.q; }); });
+    per.forEach(v => { s += v; cum.push(s); });
+    const oh = dr.p.reduce((a, id) => a + PX[id].sizes.reduce((b, z) => b + UMB.stock(id, z), 0), 0);
+    return { dr, L, cum, rev, u72, st: sold / (sold + oh), sold };
+  });
+  return `<div class="card" style="--k:0"><div class="ch"><div><h3>Launch curves</h3><p>Units sold in each drop’s first two weeks, counted from launch at noon.</p></div><div class="legend">${D.map((d, i) => `<span><i style="background:${i === 3 ? 'var(--ink)' : ['#B9BBB2', '#9C9E95', '#6F716A'][i]};${i === 3 ? 'height:3px' : ''}"></i>Drop 0${d.dr.n}</span>`).join('')}</div></div><div class="chart" id="cDrops"></div></div>
+  <div class="row r-11" style="--k:1">${D.slice().reverse().map(d => `<div class="card dcard"><div class="dh"><div><span class="lbl">Drop 0${d.dr.n} · ${dateS(d.L)}</span><b>${esc(d.dr.name)}</b></div>${d.dr.n === 4 ? '<span class="pill lime">Live</span>' : `<span class="pill">${Math.round((now - d.L) / DAY)} days in</span>`}</div>
+    <div class="dthumbs">${d.dr.p.map(id => `<span class="th">${pic(id)}</span>`).join('')}</div>
+    <div class="dstats"><div><span class="lbl">First 72h</span><b>${num(d.u72)} units</b></div><div><span class="lbl">Net to date</span><b>${moneyK(d.rev)}</b></div><div><span class="lbl">Sell-through</span><b>${pct(d.st, 0)}</b></div></div>
+    <div class="bar"><i class="${d.dr.n === 4 ? 'l' : ''}" style="width:${d.st * 100}%"></i></div></div>`).join('')}</div>`;
+  /* chart is drawn after insert */
+}
+function dropChart() {
+  const el = $('#cDrops'); if (!el) return; const all = UMB.orders(), now = Date.now();
+  const series = DROPS.map((dr, i) => { const L = dropLaunch(dr), days = Math.min(14, Math.floor((now - L) / DAY) + 1), per = new Array(days).fill(0); all.forEach(o => { if (o.t < L) return; const d = Math.floor((o.t - L) / DAY); if (d >= days) return; o.items.forEach(x => { if (dr.p.includes(x.p)) per[d] += x.q; }); }); let s = 0; return { v: per.map(v => s += v), stroke: i === 3 ? 'var(--ink)' : ['#B9BBB2', '#9C9E95', '#6F716A'][i], w: i === 3 ? 2.6 : 1.6, end: i === 3, area: false, name: 'Drop 0' + dr.n }; });
+  lineChart(el, { n: 14, series, labels: Array.from({ length: 14 }, (_, i) => 'Day ' + (i + 1)), ticks: [0, 2, 4, 6, 8, 10, 13].map(i => [i, 'D' + (i + 1)]), yfmt: v => num(v), tfmt: v => num(v) + ' units' });
+}
+
+function nextPayday() { const anchor = new Date(2026, 0, 2).getTime(), t0 = d0(Date.now()); let k = Math.ceil((t0 - anchor) / (14 * DAY)); return addDays(anchor, k * 14); }
+function secBooks() {
+  const now = Date.now(), dt = new Date(now), m0 = new Date(dt.getFullYear(), dt.getMonth(), 1).getTime();
+  const pm0 = new Date(dt.getFullYear(), dt.getMonth() - 1, 1).getTime();
+  const [a, b] = OWN.month === 'this' ? [m0, now] : [pm0, m0 - 1];
+  const days = (Math.min(b, now) - a) / DAY, mdays = new Date(new Date(a).getFullYear(), new Date(a).getMonth() + 1, 0).getDate();
+  const l = within(a, b), sales = l.reduce((s, o) => s + o.sub, 0), shipIn = l.reduce((s, o) => s + o.ship, 0), tax = l.reduce((s, o) => s + o.tax, 0), cg = l.reduce((s, o) => s + cogs(o), 0);
+  const shipped = l.filter(o => o.method === 'ship').length;
+  const fees = l.reduce((s, o) => s + (o.ch === 'store' ? o.total * .026 + .1 : o.total * .029 + .3), 0);
+  const perPeriod = STAFF.reduce((s, x) => s + (x.per || x.rate * 80), 0) * 1.0765;
+  const F = FIXED, payroll = perPeriod * days / 14, rent = F.rent, mkt = sales * F.mkt, ship = shipped * F.shipCost + l.length * F.pack, sw = F.software, ut = F.utilities * Math.min(1, days / mdays);
+  const rev = sales + shipIn, gp = rev - cg, opex = payroll + rent + mkt + ship + fees + sw + ut, net = gp - opex;
+  const row = (n, v, cls = '', share = true) => `<div class="lg ${cls}"><span>${n}</span><em>${share && rev ? pct(Math.abs(v) / rev, 0) : ''}</em><b>${v < 0 ? '−' : ''}${money(Math.abs(v), 2)}</b></div>`;
+  const pd = nextPayday(), ps = addDays(pd, -13), elapsed = Math.min(14, Math.max(1, (now - ps) / DAY + 1)) / 14;
+  const mname = MO[new Date(a).getMonth()];
+  return `<div class="row r-21" style="--k:0">
+    <div class="card"><div class="ch"><div><h3>Profit and loss · ${mname}</h3><p>${OWN.month === 'this' ? 'Month to date, ' + dateS(a) + ' to ' + dateS(now) + '.' : 'Full month.'} Sales tax sits outside revenue.</p></div>
+      <div class="seg" id="mSeg"><i></i><button type="button" data-month="this" aria-pressed="${OWN.month === 'this'}">This month</button><button type="button" data-month="last" aria-pressed="${OWN.month === 'last'}">Last month</button></div></div>
+      <div class="ledger">
+        <div class="lg hd"><span>Line</span><em>Of rev</em><b>Amount</b></div>
+        ${row('Product sales', sales)}${row('Shipping charged', shipIn, 'sub')}
+        ${row('Revenue', rev, 'tot', false)}
+        ${row('Cost of goods', -cg, 'sub')}
+        ${row('Gross profit', gp, 'tot')}
+        ${row('Payroll and payroll tax', -payroll, 'sub')}${row('Studio rent', -rent, 'sub')}${row('Marketing', -mkt, 'sub')}${row('Shipping and packaging', -ship, 'sub')}${row('Card and POS fees', -fees, 'sub')}${row('Software', -sw, 'sub')}${row('Utilities', -ut, 'sub')}
+        ${row('Net income', net, 'tot')}
+      </div></div>
+    <div style="display:grid;gap:16px;align-content:start">
+      <div class="card kpi"><span class="lbl">Operating cash</span><span class="kv">${money(Math.round(F.cash + net))}</span><span class="d">Bank feed · 6:02 AM</span></div>
+      <div class="card kpi"><span class="lbl">Sales tax set aside</span><span class="kv">${money(Math.round(tax))}</span><span class="d">7% collected in ${mname}, due the 20th</span></div>
+      <div class="card kpi"><span class="lbl">Next payroll</span><span class="kv">${money(Math.round(perPeriod))}</span><span class="d">${WDL[new Date(pd).getDay()]}, ${dateS(pd)}</span></div>
+    </div>
+  </div>
+  <div class="card" style="--k:1"><div class="ch"><div><h3>Payroll · ${dateS(ps)} to ${dateS(pd)}</h3><p>Hours so far this period, from the studio clock-in.</p></div><span class="lbl">${Math.round(elapsed * 14)} of 14 days</span></div>
+    <div class="pay" style="border-top:0;padding-top:0"><span class="lbl">Person</span><span class="lbl" style="text-align:right">Rate</span><span class="lbl" style="text-align:right">Hours</span><span class="lbl" style="text-align:right">Gross so far</span></div>
+    ${STAFF.map(s => { const hrs = s.hrs ? Math.round(s.hrs * elapsed) : null, g = s.per ? s.per * elapsed : hrs * s.rate; return `<div class="pay"><span class="nm" style="display:flex;flex-direction:column;gap:5px"><b style="font:700 13px/1.2 var(--f-disp)">${esc(s.n)}</b><span class="lbl" style="letter-spacing:.1em">${esc(s.r)}</span></span><span class="c tn" style="text-align:right;font:600 12.5px/1 var(--f-mono)">${s.per ? 'Salary' : money(s.rate) + '/hr'}</span><span class="c tn" style="text-align:right;font:600 12.5px/1 var(--f-mono)">${hrs === null ? '—' : hrs}</span><span class="c tn" style="text-align:right;font:600 12.5px/1 var(--f-mono)">${money(g, 2)}</span></div>`; }).join('')}
+  </div>`;
+}
+
+/* ---------- drawer ---------- */
+function openDrawer(id) {
+  const o = UMB.orders().find(x => x.id === id); if (!o) return; OWN.dw = id;
+  const c = UMB.customer(o), now = Date.now(), st = stageOf(o, now), S = STG[o.method], fin = st === S.length - 1, can = o.live && !fin;
+  $('#oDrawer').innerHTML = `<div class="dw-in">
+    <div class="dw-h"><div><span class="lbl">${CH_L[o.ch]} · ${o.method === 'store' ? 'Counter sale' : o.method === 'ship' ? 'Ship' : 'Pickup'}</span><h2>${o.no}</h2></div><button type="button" class="x" id="dwX" aria-label="Close">${XIC}</button></div>
+    <div class="ch"><div><h3>${c ? esc(c.name) : 'Walk-in'}</h3><p>${c ? esc(c.city) + ' · ' : ''}${when(o.t)}</p></div><span class="pill ${fin ? 'up' : 'lime'}">${S[st]}</span></div>
+    <div class="lrows">${o.items.map(x => `<div class="lr" style="grid-template-columns:auto minmax(0,1fr) auto"><span class="th">${pic(x.p, 'f', '', x.c | 0)}</span><div><b>${esc(PX[x.p].name)}</b><br><span>${esc(colName(x.p, x.c | 0))} · Size ${x.s} · ${x.q} × ${money(PX[x.p].price)} · stock now ${UMB.stock(x.p, x.s)}</span></div><em>${money(PX[x.p].price * x.q, 2)}</em></div>`).join('')}</div>
+    <div class="ledger">${o.ship ? `<div class="lg sub"><span>Shipping</span><em></em><b>${money(o.ship, 2)}</b></div>` : ''}<div class="lg sub"><span>Sales tax</span><em></em><b>${money(o.tax, 2)}</b></div><div class="lg tot"><span>Total</span><em></em><b>${money(o.total, 2)}</b></div></div>
+    ${o.method !== 'store' ? `<ol class="steps">${S.map((s, i) => `<li class="${i < st || fin ? 'done' : i === st ? 'now' : ''}"><span class="k">${CHK}</span><div><b>${s}</b></div><time>${i <= st ? clock(stageTime(o, i)) : ''}</time></li>`).join('')}</ol>` : ''}
+    ${can ? `<div class="act"><button type="button" class="btn" data-adv="${o.id}:${st + 1}">Mark ${S[st + 1].toLowerCase()} ${ARW.replace('<svg', '<svg style="width:13px;height:13px;stroke:currentColor;stroke-width:1.8;fill:none"')}</button></div>` : ''}
+  </div>`;
+  $('#oDrawer').classList.add('on');
+}
+function closeDrawer() { OWN.dw = null; $('#oDrawer').classList.remove('on'); }
+
+/* ---------- render ---------- */
+OWN.render = function (keepScroll) {
+  if (!OWN.shown) return;
+  const sec = OWN.sec, now = Date.now(), act = UMB.orders().slice(-400).filter(o => needsAction(o, now)).length;
+  $('#oNav').innerHTML = NAV.map(([k, l, ic]) => `<button type="button" data-sec="${k}" aria-current="${k === sec}"><svg viewBox="0 0 20 20">${ic}</svg>${l}${k === 'orders' && act ? `<em>${act}</em>` : ''}</button>`).join('');
+  const rng = ['today', 'products', 'customers'].includes(sec);
+  const stk = { today: 'Drop 04 live', orders: act ? act + ' to pack' : 'All packed', products: P.length + ' pieces', drops: 'Drop 05 next' }[sec];
+  $('#oHead').innerHTML = `<div><h1>${TITLE[sec]}${stk ? `<span class="stk">${stk}</span>` : ''}</h1><p>${WDL[new Date(now).getDay()]}, ${dateS(now)} · ${clock(now)}</p></div>
+    <div class="oh-r">${rng ? `<div class="seg" id="rSeg"><i></i>${[['today', 'Today'], ['7d', '7 days'], ['30d', '30 days']].map(([k, l]) => `<button type="button" data-range="${k}" aria-pressed="${OWN.range === k}">${l}</button>`).join('')}</div>` : ''}<span class="sync hide-s"><span class="dot pulse"></span><span id="syncTx">Synced just now</span></span></div>`;
+  const main = $('#oMain'), y = main.scrollTop;
+  $('#oSec').innerHTML = ({ today: secToday, orders: secOrders, products: secProducts, inventory: secInventory, customers: secCustomers, drops: secDrops, books: secBooks })[sec]();
+  if (keepScroll) { $('#oSec').querySelectorAll('.osec > *, #oSec > *').forEach(e => e.style.animation = 'none'); main.scrollTop = y; }
+  document.querySelectorAll('#oHead .seg, #mSeg').forEach(placeSeg);
+  if (sec === 'today') mainChart(); if (sec === 'customers') custChart(); if (sec === 'drops') dropChart();
+  if (keepScroll) $('#oSec').querySelectorAll('.draw,.area-in,.pop,.bar i,.bg').forEach(e => e.style.animation = 'none');
+  $('#oSrc').innerHTML = `<span class="lbl">Feeding UMB</span>` + [['Soft Riot app', LIVE.mode === 'db' ? 'live' : 'device'], ['Web store', 'live'], ['Square POS', ago(OWN.syncAt - 90e3).replace(' ago', '')], ['Bank feed', '6:02a']].map(([n, s]) => `<div><span class="dot"></span>${n}<span>${s}</span></div>`).join('');
+  OWN.w = $('#oSec').clientWidth;
+};
+OWN.show = function () { if (!OWN.shown) { OWN.shown = true; OWN.render(); } else OWN.resize(); };
+OWN.resize = function () { if (!OWN.shown || SH.view === 'app') return; const w = $('#oSec').clientWidth; if (Math.abs(w - OWN.w) > 4) { OWN.w = w; mainChart(); custChart(); dropChart(); document.querySelectorAll('#oHead .seg, #mSeg').forEach(placeSeg); } };
+OWN.onLive = function (ev) {
+  UMB.dirty();
+  const ids = ev.type === 'add' ? [ev.id] : ev.type === 'snap' ? ev.added : ev.type === 'sim' ? [ev.id] : [];
+  ids.forEach(id => { OWN.fresh.add(id); setTimeout(() => OWN.fresh.delete(id), 6000); });
+  OWN.syncAt = Date.now();
+  if (OWN.shown && SH.view !== 'app') {
+    OWN.render(true);
+    const o = ids.length && UMB.orders().find(x => x.id === ids[ids.length - 1]);
+    if (o && o.ch === 'app') { const c = UMB.customer(o), t = $('#oToast'); t.dataset.order = o.id; t.innerHTML = `<span class="th">${pic(o.items[0].p, 'f', '', o.items[0].c | 0)}</span><div><b>New app order · ${esc(c ? c.name : 'Customer')}<em>${money(o.total, 2)}</em></b><span>${o.no} · ${o.items.map(x => esc(PX[x.p].name) + ' ' + x.s).join(', ')}</span></div>`; t.classList.add('on'); clearTimeout(OWN.tt); OWN.tt = setTimeout(() => t.classList.remove('on'), 6000); }
+    if (OWN.dw) openDrawer(OWN.dw);
+  }
+};
+function bindOwner() {
+  $('#paneOwn').addEventListener('click', e => {
+    const t = e.target; let b;
+    if ((b = t.closest('[data-sec]'))) { OWN.sec = b.dataset.sec; closeDrawer(); OWN.render(); $('#oMain').scrollTop = 0; return; }
+    if ((b = t.closest('[data-range]'))) { OWN.range = b.dataset.range; OWN.render(); return; }
+    if ((b = t.closest('[data-month]'))) { OWN.month = b.dataset.month; OWN.render(true); return; }
+    if ((b = t.closest('[data-of]'))) { OWN.of = b.dataset.of; OWN.render(true); return; }
+    if ((b = t.closest('[data-adv]'))) { const [id, s] = b.dataset.adv.split(':'); LIVE.advance(id, Number(s)); return; }
+    if (t.closest('#dwX')) { closeDrawer(); return; }
+    if ((b = t.closest('[data-order]'))) { $('#oToast').classList.remove('on'); openDrawer(b.dataset.order); return; }
+  });
+}
+function ownTick() {
+  const s = $('#syncTx'); if (s) s.textContent = 'Synced ' + ago(OWN.syncAt);
+  if (Date.now() - OWN.syncAt > 15e3) OWN.syncAt = Date.now() - 1000;
+}
+
+/* ---------- boot ---------- */
+(function boot() {
+  document.documentElement.style.setProperty('--grain', `url(${noiseURL(140, 70, 26)})`);
+  SH.mob = innerWidth <= 600; document.body.classList.toggle('mob', SH.mob);
+  bindApp(); bindOwner(); renderShop(); setBadge();
+  $('#viewSeg').addEventListener('click', e => { const b = e.target.closest('[data-view]'); if (b) setView(b.dataset.view, true); });
+  SH.view = location.hash.slice(1) || (innerWidth >= 1200 ? 'both' : 'app');
+  buildSeg(); setView(SH.view);
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layout, 120); });
+  addEventListener('hashchange', () => setView(location.hash.slice(1)));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { placeSeg($('#viewSeg')); document.querySelectorAll('#oHead .seg, #mSeg, #pdSeg').forEach(placeSeg); });
+  LIVE.on(ev => {
+    UMB.dirty();
+    if (A.tab === 'orders' && !A.over && ev.type !== 'add') renderOrders();
+    OWN.onLive(ev);
+  });
+  LIVE.init();
+  let n = 0;
+  setInterval(() => { appTick(); ownTick(); if (++n % 30 === 0 && OWN.shown && SH.view !== 'app') OWN.render(true); }, 1000);
+  (function sim() { setTimeout(() => { simStoreSale(); sim(); }, 45e3 + Math.random() * 60e3); })();
+})();
+
+</script>
+
+</body></html>

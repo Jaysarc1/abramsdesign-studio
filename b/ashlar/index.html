@@ -1,0 +1,471 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!--
+ALIGNMENT NOTES
+Grid: 12 columns, max width 1344px, 32px gutter, page gutter max(24px, safe-area) (16px floor on phones).
+Copy, bars, steps and the form start on column 1 or column 7.
+Intentional offsets:
+- The wind bars run from column 1 to the right edge of the grid at 220 mph, so bar length is the true ratio of wind speeds.
+- The recent work photo runs full bleed with no grid; its caption starts on column 1.
+- Hero opening: the photo is laid as running-bond courses (block = 2.1 x course height, every other course shifted half a block), so the joints sit on the masonry module, not the column grid. The brass mason's line rides the top of the course being set and leaves at the roofline.
+- Storm test: the hurricane category ticks (74, 96, 111, 130, 157 mph) and the wind front sit at their true positions on the 0 to 220 mph scale, not on columns; that is the point of the scale. The live readout starts on column 7.
+
+SELLS
+Buyer: Palm Beach County family or owner-investor building a custom home or a large addition.
+Fear: a builder who cuts corners, blows the budget, or builds something the next storm takes.
+Outcome: a house built once, built right, by one team from drawing to keys.
+Proof: wind rating above code, homes built, none lost to storms, warranty.
+One CTA: "Request an estimate".
+-->
+<title>Ashlar & Pine</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=Onest:wght@400..600&family=Fragment+Mono&display=swap">
+<style>
+/* Layout: the house at dusk with its lights coming on; navy and brass, sand pages between */
+:root{
+  --navy:#0B1220;
+  --deep:#111A2C;
+  --line:#26314A;
+  --brass:#D9A35B;
+  --paper:#EDE6D6;
+  --sand:#F4EFE6;
+  --ink:#141B2A;
+  --ink-2:#56607A;
+  --rule:#DCD3C2;
+  --serif:"Spectral",Georgia,"Times New Roman",serif;
+  --sans:"Onest",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Fragment Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--sand);color:var(--ink);font-family:var(--sans);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--navy)}
+.wrap{max-width:1344px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
+.eyebrow{font-family:var(--mono);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--brass);color:#14130F;font-family:var(--sans);font-weight:600;font-size:18px;padding:19px 30px;text-decoration:none;border:0;cursor:pointer;transition:background .3s}
+.btn:hover,.btn:focus-visible{background:#E6B572}
+.btn:focus-visible{outline:2px solid var(--brass);outline-offset:4px}
+.btn{padding-right:0}
+.btn svg{width:18px;height:18px;box-sizing:content-box;padding:6px 22px;margin-left:8px;border-left:1px solid rgba(20,19,15,.28);transition:transform .3s}
+.btn:hover svg{transform:none}
+
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:9;color:var(--paper);transition:background .5s}
+header.solid{background:rgba(11,18,32,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+header .wrap{display:flex;align-items:center;height:88px}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;font-variation-settings:"wdth" 112;font-weight:600;letter-spacing:.16em;font-size:16px;text-transform:uppercase}
+.logo i{width:32px;height:32px;border:1.5px solid var(--brass);display:grid;place-items:center;font-style:normal;font-size:12px;letter-spacing:0;color:var(--brass);font-weight:600}
+nav{margin-left:auto;display:flex;align-items:center;gap:40px;font-size:17px;font-weight:500}
+nav a.t{text-decoration:none;color:rgba(237,230,214,.8)}
+nav a.t:hover{color:var(--paper)}
+nav .btn{padding:13px 22px;font-size:16px;transition:background .3s,opacity .5s}
+header:not(.solid) nav .btn{opacity:0;pointer-events:none}
+
+/* hero */
+.hero{position:relative;height:100svh;min-height:680px;background:var(--navy);color:var(--paper);overflow:hidden}
+.hero .ph{position:absolute;inset:0}
+.hero .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block}
+.hero .ph .on{opacity:1}
+.hero .ph canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .ph .wall{filter:brightness(.5) saturate(.6)}
+.hero .ph .mortar{transition:opacity .9s cubic-bezier(.4,0,.2,1)}
+.hero.set .ph .mortar{opacity:0}
+.hero.building{background:#070B15}
+.hero .shade{transition:opacity 1.6s cubic-bezier(.4,0,.2,1)}
+.hero.building .shade{opacity:.45}
+.hero.building .ph .base{visibility:hidden}
+.hero .ph .string{position:absolute;left:0;right:0;top:0;height:1px;background:var(--brass);opacity:0;will-change:transform;box-shadow:0 0 6px rgba(217,163,91,.55)}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,22,.82) 0%,rgba(8,12,22,.5) 34%,rgba(8,12,22,0) 58%),linear-gradient(0deg,rgba(8,12,22,.6) 0%,rgba(8,12,22,0) 30%),linear-gradient(180deg,rgba(8,12,22,.45) 0%,rgba(8,12,22,0) 18%)}
+.dim{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.dl{fill:none;stroke:var(--brass);stroke-width:1.5}
+.dt{font-family:var(--mono);font-size:14px;letter-spacing:.06em;fill:var(--paper)}
+.hero .wrap{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(56px,10vh,112px)}
+.hl{max-width:640px}
+.kick{font-family:var(--mono);font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin:0 0 24px}
+h1{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(62px,7.6vw,120px);line-height:.96;letter-spacing:-.02em}
+h1 span{display:block}
+h1 em{color:var(--brass)}
+.lede{margin:28px 0 40px;font-size:21px;line-height:1.5;color:rgba(237,230,214,.84);max-width:30ch}
+
+/* wind: a storm test, pinned while you scroll */
+.storm{position:relative;height:340vh;background:var(--navy);color:var(--paper)}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--navy)}
+.stage .rain{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.stage .wrap{position:relative;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding-top:136px;padding-bottom:80px}
+.stage .top{align-items:end}
+.stage .eyebrow{grid-column:1 / span 6;grid-row:1;color:var(--brass);align-self:start}
+.wind h2,.how h2{grid-column:1 / span 8;margin:16px 0 0;font-family:var(--serif);font-weight:300;font-size:clamp(46px,5.2vw,84px);line-height:1.02;letter-spacing:-.015em;text-wrap:balance}
+.stage h2{grid-column:1 / span 6;grid-row:2;font-size:clamp(40px,3.9vw,60px);line-height:1.04}
+.read{grid-column:7 / span 6;grid-row:1 / span 2;align-self:end}
+.read .cat{display:block;font-family:var(--mono);font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin-bottom:6px}
+.read .num{display:flex;align-items:baseline;gap:18px;font-family:var(--serif);font-weight:300;font-size:clamp(150px,15.5vw,236px);line-height:.8;letter-spacing:-.035em;font-variant-numeric:lining-nums tabular-nums}
+.read .num small{font-family:var(--mono);font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:rgba(237,230,214,.6)}
+.gauge{position:relative;display:grid;gap:30px}
+.cats{position:relative;height:30px;font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.cats span{position:absolute;bottom:0;left:calc(var(--v) / 220 * 100%);padding-left:9px;color:rgba(237,230,214,.32);white-space:nowrap;transition:color .4s}
+.cats span::before{content:"";position:absolute;left:0;bottom:2px;width:1px;height:28px;background:currentColor}
+.cats span b{font-weight:inherit}
+.cats span.on{color:rgba(237,230,214,.86)}
+.bar .lab{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin-bottom:14px}
+.bar .lab b{font-weight:500;font-size:19px;transition:color .5s}
+.bar .lab span{white-space:nowrap;font-family:var(--serif);font-weight:300;font-size:clamp(30px,2.6vw,40px);line-height:1;font-variant-numeric:lining-nums tabular-nums;transition:color .5s}
+.track{height:12px;background:#1A2438;position:relative}
+.fill{position:absolute;inset:0 auto 0 0;width:calc(var(--w) / 220 * 100%);background:rgba(237,230,214,.55);transition:background .5s,box-shadow .6s}
+.bar.us .fill{background:var(--brass)}
+.bar.code.past .fill{background:repeating-linear-gradient(90deg,rgba(237,230,214,.3) 0 8px,transparent 8px 13px)}
+.bar.code.past .lab b,.bar.code.past .lab span{color:rgba(237,230,214,.38)}
+.bar.us.hold .fill{background:#E6B572;box-shadow:0 0 28px rgba(217,163,91,.45)}
+.bar.us.hold .lab span{color:var(--brass)}
+.scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:14px;color:rgba(237,230,214,.5);margin-top:-14px}
+.front{position:absolute;left:0;top:0;width:0;pointer-events:none;will-change:transform}
+.front i{position:absolute;left:-1px;width:2px;background:var(--paper);box-shadow:0 0 14px rgba(237,230,214,.5);transition:background .4s,box-shadow .4s}
+.gauge.hold .front i{background:#E6B572;box-shadow:0 0 18px rgba(217,163,91,.7)}
+.after{padding-block:120px 128px}
+.stats{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px}
+.stat{border-top:1px solid var(--rule);padding-top:28px}
+.stat b{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(60px,5.8vw,96px);line-height:1;letter-spacing:-.02em;font-variant-numeric:lining-nums tabular-nums}
+.stat > span{display:block;margin-top:14px;color:var(--ink-2);max-width:20ch}
+
+/* how */
+.how{background:var(--paper);padding-block:128px}
+.steps{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px;margin-top:72px}
+.step{border-top:1.5px solid var(--ink);padding-top:28px}
+.step i{display:block;font-style:normal;font-family:var(--mono);font-size:15px;color:var(--brass);letter-spacing:.06em}
+.step b{display:block;margin-top:20px;font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.05}
+.step p{margin:14px 0 0;color:var(--ink-2);max-width:24ch}
+
+/* book */
+.book{background:var(--navy);color:var(--paper);padding-block:128px 136px}
+.book .lt{grid-column:1 / span 5}
+.book h2{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(56px,6.4vw,104px);line-height:.98;letter-spacing:-.02em}
+.book h2 em{color:var(--brass)}
+.book .side{margin-top:32px;color:rgba(237,230,214,.78);font-size:20px}
+.book .phone{display:block;margin-top:28px;font-family:var(--serif);font-weight:300;font-size:38px;color:var(--paper);text-decoration:none;user-select:all}
+.book .addr{margin-top:40px;font-family:var(--mono);font-size:15px;color:rgba(237,230,214,.56)}
+form{grid-column:7 / span 6;display:grid;gap:22px;align-self:start}
+label{display:grid;gap:8px;font-size:16px;color:rgba(237,230,214,.72)}
+input,select{font:inherit;font-size:19px;color:var(--paper);background:transparent;border:0;border-bottom:1px solid var(--line);padding:12px 0;outline:none;border-radius:0;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--paper) 50%),linear-gradient(135deg,var(--paper) 50%,transparent 50%);background-position:calc(100% - 14px) 52%,calc(100% - 8px) 52%;background-size:6px 6px;background-repeat:no-repeat}
+select option{color:var(--ink)}
+input:focus,select:focus{border-color:var(--brass)}
+form .btn{justify-self:start;margin-top:12px}
+.thanks{font-family:var(--serif);font-weight:300;font-size:34px;line-height:1.2}
+footer{padding-block:36px;background:var(--navy);color:rgba(237,230,214,.5);border-top:1px solid var(--line);font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+/* recent work: one finished house, full bleed, framed in from the sides as it arrives */
+.work{position:relative;height:clamp(440px,74vh,780px);background:var(--navy);overflow:hidden}
+.work img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
+/* the caption sits straight on the photo in white, held legible by a low wash of the marsh's own dark */
+.work::after{content:"";position:absolute;inset:auto 0 0;height:55%;background:linear-gradient(180deg,rgba(10,18,28,0),rgba(10,18,28,.62));pointer-events:none}
+.work .wrap{position:relative;z-index:1;height:100%;display:flex;align-items:flex-end;padding-bottom:48px}
+.work p{margin:0;color:#fff;text-shadow:0 1px 18px rgba(0,0,0,.35);font-family:var(--serif);font-weight:300;font-size:clamp(28px,2.6vw,38px);line-height:1.15}
+.work p em{display:block;font-family:var(--mono);font-style:normal;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.82);margin-bottom:10px}
+.js .work img{clip-path:inset(0 9% 0 9%);transform:scale(1.06);transition:clip-path 2s cubic-bezier(.6,0,.2,1),transform 3.6s cubic-bezier(.2,.7,.2,1)}
+.js .work.on img{clip-path:inset(0 0 0 0);transform:none}
+.rv{transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.js .rv.pre{opacity:.001;transform:translateY(28px)}
+.js .hero .in{opacity:0;transform:translateY(28px);transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.js .hero .in.on{opacity:1;transform:none}
+.js .hero .ph .base{filter:brightness(.5) saturate(.6)}
+.js .hero .ph .on{opacity:0;transition:opacity 2s cubic-bezier(.45,0,.25,1)}
+.js .hero.lit .ph .on{opacity:1}
+.js .hero .ph{transform:scale(1.05);transition:transform 7s cubic-bezier(.2,.7,.2,1)}
+.js .hero.lit .ph{transform:none}
+
+@media (max-width:900px){
+  nav a.t{display:none}
+  .wind h2,.how h2,.book .lt,form{grid-column:1 / -1}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:48px}
+  .after{padding-block:88px}
+  .storm{height:280vh}
+  .stage .wrap{padding-top:116px;padding-bottom:52px}
+  .stage .eyebrow{grid-column:1 / -1}
+  .stage h2{grid-column:1 / -1;grid-row:2}
+  .read{grid-column:1 / -1;grid-row:3;margin-top:36px}
+  .steps{grid-template-columns:1fr;row-gap:48px;margin-top:56px}
+  form{margin-top:48px}
+  .how,.book{padding-block:88px}
+  .hero .ph img{object-position:70% 50%}
+  .dim{display:none}
+}
+@media (max-width:520px){
+  .work p{font-size:26px;padding:18px 20px}
+  .work p em{font-size:12px;letter-spacing:.06em}
+  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .logo b{display:none}
+  nav .btn{padding:12px 16px;font-size:15px}
+  h1{font-size:clamp(50px,14vw,64px)}
+  .lede{font-size:19px;margin:22px 0 32px}
+  .stats{grid-template-columns:1fr}
+  .stage h2{font-size:34px}
+  .read .num{font-size:118px;gap:12px}
+  .read .num small{font-size:13px}
+  .gauge{gap:24px}
+  .cats{font-size:11px;letter-spacing:.02em}
+  .cats span{padding-left:5px}
+  .cats span b{display:none}
+  .bar .lab{margin-bottom:10px}
+  .bar .lab b{font-size:15px}
+  .bar .lab span{font-size:24px}
+  .track{height:10px}
+  .scale{font-size:12px}
+  .hero .shade{background:linear-gradient(0deg,rgba(8,12,22,.94) 0%,rgba(8,12,22,.78) 42%,rgba(8,12,22,0) 72%),linear-gradient(180deg,rgba(8,12,22,.5) 0%,rgba(8,12,22,0) 18%)}
+}
+@media (prefers-reduced-motion:reduce){
+  .js .work img{clip-path:none;transform:none;transition:none}
+  .rv,.js .hero .in,.js .hero .ph,.js .hero .ph .on{transition:none}
+  .storm{height:auto}.stage{position:relative;height:auto;min-height:100svh}
+  .js .rv.pre,.js .hero .in{opacity:1;transform:none}
+  .js .hero .ph{transform:none}
+  .js .hero .ph .on{opacity:1}
+}
+</style>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Ashlar and Pine home"><i>A/P</i><b>Ashlar &amp; Pine</b></a>
+    <nav>
+      <a class="t" href="#wind">Built for storms</a>
+      <a class="t" href="#how">How we build</a>
+      <a class="btn" href="#book">Request an estimate</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero" aria-label="Ashlar and Pine">
+    <div class="ph">
+      <img class="base" src="b/ashlar/img/house.jpg" alt="" aria-hidden="true">
+      <canvas class="wall" aria-hidden="true"></canvas>
+      <canvas class="mortar" aria-hidden="true"></canvas>
+      <i class="string" aria-hidden="true"></i>
+      <img class="on" src="b/ashlar/img/house.jpg" alt="A board-formed concrete house on the beach at dusk, its interior lit warm" fetchpriority="high">
+    </div>
+    <div class="shade"></div>
+    <div class="wrap">
+      <div class="hl">
+        <h1><span class="in">Built once.</span><span class="in"><em>Built right.</em></span></h1>
+        <p class="lede in">Drawn, engineered and built by one team, from the first sketch to the keys.</p>
+        <a class="btn in" href="#book">Request an estimate <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wind" id="wind">
+    <div class="storm" id="storm">
+      <div class="stage">
+        <canvas class="rain" aria-hidden="true"></canvas>
+        <div class="wrap">
+          <div class="grid top">
+            <p class="eyebrow">Wind rating</p>
+            <h2>Built past the code, for the storm you hope never comes.</h2>
+            <div class="read" aria-hidden="true"><span class="cat" id="cat">Category 1</span><div class="num"><span id="mph">74</span><small>mph</small></div></div>
+          </div>
+          <div class="gauge" id="gauge">
+            <div class="cats" aria-hidden="true"><span style="--v:74"><b>Cat </b>1</span><span style="--v:96"><b>Cat </b>2</span><span style="--v:111"><b>Cat </b>3</span><span style="--v:130"><b>Cat </b>4</span><span style="--v:157"><b>Cat </b>5</span></div>
+            <div class="bar code"><div class="lab"><b>Florida building code</b><span>170 mph</span></div><div class="track"><div class="fill" style="--w:170"></div></div></div>
+            <div class="bar us"><div class="lab"><b>Every Ashlar &amp; Pine home</b><span>200 mph</span></div><div class="track"><div class="fill" style="--w:200"></div></div></div>
+            <div class="scale" aria-hidden="true"><span>0</span><span>110</span><span>220 mph</span></div>
+            <div class="front" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="after">
+      <div class="wrap grid">
+        <div class="stats">
+          <div class="stat rv"><b data-n="140">140</b><span>homes built since 2004</span></div>
+          <div class="stat rv"><b>0</b><span>lost to a hurricane</span></div>
+          <div class="stat rv"><b data-n="14">14</b><span>months, average build</span></div>
+          <div class="stat rv"><b data-n="10" data-s=" yr">10 yr</b><span>structural warranty</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work" id="work" aria-label="Recent work">
+    <img src="b/ashlar/img/estate.webp" alt="A white oceanfront house at dusk, every room lit, behind a pool and a row of palms" loading="lazy">
+    <div class="wrap"><p class="rv"><em>Recent work · 9,800 sq ft · 13 months</em>Manalapan, on the ocean.</p></div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="wrap grid">
+      <p class="eyebrow rv" style="grid-column:1 / -1">How we build</p>
+      <h2 class="rv">One team, start to finish.</h2>
+      <div class="steps">
+        <div class="step rv"><i>01</i><b>Draw</b><p>Your house, designed around your lot and the way you live.</p></div>
+        <div class="step rv"><i>02</i><b>Engineer</b><p>Every wall and beam sized before a shovel hits the ground.</p></div>
+        <div class="step rv"><i>03</i><b>Build</b><p>Our own crews, one site lead, a fixed price.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div class="wrap grid">
+      <div class="lt">
+        <h2 class="rv">Let's build <em>yours.</em></h2>
+        <p class="side rv">Tell us about your lot. We'll walk it with you and send an estimate.
+          <a class="phone" href="tel:5615550162">(561) 555-0162</a></p>
+        <p class="addr rv">Jupiter, Florida<br>build@ashlarandpine.com</p>
+      </div>
+      <form id="f" class="rv">
+        <label>Name<input name="name" autocomplete="name" required></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
+        <label>Email<input name="email" type="email" autocomplete="email"></label>
+        <label>Project<select name="for"><option>A new custom home</option><option>A major addition</option><option>A teardown and rebuild</option></select></label>
+        <button class="btn" type="submit">Request an estimate <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>Ashlar &amp; Pine · Licensed general contractor</span><span>Jupiter, Florida</span></div></footer>
+
+<script>
+document.documentElement.classList.add('js');
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function draw(el,dur,delay){
+  const L=el.getTotalLength();el.style.strokeDasharray=L;el.style.strokeDashoffset=L;
+  return new Promise(res=>setTimeout(()=>{const t0=performance.now();const f=n=>{const p=Math.min(1,(n-t0)/dur);el.style.strokeDashoffset=L*(1-ease(p));if(p<1)requestAnimationFrame(f);else{el.style.strokeDasharray='';el.style.strokeDashoffset='';res()}};requestAnimationFrame(f)},delay));
+}
+
+/* hero: the house is laid course by course in running bond, the lights warm on, the words rise last */
+(()=>{
+  const hero=document.getElementById('hero'),ins=[...hero.querySelectorAll('.in')];
+  const ph=hero.querySelector('.ph'),img=ph.querySelector('.on'),wall=ph.querySelector('.wall'),mortar=ph.querySelector('.mortar'),str=ph.querySelector('.string');
+  const words=d=>ins.forEach((e,i)=>setTimeout(()=>e.classList.add('on'),d+i*160));
+  if(RM){wall.remove();mortar.remove();str.remove();ins.forEach(e=>e.classList.add('on'));return}
+  hero.classList.add('building');
+  const outE=t=>1-Math.pow(1-t,4);
+  const build=()=>{
+    const W=ph.clientWidth,H=ph.clientHeight,dpr=Math.min(devicePixelRatio||1,2);
+    [wall,mortar].forEach(c=>{c.width=Math.round(W*dpr);c.height=Math.round(H*dpr)});
+    const g=wall.getContext('2d'),m=mortar.getContext('2d');
+    g.setTransform(dpr,0,0,dpr,0,0);m.setTransform(dpr,0,0,dpr,0,0);
+    /* object-fit:cover mapping, same focal point as the CSS */
+    const iw=img.naturalWidth,ih=img.naturalHeight,sc=Math.max(W/iw,H/ih),px=matchMedia('(max-width:900px)').matches?.7:.5;
+    const ox=(W-iw*sc)*px,oy=(H-ih*sc)*.5;
+    const n=W<600?14:12,h=H/n,bw=h*(W<600?1.7:2.1);
+    /* courses from the ground up; the mason works each course end to end, alternating direction, gaining rhythm */
+    const blocks=[],starts=[];let t=0;
+    for(let c=0;c<n;c++){
+      const y=H-(c+1)*h,sh=c%2?bw/2:0,row=[];
+      for(let x=-sh;x<W;x+=bw)row.push({x:Math.max(0,x),w:Math.min(x+bw,W)-Math.max(0,x),y,h,c});
+      if(c%2)row.reverse();
+      const d=175-75*c/(n-1);starts.push(t);
+      row.forEach((b,k)=>{b.t=t+d*k/row.length;b.dir=c%2?-1:1;blocks.push(b)});
+      t+=d;
+    }
+    const total=t,DUR=300,done=document.createElement('canvas');done.width=wall.width;done.height=wall.height;
+    const dg=done.getContext('2d');dg.setTransform(dpr,0,0,dpr,0,0);
+    const piece=(ctx,b,dx,dy)=>ctx.drawImage(img,(b.x-ox)/sc,(b.y-oy)/sc,b.w/sc,b.h/sc,b.x+dx,b.y+dy,b.w,b.h);
+    m.strokeStyle='rgba(237,230,214,.26)';m.lineWidth=1/dpr;
+    const joint=b=>{m.beginPath();const r=v=>Math.round(v*dpr)/dpr+.5/dpr;m.moveTo(b.x,r(b.y));m.lineTo(b.x+b.w,r(b.y));if(b.x>0){m.moveTo(r(b.x),b.y);m.lineTo(r(b.x),b.y+b.h)}m.stroke()};
+    str.style.opacity='.9';
+    let i0=0,ig=0,t0=null;const GL=DUR+420;g.fillStyle='#F4EFE6';
+    const f=now=>{
+      if(t0===null)t0=now;const el=now-t0;
+      g.clearRect(0,0,W,H);
+      while(i0<blocks.length&&el>=blocks[i0].t+DUR){piece(dg,blocks[i0],0,0);joint(blocks[i0]);i0++}
+      g.drawImage(done,0,0,W,H);
+      for(let i=i0;i<blocks.length&&blocks[i].t<=el;i++){
+        const b=blocks[i],p=Math.min(1,(el-b.t)/DUR),e=outE(p);
+        g.globalAlpha=Math.min(1,p/.35);piece(g,b,-b.dir*7*(1-e),-11*(1-e));
+      }
+      /* a freshly set block catches the light for a beat, then takes the dusk tone */
+      while(ig<blocks.length&&el>blocks[ig].t+GL)ig++;
+      for(let i=ig;i<blocks.length&&blocks[i].t<=el;i++){
+        const b=blocks[i],q=(el-b.t)/GL,p=Math.min(1,(el-b.t)/DUR),e=outE(p);
+        g.globalAlpha=.3*Math.min(1,p/.35)*(1-q)*(1-q);g.fillRect(b.x-b.dir*7*(1-e),b.y-11*(1-e),b.w,b.h);
+      }
+      g.globalAlpha=1;
+      let c=0;while(c<n-1&&el>=starts[c+1])c++;
+      const cy=H-(c+1)*h;str.style.transform=`translateY(${cy}px)`;
+      if(el<total+DUR)requestAnimationFrame(f);
+      else{
+        hero.classList.remove('building');hero.classList.add('set');
+        str.style.transition='opacity .5s';str.style.opacity='0';
+        setTimeout(()=>{hero.classList.add('lit');wall.style.visibility='hidden'},120);
+        words(650);
+      }
+    };
+    requestAnimationFrame(f);
+  };
+  const go=()=>(img.decode?img.decode().catch(()=>{}):Promise.resolve()).then(()=>requestAnimationFrame(build));
+  img.complete&&img.naturalWidth?go():img.addEventListener('load',go,{once:true});
+})();
+
+/* storm test: as you scroll, the wind climbs through the categories, passes the code, and stops where every Ashlar & Pine home is rated */
+(()=>{
+  const storm=document.getElementById('storm'),stage=storm.querySelector('.stage'),cv=stage.querySelector('.rain'),gauge=document.getElementById('gauge');
+  const mph=document.getElementById('mph'),cat=document.getElementById('cat'),front=gauge.querySelector('.front');
+  const cats=[...gauge.querySelectorAll('.cats span')],code=gauge.querySelector('.bar.code'),us=gauge.querySelector('.bar.us');
+  const CAT=[74,96,111,130,157],LO=74,HI=200;
+  const g=cv.getContext('2d');let W=0,H=0,dpr=1,v=LO,shown=-1,drops=[];
+  const size=()=>{
+    dpr=Math.min(devicePixelRatio||1,2);W=stage.clientWidth;H=stage.clientHeight;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);g.setTransform(dpr,0,0,dpr,0,0);
+    const N=Math.round(Math.min(420,W*H/2600));
+    drops=Array.from({length:N},(_,i)=>({x:Math.random()*W*1.4-W*.2,y:Math.random()*H*1.3-H*.3,l:.5+Math.random(),s:.7+Math.random()*.6,a:Math.random(),k:i/N}));
+    /* the front is drawn only through the two bars, never across the words */
+    const gt=gauge.getBoundingClientRect().top,seg=[];
+    gauge.querySelectorAll('.track').forEach(t=>{const r=t.getBoundingClientRect();seg.push([r.top-gt-10,r.height+20])});
+    front.innerHTML=seg.map(([t,h])=>`<i style="top:${t}px;height:${h}px"></i>`).join('');
+    shown=-1;paint();
+  };
+  const paint=()=>{
+    const r=Math.round(v);
+    if(r!==shown){shown=r;mph.textContent=r;let k=0;CAT.forEach((c,i)=>{if(v>=c)k=i});cat.textContent='Category '+(k+1);
+      cats.forEach((s,i)=>s.classList.toggle('on',v>=CAT[i]));
+      code.classList.toggle('past',v>170.5);const h=v>=HI-.01;us.classList.toggle('hold',h);gauge.classList.toggle('hold',h)}
+    front.style.transform=`translateX(${gauge.clientWidth*v/220}px)`;
+  };
+  const read=()=>{
+    const r=storm.getBoundingClientRect(),run=storm.offsetHeight-innerHeight,p=run>0?Math.min(1,Math.max(0,-r.top/run)):1;
+    const q=Math.min(1,Math.max(0,(p-.06)/.78));v=LO+(HI-LO)*q;paint();
+  };
+  const rain=(dt)=>{
+    const I=(v-LO)/(HI-LO),dens=.2+.8*I,sp=700+2600*I,sl=.62-.56*I,len=14+90*I,al=.1+.2*I;
+    g.clearRect(0,0,W,H);g.lineCap='round';
+    for(let pass=0;pass<3;pass++){
+      g.strokeStyle=`rgba(237,230,214,${(al*(.45+pass*.35)).toFixed(3)})`;g.lineWidth=pass===2?1.2:.8;g.beginPath();
+      for(const d of drops){
+        if(d.k>dens||((d.a*3)|0)!==pass)continue;
+        const s=sp*d.s;d.x+=s*dt;d.y+=s*sl*dt;
+        if(d.x>W+120||d.y>H+60){d.x=-Math.random()*W*.3-60;d.y=Math.random()*H*1.2-H*.3}
+        const L=len*d.l,ux=1/Math.hypot(1,sl);g.moveTo(d.x,d.y);g.lineTo(d.x-L*ux,d.y-L*sl*ux);
+      }
+      g.stroke();
+    }
+  };
+  let on=false,last=0;
+  const loop=now=>{if(!on)return;const dt=Math.min(.05,(now-last)/1000||0);last=now;rain(dt);requestAnimationFrame(loop)};
+  size();addEventListener('resize',()=>{size();read()});
+  if(RM){v=HI;paint();rain(0);return}
+  read();addEventListener('scroll',read,{passive:true});
+  new IntersectionObserver(es=>{on=es[0].isIntersecting;if(on){last=performance.now();requestAnimationFrame(loop)}}).observe(stage);
+  document.fonts&&document.fonts.ready.then(()=>{size();read()});
+})();
+
+/* reveals and counters */
+(()=>{
+  if(RM)return;
+  const els=[...document.querySelectorAll('.rv')];
+  els.forEach(e=>{if(e.getBoundingClientRect().top>innerHeight*.9)e.classList.add('pre')});
+  const io=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io.unobserve(e.target);setTimeout(()=>e.target.classList.remove('pre'),i*550)})},{threshold:.25});
+  els.forEach(e=>io.observe(e));
+  const ns=[...document.querySelectorAll('[data-n]')];
+  const fmt=(el,v)=>Math.round(v).toLocaleString('en-US')+(el.dataset.s||'');
+  const io2=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io2.unobserve(e.target);const el=e.target,N=+el.dataset.n;
+    setTimeout(()=>{const t0=performance.now(),D=2000;const f=n=>{const p=Math.min(1,(n-t0)/D);el.textContent=fmt(el,N*ease(p));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)},300+i*550)})},{threshold:.4});
+  ns.forEach(n=>io2.observe(n));
+})();
+{const h=document.querySelector('header'),hero=document.getElementById('hero');const f=()=>h.classList.toggle('solid',scrollY>hero.offsetHeight-100);addEventListener('scroll',f,{passive:true});f()}
+{const w=document.getElementById('work');if(RM)w.classList.add('on');else new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){o.disconnect();setTimeout(()=>w.classList.add('on'),200)}},{threshold:.3}).observe(w)}
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();e.target.innerHTML='<p class="thanks">Thank you. We will call to set a time to walk your lot.</p>'});
+</script>
+
+</body></html>

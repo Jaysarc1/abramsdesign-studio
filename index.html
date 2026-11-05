@@ -1,0 +1,1771 @@
+<!doctype html><html><head><meta charset=utf8><title>Abrams Design Studio</title><meta name="description" content="Abrams Design Studio: brands, sites and apps, designed one at a time."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..400;1,9..144,300..400&family=Gilda+Display&family=Montserrat:wght@400&display=swap">
+<style>
+/* Layout: a quiet plaster page, a small wordmark, and the work given most of the room.
+   Every preview is a live, looping cut of that mockup's opening moment. None of them link out. */
+:root{
+  --plaster:#F1EBE1;
+  --sheet:#FAF7F2;
+  --graphite:#1F1C18;
+  --pencil:#6E665B;
+  --faint:#857C70;
+  --rule:rgba(31,28,24,.13);
+  --patina:#2E5149;
+  --tint:rgba(46,81,73,.075);
+  --tan:#E4DACA;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --text:"Newsreader",Georgia,"Times New Roman",serif;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --mono:"DM Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --gutter:max(16px,env(safe-area-inset-left,0px));
+  --gutter-r:max(16px,env(safe-area-inset-right,0px));
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --plaster:#141311;--sheet:#1C1A17;--graphite:#ECE7DE;--pencil:#A39C91;--faint:#8E877C;--rule:rgba(236,231,222,.12);--patina:#86B3A7;--tint:rgba(134,179,167,.1);--tan:#2A2723;color-scheme:dark}}
+:root[data-theme="dark"]{--plaster:#141311;--sheet:#1C1A17;--graphite:#ECE7DE;--pencil:#A39C91;--faint:#8E877C;--rule:rgba(236,231,222,.12);--patina:#86B3A7;--tint:rgba(134,179,167,.1);--tan:#2A2723;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:61px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--plaster);color:var(--graphite);font-family:var(--text);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--patina);outline-offset:3px}
+.wrap{max-width:1320px;margin:0 auto;padding-left:max(24px,var(--gutter));padding-right:max(24px,var(--gutter-r))}
+.mono{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+
+/* header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--plaster);transition:opacity .6s ease}
+html:not(.past) body::before{opacity:0}
+/* the hero is one full screen with its own nav, so the bar stays out of sight until the hero has scrolled away, then slides in; one nav on screen at a time */
+header{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);z-index:20;transition:transform .7s cubic-bezier(.2,.7,.1,1),opacity .5s ease;background:color-mix(in srgb,var(--plaster) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+header .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:24px;min-height:60px}
+/* the header sits on the logo's centre axis: the mark is dead centre, the links pinned to the two outer edges. The mark fades in once the big logo has scrolled away, so the logo never shows twice */
+.mark{display:block;line-height:0;color:var(--graphite);transition:opacity .9s ease}
+.mark svg{display:block;height:17px;width:calc(17px*2.994)}
+header:not(.past){transform:translateY(-100%);opacity:0;pointer-events:none}
+nav{display:flex;gap:28px}
+.nr{justify-content:flex-end}
+nav a{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--faint);transition:color .2s}
+nav a:hover{color:var(--graphite)}
+@media (max-width:760px){nav{gap:16px}nav a.opt{display:none}}
+
+/* opening: Jason's ADS logo rebuilt as live type, everything on one centre axis.
+   Tracked capitals carry trailing space after the last letter, so each tracked line is indented by the same amount to sit truly centred */
+.open{padding-block:clamp(64px,10vw,140px) clamp(40px,6vw,80px);text-align:center}
+.open h1{margin:0;font-weight:400;color:var(--graphite);font-size:clamp(50px,6.6vw,88px);line-height:1;display:flex;flex-direction:column;align-items:center}
+.open .ads{display:block;height:1em;width:2.994em}
+.open .rule{display:block;width:4.03em;height:1px;margin-top:.39em;background:currentColor;opacity:.62;transform-origin:50% 50%}
+.open .sub{display:block;margin-top:.8em;font-family:Montserrat,"Helvetica Neue",Arial,sans-serif;font-weight:400;font-size:.236em;letter-spacing:.335em;text-indent:.335em;text-transform:uppercase;line-height:1;white-space:nowrap}
+/* the rule is a touch narrower than the name under it, as in the logo */
+.fold{position:relative;height:100svh;min-height:520px;max-height:1080px;padding:0;overflow:hidden;background:#1d2448}
+.fold-bg{position:absolute;inset:0}
+/* the same soft dusk veil abramsplaces.com lays over this film, measured frame against frame: light across the sky, a little deeper over the pool */
+.fold-bg::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(30,40,70,.10) 0%,rgba(30,40,70,.10) 60%,rgba(30,40,70,.24) 100%)}
+.fold-bg img,.fold-bg video{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block}
+.fold-in{position:absolute;left:0;right:0;top:19%;transform:translateY(-50%);padding-inline:max(16px,env(safe-area-inset-left,0px));filter:drop-shadow(0 1px 20px rgba(12,16,44,.35))}
+.open.fold h1,.open.fold .hl{color:#fff}
+/* in the film the roofline rides higher than in the still, so the frame is pinned to its top edge and the logo sits a little higher, keeping the palms clear of the name */
+.fold-bg video{object-position:50% 0}
+.fold-in{top:15%}
+/* the studio name is set larger here so it reads on the moving film; the rule widens with it so it keeps the logo's proportion, a touch narrower than the name */
+.open.fold .sub{font-size:.3em;letter-spacing:.3em;text-indent:.3em}
+.open.fold .rule{width:5em}
+@media (max-width:600px){.fold .fold-in{top:15.5%}}
+.snd svg{width:20px;height:20px}
+/* sound: a small round toggle that closes the nav row, centred on the same line as Work, Process and Contact */
+.snd{position:relative;flex:none;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(12,16,44,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;display:grid;place-items:center;padding:0;cursor:pointer;transition:border-color .3s,background .3s}
+.snd:hover{border-color:#fff;background:rgba(12,16,44,.32)}
+.snd svg{width:18px;height:18px;display:block}
+@media (max-width:600px){.snd{width:32px;height:32px}}
+.snd .on{display:none}.snd[aria-pressed="true"] .on{display:block}.snd[aria-pressed="true"] .off{display:none}
+/* live nav where the photo's own nav was: same plain grotesque, same spot, top right on the logo's level band */
+.fold-nav{position:absolute;top:calc(6.4% + env(safe-area-inset-top,0px));right:max(16px,3.1vw,env(safe-area-inset-right,0px));transform:translateY(-50%);display:flex;align-items:center;gap:clamp(20px,2.75vw,46px);filter:drop-shadow(0 1px 14px rgba(12,16,44,.4))}
+.fold-nav a{font-family:"Helvetica Neue",Helvetica,"Archivo",Arial,sans-serif;font-weight:400;font-size:clamp(14px,1.08vw,18px);letter-spacing:.01em;text-transform:none;color:rgba(255,255,255,.9);text-decoration:none;transition:color .3s}
+.fold-nav a:hover{color:#fff}
+/* the line sits where the photo's VIEW WORK sat, centred over the pool, with the scroll line under it */
+.fold-cta{position:absolute;left:50%;top:88.7%;transform:translate(-50%,-50%);white-space:nowrap;display:flex;flex-direction:column;align-items:center;text-decoration:none;filter:drop-shadow(0 1px 16px rgba(12,16,44,.45))}
+.open.fold .fold-cta .hl{margin:0;font-size:clamp(15px,min(2.4svh,1.45vw),24px);font-weight:300}
+.fold-cta .ln{display:block;width:1px;height:clamp(32px,5.1svh,52px);margin-top:clamp(14px,2.4svh,26px);background:rgba(255,255,255,.75);transform-origin:50% 0}
+.open.fold h1{font-size:clamp(34px,min(6svh,4.4vw),64px)}
+.open.fold .rule{opacity:.8}
+@media (max-width:600px){.fold-in{top:24%}.fold-nav{top:calc(5% + env(safe-area-inset-top,0px))}.fold-cta{top:88.5%}}
+@media (prefers-reduced-motion:no-preference){
+  .fold-bg img{animation:settle 9s cubic-bezier(.25,.1,.25,1) both}
+  @keyframes settle{from{transform:scale(1.06)}to{transform:none}}
+}
+.open .hl{margin:clamp(48px,6vw,88px) 0 0;font-family:var(--display);font-weight:200;font-variation-settings:"wdth" 125;font-size:clamp(20px,2.8vw,40px);letter-spacing:.2em;text-indent:.2em;line-height:1.35;text-transform:uppercase;color:var(--graphite);text-wrap:balance}
+@media (prefers-reduced-motion:no-preference){
+  .open .ads{animation:up 1.6s cubic-bezier(.2,.7,.1,1) .2s both}
+  .open .sub{animation:up 1.6s cubic-bezier(.2,.7,.1,1) 1.1s both}
+  .open .rule{animation:draw 1.3s cubic-bezier(.6,0,.2,1) .7s both}
+  .open .hl{animation:up 1.6s cubic-bezier(.2,.7,.1,1) 1.8s both}
+  .fold-nav{animation:fade 1.6s ease 1.4s both}
+  .fold-cta .ln{animation:drop 1.2s cubic-bezier(.6,0,.2,1) 2.7s both}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  @keyframes drop{from{transform:scaleY(0)}to{transform:none}}
+  @keyframes draw{from{transform:scaleX(0)}to{transform:none}}
+  @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
+
+/* statements: the same tracked capitals as the logo, kept quiet so the work leads.
+   Each sits on the tile grid: the copy starts on the line where the right-hand tile starts, and the three steps sit on the three-up tile columns */
+/* one spacing scale for the page: --sp-g between columns, --sp-in from a heading to its content, --sp-sec between statements */
+:root{--sp-g:clamp(16px,1.8vw,24px);--sp-in:clamp(40px,5vw,72px);--sp-sec:clamp(80px,9vw,128px)}
+.st{margin-block:var(--sp-sec)}
+#studio .st{margin-block:0}
+/* with no copy beside it, the comparison heading takes the full row: two lines, the first stating the subject, the second the change */
+#ba .st-row>:first-child{grid-column:1/-1}
+#studio{padding-block:var(--sp-in) var(--sp-sec)}
+.st-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(16px,1.8vw,24px);align-items:end}
+.st-row>:first-child{grid-column:1/4;margin:0}
+.st-copy{grid-column:4/7;min-width:0}
+.st-copy p{margin:0;max-width:34ch;font-size:clamp(19px,1.6vw,23px);line-height:1.5;color:var(--pencil);text-wrap:balance}
+.st-h{margin:0 0 12px;font-family:var(--serif);font-weight:300;font-optical-sizing:auto;letter-spacing:-.008em;text-transform:none;color:var(--graphite);font-size:clamp(26px,2.3vw,34px);line-height:1.15}
+.big{margin-left:-.06em!important;font-family:var(--display);font-weight:200;font-variation-settings:"wdth" 125;font-size:clamp(120px,17vw,250px);line-height:.78;letter-spacing:-.02em;color:var(--graphite);font-variant-numeric:tabular-nums}
+.st-big,.inq h2{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(40px,5.4vw,78px);letter-spacing:-.018em;line-height:1.02;color:var(--graphite);text-wrap:balance}
+.st-big em,.inq h2 em{font-style:normal;color:inherit}
+/* the italic pairing, kept for comparison: open the page with #italic */
+.it .st-big em,.it .inq h2 em{font-style:italic;color:var(--patina)}
+.it .st-h,.it .steps b,.it .beats b,.it .head h2{font-style:italic}
+/* the 20 years as a path: three lights set out along art, architecture and marketing as the page scrolls, gather where the lines meet, and one light carries on into your business.
+   Lines are drawn in viewBox units and stretched to the width; the lights are HTML so they stay round at any size */
+.conv{position:relative;margin:var(--sp-in) 0 0;height:clamp(190px,17vw,240px)}
+.conv svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.cl{fill:none;stroke:var(--rule);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.cx{fill:none;stroke:var(--pencil);stroke-width:1.4;vector-effect:non-scaling-stroke;stroke-dasharray:1 2;stroke-dashoffset:1}
+.cx.out{stroke:var(--patina);stroke-width:2}
+.lb{position:absolute;left:0;transform:translateY(calc(-100% - 12px));display:flex;align-items:baseline;gap:12px;white-space:nowrap;opacity:.38;transition:opacity 1.2s ease}
+.lb b{font-family:var(--mono);font-weight:400;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--graphite)}
+.lb i{font-family:var(--text);font-style:italic;font-size:19px;color:var(--pencil)}
+.lb.on{opacity:1}
+.lb.end{left:auto;right:0;top:50%;opacity:.3}
+.lb.end i{font-family:var(--serif);font-variation-settings:"opsz" 144;font-weight:300;font-size:clamp(24px,2.3vw,32px);letter-spacing:-.01em;color:var(--graphite)}
+.lb.end.on{opacity:1}
+/* the 20 years as a timeline: the band holds on screen while you scroll, and one light walks each discipline in turn.
+   Across the lines, left to right is the twenty years; the green bar on each line grows over the years that discipline ran, and the number counts them */
+/* the pinned band centres the 20 in the screen; --yg is that centring gap, measured in script and taken back out of the margins so the 20 sits one --sp-sec below the panel above, like every other statement */
+.yrs-track{position:relative;height:300vh;margin-block:calc(-1*var(--yg,0px))}
+.yrs-pin{position:sticky;top:61px;height:calc(100svh - 61px);display:flex;flex-direction:column;justify-content:center;pointer-events:none}
+.yrs-pin>*{pointer-events:auto}
+/* the copy starts on column 3, the first column clear of the 20, so the number and its words read as one block */
+.yrs .st-row>:first-child{grid-column:1/3}
+.yrs .st-copy{grid-column:3/7}
+.yrs{margin-block:0!important}
+.yc{display:grid}
+.ys{grid-area:1/1;align-self:end;opacity:0;transform:translateY(10px);transition:opacity .8s ease,transform .9s cubic-bezier(.2,.7,.1,1);pointer-events:none}
+.ys.on{opacity:1;transform:none}
+.ys p{margin:0}
+.bar{fill:none;stroke:var(--graphite);stroke-width:2;vector-effect:non-scaling-stroke}
+.cl,.cx,.bar{transition:opacity .9s ease}
+.cl.dim,.cx.dim,.bar.dim{opacity:.18}
+.lb.dim{opacity:.22}
+@media (prefers-reduced-motion:reduce){.yrs-track{height:auto}.yrs-pin{position:static;height:auto}}
+.orb{position:absolute;left:0;top:0;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--patina);box-shadow:0 0 0 5px color-mix(in srgb,var(--patina) 16%,transparent),0 0 26px 8px color-mix(in srgb,var(--patina) 30%,transparent);opacity:0;pointer-events:none;will-change:transform,opacity}
+.orb.main{width:16px;height:16px;margin:-8px 0 0 -8px;box-shadow:0 0 0 7px color-mix(in srgb,var(--patina) 18%,transparent),0 0 40px 14px color-mix(in srgb,var(--patina) 34%,transparent)}
+.node{position:absolute;left:75%;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;border:1px solid var(--patina);background:var(--plaster);transform:scale(var(--n,0));transition:transform .9s cubic-bezier(.2,.7,.1,1),background .9s}
+.node.full{background:var(--patina)}
+.dot{position:absolute;right:-6px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;border:1px solid var(--patina);background:var(--plaster);transition:background .9s,box-shadow 1.4s}
+.dot.on{background:var(--patina);box-shadow:0 0 0 7px color-mix(in srgb,var(--patina) 16%,transparent),0 0 36px 12px color-mix(in srgb,var(--patina) 28%,transparent)}
+.steps{list-style:none;margin:var(--sp-in) 0 0;padding:22px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,1.8vw,24px);position:relative}
+.steps::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--rule);transform-origin:0 50%}
+.steps li{display:grid;gap:8px;min-width:0;justify-items:center;text-align:center}
+.steps b{font-family:var(--serif);font-weight:300;font-optical-sizing:auto;letter-spacing:-.008em;text-transform:none;color:var(--graphite);font-size:clamp(26px,2.3vw,34px);line-height:1.15}
+.steps p{margin:0;font-size:19px;line-height:1.5;color:var(--pencil);text-wrap:balance}
+@media (max-width:760px){.conv{margin-top:88px}.lb{flex-direction:column;gap:2px}.lb.end{top:calc(50% + 16px);transform:none;align-items:flex-end}.lb i{font-size:17px}.st-row{grid-template-columns:1fr;gap:24px}.st-row>:first-child,.st-copy{grid-column:auto}.steps{grid-template-columns:1fr;gap:28px}}
+@media (prefers-reduced-motion:no-preference){
+    .rv .st-row>*{opacity:0;transform:translateY(16px);transition:opacity 1.4s cubic-bezier(.2,.7,.1,1),transform 1.4s cubic-bezier(.2,.7,.1,1)}
+  .rv .st-row>:nth-child(2){transition-delay:.45s}
+  .rv.in .st-row>*{opacity:1;transform:none}
+  .rv .steps::before{transform:scaleX(0);transition:transform 1.8s cubic-bezier(.6,0,.2,1) .7s}
+  .rv.in .steps::before{transform:none}
+  .rv .steps li{opacity:0;transform:translateY(12px);transition:opacity 1.3s ease,transform 1.3s cubic-bezier(.2,.7,.1,1);transition-delay:calc(1.3s + var(--i)*.4s)}
+  .rv.in .steps li{opacity:1;transform:none}
+}
+
+/* three seconds, shown rather than told: a live homepage resolves in three beats while the ring counts them down.
+   Ring, page and beats share one row of the six-column grid: ring on column 1, page on 2 to 4, beats on 5 and 6, the beats stretched so their top and bottom rules meet the page's top and bottom edges.
+   The lead moves up beside the headline and starts on column 5, the same line as the beats */
+#you .st-row>:first-child{grid-column:1/5}
+#you .st-row .lead{grid-column:5/7;max-width:none}
+.secs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--sp-g);align-items:stretch;margin-top:var(--sp-in)}
+.ring{grid-column:1/2;align-self:center;position:relative;margin:0;width:100%;aspect-ratio:1}
+.ring svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
+.ring circle{fill:none}
+.rb{stroke:var(--rule);stroke-width:1.2}
+.rl{stroke:var(--patina);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:1 2;stroke-dashoffset:0}
+.ring .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding-top:4px}
+.ring .num{font-family:var(--display);font-weight:200;font-variation-settings:"wdth" 125;font-size:clamp(52px,5.4vw,80px);line-height:.8;color:var(--graphite);font-variant-numeric:tabular-nums;transition:opacity .3s ease,transform .3s ease}
+.ring .num.sw{opacity:0;transform:translateY(6px)}
+.ring small{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--pencil)}
+.lead{margin:0;max-width:34ch;font-size:clamp(19px,1.6vw,23px);line-height:1.5;color:var(--pencil);text-wrap:balance}
+.brw{grid-column:2/5;margin:0;min-width:0;border-radius:8px;overflow:hidden;background:var(--sheet);box-shadow:0 0 0 1px var(--rule),0 30px 60px -36px rgba(0,0,0,.5)}
+/* the address pill is centred on the frame, not after the dots, so it sits on the page's axis */
+.brw-bar{position:relative;height:30px;display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid var(--rule)}
+.brw-bar i{width:8px;height:8px;border-radius:50%;background:var(--faint);opacity:.45}
+.brw-bar span{position:absolute;left:32%;right:32%;top:8px;height:14px;border-radius:7px;background:var(--rule)}
+.brw-v{position:relative;aspect-ratio:16/10;overflow:hidden;container-type:inline-size;background:#15110D}
+.brw-v img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+.brw-v::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(14,11,8,.62),rgba(14,11,8,0) 24%),linear-gradient(90deg,rgba(14,11,8,.78),rgba(14,11,8,.32) 52%,rgba(14,11,8,0) 80%)}
+/* every edge of the page sits on one 5% margin: brand, headline and button share the left line, the nav ends on the right one */
+.hh{position:absolute;inset:0;z-index:2;color:#F3EDE3}
+.hh-nav{position:absolute;top:4.6cqw;left:5cqw;right:5cqw;display:flex;align-items:center;gap:3.4cqw;font-family:var(--mono);font-size:1.45cqw;letter-spacing:.16em;text-transform:uppercase;color:rgba(243,237,227,.8)}
+.hh-nav b{margin-right:auto;font-family:var(--display);font-weight:300;font-variation-settings:"wdth" 125;font-size:1.7cqw;letter-spacing:.34em;color:#F3EDE3}
+.hh-h{position:absolute;left:5cqw;bottom:19cqw;margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:7.6cqw;line-height:.98;letter-spacing:-.018em}
+.hh-b{position:absolute;left:5cqw;bottom:8.6cqw;padding:1.5cqw 2.6cqw;border-radius:2px;background:#D9BC8C;color:#17130E;font-family:var(--mono);font-size:1.45cqw;letter-spacing:.16em;text-transform:uppercase}
+.beats{grid-column:5/7;list-style:none;margin:0;padding:0;display:grid;grid-template-rows:repeat(3,minmax(0,1fr));min-width:0}
+.beats li{display:grid;grid-template-columns:3.6em minmax(0,1fr);column-gap:14px;row-gap:4px;align-content:center;padding:14px 0;border-top:1px solid var(--rule)}
+.beats li:last-child{border-bottom:1px solid var(--rule)}
+.beats .mono{grid-row:1/3;padding-top:10px;color:var(--patina)}
+.beats b{font-family:var(--serif);font-weight:300;font-optical-sizing:auto;letter-spacing:-.008em;text-transform:none;color:var(--graphite);font-size:clamp(24px,2.1vw,30px);line-height:1.15}
+.beats p{margin:0;font-size:17px;line-height:1.45;color:var(--pencil)}
+@media (max-width:760px){
+  .secs{grid-template-columns:96px minmax(0,1fr);gap:28px 20px}
+  #you .st-row>:first-child,#you .st-row .lead,.yrs .st-row>:first-child,.yrs .st-copy{grid-column:auto}
+  .brw{grid-column:1/-1;grid-row:1}
+  .ring{grid-column:1;grid-row:2;align-self:start}
+  .beats{grid-column:2;grid-row:2}
+  .beats li{grid-template-columns:1fr;padding:14px 0}
+  .beats .mono{grid-row:auto;padding-top:0}
+}
+/* one beat every 1.5 seconds from .9s: the photo sharpens (trust), the promise lands (clarity), the button arrives and pulses once (action) */
+@media (prefers-reduced-motion:no-preference){
+  .rv .rl{stroke-dashoffset:1;transition:stroke-dashoffset 4.5s linear .9s}
+  .rv.in .rl{stroke-dashoffset:0}
+  .rv .beats li{opacity:.22;transition:opacity 1s ease calc(.9s + var(--i)*1.5s)}
+  .rv.in .beats li{opacity:1}
+  .rv .brw-v img{filter:blur(16px) saturate(.45);transform:scale(1.07);transition:filter 1.5s cubic-bezier(.2,.7,.1,1) .9s,transform 2s cubic-bezier(.2,.7,.1,1) .9s}
+  .rv.in .brw-v img{filter:none;transform:none}
+  .rv .hh-nav{opacity:0;transition:opacity 1s ease 1.7s}
+  .rv.in .hh-nav{opacity:1}
+  .rv .hh-h{opacity:0;transform:translateY(.4em);transition:opacity 1.1s ease 2.4s,transform 1.4s cubic-bezier(.2,.7,.1,1) 2.4s}
+  .rv.in .hh-h{opacity:1;transform:none}
+  .rv .hh-b{opacity:0;transform:translateY(1cqw);transition:opacity .9s ease 3.9s,transform 1.1s cubic-bezier(.2,.7,.1,1) 3.9s}
+  .rv.in .hh-b{opacity:1;transform:none;animation:hhp 1.4s ease-out 4.8s 1}
+  @keyframes hhp{0%{box-shadow:0 0 0 0 rgba(217,188,140,.6)}100%{box-shadow:0 0 0 2.4cqw rgba(217,188,140,0)}}
+}
+
+/* before and after: captions sit under the frame so they never land on either site. The old site covers the frame first, then the new one wipes across in full, holds, and settles just past centre, so its headline and button show whole beside the old site's clutter */
+.cmp{position:relative;margin-top:var(--sp-in);aspect-ratio:16/10;max-width:100%;overflow:hidden;border-radius:6px;background:#1a1a1a;box-shadow:0 1px 0 var(--rule),0 24px 50px -34px rgba(0,0,0,.5)}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.cmp-b{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--x)) 0 0)}
+.cmp-h{position:absolute;top:0;bottom:0;left:var(--x);width:1px;margin-left:-.5px;background:#F4F2EC;box-shadow:0 0 12px rgba(0,0,0,.35);pointer-events:none}
+/* the handle: a solid warm-white knob with two ink arrows, so it reads as drag left and right on the dark site and the bright one alike */
+.cmp-h::after{content:"";position:absolute;top:50%;left:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:#F4F2EC url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.5 7.5 4.5 12l5 4.5z M14.5 7.5l5 4.5-5 4.5z' fill='%231B1C1D'/%3E%3C/svg%3E") center/26px 26px no-repeat;box-shadow:0 0 0 1px rgba(27,28,29,.1),0 6px 22px rgba(0,0,0,.4)}
+@media (max-width:700px){.cmp-h::after{width:44px;height:44px;margin:-22px 0 0 -22px;background-size:22px 22px}}
+.cmp-cap{display:flex;justify-content:space-between;padding-top:14px}
+.cmp input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize}
+/* section heads */
+section{padding-block:var(--sp-sec)}
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--rule);margin-bottom:clamp(28px,4vw,48px)}
+.head h2{margin:0;font-family:var(--serif);font-weight:300;font-optical-sizing:auto;letter-spacing:-.008em;text-transform:none;color:var(--graphite);font-size:clamp(28px,2.6vw,38px);line-height:1.1}
+
+/* work: every concept as a live tile, grouped by industry. Six-column grid so every group fills its rows:
+   a feature tile (four columns, two rows) with two tiles stacked beside it, then rows of three or of two */
+#work{padding-top:0}
+#work>.wrap>:last-child{margin-bottom:0}
+.ind{margin-top:var(--sp-sec)}
+.ind:first-of-type{margin-top:0}
+.ind .head{margin-bottom:clamp(20px,2.6vw,32px)}
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(16px,1.8vw,24px)}
+.tile{grid-column:span 2;margin:0;display:flex;flex-direction:column;min-width:0}
+.tile.half{grid-column:span 3}
+.tile.feat{grid-column:span 4;grid-row:span 2}
+/* each tile is the page alone, no browser chrome. The feature's page stretches so its caption lands level with the second stacked tile's */
+.frame{position:relative;border-radius:6px;overflow:hidden;background:#111;box-shadow:0 1px 0 var(--rule),0 24px 50px -34px rgba(0,0,0,.5);display:flex;flex-direction:column;transition:transform .5s cubic-bezier(.2,.7,.1,1),box-shadow .5s}
+.tile:hover .frame{transform:translateY(-3px);box-shadow:0 1px 0 var(--rule),0 34px 60px -34px rgba(0,0,0,.55)}
+.tile.feat .frame{flex:1}
+.page{position:relative;aspect-ratio:16/10;max-width:100%;overflow:hidden;background:#1a1a1a}
+.tile.feat .page{aspect-ratio:auto;flex:1;min-height:0}
+/* the feature is a touch taller than 16:10 to meet the stacked pair, so it crops from the right and keeps each headline whole */
+.tile.feat .page img{object-position:0 0}
+.page img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;transform-origin:50% 30%}
+/* two moments from each opening: the first holds, then a long crossfade, under a slow breathing push.
+   Each tile starts on its first frame when it arrives (and again if you come back), a beat after its neighbour. */
+.page img+img{opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  .play .page img{animation:push 10s ease-in-out var(--d,0s) infinite alternate backwards}
+  .play .page img+img{animation:push 10s ease-in-out var(--d,0s) infinite alternate backwards,swap 10s ease-in-out var(--d,0s) infinite backwards}
+}
+@keyframes push{from{transform:scale(1)}to{transform:scale(1.05)}}
+/* apply tile: a tap lands on the folder's back arrow just before the page turns to 314, and on the next arrow before it turns back */
+.tap{position:absolute;left:56.6%;top:66.9%;width:3.6%;aspect-ratio:1;margin:-1.8% 0 0 -1.8%;border-radius:50%;background:rgba(255,255,255,.35);box-shadow:0 0 0 2px rgba(255,255,255,.9),0 2px 10px rgba(0,0,0,.35);opacity:0;pointer-events:none}
+.tap.nx{left:91.3%;top:3.4%}
+@media (prefers-reduced-motion:no-preference){
+  .play .tap{animation:tap 10s ease-out var(--d,0s) infinite backwards}
+  .play .tap.nx{animation-delay:calc(var(--d,0s) + 4.8s)}
+}
+@keyframes tap{0%,30%{opacity:0;transform:scale(1.4)}34%{opacity:1;transform:scale(1)}37%{opacity:1;transform:scale(.78)}41%,100%{opacity:0;transform:scale(1.9)}}
+@keyframes swap{0%,40%{opacity:0}52%,88%{opacity:1}100%{opacity:0}}
+@media (max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tile,.tile.half{grid-column:span 1}.tile.feat{grid-column:1/-1;grid-row:auto}.tile.feat .page{aspect-ratio:16/10;flex:none}}
+@media (max-width:560px){.tiles{grid-template-columns:1fr}.tile.feat{grid-column:auto}}
+.note{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;margin-top:clamp(40px,5vw,64px);padding-top:18px;border-top:1px solid var(--rule)}
+
+/* studio line */
+.studio-line{display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--rule)}
+.studio-line p{margin:0;font-family:var(--display);font-weight:200;font-variation-settings:"wdth" 110;font-size:clamp(20px,2.2vw,30px);line-height:1.2;max-width:28ch;text-wrap:balance;color:var(--pencil)}
+
+/* inquiries */
+#inquiries{background:var(--sheet);border-top:1px solid var(--rule)}
+.inq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(32px,6vw,96px);align-items:start}
+.inq-l{display:grid;gap:clamp(28px,3.4vw,44px)}
+.direct{margin:0;display:grid;gap:6px}
+.direct a{font-family:var(--serif);font-variation-settings:"opsz" 144;font-weight:300;font-size:clamp(24px,2.2vw,30px);color:var(--graphite);text-decoration:none;width:fit-content;border-bottom:1px solid var(--rule);padding-bottom:4px;user-select:all;transition:border-color .3s}
+.direct a:hover{border-bottom-color:var(--patina)}
+form{display:grid;gap:18px}
+.f{display:grid;gap:6px}
+.f label{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--pencil)}
+.f label small{font-size:inherit;letter-spacing:inherit;text-transform:none;color:var(--faint)}
+.f input{font:inherit;font-size:19px;color:var(--graphite);background:transparent;border:0;border-bottom:1px solid var(--rule);padding:8px 0 10px;border-radius:0}
+.f input:focus{outline:none;border-bottom-color:var(--patina)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:560px){.two{grid-template-columns:1fr}}
+button{justify-self:start;font-family:var(--mono);font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--plaster);background:var(--graphite);border:0;padding:17px 28px;cursor:pointer;transition:background .2s}
+button:hover{background:var(--patina)}
+.msg{font-size:17px;color:var(--patina);margin:0}
+@media (max-width:820px){.inq{grid-template-columns:1fr}}
+
+footer{padding-block:28px 40px;border-top:1px solid var(--rule)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+/* the magazine: a printed object, so its paper keeps one look in both themes */
+:root{--paper:#F7F3EB;--ink:#1F1C18}
+.bk{padding-block:var(--sp-sec) 0}
+.bk-stage{display:flex;flex-direction:column;align-items:center;gap:clamp(28px,3.4vw,44px)}
+.bk-lie{width:min(1040px,100%,calc((100svh - 230px)*4/3));opacity:0;transform:translateY(70px) rotate(-4deg);transition:opacity 1.4s ease,transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.bk.in .bk-lie{opacity:1;transform:translateY(0) rotate(-4deg)}
+.bk.in.opened .bk-lie{transform:translateY(0) rotate(0deg)}
+.bk-book{position:relative;width:100%;aspect-ratio:4/3;perspective:2600px;touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none;outline:none}
+.bk-book:active{cursor:grabbing}
+.bk-book:focus-visible{outline:2px solid var(--patina);outline-offset:14px}
+.bk-shift{position:absolute;inset:0;transform:translateX(-25%);transition:transform 1.5s cubic-bezier(.645,.045,.355,1);transform-style:preserve-3d}
+.bk-book[data-st="open"] .bk-shift{transform:none}
+.bk-book[data-st="done"] .bk-shift{transform:translateX(25%)}
+/* a thin magazine lies close to the table, so its shadow is short and soft */
+.bk-base{position:absolute;top:0;bottom:0;left:50%;right:0;background:var(--paper);box-shadow:0 1px 2px rgba(0,0,0,.14),0 16px 28px -16px rgba(0,0,0,.36),0 44px 70px -44px rgba(0,0,0,.4);transition:left 1.5s cubic-bezier(.645,.045,.355,1),right 1.5s cubic-bezier(.645,.045,.355,1)}
+.bk-book[data-st="open"] .bk-base{left:0}
+.bk-book[data-st="done"] .bk-base{left:0;right:50%}
+/* creep: saddle-stitched sheets nest inside each other, so the inner ones reach a little further past the fore-edge (--cr is set per leaf) */
+.lf{position:absolute;top:0;bottom:0;left:50%;width:calc(50% + var(--cr,0px));transform-origin:0 50%;transform-style:preserve-3d;will-change:transform}
+.pg{position:absolute;inset:0;overflow:hidden;background:var(--paper);color:var(--ink);backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:inset -1px 0 0 rgba(0,0,0,.07)}
+.pg.b{transform:rotateY(180deg);box-shadow:inset 1px 0 0 rgba(0,0,0,.07)}
+.pg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pg.spl img,.pg.spr img{width:200%;max-width:none}
+.pg.spr img{left:-100%}
+/* the fold: soft, since the paper bends into the staples instead of a stiff spine */
+.pg::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.16),rgba(0,0,0,.04) 3%,rgba(0,0,0,0) 8%)}
+.pg.b::after{background:linear-gradient(270deg,rgba(0,0,0,.16),rgba(0,0,0,.04) 3%,rgba(0,0,0,0) 8%)}
+.pg .sh,.pg .cs{position:absolute;inset:0;pointer-events:none;opacity:0}
+.pg .sh{background:linear-gradient(270deg,rgba(0,0,0,.45),rgba(0,0,0,.14) 60%,rgba(255,255,255,.06))}
+.pg.b .sh{background:linear-gradient(90deg,rgba(0,0,0,.45),rgba(0,0,0,.14) 60%,rgba(255,255,255,.06))}
+.pg .cs{background:linear-gradient(90deg,rgba(0,0,0,.42),rgba(0,0,0,0) 50%)}
+.pg.b .cs{background:linear-gradient(270deg,rgba(0,0,0,.42),rgba(0,0,0,0) 50%)}
+/* cover: soft gloss stock with the masthead set in the sky */
+.pg.cv{color:#fff}
+.pg.bcv{background:var(--ink);color:#E9E2D5}
+.pg.bcv .tp span{color:rgba(233,226,213,.55)}
+.pg.cv::after{background:linear-gradient(90deg,rgba(0,0,0,.28),rgba(255,255,255,.16) .8%,rgba(0,0,0,.1) 2.2%,rgba(0,0,0,0) 5%)}
+.pg .gl{position:absolute;inset:0;pointer-events:none;background:linear-gradient(112deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.13) 47%,rgba(255,255,255,0) 58%),linear-gradient(180deg,rgba(0,0,0,.22),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 62%,rgba(0,0,0,.38))}
+/* dateline above, masthead below it, so the letters sit in the sky and stop short of the cornice */
+.pg .mh{position:absolute;left:0;right:0;top:2.6%;display:flex;flex-direction:column-reverse;align-items:center;gap:clamp(5px,.8vw,10px)}
+.pg .mh svg{width:42%;aspect-ratio:257.6/90.7;filter:drop-shadow(0 1px 10px rgba(0,0,0,.18))}
+.pg .mh span{font-family:var(--mono);font-size:clamp(6px,.7vw,9px);letter-spacing:.42em;text-transform:uppercase;opacity:.9}
+.pg .cvl{position:absolute;right:9%;bottom:7%;display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:clamp(4px,.6vw,8px)}
+.pg .cvl b{font-family:var(--serif);font-weight:300;font-size:clamp(14px,2vw,27px);line-height:1.04;letter-spacing:-.01em}
+.pg .cvl span{font-family:var(--mono);font-size:clamp(6px,.66vw,9px);letter-spacing:.24em;text-transform:uppercase;opacity:.85}
+/* the spine from outside: a soft fold with two staples */
+.pg .spn{position:absolute;top:0;bottom:0;left:0;width:2.4%;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.3),rgba(255,255,255,.18) 45%,rgba(0,0,0,0))}
+.pg.b .spn{left:auto;right:0;transform:scaleX(-1)}
+.pg .spn::before,.pg .spn::after,.pg .stp::before,.pg .stp::after{content:"";position:absolute;width:2px;height:6.5%;border-radius:1px;background:linear-gradient(90deg,#8d8f92,#e9eaec 50%,#7b7d80);box-shadow:0 .5px 1px rgba(0,0,0,.35)}
+.pg .spn::before,.pg .stp::before{top:23%}
+.pg .spn::after,.pg .stp::after{bottom:23%}
+.pg .spn::before,.pg .spn::after{left:1px}
+/* the staples from inside, on the centre spread only, where a real magazine shows them */
+.pg .stp{position:absolute;top:0;bottom:0;left:0;width:3px;pointer-events:none}
+.pg .stp::before,.pg .stp::after{left:0}
+.pg.b .stp{left:auto;right:0}
+.pg.b .stp::before,.pg.b .stp::after{left:auto;right:-1px}
+/* title page */
+.pg .tp{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:clamp(10px,1.4vw,18px)}
+.pg .tp svg{width:34%;aspect-ratio:257.6/90.7}
+.pg .tp i{display:block;width:18%;height:1px;background:rgba(31,28,24,.35)}
+.pg .tp b{font-family:var(--serif);font-weight:300;font-size:clamp(13px,1.9vw,26px);letter-spacing:-.005em;line-height:1.1}
+.pg .tp span,.pg .fo,.pg .kk,.pg .cap{font-family:var(--mono);font-size:clamp(6px,.72vw,9.5px);letter-spacing:.24em;text-transform:uppercase;color:#7d7468}
+.pg .tp span.bt{position:absolute;bottom:8%}
+.pg.bcv .tp svg{width:16%}
+.pg .fo{position:absolute;bottom:5.5%;right:9%}
+.pg.b .fo{right:auto;left:9%}
+.pg .tx{position:absolute;left:14%;right:12%;top:15%;bottom:12%;display:flex;flex-direction:column}
+.pg .tx b{font-family:var(--serif);font-weight:300;font-size:clamp(16px,2.6vw,36px);line-height:1.06;letter-spacing:-.012em;margin-top:clamp(14px,2vw,26px)}
+.pg .tx p{margin:auto 0 0;font-size:clamp(8px,1.12vw,15px);line-height:1.55;color:#4c463e;max-width:24em}
+/* contents, set the way the studio's own invoices were: tracked bold caps, italic values, hairline rules */
+.pg .toc{position:absolute;left:13%;right:12%;top:15%;bottom:14%;display:flex;flex-direction:column}
+.pg .toc ol{list-style:none;margin:clamp(18px,3vw,40px) 0 0;padding:0;border-top:1px solid rgba(31,28,24,.22)}
+.pg .toc li{display:grid;grid-template-columns:1fr auto;align-items:baseline;row-gap:3px;padding-block:clamp(8px,1.25vw,16px);border-bottom:1px solid rgba(31,28,24,.22)}
+.pg .toc li b{font-family:"Archivo",var(--sans,system-ui),sans-serif;font-weight:700;font-stretch:112%;font-size:clamp(7px,.86vw,11.5px);letter-spacing:.16em;text-transform:uppercase}
+.pg .toc li i,.pg .toc li em{font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:clamp(8px,1vw,13.5px);color:#5d564c}
+.pg .toc li i{grid-column:1}
+.pg .toc li em{grid-row:1;grid-column:2}
+/* section openers */
+.pg .op{position:absolute;left:14%;right:12%;top:12%;bottom:12%;display:flex;flex-direction:column}
+.pg .op .no{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(46px,8.6vw,118px);line-height:.8;letter-spacing:-.04em;color:#cdbfa8}
+.pg .op .kk{margin-top:auto;font-family:"Archivo",sans-serif;font-weight:700;font-stretch:112%;letter-spacing:.2em;color:#8a7a62}
+.pg .op b{font-family:var(--serif);font-weight:300;font-size:clamp(16px,2.6vw,36px);line-height:1.06;letter-spacing:-.012em;margin-top:clamp(10px,1.4vw,18px)}
+.pg .op .ad{font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:clamp(8px,1.05vw,14px);color:#5d564c;margin-top:clamp(5px,.7vw,9px)}
+.pg .op p{margin:clamp(14px,2vw,26px) 0 0;padding-top:clamp(10px,1.4vw,18px);border-top:1px solid rgba(31,28,24,.22);font-size:clamp(8px,1.05vw,14px);line-height:1.55;color:#4c463e;max-width:22em}
+/* plates: a picture set on the page with a margin, the way a magazine runs a drawing */
+/* every plate hangs from the same line, 17% down, so facing pictures share one top edge */
+.pg .pl{position:absolute;left:13%;right:13%;top:17%;bottom:14%;display:flex;flex-direction:column;justify-content:flex-start;gap:clamp(7px,1vw,13px)}
+.pg .pl img{position:static;display:block;width:100%;height:auto;max-height:88%;object-fit:contain;object-position:left center;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.pg .pl.t img{box-shadow:none}
+/* rendered / built: one small tag on the picture */
+.pg .tag{position:absolute;left:9%;bottom:6%;font-family:var(--mono);font-size:clamp(6px,.72vw,9.5px);letter-spacing:.28em;text-transform:uppercase;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.45)}
+.pg.b .tag{left:auto;right:9%}
+.pg .tag.l{left:auto;right:9%}
+/* a turning leaf is cut into strips that each bend a little more, so the paper curls instead of swinging like a board */
+.crl{position:absolute;top:0;bottom:0;left:50%;transform-style:preserve-3d;pointer-events:none}
+.crl .cst{position:absolute;top:0;bottom:0;left:0;transform-origin:0 50%;transform-style:preserve-3d}
+.crl .cst .cst{left:100%}
+.crl .cfc{position:absolute;top:0;bottom:0;left:0;width:calc(100% + .7px);overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.crl .cfc.r{transform:rotateY(180deg)}
+.crl .cfc>.pg{inset:auto;top:0;bottom:0;transform:none;backface-visibility:visible;-webkit-backface-visibility:visible}
+.crl .clt{position:absolute;inset:0;pointer-events:none}
+.bk-nav{display:flex;align-items:center;gap:18px;color:var(--pencil)}
+.bk-nav button{appearance:none;border:0;background:none;color:inherit;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;border-radius:50%;transition:color .3s ease,opacity .3s ease}
+.bk-nav button:hover{color:var(--graphite)}
+.bk-nav button:disabled{opacity:.25;cursor:default}
+.bk-nav svg{width:22px;height:22px}
+.bk-bar{width:clamp(120px,16vw,200px);height:1px;background:var(--rule);position:relative}
+.bk-bar i{position:absolute;left:0;top:-.5px;height:2px;width:var(--p,0%);background:var(--graphite);transition:width .9s cubic-bezier(.645,.045,.355,1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bk-base{box-shadow:0 0 0 1px rgba(255,255,255,.05),0 16px 28px -16px rgba(0,0,0,.7),0 44px 70px -44px rgba(0,0,0,.8)}}
+:root[data-theme="dark"] .bk-base{box-shadow:0 0 0 1px rgba(255,255,255,.05),0 16px 28px -16px rgba(0,0,0,.7),0 44px 70px -44px rgba(0,0,0,.8)}
+@media (prefers-reduced-motion:reduce){.bk-lie,.bk-shift,.bk-base{transition:none}.bk-lie{opacity:1;transform:none}}
+
+/* live work: the café and each made-up brand open as the real, working site in a full frame. Nothing of them loads until it is asked for, and the frame is emptied on close, so the page stays as quick as before */
+@media (min-width:761px){#live .st-row>:first-child{grid-column:1/5}#live .st-copy{grid-column:5/7}}
+.live{position:relative;display:block;width:100%;margin:var(--sp-in) 0 0;padding:0;border:0;border-radius:6px;overflow:hidden;aspect-ratio:16/9;max-width:100%;background:#1b1d2e;cursor:pointer;box-shadow:0 1px 0 var(--rule),0 30px 60px -36px rgba(0,0,0,.55);color:#fff;font:inherit}
+.live img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;transition:transform 2.4s cubic-bezier(.2,.7,.1,1)}
+.live::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 52%,rgba(12,14,30,.34),rgba(12,14,30,0) 70%);transition:opacity .6s}
+.live:hover img{transform:scale(1.025)}
+.live-go{position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:14px;padding:10px 26px 10px 10px;border-radius:12px;background:rgba(14,15,26,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(255,255,255,.28) inset,0 18px 40px -18px rgba(0,0,0,.6);font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:background .4s,box-shadow .4s}
+.live-go i{flex:none;width:44px;height:44px;border-radius:50%;background:#fff;color:#14151f;display:grid;place-items:center}
+.live-go svg{width:16px;height:16px;margin-left:3px}
+.live:hover .live-go{background:rgba(14,15,26,.66);box-shadow:0 0 0 1px rgba(255,255,255,.55) inset,0 18px 40px -18px rgba(0,0,0,.6)}
+@media (max-width:560px){.live{aspect-ratio:4/5}.live img{object-position:38% 50%}.live-go{padding-right:20px;font-size:12px}.live-go i{width:38px;height:38px}}
+@media (prefers-reduced-motion:no-preference){.rv .live{opacity:0;transform:translateY(16px);transition:opacity 1.4s cubic-bezier(.2,.7,.1,1) .8s,transform 1.4s cubic-bezier(.2,.7,.1,1) .8s}.rv.in .live{opacity:1;transform:none}}
+/* Soft Riot: the store and its app open side by side. The store hangs on its wall, the app stands on its own phone-shaped cover, and the app lands a beat after the store */
+@media (min-width:761px){#riot .st-row>:first-child{grid-column:1/5}#riot .st-copy{grid-column:5/7}}
+.lv-pair{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(16px,1.8vw,24px);margin:var(--sp-in) 0 0}
+.lv-pair .live{grid-column:1/5;margin:0;aspect-ratio:16/10}
+.lv-pair .live.ph{grid-column:5/7;aspect-ratio:auto;height:100%}
+.live.sr{background:#E6E7E1}
+.live.sr::after{background:radial-gradient(60% 60% at 50% 52%,rgba(16,17,14,.2),rgba(16,17,14,0) 70%)}
+@media (max-width:760px){.lv-pair{grid-template-columns:minmax(0,1fr)}.lv-pair .live{grid-column:auto;aspect-ratio:1}.lv-pair .live.ph{grid-column:auto;aspect-ratio:4/5;height:auto}.live.sr img{object-position:50% 50%}}
+@media (prefers-reduced-motion:no-preference){.rv .lv-pair .live.ph{transition-delay:1.15s,1.15s}}
+/* owner's side (#visual, #ourwork): each Flagship business opens on three tiles, the place, the app and the owner's books */
+.lv-pair.tri{grid-template-columns:repeat(12,minmax(0,1fr))}
+.lv-pair.tri .live{grid-column:1/6}
+.lv-pair.tri .live.ph{grid-column:6/9}
+.lv-pair.tri .live.own{grid-column:9/13;aspect-ratio:auto;height:100%}
+.live.own img{object-position:0 0}
+.live.own.lu{background:#0D0F1C}#ladder .live.own.av{aspect-ratio:1440/460;background:#E6DED2}#ladder .live.own.av::after{background:radial-gradient(50% 70% at 50% 52%,rgba(30,24,16,.22),rgba(30,24,16,0) 70%)}#ladder .live.own.av img{object-position:50% 0}@media (max-width:760px){#ladder .live.own.av{aspect-ratio:4/5}#ladder .live.own.av img{object-position:0 0}}
+@media (max-width:1100px) and (min-width:761px){.lv-pair.tri .live{grid-column:1/-1}.lv-pair.tri .live.ph{grid-column:1/7;aspect-ratio:4/5;height:auto}.lv-pair.tri .live.own{grid-column:7/13;aspect-ratio:4/5;height:auto}}
+@media (max-width:760px){.lv-pair.tri{grid-template-columns:minmax(0,1fr)}.lv-pair.tri .live,.lv-pair.tri .live.ph{grid-column:auto}.lv-pair.tri .live.own{grid-column:auto;aspect-ratio:4/5;height:auto}.live.own.lu img,.live.own.sr img{object-position:0 0}}
+@media (prefers-reduced-motion:no-preference){.rv .lv-pair .live.own{transition-delay:1.5s,1.5s}}
+/* Luna’s: the café and its ordering app open side by side, the same way. The app stands on the café’s cool studio grey */
+.live.lu{background:#DADFE8}
+.live.lu::after{background:radial-gradient(60% 60% at 50% 52%,rgba(12,14,30,.2),rgba(12,14,30,0) 70%)}
+@media (max-width:760px){.live.lu img{object-position:50% 50%}}
+.tile[data-site]{cursor:pointer}
+.tile[data-site]:focus{outline:none}
+.tile[data-site]:focus-visible .frame{outline:2px solid var(--patina);outline-offset:3px}
+.go{position:absolute;z-index:2;right:14px;bottom:14px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(14,14,14,.42);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 0 0 1px rgba(255,255,255,.4) inset;opacity:0;transform:scale(.9);transition:opacity .5s,transform .5s cubic-bezier(.2,.7,.1,1)}
+.go svg{width:15px;height:15px}
+.tile:hover .go,.tile:focus-visible .go{opacity:1;transform:none}
+@media (hover:none){.go{opacity:1;transform:none}}
+/* offers: the engagements as one room. Overview first, then each tier on its own page, add-ons last.
+   Tier pages share the statement grid: the name and the included list on columns 1 to 3, terms from column 4, so every edge lines up with the headlines above */
+#offers{border-top:1px solid var(--rule)}
+#offers .st{margin:0}
+.of-tabs{display:flex;gap:6px;margin-top:var(--sp-in);overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.of-tabs::-webkit-scrollbar{display:none}
+.of-tabs button{flex:none;border:0;border-radius:12px;padding:11px 20px;background:var(--tan);color:var(--pencil);font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .4s,color .4s}
+.of-tabs button:hover{color:var(--graphite)}
+.of-tabs button[aria-selected="true"]{background:var(--graphite);color:var(--plaster)}
+.of-panel{margin-top:clamp(28px,4vw,48px)}
+.of-panel.on{animation:ofin .9s cubic-bezier(.2,.7,.1,1) both}
+@keyframes ofin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.of-panel.on{animation:none}}
+.of-tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-g);align-items:stretch}
+.of-tier{position:relative;display:flex;flex-direction:column;min-width:0;background:var(--sheet);border-radius:6px;padding:clamp(26px,2.6vw,38px);padding-top:calc(clamp(26px,2.6vw,38px) + 26px);box-shadow:0 1px 0 var(--rule),0 24px 50px -40px rgba(0,0,0,.4);overflow:hidden}
+.of-bar{position:absolute;left:0;right:0;top:0;height:34px;display:flex;align-items:center;justify-content:center;background:var(--graphite);color:var(--plaster);font-size:12px}
+/* recommended: a tan band with dark type, a 12px break in the page colour under it, and one 2px ink line around band and card together */
+.of-tier.rec{border-radius:12px;overflow:visible;background:linear-gradient(var(--tan) 0 34px,var(--plaster) 34px 46px,var(--sheet) 46px)}
+.of-tier.rec::after{content:"";position:absolute;inset:0;border:2px solid var(--graphite);border-radius:12px;pointer-events:none}
+.of-tier.rec .of-bar{background:none;color:var(--graphite);font-weight:500;font-size:12px;letter-spacing:.14em;text-indent:.14em}
+@media (max-width:900px){.of-tier.rec{padding-top:calc(clamp(26px,2.6vw,38px) + 46px)}}
+.of-n{color:var(--patina)}
+.of-name{margin:14px 0 0;font-family:var(--serif);font-weight:300;font-optical-sizing:auto;font-size:clamp(30px,2.6vw,40px);line-height:1.05;letter-spacing:-.01em;color:var(--graphite)}
+.of-p{margin:18px 0 0;font-family:var(--display);font-weight:200;font-variation-settings:"wdth" 125;font-size:clamp(40px,4vw,58px);line-height:.95;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--graphite)}
+.of-from{margin-right:10px;font-size:12px;letter-spacing:.14em;vertical-align:.5em}
+.of-line{margin:14px 0 0;font-size:clamp(17px,1.35vw,19px);line-height:1.45;color:var(--pencil);text-wrap:balance}
+.of-tier .of-line{min-height:2.9em}
+.of-list{list-style:none;margin:22px 0 0;padding:0}
+.of-list li{padding:11px 0;border-top:1px solid var(--rule);font-size:16.5px;line-height:1.4}
+.of-list.lg li{padding:14px 0;font-size:clamp(17px,1.3vw,19px)}
+.of-list li:last-child{border-bottom:1px solid var(--rule)}
+.of-up{margin:18px 0 0;display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:13px 16px;border-radius:6px;background:var(--tint);font-size:16.5px}
+.of-up span{display:flex;flex-direction:column;gap:3px}
+.of-up .mono{font-size:12px;color:var(--patina)}
+.of-up b{font-weight:500;color:var(--patina);white-space:nowrap}
+.of-tier .of-meta{margin-top:auto;padding-top:26px}
+.of-meta{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0;align-items:baseline}
+.of-meta dt{font-size:12px}
+.of-meta dd{margin:0;font-size:16.5px;text-align:right}
+.of-meta.lg{gap:0;grid-template-columns:auto 1fr;align-items:stretch}
+.of-meta.lg dt,.of-meta.lg dd{padding:14px 0;border-top:1px solid var(--rule)}
+.of-meta.lg dt{padding-top:19px}
+.of-meta.lg dd{font-size:clamp(17px,1.3vw,19px);text-wrap:balance;padding-left:24px}
+.of-more{margin:22px 0 0;align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:0;border:0;background:none;color:var(--graphite);font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.of-more svg,.of-see svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s cubic-bezier(.2,.7,.1,1)}
+.of-more:hover svg{transform:translateX(4px)}
+.of-hd{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--sp-g);align-items:end;padding-bottom:clamp(24px,3vw,36px);border-bottom:1px solid var(--rule)}
+.of-hd>:first-child{grid-column:1/4}
+.of-hp{grid-column:4/7;display:flex;align-items:baseline;justify-content:space-between;gap:24px}
+.of-hp .of-p{margin:0}
+.of-hp .of-line{margin:0;max-width:22ch;text-align:right}
+.of-title{margin:12px 0 0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(48px,6vw,88px);line-height:.95;letter-spacing:-.02em;color:var(--graphite)}
+.of-rec{display:inline-block;margin-left:14px;padding:5px 10px;border-radius:12px;background:var(--tan);color:var(--graphite);font-weight:500;font-size:12px;vertical-align:1px}
+.of-body{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--sp-g);margin-top:clamp(28px,3.4vw,44px)}
+.of-a{grid-column:1/4;min-width:0}
+.of-b{grid-column:4/7;min-width:0;display:flex;flex-direction:column;gap:clamp(28px,3vw,40px)}
+.of-lbl{display:block;font-size:12px;margin-bottom:12px}
+.of-a .of-list{margin:0}
+.of-add{margin-top:clamp(24px,3vw,36px);padding:clamp(22px,2.4vw,30px);border-radius:6px;background:var(--tint)}
+.of-add-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.of-add-h .mono{font-size:12px;color:var(--patina)}
+.of-add-h b{font-family:var(--display);font-weight:300;font-variation-settings:"wdth" 125;font-size:clamp(26px,2.2vw,32px);letter-spacing:-.01em;color:var(--patina)}
+.of-add-n{margin:10px 0 0;font-family:var(--serif);font-weight:300;font-size:clamp(26px,2.2vw,32px);line-height:1.1;color:var(--graphite)}
+.of-add-l{margin:8px 0 0;max-width:40ch;font-size:clamp(17px,1.3vw,19px);line-height:1.45;color:var(--pencil)}
+.of-add .of-list{margin-top:14px}
+.of-add .of-list li{border-color:rgba(46,81,73,.16)}
+.of-play{margin-top:20px;display:inline-flex;align-items:center;gap:12px;padding:6px 20px 6px 6px;border:0;border-radius:12px;background:var(--graphite);color:var(--plaster);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:transform .4s cubic-bezier(.2,.7,.1,1)}
+.of-play:hover{transform:translateY(-2px)}
+.of-play i{width:32px;height:32px;border-radius:50%;background:var(--plaster);color:var(--graphite);display:grid;place-items:center}
+.of-play svg{width:11px;height:11px;margin-left:2px;fill:currentColor}
+.of-care{display:grid;grid-template-columns:1fr auto;align-items:baseline;column-gap:18px;padding-top:14px;border-top:1px solid var(--rule)}
+.of-care .of-lbl{margin:0}
+.of-care b{font-weight:400;font-size:clamp(17px,1.3vw,19px)}
+.of-care p{grid-column:1/-1;margin:8px 0 0;max-width:42ch;font-size:16.5px;line-height:1.5;color:var(--pencil)}
+.of-see{display:flex;flex-direction:column}
+.of-see a{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--rule);font-family:var(--serif);font-weight:300;font-size:clamp(22px,1.9vw,28px);text-decoration:none;color:var(--graphite)}
+.of-see a:last-child{border-bottom:1px solid var(--rule)}
+.of-see a:hover svg{transform:translate(3px,-3px)}
+.of-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-g);margin-top:clamp(28px,3.4vw,44px)}
+.of-rows{list-style:none;margin:0;padding:0}
+.of-rows li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-top:1px solid var(--rule);font-size:clamp(17px,1.3vw,19px)}
+.of-rows li:last-child{border-bottom:1px solid var(--rule)}
+.of-rows small{display:block;margin-top:3px;font-size:14.5px;color:var(--pencil)}
+.of-rows b{font-weight:400;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (max-width:900px){.of-tiers,.of-cols{grid-template-columns:1fr}.of-hd,.of-body{grid-template-columns:1fr}.of-hd>:first-child,.of-hp,.of-a,.of-b{grid-column:auto}.of-hp{flex-direction:column;align-items:flex-start;gap:10px}.of-hp .of-line{text-align:left}}
+/* who is this for: one pain per offer, set on the statement grid. The question takes columns 1 to 3, the answer and its offer start on column 4, the same line as the copy above. Each row reveals on its own as it arrives, and a tap opens that offer's page below */
+#fit{border-top:1px solid var(--rule)}
+#fit .st{margin:0}
+.fit{margin-top:var(--sp-in)}
+.fit-row{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--sp-g);padding:clamp(28px,3.4vw,48px) 0;text-decoration:none;color:inherit;cursor:pointer}
+.fit-row::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--rule);transform-origin:0 50%}
+.fit-row:last-child::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--rule)}
+.fit-q{grid-column:1/4;margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(30px,3.2vw,46px);line-height:1.06;letter-spacing:-.014em;color:var(--graphite);text-wrap:balance}
+.fit-a{grid-column:4/7;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.fit-a p{margin:0;max-width:34ch;font-size:clamp(19px,1.5vw,21px);line-height:1.5;color:var(--pencil);text-wrap:balance}
+.fit-a b{display:block;max-width:26ch;font-family:var(--serif);font-weight:300;font-optical-sizing:auto;font-size:clamp(24px,2.1vw,30px);line-height:1.15;letter-spacing:-.008em;color:var(--graphite);text-wrap:balance}
+.fit-go{margin-top:10px;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--patina)}
+.fit-go svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s cubic-bezier(.2,.7,.1,1)}
+.fit-row:hover .fit-go svg,.fit-row:focus-visible .fit-go svg{transform:translateX(4px)}
+.fit-row:focus-visible{outline-offset:-2px}
+@media (max-width:760px){.fit-row{grid-template-columns:minmax(0,1fr);gap:16px}.fit-q,.fit-a{grid-column:auto}}
+@media (prefers-reduced-motion:no-preference){
+  .fit-row.rv::before{transform:scaleX(0);transition:transform 1.8s cubic-bezier(.6,0,.2,1)}
+  .fit-row.rv.in::before{transform:none}
+  .fit-row.rv>*{opacity:0;transform:translateY(14px);transition:opacity 1.4s cubic-bezier(.2,.7,.1,1) .35s,transform 1.4s cubic-bezier(.2,.7,.1,1) .35s}
+  .fit-row.rv>.fit-a{transition-delay:.8s}
+  .fit-row.rv.in>*{opacity:1;transform:none}
+}
+/* opening previews, shown only from their own links: #pain and #found bring the three seconds up to sit right under the hero */
+html.ld-on #you{margin-block:0 var(--sp-sec)}
+/* our work, shown only from its own link (#ourwork): studio work and concepts read as one body of work, sorted by offer. Arden Architects adds its materials library, Mountain & Valley its app, Halden House adds a resident app with its owner board, and under the before and after three paired crops prove each of the three seconds */
+.ow-tg{font-style:italic;color:var(--pencil);margin-left:.28em}
+.ow-band .head{flex-wrap:nowrap;align-items:flex-end}.ow-band .head h2{min-width:0}
+@media (max-width:760px){.ow-tg{display:block;margin-left:0}}
+#ladder .tiles{margin-top:var(--sp-in)}
+.ow-cap{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:16px;min-width:0}
+.ow-cap .mono{color:var(--graphite)}
+.ow-cap em{font-family:var(--serif);font-weight:300;font-size:clamp(17px,1.35vw,19px);color:var(--pencil);text-align:right}
+@media (max-width:900px){#ladder .tiles{grid-template-columns:minmax(0,1fr);gap:40px}#ladder .tile{grid-column:auto}}
+@media (min-width:761px){#halden .st-row>:first-child{grid-column:1/5}#halden .st-copy{grid-column:5/7}}
+.live.hd{background:#16120D}
+@media (min-width:761px){#arden .st-row>:first-child,#mv .st-row>:first-child{grid-column:1/5}#arden .st-copy,#mv .st-copy{grid-column:5/7}}
+.live.ar{background:#3A3438}
+.live.ar::after{background:radial-gradient(60% 60% at 50% 52%,rgba(28,22,24,.26),rgba(28,22,24,0) 70%)}
+.live.own.ar{background:#E6DED2}.live.own.ar img{object-position:50% 0}
+.live.own.ar::after{background:radial-gradient(60% 60% at 50% 52%,rgba(30,24,16,.22),rgba(30,24,16,0) 70%)}
+.live.mv{background:#1FA6E2}
+.live.mv::after{background:radial-gradient(60% 60% at 50% 52%,rgba(8,40,90,.12),rgba(8,40,90,0) 70%)}
+@media (max-width:760px){.live.mv img,.live.ar img{object-position:50% 50%}.live.own.ar img{object-position:50% 0}}
+.live.hd::after{background:radial-gradient(60% 60% at 50% 52%,rgba(22,18,13,.24),rgba(22,18,13,0) 70%)}
+#ow-flagship+.st{margin-top:0}
+.ow-fx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-g);margin-top:var(--sp-g)}
+.ow-fx figure{margin:0;min-width:0}
+.ow-fx-p{display:grid;grid-template-columns:1fr 1fr;gap:2px;aspect-ratio:16/10;max-width:100%;border-radius:6px;overflow:hidden;background:var(--plaster);box-shadow:0 1px 0 var(--rule),0 24px 50px -34px rgba(0,0,0,.5)}
+.ow-fx-p span{position:relative;min-width:0;overflow:hidden;background:#1a1a1a}
+.ow-fx-p img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ow-fx-p b{position:absolute;z-index:1;left:10px;bottom:10px;padding:7px 10px;border-radius:12px;font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(14,14,14,.52);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.ow-fx figcaption{display:grid;gap:10px;padding-top:16px}
+.ow-fx figcaption p{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(18px,1.45vw,21px);line-height:1.35;color:var(--graphite);text-wrap:balance}
+.ow-fx figcaption p em{color:var(--pencil)}
+@media (prefers-reduced-motion:no-preference){
+  .ow-fx-a img,.ow-fx-a b{clip-path:inset(0 0 0 100%);transition:clip-path 1.5s cubic-bezier(.2,.7,.1,1) var(--fd,.6s)}
+  #ba.in .ow-fx-a img,#ba.in .ow-fx-a b{clip-path:inset(0)}
+  .ow-fx figure:nth-child(2){--fd:1s}.ow-fx figure:nth-child(3){--fd:1.4s}
+}
+@media (max-width:760px){.ow-fx{grid-template-columns:minmax(0,1fr);gap:40px}}
+/* step numbers, in the previews only (#visual, #ourwork): each name carries its number beside it so the row reads as steps; Decide's line says what that step asks */
+.sn-on .steps b{display:inline-flex;align-items:baseline;gap:.42em}
+.steps .sn{font-size:14px;color:var(--pencil)}
+/* Decide, in the step visuals preview: one company, Ashlar & Pine, at Refresh, Signature and Flagship. The three frames rise from one stack and fan out; Signature, the recommended offer, sits forward in the middle */
+.sv-fan{position:relative;width:100%;height:var(--h);--cw:min(calc(var(--h)*.86),44%)}
+.sv-c{position:absolute;left:50%;bottom:26px;width:var(--cw);margin-left:calc(var(--cw)/-2);transform:var(--t)}
+.sv-c .sv-br{display:block;width:100%}
+.sv-c.c1{--t:translateX(-58%) rotate(-4deg)}
+.sv-c.c2{--t:translateY(-6px) scale(1.06);z-index:2}
+.sv-c.c3{--t:translateX(58%) rotate(4deg)}
+.sv-o .sv-v img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:0 0}
+.sv-lb{position:absolute;left:0;right:0;bottom:0;height:12px}
+.sv-lb b{position:absolute;left:50%;bottom:0;transform:translateX(-50%);font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--pencil);white-space:nowrap}
+.sv-lb b:nth-child(1){left:calc(50% - var(--cw)*.6)}
+.sv-lb b:nth-child(2){color:var(--graphite)}
+.sv-lb b:nth-child(3){left:calc(50% + var(--cw)*.6)}
+@media (prefers-reduced-motion:no-preference){
+  .rv .sv-c{opacity:0;transform:translateY(12px);transition:opacity 1.2s ease 2.4s,transform 1.9s cubic-bezier(.2,.7,.1,1) 3s}
+  .rv .sv-c.c2{transition-delay:2.2s,3s}
+  .rv.in .sv-c{opacity:1;transform:var(--t)}
+  .rv .sv-lb{opacity:0;transition:opacity 1.2s ease 4.2s}
+  .rv.in .sv-lb{opacity:1}
+}
+/* step visuals, shown only from their own link (#visual): a picture sits above each step, all three on one baseline. Preview is the opening screen on a phone, Decide is the before and after split, Build is the full site arriving section by section */
+.sv{--h:clamp(176px,14.5vw,214px);margin:0 0 18px;width:100%;height:var(--h);display:flex;align-items:flex-end;justify-content:center;min-width:0}
+.sv img{display:block;max-width:none}
+.sv-ph{flex:none;height:var(--h);width:calc(var(--h)*336/726);padding:3px;border-radius:12px;background:#0B0E14;box-shadow:0 0 0 1px var(--rule),0 24px 44px -28px rgba(0,0,0,.6)}
+.sv-ph img{width:100%;height:100%;object-fit:cover;border-radius:9px}
+.sv-br{flex:none;width:min(calc((var(--h) - 14px)*1.6),100%);border-radius:12px;overflow:hidden;background:var(--sheet);box-shadow:0 0 0 1px var(--rule),0 24px 44px -28px rgba(0,0,0,.6)}
+.sv-bar{display:flex;align-items:center;gap:4px;height:14px;padding:0 8px;border-bottom:1px solid var(--rule)}
+.sv-bar i{width:5px;height:5px;border-radius:50%;background:var(--faint);opacity:.45}
+.sv-v{position:relative;display:block;width:100%;aspect-ratio:16/10;overflow:hidden;background:var(--sheet)}
+.sv-d .sv-v img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sv-af{clip-path:inset(0 0 0 50%)}
+.sv-h{position:absolute;top:0;bottom:0;left:50%;width:1px;margin-left:-.5px;background:#F4F2EC;box-shadow:0 0 8px rgba(0,0,0,.35)}
+.sv-h::after{content:"";position:absolute;top:50%;left:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#F4F2EC url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.5 7.5 4.5 12l5 4.5z M14.5 7.5l5 4.5-5 4.5z' fill='%231B1C1D'/%3E%3C/svg%3E") center/13px 13px no-repeat;box-shadow:0 0 0 1px rgba(27,28,29,.1),0 4px 12px rgba(0,0,0,.4)}
+.sv-pg{position:absolute;left:0;top:0;width:100%;display:flex;flex-direction:column}
+.sv-pg img{width:100%;height:auto}
+@media (max-width:760px){.sv{--h:196px}}
+@media (prefers-reduced-motion:no-preference){
+  .rv .sv-ph img{filter:blur(10px) saturate(.5);transform:scale(1.06);transition:filter 1.6s cubic-bezier(.2,.7,.1,1) 2.2s,transform 2s cubic-bezier(.2,.7,.1,1) 2.2s}
+  .rv.in .sv-ph img{filter:none;transform:none}
+  .rv .sv-af{clip-path:inset(0 0 0 100%);transition:clip-path 2.6s cubic-bezier(.6,0,.2,1) 2.8s}
+  .rv.in .sv-af{clip-path:inset(0 0 0 50%)}
+  .rv .sv-h{left:100%;transition:left 2.6s cubic-bezier(.6,0,.2,1) 2.8s}
+  .rv.in .sv-h{left:50%}
+  .rv .sv-pg img{opacity:0;transform:translateY(28px)}
+  .rv.in .sv-pg img{animation:sv-in 1.3s cubic-bezier(.2,.7,.1,1) var(--d) forwards}
+  .rv.in .sv-pg{animation:sv-go 10s cubic-bezier(.6,0,.2,1) 3s forwards}
+}
+@keyframes sv-in{to{opacity:1;transform:none}}
+.sv-fl{perspective:900px}
+.sv-fl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;opacity:0;transform-origin:0 50%;backface-visibility:hidden}
+.sv-fl img.on{opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  .rv .sv-fl img:first-child{opacity:0;transition:opacity 1.4s ease 2.6s}
+  .rv.in .sv-fl img:first-child{opacity:1}
+  .sv-fl img.on:not(:first-child),.sv-fl img.on[style]{animation:sv-flip 1.6s cubic-bezier(.2,.7,.1,1) both}
+}
+@keyframes sv-flip{from{opacity:0;transform:rotateY(-24deg) translateX(14%);box-shadow:-24px 0 40px rgba(0,0,0,.35)}to{opacity:1;transform:none;box-shadow:0 0 0 rgba(0,0,0,0)}}
+@keyframes sv-go{0%,7%{transform:none}20%,27%{transform:translateY(-19.493%)}40%,47%{transform:translateY(-38.499%)}60%,67%{transform:translateY(-48.148%)}80%,87%{transform:translateY(-62.573%)}100%{transform:translateY(-80.507%)}}
+/* the frame: a dark room with the site in a window, edge to edge on a phone */
+html.lv-on{overflow:hidden}
+.lv{position:fixed;inset:0;z-index:100;background:rgba(9,9,8,.78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;transition:opacity .45s ease}
+.lv.in{opacity:1}
+.lv-win{position:absolute;inset:clamp(12px,2.2vw,32px);display:flex;flex-direction:column;border-radius:10px;overflow:hidden;background:#141311;box-shadow:0 0 0 1px rgba(255,255,255,.07),0 40px 90px -30px rgba(0,0,0,.8);transform:translateY(14px) scale(.985);transition:transform .6s cubic-bezier(.2,.7,.1,1)}
+.lv.in .lv-win{transform:none}
+.lv-bar{flex:none;height:46px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 8px 0 18px;background:#1b1a17;border-bottom:1px solid rgba(255,255,255,.06)}
+.lv-dots{display:flex;gap:7px}
+.lv-dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.16)}
+.lv-name{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(236,231,222,.62);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lv-act{display:flex;justify-content:flex-end;gap:2px}
+.lv-act button{width:38px;height:38px;border:0;border-radius:50%;padding:0;background:none;color:rgba(236,231,222,.8);display:grid;place-items:center;cursor:pointer;transition:background .3s,color .3s}
+.lv-act button:hover{background:rgba(255,255,255,.08);color:#fff}
+.lv-act svg{width:17px;height:17px}
+.lv-view{position:relative;flex:1;min-height:0;background:#141311}
+.lv-view iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff;opacity:0;transition:opacity .6s ease}
+.lv-view iframe.on{opacity:1}
+.lv-view::before{content:"";position:absolute;left:50%;top:50%;width:120px;height:1px;margin-left:-60px;background:rgba(236,231,222,.14);opacity:0;transition:opacity .4s}
+.lv-view::after{content:"";position:absolute;left:50%;top:50%;width:36px;height:1px;margin-left:-60px;background:rgba(236,231,222,.75);opacity:0;transition:opacity .4s}
+.lv-view.wait::before,.lv-view.wait::after{opacity:1}
+@media (prefers-reduced-motion:no-preference){.lv-view.wait::after{animation:lvl 1.4s cubic-bezier(.6,0,.4,1) infinite}}
+@keyframes lvl{from{transform:translateX(0)}to{transform:translateX(84px)}}
+.lv-win:fullscreen{inset:0;border-radius:0}
+@media (max-width:700px){.lv-win{inset:0;border-radius:0}.lv-bar{height:calc(48px + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) max(6px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}.lv-fs{display:none!important}}
+/* next round (#visual, #ourwork): the developer tile runs the full width; each offer sits under its question on the question's left edge, its foot level with the foot of the answer beside it */
+.nx .tile.wide{grid-column:1/-1}
+.nx .tile.wide .page{aspect-ratio:16/10}
+.nx .tile.wide .page img{object-position:50% 0}
+.nx .fit-l{grid-column:1/4;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+.nx .fit-l .fit-q{grid-column:auto}
+.nx .fit-of{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.nx .fit-chip{display:inline-flex;align-items:center;gap:12px;height:46px;padding:0 20px;border-radius:12px;background:var(--graphite);color:var(--plaster);font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:background .3s}
+.nx .fit-chip svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s cubic-bezier(.2,.7,.1,1)}
+.nx .fit-row:hover .fit-chip,.nx .fit-row:focus-visible .fit-chip{background:var(--patina)}
+.nx .fit-row:hover .fit-chip svg,.nx .fit-row:focus-visible .fit-chip svg{transform:translateX(4px)}
+.nx .fit-of em{font-family:var(--text);font-size:19px;color:var(--pencil)}
+.nx .fit-a{justify-content:flex-end}
+@media (max-width:760px){.nx .fit-l{display:contents}.nx .fit-of{order:3;margin-top:8px}.nx .fit-of em{font-size:17px}}
+@media (prefers-reduced-motion:no-preference){.nx .fit-row.rv>.fit-l{opacity:1;transform:none}.nx .fit-row.rv .fit-l>*{opacity:0;transform:translateY(14px);transition:opacity 1.4s cubic-bezier(.2,.7,.1,1) .35s,transform 1.4s cubic-bezier(.2,.7,.1,1) .35s}.nx .fit-row.rv .fit-of{transition-delay:1.25s}.nx .fit-row.rv.in .fit-l>*{opacity:1;transform:none}}
+/* the twenty years close the page, and the band hands over to the book: the light reaches your business, the lines give way, and the magazine opens in the same place */
+.nx #about{border-top:1px solid var(--rule)}
+.ab-on .yrs-track{height:420vh}
+.ab-on .yrs-pin .yrs{opacity:calc(1 - var(--bk,0));transform:translateY(calc(var(--bk,0) * -48px))}
+.ab-on .yrs-pin .bk{position:absolute;inset:0;padding:0;display:flex;align-items:center;justify-content:center;opacity:var(--bk,0);visibility:hidden;pointer-events:none}
+.ab-on .yrs-track.bk-in .yrs-pin .bk{visibility:visible;pointer-events:auto}
+.ab-on .yrs-pin .bk-stage{width:100%}
+</style>
+<style>
+#offers .of-tier .of-name{margin-top:0}
+#offers .of-tier .of-line{margin-top:12px;min-height:0}
+#offers .of-hp{justify-content:flex-end}
+#offers .of-care{grid-template-columns:1fr}
+.of-cta{display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;margin-top:clamp(40px,5vw,64px);padding-top:clamp(28px,3vw,40px);border-top:1px solid var(--rule)}
+.of-cta p{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(28px,2.8vw,40px);line-height:1.1;letter-spacing:-.01em;color:var(--graphite);text-wrap:balance}
+.of-go{display:inline-flex;align-items:center;gap:12px;padding:17px 26px;border-radius:12px;background:var(--graphite);color:var(--plaster);font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background .3s}
+.of-go:hover{background:var(--patina)}
+.of-go svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s cubic-bezier(.2,.7,.1,1)}
+.of-go:hover svg{transform:translateX(4px)}
+@media (prefers-reduced-motion:no-preference){.of-cta.rv>*{opacity:0;transform:translateY(14px);transition:opacity 1.3s cubic-bezier(.2,.7,.1,1),transform 1.3s cubic-bezier(.2,.7,.1,1)}.of-cta.rv>:nth-child(2){transition-delay:.35s}.of-cta.rv.in>*{opacity:1;transform:none}}
+@media (max-width:760px){.of-cta{flex-direction:column;align-items:flex-start}}
+/* the one ask: every button that asks for the preview looks the same, 12px corners */
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:12px;border:1px solid transparent;font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .35s,color .35s,border-color .35s}
+.pill.pl{background:#fff;color:#1F1C18}
+.pill.pl:hover{background:#F1EBE1}
+.pill.po{border-color:rgba(255,255,255,.72);color:#fff;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.pill.po:hover{border-color:#fff;background:rgba(255,255,255,.14)}
+.pill.pd{background:var(--graphite);color:var(--plaster)}
+.pill.pd:hover{background:var(--patina)}
+button.pill{padding:0 26px;justify-self:start}
+/* hero: the mark on top, the promise and the ask at the foot of the film */
+.fold-bg::after{background:linear-gradient(180deg,rgba(30,40,70,.10) 0%,rgba(30,40,70,.06) 46%,rgba(20,28,56,.42) 100%)}
+.fold-hl{position:absolute;left:0;right:0;bottom:clamp(44px,9.5svh,108px);display:flex;flex-direction:column;align-items:center;gap:clamp(22px,3.4svh,36px);text-align:center;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.fh{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(30px,min(5.4svh,3.7vw),60px);line-height:1.08;letter-spacing:-.016em;color:#fff;text-wrap:balance;text-shadow:0 1px 28px rgba(12,16,44,.45)}
+.fh em{font-style:italic}
+.fold-go{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+@media (prefers-reduced-motion:no-preference){.fh{animation:up 1.6s cubic-bezier(.2,.7,.1,1) 1.8s both}.fold-go{animation:up 1.6s cubic-bezier(.2,.7,.1,1) 2.5s both}}
+@media (max-width:760px){.fold-hl{bottom:calc(36px + env(safe-area-inset-bottom,0px))}.fh{font-size:clamp(28px,7.6vw,34px)}.fold-go{flex-direction:column;align-items:stretch;width:100%;max-width:340px}}
+/* header ask */
+header .hpill{display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:12px;background:var(--graphite);color:var(--plaster);letter-spacing:.12em}
+header .hpill:hover{background:var(--patina);color:var(--plaster)}
+@media (max-width:760px){header .hpill{height:auto;padding:0;background:none;color:var(--graphite)}header .hpill:hover{background:none;color:var(--patina)}}
+/* proof sits right under the film */
+#proof .st:first-child{margin-top:var(--sp-sec)}
+/* the ask after the work, laid out like the offers' close */
+.cta-blk{display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;margin-top:var(--sp-sec);padding-top:clamp(28px,3vw,40px);border-top:1px solid var(--rule)}
+.cta-blk p{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(28px,2.8vw,40px);line-height:1.1;letter-spacing:-.01em;color:var(--graphite);text-wrap:balance}
+.cta-blk p em{font-style:italic;color:var(--patina)}
+@media (prefers-reduced-motion:no-preference){.cta-blk.rv>*{opacity:0;transform:translateY(14px);transition:opacity 1.3s cubic-bezier(.2,.7,.1,1),transform 1.3s cubic-bezier(.2,.7,.1,1)}.cta-blk.rv>:nth-child(2){transition-delay:.35s}.cta-blk.rv.in>*{opacity:1;transform:none}}
+/* your doubts, answered: each doubt is struck through, then answered, then shown */
+.dq{list-style:none;margin:var(--sp-in) 0 0;padding:0}
+.dq-row{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--sp-g);align-items:center;padding:clamp(32px,4vw,56px) 0;border-top:1px solid var(--rule)}
+.dq-row:last-child{border-bottom:1px solid var(--rule)}
+.dq-l{grid-column:1/4;min-width:0;display:grid;gap:16px;align-content:center;justify-items:start}
+.dq-n{color:var(--pencil)}
+.dq-q{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(34px,3.9vw,58px);line-height:1.06;letter-spacing:-.016em;color:var(--graphite);text-wrap:balance}
+.dq-q span{background:linear-gradient(var(--graphite),var(--graphite)) 0 56%/0% 2px no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.dq-a{margin:0;max-width:28ch;font-family:var(--serif);font-weight:300;font-optical-sizing:auto;font-size:clamp(22px,1.9vw,28px);line-height:1.25;letter-spacing:-.006em;color:var(--graphite);text-wrap:balance}
+.dq-v{grid-column:4/7;margin:0;position:relative;height:clamp(220px,21vw,300px);display:flex;align-items:center;justify-content:center;gap:12px;background:var(--sheet);overflow:hidden}
+.rc{width:min(250px,72%);padding:22px 22px 20px;background:#FFFDF8;color:#1F1C18;display:grid;gap:12px;box-shadow:0 1px 0 rgba(31,28,24,.06),0 18px 34px -18px rgba(31,28,24,.35);transform:rotate(-2deg)}
+.rc-m{display:block;height:18px;width:calc(18px*2.994);color:#1F1C18}
+.rc .mono{color:#6E665B}
+.rc-r{display:block;border-top:1px dashed rgba(31,28,24,.28)}
+.rc-l{display:grid;gap:2px}.rc-l span{font-family:var(--serif);font-weight:300;font-size:19px;line-height:1.2}.rc-l em{font-size:15px;color:#6E665B}
+.rc-t{display:flex;align-items:baseline;justify-content:space-between}.rc-t b{font-family:var(--serif);font-weight:300;font-style:italic;font-size:26px;line-height:1;color:#2E5149}
+.dv-bk img{height:84%;width:auto;aspect-ratio:4/5;object-fit:cover;box-shadow:0 2px 0 rgba(31,28,24,.06),0 22px 40px -20px rgba(31,28,24,.45);transform:rotate(2.5deg)}
+.br{display:block;width:min(420px,84%);border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 2px 0 rgba(31,28,24,.05),0 22px 40px -22px rgba(31,28,24,.45)}
+.br-bar{display:flex;gap:5px;align-items:center;height:22px;padding:0 10px;background:#EFE9DF}.br-bar i{width:7px;height:7px;border-radius:50%;background:rgba(31,28,24,.2)}
+.br img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.dv-of{flex-direction:column;align-items:stretch;padding:0 clamp(24px,3vw,44px)}
+.ofc{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:13px 18px;border:1px solid var(--rule);border-radius:12px;background:var(--plaster)}
+.ofc b{font-family:var(--serif);font-weight:300;font-size:22px;line-height:1.1}.ofc em{font-size:16px;color:var(--pencil);text-align:right}
+@media (prefers-reduced-motion:no-preference){
+  .dq-row .dq-a{opacity:0;transform:translateY(10px);transition:opacity 1.1s ease 1.15s,transform 1.1s cubic-bezier(.2,.7,.1,1) 1.15s}
+  .dq-row .dq-q span{transition:background-size .9s cubic-bezier(.6,0,.2,1) .35s,color 1s ease .9s}
+  .dq-row .dq-v{opacity:0;transform:translateY(16px);transition:opacity 1.2s cubic-bezier(.2,.7,.1,1) .1s,transform 1.2s cubic-bezier(.2,.7,.1,1) .1s}
+  .dq-row .dq-v>*{opacity:0;transform:translateY(18px);transition:opacity 1.2s cubic-bezier(.2,.7,.1,1) .6s,transform 1.4s cubic-bezier(.2,.7,.1,1) .6s}
+  .dq-row .dv-of>:nth-child(2){transition-delay:.85s}.dq-row .dv-of>:nth-child(3){transition-delay:1.1s}
+  .dq-row.in .dq-v,.dq-row.in .dq-v>*,.dq-row.in .dq-a{opacity:1;transform:none}
+  .dq-row.in .rc{transform:rotate(-2deg)}.dq-row.in .dv-bk img{transform:rotate(2.5deg)}
+}
+.dq-row.in .dq-q span{background-size:100% 2px;color:var(--faint)}
+@media (prefers-reduced-motion:reduce){.dq-q span{background-size:100% 2px;color:var(--faint)}}
+/* phones: the bar at the foot carries the ask once the film has gone */
+.pin-cta{display:none}
+@media (max-width:760px){
+  .pin-cta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:19;justify-content:center;padding:14px max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:color-mix(in srgb,var(--plaster) 90%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--rule);text-decoration:none;transform:translateY(105%);transition:transform .7s cubic-bezier(.2,.7,.1,1)}
+  .pin-cta .pill{width:100%;max-width:420px}
+  .pin-cta.on{transform:none}
+  .lv-on .pin-cta{transform:translateY(105%)}
+}
+/* phones: centred, top to bottom */
+@media (max-width:760px){
+  .st-row{justify-items:center;text-align:center}
+  .st-copy p,.lead,.st-copy{margin-inline:auto}
+  .ind .head,.ow-band .head{flex-direction:column;align-items:center;flex-wrap:wrap;text-align:center;gap:8px}
+  .fit-row{text-align:center;justify-items:center}
+  .fit-l,.fit-a{display:flex;flex-direction:column;align-items:center}
+  .fit-a p,.fit-a b{margin-inline:auto}
+  .fit-of{justify-content:center}
+  .dq-row{grid-template-columns:minmax(0,1fr);gap:28px;text-align:center}
+  .dq-l,.dq-v{grid-column:auto}
+  .dq-l{justify-items:center}
+  .dq-v{height:240px}
+  .cta-blk,.of-cta{flex-direction:column;align-items:center;text-align:center}
+  .cta-blk .pill,.of-cta .of-go{width:100%;max-width:340px;justify-content:center}
+  .of-tier,.of-hd,.of-a,.of-b{text-align:center}
+  .of-tier .of-list li,.of-list li{text-align:center}
+  .of-meta{justify-items:center}
+  .inq{justify-items:center;text-align:center}
+  .inq-l{justify-items:center}
+  .inq-s{margin-inline:auto}
+  .direct{justify-items:center}
+  form{width:100%}
+  .f label{text-align:center}
+  .f input{text-align:center}
+  #inqForm .pill{justify-self:stretch}
+  footer .wrap{justify-content:center;text-align:center}
+}
+.inq-s{margin:0;max-width:30ch;font-size:clamp(19px,1.6vw,23px);line-height:1.5;color:var(--pencil);text-wrap:balance}
+
+/* header: links and the ask share one centre line */
+header nav{align-items:center}
+/* hero: a soft shade under the words so the first line reads over the deck */
+.fold-hl::before{content:"";position:absolute;left:50%;top:46%;width:min(1100px,120%);height:150%;transform:translate(-50%,-50%);background:radial-gradient(50% 50% at 50% 50%,rgba(14,20,44,.34),rgba(14,20,44,0) 72%);pointer-events:none;z-index:-1}
+.fold-hl{z-index:1}
+/* phones: the offer cards keep one centre line too */
+@media (max-width:760px){
+  .of-meta{grid-template-columns:1fr 1fr;column-gap:14px}
+  .of-meta dt{text-align:right}.of-meta dd{text-align:left;margin:0}
+  .of-more,.of-tier .of-more{justify-self:center;margin-inline:auto}
+  .of-up,.of-add{text-align:center;justify-content:center}
+  .of-up>span{align-items:center}
+}
+.of-meta dt{font-size:12px}.of-up .mono{font-size:12px}.of-more{font-size:12.5px}
+@media (max-width:760px){.of-more,.of-tier .of-more{align-self:center}}
+.rv .steps::before{transition-delay:.25s}
+.rv .steps li{transition-delay:calc(.55s + var(--i)*.35s)}
+.fold-ey{margin:0 0 calc(14px - clamp(22px,3.4svh,36px));font-family:Montserrat,"Helvetica Neue",Arial,sans-serif;font-weight:400;font-size:clamp(12px,1.02vw,15px);letter-spacing:.3em;text-indent:.3em;text-transform:uppercase;line-height:1;color:rgba(255,255,255,.92);text-shadow:0 1px 18px rgba(12,16,44,.5);animation:up 1.6s cubic-bezier(.2,.7,.1,1) 1.5s both}
+@media (max-width:760px){.fold-ey{font-size:12px;letter-spacing:.26em;text-indent:.26em;margin-bottom:calc(12px - clamp(22px,3.4svh,36px))}}
+@media (prefers-reduced-motion:reduce){.fold-ey{animation:none}}
+/* fair questions */
+.wy{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--sp-g);align-items:end;margin-top:var(--sp-in);padding:clamp(32px,4vw,56px) 0;border-top:1px solid var(--rule)}
+.wy-q{grid-column:1/4;list-style:none;margin:0;padding:0;display:grid;gap:clamp(22px,2.4vw,34px);min-width:0}
+.wy-q li{display:grid;gap:10px;justify-items:start}
+.wy-q .mono{color:var(--pencil)}
+.wy-q p{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(26px,2.6vw,40px);line-height:1.08;letter-spacing:-.014em;color:var(--graphite);text-wrap:balance;transition:color 1.2s ease 1.8s}
+.wy-a{grid-column:4/7;min-width:0;display:grid;gap:18px;justify-items:start}
+.wy-h{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(34px,3.9vw,58px);line-height:1.06;letter-spacing:-.016em;color:var(--graphite)}
+.wy-h em{font-style:italic;color:var(--patina)}
+.wy-p{margin:0;max-width:30ch;font-family:var(--serif);font-weight:300;font-optical-sizing:auto;font-size:clamp(22px,1.9vw,28px);line-height:1.25;letter-spacing:-.006em;color:var(--graphite);text-wrap:balance}
+.wy-t{margin:6px 0 0;font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--pencil)}
+.wy .wy-q li{opacity:0;transform:translateY(14px);transition:opacity 1.2s ease,transform 1.3s cubic-bezier(.2,.7,.1,1);transition-delay:calc(.2s + var(--i)*.45s)}
+.wy-a>*{opacity:0;transform:translateY(12px);transition:opacity 1.2s ease 1.1s,transform 1.3s cubic-bezier(.2,.7,.1,1) 1.1s}
+.wy-a>.wy-p{transition-delay:1.45s}.wy-a>.wy-t{transition-delay:1.8s}
+.wy.in .wy-q li,.wy-a.in>*{opacity:1;transform:none}
+.wy.in .wy-q p{color:var(--pencil)}
+@media (prefers-reduced-motion:reduce){.wy .wy-q li,.wy-a>*{opacity:1;transform:none;transition:none}}
+@media (max-width:760px){
+  .wy{grid-template-columns:minmax(0,1fr);gap:40px;text-align:center;align-items:start}
+  .wy-q,.wy-a{grid-column:auto}
+  .wy-q li,.wy-a{justify-items:center}
+  .wy-p{margin-inline:auto}
+  .wy-a>*{transition-delay:.25s}.wy-a>.wy-p{transition-delay:.6s}.wy-a>.wy-t{transition-delay:.95s}
+}
+
+</style>
+
+<header>
+  <div class="wrap">
+    <nav class="nl" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#studio" class="opt">Process</a>
+    </nav>
+    <a class="mark" href="#top" aria-label="Abrams Design Studio, back to top"><svg aria-hidden="true"><use href="#adsmark"/></svg></a>
+    <nav class="nr" aria-label="Contact">
+      <a href="#offers" class="opt">Offers</a>
+      <a href="#inquiries" class="hpill">Free preview</a>
+    </nav>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="adsmark" viewBox="12 10 253.6 84.7"><path fill="currentColor" fill-rule="evenodd" d="M231.81 94.62C230.99 94.56 229.63 94.37 228.79 94.20C227.95 94.02 227.13 93.88 226.97 93.88C226.49 93.88 221.19 92.52 219.58 91.99C215.66 90.69 213.57 89.78 209.75 87.69C209.03 87.29 208.21 86.87 207.94 86.75C207.25 86.45 207.11 86.25 207.04 85.40C206.95 84.51 207.24 74.75 207.35 74.57C207.48 74.35 207.60 75.02 207.61 76.13C207.63 77.32 207.89 78.52 208.24 79.00C208.36 79.18 208.59 79.57 208.75 79.88C209.48 81.31 211.17 83.17 214.12 85.79C218.25 89.47 222.28 91.54 227.75 92.81C229.74 93.26 230.81 93.36 234.62 93.45C238.79 93.55 241.27 93.30 244.12 92.51C246.63 91.82 249.83 90.48 250.81 89.70C251.09 89.49 251.64 89.09 252.04 88.82C254.24 87.34 256.28 85.00 257.60 82.44C258.74 80.23 259.09 79.08 259.46 76.33L259.80 73.80L259.45 71.56C259.18 69.78 259.01 69.07 258.62 68.09C257.96 66.42 256.54 64.31 255.08 62.84C253.97 61.72 252.01 60.28 250.94 59.80C250.66 59.67 250.28 59.47 250.10 59.34C249.91 59.22 249.37 58.98 248.91 58.82C248.44 58.66 247.83 58.42 247.56 58.28C247.29 58.15 246.75 57.93 246.38 57.81C246.00 57.69 245.43 57.46 245.11 57.30C244.79 57.14 244.15 56.92 243.68 56.82C243.21 56.71 242.21 56.43 241.45 56.19C240.69 55.95 239.70 55.70 239.26 55.62C238.82 55.55 238.18 55.37 237.83 55.23C237.48 55.09 236.62 54.87 235.94 54.74C235.25 54.60 234.35 54.39 233.94 54.25C233.53 54.12 232.51 53.87 231.69 53.70C230.86 53.53 229.94 53.30 229.63 53.19C229.33 53.08 228.52 52.88 227.82 52.74C227.13 52.61 226.28 52.38 225.94 52.24C225.59 52.11 224.75 51.83 224.06 51.63C222.55 51.19 220.98 50.62 220.16 50.21C219.83 50.04 219.34 49.84 219.08 49.75C218.81 49.67 218.31 49.42 217.95 49.21C214.31 47.03 213.32 46.29 211.70 44.51C209.99 42.63 208.68 40.27 207.90 37.69C206.07 31.65 207.25 24.81 210.98 19.86C211.67 18.93 213.87 16.64 214.59 16.09C215.40 15.46 216.50 14.73 217.18 14.36C217.45 14.21 217.95 13.90 218.29 13.67C218.63 13.44 218.97 13.25 219.05 13.25C219.12 13.25 219.55 13.08 220.00 12.86C220.97 12.40 222.95 11.70 224.25 11.37C224.77 11.23 225.59 11.01 226.09 10.88C227.27 10.55 228.92 10.30 231.06 10.11C233.17 9.93 238.05 10.04 240.06 10.31C241.56 10.51 244.87 11.25 246.06 11.65C246.47 11.79 247.24 12.03 247.76 12.18C248.27 12.34 249.05 12.65 249.47 12.86C249.90 13.07 250.31 13.25 250.40 13.25C250.58 13.25 252.14 13.98 254.68 15.26C255.72 15.78 256.76 16.28 257.00 16.37C257.70 16.65 258.59 17.35 258.71 17.72C258.84 18.14 258.85 27.19 258.72 27.32C258.54 27.50 258.47 27.25 258.36 26.10C258.27 25.09 258.18 24.79 257.70 23.81C257.39 23.19 256.85 22.32 256.49 21.88C255.37 20.47 253.78 18.71 253.16 18.19C252.84 17.91 252.18 17.35 251.69 16.93C251.21 16.51 250.36 15.87 249.81 15.50C248.58 14.67 245.13 12.91 244.38 12.72C244.07 12.65 243.44 12.43 242.99 12.23C242.53 12.04 241.91 11.85 241.61 11.81C241.31 11.76 240.33 11.58 239.44 11.40C237.93 11.09 237.59 11.06 234.69 11.06C231.96 11.06 231.40 11.10 230.25 11.34C229.53 11.49 228.40 11.70 227.75 11.81C226.29 12.05 223.76 12.98 222.06 13.90C221.79 14.05 221.20 14.36 220.75 14.59C219.50 15.24 218.70 15.83 217.41 17.06C215.70 18.69 214.09 20.79 213.75 21.82C213.66 22.09 213.43 22.59 213.24 22.94C212.83 23.69 212.01 26.60 211.87 27.80C211.82 28.27 211.82 29.48 211.87 30.49C211.96 32.05 212.04 32.54 212.43 33.88C212.68 34.73 213.02 35.63 213.17 35.88C213.33 36.12 213.61 36.62 213.79 37.00C213.98 37.38 214.35 38.00 214.62 38.38C215.24 39.26 217.07 40.97 218.19 41.71C218.67 42.03 219.29 42.45 219.56 42.63C220.72 43.41 222.80 44.29 225.31 45.07C225.86 45.25 226.82 45.55 227.44 45.75C228.06 45.95 228.96 46.20 229.44 46.31C229.92 46.42 230.73 46.64 231.25 46.81C231.77 46.97 232.53 47.17 232.94 47.26C233.35 47.34 234.19 47.56 234.81 47.76C235.43 47.95 236.36 48.20 236.88 48.32C237.39 48.43 238.24 48.65 238.76 48.81C239.27 48.97 240.06 49.17 240.51 49.25C243.13 49.72 249.52 51.76 251.31 52.71C251.66 52.89 252.24 53.14 252.60 53.26C253.28 53.50 254.67 54.21 255.81 54.92C258.44 56.54 261.33 59.45 263.10 62.27C264.27 64.12 265.35 68.14 265.47 71.02C265.60 74.19 264.86 77.58 263.36 80.75C262.52 82.53 260.43 85.38 259.08 86.62C255.70 89.71 254.68 90.36 251.12 91.77C250.61 91.97 250.06 92.22 249.91 92.32C249.65 92.49 248.71 92.77 246.12 93.43C244.50 93.84 240.85 94.47 239.20 94.62C237.66 94.77 234.08 94.76 231.81 94.62ZM82.50 93.97C76.49 93.88 73.41 93.75 73.75 93.60C73.85 93.55 74.53 93.50 75.26 93.47C76.48 93.44 76.63 93.41 77.20 93.06C77.96 92.60 78.35 91.87 78.46 90.73C78.55 89.73 78.37 88.89 77.81 87.62C77.28 86.44 76.82 85.32 76.37 84.12C76.18 83.61 75.85 82.82 75.64 82.38C75.42 81.93 75.25 81.49 75.25 81.39C75.25 81.30 75.10 80.93 74.92 80.58C74.74 80.23 74.44 79.57 74.25 79.12C73.16 76.59 72.69 75.48 72.42 74.81C72.25 74.40 71.95 73.72 71.76 73.31C71.56 72.90 71.31 72.24 71.20 71.85C71.09 71.45 70.89 70.95 70.76 70.72C70.62 70.50 70.39 69.97 70.24 69.56C70.09 69.15 69.89 68.70 69.80 68.56C69.71 68.42 69.49 67.89 69.31 67.38C69.12 66.86 68.87 66.27 68.75 66.06C68.63 65.86 68.39 65.29 68.21 64.81C67.64 63.24 66.80 61.56 66.40 61.23C66.02 60.91 65.98 60.90 63.23 60.82C61.69 60.77 53.96 60.75 46.04 60.77C29.39 60.82 31.33 60.62 30.44 62.38C29.88 63.46 29.57 64.20 29.05 65.62C28.89 66.07 28.56 66.83 28.33 67.31C28.09 67.79 27.77 68.50 27.62 68.88C27.47 69.25 27.09 70.15 26.78 70.88C26.47 71.60 26.06 72.64 25.85 73.18C25.65 73.73 25.38 74.35 25.26 74.56C25.13 74.77 24.93 75.25 24.81 75.62C24.69 76.00 24.45 76.59 24.28 76.93C24.11 77.27 23.87 77.83 23.75 78.18C23.44 79.06 22.59 81.09 22.28 81.69C22.14 81.96 21.94 82.49 21.83 82.86C21.72 83.23 21.49 83.77 21.33 84.05C21.17 84.33 20.93 84.87 20.81 85.25C20.69 85.63 20.43 86.25 20.24 86.62C19.87 87.35 19.57 88.39 19.44 89.46C19.27 90.74 19.83 92.17 20.76 92.86C21.00 93.04 21.46 93.20 21.98 93.28C23.49 93.50 23.44 93.49 23.21 93.72C23.02 93.91 22.51 93.93 17.91 93.90C12.88 93.87 11.50 93.81 11.50 93.63C11.50 93.57 12.01 93.43 12.64 93.31C13.64 93.12 13.91 93.00 14.86 92.37C15.45 91.97 16.20 91.34 16.52 90.97C17.18 90.20 18.13 88.88 18.13 88.73C18.13 88.67 18.29 88.36 18.50 88.02C18.70 87.69 19.02 87.03 19.19 86.55C19.37 86.08 19.59 85.57 19.69 85.42C19.85 85.17 20.25 84.24 21.12 82.06C21.31 81.58 21.59 80.99 21.73 80.75C21.87 80.51 22.08 80.06 22.19 79.75C22.44 79.03 23.14 77.33 23.69 76.12C24.86 73.53 25.24 72.64 25.38 72.19C25.47 71.91 25.65 71.53 25.78 71.34C25.92 71.14 26.11 70.67 26.21 70.28C26.31 69.89 26.53 69.34 26.68 69.07C26.84 68.79 27.07 68.25 27.19 67.88C27.31 67.50 27.51 66.98 27.64 66.72C27.77 66.47 28.01 65.90 28.18 65.47C28.66 64.20 29.48 62.27 29.93 61.32C30.54 60.02 31.08 58.75 31.25 58.19C31.34 57.91 31.56 57.38 31.75 57.00C31.94 56.62 32.17 56.06 32.25 55.75C32.33 55.44 32.54 54.91 32.72 54.57C32.89 54.22 33.14 53.64 33.27 53.26C33.40 52.88 33.58 52.45 33.68 52.30C33.84 52.06 34.10 51.47 35.00 49.25C35.57 47.85 35.79 47.29 36.16 46.31C36.36 45.76 36.58 45.25 36.64 45.18C36.70 45.10 36.94 44.54 37.17 43.93C37.41 43.31 37.86 42.19 38.19 41.44C38.51 40.68 38.94 39.62 39.14 39.08C39.34 38.54 39.61 37.95 39.74 37.77C39.86 37.59 40.06 37.10 40.18 36.69C40.30 36.28 40.53 35.71 40.69 35.44C40.84 35.16 41.04 34.71 41.12 34.44C41.19 34.16 41.45 33.54 41.68 33.06C41.91 32.58 42.22 31.89 42.36 31.53C42.51 31.17 42.74 30.61 42.87 30.28C43.01 29.95 43.27 29.32 43.45 28.88C44.35 26.65 44.66 25.93 44.77 25.79C44.83 25.72 45.04 25.21 45.24 24.67C45.74 23.30 46.61 21.23 46.76 21.05C46.82 20.97 47.10 20.38 47.37 19.74C47.63 19.09 48.06 18.08 48.31 17.50C48.57 16.92 49.02 15.88 49.31 15.19C49.60 14.50 50.04 13.49 50.28 12.94C50.52 12.39 50.85 11.63 51.01 11.25C51.16 10.87 51.37 10.48 51.47 10.38C51.62 10.21 51.69 10.24 52.01 10.62C52.21 10.86 52.48 11.34 52.61 11.68C52.74 12.03 53.05 12.73 53.30 13.25C53.55 13.76 53.75 14.25 53.75 14.34C53.75 14.42 53.98 14.97 54.25 15.55C54.53 16.13 54.75 16.64 54.75 16.70C54.75 16.81 55.88 19.29 56.31 20.12C56.46 20.43 56.66 20.91 56.75 21.19C56.90 21.70 57.24 22.50 58.19 24.62C58.49 25.28 58.77 25.95 58.82 26.12C58.87 26.30 59.10 26.82 59.33 27.28C59.56 27.74 59.75 28.20 59.75 28.30C59.75 28.39 59.92 28.80 60.14 29.21C60.35 29.61 60.64 30.25 60.78 30.62C60.92 31.00 61.11 31.43 61.21 31.57C61.30 31.71 61.51 32.22 61.67 32.70C61.84 33.17 62.34 34.33 62.78 35.27C63.23 36.21 63.70 37.28 63.82 37.65C63.94 38.01 64.12 38.44 64.22 38.59C64.32 38.74 64.55 39.27 64.75 39.78C65.36 41.36 65.75 42.29 66.08 43.00C66.26 43.38 66.54 44.05 66.70 44.50C66.86 44.95 67.30 46.07 67.69 47.00C68.07 47.93 68.53 49.05 68.70 49.50C68.86 49.95 69.14 50.59 69.31 50.94C69.71 51.77 70.54 53.63 70.92 54.56C71.09 54.98 71.49 55.93 71.81 56.69C72.13 57.44 72.51 58.34 72.64 58.67C72.77 59.00 73.02 59.55 73.20 59.90C73.37 60.24 73.68 60.95 73.90 61.48C74.45 62.86 75.18 64.69 75.56 65.62C75.74 66.07 76.05 66.80 76.25 67.25C76.45 67.70 76.75 68.40 76.92 68.81C77.59 70.46 78.02 71.44 78.24 71.80C78.37 72.02 78.57 72.50 78.69 72.88C78.89 73.51 79.09 73.98 80.20 76.33C80.43 76.81 80.74 77.54 80.88 77.93C81.03 78.32 81.28 78.88 81.45 79.17C81.61 79.45 81.75 79.77 81.75 79.87C81.75 79.97 82.01 80.61 82.32 81.30C83.65 84.24 84.11 85.35 84.69 87.03C84.86 87.50 85.10 88.04 85.24 88.23C85.37 88.42 85.61 88.89 85.75 89.26C86.35 90.79 87.58 92.33 88.63 92.87C89.14 93.14 90.30 93.38 91.08 93.38C91.69 93.38 92.30 93.57 92.19 93.74C92.01 94.04 90.07 94.09 82.50 93.97ZM111.81 93.99C108.28 93.87 107.21 93.78 107.31 93.64C107.34 93.58 107.97 93.50 108.71 93.46C110.39 93.36 111.25 93.12 111.78 92.58C112.37 91.98 113.09 90.69 113.28 89.89C113.41 89.32 113.44 81.94 113.44 52.38L113.44 15.56L113.16 14.67C112.79 13.51 111.97 12.28 111.31 11.91C110.55 11.48 109.30 11.13 108.52 11.12C107.81 11.12 107.36 10.97 107.54 10.79C107.69 10.64 137.32 10.60 142.69 10.74C147.26 10.86 150.12 11.06 152.38 11.42C155.44 11.91 160.94 13.31 161.68 13.79C161.84 13.90 162.25 14.06 162.58 14.14C162.92 14.22 163.52 14.46 163.94 14.66C164.35 14.87 164.99 15.14 165.36 15.27C165.74 15.40 166.27 15.63 166.55 15.79C166.83 15.95 167.26 16.16 167.50 16.25C167.98 16.43 168.88 16.94 170.44 17.92C171.41 18.53 171.93 18.90 173.19 19.84C174.23 20.63 177.02 23.17 177.70 23.95C178.61 25.01 179.65 26.26 179.94 26.64C181.31 28.44 181.63 28.90 181.82 29.26C181.94 29.50 182.16 29.86 182.32 30.06C182.60 30.43 184.75 34.74 184.75 34.93C184.75 34.99 184.94 35.42 185.18 35.88C185.42 36.35 185.73 37.20 185.88 37.77C186.02 38.33 186.20 38.90 186.26 39.02C186.42 39.32 187.31 42.91 187.55 44.25C187.66 44.83 187.80 46.13 187.87 47.12C187.95 48.12 188.09 49.56 188.19 50.31C188.34 51.39 188.35 52.00 188.26 53.12C188.19 53.92 188.05 55.63 187.94 56.92C187.76 59.09 187.61 59.99 186.87 63.50C186.55 64.98 185.72 67.67 185.24 68.76C185.04 69.21 184.88 69.63 184.88 69.70C184.88 69.81 183.99 71.68 183.47 72.69C183.33 72.96 183.07 73.47 182.90 73.81C182.44 74.75 180.34 77.86 179.59 78.72C179.23 79.13 178.68 79.76 178.38 80.13C177.14 81.57 176.33 82.44 175.64 83.05C173.99 84.49 172.92 85.35 172.02 85.95C170.01 87.29 169.28 87.75 169.16 87.75C169.10 87.75 168.83 87.91 168.56 88.10C167.53 88.84 164.04 90.60 163.07 90.86C162.54 91.01 161.95 91.21 161.76 91.31C161.57 91.41 161.03 91.57 160.55 91.68C160.08 91.79 159.18 92.05 158.56 92.25C157.94 92.45 156.62 92.76 155.62 92.93C154.63 93.10 153.33 93.32 152.75 93.43C150.53 93.84 148.80 93.88 132.50 93.93C123.46 93.96 115.84 94.01 115.56 94.04C115.29 94.07 113.60 94.05 111.81 93.99ZM148.33 93.02C150.13 92.76 154.28 91.98 154.79 91.80C155.08 91.70 155.87 91.47 156.55 91.30C157.23 91.13 157.99 90.88 158.24 90.76C158.48 90.63 158.97 90.44 159.32 90.34C159.67 90.23 160.85 89.69 161.94 89.13C166.07 87.00 167.81 85.73 170.41 82.97C172.03 81.25 172.14 81.12 173.44 79.39C174.58 77.86 175.73 76.02 176.25 74.89C176.39 74.59 176.61 74.20 176.73 74.02C176.86 73.84 177.06 73.38 177.18 73.00C177.30 72.62 177.56 71.95 177.75 71.50C178.69 69.28 179.89 64.94 180.26 62.41C180.39 61.50 180.56 60.50 180.63 60.18C181.10 58.07 181.29 51.69 181.00 47.75C180.81 45.09 180.01 40.11 179.52 38.50C179.39 38.05 179.19 37.32 179.09 36.88C178.85 35.84 177.99 33.48 177.59 32.75C177.42 32.44 177.21 31.96 177.12 31.69C177.04 31.41 176.84 31.02 176.69 30.81C176.54 30.61 176.26 30.16 176.07 29.81C175.40 28.55 174.86 27.70 174.15 26.77C173.74 26.24 173.35 25.69 173.28 25.55C173.20 25.40 172.95 25.06 172.72 24.78C172.50 24.50 172.06 23.95 171.75 23.55C170.14 21.47 167.40 19.00 165.38 17.79C165.07 17.61 164.70 17.36 164.56 17.24C163.66 16.44 158.39 14.05 157.01 13.81C156.71 13.76 155.98 13.56 155.39 13.36C154.80 13.16 153.92 12.93 153.44 12.86C152.96 12.79 152.14 12.63 151.62 12.50C150.51 12.23 148.69 11.94 146.88 11.75C146.01 11.66 141.50 11.62 133.70 11.62C120.79 11.63 121.21 11.61 120.83 12.34C120.73 12.53 120.50 13.19 120.33 13.81L120.00 14.91L120.00 52.81C119.99 91.47 119.99 91.50 120.44 92.38C120.75 92.98 120.96 93.06 122.42 93.14C124.75 93.26 147.35 93.16 148.33 93.02ZM65.17 59.77C65.57 59.41 65.40 58.16 64.77 56.79C64.48 56.17 64.25 55.58 64.25 55.48C64.25 55.37 64.08 54.96 63.88 54.55C63.68 54.14 63.38 53.45 63.21 53.00C63.04 52.55 62.61 51.54 62.25 50.75C61.89 49.96 61.46 48.98 61.30 48.56C61.13 48.15 60.86 47.53 60.69 47.19C60.52 46.84 60.24 46.21 60.06 45.78C59.89 45.35 59.61 44.65 59.44 44.22C59.26 43.79 58.95 43.10 58.75 42.69C58.55 42.27 58.24 41.60 58.08 41.19C57.91 40.77 57.51 39.82 57.19 39.06C56.87 38.31 56.49 37.41 56.36 37.08C56.23 36.75 55.92 36.06 55.68 35.56C55.44 35.06 55.25 34.58 55.25 34.50C55.25 34.43 55.03 33.90 54.76 33.34C54.50 32.77 54.24 32.12 54.19 31.88C54.14 31.63 53.97 31.18 53.81 30.88C53.37 30.03 52.29 27.61 52.19 27.25C52.14 27.08 51.94 26.66 51.75 26.31C51.56 25.97 51.31 25.41 51.20 25.06C51.08 24.72 50.55 23.57 50.03 22.50L49.06 20.56L48.51 20.56C47.97 20.56 47.96 20.57 47.47 21.38C47.19 21.82 46.87 22.50 46.75 22.88C46.64 23.25 46.42 23.80 46.26 24.10C46.11 24.40 45.88 24.99 45.75 25.41C45.61 25.84 45.40 26.36 45.27 26.56C45.14 26.77 44.94 27.25 44.82 27.63C44.69 28.00 44.45 28.59 44.28 28.93C44.11 29.27 43.89 29.83 43.79 30.18C43.68 30.53 43.47 31.07 43.32 31.38C43.16 31.68 42.93 32.25 42.81 32.62C42.69 33.00 42.46 33.54 42.30 33.82C42.14 34.09 41.92 34.57 41.81 34.87C41.71 35.18 41.48 35.71 41.31 36.06C40.98 36.74 40.59 37.69 39.94 39.38C39.72 39.97 39.42 40.67 39.28 40.94C39.15 41.21 38.91 41.80 38.75 42.25C38.60 42.70 38.37 43.23 38.25 43.44C38.13 43.64 37.99 43.95 37.94 44.12C37.89 44.30 37.64 44.92 37.37 45.50C37.11 46.08 36.75 46.90 36.58 47.31C36.42 47.73 36.15 48.37 36.00 48.75C35.85 49.13 35.54 49.83 35.31 50.31C35.08 50.79 34.86 51.36 34.82 51.56C34.77 51.77 34.56 52.27 34.36 52.67C34.15 53.08 33.89 53.70 33.79 54.05C33.68 54.40 33.46 54.96 33.29 55.29C33.13 55.62 32.89 56.22 32.76 56.62C32.63 57.03 32.41 57.51 32.27 57.70C32.07 57.95 32.00 58.21 32.00 58.74C32.00 60.01 31.71 59.93 36.71 60.00C39.10 60.03 46.43 60.04 53.00 60.02C63.96 59.98 64.96 59.96 65.17 59.77Z"/></symbol></svg>
+<main id="top">
+  <div class="open fold">
+    <div class="fold-bg"><video id="heroVid" muted loop playsinline preload="none" poster="img/w/hero-video-poster.webp" aria-label="Abrams Places: a renovated pool house at dusk"><source src="img/w/hero-loop.mp4" type="video/mp4"></video></div>
+    <div class="fold-in">
+      <h1 aria-label="ADS, Abrams Design Studio"><svg class="ads" aria-hidden="true"><use href="#adsmark"/></svg><span class="rule" aria-hidden="true"></span><span class="sub" aria-hidden="true">Abrams Design Studio</span></h1>
+    </div>
+    <nav class="fold-nav" aria-label="Main"><a href="#work">Work</a><a href="#studio">Process</a><a href="#offers">Offers</a><a href="#inquiries">Contact</a><button class="snd" type="button" aria-pressed="false" aria-label="Sound on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><g class="off"><path d="M16 9.5l5 5M21 9.5l-5 5"/></g><g class="on"><path d="M15.5 9a4.2 4.2 0 0 1 0 6"/><path d="M18.3 6.5a8 8 0 0 1 0 11"/></g></svg></button></nav>
+    <div class="fold-hl"><p class="fh">Most studios show you their portfolio.<br><em>We show you yours.</em></p><div class="fold-go"><a class="pill pl" href="#inquiries">Get my free preview</a><a class="pill po" href="#work">View work</a></div></div>
+  </div>
+
+  <section id="proof" aria-label="Three seconds">
+    <div class="wrap">
+      <div class="st rv" id="you">
+        <div class="st-row">
+          <h2 class="st-big">You have <em>three seconds.</em></h2>
+          <p class="lead">That&rsquo;s how long a visitor gives your site before they stay or go. We design for all three.</p>
+        </div>
+        <div class="secs">
+          <figure class="ring" aria-hidden="true">
+            <svg viewBox="0 0 200 200"><circle class="rb" cx="100" cy="100" r="98.8"/><circle class="rl" cx="100" cy="100" r="98.8" pathLength="1"/></svg>
+            <span class="c"><span class="num cd">3</span><small>sec</small></span>
+          </figure>
+          <figure class="brw" aria-hidden="true">
+            <div class="brw-bar"><i></i><i></i><i></i><span></span></div>
+            <div class="brw-v"><img src="img/book/lobby.webp" alt="" loading="lazy">
+              <div class="hh"><div class="hh-nav"><b>Halden House</b><span>Residences</span><span>Amenities</span><span>Contact</span></div><p class="hh-h">Come home<br>to this.</p><span class="hh-b">Book a tour</span></div>
+            </div>
+          </figure>
+          <ol class="beats">
+            <li style="--i:0"><span class="mono">0:01</span><b>Trust</b><p>It looks as good as your work is.</p></li>
+            <li style="--i:1"><span class="mono">0:02</span><b>Clarity</b><p>One promise, understood at a glance.</p></li>
+            <li style="--i:2"><span class="mono">0:03</span><b>Action</b><p>One clear next step: call, book or buy.</p></li>
+          </ol>
+        </div>
+      </div>
+      <div class="st rv" id="ba">
+        <div class="st-row">
+          <h2 class="st-big">Same builder.<br><em>A new first impression.</em></h2>
+        </div>
+        <div class="cmp" style="--x:0%">
+          <img src="img/w/ba-before-2.webp" alt="Before: a dated, crowded contractor homepage" loading="lazy">
+          <div class="cmp-b"><img src="img/w/ba-after.webp" alt="After: a dark, minimal homepage for the fictional builder Ashlar &amp; Pine" loading="lazy"></div>
+          <i class="cmp-h" aria-hidden="true"></i>
+          <input type="range" min="0" max="100" step="0.1" value="0" aria-label="Compare after and before">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="studio">
+    <div class="wrap st rv">
+      <div class="st-row">
+        <h2 class="st-big">See what <em>could be.</em></h2>
+        <div class="st-copy"><p>No pitch deck. Just what we&rsquo;d do if it were ours.</p></div>
+      </div>
+      <ol class="steps">
+        <li style="--i:0"><b>Preview</b><p>Your opening screen, built from your brand.</p></li>
+        <li style="--i:1"><b>Decide</b><p>You see it before you invest.</p></li>
+        <li style="--i:2"><b>Build</b><p>The full site follows, section by section.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="ind">
+        <div class="head"><h2>Studio work</h2><span class="mono">03</span></div>
+        <div class="tiles">
+          <figure class="tile"><div class="frame"><div class="page"><img loading="lazy" decoding="async" src="img/w/places-1.webp" alt="Abrams Places: Origins, with the casting study"><img loading="lazy" decoding="async" src="img/w/places-2.webp" alt=""></div></div></figure>
+          <figure class="tile"><div class="frame"><div class="page"><img loading="lazy" decoding="async" src="img/w/jay-1.webp" alt="Opening screen of the jayabrams.com rebuild"><img loading="lazy" decoding="async" src="img/w/jay-2.webp" alt=""></div></div></figure>
+          <figure class="tile"><div class="frame"><div class="page"><img loading="lazy" decoding="async" src="img/w/apply-2.webp" alt="The Abrams Places rental application desk, 314 Golf Rd"><img loading="lazy" decoding="async" src="img/w/apply-1.webp" alt=""><span class="tap" aria-hidden="true"></span><span class="tap nx" aria-hidden="true"></span></div></div></figure>
+        </div>
+      </div>
+      <div class="yrs-track" id="years"><div class="yrs-pin">
+      <div class="st rv yrs">
+        <div class="st-row">
+          <p class="big" aria-label="20 years"><span class="yn">20</span></p>
+          <div class="st-copy yc">
+            <div class="ys on"><h2 class="st-h">Years in the making</h2><p>Across art, architecture and marketing. All of it goes into how your business is seen.</p></div>
+            <div class="ys" aria-hidden="true"><h3 class="st-h">Years of art</h3><p>Composition, color and restraint. Your site looks like it costs what it does.</p></div>
+            <div class="ys" aria-hidden="true"><h3 class="st-h">Years of architecture</h3><p>Structure first. Every page is planned to carry a visitor somewhere.</p></div>
+            <div class="ys" aria-hidden="true"><h3 class="st-h">Years of marketing</h3><p>Every screen earns its place by moving someone closer to yes.</p></div>
+          </div>
+        </div>
+        <figure class="conv" aria-hidden="true">
+          <svg viewBox="0 0 1200 160" preserveAspectRatio="none">
+            <path class="cl" d="M0 20H520C700 20 760 80 900 80"/>
+            <path class="cl" d="M0 80H900"/>
+            <path class="cl" d="M0 140H520C700 140 760 80 900 80"/>
+            <path class="cl" d="M900 80H1200"/>
+            <path class="cx" pathLength="1" d="M0 20H520C700 20 760 80 900 80"/>
+            <path class="cx" pathLength="1" d="M0 80H900"/>
+            <path class="cx" pathLength="1" d="M0 140H520C700 140 760 80 900 80"/>
+            <path class="cx out" pathLength="1" d="M900 80H1200"/>
+            <path class="bar"/><path class="bar"/><path class="bar"/>
+          </svg>
+          <span class="lb" style="top:12.5%"><b>Art</b><i>how it looks</i></span>
+          <span class="lb" style="top:50%"><b>Architecture</b><i>how it&rsquo;s built</i></span>
+          <span class="lb" style="top:87.5%"><b>Marketing</b><i>how it sells</i></span>
+          <span class="lb end"><i>Your business</i></span>
+          <i class="node"></i><i class="dot"></i>
+          <i class="orb"></i><i class="orb"></i><i class="orb"></i><i class="orb main"></i>
+        </figure>
+      </div>
+      </div></div>
+      <section class="bk" id="book" aria-label="Selected work">
+        <div class="bk-stage">
+          <div class="bk-lie"><div class="bk-book" data-st="closed" tabindex="0" role="group" aria-roledescription="magazine" aria-label="Selected work, a magazine of three New York buildings">
+            <div class="bk-shift"><div class="bk-base"></div></div>
+          </div></div>
+          <div class="bk-nav"><button type="button" class="bk-p" aria-label="Previous page" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M15 5l-7 7 7 7"/></svg></button><span class="bk-bar" aria-hidden="true"><i></i></span><button type="button" class="bk-n" aria-label="Next page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 5l7 7-7 7"/></svg></button></div>
+        </div>
+      </section>
+      <div class="ind">
+        <div class="head"><h2>Homes &amp; buildings</h2><span class="mono">03</span></div>
+        <div class="tiles">
+          <figure class="tile feat" data-site="b/ashlar/index.html" data-name="Ashlar &amp; Pine" tabindex="0" role="button" aria-label="Open the Ashlar &amp; Pine site"><div class="frame"><div class="page"><img src="img/w/ashlar-1.webp" alt="Ashlar &amp; Pine, custom homes" loading="lazy"><img src="img/w/ashlar-2.webp" alt="" loading="lazy"></div></div></figure>
+          <figure class="tile" data-site="b/bascule/index.html" data-name="Bascule" tabindex="0" role="button" aria-label="Open the Bascule site"><div class="frame"><div class="page"><img src="img/w/bascule-1.webp" alt="Bascule, residences on the water" loading="lazy"><img src="img/w/bascule-2.webp" alt="" loading="lazy"></div></div></figure>
+          <figure class="tile" data-site="b/sabal/index.html" data-name="Studio Sabal" tabindex="0" role="button" aria-label="Open the Studio Sabal site"><div class="frame"><div class="page"><img src="img/w/sabal-1.webp" alt="Studio Sabal, modern houses drawn for the sun" loading="lazy"><img src="img/w/sabal-2.webp" alt="" loading="lazy"></div></div></figure>
+        </div>
+      </div>
+      <div class="ind">
+        <div class="head"><h2>Interiors &amp; gardens</h2><span class="mono">03</span></div>
+        <div class="tiles">
+          <figure class="tile feat" data-site="b/linen/index.html" data-name="Linen &amp; Lacquer" tabindex="0" role="button" aria-label="Open the Linen &amp; Lacquer site"><div class="frame"><div class="page"><img src="img/w/linen-1.webp" alt="Linen &amp; Lacquer, finished rooms" loading="lazy"><img src="img/w/linen-2.webp" alt="" loading="lazy"></div></div></figure>
+          <figure class="tile" data-site="b/banyan/index.html" data-name="Banyan Row" tabindex="0" role="button" aria-label="Open the Banyan Row site"><div class="frame"><div class="page"><img src="img/w/banyan-1.webp" alt="Banyan Row, specimen trees" loading="lazy"><img src="img/w/banyan-2.webp" alt="" loading="lazy"></div></div></figure>
+          <figure class="tile" data-site="b/cortile/index.html" data-name="Cortile" tabindex="0" role="button" aria-label="Open the Cortile site"><div class="frame"><div class="page"><img src="img/w/cortile-1.webp" alt="Cortile Garden Studio" loading="lazy"><img src="img/w/cortile-2.webp" alt="" loading="lazy"></div></div></figure>
+        </div>
+      </div>
+      <div class="ind">
+        <div class="head"><h2>Services &amp; culture</h2><span class="mono">04</span></div>
+        <div class="tiles">
+          <figure class="tile half" data-site="b/aurelle/index.html" data-name="Aurelle" tabindex="0" role="button" aria-label="Open the Aurelle site"><div class="frame"><div class="page"><img src="img/w/aurelle-1.webp" alt="Aurelle, facial plastic surgery" loading="lazy"><img src="img/w/aurelle-2.webp" alt="" loading="lazy"></div></div></figure>
+          <figure class="tile half" data-site="b/wrenfield/index.html" data-name="Wrenfield" tabindex="0" role="button" aria-label="Open the Wrenfield site"><div class="frame"><div class="page"><img src="img/w/wrenfield-1.webp" alt="Wrenfield, trusts and estates" loading="lazy"><img src="img/w/wrenfield-2.webp" alt="" loading="lazy"></div></div></figure>
+          <figure class="tile half" data-site="b/coldfront/index.html" data-name="Coldfront Air" tabindex="0" role="button" aria-label="Open the Coldfront Air site"><div class="frame"><div class="page"><img src="img/w/coldfront-1.webp" alt="Coldfront, air conditioning" loading="lazy"><img src="img/w/coldfront-2.webp" alt="" loading="lazy"></div></div></figure>
+          <figure class="tile half" data-site="b/serena/index.html" data-name="The Serena" tabindex="0" role="button" aria-label="Open The Serena site"><div class="frame"><div class="page"><img src="img/w/serena-1.webp" alt="The Serena, a sculpture museum" loading="lazy"><img src="img/w/serena-2.webp" alt="" loading="lazy"></div></div></figure>
+        </div>
+      </div>
+      <div class="st rv" id="live">
+        <div class="st-row">
+          <h2 class="st-big">Open <em>for business.</em></h2>
+          <div class="st-copy"><p>Orders in, drinks out. The whole shop runs on the site.</p></div>
+        </div>
+        <div class="lv-pair">
+          <button class="live" type="button" data-site="play/lunas.html" data-name="Luna&rsquo;s Coffee" aria-label="Play Luna&rsquo;s Coffee, a working café">
+            <img src="img/w/lunas-poster.webp" srcset="img/w/lunas-poster-s.webp 960w, img/w/lunas-poster.webp 1920w" sizes="(max-width:760px) 100vw, 840px" alt="" loading="lazy">
+            <span class="live-go"><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 1.8v12.4L13.6 8z" fill="currentColor"/></svg></i>Order a coffee</span>
+          </button>
+          <button class="live lu ph" type="button" data-site="play/lunas-app/index.html" data-name="Luna&rsquo;s Coffee App" aria-label="Play the Luna&rsquo;s Coffee ordering app">
+            <img src="img/w/lunas-app-poster.webp" srcset="img/w/lunas-app-poster-s.webp 500w, img/w/lunas-app-poster.webp 1000w" sizes="(max-width:760px) 100vw, 408px" alt="" loading="lazy">
+            <span class="live-go"><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 1.8v12.4L13.6 8z" fill="currentColor"/></svg></i>Open the app</span>
+          </button>
+        </div>
+      </div>
+      <div class="st rv" id="riot">
+        <div class="st-row">
+          <h2 class="st-big">Never <em>still.</em></h2>
+          <div class="st-copy"><p>Rail to receipt. The app and the owner&rsquo;s books move with every sale.</p></div>
+        </div>
+        <div class="lv-pair">
+          <button class="live sr" type="button" data-site="play/soft-riot/index.html" data-name="Soft Riot" aria-label="Play Soft Riot, a working clothing store">
+            <img src="img/w/softriot-poster.webp" srcset="img/w/softriot-poster-s.webp 960w, img/w/softriot-poster.webp 1920w" sizes="(max-width:760px) 100vw, 840px" alt="" loading="lazy">
+            <span class="live-go"><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 1.8v12.4L13.6 8z" fill="currentColor"/></svg></i>Shop the drop</span>
+          </button>
+          <button class="live sr ph" type="button" data-site="play/soft-riot-app/index.html" data-name="Soft Riot App" aria-label="Play the Soft Riot app and its owner dashboard">
+            <img src="img/w/softriot-app-poster.webp" srcset="img/w/softriot-app-poster-s.webp 500w, img/w/softriot-app-poster.webp 1000w" sizes="(max-width:760px) 100vw, 408px" alt="" loading="lazy">
+            <span class="live-go"><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 1.8v12.4L13.6 8z" fill="currentColor"/></svg></i>Open the app</span>
+          </button>
+        </div>
+      </div>
+      <div class="cta-blk rv"><p>Like what you see? <em>Yours is next.</em></p><a class="pill pd" href="#inquiries">Get my free preview</a></div>
+    </div>
+  </section>
+
+
+  <section id="doubts" aria-label="Your doubts, answered">
+    <div class="wrap">
+      <div class="st rv">
+        <div class="st-row">
+          <h2 class="st-big">Your doubts, <em>answered.</em></h2>
+          <div class="st-copy"><p>Every good reason to say no, crossed out.</p></div>
+        </div>
+      </div>
+      <ol class="dq">
+        <li class="dq-row rv">
+          <div class="dq-l"><span class="mono dq-n">01</span><p class="dq-q"><span>&ldquo;What&rsquo;s the catch?&rdquo;</span></p><p class="dq-a">There isn&rsquo;t one. You see it before you invest.</p></div>
+          <figure class="dq-v dv-rc" aria-hidden="true"><div class="rc"><svg class="rc-m"><use href="#adsmark"/></svg><span class="mono rc-k">Your preview</span><i class="rc-r"></i><span class="rc-l"><span>Opening screen</span><em>Built from your brand</em></span><i class="rc-r"></i><span class="rc-t"><span class="mono">Due</span><b>Nothing</b></span></div></figure>
+        </li>
+        <li class="dq-row rv">
+          <div class="dq-l"><span class="mono dq-n">02</span><p class="dq-q"><span>&ldquo;Why trust a stranger?&rdquo;</span></p><p class="dq-a">You shouldn&rsquo;t have to. That&rsquo;s why the preview is free.</p></div>
+          <figure class="dq-v dv-bk" aria-hidden="true"><img src="img/book/cover-82.webp" alt="" loading="lazy"></figure>
+        </li>
+        <li class="dq-row rv">
+          <div class="dq-l"><span class="mono dq-n">03</span><p class="dq-q"><span>&ldquo;I can&rsquo;t picture it.&rdquo;</span></p><p class="dq-a">You won&rsquo;t have to. Your opening screen comes first, built from your brand.</p></div>
+          <figure class="dq-v dv-br" aria-hidden="true"><span class="br"><span class="br-bar"><i></i><i></i><i></i></span><img src="img/w/lu-sv-o-signature.webp" alt="" loading="lazy"></span></figure>
+        </li>
+        <li class="dq-row rv">
+          <div class="dq-l"><span class="mono dq-n">04</span><p class="dq-q"><span>&ldquo;What will it cost?&rdquo;</span></p><p class="dq-a">Scope changes. The finish never does. Every quote begins with a conversation.</p></div>
+          <figure class="dq-v dv-of" aria-hidden="true"><span class="ofc"><b>Refresh</b><em>Your site, renewed.</em></span><span class="ofc"><b>Signature</b><em>Your brand, elevated.</em></span><span class="ofc"><b>Flagship</b><em>Your whole business, connected.</em></span></figure>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="fit">
+    <div class="wrap">
+      <div class="st rv">
+        <div class="st-row">
+          <h2 class="st-big">Who is <em>this for?</em></h2>
+          <div class="st-copy"><p>Start with what&rsquo;s in the way.</p></div>
+        </div>
+      </div>
+      <div class="fit">
+        <a class="fit-row rv" href="#offers" data-tab="refresh">
+          <h3 class="fit-q">Site looking a little tired?</h3>
+          <div class="fit-a"><p>Your business grew up. Your site didn&rsquo;t.</p><b>You need a fresh face, not a fresh start.</b><span class="fit-go">Refresh<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+        </a>
+        <a class="fit-row rv" href="#offers" data-tab="signature">
+          <h3 class="fit-q">Look smaller than you are?</h3>
+          <div class="fit-a"><p>You&rsquo;re the best at what you do. Your site says otherwise.</p><b>You need a brand, not a template.</b><span class="fit-go">Signature<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+        </a>
+        <a class="fit-row rv" href="#offers" data-tab="flagship">
+          <h3 class="fit-q">Juggling apps that don&rsquo;t talk?</h3>
+          <div class="fit-a"><p>Your orders, customers, payments and books can all live in one place.</p><b>You need one system, not more apps.</b><span class="fit-go">Flagship<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="offers">
+    <div class="wrap">
+      <div class="st rv">
+        <div class="st-row">
+          <h2 class="st-big">Three offers <em>to begin.</em></h2>
+          <div class="st-copy"><p>Scope changes. The finish never does.</p></div>
+        </div>
+      </div>
+      <div class="of-tabs" role="tablist" aria-label="Engagements">
+        <button type="button" role="tab" id="ot-all" aria-controls="op-all" aria-selected="true">Overview</button>
+        <button type="button" role="tab" id="ot-refresh" aria-controls="op-refresh" aria-selected="false" tabindex="-1">Refresh</button>
+        <button type="button" role="tab" id="ot-signature" aria-controls="op-signature" aria-selected="false" tabindex="-1">Signature</button>
+        <button type="button" role="tab" id="ot-flagship" aria-controls="op-flagship" aria-selected="false" tabindex="-1">Flagship</button>
+        <button type="button" role="tab" id="ot-addons" aria-controls="op-addons" aria-selected="false" tabindex="-1">Add-ons</button>
+      </div>
+
+      <div class="of-panel on" id="op-all" role="tabpanel" aria-labelledby="ot-all">
+        <div class="of-tiers">
+          <article class="of-tier">
+            <h3 class="of-name">Refresh</h3>
+            
+            <p class="of-line">Your site, renewed.</p>
+            <ul class="of-list"><li>Your layout, logo and colors, kept</li><li>Sharper type, spacing and photography</li><li>Up to five pages</li><li>One opening animation</li></ul>
+            <dl class="of-meta"><dt class="mono">Timeline</dt><dd>3 weeks</dd><dt class="mono">Care</dt><dd>Monthly</dd></dl>
+            <button type="button" class="of-more" data-tab="refresh">Refresh<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+          </article>
+          <article class="of-tier rec">
+            <span class="of-bar mono">Recommended</span>
+            <h3 class="of-name">Signature</h3>
+            
+            <p class="of-line">Your brand, elevated.</p>
+            <ul class="of-list"><li>A new site, start to finish</li><li>Messaging written for you</li><li>Up to twelve pages</li><li>Ordering or booking, connected</li></ul>
+            <p class="of-up"><span><span class="mono">Add</span>Playable centerpiece</span></p>
+            <dl class="of-meta"><dt class="mono">Timeline</dt><dd>6 to 8 weeks</dd><dt class="mono">Care</dt><dd>Monthly</dd></dl>
+            <button type="button" class="of-more" data-tab="signature">Signature<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+          </article>
+          <article class="of-tier">
+            <h3 class="of-name">Flagship</h3>
+            
+            <p class="of-line">Your whole business, connected.</p>
+            <ul class="of-list"><li>Everything in Signature</li><li>The playable centerpiece</li><li>A complete rebrand</li><li>The business behind the site</li></ul>
+            <dl class="of-meta"><dt class="mono">Timeline</dt><dd>10 to 14 weeks</dd><dt class="mono">Care</dt><dd>Monthly</dd></dl>
+            <button type="button" class="of-more" data-tab="flagship">Flagship<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+          </article>
+        </div>
+      </div>
+
+      <div class="of-panel" id="op-refresh" role="tabpanel" aria-labelledby="ot-refresh" hidden>
+        <div class="of-hd"><div><span class="mono of-n">Engagement</span><h3 class="of-title">Refresh</h3></div><div class="of-hp"><p class="of-line">Your site, renewed.</p></div></div>
+        <div class="of-body">
+          <div class="of-a">
+            <span class="mono of-lbl">Included</span>
+            <ul class="of-list lg"><li>Your layout, logo and colors, kept</li><li>Sharper type, spacing and photography</li><li>Up to five pages, built mobile first</li><li>One opening animation</li><li>Contact form and SEO setup</li><li>Your copy, edited</li></ul>
+          </div>
+          <div class="of-b">
+            <dl class="of-meta lg"><dt class="mono">Timeline</dt><dd>3 weeks</dd><dt class="mono">Revisions</dt><dd>1 round</dd></dl>
+            <div class="of-care"><span class="mono of-lbl">Care</span><p>Hosting, security, backups and updates, with an hour of edits each month.</p></div>
+            <div class="of-see"><span class="mono of-lbl">See it</span><a href="https://claude.ai/artifact/CUeV3gxQ9KdBWS9kTB9Mps" target="_blank" rel="noopener">Luna&rsquo;s Coffee<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a><a href="https://claude.ai/artifact/9Nc7aPQFMxnpxgUwq1bE9s" target="_blank" rel="noopener">jayabrams.com<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="of-panel" id="op-signature" role="tabpanel" aria-labelledby="ot-signature" hidden>
+        <div class="of-hd"><div><span class="mono of-n">Engagement<span class="of-rec">Recommended</span></span><h3 class="of-title">Signature</h3></div><div class="of-hp"><p class="of-line">Your brand, elevated.</p></div></div>
+        <div class="of-body">
+          <div class="of-a">
+            <span class="mono of-lbl">Included</span>
+            <ul class="of-list lg"><li>A design made for your industry, styled to your brand</li><li>Messaging written for you</li><li>Up to twelve pages, with landing pages and offers</li><li>Before and after imagery</li><li>Signature hero motion and scroll storytelling</li><li>Ordering or booking, connected to the system you use</li><li>Leads to your inbox, analytics, SEO foundations</li></ul>
+            <div class="of-add">
+              <div class="of-add-h"><span class="mono">Add</span></div>
+              <p class="of-add-n">Playable centerpiece</p>
+              <p class="of-add-l">A 3D scene your customers can play with, opening into your real pages.</p>
+              <button type="button" class="of-play" data-site="play/lunas.html" data-name="Luna&rsquo;s Coffee"><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 1.8v12.4L13.6 8z"/></svg></i>Play Luna&rsquo;s</button>
+            </div>
+          </div>
+          <div class="of-b">
+            <dl class="of-meta lg"><dt class="mono">Timeline</dt><dd>6 to 8 weeks</dd><dt class="mono">Revisions</dt><dd>2 rounds per milestone</dd></dl>
+            <div class="of-care"><span class="mono of-lbl">Care</span><p>Refresh care, five hours of edits a month, a new section each quarter and a monthly report.</p></div>
+            <div class="of-see"><span class="mono of-lbl">See it</span><a href="https://claude.ai/artifact/CUeV3gxQ9KdBWS9kTB9Mps" target="_blank" rel="noopener">Luna&rsquo;s Coffee<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a><a href="https://claude.ai/artifact/9Nc7aPQFMxnpxgUwq1bE9s" target="_blank" rel="noopener">jayabrams.com<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="of-panel" id="op-flagship" role="tabpanel" aria-labelledby="ot-flagship" hidden>
+        <div class="of-hd"><div><span class="mono of-n">Engagement</span><h3 class="of-title">Flagship</h3></div><div class="of-hp"><p class="of-line">Your whole business, connected.</p></div></div>
+        <div class="of-body">
+          <div class="of-a">
+            <span class="mono of-lbl">Included</span>
+            <ul class="of-list lg"><li>Everything in Signature</li><li>The playable centerpiece</li><li>Up to twenty-five pages</li></ul>
+            <div class="of-add wide">
+              <div class="of-add-h"><span class="mono">Added in Flagship</span></div>
+              <ul class="of-list lg"><li>A complete rebrand</li><li>Ordering on your site, answered by your staff, ready on arrival</li><li>Owner dashboard: live orders, receipts by hour, busy times</li><li>Back of house: tickets, inventory and POS sync</li><li>Books and payroll on UMB</li><li>CRM and automation</li><li>A photography day</li><li>SEO setup, plus ninety days of ads</li></ul>
+            </div>
+          </div>
+          <div class="of-b">
+            <dl class="of-meta lg"><dt class="mono">Timeline</dt><dd>10 to 14 weeks</dd><dt class="mono">Revisions</dt><dd>At each milestone</dd></dl>
+            <div class="of-care"><span class="mono of-lbl">Care</span><p>Signature care, POS and inventory support, CRM upkeep and a monthly strategy call.</p></div>
+            <div class="of-see"><span class="mono of-lbl">See it</span><a href="https://claude.ai/artifact/CUeV3gxQ9KdBWS9kTB9Mps" target="_blank" rel="noopener">Luna&rsquo;s Coffee<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a><a href="https://claude.ai/artifact/9Nc7aPQFMxnpxgUwq1bE9s" target="_blank" rel="noopener">jayabrams.com<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg></a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="of-panel" id="op-addons" role="tabpanel" aria-labelledby="ot-addons" hidden>
+        <div class="of-hd"><div><span class="mono of-n">Any engagement</span><h3 class="of-title">Add-ons</h3></div></div>
+        <div class="of-cols">
+          <div>
+            <span class="mono of-lbl">Monthly</span>
+            <ul class="of-rows"><li><span>Content<small>Twelve posts and four short videos</small></span></li><li><span>Paid ads<small>Google and Meta, ad spend separate</small></span></li><li><span>Local SEO<small>Google profile, citations, reviews</small></span></li><li><span>CRM support</span></li></ul>
+          </div>
+          <div>
+            <span class="mono of-lbl">Once</span>
+            <ul class="of-rows"><li><span>Logo refresh</span></li><li><span>Full rebrand</span></li><li><span>Photography</span></li><li><span>Brand film</span></li><li><span>3D rendering</span></li><li><span>3D flythrough</span></li><li><span>CRM setup</span></li></ul>
+          </div>
+          <div>
+            <span class="mono of-lbl">Systems</span>
+            <ul class="of-rows"><li><span>REVERIE<small>For developers, architects and designers</small></span></li><li><span>UMB<small>Books, bookkeeping and tracking</small></span></li></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="of-cta rv"><p>Every quote begins with a conversation.</p><a class="of-go" href="#inquiries">Get my free preview<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
+    </div>
+  </section>
+
+
+  <section id="why" aria-label="Fair questions">
+    <div class="wrap">
+      <div class="st rv">
+        <div class="st-row">
+          <h2 class="st-big">Fair <em>questions.</em></h2>
+        </div>
+      </div>
+      <div class="wy rv">
+        <ol class="wy-q">
+          <li style="--i:0"><span class="mono">01</span><p>&ldquo;Why should I choose you?&rdquo;</p></li>
+          <li style="--i:1"><span class="mono">02</span><p>&ldquo;You don&rsquo;t know my business like I do.&rdquo;</p></li>
+          <li style="--i:2"><span class="mono">03</span><p>&ldquo;Why do you think you can help?&rdquo;</p></li>
+        </ol>
+        <div class="wy-a rv">
+          <p class="wy-h">You&rsquo;re right. <em>I don&rsquo;t.</em></p>
+          <p class="wy-p">You know your business better than anyone. What I know is how to build the brand around it, so it carries you beyond the day-to-day.</p>
+          <p class="wy-t">Here&rsquo;s where that comes from.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inquiries">
+    <div class="wrap inq">
+      <div class="inq-l"><h2>Start with your <em>free preview.</em></h2><p class="inq-s">Send your current site. Your opening screen comes first, built from your brand.</p><p class="direct"><span class="mono">Email</span><a href="mailto:info@abramsds.com">info@abramsds.com</a></p></div>
+      <form id="inqForm" novalidate>
+        <div class="two">
+          <div class="f"><label for="iq-name">Name</label><input id="iq-name" autocomplete="name"></div>
+          <div class="f"><label for="iq-mail">Email</label><input id="iq-mail" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="f"><label for="iq-site">Current website</label><input id="iq-site" inputmode="url" placeholder="yourbusiness.com"></div>
+        <button type="submit" class="pill pd">Get my free preview</button>
+        <p class="msg" id="iqMsg" hidden>Preview only. Inquiries aren't sent yet.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<a class="pin-cta" href="#inquiries" aria-hidden="true" tabindex="-1"><span class="pill pd">Get my free preview</span></a>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">ADS · Palm Beach County, Florida</span>
+    <span class="mono">© 2026</span>
+  </div>
+</footer>
+
+<div class="lv" hidden role="dialog" aria-modal="true" aria-label="Live site">
+  <div class="lv-win">
+    <div class="lv-bar"><span class="lv-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lv-name"></span><span class="lv-act"><button type="button" class="lv-fs" aria-label="Full screen" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></button><button type="button" class="lv-x" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span></div>
+    <div class="lv-view"></div>
+  </div>
+</div>
+
+<script>
+document.getElementById('inqForm').addEventListener('submit',function(e){e.preventDefault();document.getElementById('iqMsg').hidden=false;});
+
+(function(){
+  try{if(/^#italic$/.test(location.hash))document.documentElement.classList.add('it');}catch(e){}
+  /* opening previews: #pain or #found moves the three seconds to sit right under the hero, with that opening's words */
+  (function(){var h='';h='#ourwork';
+    var m=/^#(pain|found)$/.exec(h),you=document.getElementById('you'),see=document.querySelector('#studio .st');if(!m||!you||!see)return;
+    var hd=you.querySelector('.st-big'),ld=you.querySelector('.lead');
+    if(m[1]==='pain'){ld.textContent='Most visitors leave before they read a word. Cluttered menus and a dated look send them straight to someone else.';}
+    else{hd.innerHTML='We found you <em>the way your customers do.</em>';ld.textContent='Then we saw what they see, in the three seconds they give you.';}
+    document.documentElement.classList.add('ld-on');var w=document.createElement('div');w.className='wrap';w.appendChild(you);see.parentNode.insertBefore(w,see);
+  })();
+  /* step numbers: the previews put 01, 02, 03 beside the step names and give Decide its own line */
+  (function(){var h='';h='#ourwork';
+    if(h!=='#visual'&&h!=='#ourwork')return;
+    var li=document.querySelectorAll('#studio .steps li');if(li.length!==3)return;
+    document.documentElement.classList.add('sn-on');
+    [].forEach.call(li,function(l,i){var b=l.querySelector('b'),n=document.createElement('span');n.className='mono sn';n.textContent='0'+(i+1);b.insertBefore(n,b.firstChild);});
+    li[0].querySelector('p').textContent='You see it before you invest.';
+    li[1].querySelector('p').textContent='Pick the offer that serves your customer.';
+  li[2].querySelector('p').textContent='The full site or business plan follows.';
+  if(h==='#visual'){var cut=0;['aurelle','wrenfield','coldfront','serena'].forEach(function(k){var im=document.querySelector('#work .tile img[src="img/w/'+k+'-1.webp"]');if(im){var d=im.closest('.ind');im.closest('.tile').remove();cut++;if(d){var n=d.querySelectorAll('.tile').length,c=d.querySelector('.head .mono');if(!n)d.remove();else if(c)c.textContent=('0'+n).slice(-2);}}});}
+  })();
+  /* step visuals: #visual puts a picture above each of the three steps */
+  (function(){var h='';h='#ourwork';
+    var li=document.querySelectorAll('#studio .steps li');if(h!=='#visual'||li.length!==3)return;
+    var bar='<span class="sv-bar"><i></i><i></i><i></i></span>',pg='';
+    ['o-signature','f3','b-app','b-cafe','o-flagship'].forEach(function(n,k){pg+='<img src="img/w/lu-sv-'+n+'.webp" width="960" height="600" alt=""'+(k?'':' class="on"')+'>';});
+    var f=['<figure class="sv sv-p" aria-hidden="true"><span class="sv-ph"><img src="img/w/lu-sv-phone.webp" width="330" height="714" alt=""></span></figure>',
+      '<figure class="sv sv-o" aria-hidden="true"><span class="sv-fan">'+['refresh','signature','flagship'].map(function(o,j){return '<span class="sv-c c'+(j+1)+'"><span class="sv-br">'+bar+'<span class="sv-v"><img src="img/w/lu-sv-o-'+o+'.webp" alt=""></span></span></span>';}).join('')+'<span class="sv-lb"><b>Refresh</b><b>Signature</b><b>Flagship</b></span></span></figure>',
+      '<figure class="sv sv-b" aria-hidden="true"><span class="sv-br">'+bar+'<span class="sv-v sv-fl">'+pg+'</span></span></figure>'];
+    for(var i=0;i<3;i++)li[i].insertAdjacentHTML('afterbegin',f[i]);
+    /* Build: everything made for Luna's turns one after another, unhurried: the site, her ordering app, the café game, the books */
+    var fl=li[2].querySelector('.sv-fl'),pgs=fl.querySelectorAll('img'),cur=0,z=1,rm=false;try{rm=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+    if(!rm){var w=setInterval(function(){var r=fl.closest('.rv');if(r&&!r.classList.contains('in'))return;clearInterval(w);
+      setTimeout(function turn(){cur=(cur+1)%pgs.length;var im=pgs[cur];im.classList.remove('on');void im.offsetWidth;im.style.zIndex=++z;im.classList.add('on');setTimeout(turn,3200);},3600);},400);}
+  })();
+  /* owner's side: #visual and #ourwork add the owner's books beside the place and the app, a taste to click around in */
+  (function(){var h='';h='#ourwork';
+    if(h!=='#visual'&&h!=='#ourwork')return;
+    var go='<span class="live-go"><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 1.8v12.4L13.6 8z" fill="currentColor"/></svg></i>See the owner&rsquo;s side</span>';
+    [['live','lu','play/lunas-owner/index.html',' data-direct','Luna&rsquo;s Coffee, Owner','lunas'],['riot','sr','play/soft-riot-app/index.html',' data-own="sr"','Soft Riot, Owner','softriot']].forEach(function(o){
+      var pr=document.querySelector('#'+o[0]+' .lv-pair');if(!pr)return;pr.classList.add('tri');
+      pr.insertAdjacentHTML('beforeend','<button class="live own '+o[1]+'" type="button" data-site="'+o[2]+'"'+o[3]+' data-name="'+o[4]+'" aria-label="Open the owner&rsquo;s side"><img src="img/w/'+o[5]+'-owner-poster.webp" srcset="img/w/'+o[5]+'-owner-poster-s.webp 960w, img/w/'+o[5]+'-owner-poster.webp 1440w" sizes="(max-width:760px) 100vw, 408px" alt="" loading="lazy">'+go+'</button>');
+    });
+  })();
+  /* our work: #ourwork sorts every piece by offer, adds Arden Architects with its library, Mountain &amp; Valley with its app, the Halden House app and the proof under the before and after */
+  (function(){var h='';h='#ourwork';
+    if(h!=='#ourwork')return;
+    var wrap=document.querySelector('#work>.wrap');if(!wrap)return;
+    var T={};
+    var keys=['jay','coldfront','wrenfield','aurelle','ashlar','bascule','sabal','linen','banyan','cortile','serena','places','apply'];
+    for(var i=0;i<keys.length;i++){var im=wrap.querySelector('.tile img[src="img/w/'+keys[i]+'-1.webp"]')||wrap.querySelector('.tile img[src="img/w/'+keys[i]+'-2.webp"]');if(!im)return;T[keys[i]]=im.closest('.tile');}
+    var ba=document.getElementById('ba'),book=document.getElementById('book'),live=document.getElementById('live'),riot=document.getElementById('riot');
+    if(!ba||!book||!live||!riot)return;
+    document.documentElement.classList.add('ow');
+    T.places.querySelector('img').alt='Origins, with the casting study';
+    T.apply.querySelector('img').alt='A rental application laid out on a desk';
+    [].forEach.call(wrap.querySelectorAll(':scope>.ind'),function(d){d.remove();});
+    function el(html){var t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstChild;}
+    function band(id,name,tg,n,list){
+      var d=el('<div class="ind ow-band" id="'+id+'"><div class="head"><h2>'+name+'<em class="ow-tg">'+tg+'</em></h2><span class="mono">'+('0'+n).slice(-2)+'</span></div></div>');
+      if(list){var g=document.createElement('div');g.className='tiles';list.forEach(function(x){var t=T[x[0]];t.className='tile'+(x[1]?' '+x[1]:'');g.appendChild(t);});d.appendChild(g);}
+      return d;
+    }
+    /* proof: each of the three seconds, before and after */
+    var fx=[['trust','0:01','Trust','A stock photo of a stranger.','Now, a house they built.'],['clarity','0:02','Clarity','Seven tabs and eight services.','Now, one promise.'],['action','0:03','Action','Two quote buttons, shouting.','Now, one ask.']];
+    var fxe=el('<div class="ow-fx"></div>');
+    fx.forEach(function(f){fxe.appendChild(el('<figure><div class="ow-fx-p"><span><img src="img/w/fx-'+f[0]+'-b.webp" alt="Before: '+f[3].replace(/\.$/,'')+'" loading="lazy"><b>Before</b></span><span class="ow-fx-a"><img src="img/w/fx-'+f[0]+'-a.webp" alt="After: '+f[4].replace(/^Now, /,'').replace(/\.$/,'')+'" loading="lazy"><b>After</b></span></div><figcaption><span class="mono">'+f[1]+' &middot; '+f[2]+'</span><p>'+f[3]+' <em>'+f[4]+'</em></p></figcaption></figure>'));});
+    ba.appendChild(fxe);
+    T.lunasr=el('<figure class="tile"><div class="frame"><div class="page"><img src="img/w/lu-sv-o-refresh.webp" alt="Luna&rsquo;s Coffee at Refresh, brewed by moonlight" loading="lazy"></div></div></figure>');var ref=band('ow-refresh','Refresh','Your site, renewed.',2,[['jay','half'],['lunasr','half']]);
+    T.meridian=el('<figure class="tile" data-site="b/meridian/index.html" data-name="Meridian" tabindex="0" role="button" aria-label="Open the Meridian site"><div class="frame"><div class="page"><img src="img/w/meridian-1.webp" alt="Meridian, houses drawn for the sun" loading="lazy"><img src="img/w/meridian-2.webp" alt="" loading="lazy"></div></div></figure>');
+    T.bascule2=el('<figure class="tile" data-site="b/bascule2/index.html" data-name="Bascule" tabindex="0" role="button" aria-label="Open the Bascule site"><div class="frame"><div class="page"><img src="img/w/bascule2-1.webp" alt="Bascule, a tower on the Intracoastal" loading="lazy"><img src="img/w/bascule2-2.webp" alt="" loading="lazy"></div></div></figure>');
+    var sig=band('ow-signature','Signature','Your brand, elevated.',4,[['meridian','half'],['bascule2','half'],['places','half'],['apply','half']]);
+    var fla=band('ow-flagship','Flagship','Your whole business, connected.',5);
+    var play='<i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 1.8v12.4L13.6 8z" fill="currentColor"/></svg></i>';
+    var hd=el('<div class="st rv" id="halden"><div class="st-row"><h2 class="st-big">Home, <em>handled.</em></h2><div class="st-copy"><p>Rent, repairs and renewals in the resident&rsquo;s hand. The owner sees each one land.</p></div></div><div class="lv-pair">'
+      +'<button class="live hd" type="button" data-site="play/halden/index.html" data-name="Halden House" aria-label="Play Halden House, a resident app with its owner board"><img src="img/w/halden-poster.webp" srcset="img/w/halden-poster-s.webp 960w, img/w/halden-poster.webp 1600w" sizes="(max-width:760px) 100vw, 840px" alt="" loading="lazy"><span class="live-go">'+play+'Run the building</span></button>'
+      +'<button class="live hd ph" type="button" data-site="play/halden/index.html" data-name="Halden House" aria-label="Play the Halden House resident app"><img src="img/w/halden-app-poster.webp" srcset="img/w/halden-app-poster-s.webp 500w, img/w/halden-app-poster.webp 1000w" sizes="(max-width:760px) 100vw, 408px" alt="" loading="lazy"><span class="live-go">'+play+'Open the app</span></button>'
+      +'</div></div>');
+    /* Arden Architects, the studio's own site, with its materials library as the owner's side */
+    var go='<span class="live-go">'+play+'See the owner&rsquo;s side</span>';
+    var ar=el('<div class="st rv" id="arden"><div class="st-row"><h2 class="st-big">Walk it <em>before it&rsquo;s built.</em></h2><div class="st-copy"><p>Five tools, one house. The model, the plans, the Library, the room board and the budget.</p></div></div><div class="lv-pair">'
+      +'<button class="live ar" type="button" data-site="play/arden/index.html" data-direct data-name="Arden Architects" aria-label="Open the Arden Architects site"><img src="img/w/arden-poster.webp" srcset="img/w/arden-poster-s.webp 960w, img/w/arden-poster.webp 1600w" sizes="(max-width:760px) 100vw, 840px" alt="" loading="lazy"><span class="live-go">'+play+'Walk the house</span></button>'
+      +'<button class="live own ar ph" type="button" data-site="play/arden-library/index.html" data-direct data-name="Arden Architects, Library" aria-label="Open the owner&rsquo;s side"><img src="img/w/arden-owner-poster-m.webp" alt="" loading="lazy">'+go+'</button>'
+      +'</div></div>');
+    /* Mountain & Valley, an origami studio: the site folds a crane, the app teaches one */
+    var mv=el('<div class="st rv" id="mv"><div class="st-row"><h2 class="st-big">Every fold, <em>by hand.</em></h2><div class="st-copy"><p>Gifts folded to order, and classes that teach you to fold your own.</p></div></div><div class="lv-pair">'
+      +'<button class="live mv" type="button" data-site="play/mountain-valley/index.html" data-direct data-name="Mountain &amp; Valley" aria-label="Open the Mountain and Valley site"><picture><source media="(max-width:760px)" srcset="img/w/mv-poster-m.webp"><img src="img/w/mv-poster.webp" srcset="img/w/mv-poster-s.webp 960w, img/w/mv-poster.webp 1600w" sizes="840px" alt="" loading="lazy"></picture><span class="live-go">'+play+'Fold a crane</span></button>'
+      +'<button class="live mv ph" type="button" data-site="play/mountain-valley-app/index.html" data-direct data-name="Mountain &amp; Valley, App" aria-label="Open the Mountain and Valley app"><img src="img/w/mv-app-poster.webp" srcset="img/w/mv-app-poster-s.webp 500w, img/w/mv-app-poster.webp 1000w" sizes="(max-width:760px) 100vw, 408px" alt="" loading="lazy"><span class="live-go">'+play+'Open the app</span></button>'
+      +'</div></div>');
+    book.after(ref);ref.after(sig);sig.after(fla);fla.after(ar);ar.after(hd);hd.after(live);live.after(riot);riot.after(mv);
+  })();
+  /* next round, #visual and #ourwork: Linen & Lacquer out, Banyan Row and Cortile parked with the maybes, the three homes become one developer (Meridian),
+     each question carries its offer under it, on the question's left edge, and the twenty years move to the end of the page and open into the book */
+  (function(){var h='';h='#ourwork';
+    if(h!=='#visual'&&h!=='#ourwork')return;
+    var R=document.documentElement;R.classList.add('nx');
+    var NM={refresh:'Refresh',signature:'Signature',flagship:'Flagship'},TG={refresh:'Your site, renewed.',signature:'Your brand, elevated.',flagship:'Your whole business, connected.'};
+    [].forEach.call(document.querySelectorAll('.fit-row'),function(r){var k=r.getAttribute('data-tab'),q=r.querySelector('.fit-q'),g=r.querySelector('.fit-go');if(!NM[k]||!q)return;
+      var l=document.createElement('div');l.className='fit-l';q.parentNode.insertBefore(l,q);l.appendChild(q);
+      l.insertAdjacentHTML('beforeend','<span class="fit-of"><span class="fit-chip">'+NM[k]+'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span><em>'+TG[k]+'</em></span>');
+      if(g)g.remove();});
+    if(h==='#visual'){
+      var cut=function(k){var im=document.querySelector('#work .tile img[src="img/w/'+k+'-1.webp"]');if(!im)return null;var t=im.closest('.tile');return t;};
+      var cnt=function(d){if(!d)return;var n=d.querySelectorAll('.tile').length,c=d.querySelector('.head .mono');if(!n)d.remove();else if(c)c.textContent=('0'+n).slice(-2);};
+      ['linen','banyan','cortile'].forEach(function(k){var t=cut(k);if(t){var d=t.closest('.ind');t.remove();cnt(d);}});
+      var a=cut('ashlar'),b=cut('bascule'),sb=cut('sabal');
+      if(a&&b&&sb){var d=a.closest('.ind'),tp=document.createElement('template');tp.innerHTML='<figure class="tile" data-site="b/meridian/index.html" data-name="Meridian" tabindex="0" role="button" aria-label="Open the Meridian site"><div class="frame"><div class="page"><img src="img/w/meridian-1.webp" alt="Meridian, houses drawn for the sun" loading="lazy"><img src="img/w/meridian-2.webp" alt="" loading="lazy"></div></div></figure>';var m=tp.content.firstChild;m.classList.add('half');a.replaceWith(m);tp.innerHTML='<figure class="tile" data-site="b/bascule2/index.html" data-name="Bascule" tabindex="0" role="button" aria-label="Open the Bascule site"><div class="frame"><div class="page"><img src="img/w/bascule2-1.webp" alt="Bascule, a tower on the Intracoastal" loading="lazy"><img src="img/w/bascule2-2.webp" alt="" loading="lazy"></div></div></figure>';var bb=tp.content.firstChild;bb.classList.add('half');b.replaceWith(bb);sb.remove();cnt(d);}
+    }
+    var inq=document.getElementById('inquiries'),trk=document.getElementById('years'),bk=document.getElementById('book');
+    if(inq&&trk&&bk){
+      var ab=document.createElement('section');ab.id='about';ab.setAttribute('aria-label','About the studio');ab.innerHTML='<div class="wrap"></div>';inq.before(ab);
+      var w=ab.firstChild;w.appendChild(trk);
+      var rm=false;try{rm=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+      if(rm)w.appendChild(bk);else{R.classList.add('ab-on');trk.querySelector('.yrs-pin').appendChild(bk);}
+    }
+  })();
+  var reduce=false;try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+  /* the pinned ask on phones: in once the film is gone, out of the way of the form and of an open site */
+  (function(){var pc=document.querySelector('.pin-cta'),fm=document.getElementById('inquiries'),fd=document.querySelector('.fold');if(!pc||!('IntersectionObserver' in window))return;
+    var a=false,b=false;function up(){pc.classList.toggle('on',a&&!b);}
+    if(fd)new IntersectionObserver(function(es){a=!es[0].isIntersecting;up();},{rootMargin:'-61px 0px 0px 0px'}).observe(fd);
+    if(fm)new IntersectionObserver(function(es){b=es[0].isIntersecting;up();},{threshold:0}).observe(fm);
+  })();
+
+  /* the magazine: lies closed on the page until it scrolls into view, then opens and squares up; pages turn by drag, click or keys and bend as they go */
+  (function(){
+    var sec=document.getElementById('book');if(!sec)return;
+    var book=sec.querySelector('.bk-book'),shift=sec.querySelector('.bk-shift'),bar=sec.querySelector('.bk-bar i'),bp=sec.querySelector('.bk-p'),bn=sec.querySelector('.bk-n');
+    /* the mark is drawn into a box a little larger than its letters, so nothing on the tops or sides is cut */
+    var M='<svg viewBox="-2 -3 257.6 90.7" aria-hidden="true"><use href="#adsmark" width="253.6" height="84.7"/></svg>';
+    var I=function(n,c,r){return '<img data-src="img/book/'+n+'.webp" alt="" draggable="false"'+(c?' class="'+c+'"':'')+(r?' style="aspect-ratio:'+r+'"':'')+'>';};
+    var FO=function(n){return '<span class="fo">'+(n<10?'0':'')+n+'</span>';};
+    var PL=function(n,r,cap,f,t){return '<div class="pl'+(t?' t':'')+'">'+I(n,'',r)+'<span class="cap">'+cap+'</span></div>'+FO(f);};
+    var OP=function(no,kk,b,ad,p,f){return '<div class="op"><span class="no">'+no+'</span><span class="kk">'+kk+'</span><b>'+b+'</b><i class="ad">'+ad+'</i>'+(p?'<p>'+p+'</p>':'')+'</div>'+FO(f);};
+    var P=[
+      ['cv',I('cover-82')+'<i class="gl"></i><div class="mh">'+M+'<span>Selected work</span></div><div class="cvl"><b>Seen before<br>it was built.</b><span>Three New York buildings</span></div><i class="spn"></i>'],
+      ['',I('teaser')],
+      ['','<div class="tp">'+M+'<i></i><b>Selected work</b><span>Art &middot; Architecture &middot; Marketing</span><span class="bt">Abrams Design Studio</span></div>'],
+      ['','<div class="tx"><span class="kk">Foreword</span><b>Seen before it was built.</b><p>Every room and facade in these pages was drawn, lit and furnished before it existed. Twenty years across art, architecture and marketing, now turned to how your business is seen.</p></div>'+FO(3)],
+      ['','<div class="toc"><span class="kk">Contents</span><ol><li><b>Manor 82</b><em>05</em><i>333 East 82nd Street, New York</i></li><li><b>101 East 2nd</b><em>13</em><i>Renderings, New York</i></li><li><b>271 Sea Breeze</b><em>17</em><i>Amenity spaces, Brooklyn</i></li></ol></div>'+FO(4)],
+      ['',OP('01','Rendered, then built','Manor 82','333 East 82nd Street, New York','Three rejected submissions to the historic preservation board. Then a staple of the Upper East Side.',5)],
+      ['',I('entry')],
+      ['spl',I('living')],['spr',I('living')],
+      ['',I('street')+'<span class="tag l">Rendered</span>'],['',PL('phext','1','Penthouse at dusk',10)],
+      ['',I('built')+'<span class="tag">Built</span><i class="stp"></i>'],['',PL('kitchen','2000/1314','Penthouse kitchen',12)+'<i class="stp"></i>'],
+      ['',OP('02','Renderings','101 East 2nd Street','New York','The street front and the garden terrace.',13)],
+      ['',I('first')],
+      ['spl',I('terrace')],['spr',I('terrace')],
+      ['',OP('03','Amenity spaces','271 Sea Breeze Avenue','Brooklyn, New York','The resident lobby and the lounge.',17)],
+      ['',I('lobby-p')],
+      ['spl',I('lounge')],['spr',I('lounge')],
+      ['bcv','<div class="tp">'+M+'<span class="bt">Palm Beach County</span></div><i class="spn"></i>']
+    ];
+    var N=P.length/2,leaves=[],ang=[],cur=0,busy=false,touched=false,NS=8;
+    for(var k=0;k<N;k++){
+      var lf=document.createElement('div');lf.className='lf';
+      lf.style.setProperty('--cr',(Math.min(k,N-1-k)*.8).toFixed(1)+'px');
+      lf.innerHTML='<div class="pg f '+P[2*k][0]+'">'+P[2*k][1]+'<i class="cs"></i><i class="sh"></i></div><div class="pg b '+P[2*k+1][0]+'">'+P[2*k+1][1]+'<i class="cs"></i><i class="sh"></i></div>';
+      shift.appendChild(lf);leaves.push(lf);ang.push(0);
+    }
+    var F=function(k){return leaves[k]&&leaves[k].children[0];},B=function(k){return leaves[k]&&leaves[k].children[1];};
+    function op(e,c,v){if(e){var x=e.querySelector(c);if(x)x.style.opacity=v;}}
+    /* the curl: a copy of the turning leaf, cut into strips; each strip turns a little past the one before it */
+    var cl=null;
+    function strip(src,i,pw,sw,back){
+      var f=document.createElement('div');f.className='cfc'+(back?' r':'');
+      var c=src.cloneNode(true);c.style.cssText='width:'+pw+'px;left:'+(-(back?NS-1-i:i)*sw)+'px';
+      [].forEach.call(c.querySelectorAll('.sh,.cs'),function(x){x.style.opacity=0;});
+      var lt=document.createElement('i');lt.className='clt';f.appendChild(c);f.appendChild(lt);return [f,lt];
+    }
+    function curlOn(k){
+      if(cl&&cl.k===k)return;curlOff();
+      var pw=leaves[k].offsetWidth,sw=pw/NS,root=document.createElement('div'),par=root,s=[];
+      root.className='crl';root.style.width=pw+'px';root.style.zIndex=N+6;
+      for(var i=0;i<NS;i++){
+        var st=document.createElement('div');st.className='cst';st.style.width=sw+'px';
+        var a=strip(F(k),i,pw,sw,0),b=strip(B(k),i,pw,sw,1);st.appendChild(a[0]);st.appendChild(b[0]);
+        par.appendChild(st);par=st;s.push({el:st,lf:a[1],lb:b[1]});
+      }
+      shift.appendChild(root);leaves[k].style.visibility='hidden';
+      cl={k:k,root:root,s:s,stiff:k===0||k===N-1};
+    }
+    function curlOff(){if(!cl)return;cl.root.remove();leaves[cl.k].style.visibility='';cl=null;}
+    function set(k,a,bend){
+      ang[k]=a;var l=leaves[k];l.style.transform='rotateY('+(-a)+'deg)';
+      var s=Math.sin(a*Math.PI/180);
+      op(F(k),'.sh',a<90?(a/90*.7).toFixed(3):0);op(B(k),'.sh',a>90?((180-a)/90*.7).toFixed(3):0);
+      op(F(k+1),'.cs',a<90?(s*.5).toFixed(3):0);op(B(k-1),'.cs',a>90?(s*.5).toFixed(3):0);
+      if(cl&&cl.k===k){
+        var b=(bend||0)*(cl.stiff?.45:1),prev=0,ph=[];
+        for(var i=0;i<NS;i++)ph.push(Math.max(0,Math.min(180,a+b*Math.pow(i/(NS-1),1.5))));
+        /* shade follows the bend: each strip blends from its neighbour's angle to the next, so the curve reads smooth */
+        var sh=function(x){return (.42*Math.pow(Math.sin(x*Math.PI/180),1.3)).toFixed(3);};
+        for(i=0;i<NS;i++){
+          var q=cl.s[i],l=sh((ph[i]+(i?ph[i-1]:ph[i]))/2),r=sh((ph[i]+(i<NS-1?ph[i+1]:ph[i]))/2);
+          q.el.style.transform='rotateY('+(-(ph[i]-prev)).toFixed(2)+'deg)';prev=ph[i];
+          q.lf.style.background='linear-gradient(90deg,rgba(0,0,0,'+l+'),rgba(0,0,0,'+r+'))';
+          q.lb.style.background='linear-gradient(90deg,rgba(0,0,0,'+r+'),rgba(0,0,0,'+l+'))';
+        }
+      }
+    }
+    function z(){for(var k=0;k<N;k++)leaves[k].style.zIndex=ang[k]>90?k+1:N-k+1;}
+    function ui(){
+      book.setAttribute('data-st',cur===0?'closed':cur===N?'done':'open');
+      sec.classList.toggle('opened',cur>0);
+      bp.disabled=cur===0;bn.disabled=cur===N;
+      bar.style.setProperty('--p',(cur/N*100).toFixed(1)+'%');
+    }
+    var ease=function(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;};
+    var K=52;
+    /* fn(p) gives [angle, bend]; without one the page is lifted by its edge first, then trails as it lands */
+    function anim(k,from,to,dur,fn,done){
+      busy=true;leaves[k].style.zIndex=N+5;
+      if(reduce){set(k,to,0);z();busy=false;done&&done();return;}
+      curlOn(k);var dir=to>=from?1:-1,t0=null;
+      function finish(){curlOff();set(k,ang[k],0);z();busy=false;done&&done();}
+      requestAnimationFrame(function step(t){
+        if(t0===null)t0=t;var p=Math.min(1,(t-t0)/dur);
+        var r=fn?fn(p):[from+(to-from)*ease(p),dir*K*Math.sin(2*Math.PI*p)*(1-.3*p)];
+        set(k,r[0],r[1]);
+        if(p<1){requestAnimationFrame(step);return;}
+        if(fn&&!fn.settle){finish();return;}
+        /* loose paper settles with a couple of soft flutters at the fore-edge */
+        var t1=null,sg=to>=90?-1:1;
+        requestAnimationFrame(function fl(t){
+          if(t1===null)t1=t;var q=Math.min(1,(t-t1)/560);
+          set(k,to,sg*10*Math.abs(Math.sin(3*Math.PI*q))*Math.pow(1-q,2));
+          if(q<1)requestAnimationFrame(fl);else finish();
+        });
+      });
+    }
+    function next(dur){if(busy||cur>=N)return;var k=cur;cur++;ui();anim(k,ang[k],180,dur||(k===0?1500:1150));}
+    function prev(dur){if(busy||cur<=0)return;var k=cur-1;cur--;ui();anim(k,ang[k],0,dur||(k===0?1500:1150));}
+    function load(){[].forEach.call(sec.querySelectorAll('img[data-src]'),function(i){i.src=i.getAttribute('data-src');i.removeAttribute('data-src');});}
+    z();ui();
+    bn.addEventListener('click',function(){touched=true;next();});
+    bp.addEventListener('click',function(){touched=true;prev();});
+    book.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){touched=true;next();e.preventDefault();}if(e.key==='ArrowLeft'){touched=true;prev();e.preventDefault();}});
+    /* drag: the edge follows the pointer and leads the rest of the page, the way paper does when you pull it */
+    var d=null;
+    book.addEventListener('pointerdown',function(e){
+      if(busy||e.button>0)return;
+      var r=shift.getBoundingClientRect(),sx=r.left+r.width/2,pw=r.width/2,fwd=e.clientX>sx;
+      if(fwd&&cur>=N||!fwd&&cur<=0)return;
+      d={x0:e.clientX,y0:e.clientY,sx:sx,pw:pw,fwd:fwd,k:fwd?cur:cur-1,on:false,lx:e.clientX,lt:e.timeStamp,v:0,b:0};
+    });
+    book.addEventListener('pointermove',function(e){
+      if(!d)return;var dx=e.clientX-d.x0;
+      if(!d.on){if(Math.abs(dx)<7)return;if(Math.abs(e.clientY-d.y0)>Math.abs(dx)){d=null;return;}d.on=true;touched=true;leaves[d.k].style.zIndex=N+5;curlOn(d.k);try{book.setPointerCapture(e.pointerId);}catch(_){}}
+      var a=d.fwd?Math.max(0,Math.min(1,(d.x0-e.clientX)/(d.x0-(d.sx-d.pw))))*180:180-Math.max(0,Math.min(1,(e.clientX-d.x0)/((d.sx+d.pw)-d.x0)))*180;
+      var dt=Math.max(1,e.timeStamp-d.lt);d.v=(e.clientX-d.lx)/dt;d.lx=e.clientX;d.lt=e.timeStamp;
+      d.b=(d.fwd?1:-1)*K*.55*Math.sin(a*Math.PI/180);
+      set(d.k,a,d.b);
+    });
+    function up(){
+      if(!d)return;var g=d;d=null;
+      if(!g.on){touched=true;g.fwd?next():prev();return;}
+      var a=ang[g.k],go=g.fwd?(a>70||g.v<-.35):(a<110||g.v>.35);
+      var to=go?(g.fwd?180:0):(g.fwd?0:180),rem=Math.abs(to-a)/180,b0=g.b,dir=to>=a?1:-1;
+      if(go){cur+=g.fwd?1:-1;ui();}
+      /* let go: the lead in the paper relaxes, swings past, and trails into place */
+      var fn=function(p){var e=1-Math.pow(1-p,3);return [a+(to-a)*e,b0*Math.pow(1-p,2)-dir*K*.45*Math.sin(Math.PI*p)];};fn.settle=true;
+      anim(g.k,a,to,420+rem*760,fn);
+    }
+    book.addEventListener('pointerup',up);book.addEventListener('pointercancel',up);
+    /* until someone touches it, the corner of the page lifts and falls back now and then, so it reads as paper that turns */
+    function peek(){if(touched||busy||cur>=N||document.hidden)return;var k=cur;anim(k,0,0,1500,function(p){var s=Math.sin(Math.PI*p);return [5*s,26*s];});}
+    var started=false;
+    function start(){
+      if(started)return;started=true;load();sec.classList.add('in');
+      if(reduce){next();return;}
+      setTimeout(function(){if(!touched&&cur===0)next();},1900);
+      setInterval(peek,5200);
+    }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){load();}});},{rootMargin:'900px 0px'}).observe(sec);
+      if(document.documentElement.classList.contains('ab-on'))window.__bkGo=start;
+      else new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){start();o.disconnect();}});},{threshold:.25}).observe(book);
+    }else start();
+  })();
+  /* previews only run while they are on screen */
+  var screens=[].slice.call(document.querySelectorAll('.tile'));
+  [].forEach.call(document.querySelectorAll('.tiles'),function(g){[].forEach.call(g.children,function(t,i){t.style.setProperty('--d',(i*.3).toFixed(1)+'s');});});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle('play',e.isIntersecting);});},{threshold:.35});
+    screens.forEach(function(s){io.observe(s);});
+  }else screens.forEach(function(s){s.classList.add('play');});
+
+  /* the comparison: drag (or arrow keys) moves the line; on arrival the new site wipes across in full, holds so it can be seen whole, then eases back to just past centre */
+  var cmp=document.querySelector('.cmp'),rng=cmp&&cmp.querySelector('input'),touched=false;
+  function setX(v){cmp.style.setProperty('--x',v+'%');rng.value=v;}
+  if(cmp){rng.addEventListener('input',function(){touched=true;cmp.style.setProperty('--x',rng.value+'%');});if(reduce)setX(54);}
+  function sweep(){if(!cmp)return;
+    function ease(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;}
+    function run(from,to,D,done){var t0=null;function f(t){if(touched)return;if(!t0)t0=t;var k=Math.min(1,(t-t0)/D);setX(from+(to-from)*ease(k));if(k<1)requestAnimationFrame(f);else if(done)done();}requestAnimationFrame(f);}
+    setTimeout(function(){run(0,100,2800,function(){setTimeout(function(){if(!touched)run(100,54,1800);},1800);});},1400);}
+
+  /* hero film: holds on its first frame for people who ask for less motion */
+  var hv=document.querySelector('.fold-bg video');if(hv&&reduce){hv.removeAttribute('autoplay');hv.pause();}
+  /* sound toggle: the film always starts muted (browsers only allow muted autoplay); a tap brings the sound in gently */
+  var sb=document.querySelector('.snd');
+  if(sb&&hv){sb.addEventListener('click',function(){var on=hv.muted;hv.muted=!on;sb.setAttribute('aria-pressed',on?'true':'false');sb.setAttribute('aria-label',on?'Sound off':'Sound on');
+    if(on){hv.volume=0;var p=hv.play();if(p&&p.catch)p.catch(function(){});var n=0,fi=setInterval(function(){n++;if(!hv.muted)hv.volume=Math.min(1,n/18)*.8;if(n>=18||hv.muted)clearInterval(fi);},50);}});}
+  /* the bar slides in once the full-screen hero has scrolled away */
+  var hdr=document.querySelector('header'),fold=document.querySelector('.fold'),root=document.documentElement;
+  function past(v){hdr.classList.toggle('past',v);root.classList.toggle('past',v);}
+  if('IntersectionObserver' in window&&fold){new IntersectionObserver(function(es){past(!es[0].isIntersecting);},{rootMargin:'-61px 0px 0px 0px'}).observe(fold);}else past(true);
+
+
+  /* the timeline: scroll through the held band sets where the light should be, and it eases toward it, so a fast scroll still reads as an unhurried walk.
+     Years run left to right along the lines (0 at the left edge, 20 where they meet), placed as drawn: art 7 to 13, architecture 0 to 18, marketing 9 to 20 */
+  var cv=document.querySelector('.conv'),trk=document.querySelector('.yrs-track');
+  if(cv&&trk){
+    var cx=[].slice.call(cv.querySelectorAll('.cx')),cl=[].slice.call(cv.querySelectorAll('.cl')),bars=[].slice.call(cv.querySelectorAll('.bar')),lbs=[].slice.call(cv.querySelectorAll('.lb')),orbs=[].slice.call(cv.querySelectorAll('.orb')),node=cv.querySelector('.node'),dot=cv.querySelector('.dot');
+    var yn=document.querySelector('.yn'),ys=[].slice.call(document.querySelectorAll('.ys'));
+    var span=[[7,13],[0,18],[9,20]],ph=[[.05,.27],[.31,.53],[.57,.79]],fin=[.83,.97],cur=0,goal=0,raf=0,shown=-1;
+    var smp=cl.slice(0,3).map(function(p){var L=p.getTotalLength(),a=[];for(var j=0;j<=240;j++){var q=p.getPointAtLength(L*j/240);a.push([L*j/240,q.x,q.y]);}return a;});
+    var lens=cl.map(function(p){return p.getTotalLength();});
+    function clamp(v){return v<0?0:v>1?1:v;}
+    function seg(a,b,v){return clamp((v-a)/(b-a));}
+    function smooth(k){return k*k*(3-2*k);}
+    function put(o,i,k){var W=cv.clientWidth,H=cv.clientHeight,pt=cl[i].getPointAtLength(lens[i]*k);o.style.transform='translate('+(pt.x/1200*W).toFixed(1)+'px,'+(pt.y/160*H).toFixed(1)+'px)';return pt.x;}
+    function bar(i,x0,x1){if(x1<=x0){bars[i].setAttribute('d','');return;}var d='',a=smp[i];for(var j=0;j<a.length;j++){if(a[j][1]>=x0&&a[j][1]<=x1)d+=(d?'L':'M')+a[j][1].toFixed(1)+' '+a[j][2].toFixed(1);}bars[i].setAttribute('d',d||'');}
+    function show(n){if(n===shown)return;shown=n;ys.forEach(function(e,j){var on=j===n;e.classList.toggle('on',on);if(on)e.removeAttribute('aria-hidden');else e.setAttribute('aria-hidden','true');});}
+    function draw(v){
+      var got=0,num=null,act=0;
+      for(var i=0;i<3;i++){
+        var k=smooth(seg(ph[i][0],ph[i][1],v)),x=put(orbs[i],i,k),xa=span[i][0]*45,xb=span[i][1]*45;
+        cx[i].style.strokeDashoffset=1-k;orbs[i].style.opacity=k>0&&k<1?1:0;
+        bar(i,xa,Math.min(x,xb));lbs[i].classList.toggle('on',k>0);
+        if(k>0){act=i+1;num=Math.round(clamp((x-xa)/(xb-xa))*(span[i][1]-span[i][0]));}
+        if(k>=1)got++;
+      }
+      node.style.setProperty('--n',got/3);node.classList.toggle('full',got===3);
+      var m=smooth(seg(fin[0],fin[1],v));cx[3].style.strokeDashoffset=1-m;put(orbs[3],3,m);orbs[3].style.opacity=m>0&&m<1?1:0;
+      lbs[3].classList.toggle('on',m>=1);dot.classList.toggle('on',m>=1);
+      var all=v<ph[0][0]||v>=fin[0]-.01;
+      for(var g=0;g<3;g++){var d=!all&&act&&g!==act-1;cl[g].classList.toggle('dim',d);cx[g].classList.toggle('dim',d);bars[g].classList.toggle('dim',d);lbs[g].classList.toggle('dim',d);}
+      if(all){show(0);num=v<ph[0][0]?20:Math.round(11+9*m);}else show(act||1);
+      yn.textContent=num==null?0:num;
+    }
+    var pin=trk.querySelector('.yrs-pin'),yb=trk.querySelector('.yrs');
+    function gap(){if(reduce)return;trk.style.setProperty('--yg',Math.max(0,(pin.clientHeight-yb.offsetHeight)/2).toFixed(1)+'px');}
+    gap();addEventListener('resize',gap);
+    var AB=document.documentElement.classList.contains('ab-on');
+    function aim(){var r=trk.getBoundingClientRect(),run=trk.offsetHeight-(innerHeight-61),raw=clamp((61-r.top)/run);
+      if(!AB){goal=raw;return;}
+      goal=clamp(raw/.7);var b=smooth(seg(.74,.88,raw));trk.style.setProperty('--bk',b.toFixed(3));trk.classList.toggle('bk-in',b>0);if(b>.5&&window.__bkGo)window.__bkGo();}
+    function tick(){cur+=(goal-cur)*.05;if(Math.abs(goal-cur)<.0006)cur=goal;draw(cur);raf=cur!==goal?requestAnimationFrame(tick):0;}
+    function go(){aim();if(!raf)raf=requestAnimationFrame(tick);}
+    if(reduce){draw(1);show(0);yn.textContent=20;}else{draw(0);addEventListener('scroll',go,{passive:true});addEventListener('resize',function(){draw(cur);go();});go();}
+  }
+
+  /* statements reveal once, when most of them are on screen; the 20 counts up as its lines draw */
+  var rv=[].slice.call(document.querySelectorAll('.rv'));
+  /* the ring counts down with the beats, 3 at .9s, 2 at 2.4s, 1 at 3.9s, and settles back on 3 once it is full */
+  function down(el){var n=el.querySelector('.num.cd');if(!n)return;[[2400,'2'],[3900,'1'],[5700,'3']].forEach(function(s){setTimeout(function(){n.classList.add('sw');setTimeout(function(){n.textContent=s[1];n.classList.remove('sw');},300);},s[0]-300);});}
+  function count(el){if(reduce)return;[].forEach.call(el.querySelectorAll('.num:not(.cd)'),function(n){var to=+n.getAttribute('data-to'),D=+(n.getAttribute('data-dur')||2600),W=+(n.getAttribute('data-wait')||0),lin=n.hasAttribute('data-lin'),t0=null;
+    function f(t){if(!t0)t0=t;var k=Math.min(1,Math.max(0,(t-t0-W)/D)),e=lin?k:1-Math.pow(1-k,3);n.textContent=lin?Math.floor(to*e+1e-6):Math.round(to*e);if(k<1)requestAnimationFrame(f);}n.textContent='0';requestAnimationFrame(f);});}
+  if('IntersectionObserver' in window&&!reduce){
+    var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');count(e.target);if(e.target.id==='you')down(e.target);if(e.target.id==='ba')sweep();io2.unobserve(e.target);}});},{threshold:.4});
+    rv.forEach(function(r){io2.observe(r);});
+  }else{rv.forEach(function(r){r.classList.add('in');});if(cmp)setX(54);}
+  /* live work: a tile or the café opens its site in the frame. The page is fetched only on that click and dropped on close, so it costs nothing until asked for.
+     In-page links inside the site are walked by hand, since a framed page would otherwise follow them out of the frame */
+  var lv=document.querySelector('.lv');
+  if(lv&&window.fetch){
+    var lview=lv.querySelector('.lv-view'),lname=lv.querySelector('.lv-name'),lx=lv.querySelector('.lv-x'),lfs=lv.querySelector('.lv-fs'),lwin=lv.querySelector('.lv-win'),lfr=null,lfrom=null,ltok=0,lshut=0,lcache={},lvid=false;
+    var arrow='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 11.5l7-7M5.5 4.5h6v6"/></svg>';
+    [].forEach.call(document.querySelectorAll('.tile[data-site] .frame'),function(f){var g=document.createElement('span');g.className='go';g.setAttribute('aria-hidden','true');g.innerHTML=arrow;f.appendChild(g);});
+    if(lwin.requestFullscreen&&document.fullscreenEnabled)lfs.hidden=false;
+    function lget(u){return lcache[u]||(lcache[u]=fetch(u).then(function(r){if(!r.ok)throw new Error(r.status);return r.text();}).catch(function(e){delete lcache[u];throw e;}));}
+    function lkey(e){if(e.key==='Escape'&&!e.defaultPrevented){e.preventDefault();lclose();}}
+    function lwire(f){try{var w=f.contentWindow,d=f.contentDocument;
+      d.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();var id=decodeURIComponent(a.getAttribute('href').slice(1)),t=id&&d.getElementById(id);if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});else w.scrollTo({top:0,behavior:reduce?'auto':'smooth'});},true);
+      w.addEventListener('keydown',lkey);w.focus();}catch(e){}}
+    var OWNSR='<style>#oNav [data-sec="inventory"],#oNav [data-sec="customers"]{display:none!important}.own{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr)!important}.side{flex-direction:row!important;align-items:center;gap:40px!important;padding:14px 28px!important;overflow-x:auto;scrollbar-width:none}.side::-webkit-scrollbar{display:none}.s-brand{display:none!important}.s-brand span,.ws,.src{display:none!important}.nav{flex-direction:row!important;margin:0!important;gap:6px!important;overflow:visible!important}.nav button{height:40px!important;padding:0 18px!important;border-radius:12px!important;font:800 13px/1 var(--f-disp)!important;font-stretch:118%!important;letter-spacing:.05em!important;text-transform:uppercase;flex:none}.nav button svg{display:none!important}.nav button[aria-current="true"]{background:var(--lime)!important;color:var(--ink)!important}.nav button[aria-current="true"]::after{display:none!important}.nav button em{margin-left:10px!important;margin-right:0!important}.nav button[aria-current="true"] em{background:var(--ink)!important;color:var(--lime)!important}.oh h1{font-size:52px!important}@media (max-width:760px){.side{gap:16px!important;padding:10px 16px!important}.nav button{height:34px!important;padding:0 12px!important;font-size:12px!important}.oh h1{font-size:30px!important}}.pane-own{border-left:0!important}<\/style><script>document.addEventListener(\'click\',function(e){var b=e.target.closest&&e.target.closest(\'[data-sec]\');if(b&&!/^(today|orders|drops|products|books)$/.test(b.getAttribute(\'data-sec\'))){e.stopPropagation();e.preventDefault();}},true);addEventListener(\'load\',function(){setTimeout(function(){try{OWN.range=\'7d\';setView(\'owner\');OWN.render()}catch(e){}},0)});<\/script>';
+    function lopen(el){
+      var u=el.getAttribute('data-site');if(!u)return;
+      clearTimeout(lshut);if(lfr){lfr.remove();lfr=null;}
+      var t=++ltok,nm=el.getAttribute('data-name')||'';lfrom=el;
+      lname.textContent=nm;lv.setAttribute('aria-label',nm);
+      lv.hidden=false;root.classList.add('lv-on');lview.classList.add('wait');
+      requestAnimationFrame(function(){requestAnimationFrame(function(){lv.classList.add('in');});});
+      lx.focus({preventScroll:true});
+      if(hv&&!hv.paused){hv.pause();lvid=true;}
+      if(el.hasAttribute('data-direct')){var fd=document.createElement('iframe');fd.title=nm;fd.setAttribute('allow','fullscreen; autoplay');
+        fd.addEventListener('load',function(){if(t!==ltok)return;lwire(fd);lview.classList.remove('wait');fd.classList.add('on');},{once:true});
+        fd.src=u;lview.appendChild(fd);lfr=fd;return;}
+      lget(u).then(function(html){if(t!==ltok)return;
+        if(el.getAttribute('data-own')==='sr')html=html.replace('</body>',OWNSR+'</body>');
+        var f=document.createElement('iframe');f.title=nm;f.setAttribute('allow','fullscreen; autoplay');
+        f.addEventListener('load',function(){if(t!==ltok)return;lwire(f);lview.classList.remove('wait');f.classList.add('on');},{once:true});
+        f.srcdoc=html;lview.appendChild(f);lfr=f;
+      }).catch(function(){if(t!==ltok)return;lview.classList.remove('wait');lclose();});
+    }
+    function lclose(){
+      if(lv.hidden||!lv.classList.contains('in'))return;
+      ltok++;lv.classList.remove('in');
+      if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(function(){});
+      lshut=setTimeout(function(){if(lfr){lfr.remove();lfr=null;}lview.classList.remove('wait');lv.hidden=true;root.classList.remove('lv-on');
+        if(lvid&&hv){var p=hv.play();if(p&&p.catch)p.catch(function(){});lvid=false;}
+        if(lfrom)lfrom.focus({preventScroll:true});},reduce?0:460);
+    }
+    [].forEach.call(document.querySelectorAll('[data-site]'),function(el){
+      el.addEventListener('click',function(){lopen(el);});
+      if(el.tagName!=='BUTTON')el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();lopen(el);}});
+    });
+    lx.addEventListener('click',lclose);
+    lv.addEventListener('click',function(e){if(e.target===lv)lclose();});
+    document.addEventListener('keydown',function(e){if(!lv.hidden)lkey(e);});
+    document.addEventListener('focusin',function(e){if(!lv.hidden&&!lv.contains(e.target))lx.focus({preventScroll:true});});
+    lfs.addEventListener('click',function(){if(document.fullscreenElement){document.exitFullscreen().catch(function(){});}else{var p=lwin.requestFullscreen();if(p&&p.catch)p.catch(function(){});}});
+    document.addEventListener('fullscreenchange',function(){lfs.setAttribute('aria-label',document.fullscreenElement?'Exit full screen':'Full screen');});
+  }
+  /* offers: tabs behave as tabs (arrow keys move between them); the tier cards open their own page */
+  var oft=[].slice.call(document.querySelectorAll('.of-tabs [role="tab"]'));
+  if(oft.length){
+    var ofw=document.querySelector('.of-tabs');
+    function ofgo(tab,focus,scroll){oft.forEach(function(t){var on=t===tab,p=document.getElementById(t.getAttribute('aria-controls'));t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;p.hidden=!on;p.classList.toggle('on',on);});
+      var L=tab.offsetLeft-ofw.offsetLeft,R=L+tab.offsetWidth;if(L<ofw.scrollLeft||R>ofw.scrollLeft+ofw.clientWidth)ofw.scrollTo({left:Math.max(0,L-24),behavior:reduce?'auto':'smooth'});
+      if(focus)tab.focus({preventScroll:true});
+      if(scroll){var y=ofw.getBoundingClientRect().top+scrollY-90;if(scrollY>y)scrollTo({top:y,behavior:reduce?'auto':'smooth'});}}
+    oft.forEach(function(t,i){t.addEventListener('click',function(){ofgo(t);});
+      t.addEventListener('keydown',function(e){var k=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(!k)return;e.preventDefault();ofgo(oft[(i+k+oft.length)%oft.length],true);});});
+    [].forEach.call(document.querySelectorAll('.of-more'),function(b){b.addEventListener('click',function(){ofgo(document.getElementById('ot-'+b.getAttribute('data-tab')),true,true);});});
+  }
+})();
+</script>
+<script>
+/* who is this for: a row opens its offer's page and brings the tabs into view */
+(function(){
+  var reduce=false;try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+  [].forEach.call(document.querySelectorAll('.fit-row'),function(r){r.addEventListener('click',function(e){
+    var t=document.getElementById('ot-'+r.getAttribute('data-tab')),w=document.querySelector('.of-tabs');if(!t||!w)return;
+    e.preventDefault();t.click();
+    scrollTo({top:w.getBoundingClientRect().top+scrollY-90,behavior:reduce?'auto':'smooth'});
+  });});
+})();
+</script>
+
+
+
+<script>(function(){var v=document.getElementById("heroVid");if(!v||matchMedia("(prefers-reduced-motion: reduce)").matches)return;function go(){if(document.documentElement.classList.contains("lv-on")||document.body.classList.contains("lv-on"))return;v.preload="auto";var p=v.play();if(p&&p.catch)p.catch(function(){});}
+if("IntersectionObserver"in window){var o=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){go();}else{v.pause();}});},{rootMargin:"200px"});o.observe(v);}else{go();}})();</script></body></html>

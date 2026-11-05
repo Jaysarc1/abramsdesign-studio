@@ -1,0 +1,1555 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mountain &amp; Valley</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Unbounded:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&text=%E5%A1%B5%E3%82%82%E7%A9%8D%E3%82%82%E3%82%8C%E3%81%B0%E5%B1%B1%E3%81%A8%E3%81%AA%E3%82%8B&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky1:#0a9fdc; --sky2:#36c8f3; --navy:#0f2a6b; --ink:#0f2a6b; --ink2:#4a5d86;
+  --coral:#f55a5f; --coral-d:#e24a54; --berry:#933a5a; --butter:#f2dd6e;
+  --line:#d9e6f0;
+  --g: clamp(16px, 2.4vw, 32px);
+  --gl: max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px));
+  --gr: max(clamp(20px, 4vw, 48px), env(safe-area-inset-right, 0px));
+  --hh: 64px;
+  --disp: Unbounded, Figtree, sans-serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0; background:#f4f8fb; color:var(--ink); font:400 17px/1.6 Figtree, system-ui, sans-serif; -webkit-font-smoothing:antialiased; overflow-x:clip}
+body::before{content:""; position:fixed; left:0; right:0; top:0; height:env(safe-area-inset-top,0px); background:var(--sky1); z-index:40}
+img,svg,canvas{display:block}
+a{color:inherit}
+#facets{position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none}
+main,footer,.ribbon{position:relative; z-index:1}
+.wrap{max-width:1240px; margin:0 auto; padding-left:var(--gl); padding-right:var(--gr)}
+.g12{display:grid; grid-template-columns:repeat(12, minmax(0,1fr)); column-gap:var(--g)}
+
+/* credit line */
+.ribbon{background:#5ac4ee; color:#0b3a66; font-family:Figtree, sans-serif; font-size:10px; font-weight:500; line-height:10px; letter-spacing:.24em; text-transform:uppercase; text-align:center; z-index:30}
+.ribbon .wrap{padding-block:9px}
+.ribbon a{text-decoration:none; padding-left:.24em; color:inherit}
+
+/* folded type: every letter carries a crease */
+.ft .wd{display:inline-block; white-space:nowrap}
+.ft .ch{display:inline-block; color:transparent; -webkit-text-fill-color:transparent; background:linear-gradient(var(--a), var(--ft1, #0f2a6b) var(--p), var(--ft2, #2c4f9a) var(--p)); -webkit-background-clip:text; background-clip:text; transform-origin:50% 0; transform:perspective(500px) rotateX(-96deg); opacity:0; transition:transform 1.15s cubic-bezier(.2,.75,.2,1) var(--d), opacity .55s var(--d)}
+.ft.in .ch{transform:none; opacity:1}
+.on-sky{--ft1:#ffffff; --ft2:#cfeaf8}
+
+/* header */
+.hdr{position:sticky; top:env(safe-area-inset-top,0px); z-index:25; height:var(--hh); color:#fff; transition:background-color .45s, color .45s, box-shadow .45s}
+.hdr.solid{background:#fff; color:var(--navy); box-shadow:0 1px 0 var(--line)}
+.hdr .wrap{height:100%; display:flex; align-items:center; justify-content:space-between; gap:20px}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit}
+.brand .mark{width:46px; height:auto; overflow:visible; opacity:0}
+.brand .mark.on{opacity:1}
+.brand .word{font:800 17px/1 var(--disp); letter-spacing:-.01em; white-space:nowrap; --ft1:#ffffff; --ft2:#d7eefa}
+.hdr.solid .brand .word{--ft1:#0f2a6b; --ft2:#2c4f9a}
+.nav{display:flex; align-items:center; gap:28px; opacity:0; transform:translateY(-6px); pointer-events:none; transition:opacity .9s .7s, transform .9s .7s cubic-bezier(.22,.7,.2,1)}
+.hdr.landed .nav{opacity:1; transform:none; pointer-events:auto}
+.nav a.l{font:600 15px/1 Figtree; text-decoration:none; opacity:.92}
+.nav a.l:hover{opacity:1; text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:2px}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; height:46px; padding:0 22px; border-radius:12px; border:0; cursor:pointer; font:700 15px/1 Figtree, sans-serif; text-decoration:none; white-space:nowrap; transition:transform .25s, box-shadow .25s, filter .25s}
+.btn:active{transform:translateY(1px)}
+.btn-coral{background:linear-gradient(128deg, #f55a5f 0 52%, #ea4d55 52%); color:#fff; box-shadow:0 8px 20px -10px rgba(226,74,84,.9)}
+.btn-coral:hover{filter:brightness(1.05)}
+.btn-line{background:transparent; color:inherit; box-shadow:inset 0 0 0 2px currentColor}
+.btn-line:hover{background:rgba(15,42,107,.06)}
+.btn-white{background:linear-gradient(128deg, #fff 0 52%, #eef5fa 52%); color:var(--navy)}
+.btn:focus-visible,.nav a:focus-visible,.dot:focus-visible{outline:3px solid #ffd84d; outline-offset:3px}
+.hdr .btn{height:42px; padding:0 18px}
+@media (max-width:820px){ .nav a.l{display:none} }
+@media (max-width:420px){ .hdr .btn .long{display:none} .brand .word{font-size:15px} .brand .mark{width:40px} .hdr .btn{padding:0 14px} }
+
+/* opening */
+.intro{position:relative; z-index:2; height:1578.18vh; margin-top:calc(-1 * var(--hh)); pointer-events:none}
+.stage{position:sticky; top:0; height:100vh; height:100svh; overflow:hidden}
+/* the hero is printed on the page that folds up over the logo, and folds back down into Learn */
+.finpage{position:absolute; inset:0; perspective-origin:50% 50%}
+.finsheet{position:absolute; inset:0; transform-origin:50% 100%; -webkit-backface-visibility:hidden; backface-visibility:hidden}
+.finsheet .fin,.finsheet .fin .ch{transition:none !important}
+#fold{position:absolute; inset:0; width:100%; height:100%}
+.cap{position:absolute; left:0; right:0; bottom:max(30px, env(safe-area-inset-bottom, 0px)); padding-left:var(--gl); padding-right:var(--gr); display:grid; justify-items:center; text-align:center; color:#fff}
+.cap > div{grid-area:1/1; width:min(620px, 100%); transition:opacity .5s, transform .5s cubic-bezier(.22,.7,.2,1)}
+.off{opacity:0; transform:translateY(10px); pointer-events:none}
+.eye{font:700 12px/1.2 Figtree; letter-spacing:.2em; text-transform:uppercase; color:var(--coral-d); margin:0 0 12px}
+.cap .eye{color:#fff; opacity:.86}
+.cap .h{font:800 clamp(26px, 3.8vw, 44px)/1.08 var(--disp); letter-spacing:-.02em; margin:0; min-height:1.08em}
+.cap p.d{margin:12px auto 0; font-size:clamp(15px, 1.5vw, 17px); color:rgba(255,255,255,.92); max-width:470px; min-height:3.2em}
+.cue{width:28px; height:28px; margin:0 auto; color:#0f2a6b; opacity:.72}
+.cue svg{animation:bob 2.4s ease-in-out infinite}
+/* sound: a small paper tab, bottom right; the speaker opens the slider, a second tap mutes */
+.snd[hidden]{display:none !important}
+.snd{position:fixed; right:max(16px, env(safe-area-inset-right, 0px)); bottom:max(16px, env(safe-area-inset-bottom, 0px)); z-index:40; display:flex; flex-direction:row-reverse; align-items:center; height:44px; border-radius:12px; background:rgba(255,255,255,.84); -webkit-backdrop-filter:blur(10px) saturate(1.2); backdrop-filter:blur(10px) saturate(1.2); box-shadow:inset 0 1px 0 rgba(255,255,255,.7), 0 8px 22px rgba(15,42,107,.16); color:#0f2a6b}
+.snd-b{width:44px; height:44px; padding:0; border:0; border-radius:12px; background:none; color:inherit; display:grid; place-items:center; cursor:pointer; -webkit-tap-highlight-color:transparent}
+.snd-b:focus-visible,.snd-r:focus-visible{outline:2px solid #f55a5f; outline-offset:2px}
+.snd-b svg{width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; overflow:visible}
+.snd-b .spk{fill:currentColor; stroke:none}
+.snd-b .w1,.snd-b .w2,.snd-b .x{transition:opacity .3s}
+.snd-b .x,.snd.mute .w1,.snd.mute .w2,.snd.low .w2{opacity:0}
+.snd.mute .x{opacity:1}
+.snd-r{-webkit-appearance:none; appearance:none; width:0; height:44px; margin:0; padding:0; opacity:0; background:transparent; cursor:pointer; --v:70%; transition:width .5s cubic-bezier(.22,.7,.2,1), margin .5s cubic-bezier(.22,.7,.2,1), opacity .35s}
+.snd.open .snd-r{width:118px; margin-left:18px; opacity:1}
+.snd-r::-webkit-slider-runnable-track{height:4px; border-radius:2px; background:linear-gradient(90deg, #0f2a6b var(--v), rgba(15,42,107,.18) var(--v))}
+.snd-r::-moz-range-track{height:4px; border-radius:2px; background:rgba(15,42,107,.18)}
+.snd-r::-moz-range-progress{height:4px; border-radius:2px; background:#0f2a6b}
+.snd-r::-webkit-slider-thumb{-webkit-appearance:none; width:12px; height:20px; margin-top:-8px; border:0; border-radius:4px; background:#f55a5f; box-shadow:0 2px 6px rgba(15,42,107,.25)}
+.snd-r::-moz-range-thumb{width:12px; height:20px; border:0; border-radius:4px; background:#f55a5f; box-shadow:0 2px 6px rgba(15,42,107,.25)}
+@media (max-width:520px){ .cap{bottom:max(76px, calc(env(safe-area-inset-bottom, 0px) + 60px))} }
+
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.fin{position:absolute; left:0; right:0; top:50%; transform:translateY(-44%); padding-left:var(--gl); padding-right:var(--gr); text-align:center; color:var(--navy); pointer-events:auto}
+.fin.off{opacity:0; transform:translateY(-38%); pointer-events:none}
+.fin h1{font:800 clamp(34px, 6.4vw, 84px)/1.02 var(--disp); letter-spacing:-.03em; margin:0 auto; max-width:13ch}
+.fin p.d{margin:20px auto 0; max-width:470px; font-size:clamp(16px, 1.6vw, 19px); color:#3b4f78}
+@media (min-width:720px){ .fin p.d{max-width:none; white-space:nowrap} }
+.fin .acts{display:flex; gap:12px; justify-content:center; margin-top:28px; flex-wrap:wrap}
+.fin .btn-line{color:var(--navy)}
+.stage.paperpage .fin{color:var(--navy)}
+.stage.paperpage .fin .eye{color:var(--navy); opacity:.7}
+.stage.paperpage .fin p.d{color:#3b4f78}
+.stage.paperpage .fin .btn-line{color:var(--navy)}
+.stage.paperpage .fin .ft{--ft1:#0f2a6b; --ft2:#2c4f9a}
+
+/* sections */
+.sec{position:relative; padding:clamp(96px, 12vw, 160px) 0}
+#learn{padding-bottom:clamp(56px, 6vw, 80px); margin-top:-100vh; margin-top:-100svh}
+.head{text-align:center; max-width:760px; margin:0 auto clamp(52px, 6vw, 80px)}
+.head h2{font:800 clamp(30px, 4.6vw, 58px)/1.06 var(--disp); letter-spacing:-.025em; margin:0}
+.head .lede{margin:20px auto 0; max-width:560px; color:var(--ink2); font-size:clamp(16px, 1.6vw, 19px)}
+
+/* paper surfaces: each carries one crease */
+.paper{background:linear-gradient(162deg, #ffffff 0 57%, #f4f8fb 57% 100%)}
+.tile{position:relative; aspect-ratio:4/3; background:conic-gradient(from 22.5deg at 50% 54%, #e3f3fc 0 12.5%, #d6edfa 0 25%, #e8f5fd 0 37.5%, #d9eefa 0 50%, #e5f4fc 0 62.5%, #d3ebf9 0 75%, #e9f6fd 0 87.5%, #dbeffa 0 100%); overflow:hidden}
+.tile svg{position:relative; width:100%; height:100%}
+.tile.warm{background:conic-gradient(from 22.5deg at 50% 54%, #fdf3cf 0 12.5%, #fbecbc 0 25%, #fdf5d7 0 37.5%, #faeab5 0 50%, #fdf2cb 0 62.5%, #f9e7ae 0 75%, #fef6da 0 87.5%, #fbedc0 0 100%)}
+
+/* levels: an accordion strip, valley and mountain */
+.acc{perspective:1900px; perspective-origin:50% 40%}
+.levels{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:var(--g); transform-style:preserve-3d}
+.lv{position:relative; border-radius:12px; overflow:hidden; box-shadow:0 18px 40px -28px rgba(15,42,107,.35); will-change:transform}
+.lv::after{content:""; position:absolute; inset:0; background:#0f2a6b; opacity:var(--sh, 0); pointer-events:none}
+.lv .b{padding:16px 18px 22px}
+.lv .lvl{display:flex; justify-content:space-between; align-items:center; font:700 12px/1 Figtree; letter-spacing:.16em; text-transform:uppercase; color:var(--ink2)}
+.marks{display:flex; gap:4px}
+.marks i{width:8px; height:8px; transform:rotate(45deg); background:var(--line); display:block}
+.marks i.on{background:var(--coral)}
+.lv h3{font:800 18px/1.15 var(--disp); margin:14px 0 6px; letter-spacing:-.01em}
+.lv p{margin:0; font-size:15px; line-height:1.5; color:var(--ink2)}
+@media (max-width:760px){
+  .levels{grid-template-columns:1fr; gap:12px}
+  .lv{display:grid; grid-template-columns:124px 1fr; align-items:center}
+  .lv .tile{aspect-ratio:1/1; height:100%}
+  .lv .b{padding:14px 16px}
+  .lv h3{margin:10px 0 4px}
+  .lv p{font-size:14px}
+}
+
+/* fold-along player */
+.player{margin-top:clamp(72px, 9vw, 120px); align-items:center}
+.pl-stage{grid-column:1 / 8; position:relative; aspect-ratio:7/5; border-radius:12px; overflow:hidden; background:conic-gradient(from 45deg at 50% 50%, #0aa2de 0 25%, #1db5ec 0 50%, #0e9fda 0 75%, #27bdf0 0 100%)}
+.pl-stage::before{content:""; position:absolute; inset:0; background:conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,.07) 0 12.5%, transparent 0 25%, rgba(255,255,255,.05) 0 37.5%, transparent 0 50%, rgba(255,255,255,.07) 0 62.5%, transparent 0 75%, rgba(255,255,255,.05) 0 87.5%, transparent 0)}
+#pc{position:absolute; inset:0; width:100%; height:100%}
+.pl-text{grid-column:9 / 13}
+.pl-count{font:700 12px/1 Figtree; letter-spacing:.2em; text-transform:uppercase; color:var(--ink2); margin:0 0 14px}
+.pl-text h3{font:800 clamp(24px, 2.6vw, 34px)/1.1 var(--disp); letter-spacing:-.02em; margin:0; min-height:2.2em}
+.pl-text p.ins{margin:14px 0 0; color:var(--ink2); min-height:5em}
+.pl-ctrl{display:flex; gap:12px; margin-top:22px}
+.pl-ctrl .btn-line{color:var(--navy)}
+.dots{display:flex; gap:8px; margin-top:22px; flex-wrap:wrap}
+.dot{width:36px; height:36px; border-radius:12px; border:0; background:#e6eff6; color:var(--navy); font:700 13px/1 Figtree; cursor:pointer; transition:background-color .3s, color .3s}
+.dot[aria-current="step"]{background:var(--navy); color:#fff}
+@media (max-width:960px){ .pl-stage,.pl-text{grid-column:1 / -1} .pl-stage{aspect-ratio:1/1; max-height:520px} .pl-text{margin-top:32px} .pl-text h3{min-height:0} }
+
+/* gifts: a folded letter that opens */
+.gpin{position:relative; height:500vh}
+.gstage{position:sticky; top:0; height:100vh; height:100svh; overflow:hidden}
+#gc{position:absolute; inset:0; width:100%; height:100%}
+.gtext{position:absolute; left:50%; top:var(--gy, 50%); width:var(--gw, 70%); transform:translate(-50%, -50%); text-align:center; opacity:0; transition:opacity 1s; -webkit-backface-visibility:hidden; backface-visibility:hidden}
+.gtext.on{opacity:1}
+.gtext h2{font:800 var(--gf, 40px)/1.08 var(--disp); letter-spacing:-.025em; margin:0}
+.gtext .lede{margin:16px auto 0; color:var(--ink2); font-size:clamp(15px, 1.5vw, 18px); max-width:440px}
+.gbody{padding:0 0 clamp(96px, 12vw, 160px)}
+.gifts{row-gap:var(--g)}
+.gift{grid-column:span 4; border-radius:12px; overflow:hidden; box-shadow:0 30px 60px -36px rgba(6,58,110,.6)}
+.gift .tile{background:conic-gradient(from 22.5deg at 50% 54%, #ffffff 0 12.5%, #f3f8fb 0 25%, #fbfdfe 0 37.5%, #eef5f9 0 50%, #ffffff 0 62.5%, #f1f7fa 0 75%, #fcfdfe 0 87.5%, #f0f6fa 0 100%)}
+.gift .b{padding:20px 22px 26px}
+.gift h3{font:800 20px/1.15 var(--disp); margin:0 0 8px; letter-spacing:-.01em}
+.gift p{margin:0; color:var(--ink2); font-size:16px; line-height:1.55}
+.gift .for{margin-top:14px; font:600 13px/1.4 Figtree; color:var(--coral-d)}
+@media (max-width:960px){ .gift{grid-column:1 / -1} .gifts{max-width:560px; margin:0 auto} }
+
+.gifts{margin-top:clamp(56px, 7vw, 96px)}
+/* the form is the back of the opened letter: it sits where the turned sheet lands */
+.commission{position:relative; z-index:3; scroll-margin-top:calc(var(--hh) + 28px)}
+.commission .form-wrap{opacity:0; pointer-events:none; transition:opacity .45s}
+.commission.on .form-wrap{opacity:1; pointer-events:auto}
+.form-wrap{grid-column:3 / 11; border-radius:12px; padding:clamp(24px, 4vw, 48px); box-shadow:0 30px 60px -36px rgba(6,58,110,.6)}
+.form-wrap h3{font:800 clamp(24px, 2.6vw, 32px)/1.08 var(--disp); margin:0; letter-spacing:-.02em}
+.form-wrap .sub{margin:12px 0 28px; color:var(--ink2)}
+.fg{display:grid; grid-template-columns:1fr 1fr; gap:16px 18px}
+.fg .full{grid-column:1 / -1}
+label{display:block; font:700 13px/1.2 Figtree; color:var(--navy); margin-bottom:8px}
+input,select,textarea{width:100%; font:500 16px/1.4 Figtree; color:var(--navy); background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:12px 14px; appearance:none; -webkit-appearance:none}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230f2a6b' stroke-width='2'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:38px}
+textarea{min-height:110px; resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none; border-color:var(--sky1); box-shadow:0 0 0 3px rgba(10,159,220,.18)}
+.form-foot{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:22px; flex-wrap:wrap}
+.form-foot small{font-size:14px; color:var(--ink2)}
+.done{display:none; text-align:center; padding:28px 0 8px}
+.done.on{display:block}
+.done h4{font:800 26px/1.1 var(--disp); margin:14px 0 8px}
+.done p{margin:0; color:var(--ink2)}
+@media (max-width:960px){ .form-wrap{grid-column:1 / -1} }
+@media (max-width:560px){ .fg{grid-template-columns:1fr} .form-foot .btn{width:100%} }
+
+/* unfold-in for cards */
+.unf{transform-origin:50% 0; transform:perspective(1400px) rotateX(-72deg); opacity:0; transition:transform 1.5s cubic-bezier(.2,.75,.2,1) var(--d, 0ms), opacity .9s var(--d, 0ms)}
+.unf.up{transform-origin:50% 100%; transform:perspective(1400px) rotateX(72deg)}
+.unf.in{transform:none; opacity:1}
+
+/* classes: a tri-fold that opens */
+.tri{perspective:2200px}
+.trirow{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); transform-style:preserve-3d}
+.pn{position:relative; transform-style:preserve-3d; will-change:transform}
+.pn .face{position:relative; height:100%; display:flex; flex-direction:column; padding:clamp(18px, 2.2vw, 28px); -webkit-backface-visibility:hidden; backface-visibility:hidden; transform:translateZ(0)}
+.pn:nth-child(1) .face{border-radius:12px 0 0 12px; box-shadow:inset -1px 0 0 rgba(15,42,107,.08)}
+.pn:nth-child(2) .face{box-shadow:inset -1px 0 0 rgba(15,42,107,.08)}
+.pn:nth-child(3) .face{border-radius:0 12px 12px 0}
+.pn .back{position:absolute; inset:0; -webkit-backface-visibility:hidden; backface-visibility:hidden; transform:rotateY(180deg); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:28px}
+.pn:nth-child(1) .back{border-radius:0 12px 12px 0}
+.pn:nth-child(3) .back{border-radius:12px 0 0 12px}
+.pn .shade{position:absolute; inset:0; background:#0f2a6b; opacity:var(--sh, 0); pointer-events:none; border-radius:inherit}
+.cover{background:conic-gradient(from 45deg at 50% 50%, #0f2a6b 0 25%, #183573 0 50%, #0c2460 0 75%, #1b3a7c 0 100%); color:#fff}
+.cover .eye{color:#fff; opacity:.8}
+.cover .t{font:800 clamp(26px, 2.8vw, 36px)/1.08 var(--disp); letter-spacing:-.02em; margin:6px 0 0}
+.cover svg{width:62%; max-width:240px; margin-bottom:22px}
+.lining{background:conic-gradient(from 45deg at 50% 50%, #f55a5f 0 25%, #ea4d55 0 50%, #f86c6b 0 75%, #e24a54 0 100%); color:#fff}
+.lining .t{font:800 clamp(22px, 2.3vw, 30px)/1.12 var(--disp); letter-spacing:-.02em; margin:0; max-width:12ch}
+.pn .tile{border-radius:12px}
+.pn h3{font:800 20px/1.15 var(--disp); margin:22px 0 8px; letter-spacing:-.01em}
+.pn p{margin:0; color:var(--ink2); font-size:16px; line-height:1.55}
+.meta{display:grid; grid-template-columns:auto 1fr; gap:6px 16px; margin:18px 0 22px; padding-top:16px; border-top:1px solid var(--line); font-size:15px}
+.meta dt{font:700 12px/1.9 Figtree; letter-spacing:.16em; text-transform:uppercase; color:var(--ink2)}
+.meta dd{margin:0; font-weight:600}
+.pn .btn{margin-top:auto; align-self:flex-start}
+.pn .note{min-height:24px; margin:10px 0 0; font-size:14px; color:var(--coral-d); font-weight:600}
+@media (max-width:960px){
+  .trirow{grid-template-columns:1fr; grid-auto-rows:1fr; max-width:560px; margin:0 auto}
+  .pn:nth-child(1) .face{border-radius:12px 12px 0 0; box-shadow:inset 0 -1px 0 rgba(15,42,107,.08)}
+  .pn:nth-child(2) .face{box-shadow:inset 0 -1px 0 rgba(15,42,107,.08)}
+  .pn:nth-child(3) .face{border-radius:0 0 12px 12px}
+  .pn .back{transform:rotateX(180deg)}
+  .pn:nth-child(1) .back{border-radius:0 0 12px 12px}
+  .pn:nth-child(3) .back{border-radius:12px 12px 0 0}
+}
+
+/* closing */
+.close{padding:clamp(96px, 12vw, 160px) 0 0; text-align:center; color:#fff}
+.close .h{font:800 clamp(32px, 5.6vw, 72px)/1.04 var(--disp); letter-spacing:-.03em; margin:0 auto; max-width:16ch}
+.close .eye{color:#fff; opacity:.75}
+.close .acts{display:flex; gap:12px; justify-content:center; margin-top:30px; flex-wrap:wrap}
+.close .btn-line{color:#fff}
+.close{padding:0}
+.fpin{position:relative; height:330vh}
+.fstage{position:sticky; top:0; height:100vh; height:100svh; overflow:hidden}
+#ffc{position:absolute; inset:0; width:100%; height:100%}
+.ftext{position:absolute; left:0; right:0; bottom:clamp(56px, 11vh, 120px); padding-left:var(--gl); padding-right:var(--gr); transition:opacity .9s, transform 1.2s cubic-bezier(.22,.7,.2,1)}
+.ftext.off{opacity:0; transform:translateY(16px); pointer-events:none}
+
+footer{color:#fff; padding:28px 0 calc(40px + env(safe-area-inset-bottom,0px))}
+footer .g12{row-gap:32px; align-items:start}
+.f-brand{grid-column:1 / 5}
+.f-brand .brand .mark{opacity:1}
+.f-brand .word{font:800 17px/1 var(--disp)}
+.f-brand p{margin:16px 0 0; color:rgba(255,255,255,.75); max-width:320px; font-size:15px}
+.f-col{grid-column:span 2; font-size:15px}
+.f-col h4{font:700 12px/1 Figtree; letter-spacing:.2em; text-transform:uppercase; margin:6px 0 14px; color:rgba(255,255,255,.65)}
+.f-col p{margin:0 0 6px}
+.f-col a{text-decoration:none}
+.f-col a:hover{text-decoration:underline}
+.f-cta{grid-column:11 / 13; justify-self:end}
+.f-bot{margin-top:44px; padding-top:20px; border-top:1px solid rgba(255,255,255,.14); font-size:13px; color:rgba(255,255,255,.6)}
+@media (max-width:960px){ .f-brand{grid-column:1 / -1} .f-col{grid-column:span 6} .f-cta{grid-column:1 / -1; justify-self:start} }
+
+@media (prefers-reduced-motion: reduce){
+  .ft .ch,.unf{transition:none !important; transform:none !important; opacity:1 !important}
+  .cue svg{animation:none}
+  .cap > div,.fin,.nav{transition:none}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="soft" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="3.2"/></filter>
+    <symbol id="crane" viewBox="0 0 10 10"></symbol>
+    <symbol id="bloom" viewBox="36 12 88 84">
+      <polygon points="80,92 70,60 42,40 58,74" style="fill:var(--t-fs,#e24a54)"/>
+      <polygon points="80,92 90,60 118,40 102,74" style="fill:var(--t-fd,#b83a51)"/>
+      <polygon points="80,92 68,58 80,16 92,58" style="fill:var(--t-f,#f55a5f)"/>
+      <polygon points="80,92 80,16 92,58" style="fill:var(--t-f2,#f86c6b)"/>
+    </symbol>
+  </defs>
+</svg>
+<style>
+.pal-butter{--t-f:#f2dd6e; --t-f2:#f5e48a; --t-fs:#dcc35a; --t-fs2:#d3b84e; --t-fd:#b99f3b; --t-bw:#a58a2a}
+.pal-berry{--t-f:#b8486f; --t-f2:#c25679; --t-fs:#a03f63; --t-fs2:#933a5a; --t-fd:#7d2f4c; --t-bw:#652540}
+.pal-navy{--t-f:#2c4c94; --t-f2:#3557a3; --t-fs:#1f3d80; --t-fs2:#183470; --t-fd:#0f2a6b; --t-bw:#0b1f52}
+.pal-white{--t-f:#ffffff; --t-f2:#f4f8fb; --t-fs:#e6eef5; --t-fs2:#dde8f1; --t-fd:#cbd9e6; --t-bw:#b9cadb}
+</style>
+
+<canvas id="facets" aria-hidden="true"></canvas>
+
+
+<div class="snd" id="snd" hidden>
+  <button class="snd-b" id="sndB" type="button" aria-label="Sound" aria-expanded="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path class="spk" d="M3.5 9.4h3.4L11.6 5.6v12.8L6.9 14.6H3.5z"/><path class="w1" d="M15 9.3a3.9 3.9 0 0 1 0 5.4"/><path class="w2" d="M17.6 6.7a7.6 7.6 0 0 1 0 10.6"/><path class="x" d="M15.5 9.5l5 5M20.5 9.5l-5 5"/></svg>
+  </button>
+  <input class="snd-r" id="sndR" type="range" min="0" max="100" value="70" aria-label="Volume" tabindex="-1">
+</div>
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Mountain and Valley, home">
+      <svg class="mark" id="mark" aria-hidden="true"></svg>
+      <span class="word ft" id="word">Mountain &amp; Valley</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a class="l" href="#learn">Learn</a>
+      <a class="l" href="#gifts">Gifts</a>
+      <a class="l" href="#classes">Classes</a>
+      <a class="btn btn-coral" href="#commission">Commission<span class="long">a gift</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="intro" id="intro" aria-label="A sheet of paper is cut square and folded into a crane as you scroll">
+    <div class="stage" id="stage" data-pin data-zone="hero">
+      <canvas id="fold" aria-hidden="true"></canvas>
+      <div class="cap" id="cap">
+        <div id="capCue"><div class="cue" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11l6 6 6-6"/></svg></div></div>
+        <div id="capStep" class="off" aria-live="polite">
+          <p class="eye" id="stepNo">Before you fold</p>
+          <p class="h ft on-sky" id="stepTitle">Cut it square</p>
+          <p class="d" id="stepText"></p>
+        </div>
+      </div>
+      <div class="finpage" id="finpage"><div class="finsheet" id="finsheet">
+      <div class="fin off" id="fin">
+        <h1 class="ft" id="finH">Every fold, by hand.</h1>
+        <p class="d">Gifts folded to order, and classes that teach you to fold your own.</p>
+        <div class="acts">
+          <a class="btn btn-coral" href="#commission">Commission a gift</a>
+          <a class="btn btn-line" href="#classes">Book a class</a>
+        </div>
+      </div>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="learn" data-zone="paper" data-mosaic="crane" data-part="neck">
+    <div class="wrap">
+      <div class="head">
+        <p class="eye">Learn to fold</p>
+        <h2 class="ft" id="learnH">From a cup to a rose, one level at a time.</h2>
+        <p class="lede">Every class starts with a single square. Five levels take you from your first fold to a rose twisted from one uncut sheet.</p>
+      </div>
+
+      <div class="acc" id="acc">
+        <ol class="levels" id="levels">
+          <li class="lv paper">
+            <div class="tile"><svg viewBox="0 0 160 120" aria-hidden="true">
+              <ellipse cx="84" cy="103" rx="30" ry="5" fill="#0b4a7a" opacity=".2" filter="url(#soft)"/>
+              <polygon points="52,40 108,40 98,98 62,98" fill="#f2dd6e"/>
+              <polygon points="80,40 108,40 98,98 80,98" fill="#ead15f"/>
+              <polygon points="52,40 108,40 80,64" fill="#dcc35a"/>
+              <polygon points="58,40 102,40 80,30" fill="#f5e48a"/>
+            </svg></div>
+            <div class="b"><div class="lvl"><span>Level 1</span><span class="marks"><i class="on"></i><i></i><i></i><i></i><i></i></span></div><h3>The cup</h3><p>Six folds. The first thing every class makes, and it holds water.</p></div>
+          </li>
+          <li class="lv paper">
+            <div class="tile"><svg viewBox="0 0 160 120" aria-hidden="true">
+              <ellipse cx="84" cy="104" rx="34" ry="5" fill="#0b4a7a" opacity=".2" filter="url(#soft)"/>
+              <polygon points="38,46 122,46 80,100" fill="#f55a5f"/>
+              <polygon points="80,46 122,46 80,100" fill="#e24a54"/>
+              <polygon points="38,46 64,46 46,16" fill="#f86c6b"/>
+              <polygon points="96,46 122,46 114,16" fill="#d8434f"/>
+              <polygon points="66,78 94,78 80,100" fill="#fffaf3"/>
+              <circle cx="64" cy="60" r="2.8" fill="#0f2a6b"/><circle cx="96" cy="60" r="2.8" fill="#0f2a6b"/>
+            </svg></div>
+            <div class="b"><div class="lvl"><span>Level 2</span><span class="marks"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></div><h3>The fox</h3><p>A face, two ears and a grin. Your first reverse folds.</p></div>
+          </li>
+          <li class="lv paper">
+            <div class="tile"><svg viewBox="0 0 160 120" aria-hidden="true">
+              <ellipse cx="84" cy="104" rx="40" ry="5" fill="#0b4a7a" opacity=".2" filter="url(#soft)"/>
+              <use href="#crane" x="22" y="22" width="116" height="80"/>
+            </svg></div>
+            <div class="b"><div class="lvl"><span>Level 3</span><span class="marks"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div><h3>The crane</h3><p>Eight steps that teach every fold you will need after it.</p></div>
+          </li>
+          <li class="lv paper">
+            <div class="tile"><svg viewBox="0 0 160 120" aria-hidden="true">
+              <ellipse cx="82" cy="103" rx="30" ry="5" fill="#0b4a7a" opacity=".2" filter="url(#soft)"/>
+              <use href="#bloom" class="pal-berry" x="36" y="12" width="88" height="84"/>
+            </svg></div>
+            <div class="b"><div class="lvl"><span>Level 4</span><span class="marks"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div><h3>The lily</h3><p>A petal fold, four times over, then curled open by hand.</p></div>
+          </li>
+          <li class="lv paper">
+            <div class="tile"><svg viewBox="0 0 160 120" aria-hidden="true">
+              <ellipse cx="82" cy="104" rx="30" ry="5" fill="#0b4a7a" opacity=".2" filter="url(#soft)"/>
+              <rect x="48" y="26" width="64" height="64" fill="#f55a5f" transform="rotate(15 80 58)"/>
+              <rect x="57" y="35" width="46" height="46" fill="#e24a54" transform="rotate(38 80 58)"/>
+              <rect x="65" y="43" width="30" height="30" fill="#f86c6b" transform="rotate(61 80 58)"/>
+              <rect x="72" y="50" width="16" height="16" fill="#b83a51" transform="rotate(84 80 58)"/>
+            </svg></div>
+            <div class="b"><div class="lvl"><span>Level 5</span><span class="marks"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><h3>The rose</h3><p>A twisted spiral from one uncut square. Two hours, and worth it.</p></div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="player g12">
+        <div class="pl-stage unf" style="--d:0ms"><canvas id="pc" aria-hidden="true"></canvas></div>
+        <div class="pl-text">
+          <p class="eye">Fold along: the crane</p>
+          <p class="pl-count" id="plCount">Before you start</p>
+          <h3 id="plTitle">One square of paper</h3>
+          <p class="ins" id="plText">Any square works. Start with the white side facing up.</p>
+          <div class="pl-ctrl">
+            <button class="btn btn-line" id="plPrev" type="button">Back</button>
+            <button class="btn btn-coral" id="plNext" type="button">Next fold</button>
+          </div>
+          <div class="dots" id="plDots" role="group" aria-label="Jump to a step"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gifts">
+    <div class="gpin" id="gpin">
+      <div class="gstage" id="gstage" data-pin data-zone="sky">
+        <canvas id="gc" aria-hidden="true"></canvas>
+        <div class="gtext" id="gtext">
+          <p class="eye">Gifts, folded to order</p>
+          <h2 class="ft" id="gH">A gift someone folded for them.</h2>
+          <p class="lede">Tell us who it's for. We fold it by hand, wrap it, and send it with your words tucked inside.</p>
+        </div>
+      </div>
+    </div>
+    <div class="gbody" id="gbody" data-zone="sky" data-mosaic="crane" data-part="wings">
+      <div class="wrap">
+        <div class="commission g12" id="commission">
+          <div class="form-wrap paper" id="fwrap">
+            <form id="cform" novalidate>
+              <h3>Tell us who it's for.</h3>
+              <p class="sub">Every commission starts with a short conversation, so we fold exactly the right thing.</p>
+              <div class="fg">
+                <div><label for="f-who">Who it's for</label><input id="f-who" name="who" placeholder="My sister, Maya" autocomplete="off"></div>
+                <div><label for="f-occ">The occasion</label><select id="f-occ" name="occ"><option>Wedding</option><option>Birthday</option><option>New baby</option><option>Anniversary</option><option>Get well</option><option>Thank you</option><option>Something else</option></select></div>
+                <div class="full"><label for="f-say">What should it say?</label><textarea id="f-say" name="say" placeholder="The words you want folded inside"></textarea></div>
+                <div><label for="f-when">When you need it</label><input id="f-when" name="when" type="date"></div>
+                <div><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name"></div>
+                <div class="full"><label for="f-mail">Your email</label><input id="f-mail" name="mail" type="email" autocomplete="email"></div>
+              </div>
+              <div class="form-foot"><small>We write back within a day.</small><button class="btn btn-coral" type="submit">Start my commission</button></div>
+            </form>
+            <div class="done" id="cdone" aria-live="polite">
+              <svg viewBox="0 0 120 80" width="120" height="80" style="margin:0 auto" aria-hidden="true"><use href="#crane" x="0" y="0" width="120" height="80"/></svg>
+              <h4 id="cdoneH">Thank you.</h4>
+              <p>We'll write back within a day with a few ideas and a time to talk.</p>
+            </div>
+          </div>
+        </div>
+        <div class="gifts g12">
+          <article class="gift paper unf" style="--d:0ms">
+            <div class="tile"><svg viewBox="0 0 160 120" aria-hidden="true">
+              <g stroke="#0f2a6b" stroke-width="1" opacity=".55"><line x1="44" y1="0" x2="44" y2="104"/><line x1="68" y1="0" x2="68" y2="112"/><line x1="92" y1="0" x2="92" y2="100"/><line x1="116" y1="0" x2="116" y2="110"/></g>
+              <use href="#crane" x="32" y="18" width="24" height="16"/><use href="#crane" class="pal-butter" x="32" y="48" width="24" height="16"/><use href="#crane" class="pal-berry" x="32" y="78" width="24" height="16"/>
+              <use href="#crane" class="pal-butter" x="56" y="28" width="24" height="16"/><use href="#crane" class="pal-navy" x="56" y="58" width="24" height="16"/><use href="#crane" x="56" y="88" width="24" height="16"/>
+              <use href="#crane" class="pal-berry" x="80" y="14" width="24" height="16"/><use href="#crane" x="80" y="44" width="24" height="16"/><use href="#crane" class="pal-butter" x="80" y="74" width="24" height="16"/>
+              <use href="#crane" class="pal-navy" x="104" y="24" width="24" height="16"/><use href="#crane" class="pal-berry" x="104" y="54" width="24" height="16"/><use href="#crane" class="pal-navy" x="104" y="84" width="24" height="16"/>
+            </svg></div>
+            <div class="b"><h3>A thousand cranes</h3><p>Senbazuru, strung by hand in the colors you choose. A wish for a long, happy life.</p><p class="for">For weddings, new babies and recoveries</p></div>
+          </article>
+          <article class="gift paper unf up" style="--d:160ms">
+            <div class="tile"><svg viewBox="0 0 160 120" aria-hidden="true">
+              <ellipse cx="80" cy="110" rx="26" ry="4" fill="#0b4a7a" opacity=".18" filter="url(#soft)"/>
+              <g stroke="#0f2a6b" stroke-width="2" stroke-linecap="round" fill="none"><path d="M80 108 C78 86 62 70 50 56"/><path d="M80 108 C80 84 80 62 80 44"/><path d="M80 108 C84 86 98 72 110 58"/></g>
+              <use href="#bloom" class="pal-butter" x="28" y="28" width="44" height="42"/>
+              <use href="#bloom" x="56" y="6" width="48" height="46"/>
+              <use href="#bloom" class="pal-berry" x="88" y="30" width="44" height="42"/>
+              <polygon points="68,96 92,96 86,110 74,110" fill="#f2dd6e"/>
+            </svg></div>
+            <div class="b"><h3>A bouquet that keeps</h3><p>Paper flowers folded from pages you send us. Sheet music, a map of where you met, an old letter.</p><p class="for">For anniversaries and thank yous</p></div>
+          </article>
+          <article class="gift paper unf" style="--d:320ms">
+            <div class="tile"><svg viewBox="0 0 160 120" aria-hidden="true">
+              <ellipse cx="82" cy="106" rx="42" ry="5" fill="#0b4a7a" opacity=".18" filter="url(#soft)"/>
+              <g transform="rotate(-8 108 82)"><rect x="88" y="66" width="44" height="32" fill="#f2dd6e"/><polygon points="88,66 132,66 110,82" fill="#dcc35a"/><g stroke="#0f2a6b" stroke-width="1.2" opacity=".6"><line x1="96" y1="88" x2="124" y2="88"/><line x1="96" y1="93" x2="116" y2="93"/></g></g>
+              <use href="#crane" x="20" y="18" width="104" height="72"/>
+            </svg></div>
+            <div class="b"><h3>Your words, folded in</h3><p>A handwritten note folded inside a crane, waiting for them to find it when they open the wings.</p><p class="for">For birthdays and the hard-to-say things</p></div>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="classes" data-zone="butter" data-mosaic="crane" data-part="tail">
+    <div class="wrap">
+      <div class="head">
+        <p class="eye">Classes</p>
+        <h2 class="ft">Fold with us.</h2>
+        <p class="lede">Small tables, good paper, and a teacher at your elbow. Bring nothing but your hands.</p>
+      </div>
+      <div class="tri" id="tri">
+        <div class="trirow" id="trirow">
+          <article class="pn">
+            <div class="face paper">
+              <div class="tile warm"><svg viewBox="0 0 160 120" aria-hidden="true">
+                <ellipse cx="82" cy="104" rx="46" ry="5" fill="#0b4a7a" opacity=".2" filter="url(#soft)"/>
+                <use href="#crane" x="22" y="26" width="86" height="60"/>
+                <use href="#crane" class="pal-navy" x="96" y="60" width="44" height="31"/>
+              </svg></div>
+              <h3>Saturday family mornings</h3>
+              <p>Fold side by side with your kids. Cups, foxes and cranes, then a frog race at the end.</p>
+              <dl class="meta"><dt>Next</dt><dd>Sat, Nov 7, 10 am</dd><dt>Who</dt><dd>Ages 6 and up, with a grown-up</dd></dl>
+              <button class="btn btn-coral" type="button" data-req>Request a spot</button><p class="note" aria-live="polite"></p>
+            </div>
+            <div class="back lining"><p class="t">Bring nothing but your hands.</p></div>
+            <div class="shade"></div>
+          </article>
+          <article class="pn">
+            <div class="face paper">
+              <div class="tile warm"><svg viewBox="0 0 160 120" aria-hidden="true">
+                <circle cx="122" cy="26" r="11" fill="#0f2a6b"/><circle cx="128" cy="21" r="10" fill="#fdf3cf"/>
+                <ellipse cx="80" cy="104" rx="46" ry="5" fill="#0b4a7a" opacity=".2" filter="url(#soft)"/>
+                <use href="#crane" class="pal-berry" x="24" y="24" width="112" height="78"/>
+              </svg></div>
+              <h3>Thursday evenings</h3>
+              <p>For grown-ups. A new model every week, from the crane to the lily and the rose.</p>
+              <dl class="meta"><dt>Next</dt><dd>Thu, Nov 5, 7 pm</dd><dt>Who</dt><dd>Adults, all levels</dd></dl>
+              <button class="btn btn-coral" type="button" data-req>Request a spot</button><p class="note" aria-live="polite"></p>
+            </div>
+            <div class="shade"></div>
+          </article>
+          <article class="pn">
+            <div class="face paper">
+              <div class="tile warm"><svg viewBox="0 0 160 120" aria-hidden="true">
+                <ellipse cx="80" cy="102" rx="56" ry="5" fill="#0b4a7a" opacity=".2" filter="url(#soft)"/>
+                <use href="#crane" class="pal-navy" x="14" y="50" width="52" height="36"/>
+                <use href="#crane" x="54" y="36" width="56" height="39"/>
+                <use href="#crane" class="pal-berry" x="98" y="54" width="48" height="33"/>
+              </svg></div>
+              <h3>Private parties</h3>
+              <p>Birthdays, bridal showers and team nights. We bring the paper, the tables and the teacher.</p>
+              <dl class="meta"><dt>When</dt><dd>Any day you choose</dd><dt>Where</dt><dd>Our studio, or your place</dd></dl>
+              <button class="btn btn-coral" type="button" data-req="party">Ask about a date</button><p class="note" aria-live="polite"></p>
+            </div>
+            <div class="back cover">
+              <svg viewBox="0 0 10 6" aria-hidden="true"><use href="#crane" class="pal-white" x="0" y="0" width="10" height="6"/></svg>
+              <p class="eye">Mountain &amp; Valley</p>
+              <p class="t">Class schedule</p>
+            </div>
+            <div class="shade"></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="close" id="close">
+    <div class="fpin" id="fpin">
+      <div class="fstage" id="fstage" data-pin data-zone="navy">
+        <canvas id="ffc" aria-hidden="true"></canvas>
+        <div class="ftext off" id="ftext">
+          <p class="eye">Mountain &amp; Valley</p>
+          <p class="h ft on-sky" id="fH">Make something someone keeps.</p>
+          <div class="acts"><a class="btn btn-coral" href="#commission">Commission a gift</a><a class="btn btn-line" href="#classes">Book a class</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-zone="navy">
+  <div class="wrap">
+    <div class="g12">
+      <div class="f-brand">
+        <a class="brand" href="#top"><svg class="mark" id="mark2" aria-hidden="true"></svg><span class="word">Mountain &amp; Valley</span></a>
+        <p>An origami studio. Gifts folded by hand, and classes that teach you to fold your own.</p>
+      </div>
+      <div class="f-col"><h4>Visit</h4><p>West Palm Beach, Florida</p><p>Tuesday to Saturday, 10 to 6</p></div>
+      <div class="f-col"><h4>Explore</h4><p><a href="#learn">Learn</a></p><p><a href="#gifts">Gifts</a></p><p><a href="#classes">Classes</a></p></div>
+      <div class="f-col"><h4>The app</h4><p><a href="https://claude.ai/artifact/66JE3DRH4mU1nvpVVpmyEP" target="_blank" rel="noopener">Fold along on your phone</a></p></div>
+      <div class="f-cta"><a class="btn btn-white" href="#commission">Write to us</a></div>
+    </div>
+    <div class="f-bot">© 2026 Mountain &amp; Valley</div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const TONE = { b:'#fffaf3', f:'#f55a5f', f2:'#f86c6b', fs:'#e24a54', fs2:'#d8434f', fd:'#b83a51', bw:'#933a5a' };
+  const RGB = {}; for (const k in TONE) { const h = TONE[k]; RGB[k] = [1,3,5].map(i => parseInt(h.slice(i, i + 2), 16)); }
+
+  /* ---------- paper model (y points down) ---------- */
+  const PL=[-.293,-.207], PR=[.293,-.207], M=[0,-.207], T=[0,-.5], Bt=[0,.5], L3=[-.5,0], R3=[.5,0],
+        Lt=[-1,-.5], Rt=[1,-.5], WP=[0,-.914], NL=[-.12,-.207], NR=[.12,-.207], Ps=[-.293,-.5];
+  const q = (...a) => { while (a.length < 4) a.push(a[a.length - 1]); return a.map(p => [p[0], p[1]]); };
+  const mx = f => f.map(p => [-p[0], p[1]]);
+  const my = f => f.map(p => [p[0], -1 - p[1]]);
+  const ORDER = ['B','U2','U3','U1','V','C','D','E','K','GL','GR','AL','AR'];
+  const SIX = ['AL','C','GL','AR','D','GR'];
+
+  const s2 = {
+    AL:q(PL,Bt,L3), C:q(PL,M,Bt), GL:q(T,M,PL), AR:q(L3,Lt,PL), D:q(PL,Ps,Lt), GR:q(T,PL,Ps),
+    E:[[-.044,.394],Bt,Bt,[0,.394]].map(p=>[...p]), K:q(M), B:q(PL,Bt,M), U1:q(T,L3,Bt), V:q(T,Lt,L3), U2:q(T,L3,Bt), U3:q(T,Lt,L3)
+  };
+  const s1 = { ...s2, U2:q(Lt,T,Bt), U3:q(T,Rt,Bt) };
+  for (const id of [...SIX,'E','K']) s1[id] = mx(s2[id]);
+  const s0 = { ...s1 };
+  for (const id of [...SIX,'E','K','U1','V']) s0[id] = my(s1[id]);
+  const s3 = { ...s2, AR:q(R3,Bt,PR), D:q(PR,M,Bt), GR:q(T,PR,M), U3:q(T,Bt,R3), V:q(T,Bt,R3) };
+  const s4 = { ...s3, AL:q(PL,Bt,M), AR:q(M,Bt,PR), U1:q(T,PL,Bt), U2:q(T,PL,Bt), U3:q(T,Bt,PR), V:q(T,Bt,PR), B:q(PL,Bt,PR,M) };
+  const s5 = { ...s4, AL:q(PL,WP,M), AR:q(M,WP,PR), B:q(PL,WP,PR,M), U1:q(PL,M,Bt), U2:q(PL,M,Bt), U3:q(PR,M,Bt), V:q(PR,M,Bt) };
+  const s6 = { ...s5, C:q(NL,M,Bt), D:q(NR,M,Bt), E:[[-.018,.394],Bt,Bt,[0,.394]].map(p=>[...p]), U1:q(NL,M,Bt), U2:q(NL,M,Bt), U3:q(NR,M,Bt), V:q(NR,M,Bt) };
+  const PL8=[-.22,-.14], W8=[.02,-1.02], M8=[.04,-.14], PR8=[.26,-.14];
+  const C7 = [[-.086,-.135],[-.174,-.025],[-.93,-.708],[-.91,-.732]];
+  const D7 = [[.088,-.136],[.172,-.024],[.949,-.668],[.931,-.692]];
+  const s7 = {
+    AL:q(PL8,W8,M8), AR:q(M8,W8,PR8), B:[PL8,W8,PR8,M8].map(p=>[...p]),
+    GL:q([0,-.22],[0,.06],[-.32,-.12]), GR:q([0,-.22],[.32,-.12],[0,.06]),
+    K:[[-.3,-.11],[0,.06],[.3,-.11],[0,-.03]], C:C7, U1:C7, U2:C7, D:D7, U3:D7, V:D7,
+    E:[[-.79,-.645],[-.91,-.732],[-.93,-.708],[-.81,-.615]]
+  };
+  const WT=[-.04,-1.0];
+  const C8 = [[-.086,-.135],[-.174,-.025],[-.81,-.615],[-.79,-.645]];
+  const s8 = { ...s7, AL:q(PL8,WT,M8), AR:q(M8,WT,PR8), B:[[-.02,-.15],[.36,-.9],[.3,-.14],[.14,-.145]],
+    C:C8, U1:C8, U2:C8, E:[[-.79,-.645],[-1.02,-.53],[-1.0,-.505],[-.81,-.615]] };
+
+  const tn = (def, over={}) => { const o = {}; for (const id of ORDER) o[id] = over[id] || def; return o; };
+  const t5 = { AL:'f', AR:'f2', C:'fs', E:'fs', D:'fs2', U1:'fs', U2:'fs', U3:'fs2', V:'fs2', GR:'f2' };
+  const t7 = { AL:'f', AR:'f2', B:'fd', C:'f', E:'f', U1:'fs', U2:'fs', D:'f2', U3:'fs2', V:'fs2', GL:'fs', GR:'fs2', K:'fd' };
+  const pivL = [[-.06,-.207],[-.13,-.08]], pivR = [[.06,-.207],[.13,-.08]];
+  const ST = [
+    { p:s0, t:tn('b') },
+    { p:s1, t:tn('f', { U2:'b', U3:'b', B:'b' }) },
+    { p:s2, t:tn('f') },
+    { p:s3, t:tn('f', { AR:'f2', D:'f2', GR:'f2', U3:'f2' }) },
+    { p:s4, t:tn('f', { GR:'f2', AL:'fs', AR:'fs2', D:'f2', U3:'f2' }) },
+    { p:s5, t:tn('f', t5) },
+    { p:s6, t:tn('f', t5) },
+    { p:s7, t:tn('f', t7), rot:{ C:pivL, E:pivL, U1:pivL, U2:pivL, D:pivR, U3:pivR, V:pivR } },
+    { p:s8, t:tn('f', { ...t7, B:'bw', E:'fs' }), rot:{ E:[[-.8,-.63],[-.8,-.63]] } }
+  ];
+
+  const area = pts => { let a = 0; for (let i = 0; i < pts.length; i++) { const p = pts[i], n = pts[(i + 1) % pts.length]; a += p[0] * n[1] - n[0] * p[1]; } return Math.abs(a) / 2; };
+  const FIT = ST.map(st => {
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    for (const id of ORDER) { const f = st.p[id]; if (area(f) < 1e-4) continue; for (const p of f) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); } }
+    const w = x1 - x0, h = y1 - y0;
+    return { cx:(x0 + x1) / 2, cy:(y0 + y1) / 2, w, h, x0, y0, k:Math.pow(2 / Math.max(w, h), .6) };
+  });
+  const MOV = ST.slice(0, 8).map((st, i) => { const o = {}; for (const id of ORDER) { let m = 0; st.p[id].forEach((p, j) => { const b = ST[i + 1].p[id][j]; m = Math.max(m, Math.hypot(p[0] - b[0], p[1] - b[1])); }); o[id] = m > .03; } return o; });
+
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const smooth = (a, b, t) => { t = clamp((t - a) / (b - a)); return t * t * (3 - 2 * t); };
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const rotl = (a, b, pa, pb, t) => {
+    const px = lerp(pa[0], pb[0], t), py = lerp(pa[1], pb[1], t);
+    const ax = a[0] - pa[0], ay = a[1] - pa[1], bx = b[0] - pb[0], by = b[1] - pb[1];
+    const aa = Math.atan2(ay, ax), ab = Math.atan2(by, bx);
+    let d = ab - aa; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI;
+    const r = lerp(Math.hypot(ax, ay), Math.hypot(bx, by), t), an = aa + d * t;
+    return [px + Math.cos(an) * r, py + Math.sin(an) * r];
+  };
+
+  function pose(sf) {
+    sf = clamp(sf, 0, 8);
+    const i = Math.min(7, Math.floor(sf)), t = sf - i, A = ST[i], B = ST[i + 1], ct = smooth(.42, .58, t);
+    const facets = ORDER.map(id => {
+      const pa = A.p[id], pb = B.p[id], r = B.rot && B.rot[id];
+      const pts = pa.map((p, j) => r ? rotl(p, pb[j], r[0], r[1], t) : [lerp(p[0], pb[j][0], t), lerp(p[1], pb[j][1], t)]);
+      const ca = RGB[A.t[id]], cb = RGB[B.t[id]];
+      return { id, pts, col:[0,1,2].map(c => lerp(ca[c], cb[c], ct)), shade:MOV[i][id] && !/^[UBV]/.test(id) ? Math.sin(Math.PI * t) * lerp(-.2, .3, smooth(.28, .62, t)) : 0 };
+    });
+    const fa = FIT[i], fb = FIT[i + 1];
+    return { facets, cx:lerp(fa.cx, fb.cx, t), cy:lerp(fa.cy, fb.cy, t), k:lerp(fa.k, fb.k, t) };
+  }
+  function flap(P, v) {
+    for (const f of P.facets) {
+      if (f.id === 'AL' || f.id === 'AR' || f.id === 'B') {
+        const by = f.id === 'B' ? -.145 : -.14;
+        f.pts = f.pts.map(p => [p[0], by + (p[1] - by) * v]);
+        f.shade += (1 - v) * .1;
+      }
+    }
+    return P;
+  }
+  const OFF = 20000;
+  function draw(ctx, P, ox, oy, sc, o) {
+    const dpr = o.dpr, cr = Math.cos(o.rot || 0), sr = Math.sin(o.rot || 0);
+    const polys = [];
+    for (const f of P.facets) {
+      const s = f.pts.map(p => { const x = (p[0] - P.cx) * sc, y = (p[1] - P.cy) * sc; return [ox + x * cr - y * sr, oy + x * sr + y * cr]; });
+      if (area(s) < .4) continue;
+      polys.push({ s, f });
+    }
+    if (o.shadow > .01) {
+      ctx.save();
+      ctx.shadowColor = `rgba(6,58,110,${(.26 * o.shadow).toFixed(3)})`;
+      ctx.shadowBlur = 28 * dpr; ctx.shadowOffsetX = (OFF + 8) * dpr; ctx.shadowOffsetY = 18 * dpr;
+      ctx.fillStyle = '#000'; ctx.beginPath();
+      for (const { s } of polys) { ctx.moveTo(s[0][0] - OFF, s[0][1]); for (let j = 1; j < s.length; j++) ctx.lineTo(s[j][0] - OFF, s[j][1]); ctx.closePath(); }
+      ctx.fill(); ctx.restore();
+    }
+    ctx.lineJoin = 'round'; ctx.lineWidth = .8;
+    for (const { s, f } of polys) {
+      const k = 1 - f.shade, c = `rgb(${f.col[0] * k | 0},${f.col[1] * k | 0},${f.col[2] * k | 0})`;
+      ctx.fillStyle = c; ctx.strokeStyle = c; ctx.beginPath();
+      ctx.moveTo(s[0][0], s[0][1]); for (let j = 1; j < s.length; j++) ctx.lineTo(s[j][0], s[j][1]);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+    }
+  }
+
+  /* ---------- crane symbol, shared by the logo and the drawings ---------- */
+  const F8 = FIT[8], VB = `${F8.x0.toFixed(4)} ${F8.y0.toFixed(4)} ${F8.w.toFixed(4)} ${F8.h.toFixed(4)}`;
+  const VAR = { f:'--t-f', f2:'--t-f2', fs:'--t-fs', fs2:'--t-fs2', fd:'--t-fd', bw:'--t-bw' };
+  const polysSVG = ORDER.filter(id => !/^[UV]/.test(id)).map(id => {
+    const tone = ST[8].t[id];
+    return `<polygon points="${s8[id].map(p => p.map(v => v.toFixed(4)).join(',')).join(' ')}" style="fill:var(${VAR[tone]},${TONE[tone]});stroke:var(${VAR[tone]},${TONE[tone]});stroke-width:.004;stroke-linejoin:round"/>`;
+  }).join('');
+  const sym = document.getElementById('crane'); sym.setAttribute('viewBox', VB); sym.innerHTML = polysSVG;
+  for (const id of ['mark', 'mark2']) { const m = document.getElementById(id); m.setAttribute('viewBox', VB); m.innerHTML = polysSVG; }
+  const mark = document.getElementById('mark');
+
+
+  const $ = id => document.getElementById(id);
+  const hash = (i, j) => { let h = (i * 374761393 + j * 668265263) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return (h ^ (h >>> 16)) >>> 0; };
+  const esc = c => c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c;
+
+  const STEPS = [
+    ['One square of paper', 'Any square works. Start with the white side facing up.'],
+    ['Fold in half', 'Fold the square in half, corner to corner. The color comes to the front.'],
+    ['Fold in half again', 'Fold the triangle in half once more, point to point.'],
+    ['Squash fold', 'Lift the top flap, open it, and press it flat into a square. Repeat behind.'],
+    ['Kite fold', 'Fold the lower edges of the top layer to the center line. Repeat behind.'],
+    ['Petal fold', 'Lift the bottom point up along the crease and let the sides fold in. Repeat behind.'],
+    ['Narrow the legs', 'Fold the lower edges to the center once more, front and back.'],
+    ['Inside reverse fold', 'Push each leg up between the layers. One becomes the neck, one the tail.'],
+    ['Head and wings', 'Reverse fold a small head, then open the wings. Your crane is done.']
+  ];
+
+  /* ---------- folded type ---------- */
+  function foldType(el, txt) {
+    txt = txt || el.dataset.t || el.textContent.trim(); el.dataset.t = txt;
+    el.setAttribute('aria-label', txt);
+    let n = 0; const seed = txt.length * 7;
+    el.innerHTML = txt.split(' ').map(w => `<span class="wd" aria-hidden="true">${[...w].map(c => {
+      const h = hash(n, seed), a = [116, 130, 146, 214, 228, 62][h % 6], p = 38 + (h >> 7) % 24, d = (n++) * 34;
+      return `<span class="ch" style="--a:${a}deg;--p:${p}%;--d:${d}ms">${esc(c)}</span>`;
+    }).join('')}</span>`).join(' ');
+  }
+  const unfoldIn = el => requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('in')));
+  document.querySelectorAll('.ft').forEach(el => foldType(el));
+
+  /* ---------- faceted paper behind everything ---------- */
+  const fc = $('facets'), fx = fc.getContext('2d');
+  const ZP = {
+    hero:  { h:199, s:80, l:51,   a:4.6, n:1.5, m:0 },
+    paper: { h:205, s:42, l:96.3, a:2.2, n:1.0, m:-2.8 },
+    sky:   { h:198, s:80, l:52,   a:4.4, n:1.4, m:5.8 },
+    butter:{ h:46,  s:88, l:89.5, a:2.6, n:1.1, m:-3.8 },
+    navy:  { h:224, s:56, l:22,   a:3.2, n:1.1, m:4.8 }
+  };
+  const box = polys => { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const f of polys) for (const p of f) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); } return { x0, y0, w:x1 - x0, h:y1 - y0 }; };
+  /* each section of the site is one part of the crane */
+  const PART = { C:'neck', E:'neck', U1:'neck', U2:'neck', AL:'wings', AR:'wings', B:'wings', D:'tail', U3:'tail', V:'tail', GL:'body', GR:'body', K:'body' };
+  const craneIds = ORDER.filter(id => !/^[UV]/.test(id)).reverse();
+  const MOS = { crane:{ polys:craneIds.map(id => s8[id]), parts:craneIds.map(id => PART[id]) } };
+  for (const k in MOS) MOS[k].b = box(MOS[k].polys);
+  const inPoly = (x, y, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const a = poly[i], b = poly[j]; if ((a[1] > y) !== (b[1] > y) && x < (b[0] - a[0]) * (y - a[1]) / (b[1] - a[1]) + a[0]) c = !c; } return c; };
+  const zoneEls = [...document.querySelectorAll('[data-zone]:not([data-pin])')], pinEls = [...document.querySelectorAll('[data-pin]')];
+
+  let W = 0, H = 0, dpr = 1, C = 56;
+  function facetLayer(y0, y1, anchorY, zoneAt, L, wp, g = fx) {
+    const j0 = Math.floor((y0 - anchorY) / C), j1 = Math.ceil((y1 - anchorY) / C);
+    const half = Math.ceil(W / 2 / C) + 1;
+    const tilt = .42, lz = L[2];
+    for (let j = j0; j < j1; j++) {
+      const y = anchorY + j * C;
+      for (let i = -half; i < half; i++) {
+        const x = W / 2 + i * C, h = hash(i + 4096, j + 4096), mv = (h & 16) ? 1 : -1;
+        const TL = [x, y], TR = [x + C, y], BR = [x + C, y + C], BL = [x, y + C], CN = [x + C / 2, y + C / 2];
+        let tris;
+        if (h % 10 < 7) tris = [[TL, TR, CN, 0, -1], [TR, BR, CN, 1, 0], [BR, BL, CN, 0, 1], [BL, TL, CN, -1, 0]];
+        else if (h & 32) tris = [[TL, TR, BR, .7, -.7], [TL, BR, BL, -.7, .7]];
+        else tris = [[TR, BR, BL, .7, .7], [TR, BL, TL, -.7, -.7]];
+        const nz = ((h >>> 8) % 100) / 100 - .5;
+        for (const t of tris) {
+          const gx = (t[0][0] + t[1][0] + t[2][0]) / 3, gy = (t[0][1] + t[1][1] + t[2][1]) / 3;
+          const Z = zoneAt(gx, gy), P = Z.p;
+          const nx = t[3] * tilt * mv, ny = t[4] * tilt * mv, nl = Math.hypot(nx, ny, 1);
+          const d = ((nx * L[0] + ny * L[1] + lz) / nl - lz) / (tilt * .8);
+          let l = P.l + d * P.a + nz * P.n + (Z.mos || 0) * P.m + (Z.dl || 0), v = t;
+          if (wp && gy < wp.yh) { v = [wp.f(t[0]), wp.f(t[1]), wp.f(t[2])]; l += wp.dl(gy); }
+          const c = `hsl(${P.h} ${P.s}% ${l.toFixed(2)}%)`;
+          g.fillStyle = c; g.strokeStyle = c; g.beginPath();
+          g.moveTo(v[0][0], v[0][1]); g.lineTo(v[1][0], v[1][1]); g.lineTo(v[2][0], v[2][1]); g.closePath(); g.fill(); g.stroke();
+        }
+      }
+    }
+  }
+  /* where Learn meets Gifts, the blue sheet unfolds up out of the seam instead of butting against the paper */
+  const gstageEl = document.getElementById('gstage');
+  function seamFlap(top) {
+    if (RM || top <= 0 || top >= H) return null;
+    const e = ease(clamp(1 - (top - H * .3) / (H * .6)));
+    if (e >= 1) return null;
+    const Fh = C * Math.max(2, Math.round(Math.min(H * .3, 260) / C)), yh = top + Fh, th = (1 - e) * Math.PI / 2 * .985;
+    const c = Math.cos(th), z = Math.sin(th), D = 2.6 * Math.max(W, H), cx = W / 2, cy = H / 2;
+    return { yh, f:q => { const d = Math.max(0, yh - q[1]), y = yh - d * c, k = D / (D - d * z); return [cx + (q[0] - cx) * k, cy + (y - cy) * k]; }, dl:gy => 7 * z * clamp((yh - gy) / Fh) };
+  }
+  function lightL() { const ang = RM ? 2.3 : 2.3 + scrollY * .00045, L0 = [Math.cos(ang), Math.sin(ang), 1.25], ll = Math.hypot(...L0); return L0.map(v => v / ll); }
+  function drawFacets() {
+    fx.setTransform(dpr, 0, 0, dpr, 0, 0); fx.lineWidth = 1; fx.lineJoin = 'round';
+    const L = lightL();
+    const pins = pinEls.filter(el => !(el === stage && paperOn)).map(el => ({ el, r:el.getBoundingClientRect(), z:el.dataset.zone })).filter(o => o.r.bottom > 0 && o.r.top < H);
+    const full = pins.some(o => o.r.top <= 0 && o.r.bottom >= H);
+    if (!full) {
+      const zs = zoneEls.map(el => {
+        const r0 = el.getBoundingClientRect(), r = el.tagName === 'FOOTER' ? { top:r0.top, bottom:1e9, left:r0.left, width:r0.width, height:r0.height } : r0, mk = el.dataset.mosaic,   /* the footer's navy runs to the very bottom */ o = { r, p:ZP[el.dataset.zone], part:el.dataset.part };
+        if (mk && r.bottom > 0 && r.top < H + r.height) { const M = MOS[mk], sc = Math.min(r.width * .84 / M.b.w, r.height * .62 / M.b.h); o.m = { M, sc, ox:r.left + r.width / 2 - (M.b.x0 + M.b.w / 2) * sc, oy:r.top + r.height / 2 - (M.b.y0 + M.b.h / 2) * sc }; }
+        return o;
+      }).filter(o => o.r.bottom > 0 && o.r.top < H);
+      const dflt = { p:ZP.paper };
+      facetLayer(0, H, -scrollY, (x, y) => {
+        for (const o of pins) if (y >= o.r.top && y < o.r.bottom) return { p:ZP[o.z] };
+        for (const z of zs) if (y >= z.r.top && y < z.r.bottom) {
+          let mos = 0;
+          if (z.m) { const mx = (x - z.m.ox) / z.m.sc, my = (y - z.m.oy) / z.m.sc, M = z.m.M; for (let i = 0; i < M.polys.length; i++) if (inPoly(mx, my, M.polys[i])) { mos = M.parts[i] === z.part ? 2.1 : .7; break; } }
+          return { p:z.p, mos };
+        }
+        return dflt;
+      }, L);
+    }
+    for (const o of pins) {
+      fx.save(); fx.beginPath(); fx.rect(0, Math.max(0, o.r.top), W, Math.min(H, o.r.bottom) - Math.max(0, o.r.top)); fx.clip();
+      const P = ZP[o.z], top = o.r.top, hh = o.r.height;
+      facetLayer(Math.max(0, top), Math.min(H, o.r.bottom), top, o.z === 'hero' ? (x, y) => ({ p:P, dl:-5 + 11 * (y - top) / hh }) : () => ({ p:P }), L, o.el === gstageEl ? seamFlap(top) : null);
+      fx.restore();
+    }
+  }
+
+
+  /* ---------- the wordmark: the sky folds itself into the letters while the crane flaps ---------- */
+  let WMK = null; const oc = document.createElement('canvas'), ocx = oc.getContext('2d');
+  function planMark() {
+    const fam = (getComputedStyle(document.documentElement).getPropertyValue('--disp') || '').trim() || 'Unbounded, sans-serif';
+    ocx.font = `800 100px ${fam}`;
+    const one = ['Mountain & Valley'], two = ['Mountain &', 'Valley'], wOf = L => Math.max(...L.map(t => ocx.measureText(t).width)) || 1;
+    const maxW = W * (W < 600 ? .84 : .72), cap = W < 600 ? 78 : 124;
+    const f1 = Math.min(cap, 100 * maxW / wOf(one)), f2 = Math.min(cap, 100 * maxW / wOf(two)) * .92;
+    const lines = f2 > f1 * 1.4 ? two : one, fs = lines === two ? f2 : f1, lh = fs * 1.04;
+    const ch = fs * (lines === two ? 2.3 : 2.8), gap = fs * .42, th = lines.length * lh;
+    const es = Math.max(12, Math.min(16, fs * .15)), eg = Math.max(18, fs * .34);
+    const eg2 = Math.max(12, fs * .2), top = H / 2 - (ch + gap + th + eg2 + es) / 2;   // the whole lockup, crane to studio line, centred on the screen
+    const tw = wOf(lines) * fs / 100, x0 = W / 2 - tw / 2;
+    WMK = { fam, lines, fs, lh, cy:top + ch / 2, sc:ch / F8.h, ty:top + ch + gap, x0, tw, cell:Math.max(9, fs / 4.4), es, ey:top + ch + gap + th + eg2 + es * .8 };   // the studio line sits just under the name
+    oc.width = Math.round(W * dpr); oc.height = Math.round(H * dpr);
+  }
+  /* the letters are cut from the same sheet as the sky: the background's own triangles, same cells, same pattern, in white */
+  const LP = { h:205, s:60, l:94.6, a:3.2, n:1.2 };
+  const lc = document.createElement('canvas'), lcx = lc.getContext('2d');
+  function sheetTris(y0, y1, fn) {   // walks the background's grid exactly as facetLayer does, anchored to the stage's top
+    const j0 = Math.floor(y0 / C), j1 = Math.ceil(y1 / C), half = Math.ceil(W / 2 / C) + 1, tilt = .42;
+    for (let j = j0; j < j1; j++) for (let i = -half; i < half; i++) {
+      const x = W / 2 + i * C, y = j * C, h = hash(i + 4096, j + 4096), mv = (h & 16) ? 1 : -1;
+      const TL = [x, y], TR = [x + C, y], BR = [x + C, y + C], BL = [x, y + C], CN = [x + C / 2, y + C / 2];
+      const tris = h % 10 < 7 ? [[TL, TR, CN, 0, -1], [TR, BR, CN, 1, 0], [BR, BL, CN, 0, 1], [BL, TL, CN, -1, 0]] : (h & 32) ? [[TL, TR, BR, .7, -.7], [TL, BR, BL, -.7, .7]] : [[TR, BR, BL, .7, .7], [TR, BL, TL, -.7, -.7]];
+      const nz = ((h >>> 8) % 100) / 100 - .5;
+      tris.forEach((t, k) => fn(t, t[3] * tilt * mv, t[4] * tilt * mv, nz, i, j, k, x));
+    }
+  }
+  const triL = (nx, ny, L) => ((nx * L[0] + ny * L[1] + L[2]) / Math.hypot(nx, ny, 1) - L[2]) / (.42 * .8);
+  function drawMark(g, L) {
+    const M = WMK; if (!M || g <= 0) return;
+    ocx.setTransform(dpr, 0, 0, dpr, 0, 0); ocx.clearRect(0, 0, W, H); ocx.globalCompositeOperation = 'source-over'; ocx.lineJoin = 'round'; ocx.lineWidth = 1;
+    const y0 = M.ty - M.fs * .12, y1 = M.ty + M.lines.length * M.lh + M.fs * .1, P = ZP.hero, spread = 1.3;
+    sheetTris(y0, y1, (t, nx, ny, nz, i, j, k, x) => {   // each of the sky's own triangles turns over its edge and lands white
+      const xn = (x - M.x0) / M.tw, rn = (hash(i * 4 + k, j + 51) % 1000) / 1000;
+      const q = clamp(g * (1 + spread) - (xn * .75 + rn * .25) * spread); if (q <= .02) return;
+      const th = Math.PI * q, m = [(t[0][0] + t[1][0]) / 2, (t[0][1] + t[1][1]) / 2], c = -Math.cos(th);
+      const ap = [m[0] + (t[2][0] - m[0]) * c, m[1] + (t[2][1] - m[1]) * c], d = triL(nx, ny, L), gy = (t[0][1] + t[1][1] + t[2][1]) / 3;
+      const col = q < .5 ? `hsl(${P.h} ${P.s}% ${(P.l + d * P.a + nz * P.n - 5 + 11 * gy / H - 9 * Math.sin(th)).toFixed(2)}%)` : `hsl(${LP.h} ${LP.s}% ${(LP.l + d * LP.a + nz * LP.n - 7 * Math.sin(th)).toFixed(2)}%)`;
+      ocx.fillStyle = col; ocx.strokeStyle = col; ocx.beginPath(); ocx.moveTo(t[0][0], t[0][1]); ocx.lineTo(t[1][0], t[1][1]); ocx.lineTo(ap[0], ap[1]); ocx.closePath(); ocx.fill(); ocx.stroke();
+    });
+    ocx.globalCompositeOperation = 'destination-in'; ocx.fillStyle = '#000'; ocx.font = `800 ${M.fs.toFixed(2)}px ${M.fam}`; ocx.textAlign = 'center'; ocx.textBaseline = 'alphabetic';
+    M.lines.forEach((t, n) => ocx.fillText(t, W / 2, M.ty + n * M.lh + M.fs * .8));
+    ocx.globalCompositeOperation = 'source-over';
+    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+    const sh = smooth(.5, 1, g); if (sh > 0) { ctx.shadowColor = `rgba(6,58,110,${(.2 * sh).toFixed(3)})`; ctx.shadowBlur = 22 * dpr; ctx.shadowOffsetY = 10 * dpr; }
+    ctx.drawImage(oc, 0, 0);
+    const solid = smooth(.62, .96, g);
+    if (solid > 0) {   // the name, set solid over the last of the tiles: the same landed triangles, filled through the letters
+      if (lc.width !== oc.width || lc.height !== oc.height) { lc.width = oc.width; lc.height = oc.height; }
+      lcx.setTransform(dpr, 0, 0, dpr, 0, 0); lcx.clearRect(0, 0, W, H); lcx.lineJoin = 'round'; lcx.lineWidth = 1;
+      sheetTris(y0, y1, (t, nx, ny, nz) => {
+        const col = `hsl(${LP.h} ${LP.s}% ${(LP.l + triL(nx, ny, L) * LP.a + nz * LP.n).toFixed(2)}%)`;
+        lcx.fillStyle = col; lcx.strokeStyle = col; lcx.beginPath(); lcx.moveTo(t[0][0], t[0][1]); lcx.lineTo(t[1][0], t[1][1]); lcx.lineTo(t[2][0], t[2][1]); lcx.closePath(); lcx.fill(); lcx.stroke();
+      });
+      const pat = ctx.createPattern(lc, 'no-repeat');
+      if (pat) {
+        ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = solid; ctx.fillStyle = pat;   // device pixels, so the pattern sits exactly on the tiles
+        ctx.font = `800 ${(M.fs * dpr).toFixed(2)}px ${M.fam}`; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+        M.lines.forEach((t, n) => ctx.fillText(t, W / 2 * dpr, (M.ty + n * M.lh + M.fs * .8) * dpr));
+      }
+    }
+    ctx.restore();
+    const e = smooth(.72, 1, g);
+    if (e > 0) {   // the studio line, letter-spaced, under the name
+      const t = 'ORIGAMI STUDIO, WEST PALM BEACH', sp = M.es * .2;
+      ctx.save(); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.font = `700 ${M.es.toFixed(2)}px Figtree, sans-serif`; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      const ws = [...t].map(c => ctx.measureText(c).width), tot = ws.reduce((a, b) => a + b, 0) + sp * (t.length - 1);
+      let x = W / 2 - tot / 2; ctx.fillStyle = `rgba(255,255,255,${(.88 * e).toFixed(3)})`;
+      [...t].forEach((c, i) => { ctx.fillText(c, x, M.ey + (1 - e) * 6); x += ws[i] + sp; });
+      ctx.restore();
+    }
+  }
+  /* the next page swings up from the bottom edge and lies flat over the logo; the hero is printed on it */
+  const PA = Math.PI / 2 - .16;   // how far the page leans toward you before it lies flat
+  function drawPage(a, al, L) {
+    finsheet.style.transform = a > 0 ? `rotateX(${(-a).toFixed(4)}rad)` : '';
+    finsheet.style.opacity = al < 1 ? al.toFixed(3) : '';
+    if (al <= 0) return;
+    const c = Math.cos(a), z = Math.sin(a), D = 2.6 * Math.max(W, H), cx = W / 2, cy = H / 2;
+    const f = q => { const d = H - q[1], y = H - d * c, k = D / (D - d * z); return [cx + (q[0] - cx) * k, cy + (y - cy) * k]; };
+    ocx.setTransform(dpr, 0, 0, dpr, 0, 0); ocx.clearRect(0, 0, W, H); ocx.globalCompositeOperation = 'source-over'; ocx.lineWidth = 1; ocx.lineJoin = 'round';
+    facetLayer(0, H, 0, () => ({ p:ZP.paper }), L, a > 0 ? { yh:H + 1, f, dl:() => -5 * z } : null, ocx);
+    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = al; ctx.drawImage(oc, 0, 0); ctx.restore();
+  }
+
+  /* ---------- the opening: sheet, cut, square, crane, logo ---------- */
+  const intro = $('intro'), stage = $('stage'), cv = $('fold'), ctx = cv.getContext('2d');
+  const hdr = $('hdr'), cap = $('cap'), capCue = $('capCue'), capStep = $('capStep'), fin = $('fin'), finH = $('finH'), word = $('word');
+  const finpage = $('finpage'), finsheet = $('finsheet'), learnH = $('learnH');
+  const stepNo = $('stepNo'), stepTitle = $('stepTitle'), stepText = $('stepText');
+  const SCR = 14.7818, at = sc => sc / SCR;                     // scroll, in screens
+  const RS = v => (v * 1000 / 1100 + 100 / 1100) * 10 / SCR;   // the folds keep their pace
+  const FOLD0 = .02 * 10 / SCR, CUT0 = RS(.09), FOLDEND = CUT0 - .025 * 10 / SCR, CUT1 = RS(.171), FALL = RS(.2205), ROT = RS(.279), FS = RS(.288), FE = RS(.756), SEG = (FE - FS) / 8;
+  /* the finished crane holds; then it flaps, and the sky folds into the wordmark around it; then the next page folds over it all */
+  const YS = FE + at(.5), W1 = YS + at(2.4), WM0 = YS + at(.7), WM1 = YS + at(2.2), C0 = W1 + at(1.0), C1 = C0 + at(1.2);
+  /* the hero holds, then its page folds back down and Learn rises out from behind it */
+  const D0 = C1 + at(.9), D1 = Math.min(1, D0 + at(1.0)), DL = D0 + (D1 - D0) * .5;
+  let learnIn = false;
+  let FP = null, lastPre = -1, objTop = 0, objBot = 0, Tpx = 100, curKey = '', curMode = '', landed = null, lastFold = -1, glintT = 0, paperOn = null;
+
+  const grain = (() => { const c = document.createElement('canvas'); c.width = c.height = 160; const g = c.getContext('2d'), id = g.createImageData(160, 160); for (let i = 0; i < id.data.length; i += 4) { const v = Math.random(); id.data[i] = id.data[i + 1] = id.data[i + 2] = v > .5 ? 255 : 60; id.data[i + 3] = v > .5 ? 10 : 7; } g.putImageData(id, 0, 0); return c; })();
+  let grainPat = null;
+
+  function size() {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = innerWidth; H = stage.clientHeight || innerHeight;
+    C = W < 600 ? 34 : W < 1100 ? 46 : 56;
+    fc.width = Math.round(W * dpr); fc.height = Math.round(innerHeight * dpr);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    grainPat = ctx.createPattern(grain, 'repeat');
+    const hh = hdr.offsetHeight, capTop = H - cap.offsetHeight - (parseFloat(getComputedStyle(cap).bottom) || 0);
+    objTop = hh + 14; objBot = capTop - 30;
+    Tpx = Math.max(60, Math.min(W * .29, (objBot - objTop) * .43));
+    finpage.style.perspective = (2.6 * Math.max(W, H)).toFixed(0) + 'px';
+    planFolds(); planQuote(); planMark(); planSounds();
+    sizeGifts(); sizeFinale(); frame();
+  }
+  const scr = pts => ({ facets:[{ id:'S', pts, col:RGB.b.slice(), shade:0 }], cx:0, cy:0 });
+  function paperPoly(pts, shade, alpha) {
+    ctx.save(); ctx.globalAlpha = alpha;
+    draw(ctx, { facets:[{ id:'S', pts, col:RGB.b.map(v => v * (1 - shade)), shade:0 }], cx:0, cy:0 }, 0, 0, 1, { dpr, shadow:1 });
+    ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); for (const p of pts.slice(1)) ctx.lineTo(p[0], p[1]); ctx.closePath(); ctx.clip();
+    if (grainPat) { ctx.fillStyle = grainPat; ctx.fill(); }
+    ctx.restore();
+  }
+  const rotP = (p, c, a) => { const s = Math.sin(a), k = Math.cos(a), x = p[0] - c[0], y = p[1] - c[1]; return [c[0] + x * k - y * s, c[1] + x * s + y * k]; };
+
+
+  /* ---------- sound: every fold, cut and crease has its own paper sound; it starts on the first tap ---------- */
+  const SND = (() => {
+    let ac = null, master = null, noise = null, vol = .7, muted = false;
+    try { const sv = JSON.parse(localStorage.getItem('vm-sound') || '{}'); if (typeof sv.v === 'number') vol = clamp(sv.v); muted = !!sv.m; } catch (e) {}
+    const save = () => { try { localStorage.setItem('vm-sound', JSON.stringify({ v:vol, m:muted })); } catch (e) {} };
+    const level = () => muted ? 0 : vol * vol;
+    function init() {
+      if (ac) return;
+      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      try { ac = new AC(); } catch (e) { ac = null; return; }
+      const comp = ac.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 4; comp.connect(ac.destination);
+      master = ac.createGain(); master.gain.value = level(); master.connect(comp);
+      const n = ac.sampleRate * 2, b = ac.createBuffer(1, n, ac.sampleRate), d = b.getChannelData(0);
+      let b0 = 0, b1 = 0, b2 = 0;
+      for (let i = 0; i < n; i++) { const w = Math.random() * 2 - 1; b0 = .997 * b0 + w * .029; b1 = .985 * b1 + w * .032; b2 = .95 * b2 + w * .048; d[i] = (b0 + b1 + b2 + w * .18) * .9; }
+      noise = b;
+    }
+    function unlock() { init(); if (ac && ac.state !== 'running') ac.resume().catch(() => {}); }
+    function apply() { if (master) master.gain.setTargetAtTime(level(), ac.currentTime, .04); }
+    /* the pieces: a brush of paper, a crisp tick, a soft press */
+    function brush(t, dur, f0, f1, g, o = {}) {
+      const s = ac.createBufferSource(); s.buffer = noise; s.playbackRate.value = .85 + Math.random() * .3;
+      const f = ac.createBiquadFilter(); f.type = o.type || 'bandpass'; f.Q.value = o.q || .8;
+      f.frequency.setValueAtTime(f0, t); f.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      const h = ac.createBiquadFilter(); h.type = 'highpass'; h.frequency.value = o.hp || 260;
+      const e = ac.createGain(), pk = t + dur * (o.att == null ? .35 : o.att);
+      e.gain.setValueAtTime(.0001, t); e.gain.exponentialRampToValueAtTime(g, pk); e.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      s.connect(f); f.connect(h); h.connect(e); e.connect(master); s.start(t, Math.random() * 1.6, dur + .05);
+    }
+    const tick = (t, fq, g, dur = .012) => brush(t, dur, fq, fq * .8, g, { q:2.4, hp:1800, att:.08 });
+    function press(t, fq, g, dur) {
+      const o = ac.createOscillator(), e = ac.createGain(); o.type = 'sine';
+      o.frequency.setValueAtTime(fq, t); o.frequency.exponentialRampToValueAtTime(fq * .55, t + dur);
+      e.gain.setValueAtTime(.0001, t); e.gain.exponentialRampToValueAtTime(g, t + .006); e.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      o.connect(e); e.connect(master); o.start(t); o.stop(t + dur + .02);
+    }
+    const crinkle = (t, span, n, g) => { for (let i = 0; i < n; i++) tick(t + Math.random() * span, 2400 + Math.random() * 3800, g * (.35 + Math.random() * .65), .005 + Math.random() * .01); };
+    const FX = {
+      fold:   t => { brush(t, .46, 650, 2300, .34, { att:.5 }); crinkle(t + .06, .34, 6, .1); },               // a flap lifts and turns over
+      crease: t => { tick(t, 3300, .42, .016); press(t, 170, .2, .07); brush(t + .01, .16, 3600, 1500, .13, { q:1.3, att:.15 }); }, // the fingernail runs the crease
+      snip:   t => { tick(t, 5600, .5, .009); brush(t + .004, .05, 6800, 3800, .12, { q:3 }); tick(t + .05, 4300, .38, .011); },     // scissors
+      drop:   t => { for (let i = 0; i < 4; i++) brush(t + i * .085, .1, 1500 - i * 120, 900, .1, { q:1.1 }); press(t + .36, 120, .09, .08); }, // the strip flutters off
+      turn:   t => brush(t, .55, 1700, 700, .16, { type:'lowpass', q:.5, att:.3 }),                           // the square turns on its point
+      flap:   t => { brush(t, .3, 520, 1150, .24, { att:.3, q:.9 }); press(t + .05, 140, .1, .09); },              // a wingbeat
+      ripple: t => { crinkle(t, .75, 16, .11); brush(t, .8, 1200, 3200, .1, { att:.5, q:.7 }); },                 // the sky folding into letters
+      cover:  t => { brush(t, 1.05, 300, 1700, .36, { att:.6, q:.6 }); crinkle(t + .3, .6, 8, .08); },            // a whole page swings over
+      land:   t => { press(t, 230, .2, .07); tick(t + .01, 2700, .22, .012); },
+      unfold: t => { brush(t, .85, 480, 2100, .38, { att:.4, q:.6 }); crinkle(t + .1, .62, 11, .1); }        // the page opens out
+    };
+    function play(name, delay = 0) {
+      if (!ac || ac.state !== 'running' || level() <= 0 || !FX[name]) return;
+      try { FX[name](ac.currentTime + .006 + delay); } catch (e) {}
+    }
+    /* the control */
+    const box = $('snd'), btn = $('sndB'), rng = $('sndR');
+    const paint = () => { box.classList.toggle('mute', muted || vol <= 0); box.classList.toggle('low', vol < .4); rng.value = Math.round(vol * 100); rng.style.setProperty('--v', Math.round(vol * 100) + '%'); btn.setAttribute('aria-label', muted || vol <= 0 ? 'Sound off' : 'Sound on'); };
+    const setOpen = v => { box.classList.toggle('open', v); btn.setAttribute('aria-expanded', v); rng.tabIndex = v ? 0 : -1; };
+    btn.addEventListener('click', () => {
+      unlock();
+      if (!box.classList.contains('open')) { setOpen(true); return; }
+      if (vol <= 0) { vol = .7; muted = false; } else muted = !muted;
+      apply(); paint(); save(); if (!muted) play('crease');
+    });
+    rng.addEventListener('input', () => { unlock(); vol = rng.value / 100; muted = vol <= 0; apply(); paint(); });
+    rng.addEventListener('change', () => { save(); play('crease'); });
+    document.addEventListener('pointerdown', e => { if (!box.contains(e.target)) setOpen(false); });
+    ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach(ev => addEventListener(ev, unlock, { capture:true, passive:true }));
+    paint();
+    return { play };
+  })();
+  let SEV = [], sLast = null;
+  function planSounds() {
+    const ev = [], add = (p, s) => ev.push({ p, s }), seg = (FOLDEND - FOLD0) / FP.N;
+    for (let i = 0; i < FP.N; i++) { add(FOLD0 + seg * i + .0005, 'fold'); add(FOLD0 + seg * (i + .8), 'crease'); }
+    for (let k = 0; k < 4; k++) add(CUT0 + (CUT1 - CUT0) * (.08 + k * .27), 'snip');
+    add(CUT1 + .002, 'drop'); add(FALL + .002, 'turn');
+    for (let k = 0; k < 8; k++) { add(FS + SEG * k + .0005, 'fold'); add(FS + SEG * (k + .7), 'crease'); }
+    for (let k = 0; k < 3; k++) add(YS + (W1 - YS) * (.05 + .85 * (k + .5) / 3), 'flap');
+    for (let k = 0; k < 3; k++) add(WM0 + (WM1 - WM0) * (.12 + k * .3), 'ripple');
+    add(C0 + .03 * (C1 - C0), 'cover'); add(D0 + .04 * (D1 - D0), 'cover');
+    SEV = ev.sort((a, b) => a.p - b.p);
+  }
+  function trackSounds(p) {
+    if (sLast === null || p === sLast) { sLast = p; return; }
+    const a = Math.min(p, sLast), b = Math.max(p, sLast), fwd = p > sLast; sLast = p;
+    let hit = SEV.filter(e => e.p > a && e.p <= b); if (!hit.length) return;
+    if (hit.length > 2) hit = fwd ? hit.slice(-2) : hit.slice(0, 2);   // a fast flick plays the last of it, not a pile-up
+    if (!fwd) hit.reverse();
+    hit.forEach((e, i) => SND.play(e.s, i * .07));
+  }
+
+  /* ---------- a proverb is printed on the sheet, and it folds up with it ---------- */
+  const qc = document.createElement('canvas'), qcx = qc.getContext('2d'); let qT0 = 0;
+  const QT = ['Even dust, when piled up,', 'becomes a mountain.'];
+  function foldText(g, txt, cx, y, fs, fam, c1, c2) {
+    g.font = `800 ${fs.toFixed(2)}px ${fam}`; g.textAlign = 'left'; g.textBaseline = 'alphabetic';
+    const tw = g.measureText(txt).width, x0 = cx - tw / 2, seed = txt.length * 7; let n = 0;
+    [...txt].forEach((ch, i) => {
+      if (ch === ' ') return;
+      const xa = x0 + g.measureText(txt.slice(0, i)).width, w = g.measureText(ch).width, hh = fs, ya = y - fs * .8;
+      const h = hash(n++, seed), a = [116, 130, 146, 214, 228, 62][h % 6] * Math.PI / 180, p = (38 + (h >> 7) % 24) / 100;
+      const dx = Math.sin(a), dy = -Math.cos(a), Lg = Math.abs(w * dx) + Math.abs(hh * dy), mx = xa + w / 2, my = ya + hh / 2;
+      const gr = g.createLinearGradient(mx - dx * Lg / 2, my - dy * Lg / 2, mx + dx * Lg / 2, my + dy * Lg / 2);
+      gr.addColorStop(0, c1); gr.addColorStop(p, c1); gr.addColorStop(p, c2); gr.addColorStop(1, c2);
+      g.fillStyle = gr; g.fillText(ch, xa, y);
+    });
+    return tw;
+  }
+  function planQuote() {
+    qc.width = Math.round(W * dpr); qc.height = Math.round(H * dpr);
+    const fam = (getComputedStyle(document.documentElement).getPropertyValue('--disp') || '').trim() || 'Unbounded, sans-serif';
+    qcx.setTransform(dpr, 0, 0, dpr, 0, 0); qcx.clearRect(0, 0, W, H);
+    qcx.font = `800 100px ${fam}`;
+    const w100 = Math.max(...QT.map(t => qcx.measureText(t).width)) || 1;
+    const fs = Math.min(W < 600 ? 44 : 88, 100 * W * (W < 600 ? .84 : .66) / w100), lh = fs * 1.12, es = Math.max(12, Math.min(14, fs * .2));
+    const js = Math.max(14, Math.min(22, fs * .34)), jg = Math.max(16, fs * .5);   // the proverb in Japanese, under the English
+    const eg = Math.max(18, fs * .42), tot = es + eg + QT.length * lh + jg + js, top = H * .45 - tot / 2;
+    qcx.textAlign = 'center'; qcx.textBaseline = 'alphabetic';
+    const t = 'A JAPANESE PROVERB', sp = es * .2; qcx.font = `700 ${es}px Figtree, sans-serif`;
+    const ws = [...t].map(c => qcx.measureText(c).width), tw = ws.reduce((a, b) => a + b, 0) + sp * (t.length - 1);
+    qcx.textAlign = 'left'; qcx.fillStyle = '#e24a54'; let x = W / 2 - tw / 2;
+    [...t].forEach((c, i) => { qcx.fillText(c, x, top + es); x += ws[i] + sp; });
+    QT.forEach((l, i) => foldText(qcx, l, W / 2, top + es + eg + i * lh + fs * .82, fs, fam, '#0f2a6b', '#2c4f9a'));
+    { const jp = '塵も積もれば山となる', jsp = js * .28; qcx.font = `600 ${js.toFixed(1)}px "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif`; qcx.textAlign = 'left'; qcx.fillStyle = '#4a5d86';
+      const cw = [...jp].map(c => qcx.measureText(c).width), jw = cw.reduce((a, b) => a + b, 0) + jsp * (jp.length - 1); let jx = W / 2 - jw / 2;
+      const jy = top + es + eg + (QT.length - 1) * lh + fs * 1.04 + jg + js * .88;
+      [...jp].forEach((c, i) => { qcx.fillText(c, jx, jy); jx += cw[i] + jsp; }); }
+    /* the studio's mark and name, printed along the top of the sheet: they fold away with it */
+    const ws_ = W < 600 ? 16 : 19, mw = W < 600 ? 44 : 52, gp = 12, my = hdr.offsetHeight / 2;
+    qcx.font = `800 ${ws_}px ${fam}`; const nw = qcx.measureText('Mountain & Valley').width, lx = W / 2 - (mw + gp + nw) / 2;
+    draw(qcx, pose(8), lx + mw / 2, my, mw / F8.w, { dpr, shadow:.5 });
+    foldText(qcx, 'Mountain & Valley', lx + mw + gp + nw / 2, my + ws_ * .36, ws_, fam, '#0f2a6b', '#2c4f9a');
+    if (!qT0) qT0 = performance.now();
+  }
+  /* layers keep a map back to the flat sheet, so the print folds with the paper */
+  const mulA = (m, r) => [m[0] * r[0] + m[2] * r[1], m[1] * r[0] + m[3] * r[1], m[0] * r[2] + m[2] * r[3], m[1] * r[2] + m[3] * r[3], m[0] * r[4] + m[2] * r[5] + m[4], m[1] * r[4] + m[3] * r[5] + m[5]];
+  const apA = (m, p) => [m[0] * p[0] + m[2] * p[1] + m[4], m[1] * p[0] + m[3] * p[1] + m[5]];
+  const reflA = F => F.ax ? [1, 0, 0, -1, 0, 2 * F.c] : [-1, 0, 0, 1, 2 * F.c, 0];
+  function printOn(l, pts, al) {
+    if (al <= 0) return;
+    const o0 = apA(l.m, [l.r[0], l.r[1]]), o1 = apA(l.m, [l.r[2], l.r[1]]), o3 = apA(l.m, [l.r[0], l.r[3]]);
+    const u = [o1[0] - o0[0], o1[1] - o0[1]], v = [o3[0] - o0[0], o3[1] - o0[1]], s0 = pts[0];
+    const su = [pts[1][0] - s0[0], pts[1][1] - s0[1]], sv = [pts[3][0] - s0[0], pts[3][1] - s0[1]];
+    const det = u[0] * v[1] - v[0] * u[1]; if (Math.abs(det) < 1e-6 || Math.abs(su[0] * sv[1] - su[1] * sv[0]) < 4) return;
+    const a = (su[0] * v[1] - sv[0] * u[1]) / det, c = (sv[0] * u[0] - su[0] * v[0]) / det, b = (su[1] * v[1] - sv[1] * u[1]) / det, d = (sv[1] * u[0] - su[1] * v[0]) / det;
+    const e = s0[0] - (a * o0[0] + c * o0[1]), f = s0[1] - (b * o0[0] + d * o0[1]);
+    ctx.save(); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); for (const q of pts.slice(1)) ctx.lineTo(q[0], q[1]); ctx.closePath(); ctx.clip();
+    ctx.globalAlpha = al; ctx.setTransform(dpr * a, dpr * b, dpr * c, dpr * d, dpr * e, dpr * f); ctx.drawImage(qc, 0, 0, W, H);
+    ctx.restore();
+  }
+
+  /* ---------- the page is the sheet: it folds over, then down, to the size of the cut ---------- */
+  function planFolds() {
+    const sqd = Math.SQRT2 * Tpx;
+    let n = Math.max(1, Math.round(Math.log2(H / sqd))), hf = H / 2 ** n;
+    while (hf >= W * .92) { n++; hf /= 2; }
+    const wf = (W + hf) / 2, folds = [{ ax:0, c:wf, side:1 }];
+    let y0 = 0; const y1 = H;
+    for (let i = 0; i < n; i++) { const c = (y0 + y1) / 2; folds.push({ ax:1, c, side:-1 }); y0 = c; }
+    const I = [1, 0, 0, 1, 0, 0], states = [[{ r:[0, 0, wf, H], k:0, m:I, fc:1 }, { r:[wf, 0, W, H], k:.02, m:I, fc:1 }]];
+    for (const F of folds) { const { keep, move } = split(states[states.length - 1], F); states.push(keep.concat(move.reverse().map(l => ({ ...l, r:refl(l.r, F), m:mulA(l.m, reflA(F)), fc:-l.fc })))); }
+    FP = { folds, states, hf, wf, sF:sqd / hf, N:folds.length, boxes:states.map(bbox) };
+  }
+  const setAx = (r, ax, lo, hi) => ax ? [r[0], lo, r[2], hi] : [lo, r[1], hi, r[3]];
+  const refl = (r, F) => F.ax ? [r[0], 2 * F.c - r[3], r[2], 2 * F.c - r[1]] : [2 * F.c - r[2], r[1], 2 * F.c - r[0], r[3]];
+  function split(L, F) {
+    const keep = [], move = [];
+    for (const l of L) {
+      const lo = l.r[F.ax], hi = l.r[F.ax + 2];
+      const kl = F.side > 0 ? lo : Math.max(lo, F.c), kh = F.side > 0 ? Math.min(hi, F.c) : hi;
+      const ml = F.side > 0 ? Math.max(lo, F.c) : lo, mh = F.side > 0 ? hi : Math.min(hi, F.c);
+      if (kh - kl > .5) keep.push({ ...l, r:setAx(l.r, F.ax, kl, kh) });
+      if (mh - ml > .5) move.push({ ...l, r:setAx(l.r, F.ax, ml, mh) });
+    }
+    return { keep, move };
+  }
+  const bbox = L => { let a = 1e9, b = 1e9, c = -1e9, d = -1e9; for (const l of L) { a = Math.min(a, l.r[0]); b = Math.min(b, l.r[1]); c = Math.max(c, l.r[2]); d = Math.max(d, l.r[3]); } return [(a + c) / 2, (b + d) / 2]; };
+  function drawFolds(p, ox, oy, now) {
+    const seg = (FOLDEND - FOLD0) / FP.N, u = clamp((p - FOLD0) / (FOLDEND - FOLD0)) * FP.N;
+    const i = Math.min(FP.N - 1, Math.floor(u)), e = ease(clamp((u - i) / .8)), done = u >= FP.N;
+    if (!RM) { const k = done ? FP.N : i + (e >= 1 ? 1 : 0); if (k > lastPre && k > 0 && navigator.vibrate) { try { navigator.vibrate(8); } catch (er) {} } lastPre = k; }
+    const at = k => { const t = k / FP.N; return { b:FP.boxes[k], X:lerp(W / 2, ox, t), Y:lerp(H / 2, oy, t), s:lerp(1, FP.sF, t) }; };
+    const A = at(i), B = at(i + 1), m = done ? 1 : e;
+    const bx = lerp(A.b[0], B.b[0], m), by = lerp(A.b[1], B.b[1], m), X = lerp(A.X, B.X, m), Y = lerp(A.Y, B.Y, m), sc = lerp(A.s, B.s, m);
+    const D = 2.6 * Math.max(W, H), cx = W / 2, cy = H / 2;
+    const T = (x, y, z) => { const f = D / (D - z * sc), sx = X + (x - bx) * sc, sy = Y + (y - by) * sc; return [cx + (sx - cx) * f, cy + (sy - cy) * f]; };
+    const rect = r => [T(r[0], r[1], 0), T(r[2], r[1], 0), T(r[2], r[3], 0), T(r[0], r[3], 0)];
+    const qa = RM ? 1 : smooth(0, 1, (now - qT0) / 1100);
+    if (done || p < FOLD0) {
+      const L = FP.states[done ? FP.N : 0];
+      for (const l of L) { const pts = rect(l.r); paperPoly(pts, l.k, 1); if (l.fc > 0) printOn(l, pts, qa); }
+      return;
+    }
+    const F = FP.folds[i], { keep, move } = split(FP.states[i], F), th = Math.PI * e, c = Math.cos(th), z = Math.sin(th);
+    for (const l of keep) { const pts = rect(l.r); paperPoly(pts, l.k, 1); if (l.fc > 0) printOn(l, pts, qa); }
+    const sh = Math.sin(th) * lerp(-.1, .13, smooth(.3, .7, e));
+    const mv = th < Math.PI / 2 ? move : move.slice().reverse();
+    for (const l of mv) {
+      const q = (x, y) => { const a = F.ax ? y : x, d = a - F.c, a2 = F.c + d * c, zz = Math.abs(d) * z; return F.ax ? T(x, a2, zz) : T(a2, y, zz); };
+      const pts = [q(l.r[0], l.r[1]), q(l.r[2], l.r[1]), q(l.r[2], l.r[3]), q(l.r[0], l.r[3])];
+      paperPoly(pts, l.k + sh, 1); if ((l.fc > 0) !== (th > Math.PI / 2)) printOn(l, pts, qa * (1 - .35 * Math.sin(th)));
+    }
+  }
+  function glintOver(all, now) {
+    const tt = (now * .00009) % 1, w = all[1][0] - all[0][0], gx = lerp(all[0][0] - w * .4, all[1][0] + w * .4, tt);
+    ctx.save(); ctx.beginPath(); ctx.moveTo(all[0][0], all[0][1]); all.slice(1).forEach(q => ctx.lineTo(q[0], q[1])); ctx.closePath(); ctx.clip();
+    const gr = ctx.createLinearGradient(gx - 160, all[0][1], gx + 160, all[0][1] + 220);
+    gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(.5, 'rgba(255,255,255,.75)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = gr; ctx.fillRect(0, 0, W, H);
+    const sh = ctx.createLinearGradient(gx + 60, all[0][1], gx + 360, all[0][1] + 220);
+    sh.addColorStop(0, 'rgba(120,96,70,0)'); sh.addColorStop(.5, 'rgba(120,96,70,.06)'); sh.addColorStop(1, 'rgba(120,96,70,0)');
+    ctx.fillStyle = sh; ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
+
+  function drawSheet(p, ox, oy, now) {
+    if (p < FOLDEND) { drawFolds(p, ox, oy, now); return; }
+    const sq = FP.hf * FP.sF, sw = FP.wf * FP.sF, sx0 = ox - sw / 2, top = oy - sq / 2, bot = oy + sq / 2, cutX = sx0 + sq;
+    const Z = 1;
+    const zp = q => [ox + (q[0] - ox) * Z, oy + (q[1] - oy) * Z];
+    const f = ease(clamp((p - CUT1) / (FALL - CUT1))), r = ease(clamp((p - FALL) / (ROT - FALL)));
+    const sqC = [lerp(sx0 + sq / 2, ox, r), oy], ang = r * Math.PI / 4;
+    const bump = 1 + .018 * Math.sin(Math.PI * clamp((p - CUT1) / .03));
+    const sqPts = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([a, b]) => rotP([sqC[0] + a * sq / 2 * bump, sqC[1] + b * sq / 2 * bump], sqC, ang)).map(zp);
+    if (f < 1) {
+      const sc = [cutX + (sw - sq) / 2, oy], fall = [sc[0] + f * sq * .55, sc[1] + f * f * H * .9];
+      const st = [[cutX, top], [sx0 + sw, top], [sx0 + sw, bot], [cutX, bot]].map(q => rotP([q[0] - sc[0] + fall[0], q[1] - sc[1] + fall[1]], fall, f * .32)).map(zp);
+      paperPoly(st, .02, 1 - f * f);
+    }
+    paperPoly(sqPts, 0, 1);
+    // the cut
+    const c = clamp((p - CUT0) / (CUT1 - CUT0));
+    if (c > 0 && f < .05) {
+      const a = zp([cutX, top - 26]), b = zp([cutX, bot + 26]), by = lerp(a[1], b[1], ease(c));
+      ctx.save();
+      ctx.globalAlpha = clamp(c * 8) * (1 - clamp(f * 20));
+      ctx.setLineDash([7, 7]); ctx.lineWidth = 1.6; ctx.strokeStyle = 'rgba(15,42,107,.45)';
+      ctx.beginPath(); ctx.moveTo(a[0], by); ctx.lineTo(b[0], b[1]); ctx.stroke();
+      ctx.setLineDash([]); ctx.lineWidth = 2; ctx.strokeStyle = '#0f2a6b';
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(a[0], by); ctx.stroke();
+      if (c < 1) {
+        ctx.translate(a[0], by); ctx.rotate(-.62);
+        ctx.fillStyle = '#d9e2ea'; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-10, -22); ctx.lineTo(10, -22); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-10, -22); ctx.lineTo(0, -22); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = '#0f2a6b'; ctx.beginPath(); ctx.moveTo(-11, -22); ctx.lineTo(11, -22); ctx.lineTo(9, -84); ctx.lineTo(-9, -84); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = '#f55a5f'; ctx.fillRect(-9, -40, 18, 6);
+      }
+      ctx.restore();
+    }
+  }
+
+  /* the page itself: once the crane has landed, the sheet opens out into the site */
+  function setPaper(v) {
+    if (paperOn === v) return; paperOn = v;
+    stage.dataset.zone = v ? 'paper' : 'hero'; stage.classList.toggle('paperpage', v);
+  }
+  const PAPER = [242, 246, 250], BACK = [224, 233, 243];
+  const tint = (c, k) => `rgb(${c[0] * k | 0},${c[1] * k | 0},${c[2] * k | 0})`;
+  function drawUnfold(u) {
+    if (u <= 0 || u >= 1) return;
+    const a = ease(clamp((u - .1) / .36)), b = ease(clamp((u - .5) / .36));
+    const al = clamp(u / .1) * (1 - clamp((u - .9) / .1));
+    const sc = lerp(.78, 1, ease(clamp(u / .86))), rise = (1 - ease(clamp(u / .14))) * 46;
+    const bx = lerp(W / 4, W / 2, a), by = lerp(H / 4, H / 2, b), cx = W / 2, cy = H / 2, D = 2.6 * Math.max(W, H);
+    const T = (x, y, z) => { const X = (x - bx) * sc, Y = (y - by) * sc + rise, f = D / (D - z * sc); return [cx + X * f, cy + Y * f]; };
+    const poly = (pts, fill) => { ctx.fillStyle = fill; ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); for (const q of pts.slice(1)) ctx.lineTo(q[0], q[1]); ctx.closePath(); ctx.fill(); };
+    const face = th => { const s_ = Math.abs(Math.sin(th)); return Math.abs(th) < Math.PI / 2 ? tint(PAPER, 1 - .09 * s_) : tint(BACK, 1 - .05 * s_); };
+    ctx.save(); ctx.globalAlpha = al;
+    ctx.shadowColor = 'rgba(6,58,110,.24)'; ctx.shadowBlur = 34 * dpr; ctx.shadowOffsetY = 16 * dpr;
+    if (a >= 1) {   // the lower half swings down from behind
+      const th = -Math.PI * (1 - b), c = Math.cos(th), z = Math.sin(th);
+      poly([T(0, H / 2, 0), T(W, H / 2, 0), T(W, H / 2 + H / 2 * c, H / 2 * z), T(0, H / 2 + H / 2 * c, H / 2 * z)], face(th));
+    }
+    poly([T(0, 0, 0), T(W / 2, 0, 0), T(W / 2, H / 2, 0), T(0, H / 2, 0)], tint(PAPER, 1));
+    const th = Math.PI * (1 - a), c = Math.cos(th), z = Math.sin(th);
+    poly([T(W / 2, 0, 0), T(W / 2 + W / 2 * c, 0, W / 2 * z), T(W / 2 + W / 2 * c, H / 2, W / 2 * z), T(W / 2, H / 2, 0)], face(th));
+    ctx.shadowColor = 'transparent';
+    ctx.strokeStyle = 'rgba(15,42,107,.09)'; ctx.lineWidth = 1;
+    ctx.beginPath(); const v0 = T(W / 2, 0, 0), v1 = T(W / 2, b > 0 ? H : H / 2, 0); ctx.moveTo(v0[0], v0[1]); ctx.lineTo(v1[0], v1[1]);
+    if (b > .02) { const h0 = T(0, H / 2, 0), h1 = T(W, H / 2, 0); ctx.moveTo(h0[0], h0[1]); ctx.lineTo(h1[0], h1[1]); }
+    ctx.stroke(); ctx.restore();
+  }
+
+  function setLanded(v) {
+    if (landed === v) return; landed = v;
+    hdr.classList.toggle('landed', v); mark.classList.toggle('on', v);
+    if (v) { unfoldIn(word); SND.play('land'); } else word.classList.remove('in');
+  }
+  function setCap(mode, key) {
+    if (mode !== curMode) {
+      curMode = mode;
+      capCue.classList.toggle('off', mode !== 'cue');
+      capStep.classList.toggle('off', mode !== 'step');
+      fin.classList.toggle('off', mode !== 'final');
+      finH.classList.toggle('in', mode === 'final');
+    }
+    if (mode === 'step' && key !== curKey) {
+      curKey = key;
+      const cut = key === 'cut', k = cut ? 0 : +key;
+      stepNo.textContent = cut ? 'Before you fold' : `Fold ${k} of 8`;
+      stepText.textContent = cut ? 'Trim the sheet so all four sides match.' : STEPS[k][1];
+      stepTitle.classList.remove('in'); foldType(stepTitle, cut ? 'Cut it square' : STEPS[k][0]); unfoldIn(stepTitle);
+    }
+  }
+
+  function renderIntro(now) {
+    const r = intro.getBoundingClientRect(), p = clamp(-r.top / (r.height - H));
+    trackSounds(p);
+    setPaper(r.bottom < 0 || p >= C1);
+    hdr.classList.toggle('solid', paperOn || r.bottom - hdr.offsetHeight <= 1);
+    if (r.bottom < 0) { setLanded(true); return; }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H); cv.style.opacity = '';
+    const ox = W / 2, oy = (objTop + objBot) / 2;
+
+    setCap(p < FOLD0 ? 'cue' : p < CUT0 - .012 ? 'none' : p < YS ? 'step' : p < C0 ? 'none' : p < D1 ? 'final' : 'none', p < FS ? 'cut' : String(Math.min(8, Math.floor((p - FS) / SEG) + 1)));
+    const li = p >= DL; if (li !== learnIn) { learnIn = li; if (li) unfoldIn(learnH); }
+
+    if (p < ROT) { setLanded(false); drawSheet(p, ox, oy, now); return; }
+
+    let sf = 8, k = 7, lt = 1;
+    if (p < FE) { const u = (p - FS) / SEG; k = clamp(Math.floor(u), 0, 7); lt = u - k; sf = k + ease(clamp(lt / .7)); }
+    if (k !== lastFold && lt >= .7) { if (k > lastFold && navigator.vibrate) { try { navigator.vibrate(8); } catch (e) {} } lastFold = k; }
+    if (lt < .7 && k <= lastFold) lastFold = k - 1;
+    const P = pose(sf);
+    const bump = p < FE ? Math.sin(Math.PI * clamp((lt - .7) / .16)) : 0;
+    const glint = p < FE + .02 && lt >= .7 ? 1 - clamp((lt - .7) / .3) : 0;
+    if (glint > 0) for (const f of P.facets) if (MOV[k][f.id] && !/^[UBV]/.test(f.id)) f.shade -= glint * .14;
+    const sc = Tpx * P.k * (1 + .022 * bump);
+
+    if (p < YS) { setLanded(false); draw(ctx, P, ox, oy, sc, { dpr, shadow:1 }); return; }
+    if (p >= C1) {
+      setLanded(true);
+      if (p < D1) { const t = clamp((p - D0) / (D1 - D0)); drawPage(RM ? 0 : PA * ease(t), RM ? (t < .5 ? 1 : 0) : 1 - smooth(.84, 1, t), lightL()); }
+      return;
+    }
+    setLanded(false);
+    const M = WMK, L = lightL();
+    if (RM) { draw(ctx, P, ox, M.cy, M.sc, { dpr, shadow:1 }); drawMark(1, L); if (p >= C0) drawPage(0, 1, L); return; }
+    const w = clamp((p - YS) / (W1 - YS)), mv = ease(clamp(w / .42)), u = clamp((w - .05) / .85);
+    const v = 1 - (1 - Math.cos(u * Math.PI * 2 * 3)) * .95 * Math.pow(Math.sin(Math.PI * u), .5);
+    const s = Math.exp(lerp(Math.log(sc), Math.log(M.sc), mv)), y = lerp(oy, M.cy, mv) - Math.sin(u * Math.PI * 6) * Math.sin(Math.PI * u) * s * F8.h * .05;
+    flap(P, Math.max(v, lerp(-.9, -.3, mv)));   // once it sits above the name, the downstroke stays short of the letters
+    draw(ctx, P, ox, y, s, { dpr, shadow:lerp(1, .7, mv) });
+    drawMark(clamp((p - WM0) / (WM1 - WM0)), L);
+    if (p >= C0) { const t = ease(clamp((p - C0) / (C1 - C0))); drawPage(PA * (1 - t), smooth(0, .1, t), L); }
+  }
+
+  /* ---------- learn: the levels open like an accordion ---------- */
+  const levels = $('levels'), lvs = [...levels.children];
+  function renderAcc() {
+    const r = levels.getBoundingClientRect(); if (r.bottom < -200 || r.top > H + 200) return;
+    const u = RM ? 1 : ease(clamp((H * .94 - r.top) / (H * .62)));
+    const phi = (1 - u) * 78 * Math.PI / 180, cs = Math.cos(phi), sn = Math.sin(phi), n = lvs.length;
+    const mob = innerWidth <= 760, gap = parseFloat(getComputedStyle(levels)[mob ? 'rowGap' : 'columnGap']) || 0, gu = gap * u;
+    const w = mob ? lvs[0].offsetHeight : lvs[0].offsetWidth;
+    const nat = n * w + (n - 1) * gap, wf = n * w * cs + (n - 1) * gu, off = (nat - wf) / 2;
+    lvs.forEach((el, i) => {
+      const xi = off + i * (w * cs + gu), natL = i * (w + gap), even = i % 2 === 0;
+      if (!mob) {
+        el.style.transformOrigin = even ? '0 50%' : '100% 50%';
+        el.style.transform = even ? `translateX(${(xi - natL).toFixed(2)}px) rotateY(${phi.toFixed(4)}rad)` : `translateX(${(xi + w * cs - natL - w).toFixed(2)}px) rotateY(${(-phi).toFixed(4)}rad)`;
+      } else {
+        el.style.transformOrigin = even ? '50% 0' : '50% 100%';
+        el.style.transform = even ? `translateY(${(xi - natL).toFixed(2)}px) rotateX(${(-phi).toFixed(4)}rad)` : `translateY(${(xi + w * cs - natL - w).toFixed(2)}px) rotateX(${phi.toFixed(4)}rad)`;
+      }
+      el.style.setProperty('--sh', (even ? .04 : .2) * sn);
+    });
+  }
+
+  /* ---------- gifts: a folded letter opens ---------- */
+  const gpin = $('gpin'), gstage = $('gstage'), gc = $('gc'), gctx = gc.getContext('2d'), gtext = $('gtext'), gH = $('gH');
+  const comm = $('commission'), fwrap = $('fwrap');
+  let gS = 400, gOn = false, fOnG = null, FR = { x:0, w:400, h:600, y:100 };
+  const CORAL = [[245,90,95],[234,77,85]], INSIDE = [[255,255,255],[241,246,250]], QUAD = [[251,253,254],[243,248,251],[247,250,252],[238,245,249]];
+  function sizeGifts() {
+    gc.width = Math.round(W * dpr); gc.height = Math.round(H * dpr);
+    gS = Math.min(W * .88, (H - hdr.offsetHeight) * .8, 780);
+    gstage.style.setProperty('--gw', (gS * .74).toFixed(0) + 'px');
+    gstage.style.setProperty('--gy', ((H + hdr.offsetHeight) / 2).toFixed(0) + 'px');
+    gstage.style.setProperty('--gf', Math.max(22, Math.min(46, gS * .066)).toFixed(1) + 'px');
+    const y = hdr.offsetHeight + 28;   // where the turned sheet lands, and where the form sits when the pin lets go
+    comm.style.marginTop = (y - H).toFixed(1) + 'px';
+    const b = fwrap.getBoundingClientRect();
+    FR = { x:b.left, w:fwrap.offsetWidth || b.width, h:fwrap.offsetHeight || b.height, y };
+  }
+  /* the back of the letter: plain paper with one crease, like every card on the site */
+  function paperBack(g, pts, rad) {
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const p of pts) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); }
+    const w = x1 - x0, h = y1 - y0, a = 162 * Math.PI / 180, dx = Math.sin(a), dy = -Math.cos(a), Lg = Math.abs(w * dx) + Math.abs(h * dy), mx = x0 + w / 2, my = y0 + h / 2;
+    const gr = g.createLinearGradient(mx - dx * Lg / 2, my - dy * Lg / 2, mx + dx * Lg / 2, my + dy * Lg / 2);
+    gr.addColorStop(0, '#ffffff'); gr.addColorStop(.57, '#ffffff'); gr.addColorStop(.57, '#f4f8fb'); gr.addColorStop(1, '#f4f8fb');
+    g.save(); g.shadowColor = 'rgba(6,58,110,.3)'; g.shadowBlur = 40 * dpr; g.shadowOffsetY = 24 * dpr; g.fillStyle = gr; g.beginPath();
+    if (rad > .5 && g.roundRect) g.roundRect(x0, y0, w, h, rad); else { g.moveTo(pts[0][0], pts[0][1]); for (const p of pts.slice(1)) g.lineTo(p[0], p[1]); g.closePath(); }
+    g.fill(); g.restore();
+  }
+  function renderGifts() {
+    const r = gpin.getBoundingClientRect(); if (r.bottom < 0 || r.top > H) return;
+    const g0 = RM ? 1 : clamp(-r.top / (r.height - H));
+    const g = clamp(g0 / .6), fl = RM ? 1 : ease(clamp((g0 - .62) / .2)), ex = RM ? 1 : ease(clamp((g0 - .82) / .16)), phi = Math.PI * fl;
+    const S = gS, cx = W / 2, cy = (H + hdr.offsetHeight) / 2, h = S / 2;
+    gctx.setTransform(dpr, 0, 0, dpr, 0, 0); gctx.clearRect(0, 0, W, H);
+    /* the opened letter turns over; its back opens out into the commission form */
+    const off = Math.max(0, r.bottom - H); comm.style.transform = off > .5 ? `translateY(${(-off).toFixed(1)}px)` : '';
+    const fOn = ex >= .985; if (fOn !== fOnG) { fOnG = fOn; comm.classList.toggle('on', fOn); }
+    const Dg = 2.6 * Math.max(W, H), cs = Math.cos(phi), sn = Math.sin(phi);
+    const turn = q => { const x = q[0] - cx, k = Dg / (Dg + x * sn); return [cx + x * cs * k, cy + (q[1] - cy) * k]; };
+    gtext.style.transform = phi > 0 ? `translate(-50%, -50%) perspective(${Dg.toFixed(0)}px) rotateY(${phi.toFixed(4)}rad)` : '';
+    if (phi >= Math.PI / 2) {
+      const R0 = [cx - h, cy - h, cx + h, cy + h], R1 = [FR.x, FR.y, FR.x + FR.w, FR.y + FR.h], Rr = R0.map((v, i) => lerp(v, R1[i], ex));
+      let pts = [[Rr[0], Rr[1]], [Rr[2], Rr[1]], [Rr[2], Rr[3]], [Rr[0], Rr[3]]];
+      if (fl < 1) pts = pts.map(turn);
+      paperBack(gctx, pts, 12 * ex);
+      if (gOn) { gOn = false; gtext.classList.remove('on'); }
+      return;
+    }
+    const Vt = [cx, cy - h], Vr = [cx + h, cy], Vb = [cx, cy + h], Vl = [cx - h, cy], Cn = [cx, cy];
+    const flaps = [
+      { e1:Vl, e2:Vt, P:[cx - h, cy - h] }, { e1:Vt, e2:Vr, P:[cx + h, cy - h] },
+      { e1:Vr, e2:Vb, P:[cx + h, cy + h] }, { e1:Vb, e2:Vl, P:[cx - h, cy + h] }
+    ];
+    const D = S * 2.6;
+    flaps.forEach((fp, i) => {
+      const t = ease(clamp((g - (.08 + i * .15)) / .24)); fp.th = Math.PI * (1 - t);
+      const ft = [(fp.e1[0] + fp.e2[0]) / 2, (fp.e1[1] + fp.e2[1]) / 2], cs = Math.cos(fp.th), z = Math.hypot(fp.P[0] - ft[0], fp.P[1] - ft[1]) * Math.sin(fp.th);
+      const q = [ft[0] + (fp.P[0] - ft[0]) * cs, ft[1] + (fp.P[1] - ft[1]) * cs], k = D / (D - z);
+      fp.Q = [cx + (q[0] - cx) * k, cy + (q[1] - cy) * k]; fp.ft = ft;
+    });
+    const quads = [[Cn, Vl, Vt], [Cn, Vt, Vr], [Cn, Vr, Vb], [Cn, Vb, Vl]];
+    const facets = [];
+    quads.forEach((qd, i) => facets.push({ id:'q', pts:qd, col:QUAD[i], shade:0 }));
+    const order = flaps.map((f, i) => i).sort((a, b) => {
+      const A = flaps[a].th, B = flaps[b].th, ma = A > .02 && A < Math.PI - .02, mb = B > .02 && B < Math.PI - .02;
+      if (ma !== mb) return ma ? 1 : -1; return A - B;
+    });
+    for (const i of order) {
+      const fp = flaps[i], out = fp.th > Math.PI / 2, cols = out ? CORAL : INSIDE, lift = Math.sin(fp.th);
+      const sh = out ? .1 * lift : .16 * lift;
+      facets.push({ id:'f', pts:[fp.e1, fp.ft, fp.Q], col:cols[i % 2], shade:sh });
+      facets.push({ id:'f', pts:[fp.ft, fp.e2, fp.Q], col:cols[(i + 1) % 2], shade:sh + (out ? .03 : .02) });
+    }
+    if (phi > 0) for (const f of facets) f.pts = f.pts.map(turn);
+    draw(gctx, { facets, cx:0, cy:0 }, 0, 0, 1, { dpr, shadow:1 });
+    const seal = 1 - clamp((g - .04) / .05);
+    if (seal > .01) {
+      gctx.save(); gctx.globalAlpha = seal;
+      const P = pose(8); P.facets.forEach(f => { f.col = f.id === 'B' ? [220,195,90] : f.id === 'E' || f.id === 'GR' || f.id === 'AR' ? [236,210,98] : [242,221,110]; });
+      draw(gctx, P, cx, cy - S * .02, S * .11, { dpr, shadow:.4 });
+      gctx.restore();
+    }
+    const on = g >= .8;
+    if (on !== gOn) { gOn = on; gtext.classList.toggle('on', on); if (on) unfoldIn(gH); else gH.classList.remove('in'); }
+  }
+
+  /* ---------- classes: the tri-fold opens ---------- */
+  const trirow = $('trirow'), pns = [...trirow.children];
+  function renderTri() {
+    const r = trirow.getBoundingClientRect(); if (r.bottom < -200 || r.top > H + 200) return;
+    const u = RM ? 1 : clamp((H * .9 - r.top) / (H * .72));
+    const a = ease(clamp(u / .5)), b = ease(clamp((u - .5) / .5)), mob = innerWidth <= 960;
+    const right = pns[2], left = pns[0];
+    const ra = 180 * (1 - a), la = 180 * (1 - b);
+    if (!mob) {
+      right.style.transformOrigin = '0 50%'; right.style.transform = `translateZ(${a < 1 ? 2 : 0}px) rotateY(${-ra}deg)`;
+      left.style.transformOrigin = '100% 50%'; left.style.transform = `translateZ(${b < 1 ? 1 : 0}px) rotateY(${la}deg)`;
+    } else {
+      right.style.transformOrigin = '50% 0'; right.style.transform = `translateZ(${a < 1 ? 2 : 0}px) rotateX(${ra}deg)`;
+      left.style.transformOrigin = '50% 100%'; left.style.transform = `translateZ(${b < 1 ? 1 : 0}px) rotateX(${-la}deg)`;
+    }
+    right.style.setProperty('--sh', (.22 * Math.sin(ra * Math.PI / 180)).toFixed(3));
+    left.style.setProperty('--sh', (.22 * Math.sin(la * Math.PI / 180)).toFixed(3));
+    pns[1].style.setProperty('--sh', (.12 * (1 - b) * (a > .99 ? 1 : 0)).toFixed(3));
+  }
+
+  /* ---------- fold-along player ---------- */
+  const pc = $('pc'), pctx = pc.getContext('2d');
+  const plCount = $('plCount'), plTitle = $('plTitle'), plText = $('plText'), plPrev = $('plPrev'), plNext = $('plNext'), plDots = $('plDots');
+  let pv = 0, pTarget = 0, pFrom = 0, pT0 = 0, pAnim = 0, pW = 0, pH = 0;
+  for (let i = 1; i <= 8; i++) { const b = document.createElement('button'); b.type = 'button'; b.className = 'dot'; b.textContent = i; b.setAttribute('aria-label', `Step ${i}: ${STEPS[i][0]}`); b.onclick = () => goStep(i); plDots.appendChild(b); }
+  function plSync() {
+    const s = pTarget;
+    plCount.textContent = s === 0 ? 'Before you start' : `Step ${s} of 8`;
+    plTitle.textContent = STEPS[s][0]; plText.textContent = STEPS[s][1];
+    plNext.textContent = s === 8 ? 'Fold another' : 'Next fold';
+    plPrev.disabled = s === 0; plPrev.style.opacity = s === 0 ? .4 : 1;
+    [...plDots.children].forEach((d, i) => { if (i + 1 === s) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+  }
+  function goStep(s) {
+    pFrom = pv; pTarget = s; pT0 = performance.now(); plSync();
+    if (RM) { pv = s; drawPlayer(); return; }
+    cancelAnimationFrame(pAnim);
+    const dur = Math.min(2200, 700 + Math.abs(s - pFrom) * 420);
+    const tick = now => { const t = clamp((now - pT0) / dur); pv = lerp(pFrom, pTarget, ease(t)); drawPlayer(); if (t < 1) pAnim = requestAnimationFrame(tick); };
+    pAnim = requestAnimationFrame(tick);
+  }
+  plNext.onclick = () => goStep(pTarget === 8 ? 0 : pTarget + 1);
+  plPrev.onclick = () => goStep(Math.max(0, pTarget - 1));
+  function sizePlayer() { pW = pc.clientWidth; pH = pc.clientHeight; pc.width = Math.round(pW * dpr); pc.height = Math.round(pH * dpr); drawPlayer(); }
+  function drawPlayer() {
+    if (!pW) return;
+    pctx.setTransform(dpr, 0, 0, dpr, 0, 0); pctx.clearRect(0, 0, pW, pH);
+    const P = pose(pv), T2 = Math.min(pW * .26, pH * .3);
+    draw(pctx, P, pW / 2, pH * .47, T2 * P.k, { dpr, shadow:1 });
+  }
+  plSync();
+
+  /* ---------- forms and buttons ---------- */
+  $('cform').addEventListener('submit', e => {
+    e.preventDefault();
+    const n = $('f-name').value.trim().split(/\s+/)[0];
+    $('cdoneH').textContent = n ? `Thank you, ${n}.` : 'Thank you.';
+    e.target.style.display = 'none'; $('cdone').classList.add('on');
+  });
+  document.querySelectorAll('[data-req]').forEach(b => b.addEventListener('click', () => {
+    const party = b.dataset.req === 'party';
+    b.textContent = party ? 'Asked' : 'Requested';
+    b.classList.replace('btn-coral', 'btn-line');
+    b.nextElementSibling.textContent = party ? "We'll write back with open dates." : "We'll confirm your spot by email.";
+  }));
+
+  /* ---------- unfolding as things arrive ---------- */
+  /* ---------- close: every section folds back into the crane ---------- */
+  const fpin = $('fpin'), fstage = $('fstage'), ffc = $('ffc'), fctx = ffc.getContext('2d'), ftext = $('ftext'), fH = $('fH');
+  const PCOL = { neck:[242,246,250], wings:[62,184,238], tail:[255,216,77], body:[245,90,95] };
+  const PLAB = [['Learn', 'neck', 'U2', '#0f2a6b'], ['Classes', 'tail', 'U3', '#0f2a6b'], ['Gifts', 'wings', 'AL', '#fff']];
+  let fW = 0, fHt = 0, fOn = null, fLast = -1;
+  function sizeFinale() { fW = W; fHt = fstage.clientHeight || innerHeight; ffc.width = Math.round(fW * dpr); ffc.height = Math.round(fHt * dpr); }
+  function renderFinale() {
+    const r = fpin.getBoundingClientRect(); if (r.bottom < 0 || r.top > H) return;
+    const g = RM ? 1 : clamp(-r.top / (r.height - fHt));
+    const u = clamp((g - .1) / .6) * 8, k = Math.min(7, Math.floor(u)), lt = u - k, sf = u >= 8 ? 8 : k + ease(clamp(lt / .7));
+    if (k !== fLast && lt >= .7 && u < 8) { if (k > fLast && navigator.vibrate) { try { navigator.vibrate(8); } catch (e) {} } fLast = k; }
+    if (lt < .7 && k <= fLast) fLast = k - 1;
+    const P = pose(sf);
+    for (const f of P.facets) { const c = PCOL[PART[f.id]]; if (c) f.col = c.slice(); }
+    const bump = u < 8 ? Math.sin(Math.PI * clamp((lt - .7) / .16)) : 0;
+    const Fpx = Math.min(fW * .27, fHt * .2), lift = ease(clamp((g - .72) / .1)) * fHt * .06;
+    const ox = fW / 2, oy = fHt * .4 - lift, sc = Fpx * P.k * (1 + .022 * bump);
+    fctx.setTransform(dpr, 0, 0, dpr, 0, 0); fctx.clearRect(0, 0, fW, fHt);
+    draw(fctx, P, ox, oy, sc, { dpr, shadow:1 });
+    const la = 1 - clamp((sf - .15) / .5);
+    if (la > 0) {
+      fctx.save(); fctx.globalAlpha = la; fctx.font = '700 12px Figtree, sans-serif'; fctx.textAlign = 'center'; fctx.textBaseline = 'middle';
+      for (const [t, , id, col] of PLAB) {
+        const f = P.facets.find(x => x.id === id); if (!f) continue;
+        const c = f.pts.reduce((a, q) => [a[0] + q[0] / f.pts.length, a[1] + q[1] / f.pts.length], [0, 0]);
+        fctx.fillStyle = col; fctx.fillText(t.toUpperCase(), ox + (c[0] - P.cx) * sc, oy + (c[1] - P.cy) * sc);
+      }
+      fctx.restore();
+    }
+    const on = g >= .76;
+    if (on !== fOn) { fOn = on; ftext.classList.toggle('off', !on); if (on) unfoldIn(fH); else fH.classList.remove('in'); }
+  }
+
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin:'0px 0px -12% 0px' });
+  document.querySelectorAll('.unf, .sec .ft:not(#learnH)').forEach(el => io.observe(el));
+
+  /* links to the form land where the turned sheet lets go of it */
+  document.querySelectorAll('a[href="#commission"]').forEach(el => el.addEventListener('click', e => {
+    e.preventDefault(); const b = gpin.getBoundingClientRect(); scrollTo(0, Math.round(b.top + scrollY + gpin.offsetHeight - H + 2)); history.replaceState(null, '', '#commission');
+  }));
+
+  /* ---------- loop ---------- */
+  let raf = 0;
+  function frame(now = performance.now()) { renderIntro(now); drawFacets(); renderAcc(); renderGifts(); renderTri(); renderFinale(); }
+  const req = () => { if (!raf) raf = requestAnimationFrame(t => { raf = 0; frame(t); }); };
+  addEventListener('scroll', req, { passive:true });
+  addEventListener('resize', () => { size(); sizePlayer(); });
+  if (!RM) { const idle = t => { if (scrollY < innerHeight * .9) renderIntro(t); requestAnimationFrame(idle); }; requestAnimationFrame(idle); }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { size(); sizePlayer(); });
+  if (document.fonts && document.fonts.load) document.fonts.load('600 20px "Shippori Mincho"', '塵も積もれば山となる').then(() => { planQuote(); renderIntro(performance.now()); }).catch(() => {});
+  size(); sizePlayer();
+})();
+</script>
+
+</body></html>
