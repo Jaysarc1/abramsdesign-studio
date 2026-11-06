@@ -1,0 +1,1469 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>jayabrams.com Rebuild</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  /* Tan (default) */
+  --bg:#f5f0e7; --bg2:#ede6d9; --panel:#fbf8f3; --panel2:#f1ebe0;
+  --text:#1d1a17; --muted:#6a6157; --faint:#958a7d; --line:rgba(29,26,23,.11); --line2:rgba(29,26,23,.2);
+  --fill:rgba(29,26,23,.035); --fill2:rgba(29,26,23,.06);
+  --navbg:rgba(245,240,231,.84); --sheetbg:rgba(245,240,231,.98);
+  --inv:#1d1a17; --oninv:#f5f0e7; --invaccent:#d9996f;
+  --band:#e8dfcf;
+  --clay:#9d5a32; --clay2:#8a4d2a; --onclay:#fff;
+  --ivory:#f3ede3; --ink:#1b1714; --inkmuted:#5e554b; --clayink:#1b1209;
+  --ok:#5f8f6c; --ph:#c98a12;
+  --serif:"Cormorant Garamond", "Times New Roman", serif;
+  --sans:"Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gut:max(16px, env(safe-area-inset-left), env(safe-area-inset-right));
+  --r:22px; --rs:14px;
+  --ease:cubic-bezier(.7,0,.2,1);
+}
+:root[data-theme="charcoal"]{
+  color-scheme: dark;
+  --bg:#131313; --bg2:#181818; --panel:#1d1d1c; --panel2:#252524;
+  --text:#f2efe9; --muted:#a8a39b; --faint:#77726b; --line:rgba(242,239,233,.11); --line2:rgba(242,239,233,.22);
+  --fill:rgba(242,239,233,.05); --fill2:rgba(242,239,233,.08);
+  --navbg:rgba(19,19,19,.8); --sheetbg:rgba(19,19,19,.98);
+  --inv:#f2efe9; --oninv:#1d1a17; --invaccent:#8a4d2a;
+  --band:#f2efe9;
+  --clay:#c4825a; --clay2:#d9996f; --onclay:#1b1209;
+  --ok:#8fb59a; --ph:#e8b04a;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);transition:background .4s,color .4s;font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--clay2);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(24px,var(--gut));padding-right:max(24px,var(--gut))}
+.narrow{max-width:860px}
+.label{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--clay2);margin:0 0 18px}
+.label.dim{color:var(--muted)}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0;line-height:1.02;text-wrap:balance}
+h1{font-size:clamp(46px,8vw,104px)}
+h2{font-size:clamp(36px,5.4vw,68px)}
+h3{font-size:clamp(24px,2.6vw,32px);line-height:1.12}
+.lede{font-size:clamp(16px,1.6vw,19px);color:var(--muted);max-width:620px;line-height:1.6;margin:22px 0 0}
+.lede b,.copy b{color:var(--text);font-weight:600}
+.copy{color:var(--muted);max-width:560px}
+em.s{font-family:var(--serif);font-style:italic;color:var(--clay2)}
+section{position:relative}
+.sec{padding:clamp(80px,11vw,150px) 0}
+.sec.tight{padding:clamp(56px,7vw,96px) 0}
+.center{text-align:center}.center .lede,.center .copy{margin-left:auto;margin-right:auto}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:50px;padding:0 26px;border-radius:999px;border:1px solid transparent;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;transition:transform .25s var(--ease),background .25s,border-color .25s,color .25s;white-space:nowrap}
+.btn:hover{transform:translateY(-1px)}
+.btn-p{background:var(--clay);color:var(--onclay)}
+.btn-p:hover{background:var(--clay2)}
+.btn-g{border-color:var(--line2);background:var(--fill);color:var(--text)}
+.btn-g:hover{border-color:var(--text)}
+.btn-i{background:var(--inv);color:var(--oninv)}
+.btn-ink{background:var(--ink);color:var(--ivory)}
+.btn-sm{height:40px;padding:0 18px;font-size:11px}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.tlink{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--clay2);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.tlink:after{content:"\2192";transition:transform .25s var(--ease)}
+.tlink:hover:after{transform:translateX(4px)}
+
+/* header */
+header.top{position:sticky;top:0;z-index:50}
+.bar{background:var(--inv);color:var(--oninv);font-size:12px}
+.bar .wrap{display:flex;align-items:center;justify-content:center;gap:14px;min-height:40px;padding-top:6px;padding-bottom:6px;flex-wrap:wrap;text-align:center}
+.bar b{font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:11px}
+.bar .sep{opacity:.35}
+.bar .cd{opacity:.65}
+.bar a{font-weight:600;color:var(--invaccent);text-decoration:none;white-space:nowrap}
+.bar a:hover{text-decoration:underline}
+nav.main{background:var(--navbg);backdrop-filter:saturate(1.4) blur(18px);-webkit-backdrop-filter:saturate(1.4) blur(18px);border-bottom:1px solid var(--line)}
+nav.main .wrap{display:flex;align-items:center;height:60px;gap:28px}
+.brand{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.34em;text-decoration:none;white-space:nowrap}
+.links{display:flex;gap:26px;margin-left:auto}
+.links a{font-size:12px;letter-spacing:.06em;color:var(--muted);text-decoration:none;transition:color .2s}
+.links a:hover,.links a.on{color:var(--text)}
+nav.main .btn{height:38px;padding:0 16px;font-size:10.5px}
+.burger{display:none;margin-left:auto;width:42px;height:42px;border:0;background:none;padding:0;position:relative}
+.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:var(--text);transition:transform .3s var(--ease),opacity .2s}
+.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:25px}
+.nav-open .burger span:nth-child(1){transform:translateY(4.5px) rotate(45deg)}
+.nav-open .burger span:nth-child(2){transform:translateY(-4.5px) rotate(-45deg)}
+.sheet{display:none}
+@media (max-width:900px){
+  .links,nav.main .btn{display:none}
+  .burger{display:block}
+  .sheet{display:block;position:fixed;left:0;right:0;bottom:0;top:var(--hh,100px);background:var(--sheetbg);backdrop-filter:blur(20px);padding:24px max(24px,var(--gut));transform:translateY(-8px);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s var(--ease);overflow:auto}
+  .nav-open .sheet{opacity:1;transform:none;pointer-events:auto}
+  .sheet a{display:block;font-family:var(--serif);font-size:34px;line-height:1.5;text-decoration:none}
+  .sheet .btn{margin-top:26px;font-family:var(--sans);font-size:12px;width:100%}
+}
+@media (max-width:560px){.bar .hide-s{display:none}}
+
+/* views */
+.view{display:none}
+.view.on{display:block;animation:fade .6s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.view.on{animation:none}*{transition-duration:.01ms!important}}
+
+/* hero */
+.hero2{padding:clamp(28px,4.5vw,64px) 0 clamp(64px,9vw,120px)}
+.hero2 .top{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(20px,5vw,72px);align-items:end}
+.hero2 h1{font-size:clamp(54px,8.6vw,124px)}
+.hero2 .lede{margin-top:0}
+.hero2 .btn-row{margin-top:26px}
+@media (max-width:900px){.hero2 .top{grid-template-columns:1fr}}
+.hmedia{position:relative;margin-top:clamp(28px,4vw,52px);border-radius:var(--r);overflow:hidden;aspect-ratio:16/7.4;background:var(--panel2)}
+.hmedia img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hmedia .b{clip-path:inset(0 100% 0 0);transition:clip-path 1s var(--ease)}
+.hero2.show-before .hmedia .b{clip-path:inset(0 0 0 0)}
+@media (max-width:700px){.hmedia{aspect-ratio:1/1}}
+.io{position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:6px;padding:6px;border-radius:999px;background:rgba(20,18,16,.58);border:1px solid rgba(245,240,231,.22);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);max-width:calc(100% - 32px)}
+.io button{border:0;background:none;padding:10px 16px;border-radius:999px;font-size:12px;display:flex;gap:8px;align-items:center;white-space:nowrap;color:rgba(245,240,231,.75);transition:color .3s,background .3s}
+.io button small{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;opacity:.75}
+.io button[aria-pressed=true]{background:#f5f0e7;color:#1b1714}
+.io .arr{color:rgba(245,240,231,.5);font-size:14px}
+@media (max-width:560px){.io button{padding:9px 12px;font-size:11.5px}.io button small{display:none}}
+@media (max-width:420px){.io .arr{display:none}.io button{white-space:normal;text-align:left;line-height:1.25}}
+/* text that always sits on photos */
+.stage figcaption,.reveal .tag,.reveal .hold,.cover .ct,.vfeat .vt,.vcard .th .len{color:#f5f0e7}
+.reveal .hold{border-color:rgba(245,240,231,.25)!important}
+
+/* highlights tabs */
+.hl-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:34px}
+.tabs{display:flex;gap:6px;padding:5px;border-radius:999px;background:var(--panel);border:1px solid var(--line);overflow-x:auto;scrollbar-width:none;max-width:100%}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{border:0;background:none;padding:10px 18px;border-radius:999px;font-size:12.5px;color:var(--muted);white-space:nowrap;transition:background .3s,color .3s}
+.tabs button[aria-selected=true]{background:var(--text);color:var(--bg)}
+.stage{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:16/8.5;background:var(--panel)}
+.stage figure{margin:0;position:absolute;inset:0;opacity:0;transition:opacity .8s var(--ease)}
+.stage figure.on{opacity:1}
+.stage img{width:100%;height:100%;object-fit:cover}
+.stage figcaption{position:absolute;left:0;right:0;bottom:0;padding:clamp(20px,4vw,44px);background:linear-gradient(0deg,rgba(11,10,9,.85),rgba(11,10,9,0));font-family:var(--serif);font-size:clamp(22px,2.6vw,34px);line-height:1.15;max-width:none}
+.stage figcaption span{display:block;max-width:640px}
+@media (max-width:700px){.stage{aspect-ratio:4/5}}
+
+/* reveal */
+.reveal{position:relative;border-radius:var(--r);overflow:hidden;background:var(--panel);user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
+.reveal img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.reveal .rb{position:absolute;inset:0;clip-path:inset(0 100% 0 0);transition:clip-path .8s var(--ease)}
+.reveal.holding .rb{clip-path:inset(0 0 0 0)}
+.reveal .tag{position:absolute;top:16px;left:16px;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;padding:7px 12px;border-radius:999px;background:rgba(11,10,9,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.reveal .tag .bf{display:none}
+.reveal.holding .tag .af{display:none}.reveal.holding .tag .bf{display:inline}
+.reveal .hold{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;border:1px solid var(--line2);background:rgba(11,10,9,.62);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:11px 18px 11px 12px;border-radius:999px;font-size:12px;white-space:nowrap}
+.reveal .hold i{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--clay2);position:relative;flex:none}
+.reveal .hold i:after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--clay2);transform:scale(.4);transition:transform .5s var(--ease)}
+.reveal.holding .hold i:after{transform:scale(1)}
+.r-169{aspect-ratio:16/9}.r-43{aspect-ratio:4/3}.r-45{aspect-ratio:4/5}
+
+/* split */
+.split{display:grid;grid-template-columns:1fr 1.25fr;gap:clamp(32px,6vw,90px);align-items:center}
+.split.rev{grid-template-columns:1.25fr 1fr}
+.split.rev>:first-child{order:2}
+@media (max-width:900px){.split,.split.rev{grid-template-columns:1fr}.split.rev>:first-child{order:0}}
+
+/* shop chips */
+.shop{margin-top:30px;border-top:1px solid var(--line);padding-top:22px}
+.shop h4{margin:0 0 14px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;padding:8px 14px;border-radius:999px;border:1px solid var(--line2);background:none;text-decoration:none;transition:border-color .2s,background .2s}
+.chip:hover{border-color:var(--clay2);background:rgba(196,130,90,.08)}
+.chip:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--clay2)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:var(--r);overflow:hidden;margin-top:56px}
+.stat{background:var(--bg);padding:clamp(28px,4vw,48px)}
+.stat .n{font-family:var(--serif);font-size:clamp(56px,7vw,96px);line-height:.95;color:var(--text)}
+.stat .n sup{font-family:var(--sans);font-size:12px;color:var(--clay2);vertical-align:top;margin-left:4px;position:relative;top:10px}
+.stat p{margin:14px 0 0;color:var(--muted);max-width:260px}
+@media (max-width:760px){.stats{grid-template-columns:1fr}}
+.fn{margin-top:22px;font-size:11.5px;color:var(--faint);max-width:760px;line-height:1.6}
+.fn p{margin:0 0 4px}
+
+/* ladder */
+.ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:50px}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:28px 24px;display:flex;flex-direction:column;position:relative;transition:border-color .3s,transform .3s var(--ease)}
+.rung:hover{border-color:var(--line2);transform:translateY(-3px)}
+.rung.start{background:var(--band);color:var(--ink);border-color:var(--band)}
+.rung .st{position:absolute;top:-11px;left:24px;background:var(--clay);color:var(--clayink);font-size:9.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:5px 10px;border-radius:999px;color:var(--onclay)}
+.rung .k{font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.rung.start .k{color:var(--inkmuted)}
+.rung h3{margin:14px 0 6px;font-size:30px}
+.rung .pr{font-family:var(--serif);font-size:22px;color:var(--clay2)}
+.rung.start .pr{color:#8a4f2b}
+.rung .w{font-size:13px;color:var(--muted);margin:14px 0 0;min-height:66px}
+.rung.start .w{color:var(--inkmuted)}
+.rung ul{list-style:none;padding:0;margin:18px 0 26px;font-size:13px;flex:1}
+.rung li{padding:8px 0;border-top:1px solid var(--line)}
+.rung.start li{border-color:rgba(27,23,20,.12)}
+.rung .btn{width:100%}
+@media (max-width:1000px){.ladder{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.ladder{grid-template-columns:1fr}.rung .w{min-height:0}}
+.cmp{margin-top:28px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.cmp summary{list-style:none;cursor:pointer;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.cmp summary::-webkit-details-marker{display:none}
+.cmp summary:after{content:"+";font-size:22px;font-weight:400;color:var(--clay2);transition:transform .3s}
+.cmp[open] summary:after{transform:rotate(45deg)}
+.cmp-scroll{overflow-x:auto}
+.cmp table{width:100%;border-collapse:collapse;font-size:13px;min-width:640px}
+.cmp th,.cmp td{padding:14px 18px;border-top:1px solid var(--line);text-align:center}
+.cmp th:first-child,.cmp td:first-child{text-align:left;color:var(--muted)}
+.cmp thead th{font-family:var(--serif);font-size:20px;font-weight:500}
+.yes{color:var(--clay2)}.no{color:var(--faint)}
+
+/* jay */
+.jay img{border-radius:var(--r);aspect-ratio:4/5;object-fit:cover;width:100%}
+.quote{font-family:var(--serif);font-size:clamp(28px,3.4vw,44px);line-height:1.15;margin:0}
+.social{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+
+/* guides */
+.guides{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:50px}
+.guide{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.cover{aspect-ratio:4/3;position:relative;overflow:hidden}
+.cover img{width:100%;height:100%;object-fit:cover;filter:saturate(.85)}
+.cover .ct{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;background:linear-gradient(0deg,rgba(11,10,9,.88) 10%,rgba(11,10,9,.05) 70%)}
+.cover .ct small{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:var(--clay2)}
+.cover .ct b{font-family:var(--serif);font-weight:500;font-size:28px;line-height:1.05;margin-top:6px}
+.guide .gb{padding:22px;display:flex;flex-direction:column;gap:14px;flex:1}
+.guide .gb p{margin:0;color:var(--muted);font-size:13.5px;flex:1}
+@media (max-width:900px){.guides{grid-template-columns:1fr}}
+
+/* forms */
+.form{display:grid;gap:12px}
+.form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.form .row{grid-template-columns:1fr}}
+.field{display:grid;gap:6px}
+.field span{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.field span em{font-style:normal;text-transform:none;letter-spacing:0;font-weight:400;color:var(--faint)}
+input,select,textarea{font:inherit;font-size:15px;color:var(--text);background:var(--fill);border:1px solid var(--line2);border-radius:12px;padding:13px 14px;width:100%;transition:border-color .2s,background .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--clay2);background:var(--fill2)}
+textarea{min-height:110px;resize:vertical}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 15px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);line-height:1.5}
+.check input{width:18px;height:18px;flex:none;margin-top:1px;accent-color:var(--clay)}
+.consent{font-size:11.5px;color:var(--faint);line-height:1.55;margin:2px 0 0}
+.form .btn{width:100%;margin-top:6px}
+.err{font-size:12px;color:#f0a58a;min-height:0}
+.done{display:none;text-align:center;padding:26px 10px}
+.done .ok{width:54px;height:54px;border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;border:1px solid var(--clay2);color:var(--clay2);font-size:22px}
+.done h3{font-size:30px}
+.done p{color:var(--muted);margin:10px 0 0}
+.sent .form-body{display:none}.sent .done{display:block}
+.light input,.light select,.light textarea{color:var(--ink);background:#fff;border-color:rgba(27,23,20,.18)}
+.light .field span{color:var(--inkmuted)}
+.light .check,.light .consent{color:var(--inkmuted)}
+.light .done p{color:var(--inkmuted)}
+
+/* cards & panels */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,3.4vw,40px)}
+.card.ivory{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
+.band{background:var(--band);color:var(--ink);border-radius:clamp(22px,3vw,36px);padding:clamp(36px,6vw,80px);display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,5vw,70px);align-items:center}
+.band .label{color:#8a4f2b}
+.band .lede{color:var(--inkmuted)}
+@media (max-width:900px){.band{grid-template-columns:1fr}}
+
+/* offer hero */
+.ohero{padding:clamp(56px,8vw,110px) 0 clamp(40px,6vw,80px);border-bottom:1px solid var(--line)}
+.ohero .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,5vw,80px);align-items:start}
+@media (max-width:960px){.ohero .grid{grid-template-columns:1fr}}
+.facts{display:grid;grid-template-columns:repeat(3,auto);gap:22px 36px;margin-top:38px;justify-content:start}
+.facts div{display:grid;gap:2px}
+.facts small{font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+.facts span{font-family:var(--serif);font-size:24px;line-height:1.2}
+@media (max-width:560px){.facts{grid-template-columns:1fr 1fr}}
+.price{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-top:30px}
+.price b{font-family:var(--serif);font-weight:500;font-size:clamp(52px,6vw,76px);line-height:1}
+.price span{color:var(--muted)}
+.sticky-card{position:sticky;top:120px}
+
+/* lists */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:46px}
+.steps>div{border-top:1px solid var(--line2);padding-top:22px}
+.steps .no{font-family:var(--serif);font-size:44px;color:var(--clay2);line-height:1}
+.steps h3{margin:12px 0 8px;font-size:26px}
+.steps p{color:var(--muted);margin:0;font-size:14px}
+@media (max-width:860px){.steps{grid-template-columns:1fr}}
+.ticks{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:0}
+.ticks li{padding:14px 0 14px 30px;border-top:1px solid var(--line);position:relative;color:var(--muted)}
+.ticks li b{color:var(--text);font-weight:500}
+.ticks li:before{content:"";position:absolute;left:2px;top:22px;width:12px;height:6px;border-left:1.5px solid var(--clay2);border-bottom:1.5px solid var(--clay2);transform:rotate(-45deg)}
+.modules{margin-top:44px;border-top:1px solid var(--line2)}
+.mod{display:grid;grid-template-columns:120px 1fr 1.2fr;gap:24px;padding:26px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.mod small{font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--clay2)}
+.mod h3{font-size:28px}
+.mod p{margin:0;color:var(--muted);font-size:14px}
+@media (max-width:760px){.mod{grid-template-columns:1fr;gap:8px}}
+.faq{margin-top:40px;border-top:1px solid var(--line2)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:22px 40px 22px 0;font-family:var(--serif);font-size:23px;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";position:absolute;right:4px;top:18px;font-family:var(--sans);font-size:22px;color:var(--clay2);transition:transform .3s}
+.faq details[open] summary:after{transform:rotate(45deg)}
+.faq details p{margin:0 0 22px;color:var(--muted);max-width:720px}
+
+/* work */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:34px}
+.filters button{border:1px solid var(--line2);background:none;border-radius:999px;padding:9px 16px;font-size:12.5px;color:var(--muted);transition:all .25s}
+.filters button[aria-pressed=true]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.wgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:34px}
+.wgrid .wide{grid-column:1/-1}
+.wcard{display:flex;flex-direction:column;gap:18px}
+.wcard .meta{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.wcard h3{font-size:30px}
+.wcard .meta p{margin:4px 0 0;color:var(--muted);font-size:13.5px;max-width:460px}
+.wcard .acts{display:flex;gap:8px;flex-wrap:wrap}
+.wcard.hide{display:none}
+@media (max-width:860px){.wgrid{grid-template-columns:1fr}}
+
+/* results */
+.story{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,70px);align-items:center;padding:clamp(48px,7vw,90px) 0;border-top:1px solid var(--line)}
+.story img{border-radius:var(--r);width:100%;aspect-ratio:4/3;object-fit:cover}
+.story .nums{display:flex;gap:36px;flex-wrap:wrap;margin-top:28px}
+.story .nums b{display:block;font-family:var(--serif);font-weight:500;font-size:48px;line-height:1}
+.story .nums b sup{font-family:var(--sans);font-size:11px;color:var(--clay2);margin-left:3px}
+.story .nums span{font-size:12px;color:var(--muted)}
+@media (max-width:860px){.story{grid-template-columns:1fr}}
+
+/* watch */
+.vfeat{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:16/8;margin-top:44px;cursor:pointer;border:0;padding:0;width:100%;display:block;text-align:left}
+.vfeat img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.vfeat:hover img{transform:scale(1.03)}
+.vfeat .vt{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(22px,4vw,48px);background:linear-gradient(0deg,rgba(11,10,9,.9),rgba(11,10,9,0) 65%)}
+.vfeat .vt b{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.6vw,48px);line-height:1.05;max-width:700px}
+.play{width:64px;height:64px;border-radius:50%;background:rgba(243,237,227,.92);display:grid;place-items:center;margin-bottom:18px}
+.play:after{content:"";border-left:16px solid var(--ink);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+.vcard{border:0;padding:0;background:none;text-align:left;display:flex;flex-direction:column;gap:12px}
+.vcard .th{position:relative;border-radius:var(--rs);overflow:hidden;aspect-ratio:16/10}
+.vcard .th img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.vcard:hover .th img{transform:scale(1.05)}
+.vcard .th .len{position:absolute;right:10px;bottom:10px;font-size:11px;background:rgba(11,10,9,.7);padding:3px 8px;border-radius:6px}
+.vcard b{font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.15}
+.vcard small{color:var(--muted);font-size:12px}
+@media (max-width:860px){.vgrid{grid-template-columns:1fr}.vfeat{aspect-ratio:4/3}}
+
+/* faceless pages */
+.fl{background:var(--ivory);color:var(--ink)}
+.fl .label{color:#8a4f2b}
+.fl .tlink{color:#8a4f2b}.fl .steps .no{color:#a9643a}
+.fl .lede,.fl .copy{color:var(--inkmuted)}
+.fl .mini{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid rgba(27,23,20,.1);font-size:12px;letter-spacing:.3em;font-weight:600;text-transform:uppercase}
+.fl .mini span{letter-spacing:.06em;text-transform:none;font-weight:400;color:var(--inkmuted)}
+.fl .ticks li{color:var(--inkmuted);border-color:rgba(27,23,20,.12)}
+.fl .ticks li b{color:var(--ink)}
+.fl .card{background:#fff;border-color:rgba(27,23,20,.08)}
+.fl .steps>div{border-color:rgba(27,23,20,.2)}
+.fl .steps p{color:var(--inkmuted)}
+.fl .fn{color:#857a6c}
+.inv{background:#0e1412;--bg:#0e1412;--text:#f2efe9;--muted:#a8a39b;--faint:#77726b;--line:rgba(242,239,233,.12);--line2:rgba(242,239,233,.22);--fill:rgba(242,239,233,.05);--fill2:rgba(242,239,233,.08);--panel:#141c19;--onclay:#0c1612;color:var(--text)}
+.inv .label{color:#9fc2a8}
+.inv .btn-p{background:#9fc2a8;color:#0c1612}
+.inv .btn-p:hover{background:#b6d4be}
+.inv .steps .no{color:#9fc2a8}
+.inv .ticks li:before{border-color:#9fc2a8}
+.inv .mini{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.3em;font-weight:600;text-transform:uppercase}
+.inv .mini span{letter-spacing:.06em;text-transform:none;font-weight:400;color:var(--muted)}
+.inv .card{background:#141c19}
+.inv input:focus{border-color:#9fc2a8}
+
+/* landing chrome */
+.lhead{position:sticky;top:0;z-index:50;background:var(--navbg);backdrop-filter:saturate(1.4) blur(18px);-webkit-backdrop-filter:saturate(1.4) blur(18px);border-bottom:1px solid var(--line)}
+.lhead .wrap{display:flex;align-items:center;gap:20px;height:62px}
+.lhead .lmeta{font-size:12px;color:var(--muted);margin-left:auto}
+.lhead .btn{height:38px;padding:0 16px;font-size:10.5px}
+@media (max-width:640px){.lhead .lmeta{display:none}.lhead .btn{margin-left:auto}}
+.lfoot{border-top:1px solid var(--line);padding:36px 0 110px;font-size:11.5px;color:var(--faint);line-height:1.65}
+.lfoot p{margin:0 0 10px;max-width:900px}
+.lfoot .lr{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px}
+.lfoot .lr a{color:var(--muted);text-decoration:none}
+.lstats{margin-top:0}
+
+/* thanks */
+.cal{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.nextc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.nextc .card h3{font-size:26px;margin:10px 0 8px}
+.nextc .card p{color:var(--muted);font-size:14px;margin:0 0 18px}
+@media (max-width:860px){.nextc{grid-template-columns:1fr}}
+
+/* footer */
+footer{border-top:1px solid var(--line);margin-top:0;padding:clamp(60px,8vw,96px) 0 40px;background:var(--bg2)}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px}
+.fgrid h5{margin:0 0 16px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.fgrid a{display:block;color:var(--text);text-decoration:none;font-size:13.5px;padding:5px 0;opacity:.85}
+.fgrid a:hover{opacity:1;color:var(--clay2)}
+.fgrid a small{color:var(--faint);margin-left:6px}
+.news .form{margin-top:18px}
+.news .form .btn{margin:0;width:auto}
+.news p{color:var(--muted);font-size:13.5px;margin:10px 0 0;max-width:360px}
+@media (max-width:900px){.fgrid{grid-template-columns:1fr 1fr}.fgrid .news{grid-column:1/-1}}
+@media (max-width:480px){.news .form-body{grid-template-columns:1fr!important}.news .form .btn{width:100%}}
+.legal{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:11.5px;color:var(--faint);line-height:1.65}
+.legal p{margin:0 0 10px;max-width:980px}
+.legal .lr{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px}
+.legal .lr a{color:var(--muted);text-decoration:none}
+
+/* placeholders */
+body.show-ph [data-ph]{outline:1.5px dashed var(--ph);outline-offset:3px;border-radius:4px;position:relative}
+body.show-ph [data-ph]:hover:after{content:attr(data-ph);position:absolute;z-index:40;left:0;top:calc(100% + 8px);background:#2a2214;color:#f5d79a;font:500 11.5px/1.45 var(--sans);letter-spacing:0;text-transform:none;padding:8px 10px;border-radius:8px;width:max-content;max-width:260px;white-space:normal;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+
+/* dock */
+.dock{--text:#f2efe9;--muted:#a8a39b;--faint:#77726b;--line2:rgba(242,239,233,.22);color:var(--text);position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:80;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.dock .pill{display:flex;gap:4px;padding:5px;border-radius:999px;background:rgba(25,22,19,.88);border:1px solid var(--line2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 12px 40px rgba(0,0,0,.45)}
+.dock .pill button{border:0;background:none;border-radius:999px;padding:9px 14px;font-size:11.5px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.dock .pill button:hover{color:var(--text)}
+.dock .pill #phBtn[aria-pressed=true]{background:rgba(232,176,74,.16);color:#e8b04a}
+.dock .pill .th[aria-pressed=true]{background:rgba(242,239,233,.14);color:#f2efe9}
+.dock .pill .div{width:1px;background:rgba(242,239,233,.16);margin:6px 2px}
+.dock .pill .tag{font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--clay2);padding:0 6px 0 10px;align-self:center}
+.pages{display:none;width:min(340px,calc(100vw - 32px));max-height:min(70vh,560px);overflow:auto;background:rgba(25,22,19,.96);border:1px solid var(--line2);border-radius:18px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);backdrop-filter:blur(16px)}
+.pages.on{display:block}
+.pages h6{margin:12px 10px 6px;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.pages a{display:flex;justify-content:space-between;padding:9px 10px;border-radius:10px;text-decoration:none;font-size:13px}
+.pages a small{color:var(--faint);font-size:11px}
+.pages a:hover,.pages a.on{background:rgba(243,237,227,.06)}
+.pages a.on{color:#d9996f}
+@media (max-width:560px){.dock .pill .tag{display:none}}
+
+/* modal & toast */
+dialog{border:1px solid var(--line2);background:var(--panel);color:var(--text);border-radius:22px;padding:0;max-width:min(560px,calc(100vw - 32px));width:100%}
+dialog::backdrop{background:rgba(5,4,3,.7);backdrop-filter:blur(6px)}
+dialog .mb{padding:32px}
+dialog h3{font-size:30px;margin-bottom:10px}
+dialog p{color:var(--muted);margin:0 0 22px}
+dialog .vbox{aspect-ratio:16/9;background:#000;display:grid;place-items:center;color:var(--faint);font-size:12px;letter-spacing:.18em;text-transform:uppercase;border-radius:22px 22px 0 0}
+.toast{position:fixed;left:50%;bottom:84px;transform:translate(-50%,20px);opacity:0;z-index:90;background:var(--inv);color:var(--oninv);font-size:13px;padding:12px 18px;border-radius:999px;transition:all .35s var(--ease);pointer-events:none;max-width:calc(100vw - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+.rule{height:1px;background:var(--line)}
+.mt0{margin-top:0}.mt1{margin-top:14px}.mt2{margin-top:28px}.mt3{margin-top:48px}
+.small{font-size:12.5px;color:var(--faint)}
+.kicker{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:22px;font-size:12.5px;color:var(--muted)}
+.kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(143,181,154,.15)}
+
+/* hub homepage (v6) */
+.hub h1{font-size:clamp(42px,6.4vw,96px)}
+.hub h1 em.s{font-style:italic}
+.hub .top{grid-template-columns:1fr;gap:0}
+.hub .sub{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(20px,5vw,72px);align-items:end;margin-top:clamp(18px,2.6vw,30px)}
+.hub .sub .lede{margin:0}
+.hub .sub .btn-row{margin-top:0;justify-content:flex-end}
+@media (max-width:900px){.hub .sub{grid-template-columns:1fr}.hub .sub .btn-row{justify-content:flex-start}}
+.hgrid{display:grid;grid-template-columns:5fr 9fr;gap:14px;margin-top:clamp(28px,4vw,52px)}
+.hgrid .hmedia{margin-top:0;aspect-ratio:auto;min-height:100%}
+.vtile{position:relative;border:0;padding:0;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;cursor:pointer;text-align:left;display:block;width:100%;background:var(--panel2)}
+.vtile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%;transition:transform 1.2s var(--ease)}
+.vtile:hover img{transform:scale(1.03)}
+.vtile .vt{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;color:#f5f0e7;background:linear-gradient(0deg,rgba(11,10,9,.85),rgba(11,10,9,0) 60%)}
+.vtile .vt b{font-family:var(--serif);font-weight:500;font-size:clamp(24px,2.4vw,32px);line-height:1.1}
+.vtile .vt small{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;opacity:.75;margin-top:6px}
+.vtile .play{width:54px;height:54px;margin-bottom:14px}
+@media (max-width:760px){.hgrid{grid-template-columns:1fr}.vtile{aspect-ratio:16/10}.hgrid .hmedia{aspect-ratio:1/1}}
+.doors{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:clamp(32px,4vw,52px)}
+.door{position:relative;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:3/4.2;border-radius:var(--r);overflow:hidden;text-decoration:none;color:#f5f0e7;background:var(--panel2)}
+.door img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.door:hover img{transform:scale(1.04)}
+.door:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,10,9,.9) 0%,rgba(11,10,9,.35) 50%,rgba(11,10,9,0) 78%)}
+.door .dt{position:relative;z-index:1;padding:clamp(18px,2vw,26px)}
+.door small{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;opacity:.72}
+.door h3{font-size:clamp(32px,3vw,44px);margin:6px 0 8px;color:#f5f0e7}
+.door p{margin:0;font-size:13px;line-height:1.5;color:rgba(245,240,231,.8)}
+.door .go{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.door .go:after{content:" \2192";display:inline-block;transition:transform .25s var(--ease)}
+.door:hover .go:after{transform:translateX(4px)}
+@media (max-width:1000px){.doors{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.doors{grid-template-columns:1fr}.door{aspect-ratio:16/12}}
+.feature .band{grid-template-columns:1.1fr 1fr}
+.feature .band h2{font-size:clamp(40px,5.6vw,76px)}
+.feature .facts2{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8a4f2b}
+.proof .stats{margin-top:40px}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.qcard{display:grid;grid-template-columns:72px 1fr;gap:18px;align-items:start}
+.qcard img{width:72px;height:72px;border-radius:50%;object-fit:cover}
+.qcard .q{font-family:var(--serif);font-size:clamp(22px,2.2vw,28px);line-height:1.2;margin:0}
+.qcard .who{margin:12px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.qcard .ini{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:var(--fill2);font-family:var(--serif);font-size:30px}
+@media (max-width:760px){.qgrid{grid-template-columns:1fr}}
+.press{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;margin-top:34px;padding-top:24px;border-top:1px solid var(--line)}
+.press .pl{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--faint)}
+.press .lg{height:22px;width:110px;border-radius:6px;background:var(--fill2)}
+.newsx{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,5vw,70px);align-items:center}
+.newsx .news p{max-width:none}
+@media (max-width:900px){.newsx{grid-template-columns:1fr}}
+</style>
+
+<header class="top" id="top">
+  <div class="bar">
+    <div class="wrap">
+      <b>Design to Sell</b><span class="sep hide-s">·</span><span class="hide-s">Free live workshop</span><span class="sep">·</span><span><span data-ph="Time is a placeholder. Pick the real start time before launch.">Thu, Nov 5 · 7 PM ET</span></span><span class="cd hide-s" data-countdown></span><a href="#design-to-sell">Save my seat →</a>
+    </div>
+  </div>
+  <nav class="main" aria-label="Main">
+    <div class="wrap">
+      <a class="brand" href="#home">JAY ABRAMS</a>
+      <div class="links">
+        <a href="#learn" data-nav="learn">Learn</a>
+        <a href="#work" data-nav="work">Work</a>
+        <a href="#shop" data-nav="shop">Shop</a>
+        <a href="#invest" data-nav="invest">Invest</a>
+      </div>
+      <a class="btn btn-p" href="#design-to-sell">Save my seat</a>
+      <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="sheet">
+      <a href="#learn">Learn</a><a href="#work">Work</a><a href="#shop">Shop</a><a href="#invest">Invest</a><a href="#results">Results</a><a href="#watch">Watch</a>
+      <a class="btn btn-p" href="#design-to-sell">Save my free seat</a>
+    </div>
+</header>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section class="view" data-view="home" data-title="Jay Abrams · I design homes that sell">
+  <div class="hero2 hub" id="hero">
+    <div class="wrap">
+      <p class="label">Jay Abrams · Palm Beach County</p>
+      <h1>I design homes that sell.<br><em class="s">And I teach you how.</em></h1>
+      <div class="sub">
+        <p class="lede">I design and renovate homes across Palm Beach County, then show investors, agents and designers every decision I make, including the ones that cost me.</p>
+        <div class="btn-row">
+          <a class="btn btn-p" href="#design-to-sell">Save my free seat · Nov 5</a>
+          <button class="btn btn-g" type="button" data-video="Meet Jay">Watch the intro</button>
+        </div>
+      </div>
+      <div class="hgrid">
+        <button class="vtile" type="button" data-video="Meet Jay" aria-label="Play the intro video">
+          <img src="/b/jay/img/jay-portrait.jpg" alt="">
+          <span class="vt"><span class="play" aria-hidden="true"></span><b>Meet Jay</b><small data-ph="Use the real intro video. Length is a placeholder.">Intro · 90 sec</small></span>
+        </button>
+        <div class="hmedia">
+          <img class="a" src="/b/jay/img/living-after.jpg" alt="Bright open living room with white walls and a walnut table">
+          <img class="b" src="/b/jay/img/living-before.jpg" alt="The same room before: dark knotty pine paneling">
+          <div class="io" role="group" aria-label="Compare this room">
+            <button aria-pressed="false" data-io="before"><small>Before</small>Knotty pine den</button>
+            <span class="arr" aria-hidden="true">→</span>
+            <button aria-pressed="true" data-io="after"><small>After</small>Open living room</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="sec tight" style="padding-top:0">
+    <div class="wrap">
+      <div class="hl-head">
+        <div><p class="label">Four ways in</p><h2>Pick a door.</h2></div>
+      </div>
+      <div class="doors">
+        <a class="door" href="#learn"><img src="/b/jay/img/office-after.jpg" alt="" loading="lazy"><div class="dt"><h3>Learn</h3><p>Every decision, explained.</p></div></a>
+        <a class="door" href="#work"><img src="/b/jay/img/kitchen-after.jpg" alt="" loading="lazy"><div class="dt"><h3>Work</h3><p>Real before and afters.</p></div></a>
+        <a class="door" href="#shop"><img src="/b/jay/img/bath-after.jpg" alt="" loading="lazy"><div class="dt"><h3>Shop</h3><p>The pieces I use.</p></div></a>
+        <a class="door" href="#invest"><img src="/b/jay/img/outdoor-after.jpg" alt="" loading="lazy"><div class="dt"><h3>Invest</h3><p>Buy, rent, sell smarter.</p></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tight feature" style="padding-top:0">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <p class="label">Start here · Free live workshop</p>
+          <h2>Design to Sell.</h2>
+          <p class="lede">75 minutes, live, on the design decisions that decide what a buyer thinks of a house. Can't make it live? Register anyway and the replay comes to your inbox.</p>
+          <div class="facts2"><span>Thu, Nov 5</span><span data-ph="Time is a placeholder. Pick the real start time before launch.">7 PM ET</span><span>Free</span><span data-countdown></span></div>
+        </div>
+        <div class="light" data-reg="home"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tight proof" style="padding-top:0">
+    <div class="wrap">
+      <div class="hl-head">
+        <div><p class="label">Proof</p><h2>Real homes. Real people.</h2></div>
+        <a class="tlink" href="#results">All results</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="n">8<sup>1</sup></div><p>Full before and after transformations you can study on this site.</p></div>
+        <div class="stat"><div class="n" data-ph="Confirm figure and add source.">3<sup>2</sup></div><p>Rentals Esaie owns after working with Jay.</p></div>
+        <div class="stat"><div class="n" data-ph="Confirm figure and add source.">$1,800<sup>2</sup></div><p>A month in rental income Esaie reports.</p></div>
+      </div>
+      <div class="qgrid">
+        <div class="card qcard"><img src="/b/jay/img/esaie-portrait.jpg" alt="Esaie" loading="lazy"><div><p class="q" data-ph="Pull Esaie's strongest line from the interview video. Don't paraphrase.">“A line from Esaie's interview goes here, in Esaie's own words.”</p><p class="who">Esaie · Client</p></div></div>
+        <div class="card qcard"><span class="ini" aria-hidden="true">M</span><div><p class="q" data-ph="Pull from Michelle's 20-second testimonial clip.">“A line from Michelle's testimonial goes here, in Michelle's own words.”</p><p class="who">Michelle · Client</p></div></div>
+      </div>
+      <div class="press" data-ph="Add press only once confirmed. Leave this row off if there is none yet."><span class="pl">As featured in</span><span class="lg"></span><span class="lg"></span><span class="lg"></span></div>
+      <div class="fn"><p>1. Projects shown are real homes Jay designed or renovated. Photos are unretouched apart from standard listing edits.</p><p>2. Figures reported by the client. Individual results, not typical. Your results depend on your market, property, capital and effort.</p></div>
+    </div>
+  </section>
+
+  <section class="sec tight" style="padding-top:0">
+    <div class="wrap">
+      <div class="card newsx">
+        <div><p class="label">Not ready yet?</p><h2>Get the design notes.</h2><p class="lede">One email a week from real job sites: what I spent, what worked, what I'd skip. Free, and you can leave anytime.</p></div>
+        <div class="news"><div data-news></div></div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ LEARN ============ -->
+<section class="view" data-view="learn" data-title="Learn · Jay Abrams">
+  <section class="sec" style="padding-top:clamp(28px,4.5vw,60px)">
+    <div class="wrap">
+      <p class="label">Learn</p>
+      <h1>Learn the method.</h1>
+      <p class="lede">Everyone starts in the same place. The free workshop shows you the method, and you decide from there how much of me you want.</p>
+      <div data-ladder></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap split jay">
+      <img src="/b/jay/img/jay-portrait.jpg" alt="Jay Abrams" loading="lazy">
+      <div>
+        <p class="label">Meet Jay</p>
+        <p class="quote">“I've made the expensive mistakes already. I'll show you every decision I make now, and the ones that cost me.”</p>
+        <p class="copy mt2">I design, renovate and invest across Palm Beach County, from a single bathroom to the whole house and the backyard. Here and on my channels I show the real before, the real after, what it cost, and what I'd do differently.</p>
+        <div class="social">
+          <a class="chip" href="#" data-ext="Instagram @jayabrams">Instagram @jayabrams</a>
+          <a class="chip" href="#" data-ext="YouTube @jayabrams">YouTube @jayabrams</a>
+          <a class="chip" href="#" data-ext="TikTok @jayabrams_">TikTok @jayabrams_</a>
+          <a class="chip" href="#" data-ext="Pinterest jayabrams_">Pinterest</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap"><div class="band"><div><p class="label">Start here</p><h2>Thursday, November 5.<br>Save your seat.</h2><p class="lede">Design to Sell is 75 minutes, live, and free. The replay comes to everyone who registers.</p></div><div class="light" data-reg="learn"></div></div></div>
+  </section>
+</section>
+
+<!-- ============ WORKSHOP ============ -->
+<section class="view" data-view="design-to-sell" data-title="Design to Sell · Free live workshop">
+  <div class="lhead"><div class="wrap"><span class="brand">JAY ABRAMS</span><span class="lmeta">Free live workshop · Thu, Nov 5 · <span data-countdown></span></span><a class="btn btn-p" href="#register">Save my seat</a></div></div>
+  <div class="ohero">
+    <div class="wrap grid">
+      <div>
+        <p class="label">Free live workshop</p>
+        <h1>Design to Sell</h1>
+        <p class="lede">How to design a home buyers fall for, before it ever hits the market. <b>The exact room-by-room decisions I make on every job.</b></p>
+        <div class="facts">
+          <div><small>Date</small><span>Thu, Nov 5</span></div>
+          <div><small>Time</small><span data-ph="Placeholder time. Confirm before launch.">7:00 PM ET</span></div>
+          <div><small>Length</small><span>75 minutes</span></div>
+          <div><small>Where</small><span>Live online</span></div>
+          <div><small>Price</small><span>Free</span></div>
+          <div><small>Replay</small><span data-ph="Decide if you'll send a replay. Keep this line only if yes.">Included</span></div>
+        </div>
+        <div class="kicker"><span class="dot"></span><span data-countdown-long></span></div>
+      </div>
+      <div class="card sticky-card" id="register">
+        <h3 style="font-size:30px">Save my free seat</h3>
+        <p class="copy" style="margin:8px 0 22px;font-size:14px">The link and a calendar invite come by email right away.</p>
+        <div data-reg="workshop"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="stats lstats">
+        <div class="stat"><div class="n">75</div><p>Minutes, live, with time for your questions.</p></div>
+        <div class="stat"><div class="n">8<sup>1</sup></div><p>Real before and after projects I break down, room by room.</p></div>
+        <div class="stat"><div class="n">$0</div><p>To attend. No card and no catch.</p></div>
+      </div>
+      <div class="fn"><p>1. Real homes Jay designed or renovated, shown at their actual scope.</p></div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <p class="label">In 75 minutes</p>
+      <h2>Three things you'll walk away with.</h2>
+      <div class="steps">
+        <div><div class="no">01</div><h3>The first-look rule</h3><p>Which three spaces decide a buyer's opinion, and how to spend there first.</p></div>
+        <div><div class="no">02</div><h3>The finish formula</h3><p>The materials and colors I repeat on every job because they photograph well and hold up.</p></div>
+        <div><div class="no">03</div><h3>Budget before beauty</h3><p>How I set a design budget that protects the sale price instead of eating it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap split">
+      <div class="reveal r-43" data-hold>
+        <img src="/b/jay/img/bath-after.jpg" alt="After: a bathroom with a mural wall and cane vanity">
+        <img class="rb" src="/b/jay/img/bath-before.jpg" alt="Before: a gutted room with lime green walls">
+        <span class="tag"><span class="af">After</span><span class="bf">Before</span></span>
+        <button class="hold" type="button"><i></i><span>Hold to see the before</span></button>
+      </div>
+      <div>
+        <p class="label">This is for you if</p>
+        <h2>You want the house to do the selling.</h2>
+        <ul class="ticks">
+          <li><b>Investors and flippers</b> who want a better sale price for the same spend.</li>
+          <li><b>Agents</b> who want listings that stand out on the first scroll.</li>
+          <li><b>Designers</b> who want to work in real estate.</li>
+          <li><b>Homeowners</b> getting ready to sell in the next year.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap split jay">
+      <img src="/b/jay/img/jay-portrait.jpg" alt="Jay Abrams" loading="lazy">
+      <div>
+        <p class="label">Your host</p>
+        <p class="quote">“I've made the expensive mistakes already. On Nov 5 I'll show you the decisions I make now, and the ones that cost me.”</p>
+        <p class="copy mt2">I design, renovate and invest across Palm Beach County. This workshop is the method I use on every house, taught the way I'd explain it on site.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap narrow">
+      <div class="card">
+        <p class="label">Straight up</p>
+        <h3>What happens at the end</h3>
+        <p class="copy" style="max-width:none;margin-top:12px">The workshop stands on its own. At the end I'll share the Design to Sell Masterclass for anyone who wants to go deeper with me. No pressure and no fake countdowns.</p>
+      </div>
+      <div class="faq">
+        <details><summary>Is it really free?</summary><p>Yes. No card, no catch. You'll get my emails after, and you can unsubscribe anytime.</p></details>
+        <details><summary>Do I need design experience?</summary><p>No. If you can make a decision about a paint color, you can follow along.</p></details>
+        <details><summary>What if I can't make it live?</summary><p data-ph="Keep only if you'll send a replay.">Register anyway. The replay goes to everyone who signed up.</p></details>
+        <details><summary>Where does it happen?</summary><p>Online. Your link arrives by email the moment you register, and again an hour before we start.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <p class="label">Thursday, November 5</p>
+          <h2>Save your free seat.</h2>
+          <p class="lede">75 minutes, live and free. Can't make it? Register anyway and the replay comes to your inbox.</p>
+        </div>
+        <div class="light" data-reg="landing-end"></div>
+      </div>
+    </div>
+  </section>
+  <div class="lfoot"><div class="wrap">
+    <p>Results described are individual and not typical, and are not a promise of income, savings or sale price. Content is educational and is not financial, legal or tax advice.</p>
+    <div class="lr"><span>© 2026 Jay Abrams</span><a href="#" data-toast="Privacy policy page in the real build">Privacy</a><a href="#" data-toast="Terms page in the real build">Terms</a><a href="#home">jayabrams.com</a></div>
+  </div></div>
+</section>
+
+<!-- ============ THANKS ============ -->
+<section class="view" data-view="thanks" data-title="You're in · Design to Sell">
+  <div class="lhead"><div class="wrap"><span class="brand">JAY ABRAMS</span><span class="lmeta">Design to Sell · Thu, Nov 5</span></div></div>
+  <section class="sec">
+    <div class="wrap narrow center">
+      <p class="label">You're registered</p>
+      <h1>You're in.</h1>
+      <p class="lede">Design to Sell is <b>Thursday, November 5 at <span data-ph="Placeholder time.">7:00 PM ET</span></b>. Your link is on its way to your inbox.</p>
+      <div class="cal" style="justify-content:center">
+        <button class="btn btn-i btn-sm" data-toast="Adds the event to Google Calendar in the real build">Google Calendar</button>
+        <button class="btn btn-g btn-sm" data-toast="Downloads an .ics invite in the real build">Apple / Outlook</button>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="nextc">
+        <div class="card"><p class="label">Step 1</p><h3>Check your inbox</h3><p>Move my email to your main inbox so the link doesn't land in promotions.</p></div>
+        <div class="card"><p class="label">Step 2</p><h3>Grab a guide</h3><p>Start with Don't Retile, Refinish. It's the fastest win in the workshop.</p><a class="tlink" href="#shop">Free guides</a></div>
+        <div class="card"><p class="label">Step 3</p><h3>Bring a friend</h3><p>Know an investor or agent who'd get value from this? Send them the link.</p><button class="btn btn-g btn-sm" data-toast="Copies the workshop link in the real build">Copy link</button></div>
+      </div>
+    </div>
+  </section>
+  <div class="lfoot"><div class="wrap"><div class="lr"><span>© 2026 Jay Abrams</span><a href="#home">Explore jayabrams.com</a></div></div></div>
+</section>
+
+<!-- ============ MASTERCLASS ============ -->
+<section class="view" data-view="masterclass" data-title="Design to Sell Masterclass">
+  <div class="ohero">
+    <div class="wrap grid">
+      <div>
+        <p class="label">The Masterclass</p>
+        <h1>Design to Sell Masterclass</h1>
+        <p class="lede">Six weeks with me, live. You bring a real property or a sample one, and you leave with a <b>complete design plan, budget and sourcing list</b> you can hand to a contractor.</p>
+        <div class="price">
+          <b>$1,499</b>
+          <span data-ph="Payment plan is a placeholder.">or 3 payments of $549</span>
+        </div>
+        <div class="kicker"><span class="dot"></span><span>Enrollment opens Thursday, November 5, after the live workshop.</span></div>
+        <div class="btn-row">
+          <a class="btn btn-p" href="#waitlist">Join the waitlist</a>
+          <a class="btn btn-g" href="#design-to-sell">Start with the free workshop</a>
+        </div>
+      </div>
+      <div class="reveal r-45" data-hold>
+        <img src="/b/jay/img/kitchen-after.jpg" alt="After: sage green kitchen">
+        <img class="rb" src="/b/jay/img/kitchen-before.jpg" alt="Before: a demolished kitchen with exposed framing">
+        <span class="tag"><span class="af">After</span><span class="bf">Before</span></span>
+        <button class="hold" type="button"><i></i><span>Hold to see the before</span></button>
+      </div>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <p class="label">Six weeks</p>
+      <h2>The whole method, in order.</h2>
+      <div class="modules" data-ph="Module names and order are a working draft.">
+        <div class="mod"><small>Week 1</small><h3>Read the property</h3><p>Walk a house the way I do. What to keep, what to move, what buyers will never forgive.</p></div>
+        <div class="mod"><small>Week 2</small><h3>Set the budget</h3><p>The design budget that protects your price, with my calculator and real numbers from past jobs.</p></div>
+        <div class="mod"><small>Week 3</small><h3>Kitchens and baths</h3><p>The two rooms that sell houses. Layouts, finishes and where to save.</p></div>
+        <div class="mod"><small>Week 4</small><h3>Light, color and flow</h3><p>Paint, lighting and flooring decisions that make a house read bigger and brighter.</p></div>
+        <div class="mod"><small>Week 5</small><h3>Outside and first look</h3><p>Curb appeal and the backyard shot that stops the scroll.</p></div>
+        <div class="mod"><small>Week 6</small><h3>Stage, shoot and list</h3><p>Styling, the listing photo plan and the handoff to your agent.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap split rev">
+      <div class="reveal r-169" data-hold>
+        <img src="/b/jay/img/living-after.jpg" alt="After: a bright open living room">
+        <img class="rb" src="/b/jay/img/living-before.jpg" alt="Before: a dark wood-paneled room">
+        <span class="tag"><span class="af">After</span><span class="bf">Before</span></span>
+        <button class="hold" type="button"><i></i><span>Hold to see the before</span></button>
+      </div>
+      <div>
+        <p class="label">What's included</p>
+        <h2>Everything I use on the job.</h2>
+        <ul class="ticks">
+          <li><b>Six live sessions</b> with Q&amp;A and recordings.</li>
+          <li><b>My templates:</b> design plan, budget calculator, sourcing list.</li>
+          <li><b>Plan reviews</b> on your property in the live calls.</li>
+          <li><b>Private community</b> with the rest of your cohort.</li>
+          <li><b>A month of the Deal Room</b> after you finish. <span class="small" data-ph="Bonus is a suggestion. Remove if you don't want it.">(suggested bonus)</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="center"><p class="label">Compare</p><h2>Which one is right for you?</h2></div>
+      <div data-ladder></div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0" id="waitlist">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <p class="label">Waitlist</p>
+          <h2>Be first in when enrollment opens.</h2>
+          <p class="lede">Waitlist members hear first on November 5. No obligation.</p>
+        </div>
+        <div class="light" data-wait></div>
+      </div>
+      <div class="faq narrow" style="margin-left:auto;margin-right:auto">
+        <details><summary>Do I need a property to join?</summary><p>No. You can work on one of mine, and apply it to your own when you're ready.</p></details>
+        <details><summary>What's the refund policy?</summary><p data-ph="Decide your refund terms before launch.">Placeholder until you set your refund terms.</p></details>
+        <details><summary>Will this guarantee a higher sale price?</summary><p>No one can promise that. I teach the decisions I make, and the results depend on your market, property and execution.</p></details>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ DEAL ROOM ============ -->
+<section class="view" data-view="dealroom" data-title="The Deal Room · Membership">
+  <div class="ohero">
+    <div class="wrap grid">
+      <div>
+        <p class="label">Membership</p>
+        <h1>The Deal Room</h1>
+        <p class="lede">Bring me the deal before you buy it. Twice a month we go live and I review members' properties, design budgets and plans, <b>one deal at a time</b>.</p>
+        <div class="price"><b data-ph="$29 as on the current site. See the decisions list, I'd raise it.">$29</b><span>a month · Cancel anytime</span></div>
+        <div class="btn-row">
+          <button class="btn btn-p" data-checkout="Deal Room membership, $29 a month">Join the Deal Room</button>
+          <a class="btn btn-g" href="#design-to-sell">Try the free workshop</a>
+        </div>
+      </div>
+      <div class="card">
+        <p class="label dim">Every month</p>
+        <ul class="ticks mt0">
+          <li><b>2 live calls</b> with deal and design reviews.</li>
+          <li><b>Submit a property</b> for review on the call.</li>
+          <li><b>Replays</b> of every call, searchable.</li>
+          <li><b>New templates</b> as I make them.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <section class="sec">
+    <div class="wrap">
+      <div class="center"><p class="label">Compare</p><h2>Where the Deal Room fits.</h2></div>
+      <div data-ladder></div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ 1:1 ============ -->
+<section class="view" data-view="oneone" data-title="Work with Jay · 1:1">
+  <div class="ohero">
+    <div class="wrap grid">
+      <div>
+        <p class="label">Private advisory</p>
+        <h1>Work with me, one to one.</h1>
+        <p class="lede">For investors, developers and homeowners with a specific property and a sale in mind. <b>I take a small number of private clients</b>, so it starts with a short application.</p>
+        <div class="steps" style="grid-template-columns:1fr;gap:0;margin-top:36px">
+          <div style="padding:18px 0"><div class="no" style="font-size:30px">01</div><h3 style="font-size:24px">Apply</h3><p>Two minutes. Tell me about the property and the goal.</p></div>
+          <div style="padding:18px 0"><div class="no" style="font-size:30px">02</div><h3 style="font-size:24px">Fit call</h3><p>Twenty minutes to see if I'm the right person for it.</p></div>
+          <div style="padding:18px 0"><div class="no" style="font-size:30px">03</div><h3 style="font-size:24px">Plan and pricing</h3><p>A clear scope and fee before anything starts.</p></div>
+        </div>
+      </div>
+      <div class="card sticky-card">
+        <div data-apply></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUIDES ============ -->
+<section class="view" data-view="shop" data-title="Shop · Jay Abrams">
+  <section class="sec">
+    <div class="wrap">
+      <p class="label">Shop</p>
+      <h1>Shop the look.</h1>
+      <p class="lede">The pieces I use on real jobs, every room pinned, and the checklists I work from. The guides are free and come straight to your inbox.</p>
+      <div data-guides="all"></div>
+      <div class="guides" style="grid-template-columns:1fr 1fr;margin-top:16px">
+        <a class="card" href="#" data-ext="Pinterest jayabrams_" style="text-decoration:none"><p class="label">Pinterest</p><h3>Every project, pinned by room.</h3><p class="copy mt1">Browse kitchens, baths and backyards on my boards.</p><span class="tlink mt1">Open boards</span></a>
+        <a class="card" href="#" data-ext="Amazon storefront" style="text-decoration:none"><p class="label">Amazon storefront</p><h3>Shop the pieces I use.</h3><p class="copy mt1">Lighting, hardware and decor from my projects, in one place.</p><span class="tlink mt1">Open storefront</span></a>
+      </div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap split">
+      <div>
+        <p class="label">The transformation</p>
+        <h2>Hold to see where it started.</h2>
+        <p class="lede">Buyers decide how a home feels in the first few seconds of a listing. <b>Design is the cheapest lever you have</b>, and most sellers never pull it.</p>
+        <div class="shop">
+          <h4>Shop this room</h4>
+          <div class="chips">
+            <a class="chip" href="#" data-ext="Amazon storefront" data-ph="Link each item to its Amazon storefront listing.">Flamingo table lamp</a>
+            <a class="chip" href="#" data-ext="Amazon storefront" data-ph="Link each item to its Amazon storefront listing.">Cane lounge chair</a>
+            <a class="chip" href="#" data-ext="Amazon storefront" data-ph="Link each item to its Amazon storefront listing.">Walnut writing desk</a>
+            <a class="chip" href="#" data-ext="Amazon storefront" data-ph="Link each item to its Amazon storefront listing.">Brass task lamp</a>
+          </div>
+        </div>
+      </div>
+      <div class="reveal r-169" data-hold>
+        <img src="/b/jay/img/office-after.jpg" alt="After: a styled home office">
+        <img class="rb" src="/b/jay/img/office-before.jpg" alt="Before: a cluttered dining room">
+        <span class="tag"><span class="af">After</span><span class="bf">Before</span></span>
+        <button class="hold" type="button"><i></i><span>Hold to see the before</span></button>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ WORK ============ -->
+<section class="view" data-view="work" data-title="Work · Jay Abrams">
+  <section class="sec">
+    <div class="wrap">
+      <p class="label">Work</p>
+      <h1>Before. After.<br>Every decision in between.</h1>
+      <p class="lede">Hold any project to see where it started. Then shop the room, or learn how I designed it.</p>
+      <div class="filters" role="group" aria-label="Filter projects">
+        <button aria-pressed="true" data-f="all">All</button>
+        <button aria-pressed="false" data-f="outdoor">Outdoor</button>
+        <button aria-pressed="false" data-f="kitchen">Kitchens</button>
+        <button aria-pressed="false" data-f="bath">Baths</button>
+        <button aria-pressed="false" data-f="living">Living</button>
+        <button aria-pressed="false" data-f="office">Office</button>
+      </div>
+      <div class="wgrid" data-work></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap"><div class="band"><div><p class="label">Learn the method</p><h2>Want to design like this?</h2><p class="lede">I break down projects like these, room by room, in the free live workshop.</p></div><div class="light" data-reg="work"></div></div></div>
+  </section>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section class="view" data-view="results" data-title="Results · Jay Abrams">
+  <section class="sec" style="padding-bottom:40px">
+    <div class="wrap">
+      <p class="label">Results</p>
+      <h1>Real people.<br>Real properties.</h1>
+      <p class="lede">Clients and students in their own words. Numbers are theirs, footnoted, and not a promise of what you'll get.</p>
+    </div>
+  </section>
+  <div class="wrap">
+    <div class="story">
+      <img src="/b/jay/img/esaie-portrait.jpg" alt="Esaie smiling at work" loading="lazy">
+      <div>
+        <p class="label">Esaie · Client</p>
+        <p class="quote" data-ph="Pull Esaie's strongest line from the interview video. Don't paraphrase.">“A line from Esaie's interview goes here, in Esaie's own words.”</p>
+        <div class="nums">
+          <div><b data-ph="Confirm figure and add source.">3<sup>2</sup></b><span>rentals</span></div>
+          <div><b data-ph="Confirm figure and add source.">$1,800<sup>2</sup></b><span>monthly rental income</span></div>
+        </div>
+        <div class="btn-row"><button class="btn btn-g btn-sm" data-video="Esaie's story">Watch the story</button></div>
+      </div>
+    </div>
+    <div class="story">
+      <div>
+        <p class="label">Michelle · Client</p>
+        <p class="quote" data-ph="Pull from Michelle's 20-second testimonial clip.">“A line from Michelle's testimonial goes here, in Michelle's own words.”</p>
+        <div class="nums">
+          <div><b data-ph="Confirm figure, scope and source.">$25K<sup>3</sup></b><span>figure to confirm</span></div>
+        </div>
+        <div class="btn-row"><button class="btn btn-g btn-sm" data-video="Michelle's project">Watch the project</button></div>
+      </div>
+      <div class="reveal r-43" data-hold>
+        <img src="/b/jay/img/kitchen-after.jpg" alt="After: Michelle's kitchen">
+        <img class="rb" src="/b/jay/img/kitchen-before.jpg" alt="Before: Michelle's kitchen during demolition">
+        <span class="tag"><span class="af">After</span><span class="bf">Before</span></span>
+        <button class="hold" type="button"><i></i><span>Hold to see the before</span></button>
+      </div>
+    </div>
+    <div class="fn" style="padding-bottom:20px">
+      <p>2. Figures reported by the client. Individual results, not typical. Your results depend on your market, property, capital and effort.</p>
+      <p>3. Placeholder figure. Confirm what it measures and keep documentation on file before publishing.</p>
+    </div>
+  </div>
+  <section class="sec">
+    <div class="wrap"><div class="band"><div><p class="label">Your turn</p><h2>Start where they started.</h2><p class="lede">Every one of these began with the same free workshop.</p></div><div class="light" data-reg="results"></div></div></div>
+  </section>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section class="view" data-view="watch" data-title="Watch · Jay Abrams">
+  <section class="sec">
+    <div class="wrap">
+      <p class="label">Watch</p>
+      <h1>Watch the work happen.</h1>
+      <p class="lede">Full walkthroughs from my YouTube channel. Each one pairs with a free guide so you can do it yourself.</p>
+      <button class="vfeat" data-video="Start here: how I design a house to sell">
+        <img src="/b/jay/img/hero-after.jpg" alt="Backyard pool at dusk" loading="lazy">
+        <span class="vt"><span class="play" aria-hidden="true"></span><small class="label" style="margin-bottom:10px">Start here</small><b>How I design a house to sell, start to finish</b></span>
+      </button>
+      <div class="vgrid" data-ph="Video titles are placeholders. Swap in real episodes.">
+        <button class="vcard" data-video="The backyard that sold the house"><span class="th"><img src="/b/jay/img/outdoor-after.jpg" alt="" loading="lazy"><span class="len">12:40</span></span><b>The backyard that sold the house</b><small>Pairs with: Home Design Inspiration</small></button>
+        <button class="vcard" data-video="Don't retile. Refinish."><span class="th"><img src="/b/jay/img/bath-after.jpg" alt="" loading="lazy"><span class="len">9:15</span></span><b>Don't retile. Refinish.</b><small>Pairs with: Don't Retile, Refinish</small></button>
+        <button class="vcard" data-video="A dark den becomes the living room"><span class="th"><img src="/b/jay/img/living-after.jpg" alt="" loading="lazy"><span class="len">14:02</span></span><b>A dark den becomes the living room</b><small>Pairs with: Budget-Friendly Bathroom Update</small></button>
+      </div>
+      <div class="btn-row" style="justify-content:center;margin-top:50px">
+        <a class="btn btn-g" href="#" data-ext="YouTube @jayabrams">Subscribe on YouTube</a>
+        <a class="btn btn-p" href="#design-to-sell">Join the free workshop</a>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ FACELESS: DESIGN ============ -->
+<section class="view fl" data-view="design" data-title="Sold by Design · Free checklist">
+  <div class="wrap">
+    <div class="mini"><span style="letter-spacing:.3em;font-weight:600;text-transform:uppercase;color:var(--ink)" data-ph="Working name for the faceless design account.">Sold by Design</span><span>A Jay Abrams studio</span></div>
+  </div>
+  <section class="sec">
+    <div class="wrap split">
+      <div>
+        <p class="label">Free checklist</p>
+        <h1 style="font-size:clamp(44px,6.6vw,86px)">The design moves that sell homes.</h1>
+        <p class="lede">25 changes, room by room, that make a listing look like it costs more. <b>Most take a weekend.</b></p>
+        <div class="card mt2 light" data-lead="design"></div>
+      </div>
+      <div class="reveal r-45" data-hold>
+        <img src="/b/jay/img/bath-after.jpg" alt="After: finished bathroom">
+        <img class="rb" src="/b/jay/img/bath-before.jpg" alt="Before: the same room gutted">
+        <span class="tag"><span class="af">After</span><span class="bf">Before</span></span>
+        <button class="hold" type="button"><i></i><span>Hold to see the before</span></button>
+      </div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <p class="label">Inside the checklist</p>
+      <h2>A preview of three.</h2>
+      <div class="steps">
+        <div><div class="no">04</div><h3>Warm the whites</h3><p>One warmer white across every wall makes rooms flow in photos.</p></div>
+        <div><div class="no">11</div><h3>Swap the light, not the room</h3><p>A statement fixture changes a room's price perception for a fraction of a remodel.</p></div>
+        <div><div class="no">19</div><h3>Style for the camera</h3><p>Three objects per surface, odd heights, and nothing on the counters by the sink.</p></div>
+      </div>
+      <p class="copy mt3">Want the full method? <a class="tlink" href="#design-to-sell">Free live workshop with Jay</a></p>
+    </div>
+  </section>
+</section>
+
+<!-- ============ FACELESS: INVEST ============ -->
+<section class="view inv" data-view="invest" data-title="First Door · The 90-day plan">
+  <div class="wrap">
+    <div class="mini"><span style="letter-spacing:.3em;font-weight:600;text-transform:uppercase;color:var(--text)" data-ph="Working name for the faceless investing account.">First Door</span><span>Part of the Jay Abrams family</span></div>
+  </div>
+  <section class="sec">
+    <div class="wrap split">
+      <div>
+        <p class="label">Free plan</p>
+        <h1 style="font-size:clamp(44px,6.6vw,86px)">A 90-day plan for your first investment property.</h1>
+        <p class="lede">What to do each week, from getting your numbers straight to making an offer. <b>Written for people who haven't bought one yet.</b></p>
+        <div class="card mt2" data-lead="invest"></div>
+      </div>
+      <div class="reveal r-45" data-hold>
+        <img src="/b/jay/img/living-after.jpg" alt="After: renovated living room">
+        <img class="rb" src="/b/jay/img/living-before.jpg" alt="Before: wood-paneled room">
+        <span class="tag"><span class="af">After</span><span class="bf">Before</span></span>
+        <button class="hold" type="button"><i></i><span>Hold to see the before</span></button>
+      </div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <p class="label">How it's laid out</p>
+      <h2>Three 30-day sprints.</h2>
+      <div class="steps">
+        <div><div class="no">1–30</div><h3>Money and market</h3><p>Your budget, financing options and the neighborhoods worth your time.</p></div>
+        <div><div class="no">31–60</div><h3>Find and analyze</h3><p>How to run the numbers on a deal and spot the design upside others miss.</p></div>
+        <div><div class="no">61–90</div><h3>Offer and close</h3><p>Making offers, inspections, and the first-week renovation plan.</p></div>
+      </div>
+      <p class="copy mt3">Next step: <a class="tlink" href="#design-to-sell">Jay's free Design to Sell workshop, Nov 5</a></p>
+      <div class="fn"><p>Education only. Not financial, legal or tax advice. Real estate investing involves risk, including loss of capital.</p></div>
+    </div>
+  </section>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="news">
+        <a class="brand" href="#home" style="padding:0">JAY ABRAMS</a>
+        <p>Design notes from real job sites, once a week. Free.</p>
+        <div data-news></div>
+      </div>
+      <div>
+        <h5>Learn</h5>
+        <a href="#design-to-sell">Design to Sell <small>Nov 5</small></a>
+        <a href="#masterclass">Masterclass</a>
+        <a href="#dealroom">Deal Room</a>
+        <a href="#oneone">Work with me</a>
+        <a href="#shop">Free guides</a>
+      </div>
+      <div>
+        <h5>See</h5>
+        <a href="#work">Work</a>
+        <a href="#shop">Shop</a>
+        <a href="#invest">Invest</a>
+        <a href="#results">Results</a>
+        <a href="#watch">Watch</a>
+        <a href="#" data-ext="Amazon storefront">Amazon storefront</a>
+        <a href="#" data-ext="Pinterest jayabrams_">Pinterest</a>
+      </div>
+      <div>
+        <h5>Follow</h5>
+        <a href="#" data-ext="Instagram @jayabrams">Instagram <small>@jayabrams</small></a>
+        <a href="#" data-ext="YouTube @jayabrams">YouTube <small>@jayabrams</small></a>
+        <a href="#" data-ext="TikTok @jayabrams_">TikTok <small>@jayabrams_</small></a>
+        <a href="#" data-ext="Pinterest jayabrams_">Pinterest <small>jayabrams_</small></a>
+      </div>
+    </div>
+    <div class="legal">
+      <p><b style="color:var(--muted)">Earnings and results disclaimer.</b> Results described on this site are individual and not typical. They are not a promise or guarantee of income, savings or sale price. Your results depend on your market, property, capital, experience and effort. Content is educational and is not financial, legal or tax advice.</p>
+      <p>Amazon storefront links are affiliate links. I may earn a small commission at no cost to you.</p>
+      <div class="lr"><span>© 2026 Jay Abrams</span><a href="#" data-toast="Privacy policy page in the real build">Privacy</a><a href="#" data-toast="Terms page in the real build">Terms</a><a href="#" data-toast="Disclaimer page in the real build">Disclaimer</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="dock">
+  <div class="pages" id="pages">
+    <h6>Main</h6>
+    <a href="#home">Home <small>charcoal</small></a><a href="#learn">Learn</a><a href="#work">Work</a><a href="#shop">Shop and guides</a><a href="#results">Results</a><a href="#watch">Watch</a>
+    <h6>Offers</h6>
+    <a href="#design-to-sell">Design to Sell landing <small>tan</small></a><a href="#thanks">Registration thank you</a><a href="#masterclass">Masterclass <small>$1,499</small></a><a href="#dealroom">Deal Room <small>$29/mo</small></a><a href="#oneone">1:1 application</a>
+    <h6>Faceless entry pages</h6>
+    <a href="#design">Design account <small>/design</small></a><a href="#invest">Investing account <small>/invest</small></a>
+  </div>
+  <div class="pill">
+    <span class="tag">Prototype</span>
+    <button id="pagesBtn" aria-expanded="false" aria-controls="pages">Pages</button>
+    <button id="phBtn" aria-pressed="false">Placeholders</button>
+  </div>
+</div>
+
+<dialog id="dlg"><div class="vbox" id="dlgV" hidden>Video plays here</div><div class="mb"><h3 id="dlgT"></h3><p id="dlgP"></p><button class="btn btn-p btn-sm" id="dlgX">Close</button></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+
+  /* ---------- shared blocks ---------- */
+  const ladderHTML = `
+  <div class="ladder">
+    <div class="rung start"><span class="st">Start here</span><div class="k">Workshop</div><h3>Design to Sell</h3><div class="pr">Free · Nov 5</div><p class="w">75 minutes, live. The method, start to finish.</p><ul><li>Live with Jay</li><li>Replay included</li><li>Starter checklist</li></ul><a class="btn btn-ink btn-sm" href="#design-to-sell">Save my seat</a></div>
+    <div class="rung"><div class="k">Six weeks</div><h3>Masterclass</h3><div class="pr">$1,499</div><p class="w">Build a complete design plan with me, live, on a real property.</p><ul><li>6 live sessions</li><li>Templates and calculator</li><li>Plan reviews</li></ul><a class="btn btn-g btn-sm" href="#masterclass">Explore</a></div>
+    <div class="rung"><div class="k">Membership</div><h3>Deal Room</h3><div class="pr" data-ph="Current price. I'd raise it.">$29 / month</div><p class="w">Bring me your deals, twice a month, for as long as you want.</p><ul><li>2 live calls a month</li><li>Deal and design reviews</li><li>Cancel anytime</li></ul><a class="btn btn-g btn-sm" href="#dealroom">Explore</a></div>
+    <div class="rung"><div class="k">Private</div><h3>1:1 with Jay</h3><div class="pr">By application</div><p class="w">Hands-on advisory for one specific property.</p><ul><li>Fit call first</li><li>Custom scope</li><li>Direct access</li></ul><a class="btn btn-g btn-sm" href="#oneone">Apply</a></div>
+  </div>
+  <details class="cmp"><summary>Compare all four</summary><div class="cmp-scroll"><table>
+    <thead><tr><th></th><th>Workshop</th><th>Masterclass</th><th>Deal Room</th><th>1:1</th></tr></thead>
+    <tbody>
+      <tr><td>Live time with Jay</td><td>75 min</td><td>6 sessions</td><td>2 calls / mo</td><td>Custom</td></tr>
+      <tr><td>Templates and checklists</td><td>Starter</td><td class="yes">Full set</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+      <tr><td>Review of your property</td><td class="no">No</td><td class="yes">In class</td><td class="yes">On calls</td><td class="yes">In depth</td></tr>
+      <tr><td>Community</td><td class="no">No</td><td class="yes">Cohort</td><td class="yes">Members</td><td class="no">No</td></tr>
+      <tr><td>Price</td><td>Free</td><td>$1,499</td><td>$29 / mo</td><td>Quoted</td></tr>
+    </tbody></table></div></details>`;
+  $$('[data-ladder]').forEach(el=>el.innerHTML=ladderHTML);
+
+  const G=[
+    {t:"Don't Retile, Refinish",k:"Bath guide",img:"bath-after.jpg",d:"How to make tired tile look new without demolition, and when it's worth replacing."},
+    {t:"Budget-Friendly Bathroom Update",k:"Bath guide",img:"kitchen-after.jpg",d:"The bathroom refresh I recommend before every listing, with a shopping list."},
+    {t:"Home Design Inspiration",k:"Lookbook",img:"living-after.jpg",d:"My favorite rooms, broken down so you can borrow the ideas."}
+  ];
+  $$('[data-guides]').forEach(el=>{
+    el.innerHTML='<div class="guides">'+G.map((g,i)=>`
+      <div class="guide">
+        <div class="cover"><img src="/b/jay/img/${g.img}" alt="" loading="lazy"><div class="ct"><small>${g.k}</small><b>${g.t}</b></div></div>
+        <div class="gb"><p>${g.d}</p>
+          <form class="form" data-form="guide" data-name="${g.t}" novalidate>
+            <div class="form-body" style="display:grid;gap:10px">
+              <input type="email" name="email" placeholder="Your email" aria-label="Email for ${g.t}" required>
+              <button class="btn btn-p btn-sm" type="submit">Send it to me</button>
+              <div class="err"></div>
+            </div>
+            <div class="done"><div class="ok">✓</div><h3>Check your inbox</h3><p>${g.t} is on its way.</p><p><a class="tlink" href="#design-to-sell">Next: save your Nov 5 seat</a></p></div>
+          </form>
+        </div>
+      </div>`).join('')+'</div>';
+  });
+
+  const consent=`<p class="consent">By registering you agree to get emails from Jay Abrams about this workshop and related programs. Unsubscribe anytime. <a href="#" data-toast="Privacy policy page in the real build">Privacy</a></p>`;
+  const reg=(id)=>`
+    <form class="form" data-form="reg" data-next="thanks" novalidate>
+      <div class="form-body" style="display:grid;gap:12px">
+        <div class="row">
+          <label class="field"><span>First name</span><input name="first" autocomplete="given-name" required></label>
+          <label class="field"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+        </div>
+        <label class="field"><span>Mobile <em>optional, for a text reminder</em></span><input type="tel" name="phone" autocomplete="tel"></label>
+        <label class="check"><input type="checkbox" name="sms"><span>Text me a reminder before the workshop. Msg and data rates may apply. Reply STOP to opt out. Consent isn't required to register.</span></label>
+        <div class="err"></div>
+        <button class="btn btn-p" type="submit">Save my free seat</button>
+        ${consent}
+      </div>
+    </form>`;
+  $$('[data-reg]').forEach(el=>el.innerHTML=reg(el.dataset.reg));
+
+  $$('[data-wait]').forEach(el=>el.innerHTML=`
+    <form class="form" data-form="wait" novalidate>
+      <div class="form-body" style="display:grid;gap:12px">
+        <div class="row">
+          <label class="field"><span>First name</span><input name="first" required></label>
+          <label class="field"><span>Email</span><input type="email" name="email" required></label>
+        </div>
+        <label class="field"><span>Where are you starting?</span><select name="stage"><option>I'm new to this</option><option>I've done a project or two</option><option>I invest or flip regularly</option><option>I'm an agent or designer</option></select></label>
+        <div class="err"></div>
+        <button class="btn btn-ink" type="submit">Join the waitlist</button>
+        <p class="consent">You'll get emails about the Masterclass. Unsubscribe anytime.</p>
+      </div>
+      <div class="done"><div class="ok">✓</div><h3>You're on the list</h3><p>You'll hear from me first on November 5.</p></div>
+    </form>`);
+
+  $$('[data-apply]').forEach(el=>el.innerHTML=`
+    <h3 style="font-size:30px;margin-bottom:18px">Apply</h3>
+    <form class="form" data-form="apply" novalidate>
+      <div class="form-body" style="display:grid;gap:12px">
+        <div class="row">
+          <label class="field"><span>Name</span><input name="name" required></label>
+          <label class="field"><span>Email</span><input type="email" name="email" required></label>
+        </div>
+        <div class="row">
+          <label class="field"><span>Property</span><select name="type"><option>Flip or resale</option><option>Rental</option><option>My own home, selling soon</option><option>New build or development</option></select></label>
+          <label class="field"><span>Timeline</span><select name="when"><option>Next 30 days</option><option>1 to 3 months</option><option>3 to 6 months</option><option>Just exploring</option></select></label>
+        </div>
+        <label class="field"><span>Design and renovation budget</span><select name="budget"><option>Under $25K</option><option>$25K to $75K</option><option>$75K to $150K</option><option>$150K and up</option></select></label>
+        <label class="field"><span>Tell me about it</span><textarea name="msg" placeholder="Where it is, what it needs, and what a win looks like for you."></textarea></label>
+        <div class="err"></div>
+        <button class="btn btn-p" type="submit">Send application</button>
+        <p class="consent">I read every application myself and reply within a few business days.</p>
+      </div>
+      <div class="done"><div class="ok">✓</div><h3>Application received</h3><p>I'll be in touch about a fit call.</p></div>
+    </form>`);
+
+  const leads={
+    design:{btn:"Send me the checklist",ttl:"Check your inbox",msg:"The 25 design moves are on their way.",note:"You'll also get weekly design tips from Sold by Design, a Jay Abrams studio. Unsubscribe anytime."},
+    invest:{btn:"Send me the 90-day plan",ttl:"Check your inbox",msg:"Your 90-day plan is on its way.",note:"You'll also get weekly emails from First Door, part of the Jay Abrams family. Unsubscribe anytime."}
+  };
+  $$('[data-lead]').forEach(el=>{const L=leads[el.dataset.lead];el.innerHTML=`
+    <form class="form" data-form="lead" novalidate>
+      <div class="form-body" style="display:grid;gap:12px">
+        <label class="field"><span>First name</span><input name="first" required></label>
+        <label class="field"><span>Email</span><input type="email" name="email" required></label>
+        <div class="err"></div>
+        <button class="btn btn-p" type="submit">${L.btn}</button>
+        <p class="consent">${L.note}</p>
+      </div>
+      <div class="done"><div class="ok">✓</div><h3>${L.ttl}</h3><p>${L.msg}</p><p><a class="tlink" href="#design-to-sell">Next: the free workshop, Nov 5</a></p></div>
+    </form>`});
+
+  $$('[data-news]').forEach(el=>el.innerHTML=`
+    <form class="form" data-form="news" novalidate>
+      <div class="form-body" style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end">
+        <input type="email" name="email" placeholder="Your email" aria-label="Email for design notes" required>
+        <button class="btn btn-p btn-sm" type="submit" style="height:48px">Subscribe</button>
+        <div class="err" style="grid-column:1/-1"></div>
+      </div>
+      <div class="done" style="text-align:left;padding:10px 0"><p style="margin:0">You're subscribed. <a class="tlink" href="#design-to-sell">Save your Nov 5 seat</a></p></div>
+    </form>`);
+
+  /* ---------- work grid ---------- */
+  const W=[
+    {c:"outdoor",t:"The resort backyard",d:"An empty pool and a muddy lot, rebuilt around one listing photo.",a:"outdoor-after.jpg",b:"outdoor-before.jpg",shop:["Outdoor lounge set","Sheer pergola curtains","Live edge coffee table"],wide:true},
+    {c:"kitchen",t:"The green kitchen",d:"Down to the framing, then sage cabinets and butcher block.",a:"kitchen-after.jpg",b:"kitchen-before.jpg",shop:["Brass bar pulls","Butcher block counters","Matte black faucet"]},
+    {c:"bath",t:"The mural bath",d:"A lime green shell turned into the room everyone photographs.",a:"bath-after.jpg",b:"bath-before.jpg",shop:["Cane vanity","Organic wood mirror","Globe sconces"]},
+    {c:"living",t:"The open living room",d:"Knotty pine walls, painted out and opened up to the kitchen.",a:"living-after.jpg",b:"living-before.jpg",shop:["Walnut slab table","Woven pendants","Fluted sideboard"],wide:true},
+    {c:"office",t:"The writer's office",d:"A crowded dining corner, now the room that sells the work-from-home story.",a:"office-after.jpg",b:"office-before.jpg",shop:["Flamingo lamp","Cane lounge chair","Walnut desk"]},
+  ];
+  const wEl=$('[data-work]');
+  wEl.innerHTML=W.map(w=>`
+    <article class="wcard ${w.wide?'wide':''}" data-cat="${w.c}">
+      <div class="reveal ${w.wide?'r-169':'r-43'}" data-hold>
+        <img src="/b/jay/img/${w.a}" alt="After: ${w.t}" loading="lazy">
+        <img class="rb" src="/b/jay/img/${w.b}" alt="Before: ${w.t}" loading="lazy">
+        <span class="tag"><span class="af">After</span><span class="bf">Before</span></span>
+        <button class="hold" type="button"><i></i><span>Hold to see the before</span></button>
+      </div>
+      <div class="meta">
+        <div><h3>${w.t}</h3><p>${w.d}</p></div>
+        <div class="acts"><a class="btn btn-g btn-sm" href="#" data-ext="Amazon storefront" data-ph="Link to this room's storefront list.">Shop this room</a><a class="btn btn-p btn-sm" href="#design-to-sell">How I designed it</a></div>
+      </div>
+    </article>`).join('');
+  $$('.filters button').forEach(b=>b.addEventListener('click',()=>{
+    $$('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    const f=b.dataset.f;
+    $$('.wcard').forEach(c=>c.classList.toggle('hide',f!=='all'&&c.dataset.cat!==f));
+  }));
+
+  /* ---------- hold to reveal ---------- */
+  function bindHold(r){
+    const btn=$('.hold span',r), on=()=>{r.classList.add('holding');btn.textContent='Release to see the after'}, off=()=>{r.classList.remove('holding');btn.textContent='Hold to see the before'};
+    r.addEventListener('pointerdown',e=>{e.preventDefault();on();try{r.setPointerCapture(e.pointerId)}catch(_){}});
+    ['pointerup','pointercancel','lostpointercapture'].forEach(ev=>r.addEventListener(ev,off));
+    r.addEventListener('contextmenu',e=>e.preventDefault());
+    const hb=$('.hold',r);
+    hb.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();on()}});
+    hb.addEventListener('keyup',e=>{if(e.key===' '||e.key==='Enter'){off()}});
+    hb.addEventListener('blur',off);
+  }
+  $$('[data-hold]').forEach(bindHold);
+
+  /* ---------- hero input/output ---------- */
+  const hero=$('#hero');
+  $$('[data-io]').forEach(b=>b.addEventListener('click',()=>{
+    const before=b.dataset.io==='before';
+    hero.classList.toggle('show-before',before);
+    $$('[data-io]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  }));
+
+  /* ---------- highlights tabs ---------- */
+  const figs=$$('[data-stage] figure');
+  $$('[data-tab]').forEach(t=>t.addEventListener('click',()=>{
+    const i=+t.dataset.tab;
+    $$('[data-tab]').forEach(x=>x.setAttribute('aria-selected',x===t));
+    figs.forEach((f,j)=>f.classList.toggle('on',j===i));
+  }));
+
+  /* ---------- countdown (real date, no fake urgency) ---------- */
+  const start=new Date('2026-11-06T00:00:00Z'); // Thu Nov 5, 7:00 PM ET
+  function cd(){
+    const ms=start-Date.now(), d=Math.ceil(ms/864e5);
+    const s= ms<=0 ? 'Replay available' : d<=1 ? 'Tomorrow' : `In ${d} days`;
+    $$('[data-countdown]').forEach(e=>e.textContent=s);
+    $$('[data-countdown-long]').forEach(e=>e.textContent= ms<=0 ? 'This workshop has happened. Register for the replay.' : `Live in ${d} day${d===1?'':'s'}. Registration is open.`);
+  }
+  cd(); setInterval(cd,6e4);
+
+  /* ---------- forms ---------- */
+  document.addEventListener('submit',e=>{
+    const f=e.target.closest('form[data-form]'); if(!f) return;
+    e.preventDefault();
+    const err=$('.err',f); let bad=null;
+    $$('[required]',f).forEach(i=>{ if(!bad && (!i.value.trim() || (i.type==='email' && !/^\S+@\S+\.\S+$/.test(i.value)))) bad=i; });
+    if(bad){ err.textContent = bad.type==='email' ? 'Enter a valid email.' : 'Please fill this in.'; bad.focus(); return; }
+    err.textContent='';
+    if(f.dataset.next){ location.hash=f.dataset.next; f.reset(); return; }
+    f.classList.add('sent');
+  });
+
+  /* ---------- toasts, external links, dialog ---------- */
+  const toastEl=$('#toast'); let tt;
+  function toast(m){toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('on'),2600)}
+  const dlg=$('#dlg');
+  function modal(t,p,video){$('#dlgT').textContent=t;$('#dlgP').textContent=p;$('#dlgV').hidden=!video;dlg.showModal()}
+  $('#dlgX').addEventListener('click',()=>dlg.close());
+  dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+  document.addEventListener('click',e=>{
+    const x=e.target.closest('[data-ext]'); if(x){e.preventDefault();toast(`Opens ${x.dataset.ext} in the real build`);return}
+    const t=e.target.closest('[data-toast]'); if(t){e.preventDefault();toast(t.dataset.toast);return}
+    const v=e.target.closest('[data-video]'); if(v){modal(v.dataset.video,'In the real build this plays inline from YouTube, with a guide signup underneath.',true);return}
+    const c=e.target.closest('[data-checkout]'); if(c){modal('Checkout',`${c.dataset.checkout}. In the real build this opens Stripe Checkout, and a paid member is tagged in Communicake.`,false);return}
+  });
+
+  /* ---------- theme ---------- */
+  /* hub in charcoal, landing pages in tan */
+  function setTheme(t){ document.documentElement.dataset.theme=t; }
+
+  /* ---------- dock ---------- */
+  const pages=$('#pages'), pb=$('#pagesBtn');
+  pb.addEventListener('click',()=>{const o=pages.classList.toggle('on');pb.setAttribute('aria-expanded',o)});
+  $('#phBtn').addEventListener('click',e=>{const o=document.body.classList.toggle('show-ph');e.currentTarget.setAttribute('aria-pressed',o);toast(o?'Placeholders outlined. Hover one for the note.':'Placeholders hidden')});
+
+  /* ---------- mobile nav ---------- */
+  const header=$('header.top'), burger=$('.burger');
+  burger.addEventListener('click',()=>{header.style.setProperty('--hh',header.getBoundingClientRect().bottom+'px');const o=header.classList.toggle('nav-open');burger.setAttribute('aria-expanded',o)});
+  $$('.pages a').forEach(a=>a.addEventListener('click',()=>{pages.classList.remove('on');pb.setAttribute('aria-expanded',false)}));
+
+  /* ---------- router ---------- */
+  const views=$$('.view'), names=views.map(v=>v.dataset.view);
+  const anchors={register:'design-to-sell',waitlist:'masterclass',paths:'learn',guides:'shop'};
+  function route(){
+    let h=(location.hash||'#home').slice(1);
+    if(anchors[h]){
+      const v=anchors[h]; show(v,false);
+      const el=document.getElementById(h); if(el){ const y=el.getBoundingClientRect().top+scrollY-110; scrollTo({top:y,behavior:'smooth'}) }
+      return;
+    }
+    if(!names.includes(h)) h='home';
+    show(h,true);
+  }
+  let cur=null;
+  function show(name,top){
+    if(cur!==name){
+      views.forEach(v=>v.classList.toggle('on',v.dataset.view===name));
+      const v=views.find(v=>v.dataset.view===name); document.title=v.dataset.title||'Jay Abrams';
+      cur=name;
+    }
+    $$('[data-nav]').forEach(a=>a.classList.toggle('on',a.dataset.nav===name));
+    $$('.pages a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+name));
+    header.classList.remove('nav-open'); burger.setAttribute('aria-expanded',false);
+    pages.classList.remove('on'); pb.setAttribute('aria-expanded',false);
+    const fl=['design-to-sell','thanks','design','invest'].includes(name);
+    $('header.top').style.display=fl?'none':'';
+    $('footer').style.display=fl?'none':'';
+    setTheme(fl?'tan':'charcoal');
+    if(top) scrollTo({top:0});
+  }
+  addEventListener('hashchange',route);
+  route();
+})();
+</script>
+
+
+<script>if(window.top===window){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","z8qtahj70m");}</script>
+</body></html>

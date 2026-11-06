@@ -597,6 +597,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 html.ld-on #you{margin-block:0 var(--sp-sec)}
 /* our work, shown only from its own link (#ourwork): studio work and concepts read as one body of work, sorted by offer. Arden Architects adds its materials library, Mountain & Valley its app, Halden House adds a resident app with its owner board, and under the before and after three paired crops prove each of the three seconds */
 .ow-tg{font-style:italic;color:var(--pencil);margin-left:.28em}
+/* the three offers read as offers: a numbered eyebrow, the name set large, the promise under it, one heavier rule */
+.ow-band .head.ow-hd{align-items:flex-end;padding-bottom:clamp(22px,2.4vw,32px);border-bottom:1px solid var(--graphite)}
+.ow-t{display:grid;gap:clamp(10px,1vw,14px);min-width:0}
+.ow-k{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--patina)}.ow-k b{font-weight:400;color:var(--graphite);margin-left:.6em}
+.ow-band .head.ow-hd h2{font-size:clamp(60px,7.2vw,120px);line-height:.92;letter-spacing:-.025em}
+.ow-hd .ow-tg{display:block;margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(20px,1.9vw,28px);line-height:1.2}
+.ow-hd>.mono{padding-bottom:.4em}
 .ow-band .head{flex-wrap:nowrap;align-items:flex-end}.ow-band .head h2{min-width:0}
 @media (max-width:760px){.ow-tg{display:block;margin-left:0}}
 #ladder .tiles{margin-top:var(--sp-in)}
@@ -792,7 +799,7 @@ header .hpill:hover{background:var(--patina);color:var(--plaster)}
 .dq-q{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(34px,3.9vw,58px);line-height:1.06;letter-spacing:-.016em;color:var(--graphite);text-wrap:balance}
 .dq-q span{background:linear-gradient(var(--graphite),var(--graphite)) 0 56%/0% 2px no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .dq-a{margin:0;max-width:28ch;font-family:var(--serif);font-weight:300;font-optical-sizing:auto;font-size:clamp(22px,1.9vw,28px);line-height:1.25;letter-spacing:-.006em;color:var(--graphite);text-wrap:balance}
-.dq-v{grid-column:4/7;margin:0;position:relative;height:clamp(220px,21vw,300px);display:flex;align-items:center;justify-content:center;gap:12px;background:var(--sheet);overflow:hidden}
+.dq-v{grid-column:4/7;margin:0;position:relative;height:clamp(220px,21vw,300px);display:flex;align-items:center;justify-content:center;gap:12px;background:none;overflow:hidden}
 .rc{width:min(250px,72%);padding:22px 22px 20px;background:#FFFDF8;color:#1F1C18;display:grid;gap:12px;box-shadow:0 1px 0 rgba(31,28,24,.06),0 18px 34px -18px rgba(31,28,24,.35);transform:rotate(-2deg)}
 .rc-m{display:block;height:18px;width:calc(18px*2.994);color:#1F1C18}
 .rc .mono{color:#6E665B}
@@ -830,6 +837,7 @@ header .hpill:hover{background:var(--patina);color:var(--plaster)}
   .st-row{justify-items:center;text-align:center}
   .st-copy p,.lead,.st-copy{margin-inline:auto}
   .ind .head,.ow-band .head{flex-direction:column;align-items:center;flex-wrap:wrap;text-align:center;gap:8px}
+  .ow-t{justify-items:center}.ow-hd>.mono{display:none}
   .fit-row{text-align:center;justify-items:center}
   .fit-l,.fit-a{display:flex;flex-direction:column;align-items:center}
   .fit-a p,.fit-a b{margin-inline:auto}
@@ -1107,7 +1115,7 @@ header nav{align-items:center}
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">02</span><p class="dq-q"><span>&ldquo;Why trust a stranger?&rdquo;</span></p><p class="dq-a">You shouldn&rsquo;t have to. That&rsquo;s why the preview is free.</p></div>
-          <figure class="dq-v dv-bk" aria-hidden="true"><img src="img/book/cover-82.webp" alt="" loading="lazy"></figure>
+          <figure class="dq-v dv-bk" aria-hidden="true"><img src="img/book/cover-82.webp" alt="" decoding="async"></figure>
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">03</span><p class="dq-q"><span>&ldquo;I can&rsquo;t picture it.&rdquo;</span></p><p class="dq-a">You won&rsquo;t have to. Your opening screen comes first, built from your brand.</p></div>
@@ -1387,7 +1395,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     [].forEach.call(wrap.querySelectorAll(':scope>.ind'),function(d){d.remove();});
     function el(html){var t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstChild;}
     function band(id,name,tg,n,list){
-      var d=el('<div class="ind ow-band" id="'+id+'"><div class="head"><h2>'+name+'<em class="ow-tg">'+tg+'</em></h2><span class="mono">'+('0'+n).slice(-2)+'</span></div></div>');
+      var no={'ow-refresh':'01','ow-signature':'02','ow-flagship':'03'}[id]||'';var d=el('<div class="ind ow-band" id="'+id+'"><div class="head ow-hd"><div class="ow-t"><span class="mono ow-k">The offer <b>'+no+'</b></span><h2>'+name+'</h2><em class="ow-tg">'+tg+'</em></div><span class="mono">'+('0'+n).slice(-2)+'</span></div></div>');
       if(list){var g=document.createElement('div');g.className='tiles';list.forEach(function(x){var t=T[x[0]];t.className='tile'+(x[1]?' '+x[1]:'');g.appendChild(t);});d.appendChild(g);}
       return d;
     }
@@ -1398,9 +1406,11 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     ba.appendChild(fxe);
     T.lunasr=el('<figure class="tile"><div class="frame"><div class="page"><img src="img/w/lu-sv-o-refresh.webp" alt="Luna&rsquo;s Coffee at Refresh, brewed by moonlight" loading="lazy"></div></div></figure>');
     T.meridian=el('<figure class="tile" data-site="b/meridian/index.html" data-name="Meridian" tabindex="0" role="button" aria-label="Open the Meridian site"><div class="frame"><div class="page"><img src="img/w/meridian-1.webp" alt="Meridian, houses drawn for the sun" loading="lazy"><img src="img/w/meridian-2.webp" alt="" loading="lazy"></div></div></figure>');
-    T.bascule2=el('<figure class="tile" data-site="b/bascule2/index.html" data-name="Bascule" tabindex="0" role="button" aria-label="Open the Bascule site"><div class="frame"><div class="page"><img src="img/w/bascule2-1.webp" alt="Bascule, a tower on the Intracoastal" loading="lazy"><img src="img/w/bascule2-2.webp" alt="" loading="lazy"></div></div></figure>');
-    var ref=band('ow-refresh','Refresh','Your site, renewed.',2,[['meridian','half'],['lunasr','half']]);
-    var sig=band('ow-signature','Signature','Your brand, elevated.',4,[['jay','half'],['bascule2','half'],['places','half'],['apply','half']]);
+    T.bascule2=el('<figure class="tile" data-site="b/bascule2/index.html" data-name="Bascule" tabindex="0" role="button" aria-label="Open the Bascule site"><div class="frame"><div class="page"><img src="img/w/bascule2-2.webp" alt="Bascule, a tower on the Intracoastal" loading="lazy"><img src="img/w/bascule2-1.webp" alt="" loading="lazy"></div></div></figure>');
+    T.able=el('<figure class="tile" data-site="b/able/index.html" data-name="Able Plumbing" tabindex="0" role="button" aria-label="Open the Able Plumbing site"><div class="frame"><div class="page"><img src="img/w/able-1.webp" alt="Able Plumbing, a copper line through a glazed tile wall" loading="lazy"><img src="img/w/able-2.webp" alt="" loading="lazy"></div></div></figure>');
+    T.jay.setAttribute('data-site','b/jay/index.html');T.jay.setAttribute('data-name','jayabrams.com');T.jay.setAttribute('tabindex','0');T.jay.setAttribute('role','button');T.jay.setAttribute('aria-label','Open the jayabrams.com site');
+    var ref=band('ow-refresh','Refresh','Your site, renewed.',2,[['apply','half'],['lunasr','half']]);
+    var sig=band('ow-signature','Signature','Your brand, elevated.',4,[['jay','half'],['able','half'],['meridian','half'],['bascule2','half']]);
     var fla=band('ow-flagship','Flagship','Your whole business, connected.',5);
     var play='<i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 1.8v12.4L13.6 8z" fill="currentColor"/></svg></i>';
     var hd=el('<div class="st rv" id="halden"><div class="st-row"><h2 class="st-big">Home, <em>handled.</em></h2><div class="st-copy"><p>Rent, repairs and renewals in the resident&rsquo;s hand. The owner sees each one land.</p></div></div><div class="lv-pair">'

@@ -35,6 +35,7 @@ Intentional offsets:
   --serif:"Marcellus",Georgia,"Times New Roman",serif;
   --sans:"Sora",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --ease:cubic-bezier(.2,.7,.2,1);
+  --vu:min(1vw,1.6vh);   /* the vw of a 16:10 screen: on wide, short windows type keeps the scale of the preview */
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -76,6 +77,9 @@ header:not(.solid) nav .btn{opacity:0;pointer-events:none}
 .hero .ph{position:absolute;inset:0}
 .hero .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:12% 50%}
 .hero .ph .base{filter:brightness(.42) saturate(.55)}
+@media (min-width:761px) and (min-aspect-ratio:16/9){   /* wide, short windows: the photograph fits the height and sits right, as in the preview, its left edge fading into the night */
+  .hero .ph img{object-fit:contain;object-position:100% 50%;-webkit-mask-image:linear-gradient(90deg,transparent calc(100% - 178svh),#000 calc(100% - 150svh));mask-image:linear-gradient(90deg,transparent calc(100% - 178svh),#000 calc(100% - 150svh))}
+}
 .hero .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,22,.86) 0%,rgba(8,12,22,.58) 36%,rgba(8,12,22,0) 64%),linear-gradient(0deg,rgba(8,12,22,.9) 0%,rgba(8,12,22,.62) 18%,rgba(8,12,22,0) 42%),linear-gradient(180deg,rgba(8,12,22,.5) 0%,rgba(8,12,22,0) 20%)}
 .louvers{position:absolute;inset:0;pointer-events:none}
 .louvers i{position:absolute;top:0;bottom:0;background:linear-gradient(90deg,#0B1220 0%,#111B2E 78%,#1A263C 100%);transform-origin:0 50%;will-change:transform}
@@ -83,7 +87,7 @@ header:not(.solid) nav .btn{opacity:0;pointer-events:none}
 .hero>.wrap{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(56px,10vh,104px)}
 .hero .grid{align-items:end}
 .hl{grid-column:1 / span 6}
-h1{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(60px,6.2vw,100px);line-height:1;letter-spacing:-.022em;white-space:nowrap}
+h1{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(60px,calc(6.2*var(--vu)),100px);line-height:1;letter-spacing:-.022em;white-space:nowrap}
 h1 span{display:block}
 h1 em{color:var(--brass)}
 h1 .br{display:none}
@@ -96,8 +100,8 @@ h1 .br{display:none}
 .idx span{display:block;margin-top:8px;font-size:14px;color:var(--mute-dark)}
 
 /* shared section type */
-.ch2{margin:18px 0 0;font-family:var(--serif);font-weight:300;font-size:clamp(40px,3.9vw,60px);line-height:1.05;letter-spacing:-.015em;text-wrap:balance}
-.h2{margin:18px 0 0;font-family:var(--serif);font-weight:300;font-size:clamp(50px,5.6vw,92px);line-height:1;letter-spacing:-.02em;text-wrap:balance}
+.ch2{margin:18px 0 0;font-family:var(--serif);font-weight:300;font-size:clamp(40px,calc(3.9*var(--vu)),60px);line-height:1.05;letter-spacing:-.015em;text-wrap:balance}
+.h2{margin:18px 0 0;font-family:var(--serif);font-weight:300;font-size:clamp(50px,calc(5.6*var(--vu)),92px);line-height:1;letter-spacing:-.02em;text-wrap:balance}
 
 /* 01 the drawing becomes the house */
 .drawn{position:relative;height:380vh;background:var(--sheet)}
@@ -143,7 +147,7 @@ h1 .br{display:none}
 .ro{grid-column:1 / span 5;grid-row:3;align-self:end;padding-bottom:64px;font-variant-numeric:lining-nums tabular-nums}
 .ro-m{display:block;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
 .ro-row{display:flex;align-items:flex-end;gap:32px;margin-top:8px}
-.ro-row>b{flex:none;width:2.3em;font-family:var(--serif);font-weight:300;font-size:clamp(76px,7vw,112px);line-height:.86;letter-spacing:-.03em}
+.ro-row>b{flex:none;width:2.3em;font-family:var(--serif);font-weight:300;font-size:clamp(76px,calc(7*var(--vu)),112px);line-height:.86;letter-spacing:-.03em}
 .ro dl{flex:1;margin:0;display:grid;padding-bottom:4px}
 .ro dl div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:9px 0;border-top:1px solid var(--rule)}
 .ro dt{font-size:15px;color:var(--ink-2)}
@@ -169,7 +173,7 @@ h1 .br{display:none}
 .facts{background:var(--sheet);color:var(--ink);padding-block:24px 136px}
 .stats{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px}
 .stat{border-top:1px solid var(--rule);padding-top:28px}
-.stat b{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(58px,5.6vw,92px);line-height:1;letter-spacing:-.02em;font-variant-numeric:lining-nums tabular-nums}
+.stat b{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(58px,calc(5.6*var(--vu)),92px);line-height:1;letter-spacing:-.02em;font-variant-numeric:lining-nums tabular-nums}
 .stat>span{display:block;margin-top:14px;color:var(--ink-2);font-size:17px;max-width:20ch}
 
 /* 03 storm */
@@ -182,7 +186,7 @@ h1 .br{display:none}
 .st-top .ch2{grid-column:1 / span 6;grid-row:2}
 .read{grid-column:7 / span 6;grid-row:1 / span 2;align-self:end}
 .read .cat{display:block;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-bottom:8px}
-.read .big{display:flex;align-items:baseline;gap:18px;font-family:var(--serif);font-weight:300;font-size:clamp(150px,15.5vw,236px);line-height:.8;letter-spacing:-.035em;font-variant-numeric:lining-nums tabular-nums}
+.read .big{display:flex;align-items:baseline;gap:18px;font-family:var(--serif);font-weight:300;font-size:clamp(150px,calc(15.5*var(--vu)),236px);line-height:.8;letter-spacing:-.035em;font-variant-numeric:lining-nums tabular-nums}
 .read .big small{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mute-dark)}
 .gauge{position:relative;display:grid;gap:30px}
 .cats{position:relative;height:30px;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
@@ -192,7 +196,7 @@ h1 .br{display:none}
 .cats span.on{color:rgba(243,238,229,.88)}
 .bar .lab{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin-bottom:14px}
 .bar .lab b{font-weight:500;font-size:18px;transition:color .5s}
-.bar .lab span{white-space:nowrap;font-family:var(--serif);font-weight:300;font-size:clamp(30px,2.6vw,40px);line-height:1;font-variant-numeric:lining-nums tabular-nums;transition:color .5s}
+.bar .lab span{white-space:nowrap;font-family:var(--serif);font-weight:300;font-size:clamp(30px,calc(2.6*var(--vu)),40px);line-height:1;font-variant-numeric:lining-nums tabular-nums;transition:color .5s}
 .track{height:12px;background:#18233A;position:relative;border-radius:2px;overflow:hidden}
 .fill{position:absolute;inset:0 auto 0 0;width:calc(var(--w) / 220 * 100%);background:rgba(243,238,229,.55);transition:background .5s,box-shadow .6s}
 .bar.us .fill{background:var(--brass)}
@@ -210,7 +214,7 @@ h1 .br{display:none}
 .work img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
 .work::after{content:"";position:absolute;inset:auto 0 0;height:55%;background:linear-gradient(180deg,rgba(9,14,24,0),rgba(9,14,24,.66));pointer-events:none}
 .work>.wrap{position:relative;z-index:1;height:100%;display:flex;align-items:flex-end;padding-bottom:56px}
-.work p{margin:0;color:#fff;font-family:var(--serif);font-weight:300;font-size:clamp(30px,2.8vw,42px);line-height:1.12;text-shadow:0 1px 18px rgba(0,0,0,.3)}
+.work p{margin:0;color:#fff;font-family:var(--serif);font-weight:300;font-size:clamp(30px,calc(2.8*var(--vu)),42px);line-height:1.12;text-shadow:0 1px 18px rgba(0,0,0,.3)}
 .work p em{display:block;font-family:var(--sans);font-style:normal;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-2);margin-bottom:12px;text-shadow:none}
 .js .work img{clip-path:inset(0 9% 0 9%);transform:scale(1.06);transition:clip-path 2.2s cubic-bezier(.6,0,.2,1),transform 3.8s var(--ease)}
 .js .work.on img{clip-path:inset(0 0 0 0);transform:none}
@@ -218,7 +222,7 @@ h1 .br{display:none}
 /* close */
 .book{background:var(--night);color:var(--bone);padding-block:136px}
 .book .lt{grid-column:1 / span 5}
-.book .h2{margin:0;font-size:clamp(56px,6.4vw,104px);line-height:.98}
+.book .h2{margin:0;font-size:clamp(56px,calc(6.4*var(--vu)),104px);line-height:.98}
 .book .h2 em{color:var(--brass)}
 .book .side{margin:32px 0 0;color:var(--on-dark);font-size:20px;max-width:30ch}
 form{grid-column:7 / span 6;display:grid;gap:24px;align-self:end}
@@ -353,8 +357,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 <main id="top">
   <section class="hero" id="hero" aria-label="Meridian">
     <div class="ph">
-      <img class="base" src="b/meridian/img/house.jpg" alt="" aria-hidden="true">
-      <img class="on" src="b/meridian/img/house.jpg" alt="A board-formed concrete house on the beach at dusk, deep overhangs over rooms lit warm" fetchpriority="high">
+      <img class="base" src="/b/meridian/img/house.jpg" alt="" aria-hidden="true">
+      <img class="on" src="/b/meridian/img/house.jpg" alt="A board-formed concrete house on the beach at dusk, deep overhangs over rooms lit warm" fetchpriority="high">
     </div>
     <div class="shade"></div>
     <div class="louvers" aria-hidden="true"></div>
@@ -382,7 +386,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <p class="tblk"><b>Sheet A-201</b>Northeast elevation</p>
         </div>
         <div class="dl built" id="dbuilt">
-          <div class="ph" id="dph"><img src="b/meridian/img/house.jpg" alt="The same house, built: board-formed concrete, its overhangs deep over glass, lit at dusk" loading="lazy"></div>
+          <div class="ph" id="dph"><img src="/b/meridian/img/house.jpg" alt="The same house, built: board-formed concrete, its overhangs deep over glass, lit at dusk" loading="lazy"></div>
           <svg id="dgold" aria-hidden="true"></svg>
           <div class="dtx"><div class="wrap grid"><div class="in">
             <p class="eyebrow"><i>01</i>The house</p>
@@ -449,7 +453,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   </section>
 
   <section class="work" id="work" aria-label="A Meridian house in Manalapan">
-    <img src="b/meridian/img/estate.webp" alt="A white oceanfront house at dusk, every room lit under deep overhangs, behind a pool and a row of palms" loading="lazy">
+    <img src="/b/meridian/img/estate.webp" alt="A white oceanfront house at dusk, every room lit under deep overhangs, behind a pool and a row of palms" loading="lazy">
     <div class="wrap"><p class="rv"><em>8 ft overhangs · Rated 200 mph</em>Manalapan, on the ocean.</p></div>
   </section>
 

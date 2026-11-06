@@ -1,0 +1,463 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Able Plumbing Concept</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Young+Serif&display=swap">
+<style>
+/* Able Plumbing: "Follow the water." The whole page is the 80s glazed tile wall. One copper line runs from the top of the screen through a shutoff valve, then into each fixture as you scroll, and ends at a dripping faucet over the phone number. Copper is the only accent. Single dark look by design. */
+:root{
+  color-scheme:dark;
+  --tile:#0f3533;
+  --tile-2:#0b2826;
+  --cream:#EEF3EF;
+  --mute:rgba(238,243,239,.68);
+  --line:rgba(238,243,239,.16);
+  --copper:#c47a48;
+  --copper-l:#e0a172;
+  --copper-d:#5a2c14;
+  --water:#9fe3dc;
+  --display:"Young Serif","Iowan Old Style",Georgia,serif;
+  --body:"Karla","Helvetica Neue",Arial,sans-serif;
+  --gl:max(20px,env(safe-area-inset-left,0px));
+  --gr:max(20px,env(safe-area-inset-right,0px));
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--cream);font-family:var(--body);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-color:var(--tile);
+  background-image:
+    linear-gradient(rgba(238,243,239,.075) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(238,243,239,.075) 1px,transparent 1px),
+    radial-gradient(circle at 26% 20%,rgba(255,255,255,.055),transparent 42%),
+    linear-gradient(160deg,transparent 55%,rgba(0,0,0,.14));
+  background-size:64px 64px}
+a{color:inherit}
+svg{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--copper-l);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:var(--gl);padding-right:var(--gr)}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.02;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:clamp(40px,5.4vw,72px)}
+h3{font-size:clamp(34px,3.6vw,52px)}
+.label{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--copper-l)}
+p{margin:0}
+
+
+header{position:absolute;inset:0 0 auto;z-index:20;padding-top:env(safe-area-inset-top,0px)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-block:22px}
+.brand{font-family:var(--display);font-size:24px;text-decoration:none}
+header nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:16px}
+header nav a{text-decoration:none;opacity:.82}
+header nav a:hover{opacity:1}
+
+main{position:relative}
+#pipe{position:absolute;left:0;top:0;width:100%;pointer-events:none;z-index:1;overflow:visible}
+.po,.pb,.ph,.pw{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.po{stroke:var(--copper-d);stroke-width:14}
+.pb{stroke:var(--copper);stroke-width:10}
+.ph{stroke:#f3c39d;stroke-width:2.5;opacity:.7}
+.pw{stroke:var(--water);stroke-width:2.5;stroke-dasharray:10 26;animation:run 1.2s linear infinite;opacity:.95}
+.joint{fill:var(--copper);stroke:var(--copper-d);stroke-width:3}
+#reveal path{fill:none;stroke:#fff;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;transition:stroke-dashoffset 1.4s cubic-bezier(.2,.7,.2,1)}
+@keyframes run{to{stroke-dashoffset:-36}}
+
+section{position:relative;z-index:2}
+.node{position:absolute;width:0;height:0;pointer-events:none}
+
+/* hero */
+.hero{min-height:100svh;display:grid;align-items:center;overflow:hidden}
+.hero .light{position:absolute;inset:-20%;mix-blend-mode:soft-light;opacity:.5;pointer-events:none;
+  background:radial-gradient(40% 18% at 30% 40%,rgba(255,255,255,.9),transparent 70%),radial-gradient(30% 14% at 70% 60%,rgba(255,255,255,.8),transparent 70%),radial-gradient(36% 16% at 45% 78%,rgba(255,255,255,.7),transparent 70%);
+  animation:caustic 9s ease-in-out infinite alternate}
+@keyframes caustic{0%{transform:translate(0,0) rotate(0deg) scale(1)}50%{transform:translate(4%,-3%) rotate(6deg) scale(1.08)}100%{transform:translate(-3%,4%) rotate(-4deg) scale(1.02)}}
+.accent{position:absolute;width:63px;height:63px;pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;width:100%;padding-block:110px 90px}
+.hero h1{font-size:clamp(72px,11vw,176px);line-height:.88}
+.hero h1 em{font-style:normal;color:var(--copper-l)}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .ln>span{display:inline-block;animation:rise 1.1s cubic-bezier(.2,.75,.1,1) both}
+.hero h1 .ln:nth-child(2)>span{animation-delay:.12s}
+.hero p{font-size:21px;margin:26px 0 32px;max-width:30ch;color:var(--mute);animation:fade 1s .7s ease both}
+.call{display:inline-grid;gap:2px;text-decoration:none;border-left:2px solid var(--copper);padding-left:16px;animation:fade 1s .9s ease both}
+.call small{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.call b{font-family:var(--display);font-weight:400;font-size:36px;user-select:all}
+.follow{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;animation:fade 1s 2.2s ease both;z-index:3}
+.follow i{width:1px;height:34px;background:linear-gradient(var(--water),transparent);animation:drip 1.8s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* line art */
+.art{position:relative;width:min(100%,380px);aspect-ratio:1;justify-self:center}
+.art svg{width:100%;height:100%;overflow:visible}
+.art .ln{fill:none;stroke:var(--copper-l);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.art .lt{fill:none;stroke:rgba(238,243,239,.45);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.art .fill{fill:var(--tile-2);stroke:var(--copper-l);stroke-width:3;stroke-linejoin:round;opacity:0;transition:opacity 1.2s .9s}
+.art.in .fill{opacity:1}
+.art .d{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.6s cubic-bezier(.6,.05,.3,1)}
+.art.in .d{stroke-dashoffset:0}
+.art .late{opacity:0;transition:opacity 1.2s 2s}
+.art.in .late{opacity:1}
+.art text{font-family:var(--display);fill:var(--water);font-size:26px}
+
+.wheel{transform-box:fill-box;transform-origin:50% 50%;animation:open 2.2s .5s cubic-bezier(.5,0,.2,1) both}
+@keyframes open{from{transform:rotate(-200deg)}to{transform:rotate(0)}}
+.stream{stroke:var(--water)!important;stroke-dasharray:8 16;animation:fall .7s linear infinite}
+@keyframes fall{to{stroke-dashoffset:-24}}
+.level{animation:fillup 6s ease-in-out infinite alternate}
+@keyframes fillup{from{transform:translateY(40px)}to{transform:translateY(0)}}
+.slosh{animation:slosh 2.4s ease-in-out infinite alternate}
+@keyframes slosh{from{transform:translateX(-14px)}to{transform:translateX(14px)}}
+.flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick 1.2s ease-in-out infinite alternate}
+@keyframes flick{from{transform:scale(.9,.82)}to{transform:scale(1.05,1.08)}}
+.drop{animation:dropfall 2.4s cubic-bezier(.55,0,.9,.5) infinite}
+@keyframes dropfall{0%,20%{transform:translateY(0) scale(.4);opacity:0}30%{transform:translateY(0) scale(1);opacity:1}70%{transform:translateY(150px);opacity:1}71%,100%{transform:translateY(150px);opacity:0}}
+.ripple{transform-box:fill-box;transform-origin:50% 50%;animation:ripple 2.4s ease-out infinite}
+@keyframes ripple{0%,70%{transform:scale(.2);opacity:0}72%{opacity:.9}100%{transform:scale(1.6);opacity:0}}
+
+/* family */
+.family .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;padding-block:72px 120px}
+.family h2{margin:14px 0 22px}
+.family p{color:var(--mute);max-width:34ch;font-size:20px}
+.gen{list-style:none;margin:40px 0 0;padding:0;display:grid;gap:22px;max-width:520px}
+.gen li{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:baseline;border-top:1px solid var(--line);padding-top:16px}
+.gen b{font-family:var(--display);font-weight:400;font-size:34px;color:var(--copper-l);line-height:1}
+.gen span{font-size:17px}
+
+/* fixtures */
+.work .row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding-block:96px}
+.work .row:nth-child(even) .art{order:2}
+.work .row .txt{max-width:420px}
+.work .row:nth-child(odd) .txt{justify-self:start}
+.work h3{margin:12px 0 14px}
+.work p{color:var(--mute);font-size:19px}
+.work .head{padding-top:24px}
+
+/* manifold of services */
+.services .wrap{padding-block:150px 40px}
+.mani{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin:0 40px 0 0}
+.mani li{list-style:none;position:relative;padding-top:74px;text-align:center;font-family:var(--display);font-size:22px;line-height:1.15}
+.mani li::before{content:"";position:absolute;left:50%;top:0;width:8px;margin-left:-4px;height:48px;background:linear-gradient(90deg,var(--copper-d),var(--copper) 30%,#f3c39d 50%,var(--copper) 70%,var(--copper-d));transform:scaleY(0);transform-origin:top;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.mani li::after{content:"";position:absolute;left:50%;top:48px;width:18px;height:6px;margin-left:-9px;border-radius:2px;background:var(--copper-l);opacity:0;transition:opacity .6s 1s}
+.mani.in li::before{transform:none}
+.mani.in li::after{opacity:1}
+.mani.in li:nth-child(2)::before{transition-delay:.25s}.mani.in li:nth-child(3)::before{transition-delay:.5s}.mani.in li:nth-child(4)::before{transition-delay:.75s}.mani.in li:nth-child(5)::before{transition-delay:1s}.mani.in li:nth-child(6)::before{transition-delay:1.25s}
+.mani-wrap{position:relative;padding:0;margin:0}
+.services .label{display:block;margin-bottom:0;text-align:right;padding-right:40px}
+
+/* visit */
+.visit .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding-block:150px 120px;align-items:start}
+.visit h2{margin:14px 0 26px}
+.tel{display:block;font-family:var(--display);font-size:clamp(44px,5.6vw,76px);line-height:1;margin:6px 0 28px;color:var(--cream);text-decoration:none;user-select:all}
+.hours{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;margin:0 0 22px}
+.hours dt{font-weight:700}
+.hours dd{margin:0;color:var(--mute)}
+address{font-style:normal;color:var(--mute)}
+.visit .right{display:grid;gap:28px}
+.visit .art{width:min(100%,300px);justify-self:start}
+form{display:grid;gap:14px;background:rgba(11,40,38,.82);border:1px solid var(--line);padding:26px}
+form label{display:grid;gap:6px;font-size:14px;font-weight:700}
+form input,form textarea{font:inherit;font-size:16px;color:var(--cream);background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:4px;padding:11px 13px}
+form button{justify-self:start;font:inherit;font-weight:700;border:0;border-radius:999px;padding:14px 24px;background:var(--copper);color:#fff;cursor:not-allowed;opacity:.55}
+.off{font-size:14px;color:var(--mute)}
+footer{position:relative;z-index:2;border-top:1px solid var(--line);font-size:14px;color:var(--mute);background:var(--tile-2)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between;padding-block:26px calc(26px + env(safe-area-inset-bottom,0px))}
+
+@media (max-width:860px){
+  header nav{display:none}
+  .hero .wrap,.family .wrap,.work .wrap,.visit .wrap,.services .wrap{padding-left:calc(var(--gl) + 34px)}
+  .hero .wrap,.family .wrap,.work .row,.visit .wrap{grid-template-columns:1fr}
+  .art:not(#faucet) .stub{display:none}
+  .services .label{text-align:left;padding-right:0}
+  .hero .wrap{padding-block:100px 110px;gap:24px}
+  .hero .art{width:min(100%,260px)}
+  .work .row:nth-child(even) .art{order:0}
+  .work .row{gap:18px;padding-block:44px}
+  .art{justify-self:start}
+  .mani{grid-template-columns:1fr;margin:0}
+  .services .wrap{padding-block:60px 20px}
+  .mani li{text-align:left;padding:10px 0 10px 4px;font-size:22px}
+  .mani li::before{left:-34px;top:50%;width:34px;height:8px;margin:-4px 0 0 0;background:linear-gradient(180deg,var(--copper-d),var(--copper) 30%,#f3c39d 50%,var(--copper) 70%,var(--copper-d));transform:scaleX(0);transform-origin:left}
+  .mani li::after{display:none}
+  .mani.in li::before{transform:none}
+  .visit .wrap{padding-block:70px 100px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important}
+  .art .d{stroke-dashoffset:0;transition:none}
+  .art .late{opacity:1;transition:none}
+  .mani li::before{transform:none;transition:none}
+  .mani li::after{opacity:1}
+  #reveal path{transition:none}
+  .drop{opacity:0}
+}
+</style>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top">Able Plumbing</a>
+    <nav aria-label="Sample navigation"><ul>
+      <li><a href="#work">Our work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#family">Family</a></li>
+      <li><a href="#visit">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main id="top">
+  <svg id="pipe" aria-hidden="true">
+    <defs><mask id="reveal" maskUnits="userSpaceOnUse"></mask></defs>
+    <g mask="url(#reveal)">
+      <path class="po" id="p-o"/><path class="pb" id="p-b"/><path class="ph" id="p-h"/><path class="pw" id="p-w"/>
+      <g id="joints"></g>
+    </g>
+  </svg>
+
+  <section class="hero">
+    <div class="light"></div>
+    <div id="accents"></div>
+    <i class="node" data-x="next" style="top:84px"></i>
+    <div class="wrap">
+      <div>
+        <span class="label">Lake Worth Beach · Family owned</span>
+        <h1><span class="ln"><span>Since</span></span><span class="ln"><span><em>1980.</em></span></span></h1>
+        <p>Three generations of one family, plumbing Palm Beach County.</p>
+        <a class="call" href="#visit"><small>Call the shop</small><b>561-582-1819</b></a>
+      </div>
+      <div class="art in" id="valve">
+        <i class="node" style="left:50%;top:0"></i><i class="node" data-jump style="left:50%;top:100%"></i>
+        <svg viewBox="0 0 360 360" role="img" aria-label="Copper line through a shutoff valve with a round handwheel">
+          <path class="stub pp" d="M180 0V360"/>
+          <rect class="fill" x="140" y="148" width="80" height="64" rx="8"/>
+          <path class="ln" d="M150 148v-14h60v14M150 212v14h60v-14"/>
+          <g class="wheel">
+            <circle class="ln" cx="180" cy="180" r="112"/>
+            <circle class="lt" cx="180" cy="180" r="98"/>
+            <path class="ln" d="M180 180V68M180 180l106.5 34.6M180 180l65.8 90.6M180 180l-65.8 90.6M180 180l-106.5 34.6"/>
+            <circle class="fill" cx="180" cy="180" r="20"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <a class="follow" href="#family">Follow the water<i></i></a>
+  </section>
+
+  <section class="family" id="family">
+    <div class="wrap">
+      <div>
+        <span class="label">Family owned</span>
+        <h2>One family, three generations.</h2>
+        <p>New homes, remodels, gas lines and the leak that can't wait until Monday.</p>
+        <ol class="gen">
+          <li><b>1980</b><span>Rowland and Ken Wood open a small office in Lantana.</span></li>
+          <li><b>Today</b><span>The third generation, Danny and Krissy, carries it on.</span></li>
+        </ol>
+      </div>
+    </div>
+    <i class="node" data-x="prev" style="top:100%"></i>
+  </section>
+
+  <section class="work" id="work">
+    <div class="wrap">
+      <div class="row">
+        <div class="art" id="shower">
+          <i class="node" style="left:50%;top:0"></i><i class="node" data-jump style="left:50%;top:100%"></i>
+          <svg viewBox="0 0 360 360" role="img" aria-label="Line drawing of a rain shower head with water falling to a floor drain">
+            <path class="stub pp" d="M180 0V64"/>
+            <path class="ln" d="M180 64v24c0 10 6 16 16 16h26"/>
+            <ellipse class="fill" cx="250" cy="108" rx="56" ry="12"/>
+            <g class="late">
+              <path class="ln stream" d="M210 124l-22 196M226 124l-12 196M242 124l-4 196M258 124l4 196M274 124l12 196M290 124l22 196"/>
+            </g>
+            <path class="lt" d="M110 322H340"/>
+            <ellipse class="ln" cx="250" cy="322" rx="22" ry="5"/>
+            <path class="stub pp" d="M250 327v13c0 10-6 20-20 20h-50"/>
+          </svg>
+        </div>
+        <div class="txt">
+          <span class="label">Showers</span>
+          <h3>Walk-in, done right.</h3>
+          <p>New showers and remodels, plumbed from the valve to the drain.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="art" id="tub">
+          <i class="node" style="left:50%;top:0"></i><i class="node" data-jump style="left:50%;top:100%"></i>
+          <svg viewBox="0 0 360 360" role="img" aria-label="Line drawing of a freestanding tub filling with water from a spout">
+            <defs><clipPath id="tubclip"><path d="M40 190H320C320 290 280 320 180 320S40 290 40 190Z"/></clipPath></defs>
+            <path class="stub pp" d="M180 0V96"/>
+            <path class="ln" d="M180 96c0-18 14-30 32-30s32 12 32 30v12"/>
+            <path class="ln" d="M166 44h28"/>
+            <g class="late"><path class="ln stream" d="M244 112V280"/></g>
+            <g clip-path="url(#tubclip)"><g class="level"><g class="slosh"><path d="M0 230c40-10 80-10 120 0s80 10 120 0 80-10 120 0 80 10 120 0V360H0Z" fill="rgba(159,227,220,.22)"/><path class="lt" style="stroke:var(--water)" d="M0 230c40-10 80-10 120 0s80 10 120 0 80-10 120 0 80 10 120 0"/></g></g></g>
+            <path class="ln" d="M40 190H320C320 290 280 320 180 320S40 290 40 190Z"/>
+            <path class="lt" d="M20 336H340"/>
+            <path class="stub pp" d="M180 320V360"/>
+          </svg>
+        </div>
+        <div class="txt">
+          <span class="label">Baths</span>
+          <h3>The whole bath.</h3>
+          <p>Full baths for new homes and remodels, tub to vanity.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="art" id="heater">
+          <i class="node" style="left:50%;top:0"></i><i class="node" data-jump style="left:50%;top:100%"></i>
+          <svg viewBox="0 0 360 360" role="img" aria-label="Line drawing of a tankless water heater with a small flame">
+            <path class="stub pp" d="M180 0V56"/>
+            <rect class="fill" x="104" y="56" width="152" height="226" rx="12"/>
+            <rect class="ln" x="140" y="88" width="80" height="44" rx="4"/>
+            <text class="late" x="180" y="120" text-anchor="middle">120°</text>
+            <g class="late flame"><path class="ln" style="stroke:var(--water)" d="M180 238c-16 0-24-10-21-24 2-10 12-16 12-30 10 8 8 16 12 18 3-5 3-9 2-13 10 8 16 18 14 29-2 12-8 20-19 20z"/></g>
+            <path class="lt" d="M130 160h100"/>
+            <path class="ln" d="M140 282v34M220 282v34"/>
+            <path class="stub pp" d="M180 282V360"/>
+          </svg>
+        </div>
+        <div class="txt">
+          <span class="label">Water heaters</span>
+          <h3>Hot water, on gas.</h3>
+          <p>Water heaters, including tankless units on natural gas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="wrap">
+      <span class="label">Everything else</span>
+      <div class="mani-wrap">
+        <i class="node" style="left:0;top:28px"></i>
+        <i class="node" data-turn="h" style="right:0;top:28px"></i>
+        <ul class="mani" id="mani" style="padding:28px 0 0">
+          <li>New construction</li><li>Remodeling</li><li>Natural gas</li><li>General plumbing</li><li>Drain cleaning</li><li>Water heaters</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit" id="visit">
+    <div class="wrap">
+      <div>
+        <span class="label">Visit or call</span>
+        <h2>Call or stop by.</h2>
+        <a class="tel" href="#visit">561-582-1819</a>
+        <dl class="hours">
+          <dt>Mon–Fri</dt><dd>7 AM to 4 PM</dd>
+          <dt>After hours</dt><dd>Emergency service after 4 PM and on weekends</dd>
+        </dl>
+        <address>218 South H Street<br>Lake Worth Beach, FL 33480</address>
+      </div>
+      <div class="right">
+        <div class="art" id="faucet">
+          <i class="node" data-turn="L" style="left:50%;top:0"></i>
+          <svg viewBox="0 0 360 360" role="img" aria-label="Line drawing of a faucet dripping into a basin">
+            <path class="stub pp" d="M180 0V70"/>
+            <rect class="fill" x="158" y="70" width="44" height="60" rx="6"/>
+            <path class="ln" d="M150 70h60M180 70V52M164 52h32"/>
+            <path class="ln" d="M158 104H110c-20 0-30 12-30 30v8"/>
+            <g class="drop"><path d="M80 152c-6 0-9-4-9-8 0-6 9-14 9-14s9 8 9 14c0 4-3 8-9 8z" fill="var(--water)"/></g>
+            <ellipse class="ripple" cx="80" cy="306" rx="34" ry="6" fill="none" stroke="var(--water)" stroke-width="2"/>
+            <path class="ln" d="M14 280H346C346 336 280 352 180 352S14 336 14 280Z"/>
+          </svg>
+        </div>
+        <form id="form" novalidate>
+          <label for="s-name">Name<input id="s-name" type="text" autocomplete="off"></label>
+          <label for="s-phone">Phone<input id="s-phone" type="tel" autocomplete="off"></label>
+          <label for="s-msg">What's going on?<textarea id="s-msg" rows="3"></textarea></label>
+          <button type="submit" disabled>Schedule service</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <span>Able Plumbing · Lake Worth Beach, FL</span>
+  <span>Concept by Abrams Design Studio</span>
+</div></footer>
+
+<script>
+(function(){
+  document.getElementById('form').addEventListener('submit',function(e){e.preventDefault()});
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS='http://www.w3.org/2000/svg';
+
+  /* a few lighter and darker glazed tiles in the hero */
+  var acc=document.getElementById('accents'),glaze=['#14504b','#0a2422','#1a5c55','#0d3e3b','#2b5f57'];
+  var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
+  for(var i=0;i<22;i++){var d=document.createElement('i');d.className='accent';d.style.left=(Math.floor(rnd()*30)*64+1)+'px';d.style.top=(Math.floor(rnd()*16)*64+1)+'px';d.style.background=glaze[Math.floor(rnd()*glaze.length)];d.style.opacity=(.35+rnd()*.4).toFixed(2);acc.appendChild(d)}
+
+  /* copper stubs inside each drawing get the same three-layer pipe */
+  [].forEach.call(document.querySelectorAll('.art .pp'),function(p){
+    ['po','pb','ph'].forEach(function(c,k){var q=k===1?p:p.cloneNode();q.setAttribute('class',(p.getAttribute('class')||'').replace('pp','')+' '+c);if(k!==1)p.parentNode.insertBefore(q,k===0?p:p.nextSibling)});
+  });
+  /* line art draws itself in */
+  [].forEach.call(document.querySelectorAll('.art .ln:not(.stream), .art .lt'),function(el){el.setAttribute('pathLength','1');el.classList.add('d')});
+
+  /* the main line: route through the nodes, square turns like real pipe */
+  var main=document.getElementById('top'),svg=document.getElementById('pipe'),mask=document.getElementById('reveal');
+  var lay=['p-o','p-b','p-h','p-w'].map(function(id){return document.getElementById(id)}),joints=document.getElementById('joints');
+  var pieces=[],total=0;
+  function snap(v){return Math.round((v-32)/64)*64+32}
+  function build(){
+    var mr=main.getBoundingClientRect(),narrow=innerWidth<=860;
+    var ns=[].map.call(main.querySelectorAll('.node'),function(n){var r=n.getBoundingClientRect();return {x:r.left-mr.left,y:r.top-mr.top,dx:n.dataset.x,jump:'jump' in n.dataset,turn:n.dataset.turn,el:n}});
+    ns.forEach(function(n,i){if(n.dx==='next'&&ns[i+1])n.x=ns[i+1].x});
+    ns.forEach(function(n,i){if(n.dx==='prev'&&ns[i-1])n.x=ns[i-1].x});
+    var spine=Math.max(22,parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gl'))||20)+12;
+    if(narrow){var last=ns[ns.length-1];ns=[{x:spine,y:ns[0].y},{x:spine,y:last.y},{x:last.x,y:last.y}]}
+    pieces=[];var cur=[[ns[0].x,ns[0].y]];
+    for(var i=1;i<ns.length;i++){
+      var P=ns[i-1],N=ns[i];
+      if(N.jump&&!narrow){pieces.push(cur);cur=[[N.x,N.y]];continue}
+      if(Math.abs(P.x-N.x)<1||Math.abs(P.y-N.y)<1){cur.push([N.x,N.y])}
+      else if(N.turn==='L'){cur.push([P.x,N.y],[N.x,N.y])}
+      else{var m=snap((P.y+N.y)/2);cur.push([P.x,m],[N.x,m],[N.x,N.y])}
+    }
+    pieces.push(cur);
+    var d='',jhtml='',mhtml='';total=0;
+    pieces.forEach(function(pts){
+      var len=0,s='M'+pts[0][0].toFixed(1)+' '+pts[0][1].toFixed(1);
+      pts.forEach(function(p,k){if(k){s+='L'+p[0].toFixed(1)+' '+p[1].toFixed(1);len+=Math.abs(p[0]-pts[k-1][0])+Math.abs(p[1]-pts[k-1][1]);if(k<pts.length-1)jhtml+='<circle class="joint" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="9"/>'}});
+      pts.len=len;d+=s;mhtml+='<path d="'+s+'" stroke-dasharray="'+(len+2)+' '+(len+2)+'" stroke-dashoffset="'+(len+2)+'"/>';
+    });
+    lay.forEach(function(p){p.setAttribute('d',d)});
+    var f=pieces[0][0];jhtml+='<rect class="joint" x="'+(f[0]-17).toFixed(1)+'" y="'+(f[1]-6).toFixed(1)+'" width="34" height="10" rx="3"/>';joints.innerHTML=jhtml;mask.innerHTML=mhtml;
+    svg.setAttribute('height',main.offsetHeight);svg.setAttribute('viewBox','0 0 '+main.offsetWidth+' '+main.offsetHeight);
+  }
+  /* how much of each piece is drawn: everything above the scroll head */
+  function drawn(pts,head){
+    var len=0;
+    for(var k=1;k<pts.length;k++){var a=pts[k-1],b=pts[k];
+      if(Math.abs(a[1]-b[1])<1){if(head<a[1])return len;len+=Math.abs(b[0]-a[0])}
+      else{if(head<=a[1])return len;var seg=Math.abs(b[1]-a[1]);if(head<b[1])return len+(head-a[1]);len+=seg}}
+    return len;
+  }
+  var mpaths=[];
+  function paint(head){
+    mpaths=mask.querySelectorAll('path');
+    pieces.forEach(function(pts,i){var L=pts.len+2,v=still?L:drawn(pts,head);if(mpaths[i])mpaths[i].style.strokeDashoffset=(L-v).toFixed(1)});
+  }
+  function headNow(){return main.getBoundingClientRect().top*-1+innerHeight*.72}
+  build();
+  if(still){paint(1e9)}else{
+    paint(-1);
+    setTimeout(function(){[].forEach.call(mask.querySelectorAll('path'),function(p){p.style.transitionDuration='3s'});paint(headNow());setTimeout(function(){[].forEach.call(mask.querySelectorAll('path'),function(p){p.style.transitionDuration=''})},3100)},350);
+    var tk=false;addEventListener('scroll',function(){if(tk)return;tk=true;requestAnimationFrame(function(){tk=false;paint(headNow())})},{passive:true});
+  }
+  var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){build();paint(still?1e9:headNow())},120)});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){build();paint(still?1e9:headNow())});
+
+  /* fixtures and the manifold draw in as the line reaches them */
+  var targets=document.querySelectorAll('.art:not(#valve), #mani');
+  if(still||!('IntersectionObserver' in window)){[].forEach.call(targets,function(t){t.classList.add('in')})}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.35});[].forEach.call(targets,function(t){io.observe(t)})}
+})();
+</script>
+
+<script>if(window.top===window){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","z8qtahj70m");}</script>
+</body></html>
