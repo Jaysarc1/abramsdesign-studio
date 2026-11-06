@@ -1396,9 +1396,10 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     var fxe=el('<div class="ow-fx"></div>');
     fx.forEach(function(f){fxe.appendChild(el('<figure><div class="ow-fx-p"><span><img src="img/w/fx-'+f[0]+'-b.webp" alt="Before: '+f[3].replace(/\.$/,'')+'" loading="lazy"><b>Before</b></span><span class="ow-fx-a"><img src="img/w/fx-'+f[0]+'-a.webp" alt="After: '+f[4].replace(/^Now, /,'').replace(/\.$/,'')+'" loading="lazy"><b>After</b></span></div><figcaption><span class="mono">'+f[1]+' &middot; '+f[2]+'</span><p>'+f[3]+' <em>'+f[4]+'</em></p></figcaption></figure>'));});
     ba.appendChild(fxe);
-    T.lunasr=el('<figure class="tile"><div class="frame"><div class="page"><img src="img/w/lu-sv-o-refresh.webp" alt="Luna&rsquo;s Coffee at Refresh, brewed by moonlight" loading="lazy"></div></div></figure>');var ref=band('ow-refresh','Refresh','Your site, renewed.',2,[['meridian','half'],['lunasr','half']]);
+    T.lunasr=el('<figure class="tile"><div class="frame"><div class="page"><img src="img/w/lu-sv-o-refresh.webp" alt="Luna&rsquo;s Coffee at Refresh, brewed by moonlight" loading="lazy"></div></div></figure>');
     T.meridian=el('<figure class="tile" data-site="b/meridian/index.html" data-name="Meridian" tabindex="0" role="button" aria-label="Open the Meridian site"><div class="frame"><div class="page"><img src="img/w/meridian-1.webp" alt="Meridian, houses drawn for the sun" loading="lazy"><img src="img/w/meridian-2.webp" alt="" loading="lazy"></div></div></figure>');
     T.bascule2=el('<figure class="tile" data-site="b/bascule2/index.html" data-name="Bascule" tabindex="0" role="button" aria-label="Open the Bascule site"><div class="frame"><div class="page"><img src="img/w/bascule2-1.webp" alt="Bascule, a tower on the Intracoastal" loading="lazy"><img src="img/w/bascule2-2.webp" alt="" loading="lazy"></div></div></figure>');
+    var ref=band('ow-refresh','Refresh','Your site, renewed.',2,[['meridian','half'],['lunasr','half']]);
     var sig=band('ow-signature','Signature','Your brand, elevated.',4,[['jay','half'],['bascule2','half'],['places','half'],['apply','half']]);
     var fla=band('ow-flagship','Flagship','Your whole business, connected.',5);
     var play='<i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 1.8v12.4L13.6 8z" fill="currentColor"/></svg></i>';
