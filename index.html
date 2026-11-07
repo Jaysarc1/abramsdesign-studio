@@ -431,6 +431,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .pg .pl{position:absolute;left:13%;right:13%;top:17%;bottom:14%;display:flex;flex-direction:column;justify-content:flex-start;gap:clamp(7px,1vw,13px)}
 .pg .pl img{position:static;display:block;width:100%;height:auto;max-height:88%;object-fit:contain;object-position:left center;box-shadow:0 1px 2px rgba(0,0,0,.08)}
 .pg .pl.t img{box-shadow:none}
+.pg .pl.w{justify-content:center;left:10%;right:10%;top:12%;bottom:12%}
 /* rendered / built: one small tag on the picture */
 .pg .tag{position:absolute;left:9%;bottom:6%;font-family:var(--mono);font-size:clamp(6px,.72vw,9.5px);letter-spacing:.28em;text-transform:uppercase;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.45)}
 .pg.b .tag{left:auto;right:9%}
@@ -2085,7 +2086,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     var M='<svg viewBox="-2 -3 257.6 90.7" aria-hidden="true"><use href="#adsmark" width="253.6" height="84.7"/></svg>';
     var I=function(n,c,r){return '<img data-src="img/book/'+n+'.webp" alt="" draggable="false"'+(c?' class="'+c+'"':'')+(r?' style="aspect-ratio:'+r+'"':'')+'>';};
     var FO=function(n){return '<span class="fo">'+(n<10?'0':'')+n+'</span>';};
-    var PL=function(n,r,cap,f,t){return '<div class="pl'+(t?' t':'')+'">'+I(n,'',r)+'<span class="cap">'+cap+'</span></div>'+FO(f);};
+    var PL=function(n,r,cap,f,t){return '<div class="pl'+(t?' '+(t===1?'t':t):'')+'">'+I(n,'',r)+'<span class="cap">'+cap+'</span></div>'+FO(f);};
     var OP=function(no,kk,b,ad,p,f){return '<div class="op"><span class="no">'+no+'</span><span class="kk">'+kk+'</span><b>'+b+'</b><i class="ad">'+ad+'</i>'+(p?'<p>'+p+'</p>':'')+'</div>'+FO(f);};
     var P=[
       ['cv',I('cover-82')+'<i class="gl"></i><div class="mh">'+M+'<span>Selected work</span></div><div class="cvl"><b>Twenty years<br>of work.</b><span>Renderings &middot; Renovations &middot; Websites</span></div><i class="spn"></i>'],
@@ -2097,7 +2098,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       ['',I('entry')],
       ['spl',I('living')],['spr',I('living')],
       ['',I('street')+'<span class="tag l">Rendered</span>'],['',PL('phext','1','Penthouse at dusk',10)],
-      ['',I('built')+'<span class="tag">Built</span>'],['',PL('kitchen','2000/1314','Penthouse kitchen',12)],
+      ['',I('built')+'<span class="tag">Built</span>'],['',PL('kitchen','2000/1314','Penthouse kitchen',12,'w')],
       ['',OP('02','Renovation','Before. After.','Palm Beach County','The real before, and what each room became.',13)],
       ['',I('rn-living-b')+'<span class="tag">Before</span>'],
       ['spl',I('rn-living-a')],['spr',I('rn-living-a')+'<span class="tag l">After</span>'],
@@ -2106,9 +2107,9 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       ['',I('first')],
       ['spl',I('terrace')],['spr',I('terrace')],
       ['',OP('04','Websites','Sites you can use','Ordering, shopping, walking the house','Each one works: order a coffee, shop the drop, walk the rooms.',23)],
-      ['',PL('web-lunas','1200/675','Luna&rsquo;s Coffee',24)],
-      ['',PL('web-softriot','1200/750','Soft Riot',25)],['',PL('web-arden','1200/750','Arden Architects',26)],
-      ['',PL('web-jay','960/600','jayabrams.com',27)],['',PL('web-mv','1600/1000','Mountain &amp; Valley',28)],
+      ['',PL('web-lunas','1200/675','Luna&rsquo;s Coffee',24,'w')],
+      ['',PL('web-softriot','1200/750','Soft Riot',25,'w')],['',PL('web-arden','1200/750','Arden Architects',26,'w')],
+      ['',PL('web-jay','960/600','jayabrams.com',27,'w')],['',PL('web-mv','1600/1000','Mountain &amp; Valley',28,'w')],
       ['',OP('05','Amenity spaces','271 Sea Breeze Avenue','Brooklyn, New York','The resident lobby and the lounge.',29)],
       ['',I('lobby-p')],
       ['spl',I('lounge')],['spr',I('lounge')],
