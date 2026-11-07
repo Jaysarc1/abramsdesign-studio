@@ -1106,6 +1106,13 @@ header nav{align-items:center}
 .pill.pd,.of-go,.nx .fit-chip,header .hpill{background:transparent;color:var(--graphite);border:1px solid var(--graphite);border-radius:12px;transition:background .3s,color .3s,border-color .3s}
 .pill.pd:hover,.of-go:hover,.nx .fit-row:hover .fit-chip,.nx .fit-row:focus-visible .fit-chip,header .hpill:hover{background:var(--graphite);color:var(--plaster);border-color:var(--graphite)}
 @media (max-width:760px){header .hpill{border:0}header .hpill:hover{background:none;color:var(--patina)}}
+.of-tabs button{border:1px solid transparent}
+.of-tabs button[aria-selected="true"]{background:transparent;color:var(--graphite);border-color:var(--graphite)}
+.of-tabs button:hover{background:var(--graphite);color:var(--plaster);border-color:var(--graphite)}
+.of-play{background:transparent;color:var(--graphite);border:1px solid var(--graphite);transition:transform .4s cubic-bezier(.2,.7,.1,1),background .3s,color .3s}
+.of-play i{background:var(--graphite);color:var(--plaster);transition:background .3s,color .3s}
+.of-play:hover{background:var(--graphite);color:var(--plaster)}
+.of-play:hover i{background:var(--plaster);color:var(--graphite)}
 /* the opening: one site of each kind, then the question */
 .hk-ex{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%);width:min(1320px,94vw,calc((100svh - 330px) * 4 + 60px));display:flex;gap:clamp(16px,2vw,30px);pointer-events:none;z-index:1}
 .hk-ex .ex{flex:1;min-width:0;margin:0;display:grid;gap:14px;justify-items:center;opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform 1.2s cubic-bezier(.2,.7,.1,1)}
