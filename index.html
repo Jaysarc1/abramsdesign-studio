@@ -1174,6 +1174,22 @@ header nav{align-items:center}
   .hook.hs-ex .hk-t{top:9%}
 }
 @media (prefers-reduced-motion:reduce){.hk-ex .ex{transform:none!important}}
+/* batch 6: one step of space between things, never two or three stacked. Sections share the step (half each side of their hairline), a statement's first heading adds none */
+:root{--sp-in:clamp(28px,3.2vw,44px);--sp-sec:clamp(56px,6vw,88px)}
+@media (max-width:760px){:root{--sp-in:28px;--sp-sec:44px}}
+main>section{padding-block:calc(var(--sp-sec)/2)}
+main>section>.wrap>.st:first-child{margin-top:0}
+#proof{padding-bottom:0}#studio{padding-block:calc(var(--sp-sec)/2)}
+#inquiries{padding-block:var(--sp-sec)}
+.ind{margin-top:calc(var(--sp-sec)*.6)}
+.ow-band .st{margin-top:var(--sp-in)}
+.ow-band>.head+.st{margin-top:clamp(16px,1.8vw,24px)}
+.cta-blk{margin-top:var(--sp-sec);padding-top:clamp(20px,2vw,28px)}
+.fit.fit-cta{margin-top:clamp(12px,1.4vw,20px)}
+.fit-cta .fit-row{padding:clamp(18px,2vw,28px) 0}
+.cta-k{font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--pencil)}
+.dq{margin-top:var(--sp-in)}
+.dq-row{padding:clamp(22px,2.6vw,36px) 0}
 </style>
   <div class="hook" id="hook" data-k="0" aria-label="Opening">
     <div class="hk-eng" aria-hidden="true"><svg class="hk-top" viewBox="0 0 2400 1100" preserveAspectRatio="xMidYMid meet">
@@ -1546,7 +1562,21 @@ header nav{align-items:center}
           </button>
         </div>
       </div>
-      <div class="cta-blk rv"><p>Like what you see? <em>Yours is next.</em></p><a class="pill pd" href="#inquiries">Get my free preview</a></div>
+      <div class="cta-blk rv"><p>Interested?</p><span class="cta-k">Who is each offer for?</span></div>
+      <div class="fit fit-cta">
+        <a class="fit-row rv" href="#offers" data-tab="refresh">
+          <h3 class="fit-q">Site looking a little tired?</h3>
+          <div class="fit-a"><p>Your business grew up. Your site didn&rsquo;t.</p><b>You need a fresh face, not a fresh start.</b><span class="fit-go">Refresh<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+        </a>
+        <a class="fit-row rv" href="#offers" data-tab="signature">
+          <h3 class="fit-q">Look smaller than you are?</h3>
+          <div class="fit-a"><p>You&rsquo;re the best at what you do. Your site says otherwise.</p><b>You need a brand, not a template.</b><span class="fit-go">Signature<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+        </a>
+        <a class="fit-row rv" href="#offers" data-tab="flagship">
+          <h3 class="fit-q">Still typing the same numbers twice?</h3>
+          <div class="fit-a"><p>Your orders, customers, payments and books can all live in one place.</p><b>You need one system, not more apps.</b><span class="fit-go">Flagship<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -1577,49 +1607,25 @@ header nav{align-items:center}
           <figure class="dq-v dv-tx"><p>We&rsquo;re a branding and business agency. We build custom tools that work together to give your brand a voice and your business one structure.</p></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">05</span><p class="dq-q"><span>&ldquo;What will it cost?&rdquo;</span></p><p class="dq-a">Scope changes. The finish never does. Every quote begins with a conversation.</p></div>
-          <figure class="dq-v dv-of" aria-hidden="true"><span class="ofc"><b>Refresh</b><em>Your site, renewed.</em></span><span class="ofc"><b>Signature</b><em>Your brand, elevated.</em></span><span class="ofc"><b>Flagship</b><em>Your whole business, connected.</em></span></figure>
-        </li>
-        <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">06</span><p class="dq-q"><span>&ldquo;Why should I choose you?&rdquo;</span></p><p class="dq-a">Because we build around you, not a template.</p></div>
+          <div class="dq-l"><span class="mono dq-n">05</span><p class="dq-q"><span>&ldquo;Why should I choose you?&rdquo;</span></p><p class="dq-a">Because we build around you, not a template.</p></div>
           <figure class="dq-v dv-tx"><p>Your brand, your tools and your numbers, in one structure made for the way you work.</p></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">07</span><p class="dq-q"><span>&ldquo;You don&rsquo;t know my business like I do.&rdquo;</span></p><p class="dq-a">You&rsquo;re right. I don&rsquo;t.</p></div>
-          <figure class="dq-v dv-tx"><p>You know your business better than anyone. What I know is how to build the brand around it, so it carries you beyond the day-to-day.</p></figure>
+          <div class="dq-l"><span class="mono dq-n">06</span><p class="dq-q"><span>&ldquo;You don&rsquo;t know my business like I do.&rdquo;</span></p><p class="dq-a">You&rsquo;re right. We don&rsquo;t.</p></div>
+          <figure class="dq-v dv-tx"><p>You know your business better than anyone. What we know is how to build the brand around it, so it carries you beyond the day-to-day.</p></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">08</span><p class="dq-q"><span>&ldquo;Why do you think you can help?&rdquo;</span></p><p class="dq-a">Twenty years of practice.</p></div>
+          <div class="dq-l"><span class="mono dq-n">07</span><p class="dq-q"><span>&ldquo;Why do you think you can help?&rdquo;</span></p><p class="dq-a">Twenty years of results.</p></div>
           <figure class="dq-v dv-tx"><p>Across art, architecture and marketing, now turned to how your business is seen.</p></figure>
+        </li>
+        <li class="dq-row rv">
+          <div class="dq-l"><span class="mono dq-n">08</span><p class="dq-q"><span>&ldquo;What will it cost?&rdquo;</span></p><p class="dq-a">Scope changes. The finish never does. Every quote begins with a conversation.</p></div>
+          <figure class="dq-v dv-of" aria-hidden="true"><span class="ofc"><b>Refresh</b><em>Your site, renewed.</em></span><span class="ofc"><b>Signature</b><em>Your brand, elevated.</em></span><span class="ofc"><b>Flagship</b><em>Your whole business, connected.</em></span></figure>
         </li>
       </ol>
     </div>
   </section>
 
-  <section id="fit">
-    <div class="wrap">
-      <div class="st rv">
-        <div class="st-row">
-          <h2 class="st-big">Who is <em>this for?</em></h2>
-          <div class="st-copy"><p>Start with what&rsquo;s in the way.</p></div>
-        </div>
-      </div>
-      <div class="fit">
-        <a class="fit-row rv" href="#offers" data-tab="refresh">
-          <h3 class="fit-q">Site looking a little tired?</h3>
-          <div class="fit-a"><p>Your business grew up. Your site didn&rsquo;t.</p><b>You need a fresh face, not a fresh start.</b><span class="fit-go">Refresh<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
-        </a>
-        <a class="fit-row rv" href="#offers" data-tab="signature">
-          <h3 class="fit-q">Look smaller than you are?</h3>
-          <div class="fit-a"><p>You&rsquo;re the best at what you do. Your site says otherwise.</p><b>You need a brand, not a template.</b><span class="fit-go">Signature<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
-        </a>
-        <a class="fit-row rv" href="#offers" data-tab="flagship">
-          <h3 class="fit-q">Still typing the same numbers twice?</h3>
-          <div class="fit-a"><p>Your orders, customers, payments and books can all live in one place.</p><b>You need one system, not more apps.</b><span class="fit-go">Flagship<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
-        </a>
-      </div>
-    </div>
-  </section>
 
   <section id="offers">
     <div class="wrap">
