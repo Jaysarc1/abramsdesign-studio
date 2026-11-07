@@ -160,7 +160,7 @@
 /* batch 16: "Brewed by moonlight." bends round the top of the cup like the crescent round the bean in the logo; the h1 stays for readers */
 .hero-t h1.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .hero-arc{position:absolute;left:0;top:0;z-index:3;pointer-events:none;overflow:visible;filter:drop-shadow(0 2px 16px rgba(0,0,0,.55))}
-.hero-arc g{transform-origin:0 0;opacity:0;transform:rotate(-16deg);transition:opacity 1.4s var(--ease),transform 1.9s var(--ease)}
+.hero-arc g{transform-box:view-box;transform-origin:50% 50%;opacity:0;transform:rotate(-16deg);transition:opacity 1.4s var(--ease),transform 1.9s var(--ease)}
 .desk.lit .hero-arc g{opacity:1;transform:none}
 .hero-arc text{font-family:var(--serif);font-weight:400;letter-spacing:.005em;fill:#F3ECDF}
 .hero-arc tspan.m{font-style:italic;fill:var(--sgold)}
@@ -350,10 +350,10 @@ var px=0,py=0,tx=0,ty=0;
 function apply(){
   var ox=mob?pan:base.x-px*W*.012,oy=base.y-(mob?0:py*H*.012);
   scene.style.transform='translate('+ox.toFixed(2)+'px,'+oy.toFixed(2)+'px) scale('+s+')';
-  for(var k in O){var z=O[k].z;els[k].style.transform='translate('+(-px*z*26).toFixed(2)+'px,'+(-py*z*20).toFixed(2)+'px)'}
+  for(var k in O){if(!els[k])continue;var z=O[k].z||0;els[k].style.transform='translate('+(-px*z*26).toFixed(2)+'px,'+(-py*z*20).toFixed(2)+'px)'}
   desk._ox=ox;desk._oy=oy;
 }
-function off(k){return [-px*O[k].z*26,-py*O[k].z*20]}
+function off(k){var z=O[k].z||0;return [-px*z*26,-py*z*20]}
 addEventListener('resize',function(){frame();if(mob)panT=pan=center(1773)});
 desk.addEventListener('pointermove',function(e){if(e.pointerType!=='mouse'||RM)return;var r=desk.getBoundingClientRect();tx=(e.clientX-r.left)/r.width*2-1;ty=(e.clientY-r.top)/r.height*2-1});
 desk.addEventListener('pointerleave',function(){tx=ty=0});
