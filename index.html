@@ -25,8 +25,8 @@
   --pencil:#6E665B;
   --faint:#857C70;
   --rule:rgba(31,28,24,.13);
-  --patina:#2E5149;
-  --tint:rgba(46,81,73,.075);
+  --patina:#8A7A60;
+  --tint:rgba(138,122,96,.09);
   --tan:#E4DACA;
   --display:"Archivo","Helvetica Neue",Arial,sans-serif;
   --text:"Newsreader",Georgia,"Times New Roman",serif;
@@ -36,8 +36,8 @@
   --gutter-r:max(16px,env(safe-area-inset-right,0px));
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --plaster:#141311;--sheet:#1C1A17;--graphite:#ECE7DE;--pencil:#A39C91;--faint:#8E877C;--rule:rgba(236,231,222,.12);--patina:#86B3A7;--tint:rgba(134,179,167,.1);--tan:#2A2723;color-scheme:dark}}
-:root[data-theme="dark"]{--plaster:#141311;--sheet:#1C1A17;--graphite:#ECE7DE;--pencil:#A39C91;--faint:#8E877C;--rule:rgba(236,231,222,.12);--patina:#86B3A7;--tint:rgba(134,179,167,.1);--tan:#2A2723;color-scheme:dark}
+  --plaster:#141311;--sheet:#1C1A17;--graphite:#ECE7DE;--pencil:#A39C91;--faint:#8E877C;--rule:rgba(236,231,222,.12);--patina:#C9BA9F;--tint:rgba(201,186,159,.1);--tan:#2A2723;color-scheme:dark}}
+:root[data-theme="dark"]{--plaster:#141311;--sheet:#1C1A17;--graphite:#ECE7DE;--pencil:#A39C91;--faint:#8E877C;--rule:rgba(236,231,222,.12);--patina:#C9BA9F;--tint:rgba(201,186,159,.1);--tan:#2A2723;color-scheme:dark}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:61px;-webkit-text-size-adjust:100%}
@@ -564,7 +564,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .of-add-n{margin:10px 0 0;font-family:var(--serif);font-weight:300;font-size:clamp(26px,2.2vw,32px);line-height:1.1;color:var(--graphite)}
 .of-add-l{margin:8px 0 0;max-width:40ch;font-size:clamp(17px,1.3vw,19px);line-height:1.45;color:var(--pencil)}
 .of-add .of-list{margin-top:14px}
-.of-add .of-list li{border-color:rgba(46,81,73,.16)}
+.of-add .of-list li{border-color:rgba(138,122,96,.2)}
 .of-play{margin-top:20px;display:inline-flex;align-items:center;gap:12px;padding:6px 20px 6px 6px;border:0;border-radius:12px;background:var(--graphite);color:var(--plaster);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:transform .4s cubic-bezier(.2,.7,.1,1)}
 .of-play:hover{transform:translateY(-2px)}
 .of-play i{width:32px;height:32px;border-radius:50%;background:var(--plaster);color:var(--graphite);display:grid;place-items:center}
@@ -824,7 +824,7 @@ header .hpill:hover{background:var(--patina);color:var(--plaster)}
 .rc .mono{color:#6E665B}
 .rc-r{display:block;border-top:1px dashed rgba(31,28,24,.28)}
 .rc-l{display:grid;gap:2px}.rc-l span{font-family:var(--serif);font-weight:300;font-size:19px;line-height:1.2}.rc-l em{font-size:15px;color:#6E665B}
-.rc-t{display:flex;align-items:baseline;justify-content:space-between}.rc-t b{font-family:var(--serif);font-weight:300;font-style:italic;font-size:26px;line-height:1;color:#2E5149}
+.rc-t{display:flex;align-items:baseline;justify-content:space-between}.rc-t b{font-family:var(--serif);font-weight:300;font-style:italic;font-size:26px;line-height:1;color:#8A7A60}
 .dv-bk img{height:84%;width:auto;aspect-ratio:4/5;object-fit:cover;box-shadow:0 2px 0 rgba(31,28,24,.06),0 22px 40px -20px rgba(31,28,24,.45);transform:rotate(2.5deg)}
 .br{display:block;width:min(420px,84%);border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 2px 0 rgba(31,28,24,.05),0 22px 40px -22px rgba(31,28,24,.45)}
 .br-bar{display:flex;gap:5px;align-items:center;height:22px;padding:0 10px;background:#EFE9DF}.br-bar i{width:7px;height:7px;border-radius:50%;background:rgba(31,28,24,.2)}
@@ -1347,7 +1347,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
 .dv-kit .kit-d,.dq-row.in .dv-kit .kit-d{width:calc(var(--kw) * .914);transform:translateX(-4.7%)}
 .dv-kit .kit-p,.dq-row.in .dv-kit .kit-p{left:calc(50% + var(--kw) * .345);width:calc(var(--kw) * .31);transform:translate(-50%,-50%)}
 /* batch 13: "See what could be." line set in the header's serif, at the size it had */
-#studio .st-copy p{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;letter-spacing:-.006em;max-width:44ch}
+#studio .st-copy p{max-width:44ch}
 /* batch 13: Flagship product names take the "03 Flagship" heading font */
 #ow-flagship{--nm-fs:clamp(24px,2.1vw,30px);--nm-mb:16px;--pg:calc(var(--sp-in) * 2)}
 @media (max-width:760px){#ow-flagship{--nm-mb:14px;--pg:calc(var(--sp-in) * 2.6)}}
@@ -1376,8 +1376,13 @@ main>section>.wrap>.st:first-child{margin-top:0}
 .iv-tt{display:flex;align-items:baseline;justify-content:space-between;padding:12px 0 14px;border-bottom:1px solid rgba(31,28,24,.2)}
 .iv-ft{display:flex;align-items:baseline;justify-content:space-between;padding-top:12px}.iv-ft em{font-family:var(--serif);font-weight:300;font-size:16px;color:#2A261F}
 .iv-tt b{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:28px;line-height:1;letter-spacing:-.01em;color:#1F1C18;font-variant-numeric:tabular-nums}
-.iv-st{position:absolute;left:0;top:50%;margin-top:-16px;padding:6px 12px;border:2px solid #2E5149;border-radius:6px;color:#2E5149;font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;transform:rotate(-9deg);opacity:.82;mix-blend-mode:multiply}
-@media (max-width:760px){.rc.iv{width:100%;padding:20px 16px 16px;text-align:left}.iv-sm{column-gap:12px}.iv-st{font-size:12px;letter-spacing:.1em;padding:5px 9px}.iv-mt{font-size:14px}.iv-tb{font-size:14px}.iv-tb{grid-template-columns:minmax(0,1fr) 28px 56px}.iv-st{left:0}}
+.iv-st{position:absolute;left:0;top:50%;transform:translateY(-50%);padding:8px 14px;border-radius:12px;background:#1F1C18;color:#FAF7F2;font-family:var(--mono);font-size:12px;line-height:1;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+@media (max-width:760px){.rc.iv{width:100%;padding:20px 16px 16px;text-align:left}.iv-sm{column-gap:12px}.iv-st{letter-spacing:.1em;padding:7px 10px}.iv-mt{font-size:14px}.iv-tb{font-size:14px}.iv-tb{grid-template-columns:minmax(0,1fr) 28px 56px}.iv-st{left:0}}
+/* batch 14: the invoice goes wide, like the site examples below it; the receipt and the 82nd St render sit the same distance from their dividers */
+@media (min-width:761px){.rc.iv{width:min(600px,100%);padding:28px 34px 22px}}
+.dq-v.dv-rc{min-height:0;padding:var(--rc-o,12px) 0}
+.dq-v.dv-bk{height:auto;padding:var(--bk-o,10px) 0}
+.dv-bk img{height:auto;width:min(340px,80%)}
 /* batch 13: the sticky note says what changed */
 /* batch 13: the drop-day note is a real sticky note, art-directed: Soft Riot's acid green paper, grain, an adhesive band, a folded corner, a soft lifted shadow; it hangs off the board's lower-right corner so the 586 and every KPI stay clear */
 .dq-v.dv-note{height:auto;min-height:300px;flex-direction:column;justify-content:center;padding:6px 0 0}
@@ -1755,7 +1760,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
       <div class="cta-blk rv"><p>I like the preview you made&hellip; <em>now what?</em></p></div>
       <div class="fit fit-cta">
         <a class="fit-row rv" href="#offers" data-tab="refresh">
-          <h3 class="fit-q">Love it, but keep your site?</h3>
+          <h3 class="fit-q">Love it, but keeping your site?</h3>
           <div class="fit-a"><b>We bring the preview&rsquo;s polish to the site you already have.</b><span class="fit-go">Refresh<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
         </a>
         <a class="fit-row rv" href="#offers" data-tab="signature">
@@ -1781,7 +1786,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
       <ol class="dq">
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">01</span><p class="dq-q"><span>&ldquo;What&rsquo;s the catch?&rdquo;</span></p><p class="dq-a">There isn&rsquo;t one. You see it before you invest.</p></div>
-          <figure class="dq-v dv-rc" aria-hidden="true"><div class="rc iv"><div class="iv-h"><svg class="rc-m"><use href="#adsmark"/></svg><span class="iv-id"><b>Invoice</b><span class="mono">No. 0001</span></span></div><div class="iv-mt"><span><i class="mono">Billed to</i>You</span><span><i class="mono">Issued</i>Today</span><span><i class="mono">Terms</i>None</span></div><div class="iv-tb"><span class="mono iv-th">Item</span><span class="mono iv-th iv-n">Qty</span><span class="mono iv-th iv-n">Amount</span><span class="iv-it">Your preview<em>Opening screen, built from your brand</em></span><span class="iv-n">1</span><span class="iv-n">$0.00</span><span class="iv-it">Strings attached</span><span class="iv-n">0</span><span class="iv-n">$0.00</span></div><div class="iv-sm"><span class="iv-st">Nothing due</span><span class="mono">Subtotal</span><span>$0.00</span><span class="mono">Tax</span><span>$0.00</span></div><div class="iv-tt"><span class="mono">Total</span><b>$0.00</b></div><div class="iv-ft"><em>Thank you.</em><span class="mono">abramsdesign.studio</span></div></div></figure>
+          <figure class="dq-v dv-rc" aria-hidden="true"><div class="rc iv"><div class="iv-h"><svg class="rc-m"><use href="#adsmark"/></svg><span class="iv-id"><b>Invoice 01</b></span></div><div class="iv-mt"><span><i class="mono">Billed to</i>You</span><span><i class="mono">Issued</i>Today</span><span><i class="mono">Terms</i>None</span></div><div class="iv-tb"><span class="mono iv-th">Item</span><span class="mono iv-th iv-n">Qty</span><span class="mono iv-th iv-n">Amount</span><span class="iv-it">Your preview<em>Opening screen, built from your brand</em></span><span class="iv-n">1</span><span class="iv-n">$0.00</span><span class="iv-it">Strings attached</span><span class="iv-n">0</span><span class="iv-n">$0.00</span></div><div class="iv-sm"><span class="iv-st">Nothing due</span><span class="mono">Subtotal</span><span>$0.00</span><span class="mono">Tax</span><span>$0.00</span></div><div class="iv-tt"><span class="mono">Total</span><b>$0.00</b></div><div class="iv-ft"><em>Thank you.</em><span class="mono">abramsdesign.studio</span></div></div></figure>
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">02</span><p class="dq-q"><span>&ldquo;Why trust a stranger?&rdquo;</span></p><p class="dq-a">You shouldn&rsquo;t. So we let our work do the talking.</p></div>
@@ -2389,7 +2394,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     /* the reveal: the three after sites, live */
     var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:10,LS=3.7;
     /* each after renders at a real width (a phone layout on a phone), scaled a little into its frame, so it can be scrolled, tapped and used */
-    function liveSize(){lv.forEach(function(o){var w=o.a.clientWidth,h=o.a.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1024,w/.86),k=w/V;
+    function liveSize(){lv.forEach(function(o){var w=o.a.clientWidth,h=o.a.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1280,w/.86),k=w/V;
         o.f.style.width=Math.round(V)+'px';o.f.style.height=Math.ceil(h/k)+'px';o.f.style.transform='scale('+k.toFixed(4)+')';});}
     function liveLoad(){if(lv.length)return;live.forEach(function(a){var f=document.createElement('iframe'),o={a:a,f:f,ok:0,w:null,user:0};
         f.setAttribute('title','Mountain & Valley, after its facelift');f.setAttribute('sandbox','allow-scripts allow-same-origin allow-forms');f.setAttribute('allow',"autoplay 'none'");
@@ -2406,7 +2411,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       requestAnimationFrame(f);}
     /* the before: a real page under the still, scrolled top to bottom in steps while the five seconds run, so the after reads against it */
     var bv=hk.querySelector('.hk-f.f1 .hk-v'),bf=null,bw=null;
-    function bSize(){if(!bf)return;var w=bv.clientWidth,h=bv.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1024,w/.86),k=w/V;
+    function bSize(){if(!bf)return;var w=bv.clientWidth,h=bv.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1280,w/.86),k=w/V;
       bf.style.width=Math.round(V)+'px';bf.style.height=Math.ceil(h/k)+'px';bf.style.transform='scale('+k.toFixed(4)+')';}
     var bPend=0;function bLoad(){if(bf||!bv||RM)return;bf=document.createElement('iframe');bf.className='hk-bs';bf.setAttribute('title','Mountain & Valley, before');bf.setAttribute('tabindex','-1');bf.setAttribute('aria-hidden','true');bf.setAttribute('sandbox','allow-scripts allow-same-origin');
       bf.addEventListener('load',function(){try{var w=bf.contentWindow,d=w.document;if(!d||!d.body)return;d.documentElement.style.scrollBehavior='auto';bw=w;bSize();setTimeout(function(){bf.classList.add('on');},400);if(bPend)bRun();}catch(e){}});
