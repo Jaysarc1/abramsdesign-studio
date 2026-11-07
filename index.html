@@ -798,7 +798,7 @@ header .hpill:hover{background:var(--patina);color:var(--plaster)}
 /* proof sits right under the film */
 #proof .st:first-child{margin-top:var(--sp-sec)}
 /* no dead band between the before/after and the next statement: one --sp-sec, not three paddings stacked */
-#proof{padding-bottom:0}#proof #ba{margin-bottom:0}#studio{padding-top:var(--sp-sec)}
+#proof{padding-bottom:0}#proof #ba{margin-bottom:0}#ba>.cmp:first-child{margin-top:0}#studio{padding-top:var(--sp-sec)}
 /* the ask after the work, laid out like the offers' close */
 .cta-blk{display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;margin-top:var(--sp-sec);padding-top:clamp(28px,3vw,40px);border-top:1px solid var(--rule)}
 .cta-blk p{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(28px,2.8vw,40px);line-height:1.1;letter-spacing:-.01em;color:var(--graphite);text-wrap:balance}
@@ -1147,9 +1147,6 @@ header nav{align-items:center}
   <section id="proof" aria-label="Before and after">
     <div class="wrap">
       <div class="st rv" id="ba">
-        <div class="st-row">
-          <h2 class="st-big">Same builder.<br><em>A new first impression.</em></h2>
-        </div>
         <div class="cmp" style="--x:0%">
           <img src="img/w/ba-before-2.webp" alt="Before: a dated, crowded contractor homepage" loading="lazy">
           <div class="cmp-b"><img src="img/w/ba-after.webp" alt="After: a dark, minimal homepage for the fictional builder Ashlar &amp; Pine" loading="lazy"></div>
