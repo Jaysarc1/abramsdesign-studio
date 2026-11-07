@@ -2,8 +2,8 @@
 <style>body{margin:0;font:12px monospace}iframe{border:0;display:block}pre{white-space:pre-wrap;padding:8px}</style></head>
 <body><pre id="o">measuring…</pre><script>
 var q=new URLSearchParams(location.search),W=+(q.get('w')||1440),H=+(q.get('h')||900),MIN=+(q.get('min')||90);
-var f=document.createElement('iframe');f.src='index.html?m='+Date.now();f.style.width=W+'px';f.style.height=H+'px';document.body.appendChild(f);
-f.onload=function(){setTimeout(run,+(q.get('wait')||5000));};
+var f=document.createElement('iframe');f.src='index.html?m='+Date.now()+(q.get('hash')?'#'+q.get('hash'):'');f.style.width=W+'px';f.style.height=H+'px';document.body.appendChild(f);
+f.onload=function(){if(q.get('keep'))return;setTimeout(run,+(q.get('wait')||5000));};
 function run(){var d=f.contentDocument,w=f.contentWindow,sy=w.scrollY,iv=[];
   function fixed(e){for(var x=e;x&&x!==d.body;x=x.parentElement){var p=w.getComputedStyle(x).position;if(p==='fixed')return true;}return false;}
   function hidden(e){for(var x=e;x&&x!==d.body;x=x.parentElement){var s=w.getComputedStyle(x);if(s.display==='none'||s.visibility==='hidden')return true;}return false;}
