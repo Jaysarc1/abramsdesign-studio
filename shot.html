@@ -1,9 +1,0 @@
-<!doctype html><meta charset="utf-8"><title>shot</title><style>html,body{margin:0;background:#000}iframe{border:0;display:block}</style>
-<script>
-/* temporary: shows the opening frozen at a moment (t in ms), at a size (w, h). Delete before going live. */
-var q=new URLSearchParams(location.search),w=+q.get('w')||1440,h=+q.get('h')||900,T=+q.get('t')||0,L=+q.get('lead')||0;
-fetch('index.html').then(function(r){return r.text();}).then(function(s){
-  s=s.replace("at=function(ms,f){setTimeout(f,ms);}","at=function(ms,f){if(ms<="+T+")setTimeout(f,Math.max(0,ms-"+T+"+"+L+"));}");
-  s=s.replace('<head>','<head><base href="'+location.origin+'/">');
-  var f=document.createElement('iframe');f.width=w;f.height=h;document.body.appendChild(f);f.srcdoc=s;window.F=f;});
-</script>
