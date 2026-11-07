@@ -1227,6 +1227,91 @@ main>section>.wrap>.st:first-child{margin-top:0}
 @media (max-width:760px){
   .hk-b,.hk-clk p{letter-spacing:-.03em}
 }
+
+/* batch 11: each offer's one line of what you get sits on one line */
+@media (min-width:761px){.ow-hd .ow-p .ow-get{max-width:none;white-space:nowrap}}
+/* batch 11: "now what?" each row is one line: the question, its button right after it, the answer centred beside them */
+@media (min-width:761px){
+  .fit-cta .fit-row{grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:center}
+  .fit-cta .fit-l{grid-column:1;flex-direction:row;align-items:center;justify-content:flex-start;gap:clamp(18px,2vw,28px)}
+  .fit-cta .fit-l .fit-q{flex:0 1 auto}
+  .fit-cta .fit-of{flex:none;flex-wrap:nowrap}
+  .fit-cta .fit-a{grid-column:2;justify-content:center;align-self:center}
+}
+/* batch 11: a wider receipt, a wider building */
+.rc{width:min(420px,86%);padding:26px 30px 24px;gap:14px}
+.rc-m{height:22px;width:calc(22px*2.994)}
+.rc-l span{font-size:22px}.rc-l em{font-size:16px}.rc-t b{font-size:30px}
+.dv-bk img{height:86%;aspect-ratio:5/4;object-position:50% 38%}
+/* batch 11: every reply is a picture */
+.dv-kit,.dv-fan,.dv-note,.dv-map{overflow:visible}
+.kit-d,.nt-d{position:relative;display:block;width:min(440px,80%);border-radius:10px;overflow:hidden;box-shadow:0 2px 0 rgba(31,28,24,.05),0 24px 44px -24px rgba(31,28,24,.5)}
+.kit-d img,.nt-d img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.kit-d{transform:translateX(-7%)}
+.kit-p{position:absolute;left:calc(50% + min(150px,24%));top:50%;width:clamp(96px,9.4vw,132px);aspect-ratio:9/19.6;transform:translate(-50%,-46%);border-radius:18px;padding:4px;background:#0E0E10;box-shadow:0 26px 40px -18px rgba(31,28,24,.6)}
+.kit-p img,.fan-p img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 0;border-radius:14px}
+.fan-p{position:absolute;left:50%;top:50%;width:clamp(100px,9.6vw,136px);aspect-ratio:9/19.6;border-radius:18px;padding:4px;background:#0E0E10;box-shadow:0 22px 36px -18px rgba(31,28,24,.55)}
+.fan-p.f1{transform:translate(-50%,-50%) translateX(-92%) rotate(-7deg) scale(.9)}
+.fan-p.f3{transform:translate(-50%,-50%) translateX(92%) rotate(7deg) scale(.9)}
+.fan-p.f2{transform:translate(-50%,-50%);z-index:2}
+.nt-n{position:absolute;left:calc(50% - min(220px,40%) - 10px);top:8%;padding:16px 20px 18px;background:#FBF3C9;color:#2A261F;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(20px,1.7vw,24px);line-height:1.1;transform:rotate(-4deg);box-shadow:0 14px 24px -14px rgba(31,28,24,.5)}
+.nt-n::before{content:"";position:absolute;left:50%;top:-9px;width:54px;height:18px;margin-left:-27px;background:rgba(255,255,255,.55);transform:rotate(3deg)}
+.yr{width:min(500px,90%);height:auto;overflow:visible}
+.yr-ln path{fill:none;stroke:var(--graphite);stroke-width:1.4;stroke-linecap:round}
+.yr-ln path:nth-child(3){stroke:var(--patina)}
+.yr-k text,.yr-ax text{font-family:var(--mono);font-size:13px;letter-spacing:.14em;fill:var(--pencil)}
+.yr-ax path{fill:none;stroke:var(--rule);stroke-width:1}
+.yr-d{fill:var(--patina)}.yr-o{fill:none;stroke:var(--patina);stroke-width:1;opacity:.5}
+.yr-you{font-family:var(--serif);font-style:italic;font-weight:300;font-size:26px;fill:var(--graphite)}
+.dv-map{padding:0}
+.mp{display:block;width:min(560px,100%);height:100%;border-radius:12px;border:1px solid var(--rule)}
+.mp-land{fill:var(--sheet)}
+.mp-st path{stroke:var(--rule);stroke-width:1;fill:none}
+.mp-main{stroke:color-mix(in srgb,var(--graphite) 40%,transparent);stroke-width:2;fill:none}
+.mp-ic{fill:color-mix(in srgb,var(--patina) 16%,var(--sheet))}
+.mp-oc{fill:color-mix(in srgb,var(--patina) 24%,var(--sheet))}
+.mp-c{fill:var(--patina)}.mp-r1{fill:color-mix(in srgb,var(--patina) 22%,transparent)}.mp-r2{fill:none;stroke:color-mix(in srgb,var(--patina) 45%,transparent);stroke-width:1}
+.mp-tag{position:absolute;left:calc(50% - min(280px,50%) + clamp(18px,2vw,28px));top:clamp(16px,2vw,26px);display:grid;gap:4px;padding:14px 18px;border-radius:12px;background:var(--plaster);box-shadow:0 14px 28px -16px rgba(31,28,24,.4);text-align:left}
+.mp-tag .mono{font-size:12px;color:var(--pencil)}
+.mp-tag b{font-family:var(--serif);font-weight:300;font-size:22px;line-height:1.1;color:var(--graphite)}
+.inv{width:min(400px,86%);display:grid;gap:18px;padding:24px 26px;border-radius:12px;background:var(--sheet);border:1px solid var(--rule);box-shadow:0 22px 40px -26px rgba(31,28,24,.45);text-align:left;transform:rotate(1.5deg)}
+.inv-h{display:flex;align-items:center;justify-content:space-between}.inv-h .mono{font-size:12px;color:var(--pencil)}
+.inv-m{display:block;height:16px;width:calc(16px*2.994);color:var(--graphite)}
+.inv-t{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(24px,2vw,28px);line-height:1.12;letter-spacing:-.01em;color:var(--graphite)}
+.inv-t em{font-style:italic;color:var(--patina)}
+.inv-w{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.inv-w span{display:grid;place-items:center;height:38px;border-radius:12px;border:1px solid var(--rule);font-family:var(--mono);font-size:13px;color:var(--pencil)}
+.inv-w span.on{background:var(--patina);border-color:var(--patina);color:var(--plaster)}
+.inv-b{display:flex;align-items:center;justify-content:space-between}
+.inv-who{display:flex}.inv-who i{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--tan);font-style:normal;font-family:var(--mono);font-size:12px;color:var(--graphite);border:2px solid var(--sheet)}
+.inv-who i.ads{margin-left:-10px;background:var(--graphite)}.inv-who i.ads svg{width:24px;height:8px;color:var(--plaster)}
+.inv-go{display:inline-flex;align-items:center;height:40px;padding:0 20px;border-radius:12px;background:var(--graphite);color:var(--plaster);font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+@media (prefers-reduced-motion:no-preference){
+  .yr-ln path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.2s cubic-bezier(.6,0,.2,1) .7s}
+  .yr-ln path:nth-child(2){transition-delay:.9s}.yr-ln path:nth-child(3){transition-delay:1.2s}
+  .yr-d,.yr-o,.yr-you{opacity:0;transition:opacity 1s ease 2.6s}
+  .dq-row.in .yr-ln path{stroke-dashoffset:0}.dq-row.in .yr-d,.dq-row.in .yr-o,.dq-row.in .yr-you{opacity:1}
+  .dq-row.in .yr-o{opacity:.5}
+  .dq-row .kit-p,.dq-row .fan-p.f1,.dq-row .fan-p.f3,.dq-row .nt-n,.dq-row .mp-tag{transition-delay:1s}
+  .dq-row .fan-p.f3{transition-delay:1.2s}
+  .mp-r2{transform-origin:300px 158px;animation:mpPulse 2.8s cubic-bezier(.2,.7,.1,1) infinite}
+  @keyframes mpPulse{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.6);opacity:0}}
+}
+.dq-row.in .fan-p.f1{transform:translate(-50%,-50%) translateX(-92%) rotate(-7deg) scale(.9)}
+.dq-row.in .fan-p.f3{transform:translate(-50%,-50%) translateX(92%) rotate(7deg) scale(.9)}
+.dq-row.in .fan-p.f2{transform:translate(-50%,-50%)}
+.dq-row.in .kit-d{transform:translateX(-7%)}
+.dq-row.in .kit-p{transform:translate(-50%,-46%)}
+.dq-row.in .nt-n{transform:rotate(-4deg)}
+.dq-row.in .inv{transform:rotate(1.5deg)}
+@media (max-width:760px){
+  .dq-v.dv-kit,.dq-v.dv-fan,.dq-v.dv-note{height:260px}
+  .dq-v.dv-map{height:240px}
+  .kit-d{width:84%}
+  .nt-n{left:6%;top:4%}
+  .mp-tag{left:16px}
+  .inv{width:min(360px,92%)}
+}
 </style>
   <div class="hook" id="hook" data-k="0" aria-label="Opening">
     <div class="hk-eng" aria-hidden="true"><svg class="hk-top" viewBox="0 0 2400 1100" preserveAspectRatio="xMidYMid meet">
@@ -1627,31 +1712,31 @@ main>section>.wrap>.st:first-child{margin-top:0}
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">03</span><p class="dq-q"><span>&ldquo;I can&rsquo;t picture it.&rdquo;</span></p><p class="dq-a">You won&rsquo;t have to. Your opening screen comes first, so you know right away.</p></div>
-          <figure class="dq-v dv-br" aria-hidden="true"><span class="br"><span class="br-bar"><i></i><i></i><i></i></span><img src="img/w/lu-sv-o-signature.webp" alt="" loading="lazy"></span></figure>
+          <figure class="dq-v dv-br" aria-hidden="true"><span class="br"><span class="br-bar"><i></i><i></i><i></i></span><img src="img/w/lu-sig-1.webp" alt="" loading="lazy"></span></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">04</span><p class="dq-q"><span>&ldquo;So you just make websites?&rdquo;</span></p><p class="dq-a">Lol. We don&rsquo;t &ldquo;just make websites.&rdquo;</p></div>
-          <figure class="dq-v dv-tx"><p>We&rsquo;re a branding and business agency that builds your brand and your tools to grow your business.</p></figure>
+          <div class="dq-l"><span class="mono dq-n">04</span><p class="dq-q"><span>&ldquo;So you just make websites?&rdquo;</span></p><p class="dq-a">Lol. No. We build your brand and the tools that grow it.</p></div>
+          <figure class="dq-v dv-kit" aria-hidden="true"><span class="kit-d"><img src="img/w/fq-dash-lunas.webp" alt="" loading="lazy"></span><span class="kit-p"><img src="img/w/fq-ph-lunas.webp" alt="" loading="lazy"></span></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">05</span><p class="dq-q"><span>&ldquo;Why should I choose you?&rdquo;</span></p><p class="dq-a">Because we build around you, not a template.</p></div>
-          <figure class="dq-v dv-tx"><p>Your brand, your tools and your numbers, in one structure made for the way you work.</p></figure>
+          <div class="dq-l"><span class="mono dq-n">05</span><p class="dq-q"><span>&ldquo;Why should I choose you?&rdquo;</span></p><p class="dq-a">Because we build around you. Nothing starts as a template.</p></div>
+          <figure class="dq-v dv-fan" aria-hidden="true"><span class="fan-p f1"><img src="img/w/fq-ph-halden.webp" alt="" loading="lazy"></span><span class="fan-p f3"><img src="img/w/fq-ph-mv.webp" alt="" loading="lazy"></span><span class="fan-p f2"><img src="img/w/fq-ph-lunas.webp" alt="" loading="lazy"></span></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">06</span><p class="dq-q"><span>&ldquo;You don&rsquo;t know my business.&rdquo;</span></p><p class="dq-a">You&rsquo;re right. We don&rsquo;t.</p></div>
-          <figure class="dq-v dv-tx"><p>You know it best. We know how to build a brand, and the apps, that carry it further.</p></figure>
+          <div class="dq-l"><span class="mono dq-n">06</span><p class="dq-q"><span>&ldquo;You don&rsquo;t know my business.&rdquo;</span></p><p class="dq-a dq-w">You&rsquo;re right. You know it best. We build what carries it further.</p></div>
+          <figure class="dq-v dv-note" aria-hidden="true"><span class="nt-d"><img src="img/w/fq-dash-sr.webp" alt="" loading="lazy"></span><span class="nt-n">Drop day is chaos.</span></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">07</span><p class="dq-q"><span>&ldquo;Why do you think you can help?&rdquo;</span></p><p class="dq-a">Twenty years of <em>results</em>.</p></div>
-          <figure class="dq-v dv-tx"><p>Across art, architecture and marketing, now turned to how your business is seen.</p></figure>
+          <div class="dq-l"><span class="mono dq-n">07</span><p class="dq-q"><span>&ldquo;Why do you think you can help?&rdquo;</span></p><p class="dq-a dq-w">Twenty years of <em>results</em>, across art, architecture and marketing.</p></div>
+          <figure class="dq-v dv-yr" aria-hidden="true"><svg class="yr" viewBox="0 0 520 230"><g class="yr-ln"><path pathLength="1" d="M0 58H232C300 58 322 116 392 116"/><path pathLength="1" d="M0 116H392"/><path pathLength="1" d="M176 174H232C300 174 322 116 392 116"/></g><g class="yr-k"><text x="0" y="44">ART</text><text x="0" y="102">ARCHITECTURE</text><text x="176" y="160">MARKETING</text></g><circle class="yr-o" cx="392" cy="116" r="14"/><circle class="yr-d" cx="392" cy="116" r="6"/><text class="yr-you" x="414" y="122">You</text><g class="yr-ax"><path d="M0 214H392"/><path d="M0 208v12M392 208v12"/><text x="0" y="200">20 YEARS AGO</text><text x="392" y="200" text-anchor="end">NOW</text></g></svg></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">08</span><p class="dq-q"><span>&ldquo;How on earth did you find me?!&rdquo;</span></p><p class="dq-a">Ha! Great question.</p></div>
-          <figure class="dq-v dv-tx"><p>We&rsquo;re based in Palm Beach County, and we find great businesses using the very tools we design for yours.</p></figure>
+          <div class="dq-l"><span class="mono dq-n">08</span><p class="dq-q"><span>&ldquo;How on earth did you find me?!&rdquo;</span></p><p class="dq-a dq-w">Ha! We&rsquo;re local, and we found you with the very tools we build.</p></div>
+          <figure class="dq-v dv-map" aria-hidden="true"><svg class="mp" viewBox="0 0 520 300" preserveAspectRatio="xMidYMid slice"><rect class="mp-land" width="520" height="300"/><g class="mp-st"><path d="M0 22H330"/><path d="M0 56H330"/><path d="M0 90H330"/><path d="M0 124H330"/><path d="M0 158H330"/><path d="M0 192H330"/><path d="M0 226H330"/><path d="M0 260H330"/><path d="M0 294H330"/><path d="M26 0V300"/><path d="M70 0V300"/><path d="M114 0V300"/><path d="M158 0V300"/><path d="M202 0V300"/><path d="M246 0V300"/><path d="M290 0V300"/></g><path class="mp-main" d="M0 158H338"/><path class="mp-ic" d="M338 0C350 60 330 120 342 180S356 260 346 300H392C402 250 388 200 396 140S384 50 392 0Z"/><path class="mp-oc" d="M446 0C440 80 456 160 448 230S452 280 450 300H520V0Z"/><g class="mp-pin"><circle class="mp-r2" cx="300" cy="158" r="30"/><circle class="mp-r1" cx="300" cy="158" r="16"/><circle class="mp-c" cx="300" cy="158" r="7"/></g></svg><span class="mp-tag"><span class="mono">West Palm Beach</span><b>There you are.</b></span></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">09</span><p class="dq-q"><span>&ldquo;What will it cost?&rdquo;</span></p><p class="dq-a dq-w">Every quote begins with a conversation based on your needs.</p></div>
-          <figure class="dq-v dv-of" aria-hidden="true"><span class="ofc"><b>Refresh</b><em>Your site, renewed.</em></span><span class="ofc"><b>Signature</b><em>Your brand, elevated.</em></span><span class="ofc"><b>Flagship</b><em>Your whole business, connected.</em></span></figure>
+          <div class="dq-l"><span class="mono dq-n">09</span><p class="dq-q"><span>&ldquo;What will it cost?&rdquo;</span></p><p class="dq-a dq-w">Every quote begins with a conversation about your needs.</p></div>
+          <figure class="dq-v dv-inv" aria-hidden="true"><div class="inv"><div class="inv-h"><span class="mono">Invitation</span><svg class="inv-m"><use href="#adsmark"/></svg></div><p class="inv-t">A first conversation, <em>about what you need.</em></p><div class="inv-w"><span>M</span><span>T</span><span class="on">W</span><span>T</span><span>F</span></div><div class="inv-b"><span class="inv-who"><i>You</i><i class="ads"><svg><use href="#adsmark"/></svg></i></span><span class="inv-go">Accept</span></div></div></figure>
         </li>
       </ol>
     </div>
