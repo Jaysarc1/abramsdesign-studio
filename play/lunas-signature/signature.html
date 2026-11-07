@@ -157,6 +157,14 @@
 .hero-a{position:absolute;left:0;right:0;bottom:calc(clamp(26px,4.5vh,48px) + env(safe-area-inset-bottom,0px));z-index:3;margin:0;padding:0 20px;text-align:center;pointer-events:none}
 @media (min-width:901px){.shade{background:radial-gradient(62% 44% at 50% 22%,rgba(6,5,8,.66),rgba(6,5,8,.3) 52%,rgba(6,5,8,0) 76%),linear-gradient(180deg,rgba(6,5,8,.5),rgba(6,5,8,0) 16%),linear-gradient(0deg,rgba(6,5,8,.6),rgba(6,5,8,0) 18%)}}
 @media (max-width:900px){.hero-a{margin:0}}
+/* batch 16: "Brewed by moonlight." bends round the top of the cup like the crescent round the bean in the logo; the h1 stays for readers */
+.hero-t h1.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hero-arc{position:absolute;left:0;top:0;z-index:3;pointer-events:none;overflow:visible;filter:drop-shadow(0 2px 16px rgba(0,0,0,.55))}
+.hero-arc g{transform-origin:0 0;opacity:0;transform:rotate(-16deg);transition:opacity 1.4s var(--ease),transform 1.9s var(--ease)}
+.desk.lit .hero-arc g{opacity:1;transform:none}
+.hero-arc text{font-family:var(--serif);font-weight:400;letter-spacing:.005em;fill:#F3ECDF}
+.hero-arc tspan.m{font-style:italic;fill:var(--sgold)}
+@media (max-width:900px){.hero-arc{transition:opacity .6s var(--ease)}.desk.ph .hero-arc{opacity:0}}
 </style>
 </head>
 <body data-page="home">
@@ -170,7 +178,7 @@
   <canvas id="steam" aria-hidden="true"></canvas>
   <div class="shade"></div>
   <div class="hero-t">
-    <h1><span><i>Brewed by</i></span><span><i><em>moonlight.</em></i></span></h1>
+    <h1 class="sr"><span><i>Brewed by</i></span><span><i><em>moonlight.</em></i></span></h1>
   </div>
   <p class="hero-a"><span class="a1">Clematis <i class="dk">Street,</i><i class="mb">St.</i></span> <span class="a2">West Palm Beach</span></p>
   <div class="tag" id="tag"></div>
@@ -421,10 +429,26 @@ var bg=scene.querySelector('img.bg');
 if(bg.complete)start();else{bg.addEventListener('load',start);setTimeout(start,2500)}
 
 var steamPlace=function(){};
+/* the headline's arch: a circle round the cup, the words centred on its top, sized so they sweep about 160 degrees */
+var NS='http://www.w3.org/2000/svg',arc=document.createElementNS(NS,'svg');arc.setAttribute('class','hero-arc');arc.setAttribute('aria-hidden','true');
+arc.innerHTML='<defs><path id="harc"/></defs><g><text><textPath href="#harc" startOffset="50%" text-anchor="middle">Brewed by <tspan class="m">moonlight.</tspan></textPath></text></g>';
+desk.insertBefore(arc,heroT);
+var arcK='';
+function arcFit(){
+  var cr=COFFEE.r*s,R=cr*(mob?1.36:1.4),th=(mob?150:158)*Math.PI/180,k=Math.round(R)+'|'+mob;if(k===arcK)return;arcK=k;
+  var a=th/2,x=R*Math.sin(a),y=-R*Math.cos(a),pad=Math.ceil(R*2.2);
+  arc.setAttribute('width',pad*2);arc.setAttribute('height',pad*2);arc.setAttribute('viewBox',(-pad)+' '+(-pad)+' '+pad*2+' '+pad*2);
+  arc.querySelector('path').setAttribute('d','M'+(-x).toFixed(1)+' '+(-y).toFixed(1)+'A'+R.toFixed(1)+' '+R.toFixed(1)+' 0 '+(th>Math.PI?1:0)+' 1 '+x.toFixed(1)+' '+(-y).toFixed(1));
+  var t=arc.querySelector('text');t.style.fontSize='100px';var L=0;try{L=t.getComputedTextLength()}catch(e){}
+  t.style.fontSize=(L?Math.max(28,Math.min(84,100*R*th*.96/L)):Math.round(R*.3))+'px';
+  arc._pad=pad;
+}
+function arcPlace(){var e=off('cup'),pad=arc._pad||0;arc.style.transform='translate('+(desk._ox+(COFFEE.x+e[0])*s-pad).toFixed(1)+'px,'+(desk._oy+(COFFEE.y+e[1])*s-pad).toFixed(1)+'px)'}
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){arcK='';arcFit();});
 function loop(){
   px+=(tx-px)*.06;py+=(ty-py)*.06;
   if(mob)pan+=(panT-pan)*.045;
-  apply();placeTag();steamPlace();
+  apply();placeTag();steamPlace();arcFit();arcPlace();
   requestAnimationFrame(loop);
 }
 apply();requestAnimationFrame(loop);

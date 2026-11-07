@@ -946,7 +946,7 @@ footer .g12{row-gap:32px; align-items:start}
   /* the finished crane holds; then it flaps, and the sky folds into the wordmark around it; then the next page folds over it all */
   const YS = FE + at(.5), W1 = YS + at(2.4), WM0 = YS + at(.7), WM1 = YS + at(2.2), C0 = W1 + at(1.0), C1 = C0 + at(1.2);
   /* the hero holds, then its page folds back down and Learn rises out from behind it */
-  window.mvLogoY = () => intro.getBoundingClientRect().top + scrollY + (YS + at(2.8)) * (intro.offsetHeight - H);   // the scroll where the crane sits over the finished name
+  window.mvLogoY = () => intro.getBoundingClientRect().top + scrollY + (YS + at(3.36)) * (intro.offsetHeight - H);   // the scroll where the crane sits over the finished name, right at the edge of the next page, so the first wheel tick turns it
   const D0 = C1 + at(.9), D1 = Math.min(1, D0 + at(1.0)), DL = D0 + (D1 - D0) * .5;
   let learnIn = false;
   let FP = null, lastPre = -1, objTop = 0, objBot = 0, Tpx = 100, curKey = '', curMode = '', landed = null, lastFold = -1, glintT = 0, paperOn = null;
@@ -1059,7 +1059,7 @@ footer .g12{row-gap:32px; align-items:start}
     for (let k = 0; k < 4; k++) add(CUT0 + (CUT1 - CUT0) * (.08 + k * .27), 'snip');
     add(CUT1 + .002, 'drop'); add(FALL + .002, 'turn');
     for (let k = 0; k < 8; k++) { add(FS + SEG * k + .0005, 'fold'); add(FS + SEG * (k + .7), 'crease'); }
-    for (let k = 0; k < 3; k++) add(YS + (W1 - YS) * (.05 + .85 * (k + .5) / 3), 'flap');
+    for (let k = 0; k < 2; k++) add(YS + (W1 - YS) * (.05 + .85 * (k + .5) / 2), 'flap');
     for (let k = 0; k < 3; k++) add(WM0 + (WM1 - WM0) * (.12 + k * .3), 'ripple');
     add(C0 + .03 * (C1 - C0), 'cover'); add(D0 + .04 * (D1 - D0), 'cover');
     SEV = ev.sort((a, b) => a.p - b.p);
@@ -1322,8 +1322,8 @@ footer .g12{row-gap:32px; align-items:start}
     const M = WMK, L = lightL();
     if (RM) { draw(ctx, P, ox, M.cy, M.sc, { dpr, shadow:1 }); drawMark(1, L); if (p >= C0) drawPage(0, 1, L); return; }
     const w = clamp((p - YS) / (W1 - YS)), mv = ease(clamp(w / .42)), u = clamp((w - .05) / .85);
-    const v = 1 - (1 - Math.cos(u * Math.PI * 2 * 3)) * .95 * Math.pow(Math.sin(Math.PI * u), .5);
-    const s = Math.exp(lerp(Math.log(sc), Math.log(M.sc), mv)), y = lerp(oy, M.cy, mv) - Math.sin(u * Math.PI * 6) * Math.sin(Math.PI * u) * s * F8.h * .05;
+    const v = 1 - (1 - Math.cos(u * Math.PI * 2 * 2)) * .95 * Math.pow(Math.sin(Math.PI * u), .5);
+    const s = Math.exp(lerp(Math.log(sc), Math.log(M.sc), mv)), y = lerp(oy, M.cy, mv) - Math.sin(u * Math.PI * 4) * Math.sin(Math.PI * u) * s * F8.h * .05;
     flap(P, Math.max(v, lerp(-.9, -.3, mv)));   // once it sits above the name, the downstroke stays short of the letters
     draw(ctx, P, ox, y, s, { dpr, shadow:lerp(1, .7, mv) });
     drawMark(clamp((p - WM0) / (WM1 - WM0)), L);
