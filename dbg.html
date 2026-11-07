@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>dbg</title>
+<body style="margin:0"><pre id="o" style="position:fixed;right:0;top:0;width:420px;height:100vh;overflow:auto;background:#fff;font:11px monospace;z-index:9;margin:0"></pre>
+<iframe id="f" src="index.html" style="width:1000px;height:860px;border:0"></iframe>
+<script>
+var o=document.getElementById('o'),f=document.getElementById('f'),t0=Date.now();
+function log(s){o.textContent+=s+'\n';}
+f.onload=function(){var w=f.contentWindow,d=f.contentDocument;
+ w.addEventListener('error',function(e){log('ERR '+e.message+' @'+e.lineno);});
+ [1000,2500,5000,8000,11000,15000,19000,23000].forEach(function(ms){setTimeout(function(){
+  var h=d.getElementById('hook'),cs=w.getComputedStyle(h),r=h.getBoundingClientRect(),el=d.elementFromPoint(500,400);
+  var chain=[];for(var e=el;e&&chain.length<6;e=e.parentElement)chain.push(e.tagName+'.'+(e.className&&e.className.baseVal!==undefined?e.className.baseVal:e.className));
+  log((ms/1000)+'s sy='+w.scrollY+' hook top='+r.top.toFixed(0)+' h='+r.height.toFixed(0)+' op='+cs.opacity+' vis='+cs.visibility+' disp='+cs.display+' bg='+cs.backgroundImage.slice(0,30)+' cls='+h.className+' k='+h.getAttribute('data-k'));
+  log('  at(500,400): '+chain.join(' < '));
+  var b=d.body,bs=w.getComputedStyle(b);log('  body op='+bs.opacity+' main op='+w.getComputedStyle(d.querySelector('main')).opacity);
+ },ms);});};
+</script>
