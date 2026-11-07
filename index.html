@@ -845,6 +845,13 @@ header .hpill:hover{background:var(--patina);color:var(--plaster)}
   .pin-cta.on{transform:none}
   .lv-on .pin-cta{transform:translateY(105%)}
 }
+/* desktop too: every section's heading and line sit centred, one above the other */
+@media (min-width:761px){
+  main .st-row{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;gap:clamp(16px,1.6vw,24px)}
+  main .st-row>*{grid-column:1/-1!important}
+  main .st-copy p,main .st-row .lead{margin-inline:auto}
+  .ind .head{justify-content:center;text-align:center}
+}
 /* phones: centred, top to bottom */
 @media (max-width:760px){
   .st-row{justify-items:center;text-align:center}
