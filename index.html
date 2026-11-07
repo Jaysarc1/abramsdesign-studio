@@ -1319,6 +1319,11 @@ main>section>.wrap>.st:first-child{margin-top:0}
 .cta-blk p em{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:1.1em;letter-spacing:-.01em}
 .fit-cta .fit-q{font-size:clamp(22px,2vw,30px);line-height:1.15;letter-spacing:-.01em}
 .fit.fit-cta{margin-top:clamp(20px,2.4vw,34px)}
+/* batch 11: the turn is driven frame by frame (see turn()), so the stepped animations stand down while it runs */
+.hook.hs-turn .hk-top,.hook.hs-turn .hk-q svg,.hook.hs-turn .hk-car svg{animation:none!important;transition:none!important;will-change:transform,opacity}
+.hook.hs-turn .hk-car{opacity:1}
+.hook.hs-turn .hk-eng::after{opacity:0;transition:opacity .16s linear}
+.hook.hs-turned .hk-car svg{animation:none!important}
 </style>
   <div class="hook" id="hook" data-k="0" aria-label="Opening">
     <div class="hk-eng" aria-hidden="true"><svg class="hk-top" viewBox="0 0 2400 1100" preserveAspectRatio="xMidYMid meet">
@@ -2346,9 +2351,27 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     at(4850,function(){cl.add('hs-shut');});
     at(5370,thunk);
     /* off the roof and round to the side in one quick move: two in-between views, a beat each */
-    at(5560,function(){cl.add('hs-drop','hs-q1');});
-    at(5700,function(){cl.add('hs-q2');});
-    at(5840,function(){cl.add('hs-car');sfx('focus');});
+    /* batch 11: the turn is one continuous move. Each view is stretched to the same box as it hands to the next and crossfades over it, with a touch of blur at speed, so no swap shows */
+    var qv=[hk.querySelector('.hk-q .q1'),hk.querySelector('.hk-q .q2')],cs=car.querySelector('svg'),hq=hk.querySelector('.hk-q');
+    var TURN=!RM&&top&&qv[0]&&qv[1]&&cs&&hq;
+    /* where each view's car sits, in the side view's 640x300 units (across: the wheel centres, so the wheels line up as they hand over; down: roof to tyres): plan from above, the two in-betweens, the side */
+    var BX=[[166.2,465,55,285],[153.5,480.5,14,339],[151,483,25,334],[164.5,470.5,51,293]];
+    function turn(){var Ls=[top,qv[0],qv[1],cs],D=500,t0=performance.now();cl.add('hs-turn');
+      Ls.forEach(function(e){e.style.transformOrigin='0 0';});
+      function sm(u){u=u<0?0:u>1?1:u;return u*u*(3-2*u);}
+      function f(now){var k=Math.min(1,(now-t0)/D),a=3*(.5-Math.cos(k*Math.PI)/2),hb=hk.getBoundingClientRect(),qb=hq.getBoundingClientRect(),q=qb.width/640,L=qb.left-hb.left,T=qb.top-hb.top;
+        var i=Math.min(2,Math.floor(a)),u=a-i,P=BX[i],N=BX[i+1],G=[0,1,2,3].map(function(j){return P[j]+(N[j]-P[j])*u;}),bl=(2*Math.sin(k*Math.PI)).toFixed(2)+'px';
+        Ls.forEach(function(e,j){var B=BX[j],sx=(G[1]-G[0])/(B[1]-B[0]),sy=(G[3]-G[2])/(B[3]-B[2]),tx,ty;
+          if(j===0){tx=L+G[0]*q-sx*(L+B[0]*q);ty=T+G[2]*q-sy*(T+B[2]*q);}else{tx=(G[0]-sx*B[0])*q;ty=(G[2]-sy*B[2])*q;}
+          var op=j===0?(a<.8?1:0):(a<j-1||(j<3&&a>=j+.8))?0:sm((a-j+.8)/.6);
+          e.style.transform='translate('+tx.toFixed(2)+'px,'+ty.toFixed(2)+'px) scale('+sx.toFixed(4)+','+sy.toFixed(4)+')';e.style.opacity=op.toFixed(3);e.style.filter=k<1?'blur('+bl+')':'';});
+        road.style.opacity=Math.max(0,Math.min(1,(a-1.2)/1.2)).toFixed(3);
+        if(k<1){requestAnimationFrame(f);return;}
+        Ls.forEach(function(e,j){e.style.transform=e.style.filter=e.style.transformOrigin='';e.style.opacity=j===3?'':'0';e.style.willChange='';});road.style.opacity='';cl.remove('hs-turn');cl.add('hs-turned','hs-car');}
+      requestAnimationFrame(f);}
+    at(5560,function(){if(TURN)turn();else cl.add('hs-drop','hs-q1');});
+    at(5700,function(){if(!TURN)cl.add('hs-q2');});
+    at(5840,function(){if(!TURN)cl.add('hs-car');sfx('focus');});
     at(6430,function(){cl.add('hs-rev1');});
     at(7380,function(){cl.remove('hs-rev1');cl.add('hs-rev2');});
     at(6000,bLoad);
