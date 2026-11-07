@@ -1612,8 +1612,8 @@ main>section>.wrap>.st:first-child{margin-top:0}
             <ellipse cx="27" cy="242" rx="6" ry="10" fill="#1b1d21" stroke="#2d3036" stroke-width="2.5"/>
             <g fill="url(#fcPuff)"><circle class="pf" cx="16" cy="240" r="14" style="--d:0s"/><circle class="pf" cx="12" cy="236" r="18" style="--d:.12s"/><circle class="pf" cx="8" cy="244" r="12" style="--d:.24s"/></g>
           </g>
-          <!-- wheels: one hubcap went missing years ago -->
-          <g class="w wr"><circle cx="165" cy="250" r="44" fill="#16171a"/><circle cx="165" cy="250" r="27" fill="#3e4146" stroke="#6a6e74" stroke-width="3"/><g fill="#16171a"><circle cx="165" cy="236" r="4"/><circle cx="179" cy="250" r="4"/><circle cx="165" cy="264" r="4"/><circle cx="151" cy="250" r="4"/></g><circle cx="165" cy="250" r="7" fill="#6a6e74"/></g>
+          <!-- wheels: both hubcaps on, for now; the back one lets go as the car pulls away -->
+          <g class="w wr"><circle cx="165" cy="250" r="44" fill="#16171a"/><circle cx="165" cy="250" r="27" fill="#3e4146" stroke="#6a6e74" stroke-width="3"/><g fill="#16171a"><circle cx="165" cy="236" r="4"/><circle cx="179" cy="250" r="4"/><circle cx="165" cy="264" r="4"/><circle cx="151" cy="250" r="4"/></g><circle cx="165" cy="250" r="7" fill="#6a6e74"/><g class="hc"><circle cx="165" cy="250" r="29" fill="#d4d7dc" stroke="#8a8f96" stroke-width="3"/><g stroke="#8a8f96" stroke-width="5" stroke-linecap="round"><path d="M165 225V275M140 250H190M147 232L183 268M183 232L147 268"/></g><circle cx="165" cy="250" r="9" fill="#e9ecef" stroke="#8a8f96" stroke-width="2"/></g></g>
           <g class="w wf"><circle cx="471" cy="250" r="44" fill="#16171a"/><circle cx="471" cy="250" r="29" fill="#d4d7dc" stroke="#8a8f96" stroke-width="3"/><g stroke="#8a8f96" stroke-width="5" stroke-linecap="round"><path d="M471 225V275M446 250H496M453 232L489 268M489 232L453 268"/></g><circle cx="471" cy="250" r="9" fill="#e9ecef" stroke="#8a8f96" stroke-width="2"/></g>
         </svg>
       </div>
@@ -1623,14 +1623,14 @@ main>section>.wrap>.st:first-child{margin-top:0}
     </div>
     <canvas class="hk-cv" aria-hidden="true"></canvas>
     <div class="hk-t">
-      <p class="hk-b b1"><span>Your business is a Ferrari Spider.</span></p>
-      <p class="hk-b b2"><em>But your marketing is a Ford Focus&hellip;</em></p>
+      <p class="hk-b b1"><span>Your business is a &rsquo;26 Ferrari Spider.</span></p>
+      <p class="hk-b b2"><em>But your marketing is an &rsquo;04 Ford Focus&hellip;</em></p>
       <p class="hk-b b3"><span>You have <b class="hk-5">5 seconds</b> to grab someone&rsquo;s attention.</span></p>
       <p class="hk-b b4"><span>Now imagine a minor facelift.</span></p>
       <p class="hk-b b5"><span>Great branding doesn&rsquo;t start over.</span></p>
       <p class="hk-b b6"><em>It brings out what you already have.</em></p>
     </div>
-    <p class="sr-only">Your business is a Ferrari Spider. But your marketing is a Ford Focus&hellip; You have 5 seconds to grab someone&rsquo;s attention. Now imagine a minor facelift. Great branding doesn&rsquo;t start over. It brings out what you already have.</p>
+    <p class="sr-only">Your business is a &rsquo;26 Ferrari Spider. But your marketing is an &rsquo;04 Ford Focus&hellip; You have 5 seconds to grab someone&rsquo;s attention. Now imagine a minor facelift. Great branding doesn&rsquo;t start over. It brings out what you already have.</p>
     <!-- the one example, Mountain & Valley: to swap it, change the two before pictures, the two stills and data-live -->
     <div class="hk-fs"><figure class="hk-f f1"><span class="hk-bar" aria-hidden="true"><i></i><i></i><i></i></span><span class="hk-v"><picture><source media="(max-width:760px)" srcset="img/w/hk-mv-b-p.webp"><img src="img/w/hk-mv-b-d.webp" alt="" decoding="async"></picture><span class="hk-a" data-live="play/mountain-valley/index.html"><picture><source media="(max-width:760px)" srcset="img/w/mv-poster-m.webp"><img src="img/w/mv-poster.webp" alt="" decoding="async"></picture></span></span><span class="hk-scr" aria-hidden="true"><svg viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1.5v12M1.8 9.3 6 13.5l4.2-4.2"/></svg>Scroll to explore</span></figure><div class="hk-ring" aria-hidden="true"><svg viewBox="0 0 200 200"><g class="tks"></g><circle class="bg" cx="100" cy="100" r="80"/><circle class="arc" cx="100" cy="100" r="80" pathLength="1000" stroke-dasharray="1000" stroke-dashoffset="0"/></svg><b class="hk-num">5.0<small>s</small></b></div></div>
     <span class="hk-cue-t" aria-hidden="true">Scroll</span>
@@ -2394,7 +2394,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       hiss(t+.052,.016,'bandpass',2400,3,.22,2);
     }catch(e){}}
     /* the reveal: the three after sites, live */
-    var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:10,LS=3.7;
+    var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:20,LS=3.7;
     /* each after renders at a real width (a phone layout on a phone), scaled a little into its frame, so it can be scrolled, tapped and used */
     function liveSize(){lv.forEach(function(o){var w=o.a.clientWidth,h=o.a.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1600,w/.86),k=w/V;
         o.f.style.width=Math.round(V)+'px';o.f.style.height=Math.ceil(h/k)+'px';o.f.style.transform='scale('+k.toFixed(4)+')';});}
@@ -2470,6 +2470,24 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     at(7630,function(){cl.remove('hs-rev2');cl.add('hs-burn');smokeOn();});
     at(10200,function(){smOn=0;});
     at(8480,function(){cl.add('hs-go');});
+    /* batch 14: the back hubcap lets go as the car pulls away: it hops off, rolls on behind the car, wobbles and lies down on the road */
+    function capOff(){var hc=hk.querySelector('.hk-car .wr .hc');if(!hc||!sm||!sm.animate||RM)return;var r=hc.getBoundingClientRect(),o=sm.getBoundingClientRect();if(!r.width)return;
+      var NS='http://www.w3.org/2000/svg',v=document.createElementNS(NS,'svg'),d=r.width,R=d/2,u=d/61;
+      v.setAttribute('viewBox','134.5 219.5 61 61');v.style.cssText='position:absolute;left:0;top:0;width:'+d.toFixed(1)+'px;height:'+d.toFixed(1)+'px;overflow:visible;will-change:transform';
+      v.appendChild(hc.cloneNode(true));sm.appendChild(v);hc.style.opacity='0';
+      var x=r.left-o.left,y=r.top-o.top,g=(44-30.5)*u,deg=function(dist){return dist/R*180/Math.PI;},T=function(dx,dy,sy,rot){return 'translate('+(x+dx).toFixed(1)+'px,'+(y+dy+R*(1-sy)).toFixed(1)+'px) scaleY('+sy+') rotate('+rot.toFixed(0)+'deg)';};
+      v.animate([{transform:T(0,0,1,0)},
+        {offset:.14,transform:T(d*.5,-d*.45,1,deg(d*.5)+120),easing:'cubic-bezier(.3,0,.7,1)'},
+        {offset:.28,transform:T(d*1.1,g,1,deg(d*1.1)+160)},
+        {offset:.36,transform:T(d*1.35,g-d*.08,1,deg(d*1.35)+160)},
+        {offset:.44,transform:T(d*1.55,g,1,deg(d*1.55)+160),easing:'cubic-bezier(.2,.5,.4,1)'},
+        {offset:.7,transform:T(d*2.6,g,1,deg(d*2.6)+160)},
+        {offset:.78,transform:T(d*2.75,g,.62,deg(d*2.75)+160)},
+        {offset:.85,transform:T(d*2.8,g,.86,deg(d*2.8)+160)},
+        {offset:.91,transform:T(d*2.83,g,.36,deg(d*2.83)+160)},
+        {offset:.96,transform:T(d*2.84,g,.5,deg(d*2.84)+160)},
+        {transform:T(d*2.85,g,.22,deg(d*2.85)+160)}],{duration:1500,easing:'linear',fill:'forwards'});}
+    at(8780,capOff);
     /* the line on its own; then the site, with the clock on its corner, so the five seconds are spent looking at it; at zero it unfolds into its facelift, live and usable */
     /* batch 12: the five seconds go straight onto the before site: the line sits over it, its gold rule runs down with the clock, and at zero it hands to the next line */
     at(9830,function(){cl.add('hs-clk','hs-which');K(4);liveLoad();});
