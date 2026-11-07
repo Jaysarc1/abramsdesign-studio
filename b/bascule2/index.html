@@ -1514,6 +1514,8 @@ const r5=a=>a.map(v=>+v.toFixed(5));
 const VIEWS=[...EXT.map(e=>{const p=orbPos(e);return {id:e.id,name:e.name,grp:'Tower',pos:r5(p.toArray()),look:[0,e.ty,0],fov:e.fov}}),
   ...ROOMS.map(r=>({id:r.id,name:r.name,grp:'Residence 31A',pos:r5(mePos(r).toArray()),look:r5(meLook(r).toArray()),fov:52})),
   {id:'balcony',name:'Balcony',grp:'Tower',pos:[3.487,31.6,2.708],look:[56.88,25.6,-24.58],fov:55,depth:[.3,320]},
+  {id:'through-frame',name:'Through the frame',grp:'Tower',pos:[75.5,7.2,-.5],look:[0,18,0],fov:72,depth:[.3,420]},
+  {id:'between-blocks',name:'Between blocks',grp:'Tower',pos:[96,4,-13.8],look:[0,17,0],fov:50,depth:[1.5,420]},
   {id:'amenity-deck',name:'Amenity deck',grp:'Amenities',pos:[-13,12,-33],look:[.5,17,-6],fov:70,depth:[8,58]}];
 let mine=[];try{mine=JSON.parse(localStorage.getItem('bascule.views')||'[]').filter(v=>v&&v.pos&&v.look&&v.fov)}catch(e){}
 const allViews=()=>[...VIEWS,...mine.map(v=>({...v,grp:'Yours'}))];
@@ -1724,6 +1726,8 @@ function flyFrames(n=15,fov=45){const L=(d,y)=>O.clone().add(V(-.24,0,0)).addSca
   out[0].look=[0,13,-12];
   /* a hero from just off 31A's balcony edge, the lit rooms on the left, out over the city to the dusk skyline */
   out.push({id:'fly-'+String(n+1).padStart(2,'0'),name:'Hero balcony',pos:[3.487,31.6,2.708],look:[56.88,25.6,-24.58],fov:55,depth:[.3,320]});
+  out.push({id:'fly-'+String(n+2).padStart(2,'0'),name:'Through the frame',pos:[75.5,7.2,-.5],look:[0,18,0],fov:72,depth:[.3,420]});
+  out.push({id:'fly-'+String(n+3).padStart(2,'0'),name:'Between blocks',pos:[96,4,-13.8],look:[0,17,0],fov:50,depth:[1.5,420]});
   return out}
 window.__bascule={flyFrames,setMode,goView,goTier,goRoom,get mode(){return mode},get busy(){return !!move||!!glide||mode==='intro'},views:allViews,camera,snap,AS};
 }
