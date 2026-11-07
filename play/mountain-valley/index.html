@@ -878,6 +878,32 @@ footer .g12{row-gap:32px; align-items:start}
     }
   }
   const triL = (nx, ny, L) => ((nx * L[0] + ny * L[1] + L[2]) / Math.hypot(nx, ny, 1) - L[2]) / (.42 * .8);
+  /* every letter of the name is folded: its panels turn away from the light, and each crease catches it (shapes in units of a 200px letter, from its pen and baseline) */
+  const FOLDS = {"M":{"p":[[1,[[57,-170],[125,-170],[125,20],[57,20]]],[0.5,[[125,-170],[194,-170],[194,20],[125,20]]]],"c":[[57,-170,57,20],[125,-170,125,20],[194,-170,194,20]]},"o":{"p":[[1,[[197,-178],[197,62],[-43,62]]]],"c":[[197,-178,-43,62]]},"u":{"p":[[1,[[100,-140],[175,-140],[175,20],[100,20]]]],"c":[[100,-140,100,20]]},"n":{"p":[[1,[[58,-140],[105,-140],[105,20],[58,20]]],[0.5,[[105,-140],[175,-140],[175,20],[105,20]]]],"c":[[58,-140,58,20],[105,-140,105,20]]},"t":{"p":[[1,[[-5,-117],[135,-117],[135,-85],[-5,-85]]],[0.5,[[70,-45],[135,-45],[135,20],[70,20]]]],"c":[[-5,-117,135,-117],[-5,-85,135,-85],[70,-45,135,-45],[70,-45,70,20]]},"a":{"p":[[1,[[107,-140],[175,-140],[175,20],[107,20]]]],"c":[[107,-140,107,20]]},"i":{"p":[[0.5,[[-5,-180],[75,-180],[75,-122],[-5,-122]]],[1,[[-5,-122],[75,-122],[75,-98],[-5,-66]]]],"c":[[-5,-66,75,-98]]},"&":{"p":[[1,[[100,-170],[210,-170],[210,20],[60,20]]]],"c":[[100,-170,60,20]]},"V":{"p":[[1,[[95,-170],[200,-170],[200,20],[95,20]]]],"c":[[95,-170,95,20]]},"l":{"p":[[0.5,[[0,-62],[70,-92],[70,20],[0,20]]]],"c":[[0,-62,70,-92]]},"L":{"p":[[0.5,[[0,-100],[70,-70],[70,20],[0,20]]]],"c":[[0,-100,70,-70]]},"e":{"p":[[1,[[-5,-50],[160,-50],[160,45],[-5,45]]]],"c":[[-5,-50,160,-50]]},"y":{"p":[[1,[[82,-125],[175,-125],[175,50],[58,50]]]],"c":[[82,-125,58,50]]}};
+  const fcv = document.createElement('canvas'), fcx = fcv.getContext('2d');
+  function drawLetterFolds(a) {
+    const M = WMK; if (!M || a <= 0) return;
+    if (fcv.width !== oc.width || fcv.height !== oc.height) { fcv.width = oc.width; fcv.height = oc.height; }
+    fcx.setTransform(dpr, 0, 0, dpr, 0, 0); fcx.clearRect(0, 0, W, H); fcx.globalCompositeOperation = 'source-over';
+    fcx.font = `800 ${M.fs.toFixed(2)}px ${M.fam}`; fcx.textAlign = 'left'; fcx.textBaseline = 'alphabetic';
+    const u = M.fs / 200, lw = Math.max(1, M.fs * .014);
+    M.lines.forEach((txt, n) => {
+      const x00 = W / 2 - fcx.measureText(txt).width / 2, by = M.ty + n * M.lh + M.fs * .8; let ls = 0;
+      [...txt].forEach((ch, i) => {
+        const F = FOLDS[ch === 'l' ? (ls++ ? 'L' : 'l') : ch]; if (!F) return;
+        const x0 = x00 + fcx.measureText(txt.slice(0, i)).width, adv = fcx.measureText(ch).width;
+        fcx.save(); fcx.beginPath(); fcx.rect(x0, by - M.fs * 1.2, adv, M.fs * 1.6); fcx.clip();
+        F.p.forEach(([s, poly]) => { fcx.fillStyle = `rgba(16,78,150,${(.24 * s).toFixed(3)})`; fcx.beginPath(); poly.forEach((q, k) => fcx[k ? 'lineTo' : 'moveTo'](x0 + q[0] * u, by + q[1] * u)); fcx.closePath(); fcx.fill(); });
+        fcx.strokeStyle = 'rgba(255,255,255,.95)'; fcx.lineWidth = lw;
+        F.c.forEach(l => { fcx.beginPath(); fcx.moveTo(x0 + l[0] * u, by + l[1] * u); fcx.lineTo(x0 + l[2] * u, by + l[3] * u); fcx.stroke(); });
+        fcx.restore();
+      });
+    });
+    fcx.globalCompositeOperation = 'destination-in'; fcx.fillStyle = '#000'; fcx.textAlign = 'center';
+    M.lines.forEach((t, n) => fcx.fillText(t, W / 2, M.ty + n * M.lh + M.fs * .8));
+    fcx.globalCompositeOperation = 'source-over'; fcx.textAlign = 'left';
+    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = a; ctx.drawImage(fcv, 0, 0); ctx.restore();
+  }
   function drawMark(g, L) {
     const M = WMK; if (!M || g <= 0) return;
     ocx.setTransform(dpr, 0, 0, dpr, 0, 0); ocx.clearRect(0, 0, W, H); ocx.globalCompositeOperation = 'source-over'; ocx.lineJoin = 'round'; ocx.lineWidth = 1;
@@ -912,6 +938,7 @@ footer .g12{row-gap:32px; align-items:start}
       }
     }
     ctx.restore();
+    drawLetterFolds(solid);
     const e = smooth(.72, 1, g);
     if (e > 0) {   // the studio line, letter-spaced, under the name
       const t = 'ORIGAMI STUDIO, WEST PALM BEACH', sp = M.es * .2;
@@ -946,6 +973,7 @@ footer .g12{row-gap:32px; align-items:start}
   /* the finished crane holds; then it flaps, and the sky folds into the wordmark around it; then the next page folds over it all */
   const YS = FE + at(.5), W1 = YS + at(2.4), WM0 = YS + at(.7), WM1 = YS + at(2.2), C0 = W1 + at(1.0), C1 = C0 + at(1.2);
   /* the hero holds, then its page folds back down and Learn rises out from behind it */
+  window.mvLogoY = () => intro.getBoundingClientRect().top + scrollY + (YS + at(2.8)) * (intro.offsetHeight - H);   // the scroll where the crane sits over the finished name
   const D0 = C1 + at(.9), D1 = Math.min(1, D0 + at(1.0)), DL = D0 + (D1 - D0) * .5;
   let learnIn = false;
   let FP = null, lastPre = -1, objTop = 0, objBot = 0, Tpx = 100, curKey = '', curMode = '', landed = null, lastFold = -1, glintT = 0, paperOn = null;
@@ -984,11 +1012,12 @@ footer .g12{row-gap:32px; align-items:start}
     try { const sv = JSON.parse(localStorage.getItem('vm-sound') || '{}'); if (typeof sv.v === 'number') vol = clamp(sv.v); muted = !!sv.m; } catch (e) {}
     const save = () => { try { localStorage.setItem('vm-sound', JSON.stringify({ v:vol, m:muted })); } catch (e) {} };
     const level = () => muted ? 0 : vol * vol;
-    function init() {
+    function init(ext, dest) {
       if (ac) return;
-      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
-      try { ac = new AC(); } catch (e) { ac = null; return; }
-      const comp = ac.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 4; comp.connect(ac.destination);
+      if (ext) ac = ext;
+      else { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+        try { ac = new AC(); } catch (e) { ac = null; return; } }
+      const comp = ac.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 4; comp.connect(dest || ac.destination);
       master = ac.createGain(); master.gain.value = level(); master.connect(comp);
       const n = ac.sampleRate * 2, b = ac.createBuffer(1, n, ac.sampleRate), d = b.getChannelData(0);
       let b0 = 0, b1 = 0, b2 = 0;
@@ -1046,8 +1075,10 @@ footer .g12{row-gap:32px; align-items:start}
     document.addEventListener('pointerdown', e => { if (!box.contains(e.target)) setOpen(false); });
     ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach(ev => addEventListener(ev, unlock, { capture:true, passive:true }));
     paint();
-    return { play };
+    /* shown inside another page (the studio's opening), it plays through that page's sound, so that page's mute holds */
+    return { play, use:(ext, dest) => init(ext, dest) };
   })();
+  window.mvSound = (ext, dest) => SND.use(ext, dest);
   let SEV = [], sLast = null;
   function planSounds() {
     const ev = [], add = (p, s) => ev.push({ p, s }), seg = (FOLDEND - FOLD0) / FP.N;
