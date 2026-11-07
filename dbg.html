@@ -1,16 +1,8 @@
 <!doctype html><meta charset="utf-8"><title>dbg</title>
-<body style="margin:0"><pre id="o" style="position:fixed;right:0;top:0;width:420px;height:100vh;overflow:auto;background:#fff;font:11px monospace;z-index:9;margin:0"></pre>
-<iframe id="f" src="index.html" style="width:1000px;height:860px;border:0"></iframe>
+<style>body{margin:0;background:#000;overflow:hidden}.c{position:absolute;width:720px;height:440px;overflow:hidden}.c iframe{width:1440px;height:880px;border:0;transform:scale(.5);transform-origin:0 0}.c b{position:absolute;left:4px;top:4px;z-index:3;background:#ff0;color:#000;font:bold 12px monospace;padding:1px 4px}</style>
 <script>
-var o=document.getElementById('o'),f=document.getElementById('f'),t0=Date.now();
-function log(s){o.textContent+=s+'\n';}
-f.onload=function(){var w=f.contentWindow,d=f.contentDocument;
- w.addEventListener('error',function(e){log('ERR '+e.message+' @'+e.lineno);});
- [1000,2500,5000,8000,11000,15000,19000,23000].forEach(function(ms){setTimeout(function(){
-  var h=d.getElementById('hook'),cs=w.getComputedStyle(h),r=h.getBoundingClientRect(),el=d.elementFromPoint(500,400);
-  var chain=[];for(var e=el;e&&chain.length<6;e=e.parentElement)chain.push(e.tagName+'.'+(e.className&&e.className.baseVal!==undefined?e.className.baseVal:e.className));
-  log((ms/1000)+'s sy='+w.scrollY+' hook top='+r.top.toFixed(0)+' h='+r.height.toFixed(0)+' op='+cs.opacity+' vis='+cs.visibility+' disp='+cs.display+' bg='+cs.backgroundImage.slice(0,30)+' cls='+h.className+' k='+h.getAttribute('data-k'));
-  log('  at(500,400): '+chain.join(' < '));
-  var b=d.body,bs=w.getComputedStyle(b);log('  body op='+bs.opacity+' main op='+w.getComputedStyle(d.querySelector('main')).opacity);
- },ms);});};
+var q=new URLSearchParams(location.search),off=(q.get('o')||'0,3,6,9').split(',').map(Number),T0=Date.now(),src=q.get('src')||'index.html';
+off.forEach(function(s,i){setTimeout(function(){var c=document.createElement('div');c.className='c';c.style.left=(i%2*720)+'px';c.style.top=(Math.floor(i/2)*440)+'px';
+ var f=document.createElement('iframe');f.src=src+'?n='+i;var b=document.createElement('b');c.appendChild(f);c.appendChild(b);document.body.appendChild(c);var t1;f.onload=function(){t1=Date.now();};
+ setInterval(function(){if(t1)b.textContent=((Date.now()-t1)/1000).toFixed(1)+'s';},100);},s*1000);});
 </script>
