@@ -955,61 +955,61 @@ header nav{align-items:center}
 .hk-eng{position:absolute;inset:0;opacity:0;transform-origin:50% 62%;transform:scale(1.55);transition:opacity 1.2s ease}
 .hk-eng img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hk-eng::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(12,10,9,.82),rgba(12,10,9,.25) 34%,rgba(12,10,9,0) 52%,rgba(12,10,9,.35))}
-.hook.eng .hk-eng{opacity:1;animation:hkPull 3.6s cubic-bezier(.3,0,.25,1) forwards}
+.hook.hs-eng .hk-eng{opacity:1;animation:hkPull 3.6s cubic-bezier(.3,0,.25,1) forwards}
 @keyframes hkPull{from{transform:scale(1.55)}to{transform:scale(1.06)}}
-.hook.swing .hk-eng{animation:hkSwing 1.05s cubic-bezier(.6,0,.35,1) forwards}
+.hook.hs-swing .hk-eng{animation:hkSwing 1.05s cubic-bezier(.6,0,.35,1) forwards}
 @keyframes hkSwing{from{transform:scale(1.06);opacity:1;filter:none}to{transform:rotate(-28deg) scale(.32) translateY(-14%);opacity:0}}
 /* round the side: the car */
 .hk-road{position:absolute;inset:0;opacity:0;transform:translateX(40%) scale(1.25) rotate(6deg);pointer-events:none}
 .hk-road::before{content:"";position:absolute;left:50%;bottom:9%;width:min(1100px,120vw);height:46%;transform:translateX(-50%);background:radial-gradient(50% 50% at 50% 100%,rgba(239,233,223,.13),rgba(239,233,223,0) 70%)}
 .hk-road::after{content:"";position:absolute;left:0;right:0;bottom:17%;height:1px;background:linear-gradient(90deg,transparent,rgba(239,233,223,.22) 20%,rgba(239,233,223,.22) 80%,transparent)}
-.hook.car .hk-road{opacity:1;transform:none;filter:none;transition:opacity .5s ease,transform 1.05s cubic-bezier(.2,.8,.2,1)}
-.hook.clk .hk-road{opacity:0;transition:opacity 1.1s ease}
+.hook.hs-car .hk-road{opacity:1;transform:none;filter:none;transition:opacity .5s ease,transform 1.05s cubic-bezier(.2,.8,.2,1)}
+.hook.hs-clk .hk-road{opacity:0;transition:opacity 1.1s ease}
 .hk-car{position:absolute;left:50%;bottom:calc(17% - 1px);width:min(640px,88vw);transform:translateX(-50%)}
 .hk-car svg{display:block;width:100%;height:auto;overflow:visible}
-.hook.go .hk-car{transform:translateX(calc(-50% + 100vw));transition:transform 1.15s cubic-bezier(.6,0,.95,.55)}
+.hook.hs-go .hk-car{transform:translateX(calc(-50% + 100vw));transition:transform 1.15s cubic-bezier(.6,0,.95,.55)}
 .hk-car .cb,.hk-car .w{transform-box:fill-box}
 .hk-car .cb{transform-origin:50% 100%}
 .hk-car .w{transform-origin:50% 50%}
-.hook.car .hk-car svg{animation:hkLand .9s cubic-bezier(.3,0,.3,1) .25s both}
+.hook.hs-car .hk-car svg{animation:hkLand .9s cubic-bezier(.3,0,.3,1) .25s both}
 @keyframes hkLand{0%{transform:translateY(-70px)}45%{transform:translateY(0)}62%{transform:translateY(-14px)}80%{transform:translateY(0)}90%{transform:translateY(-3px)}100%{transform:none}}
-.hook.car .cb{animation:hkSquash .9s ease .25s both}
+.hook.hs-car .cb{animation:hkSquash .9s ease .25s both}
 @keyframes hkSquash{0%,40%{transform:none}48%{transform:scale(1.03,.9)}62%{transform:scale(.99,1.03)}78%{transform:scale(1.01,.97)}100%{transform:none}}
-.hook.rev1 .cb{animation:hkRevA .75s linear both}
-.hook.rev2 .cb{animation:hkRevB .75s linear both}
+.hook.hs-rev1 .cb{animation:hkRevA .75s linear both}
+.hook.hs-rev2 .cb{animation:hkRevB .75s linear both}
 @keyframes hkRevA{0%{transform:none}8%{transform:rotate(-2.4deg) translateY(-3px)}16%{transform:rotate(1.4deg)}24%{transform:rotate(-1.8deg) translateY(-2px)}32%{transform:rotate(1deg)}44%{transform:rotate(-1.2deg)}58%{transform:rotate(.6deg)}72%{transform:rotate(-.4deg)}100%{transform:none}}
 @keyframes hkRevB{0%{transform:none}8%{transform:rotate(-3deg) translateY(-4px)}16%{transform:rotate(1.8deg)}24%{transform:rotate(-2.2deg) translateY(-3px)}32%{transform:rotate(1.2deg)}44%{transform:rotate(-1.4deg)}58%{transform:rotate(.8deg)}72%{transform:rotate(-.5deg)}100%{transform:none}}
-.hook.burn .cb{animation:hkSquat .9s cubic-bezier(.3,0,.3,1) both}
+.hook.hs-burn .cb{animation:hkSquat .9s cubic-bezier(.3,0,.3,1) both}
 @keyframes hkSquat{0%{transform:none}30%{transform:rotate(-2.6deg) translateY(2px)}50%{transform:rotate(-2deg) translateY(1px)}70%{transform:rotate(-2.8deg) translateY(2px)}100%{transform:rotate(-2.2deg) translateY(1px)}}
-.hook.go .cb{animation:hkLaunch .5s ease-out both}
+.hook.hs-go .cb{animation:hkLaunch .5s ease-out both}
 @keyframes hkLaunch{0%{transform:rotate(-2.2deg)}40%{transform:rotate(-4deg) translateY(2px)}100%{transform:rotate(-1deg)}}
-.hook.burn .wr,.hook.go .w{animation:hkSpin .16s linear infinite}
+.hook.hs-burn .wr,.hook.hs-go .w{animation:hkSpin .16s linear infinite}
 @keyframes hkSpin{to{transform:rotate(360deg)}}
 /* exhaust: a cough per rev */
 .hk-car .pf{opacity:0;transform-box:fill-box;transform-origin:50% 50%}
-.hook.rev1 .pf{animation:hkPuffA 1s ease-out var(--d) both}
-.hook.rev2 .pf{animation:hkPuffB 1s ease-out var(--d) both}
+.hook.hs-rev1 .pf{animation:hkPuffA 1s ease-out var(--d) both}
+.hook.hs-rev2 .pf{animation:hkPuffB 1s ease-out var(--d) both}
 @keyframes hkPuffA{0%{opacity:0;transform:none}15%{opacity:.85}100%{opacity:0;transform:translate(-60px,-22px) scale(2.6)}}
 @keyframes hkPuffB{0%{opacity:0;transform:none}15%{opacity:.9}100%{opacity:0;transform:translate(-70px,-28px) scale(3)}}
 /* the burnout: smoke off the back wheel, left behind when it goes */
 .hk-smoke{position:absolute;left:50%;bottom:15%;width:min(640px,88vw);height:0;transform:translateX(-50%);pointer-events:none}
 .hk-smoke i{position:absolute;left:var(--x);bottom:0;width:var(--s);height:var(--s);margin:0 0 calc(var(--s) / -2) calc(var(--s) / -2);border-radius:50%;background:radial-gradient(circle at 40% 40%,rgba(236,232,224,.95),rgba(214,209,200,.75) 45%,rgba(200,195,186,0) 70%);opacity:0;transform:scale(.2)}
-.hook.burn .hk-smoke i{animation:hkSmoke 2.6s cubic-bezier(.2,.6,.3,1) var(--d) both}
+.hook.hs-burn .hk-smoke i{animation:hkSmoke 2.6s cubic-bezier(.2,.6,.3,1) var(--d) both}
 @keyframes hkSmoke{0%{opacity:0;transform:scale(.2)}18%{opacity:.95}100%{opacity:.9;transform:translate(var(--dx),var(--dy)) scale(var(--k))}}
-.hook.go .hk-smoke i{opacity:.9}
-.hook.clk .hk-smoke{opacity:0;transition:opacity 1.2s ease .1s}
+.hook.hs-go .hk-smoke i{opacity:.9}
+.hook.hs-clk .hk-smoke{opacity:0;transition:opacity 1.2s ease .1s}
 /* three seconds: the clock runs, people arrive, and each one decides */
 .hk-clk{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,3.4svh,40px);padding:0 24px;text-align:center;opacity:0;pointer-events:none;transition:opacity .8s ease}
-.hook.clk .hk-clk{opacity:1}
-.hook.which .hk-clk{opacity:0;transition:opacity .7s ease}
+.hook.hs-clk .hk-clk{opacity:1}
+.hook.hs-which .hk-clk{opacity:0;transition:opacity .7s ease}
 .hk-clk p{margin:0;max-width:20em;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(26px,min(4.6svh,3.2vw),50px);line-height:1.12;letter-spacing:-.016em;text-wrap:balance;opacity:0;transform:translateY(12px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.7,.1,1)}
 .hk-clk .c-bot{color:rgba(239,233,223,.8)}
 .hk-clk em{font-style:italic;color:rgba(239,233,223,.42);transition:color .7s ease,text-shadow .7s ease}
 .hk-clk em.lit{color:#d9bc8c;text-shadow:0 0 22px rgba(217,188,140,.35)}
-.hook.clk .c-top{opacity:1;transform:none;transition-delay:.15s}
-.hook.cbot .c-bot{opacity:1;transform:none}
+.hook.hs-clk .c-top{opacity:1;transform:none;transition-delay:.15s}
+.hook.hs-cbot .c-bot{opacity:1;transform:none}
 .hk-ring{position:relative;width:min(30svh,46vw,260px);aspect-ratio:1;opacity:0;transform:scale(.86);transition:opacity .9s ease .5s,transform 1.2s cubic-bezier(.2,.7,.1,1) .5s}
-.hook.clk .hk-ring{opacity:1;transform:none}
+.hook.hs-clk .hk-ring{opacity:1;transform:none}
 .hk-ring svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;transform:rotate(-90deg)}
 .hk-ring .tk{stroke:rgba(239,233,223,.55);stroke-width:1.4;stroke-linecap:round;transition:stroke .25s ease,opacity .25s ease}
 .hk-ring .tk.off{stroke:rgba(239,233,223,.14)}
@@ -1023,7 +1023,7 @@ header nav{align-items:center}
 .hk-cv{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 /* the lines */
 .hk-t{position:absolute;left:0;right:0;top:17%;transform:translateY(-50%);display:grid;padding-inline:max(24px,env(safe-area-inset-left,0px));transition:top 1.4s cubic-bezier(.6,0,.2,1);z-index:1}
-.hook.th .hk-t{top:28%}
+.hook.hs-th .hk-t{top:28%}
 .hook[data-k="6"] .hk-t{top:50%}
 .hk-b{grid-area:1/1;margin:0 auto;max-width:17em;text-align:center;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(32px,min(6svh,4.3vw),66px);line-height:1.1;letter-spacing:-.018em;text-wrap:balance;opacity:0;transform:translateY(16px);filter:blur(5px);transition:opacity .7s ease,transform 1s cubic-bezier(.2,.7,.1,1),filter .7s ease;pointer-events:none}
 .hk-b span,.hk-b em{display:block}
@@ -1038,8 +1038,8 @@ header nav{align-items:center}
 .hk-v{position:relative;display:block;aspect-ratio:16/10;background:#ddd}
 .hk-v img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0}
 .hk-a{clip-path:inset(0 0 0 100%);transition:clip-path 1.3s cubic-bezier(.6,0,.2,1)}
-.hook.th .hk-f{opacity:1;transform:none}
-.hook.th .f1{transition-delay:.45s}.hook.th .f2{transition-delay:.65s}.hook.th .f3{transition-delay:.85s}
+.hook.hs-th .hk-f{opacity:1;transform:none}
+.hook.hs-th .f1{transition-delay:.45s}.hook.hs-th .f2{transition-delay:.65s}.hook.hs-th .f3{transition-delay:.85s}
 .hook[data-k="5"] .hk-a,.hook[data-k="6"] .hk-a{clip-path:inset(0)}
 .hook[data-k="5"] .f1 .hk-a{transition-delay:.8s}.hook[data-k="5"] .f2 .hk-a{transition-delay:1.15s}.hook[data-k="5"] .f3 .hk-a{transition-delay:1.5s}
 .hook[data-k="6"] .hk-fs{opacity:0;transition:opacity .9s ease}
@@ -1050,7 +1050,7 @@ header nav{align-items:center}
 .hk-snd .snd{color:#efe9df;border-color:rgba(239,233,223,.4);background:rgba(20,18,16,.35)}
 @media (max-width:760px){
   .hk-t{top:15%}
-  .hook.th .hk-t{top:25%}
+  .hook.hs-th .hk-t{top:25%}
   .hk-b{font-size:clamp(28px,8vw,36px)}
   .hk-b.b4{font-size:clamp(25px,7vw,32px)}
   .hk-clk p{font-size:clamp(23px,6.4vw,30px)}
@@ -1063,9 +1063,9 @@ header nav{align-items:center}
   .hk-f.f1{left:3vw;--r:-5deg;transform:translateY(34px) rotate(var(--r));top:6vw}
   .hk-f.f3{right:3vw;--r:5deg;transform:translateY(34px) rotate(var(--r));top:6vw}
   .hk-f.f2{left:21vw;width:58vw;z-index:2;top:16vw}
-  .hook.th .hk-f.f1,.hook.th .hk-f.f3{transform:rotate(var(--r))}
+  .hook.hs-th .hk-f.f1,.hook.hs-th .hk-f.f3{transform:rotate(var(--r))}
 }
-@media (prefers-reduced-motion:reduce){.hk-b,.hk-f{transform:none!important;filter:none!important}.hook.th .hk-f.f1,.hook.th .hk-f.f3{transform:rotate(var(--r))!important}.hk-car .cb,.hk-car svg,.hk-car .w{animation:none!important}.hook.eng .hk-eng{animation:none;transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.hk-b,.hk-f{transform:none!important;filter:none!important}.hook.hs-th .hk-f.f1,.hook.hs-th .hk-f.f3{transform:rotate(var(--r))!important}.hk-car .cb,.hk-car svg,.hk-car .w{animation:none!important}.hook.hs-eng .hk-eng{animation:none;transform:scale(1.06)}}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* the offers: each a dark panel with its number, name and line */
 .ow-band .head.ow-hd{display:block;padding:0;border:0}
@@ -1830,7 +1830,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
   function sfx(n){cue={n:n,t:Date.now(),on:false};if(sndOn)cue.on=play(n,0);}
   function catchUp(){if(!sndOn||!cue||cue.on)return;var el=(Date.now()-cue.t)/1000;if(el<LEN[cue.n]-.2)cue.on=play(cue.n,el);}
   if(hk){
-    var cl=hk.classList,at=function(ms,f){setTimeout(f,ms);},K=function(k){hk.setAttribute('data-k',k);cl.toggle('th',k===4||k===5);};
+    var cl=hk.classList,at=function(ms,f){setTimeout(f,ms);},K=function(k){hk.setAttribute('data-k',k);cl.toggle('hs-th',k===4||k===5);};
     var ring=hk.querySelector('.hk-ring'),arc=hk.querySelector('.hk-ring .arc'),num=hk.querySelector('.hk-num'),tg=hk.querySelector('.hk-ring .tks'),ems=[].slice.call(hk.querySelectorAll('.c-bot em')),tks=[];
     for(var i=0;i<30;i++){var a=i/30*Math.PI*2,c=Math.cos(a),s=Math.sin(a),l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('class','tk');l.setAttribute('x1',(100+c*90).toFixed(2));l.setAttribute('y1',(100+s*90).toFixed(2));l.setAttribute('x2',(100+c*(i%5?95:99)).toFixed(2));l.setAttribute('y2',(100+s*(i%5?95:99)).toFixed(2));tg.appendChild(l);tks.push(l);}
     /* the clock: three seconds, drawn down a tick at a time */
@@ -1857,21 +1857,21 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       at(700,function(){e.classList.add('lit');});}
     addEventListener('resize',function(){if(pOn)size();});
     /* the running order */
-    at(350,function(){cl.add('eng');sfx('v8');});
+    at(350,function(){cl.add('hs-eng');sfx('v8');});
     at(900,function(){K(1);});
-    at(3300,function(){cl.add('swing');K(0);sfx('whoosh');});
-    at(3950,function(){cl.add('car');K(2);sfx('focus');});
-    at(4900,function(){cl.add('rev1');});
-    at(5850,function(){cl.remove('rev1');cl.add('rev2');});
-    at(6100,function(){cl.remove('rev2');cl.add('burn');});
-    at(6950,function(){cl.add('go');});
-    at(8300,function(){cl.add('clk');K(3);particles();});
+    at(3300,function(){cl.add('hs-swing');K(0);sfx('whoosh');});
+    at(3950,function(){cl.add('hs-car');K(2);sfx('focus');});
+    at(4900,function(){cl.add('hs-rev1');});
+    at(5850,function(){cl.remove('hs-rev1');cl.add('hs-rev2');});
+    at(6100,function(){cl.remove('hs-rev2');cl.add('hs-burn');});
+    at(6950,function(){cl.add('hs-go');});
+    at(8300,function(){cl.add('hs-clk');K(3);particles();});
     at(9100,function(){clock();sfx('clock');});
-    at(9700,function(){cl.add('cbot');});
+    at(9700,function(){cl.add('hs-cbot');});
     at(12100,function(){scatter(0);});
     at(12350,function(){scatter(1);});
     at(12600,function(){scatter(2);});
-    at(14000,function(){cl.add('which');K(4);});
+    at(14000,function(){cl.add('hs-which');K(4);});
     at(14700,function(){pOn=false;});
     at(17200,function(){K(5);});
     at(21000,function(){K(6);});
