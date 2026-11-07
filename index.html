@@ -1143,7 +1143,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
 .dq{margin-top:var(--sp-in)}
 .dq-row{padding:clamp(22px,2.6vw,36px) 0}
 /* batch 7: one line, then the site with the clock on its corner, then it unfolds into its facelift and stays, live */
-.hook.hs-th .hk-t{top:15%}
+.hook.hs-th .hk-t{top:calc(27% - clamp(18px,2.2vw,30px));transform:translateY(-100%);transition:top 1.4s cubic-bezier(.6,0,.2,1),transform 1.4s cubic-bezier(.6,0,.2,1)}
 .hk-fs{top:27%;width:min(860px,76vw,calc(52svh * 1.6))}
 .hook[data-k="6"] .hk-fs{opacity:1}
 .hook.hs-th .f1{transition-delay:.3s}
@@ -1162,12 +1162,12 @@ main>section>.wrap>.st:first-child{margin-top:0}
 @keyframes hkCrease{0%{opacity:0}8%{opacity:1}86%{opacity:1}100%{opacity:0}}
 .hk-a iframe.on{pointer-events:auto}
 @media (max-width:760px){
-  .hook.hs-th .hk-t{top:14%}
+  .hook.hs-th .hk-t{top:calc(28% - 18px)}
   .hk-fs{display:block;left:50%;top:28%;width:84vw;height:auto;transform:translateX(-50%)}
   .hk-f.f1{position:relative;left:0;top:0;width:100%;--r:0deg;transform:translateY(34px)}
   .hook.hs-th .hk-f.f1{transform:none}
   .hk-f.f1 .hk-v{aspect-ratio:auto;height:min(52svh,124vw)}
-  .hk-fs .hk-ring{--rs:76px;top:-28px;right:-26px}
+  .hk-fs .hk-ring{--rs:72px;top:-30px;right:-8px}
 }
 </style>
   <div class="hook" id="hook" data-k="0" aria-label="Opening">
