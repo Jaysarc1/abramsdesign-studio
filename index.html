@@ -1350,6 +1350,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
 #studio .st-copy p{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;letter-spacing:-.006em;max-width:44ch}
 /* batch 13: Flagship product names take the "03 Flagship" heading font */
 #ow-flagship{--nm-fs:clamp(24px,2.1vw,30px);--nm-mb:16px;--pg:calc(var(--sp-in) * 2)}
+@media (max-width:760px){#ow-flagship{--nm-mb:14px;--pg:calc(var(--sp-in) * 2.6)}}
 .ex-nm{margin:0 0 var(--nm-mb);font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:var(--nm-fs);line-height:1.1;letter-spacing:-.014em;color:var(--graphite)}
 /* batch 13: a hairline between products, equal room above and below it, measured from the products themselves (not their names) */
 #ow-flagship .st+.st{margin-top:var(--pg);padding-top:calc(var(--pg) - var(--nm-fs) * 1.1 - var(--nm-mb));border-top:1px solid var(--rule)}
@@ -1376,7 +1377,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
 .iv-ft{display:flex;align-items:baseline;justify-content:space-between;padding-top:12px}.iv-ft em{font-family:var(--serif);font-weight:300;font-size:16px;color:#2A261F}
 .iv-tt b{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:28px;line-height:1;letter-spacing:-.01em;color:#1F1C18;font-variant-numeric:tabular-nums}
 .iv-st{position:absolute;left:0;top:50%;margin-top:-16px;padding:6px 12px;border:2px solid #2E5149;border-radius:6px;color:#2E5149;font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;transform:rotate(-9deg);opacity:.82;mix-blend-mode:multiply}
-@media (max-width:760px){.rc.iv{padding:22px 20px 20px}.iv-mt{font-size:14px}.iv-tb{font-size:14px}.iv-tb{grid-template-columns:minmax(0,1fr) 28px 56px}.iv-st{left:0}}
+@media (max-width:760px){.rc.iv{width:100%;padding:20px 16px 16px;text-align:left}.iv-sm{column-gap:12px}.iv-st{font-size:12px;letter-spacing:.1em;padding:5px 9px}.iv-mt{font-size:14px}.iv-tb{font-size:14px}.iv-tb{grid-template-columns:minmax(0,1fr) 28px 56px}.iv-st{left:0}}
 /* batch 13: the sticky note says what changed */
 /* batch 13: the drop-day note is a real sticky note, art-directed: Soft Riot's acid green paper, grain, an adhesive band, a folded corner, a soft lifted shadow; it hangs off the board's lower-right corner so the 586 and every KPI stay clear */
 .dq-v.dv-note{height:auto;min-height:300px;flex-direction:column;justify-content:center;padding:6px 0 0}
