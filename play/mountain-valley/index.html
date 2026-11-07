@@ -904,6 +904,7 @@ footer .g12{row-gap:32px; align-items:start}
     fcx.globalCompositeOperation = 'source-over'; fcx.textAlign = 'left';
     ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = a; ctx.drawImage(fcv, 0, 0); ctx.restore();
   }
+  window.mvFoldDbg = () => { const d = fcx.getImageData(0, 0, fcv.width, fcv.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i]) n++; return [fcv.width, fcv.height, n, WMK && WMK.fs, WMK && WMK.lines.join('|')].join(' '); };
   function drawMark(g, L) {
     const M = WMK; if (!M || g <= 0) return;
     ocx.setTransform(dpr, 0, 0, dpr, 0, 0); ocx.clearRect(0, 0, W, H); ocx.globalCompositeOperation = 'source-over'; ocx.lineJoin = 'round'; ocx.lineWidth = 1;

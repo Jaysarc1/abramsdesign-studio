@@ -5,5 +5,5 @@ var q=new URLSearchParams(location.search),w=+q.get('w')||390,h=+q.get('h')||844
 var f=document.createElement('iframe');f.width=w;f.height=h;f.style.transform='scale('+k+')';f.src=q.get('u');document.documentElement.appendChild(f);
 var E=document.createElement('div');E.id='e';document.documentElement.appendChild(E);
 f.addEventListener('load',function(){var W=f.contentWindow;W.addEventListener('error',function(ev){E.textContent+=' ERR '+ev.message+' @'+ev.lineno;});
-  if(q.get('logo'))setTimeout(function(){try{W.scrollTo(0,W.mvLogoY?W.mvLogoY():0);E.textContent+=' y='+(W.mvLogoY?Math.round(W.mvLogoY()):'none');}catch(e){E.textContent+=' '+e;}},1500);});
+  if(q.get('logo'))setTimeout(function(){try{W.scrollTo(0,W.mvLogoY?W.mvLogoY():0);E.textContent+=' y='+(W.mvLogoY?Math.round(W.mvLogoY()):'none');setTimeout(function(){try{E.textContent+=' dbg '+W.mvFoldDbg();}catch(e){E.textContent+=' '+e;}},800);}catch(e){E.textContent+=' '+e;}},1500);});
 </script>
