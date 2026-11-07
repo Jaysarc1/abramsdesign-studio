@@ -880,31 +880,22 @@ footer .g12{row-gap:32px; align-items:start}
   const triL = (nx, ny, L) => ((nx * L[0] + ny * L[1] + L[2]) / Math.hypot(nx, ny, 1) - L[2]) / (.42 * .8);
   /* every letter of the name is folded: its panels turn away from the light, and each crease catches it (shapes in units of a 200px letter, from its pen and baseline) */
   const FOLDS = {"M":{"p":[[1,[[57,-170],[125,-170],[125,20],[57,20]]],[0.5,[[125,-170],[194,-170],[194,20],[125,20]]]],"c":[[57,-170,57,20],[125,-170,125,20],[194,-170,194,20]]},"o":{"p":[[1,[[197,-178],[197,62],[-43,62]]]],"c":[[197,-178,-43,62]]},"u":{"p":[[1,[[100,-140],[175,-140],[175,20],[100,20]]]],"c":[[100,-140,100,20]]},"n":{"p":[[1,[[58,-140],[105,-140],[105,20],[58,20]]],[0.5,[[105,-140],[175,-140],[175,20],[105,20]]]],"c":[[58,-140,58,20],[105,-140,105,20]]},"t":{"p":[[1,[[-5,-117],[135,-117],[135,-85],[-5,-85]]],[0.5,[[70,-45],[135,-45],[135,20],[70,20]]]],"c":[[-5,-117,135,-117],[-5,-85,135,-85],[70,-45,135,-45],[70,-45,70,20]]},"a":{"p":[[1,[[107,-140],[175,-140],[175,20],[107,20]]]],"c":[[107,-140,107,20]]},"i":{"p":[[0.5,[[-5,-180],[75,-180],[75,-122],[-5,-122]]],[1,[[-5,-122],[75,-122],[75,-98],[-5,-66]]]],"c":[[-5,-66,75,-98]]},"&":{"p":[[1,[[100,-170],[210,-170],[210,20],[60,20]]]],"c":[[100,-170,60,20]]},"V":{"p":[[1,[[95,-170],[200,-170],[200,20],[95,20]]]],"c":[[95,-170,95,20]]},"l":{"p":[[0.5,[[0,-62],[70,-92],[70,20],[0,20]]]],"c":[[0,-62,70,-92]]},"L":{"p":[[0.5,[[0,-100],[70,-70],[70,20],[0,20]]]],"c":[[0,-100,70,-70]]},"e":{"p":[[1,[[-5,-50],[160,-50],[160,45],[-5,45]]]],"c":[[-5,-50,160,-50]]},"y":{"p":[[1,[[82,-125],[175,-125],[175,50],[58,50]]]],"c":[[82,-125,58,50]]}};
-  const fcv = document.createElement('canvas'), fcx = fcv.getContext('2d');
-  function drawLetterFolds(a) {
-    const M = WMK; if (!M || a <= 0) return;
-    if (fcv.width !== oc.width || fcv.height !== oc.height) { fcv.width = oc.width; fcv.height = oc.height; }
-    fcx.setTransform(dpr, 0, 0, dpr, 0, 0); fcx.clearRect(0, 0, W, H); fcx.globalCompositeOperation = 'source-over';
-    fcx.font = `800 ${M.fs.toFixed(2)}px ${M.fam}`; fcx.textAlign = 'left'; fcx.textBaseline = 'alphabetic';
+  function foldLetters(c, M) {   // shade each letter's panels and draw its creases onto the sheet the solid name is filled from
+    c.font = `800 ${M.fs.toFixed(2)}px ${M.fam}`; c.textAlign = 'left'; c.textBaseline = 'alphabetic';
     const u = M.fs / 200, lw = Math.max(1, M.fs * .014);
     M.lines.forEach((txt, n) => {
-      const x00 = W / 2 - fcx.measureText(txt).width / 2, by = M.ty + n * M.lh + M.fs * .8; let ls = 0;
+      const x00 = W / 2 - c.measureText(txt).width / 2, by = M.ty + n * M.lh + M.fs * .8; let ls = 0;
       [...txt].forEach((ch, i) => {
         const F = FOLDS[ch === 'l' ? (ls++ ? 'L' : 'l') : ch]; if (!F) return;
-        const x0 = x00 + fcx.measureText(txt.slice(0, i)).width, adv = fcx.measureText(ch).width;
-        fcx.save(); fcx.beginPath(); fcx.rect(x0, by - M.fs * 1.2, adv, M.fs * 1.6); fcx.clip();
-        F.p.forEach(([s, poly]) => { fcx.fillStyle = `rgba(16,78,150,${(.24 * s).toFixed(3)})`; fcx.beginPath(); poly.forEach((q, k) => fcx[k ? 'lineTo' : 'moveTo'](x0 + q[0] * u, by + q[1] * u)); fcx.closePath(); fcx.fill(); });
-        fcx.strokeStyle = 'rgba(255,255,255,.95)'; fcx.lineWidth = lw;
-        F.c.forEach(l => { fcx.beginPath(); fcx.moveTo(x0 + l[0] * u, by + l[1] * u); fcx.lineTo(x0 + l[2] * u, by + l[3] * u); fcx.stroke(); });
-        fcx.restore();
+        const x0 = x00 + c.measureText(txt.slice(0, i)).width, adv = c.measureText(ch).width;
+        c.save(); c.beginPath(); c.rect(x0, by - M.fs * 1.2, adv, M.fs * 1.6); c.clip();
+        F.p.forEach(([sh, poly]) => { c.fillStyle = `rgba(16,78,150,${(.24 * sh).toFixed(3)})`; c.beginPath(); poly.forEach((q, k) => c[k ? 'lineTo' : 'moveTo'](x0 + q[0] * u, by + q[1] * u)); c.closePath(); c.fill(); });
+        c.strokeStyle = 'rgba(255,255,255,.95)'; c.lineWidth = lw; c.lineCap = 'round';
+        F.c.forEach(l => { c.beginPath(); c.moveTo(x0 + l[0] * u, by + l[1] * u); c.lineTo(x0 + l[2] * u, by + l[3] * u); c.stroke(); });
+        c.restore();
       });
     });
-    fcx.globalCompositeOperation = 'destination-in'; fcx.fillStyle = '#000'; fcx.textAlign = 'center';
-    M.lines.forEach((t, n) => fcx.fillText(t, W / 2, M.ty + n * M.lh + M.fs * .8));
-    fcx.globalCompositeOperation = 'source-over'; fcx.textAlign = 'left';
-    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = a; ctx.drawImage(fcv, 0, 0); ctx.restore();
   }
-  window.mvFoldDbg = () => { const d = fcx.getImageData(0, 0, fcv.width, fcv.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i]) n++; return [fcv.width, fcv.height, n, WMK && WMK.fs, WMK && WMK.lines.join('|')].join(' '); };
   function drawMark(g, L) {
     const M = WMK; if (!M || g <= 0) return;
     ocx.setTransform(dpr, 0, 0, dpr, 0, 0); ocx.clearRect(0, 0, W, H); ocx.globalCompositeOperation = 'source-over'; ocx.lineJoin = 'round'; ocx.lineWidth = 1;
@@ -931,6 +922,7 @@ footer .g12{row-gap:32px; align-items:start}
         const col = `hsl(${LP.h} ${LP.s}% ${(LP.l + triL(nx, ny, L) * LP.a + nz * LP.n).toFixed(2)}%)`;
         lcx.fillStyle = col; lcx.strokeStyle = col; lcx.beginPath(); lcx.moveTo(t[0][0], t[0][1]); lcx.lineTo(t[1][0], t[1][1]); lcx.lineTo(t[2][0], t[2][1]); lcx.closePath(); lcx.fill(); lcx.stroke();
       });
+      foldLetters(lcx, M);
       const pat = ctx.createPattern(lc, 'no-repeat');
       if (pat) {
         ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = solid; ctx.fillStyle = pat;   // device pixels, so the pattern sits exactly on the tiles
@@ -939,7 +931,6 @@ footer .g12{row-gap:32px; align-items:start}
       }
     }
     ctx.restore();
-    drawLetterFolds(solid);
     const e = smooth(.72, 1, g);
     if (e > 0) {   // the studio line, letter-spaced, under the name
       const t = 'ORIGAMI STUDIO, WEST PALM BEACH', sp = M.es * .2;
