@@ -1,8 +1,0 @@
-<!doctype html><meta charset="utf-8"><title>dbg</title>
-<style>body{margin:0;background:#000;overflow:hidden}.c{position:absolute;overflow:hidden}.c iframe{border:0;transform-origin:0 0}.c b{position:absolute;left:4px;top:4px;z-index:3;background:#ff0;color:#000;font:bold 12px monospace;padding:1px 4px}</style>
-<script>
-var q=new URLSearchParams(location.search),off=(q.get('o')||'0,3,6,9').split(',').map(Number),W=+(q.get('w')||1440),H=+(q.get('h')||880),S=+(q.get('s')||.5),cols=+(q.get('c')||2),src=q.get('src')||'index.html';
-off.forEach(function(s,i){setTimeout(function(){var c=document.createElement('div');c.className='c';c.style.width=W*S+'px';c.style.height=H*S+'px';c.style.left=(i%cols*(W*S+6))+'px';c.style.top=(Math.floor(i/cols)*(H*S+6))+'px';
- var f=document.createElement('iframe');f.style.width=W+'px';f.style.height=H+'px';f.style.transform='scale('+S+')';f.src=src+'?n='+i;var b=document.createElement('b');c.appendChild(f);c.appendChild(b);document.body.appendChild(c);var t1;f.onload=function(){t1=Date.now();};
- setInterval(function(){if(t1)b.textContent=((Date.now()-t1)/1000).toFixed(1)+'s';},100);},s*1000);});
-</script>
