@@ -1046,6 +1046,8 @@ header nav{align-items:center}
 /* into the site */
 .hk-cue{position:absolute;left:50%;bottom:clamp(36px,7svh,72px);width:1px;height:clamp(40px,7svh,64px);background:rgba(239,233,223,.6);transform:scaleY(0);transform-origin:50% 0;transition:transform 1.2s cubic-bezier(.6,0,.2,1) 1.2s}
 .hook[data-k="6"] .hk-cue{transform:none}
+.hk-cue-t{position:absolute;left:50%;bottom:calc(clamp(36px,7svh,72px) + clamp(40px,7svh,64px) + 14px);transform:translate(-50%,6px);margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:15px;line-height:1;letter-spacing:.04em;color:rgba(239,233,223,.75);opacity:0;transition:opacity .9s ease .9s,transform 1.1s cubic-bezier(.2,.7,.1,1) .9s;pointer-events:none}
+.hook[data-k="6"] .hk-cue-t{opacity:1;transform:translate(-50%,0)}
 .hk-snd{position:absolute;top:calc(22px + env(safe-area-inset-top,0px));right:max(16px,3.1vw,env(safe-area-inset-right,0px));z-index:3}
 .hk-snd .snd{color:#efe9df;border-color:rgba(239,233,223,.4);background:rgba(20,18,16,.35)}
 @media (max-width:760px){
@@ -1137,9 +1139,9 @@ header nav{align-items:center}
     </div>
     <p class="sr-only">Your business is a Ferrari. Your website is a Ford Focus. You have 3 seconds to grab someone&rsquo;s attention before they&rsquo;re either excited, overwhelmed, or confused.</p>
     <div class="hk-fs" aria-hidden="true"><figure class="hk-f f1"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-ashlar-b.webp" alt="" decoding="async"><img class="hk-a" src="img/w/ba-after.webp" alt="" decoding="async"></span></figure><figure class="hk-f f2"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-mv-b.webp" alt="" decoding="async"><img class="hk-a" src="img/w/mv-poster.webp" alt="" decoding="async"></span></figure><figure class="hk-f f3"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-meridian-b.webp" alt="" decoding="async"><img class="hk-a" src="img/w/meridian-1.webp" alt="" decoding="async"></span></figure></div>
+    <span class="hk-cue-t" aria-hidden="true">Scroll</span>
     <span class="hk-cue" aria-hidden="true"></span>
     <nav class="hk-snd" aria-label="Sound"><button class="snd" type="button" aria-pressed="false" aria-label="Sound on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><g class="off"><path d="M16 9.5l5 5M21 9.5l-5 5"/></g><g class="on"><path d="M15.5 9a4.2 4.2 0 0 1 0 6"/><path d="M18.3 6.5a8 8 0 0 1 0 11"/></g></svg></button></nav>
-    <audio id="hookSnd" src="img/w/hook-sound.m4a" loop preload="none"></audio>
   </div>
 
   <section id="proof" aria-label="Before and after">
@@ -1821,7 +1823,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
   /* the opening, about twenty seconds: the V8 from above, the swing round to the hatchback, three seconds on the clock, the question, the refresh.
      Sound comes in on the first tap anywhere (the effects ride on the moment they belong to), and the button mutes it */
   (function(){
-  var hk=document.getElementById('hook'),hs=document.getElementById('hookSnd'),sb=document.querySelector('.hk-snd .snd');
+  var hk=document.getElementById('hook'),sb=document.querySelector('.hk-snd .snd');
   var sndOn=false,sndUser=false,AC=null,AG=null,BUF={},LEN={v8:3.2,whoosh:.9,focus:4.6,clock:3.6},cue=null;
   function acInit(){if(AC)return;var C=window.AudioContext||window.webkitAudioContext;if(!C)return;try{AC=new C();}catch(e){AC=null;return;}
     AG=AC.createGain();AG.gain.value=sndOn?.9:0;AG.connect(AC.destination);
@@ -1876,14 +1878,14 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     at(17200,function(){K(5);});
     at(21000,function(){K(6);});
   }
-  function sndSet(on){if(!hs||!sb)return;sb.setAttribute('aria-pressed',on?'true':'false');sb.setAttribute('aria-label',on?'Sound off':'Sound on');
+  function sndSet(on){if(!sb)return;sb.setAttribute('aria-pressed',on?'true':'false');sb.setAttribute('aria-label',on?'Sound off':'Sound on');
     if(AC){if(AC.state==='suspended')AC.resume();AG.gain.setTargetAtTime(on?.9:0,AC.currentTime,.05);}
-    if(on){hs.volume=0;var p=hs.play();if(p&&p.catch)p.catch(function(){});var n=0,fi=setInterval(function(){n++;hs.volume=Math.min(1,n/18)*.45;if(n>=18||hs.paused)clearInterval(fi);},50);catchUp();}else{hs.pause();}}
-  if(hs&&sb){
+    if(on)catchUp();}
+  if(sb){
     sb.addEventListener('click',function(e){e.stopPropagation();sndUser=true;acInit();sndOn=!sndOn;sndSet(sndOn);});
     var first=function(e){removeEventListener('pointerdown',first,true);removeEventListener('keydown',first,true);if(sndUser||(e.target&&e.target.closest&&e.target.closest('.snd')))return;sndOn=true;acInit();sndSet(true);};
     addEventListener('pointerdown',first,true);addEventListener('keydown',first,true);
-    if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!sndOn)return;if(es[0].isIntersecting){var p=hs.play();if(p&&p.catch)p.catch(function(){});if(AC&&AC.state==='suspended')AC.resume();}else{hs.pause();if(AC&&AC.suspend)AC.suspend();}},{threshold:0}).observe(hk);
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!sndOn)return;if(es[0].isIntersecting){if(AC&&AC.state==='suspended')AC.resume();}else{if(AC&&AC.suspend)AC.suspend();}},{threshold:0}).observe(hk);
   }
   })();
   /* the bar slides in once the full-screen hero has scrolled away */
