@@ -363,3 +363,6 @@ html body .notepad .pad-page h1.pad-h{font-family:var(--hand)!important;font-wei
 
 /* ---------- the letter of intent ---------- */
 .fin-stamp b{letter-spacing:.12em}
+
+/* specs line stays on one line on phones */
+@media (max-width:560px){.card .specs,.specs{letter-spacing:.02em;white-space:nowrap}}
