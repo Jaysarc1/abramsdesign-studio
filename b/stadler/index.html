@@ -29,7 +29,7 @@ body{margin:0;color:var(--cream);font-family:var(--body);font-size:18px;line-hei
   background-image:
     linear-gradient(rgba(238,243,239,.075) 1px,transparent 1px),
     linear-gradient(90deg,rgba(238,243,239,.075) 1px,transparent 1px),
-    radial-gradient(circle at 26% 20%,rgba(255,255,255,.055),transparent 42%),
+    radial-gradient(circle at 22% 17%,rgba(255,255,255,.075),transparent 14%),
     linear-gradient(160deg,transparent 55%,rgba(0,0,0,.14));
   background-size:64px 64px}
 a{color:inherit}
@@ -66,10 +66,6 @@ section{position:relative;z-index:2}
 
 /* hero */
 .hero{min-height:100svh;display:grid;align-items:center;overflow:hidden}
-.hero .light{position:absolute;inset:-20%;mix-blend-mode:soft-light;opacity:.5;pointer-events:none;
-  background:radial-gradient(40% 18% at 30% 40%,rgba(255,255,255,.9),transparent 70%),radial-gradient(30% 14% at 70% 60%,rgba(255,255,255,.8),transparent 70%),radial-gradient(36% 16% at 45% 78%,rgba(255,255,255,.7),transparent 70%);
-  animation:caustic 9s ease-in-out infinite alternate}
-@keyframes caustic{0%{transform:translate(0,0) rotate(0deg) scale(1)}50%{transform:translate(4%,-3%) rotate(6deg) scale(1.08)}100%{transform:translate(-3%,4%) rotate(-4deg) scale(1.02)}}
 .accent{position:absolute;width:63px;height:63px;pointer-events:none}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;width:100%;padding-block:110px 90px}
 .hero h1{font-size:clamp(72px,11vw,176px);line-height:.88}
@@ -148,6 +144,7 @@ section{position:relative;z-index:2}
 /* visit */
 .visit .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding-block:150px 120px;align-items:start}
 .visit h2{margin:14px 0 26px}
+.visit h2+.hours{margin-top:30px}
 .tel{display:block;font-family:var(--display);font-size:clamp(44px,5.6vw,76px);line-height:1;margin:6px 0 28px;color:var(--cream);text-decoration:none;user-select:all}
 .hours{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;margin:0 0 22px}
 .hours dt{font-weight:700}
@@ -216,7 +213,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
   </svg>
 
   <section class="hero">
-    <div class="light"></div>
     <div id="accents"></div>
     <i class="node" data-x="next" style="top:84px"></i>
     <div class="wrap">
@@ -224,7 +220,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
         <span class="label">Lake Worth Beach · Family owned</span>
         <h1><span class="ln"><span>Since</span></span><span class="ln"><span><em>1980.</em></span></span></h1>
         <p>Three generations of one family, plumbing Palm Beach County.</p>
-        <a class="call" href="#visit"><small>Call the shop</small><b>561-555-0187</b></a>
+        <a class="call" href="#visit"><small>Visit the shop</small><b>306 North J Street</b></a>
       </div>
       <div class="art in" id="valve">
         <i class="node" style="left:50%;top:0"></i><i class="node" data-jump style="left:50%;top:100%"></i>
@@ -342,9 +338,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
   <section class="visit" id="visit">
     <div class="wrap">
       <div>
-        <span class="label">Visit or call</span>
-        <h2>Call or stop by.</h2>
-        <a class="tel" href="#visit">561-555-0187</a>
+        <span class="label">Visit the shop</span>
+        <h2>Stop by.</h2>
         <dl class="hours">
           <dt>Mon–Fri</dt><dd>7 AM to 4 PM</dd>
           <dt>After hours</dt><dd>Emergency service after 4 PM and on weekends</dd>
@@ -385,6 +380,14 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
   document.getElementById('form').addEventListener('submit',function(e){e.preventDefault()});
   var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var NS='http://www.w3.org/2000/svg';
+
+  /* batch 16: every glazed tile a touch different, its hue and depth nudged 1 to 3 percent up or down, so the wall reads as fired by hand */
+  (function(){try{var c=document.createElement('canvas'),n=16,t=64;c.width=c.height=n*t;var g=c.getContext('2d'),sd=19;
+    function r(){sd=(sd*16807)%2147483647;return sd/2147483647}
+    function j(){return (1+r()*2)*(r()<.5?-1:1)}
+    for(var y=0;y<n;y++)for(var x=0;x<n;x++){g.fillStyle='hsl('+(177+j()*3.6).toFixed(1)+',56%,'+(13+j()).toFixed(2)+'%)';g.fillRect(x*t,y*t,t,t)}
+    var b=document.body,cs=getComputedStyle(b);b.style.backgroundImage=cs.backgroundImage+',url('+c.toDataURL('image/png')+')';b.style.backgroundSize='64px 64px,64px 64px,64px 64px,64px 64px,1024px 1024px';
+  }catch(e){}})();
 
   /* a few lighter and darker glazed tiles in the hero */
   var acc=document.getElementById('accents'),glaze=['#14504b','#0a2422','#1a5c55','#0d3e3b','#2b5f57'];

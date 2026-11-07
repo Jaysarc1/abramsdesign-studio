@@ -2681,11 +2681,14 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       requestAnimationFrame(function(){requestAnimationFrame(function(){lv.classList.add('in');});});
       lx.focus({preventScroll:true});
       if(hv&&!hv.paused){hv.pause();lvid=true;}
+      setTimeout(function(){if(t!==ltok||!lfr)return;lview.classList.remove('wait');lfr.classList.add('on');},9000);
       if(el.hasAttribute('data-direct')){var fd=document.createElement('iframe');fd.title=nm;fd.setAttribute('allow','fullscreen; autoplay');
         fd.addEventListener('load',function(){if(t!==ltok)return;lwire(fd);lview.classList.remove('wait');fd.classList.add('on');},{once:true});
         fd.src=u;lview.appendChild(fd);lfr=fd;return;}
       lget(u).then(function(html){if(t!==ltok)return;
         if(el.getAttribute('data-own')==='sr')html=html.replace('</body>',OWNSR+'</body>');
+        /* batch 16: the fetched page keeps its own address, so its pictures, fonts and scripts load from its folder, not this one's */
+        var bu=new URL(u,location.href).href;if(!/<base\s/i.test(html))html=/<head[^>]*>/i.test(html)?html.replace(/<head[^>]*>/i,function(m){return m+'<base href="'+bu+'">';}):'<base href="'+bu+'">'+html;
         var f=document.createElement('iframe');f.title=nm;f.setAttribute('allow','fullscreen; autoplay');
         f.addEventListener('load',function(){if(t!==ltok)return;lwire(f);lview.classList.remove('wait');f.classList.add('on');},{once:true});
         f.srcdoc=html;lview.appendChild(f);lfr=f;
