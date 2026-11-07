@@ -2215,10 +2215,10 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     var bv=hk.querySelector('.hk-f.f1 .hk-v'),bf=null,bw=null;
     function bSize(){if(!bf)return;var w=bv.clientWidth,h=bv.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1024,w/.86),k=w/V;
       bf.style.width=Math.round(V)+'px';bf.style.height=Math.ceil(h/k)+'px';bf.style.transform='scale('+k.toFixed(4)+')';}
-    function bLoad(){if(bf||!bv||RM)return;bf=document.createElement('iframe');bf.className='hk-bs';bf.setAttribute('title','Mountain & Valley, before');bf.setAttribute('tabindex','-1');bf.setAttribute('aria-hidden','true');bf.setAttribute('sandbox','allow-scripts allow-same-origin');
-      bf.addEventListener('load',function(){try{var w=bf.contentWindow,d=w.document;if(!d||!d.body)return;d.documentElement.style.scrollBehavior='auto';bw=w;bSize();setTimeout(function(){bf.classList.add('on');},400);}catch(e){}});
+    var bPend=0;function bLoad(){if(bf||!bv||RM)return;bf=document.createElement('iframe');bf.className='hk-bs';bf.setAttribute('title','Mountain & Valley, before');bf.setAttribute('tabindex','-1');bf.setAttribute('aria-hidden','true');bf.setAttribute('sandbox','allow-scripts allow-same-origin');
+      bf.addEventListener('load',function(){try{var w=bf.contentWindow,d=w.document;if(!d||!d.body)return;d.documentElement.style.scrollBehavior='auto';bw=w;bSize();setTimeout(function(){bf.classList.add('on');},400);if(bPend)bRun();}catch(e){}});
       bf.src='b/before/mv2/index.html';bv.insertBefore(bf,bv.querySelector('.hk-a'));bSize();addEventListener('resize',bSize);}
-    function bRun(){if(!bw)return;var t0=performance.now(),P=[[0,0],[.5,0],[1.9,.36],[2.4,.36],[3.7,.74],[4.2,.74],[5.1,1]];
+    function bRun(){if(!bw){bPend=1;return;}bPend=0;var t0=performance.now(),P=[[0,0],[.5,0],[1.9,.36],[2.4,.36],[3.7,.74],[4.2,.74],[5.1,1]];
       function f(now){var t=(now-t0)/1000,y=1;for(var i=1;i<P.length;i++){if(t<P[i][0]){var a=P[i-1],b=P[i],k=(t-a[0])/(b[0]-a[0]);k=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;y=a[1]+(b[1]-a[1])*k;break;}}
         try{var d=bw.document,max=Math.max(0,(d.documentElement.scrollHeight||0)-bw.innerHeight);bw.scrollTo(0,max*y);}catch(e){}
         if(t<P[P.length-1][0])requestAnimationFrame(f);}
