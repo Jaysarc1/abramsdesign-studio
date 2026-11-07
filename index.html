@@ -1090,6 +1090,82 @@ header nav{align-items:center}
 .ow-band .head.ow-hd .ow-p h2{display:flex;align-items:baseline;justify-content:center;gap:.34em;margin:0;color:var(--graphite);font-size:clamp(40px,4.6vw,68px);line-height:1;letter-spacing:-.02em}
 .ow-n{font-weight:300;color:var(--pencil)}
 .ow-hd .ow-p .ow-tg{display:block;margin:0;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(19px,1.6vw,24px);line-height:1.3;color:var(--pencil)}
+/* batch 5 */
+#proof{display:none}
+/* the offers: one hairline wraps each whole offer, header and examples; the header stays clean */
+.ow-p{border:0;padding:0}
+.ow-band{border:1px solid color-mix(in srgb,var(--graphite) 18%,transparent);border-radius:12px;padding:clamp(32px,3.6vw,52px) clamp(16px,2.6vw,40px)}
+.ow-band .st{margin-block:var(--sp-in) 0}
+.ow-band>.head+.st{margin-top:clamp(12px,1.6vw,20px)}
+.ow-off{display:none!important}
+/* questions without a picture carry the rest of the answer */
+.dq-v.dv-tx{height:auto;min-height:0;justify-content:flex-start;padding:0}
+.dv-tx p{margin:0;max-width:30ch;font-family:var(--serif);font-weight:300;font-optical-sizing:auto;font-size:clamp(22px,1.9vw,28px);line-height:1.3;letter-spacing:-.006em;color:var(--pencil);text-wrap:pretty}
+@media (max-width:760px){.dq-v.dv-tx{height:auto;justify-content:center}.dv-tx p{margin-inline:auto;text-align:center}}
+/* every filled pill becomes a hairline; it fills on hover */
+.pill.pd,.of-go,.nx .fit-chip,header .hpill{background:transparent;color:var(--graphite);border:1px solid var(--graphite);border-radius:12px;transition:background .3s,color .3s,border-color .3s}
+.pill.pd:hover,.of-go:hover,.nx .fit-row:hover .fit-chip,.nx .fit-row:focus-visible .fit-chip,header .hpill:hover{background:var(--graphite);color:var(--plaster);border-color:var(--graphite)}
+@media (max-width:760px){header .hpill{border:0}header .hpill:hover{background:none;color:var(--patina)}}
+/* the opening: one site of each kind, then the question */
+.hk-ex{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%);width:min(1240px,92vw,calc((100svh - 300px) * 4.8 + 60px));display:flex;gap:clamp(16px,2vw,30px);pointer-events:none;z-index:1}
+.hk-ex .ex{flex:1;min-width:0;margin:0;display:grid;gap:14px;justify-items:center;opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform 1.2s cubic-bezier(.2,.7,.1,1)}
+.hook.hs-ex .ex{opacity:1;transform:none;transition-delay:.5s}
+.hook.hs-ex .e2{transition-delay:.85s}.hook.hs-ex .e3{transition-delay:1.2s}
+.hk-ex figcaption{font:500 14px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:#d9bc8c;padding-left:.24em}
+.ex-w{width:100%;border-radius:12px;overflow:hidden;background:#f4f1ea;box-shadow:0 30px 60px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.06)}
+.ex-p{position:relative;aspect-ratio:16/10;container-type:inline-size;overflow:hidden;font-family:Arial,Helvetica,sans-serif;text-align:left}
+.ex-p h4{margin:0}
+.hook.hs-ex .hk-t{top:13%}
+/* excited: one picture, one line, one ask */
+.xa{background:linear-gradient(180deg,#f6d3a0 0%,#efa577 34%,#c9747a 52%,#2c3e5c 53%,#1a2840 100%);color:#fff}
+.xa .xn{position:absolute;left:5cqw;right:5cqw;top:4cqw;display:flex;gap:4cqw;align-items:baseline;font-size:2.6cqw;letter-spacing:.06em;z-index:1}
+.xa .xn b{margin-right:auto;font-family:Georgia,serif;font-weight:400;font-size:3.8cqw;letter-spacing:.01em}
+.xa .xsun{position:absolute;left:58%;top:30%;width:15cqw;height:15cqw;border-radius:50%;background:radial-gradient(circle,#fff5dc 0 40%,#ffd38d 62%,rgba(255,211,141,0) 72%)}
+.xa .xsea{position:absolute;left:0;right:0;top:53%;bottom:0;background:repeating-linear-gradient(180deg,rgba(255,220,170,.22) 0 1px,transparent 1px 1.6cqw)}
+.xa .xh{position:absolute;left:5cqw;bottom:6cqw;display:grid;gap:3.4cqw;justify-items:start}
+.xa h4{font-family:Georgia,serif;font-weight:400;font-size:7.6cqw;line-height:1.02;letter-spacing:-.01em;max-width:11ch}
+.xa h4 em{display:block;font-style:italic;color:#ffe1b0}
+.xa .xb{padding:1.6cqw 3.4cqw;border-radius:99px;background:#fff;color:#1a2840;font-size:2.4cqw;font-weight:700;letter-spacing:.04em}
+/* overwhelmed: everything at once */
+.xo{background:#fff;color:#111;display:flex;flex-direction:column}
+.xo-ban{background:#ffe600;color:#d10000;font-weight:900;font-size:2.3cqw;text-align:center;padding:1cqw 0;letter-spacing:.02em}
+.xo-hd{display:flex;align-items:center;gap:1.4cqw;padding:1.4cqw 2cqw;background:#0d2c6b}
+.xo-hd b{margin-right:auto;color:#fff;font-size:3.6cqw;font-weight:900;line-height:1;display:grid}
+.xo-hd b small{font-size:1.5cqw;color:#ffcc00;font-weight:700}
+.xo-ph{color:#ffcc00;font-weight:700;font-size:2.2cqw}
+.xo-b{padding:1cqw 1.5cqw;border-radius:.6cqw;color:#fff;font-weight:900;font-size:1.8cqw}
+.xo-b.b1{background:#ff7a00}.xo-b.b2{background:#e00}.xo-b.b3{background:#13a538}
+.xo-nav{display:flex;flex-wrap:wrap;gap:0;background:#1f5fd1}
+.xo-nav span{padding:.9cqw 1.3cqw;color:#fff;font-size:1.9cqw;border-right:1px solid rgba(255,255,255,.35)}
+.xo-bd{flex:1;display:flex;gap:2cqw;padding:2cqw;background:linear-gradient(135deg,#e9f1ff,#fff3d6)}
+.xo-l{flex:1;display:grid;align-content:start;gap:1.2cqw}
+.xo-l h4{font-size:6.4cqw;font-weight:900;color:#d10000;line-height:1;text-shadow:.3cqw .3cqw 0 #ffcc00}
+.xo-l p{margin:0;font-size:2.1cqw;color:#0d2c6b;font-weight:700}
+.xo-st{font-size:2.4cqw;color:#f5a400;font-weight:900}
+.xo-bg{display:flex;gap:1.2cqw}.xo-bg i{display:grid;place-items:center;width:8cqw;height:8cqw;border-radius:50%;background:#0d2c6b;color:#ffcc00;font-style:normal;font-weight:900;font-size:1.5cqw;text-align:center;border:.4cqw dashed #ffcc00}
+.xo-f{width:32%;display:grid;gap:1cqw;align-content:start;padding:1.6cqw;background:#fff;border:.4cqw solid #e00}
+.xo-f b{font-size:2.1cqw;color:#e00;font-weight:900}.xo-f i{height:3.2cqw;border:1px solid #aaa;background:#fafafa}.xo-f span{background:#ff7a00;color:#fff;font-weight:900;font-size:2cqw;text-align:center;padding:1cqw}
+.xo-chat{position:absolute;right:2cqw;bottom:7.6cqw;padding:1.4cqw 2.2cqw;border-radius:99px;background:#13a538;color:#fff;font-weight:700;font-size:2.1cqw;box-shadow:0 1cqw 2cqw rgba(0,0,0,.3)}
+.xo-ck{display:flex;justify-content:space-between;align-items:center;gap:2cqw;padding:1.2cqw 2cqw;background:#333;color:#ddd;font-size:1.8cqw}.xo-ck b{background:#ff7a00;color:#fff;padding:.6cqw 1.6cqw}
+/* confused: no point, no next step */
+.xc{background:#eceef2;color:#5b6170}
+.xc-n{position:absolute;left:5cqw;right:5cqw;top:4.2cqw;display:flex;gap:4cqw;align-items:center;font-size:2.3cqw;letter-spacing:.08em;z-index:1}
+.xc-n b{margin-right:auto;font-weight:300;font-size:4.2cqw;letter-spacing:.12em;color:#7a7f8c}
+.xc-n i{width:4.2cqw;height:2.6cqw;background:linear-gradient(#7a7f8c 0 12%,transparent 12% 44%,#7a7f8c 44% 56%,transparent 56% 88%,#7a7f8c 88%)}
+.xc-blob{position:absolute;right:-6cqw;top:12cqw;width:48cqw;height:40cqw;border-radius:50%;background:radial-gradient(circle at 35% 40%,#c7b6ff,#9fd8e6 55%,rgba(236,238,242,0) 72%);filter:blur(2cqw);opacity:.9}
+.xc-h{position:absolute;left:5cqw;top:17cqw;width:48%;display:grid;gap:2cqw;z-index:1}
+.xc-k{font-size:1.9cqw;letter-spacing:.2em;text-transform:uppercase;color:#9aa0ac}
+.xc h4{font-weight:300;font-size:5.4cqw;line-height:1.12;color:#6b7180}
+.xc-h p{margin:0;font-size:2.2cqw;line-height:1.5;color:#9aa0ac}
+.xc-r{position:absolute;left:5cqw;right:5cqw;bottom:4.4cqw;display:flex;gap:6cqw;font-size:2.2cqw;color:#9aa0ac;z-index:1}
+.xc-r span{display:flex;align-items:center;gap:1.4cqw}.xc-r i{width:4cqw;height:4cqw;border-radius:50%;border:1px solid #b6bac4}
+@media (max-width:760px){
+  .hk-ex{top:56%;flex-direction:column;align-items:center;gap:14px;width:min(86vw,calc((100svh - 300px) / 3 * 1.6))}
+  .hk-ex .ex{flex:none;width:100%;gap:8px}
+  .hk-ex figcaption{font-size:13px}
+  .hook.hs-ex .hk-t{top:9%}
+}
+@media (prefers-reduced-motion:reduce){.hk-ex .ex{transform:none!important}}
 </style>
   <div class="hook" id="hook" data-k="0" aria-label="Opening">
     <div class="hk-eng" aria-hidden="true"><svg class="hk-top" viewBox="0 0 2400 1100" preserveAspectRatio="xMidYMid meet">
@@ -1324,6 +1400,11 @@ header nav{align-items:center}
     </div>
     <p class="sr-only">Your business is a Ferrari. Your website is a Ford Focus. You have 3 seconds to grab someone&rsquo;s attention before they&rsquo;re either excited, overwhelmed, or confused.</p>
     <div class="hk-fs" aria-hidden="true"><figure class="hk-f f1"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-ashlar-b.webp" alt="" decoding="async"><span class="hk-a" data-live="b/ashlar/index.html"><img src="img/w/ba-after.webp" alt="" decoding="async"></span></span></figure><figure class="hk-f f2"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-mv-b.webp" alt="" decoding="async"><span class="hk-a" data-live="play/mountain-valley/index.html"><img src="img/w/mv-poster.webp" alt="" decoding="async"></span></span></figure><figure class="hk-f f3"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-meridian-b.webp" alt="" decoding="async"><span class="hk-a" data-live="b/meridian/index.html"><img src="img/w/meridian-1.webp" alt="" decoding="async"></span></span></figure></div>
+    <div class="hk-ex" aria-hidden="true">
+      <figure class="ex e1"><figcaption>Excited</figcaption><div class="ex-w"><span class="hk-bar"><i></i><i></i><i></i></span><div class="ex-p xa"><div class="xn"><b>Halewind</b><span>Fleet</span><span>Trips</span><span>Book</span></div><i class="xsun"></i><i class="xsea"></i><div class="xh"><h4>The bay, <em>at golden hour.</em></h4><span class="xb">Book a charter</span></div></div></div></figure>
+      <figure class="ex e2"><figcaption>Overwhelmed</figcaption><div class="ex-w"><span class="hk-bar"><i></i><i></i><i></i></span><div class="ex-p xo"><div class="xo-ban">SALE!! 20% OFF ALL ROOFS &middot; THIS WEEK ONLY &middot; CALL NOW!!</div><div class="xo-hd"><b>DUNMORE<small>ROOFING &amp; SIDING &amp; GUTTERS &amp; MORE</small></b><span class="xo-ph">(555) 010-0199</span><span class="xo-b b1">FREE QUOTE</span><span class="xo-b b2">CALL NOW</span><span class="xo-b b3">FINANCING</span></div><div class="xo-nav"><span>Home</span><span>Roofing</span><span>Siding</span><span>Gutters</span><span>Windows</span><span>Decks</span><span>Specials</span><span>Gallery</span><span>Reviews</span><span>Blog</span><span>Contact</span></div><div class="xo-bd"><div class="xo-l"><h4>#1 ROOFERS!!!</h4><p>Licensed &bull; Bonded &bull; Insured &bull; Family Owned &bull; Since 1987</p><span class="xo-st">&#9733;&#9733;&#9733;&#9733;&#9733; 500+ REVIEWS</span><span class="xo-bg"><i>BEST OF 2019</i><i>A+</i><i>24/7</i></span></div><div class="xo-f"><b>GET YOUR FREE ESTIMATE!</b><i></i><i></i><i></i><span>SUBMIT</span></div></div><span class="xo-chat">Chat with us!</span><div class="xo-ck">We use cookies to improve your experience. <b>ACCEPT</b></div></div></div></figure>
+      <figure class="ex e3"><figcaption>Confused</figcaption><div class="ex-w"><span class="hk-bar"><i></i><i></i><i></i></span><div class="ex-p xc"><div class="xc-n"><b>nuvola</b><span>Vision</span><span>Ethos</span><span>Journey</span><i></i></div><div class="xc-h"><span class="xc-k">Welcome to the future of now</span><h4>Reimagining what&rsquo;s possible, together.</h4><p>We partner with forward-thinking visionaries to unlock holistic value across every touchpoint of tomorrow.</p></div><i class="xc-blob"></i><div class="xc-r"><span><i></i>Synergy</span><span><i></i>Passion</span><span><i></i>Innovation</span></div></div></div></figure>
+    </div>
     <span class="hk-cue-t" aria-hidden="true">Scroll</span>
     <span class="hk-cue" aria-hidden="true"></span>
     <nav class="hk-snd" aria-label="Sound"><button class="snd" type="button" aria-pressed="false" aria-label="Sound on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><g class="off"><path d="M16 9.5l5 5M21 9.5l-5 5"/></g><g class="on"><path d="M15.5 9a4.2 4.2 0 0 1 0 6"/><path d="M18.3 6.5a8 8 0 0 1 0 11"/></g></svg></button></nav>
@@ -1467,7 +1548,7 @@ header nav{align-items:center}
       <div class="st rv">
         <div class="st-row">
           <h2 class="st-big">Your doubts, <em>answered.</em></h2>
-          <div class="st-copy"><p>Every good reason to say no, crossed out.</p></div>
+          <div class="st-copy"><p>Every good reason to say no.</p></div>
         </div>
       </div>
       <ol class="dq">
@@ -1476,16 +1557,32 @@ header nav{align-items:center}
           <figure class="dq-v dv-rc" aria-hidden="true"><div class="rc"><svg class="rc-m"><use href="#adsmark"/></svg><span class="mono rc-k">Your preview</span><i class="rc-r"></i><span class="rc-l"><span>Opening screen</span><em>Built from your brand</em></span><i class="rc-r"></i><span class="rc-t"><span class="mono">Due</span><b>Nothing</b></span></div></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">02</span><p class="dq-q"><span>&ldquo;Why trust a stranger?&rdquo;</span></p><p class="dq-a">You shouldn&rsquo;t have to. That&rsquo;s why the preview is free.</p></div>
+          <div class="dq-l"><span class="mono dq-n">02</span><p class="dq-q"><span>&ldquo;Why trust a stranger?&rdquo;</span></p><p class="dq-a">You shouldn&rsquo;t. We have something to gain. So we let our work do the talking. That&rsquo;s why the preview is free.</p></div>
           <figure class="dq-v dv-bk" aria-hidden="true"><img src="img/book/cover-82.webp" alt="" decoding="async"></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">03</span><p class="dq-q"><span>&ldquo;I can&rsquo;t picture it.&rdquo;</span></p><p class="dq-a">You won&rsquo;t have to. Your opening screen comes first, built from your brand.</p></div>
+          <div class="dq-l"><span class="mono dq-n">03</span><p class="dq-q"><span>&ldquo;I can&rsquo;t picture it.&rdquo;</span></p><p class="dq-a">You won&rsquo;t have to. Your opening screen comes first, so you&rsquo;ll know if it feels right up front.</p></div>
           <figure class="dq-v dv-br" aria-hidden="true"><span class="br"><span class="br-bar"><i></i><i></i><i></i></span><img src="img/w/lu-sv-o-signature.webp" alt="" loading="lazy"></span></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">04</span><p class="dq-q"><span>&ldquo;What will it cost?&rdquo;</span></p><p class="dq-a">Scope changes. The finish never does. Every quote begins with a conversation.</p></div>
+          <div class="dq-l"><span class="mono dq-n">04</span><p class="dq-q"><span>&ldquo;So you just&hellip; make people&rsquo;s websites?&rdquo;</span></p><p class="dq-a">Lol. We don&rsquo;t &ldquo;just make websites.&rdquo;</p></div>
+          <figure class="dq-v dv-tx"><p>We&rsquo;re a branding and business agency. We build custom tools that work together to give your brand a voice and your business one structure.</p></figure>
+        </li>
+        <li class="dq-row rv">
+          <div class="dq-l"><span class="mono dq-n">05</span><p class="dq-q"><span>&ldquo;What will it cost?&rdquo;</span></p><p class="dq-a">Scope changes. The finish never does. Every quote begins with a conversation.</p></div>
           <figure class="dq-v dv-of" aria-hidden="true"><span class="ofc"><b>Refresh</b><em>Your site, renewed.</em></span><span class="ofc"><b>Signature</b><em>Your brand, elevated.</em></span><span class="ofc"><b>Flagship</b><em>Your whole business, connected.</em></span></figure>
+        </li>
+        <li class="dq-row rv">
+          <div class="dq-l"><span class="mono dq-n">06</span><p class="dq-q"><span>&ldquo;Why should I choose you?&rdquo;</span></p><p class="dq-a">Because we build around you, not a template.</p></div>
+          <figure class="dq-v dv-tx"><p>Your brand, your tools and your numbers, in one structure made for the way you work.</p></figure>
+        </li>
+        <li class="dq-row rv">
+          <div class="dq-l"><span class="mono dq-n">07</span><p class="dq-q"><span>&ldquo;You don&rsquo;t know my business like I do.&rdquo;</span></p><p class="dq-a">You&rsquo;re right. I don&rsquo;t.</p></div>
+          <figure class="dq-v dv-tx"><p>You know your business better than anyone. What I know is how to build the brand around it, so it carries you beyond the day-to-day.</p></figure>
+        </li>
+        <li class="dq-row rv">
+          <div class="dq-l"><span class="mono dq-n">08</span><p class="dq-q"><span>&ldquo;Why do you think you can help?&rdquo;</span></p><p class="dq-a">Twenty years of practice.</p></div>
+          <figure class="dq-v dv-tx"><p>Across art, architecture and marketing, now turned to how your business is seen.</p></figure>
         </li>
       </ol>
     </div>
@@ -1509,7 +1606,7 @@ header nav{align-items:center}
           <div class="fit-a"><p>You&rsquo;re the best at what you do. Your site says otherwise.</p><b>You need a brand, not a template.</b><span class="fit-go">Signature<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
         </a>
         <a class="fit-row rv" href="#offers" data-tab="flagship">
-          <h3 class="fit-q">Juggling apps that don&rsquo;t talk?</h3>
+          <h3 class="fit-q">Still typing the same numbers twice?</h3>
           <div class="fit-a"><p>Your orders, customers, payments and books can all live in one place.</p><b>You need one system, not more apps.</b><span class="fit-go">Flagship<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
         </a>
       </div>
@@ -1641,28 +1738,6 @@ header nav{align-items:center}
   </section>
 
 
-  <section id="why" aria-label="Fair questions">
-    <div class="wrap">
-      <div class="st rv">
-        <div class="st-row">
-          <h2 class="st-big">Fair <em>questions.</em></h2>
-        </div>
-      </div>
-      <div class="wy rv">
-        <ol class="wy-q">
-          <li style="--i:0"><span class="mono">01</span><p>&ldquo;Why should I choose you?&rdquo;</p></li>
-          <li style="--i:1"><span class="mono">02</span><p>&ldquo;You don&rsquo;t know my business like I do.&rdquo;</p></li>
-          <li style="--i:2"><span class="mono">03</span><p>&ldquo;Why do you think you can help?&rdquo;</p></li>
-        </ol>
-        <div class="wy-a rv">
-          <p class="wy-h">You&rsquo;re right. <em>I don&rsquo;t.</em></p>
-          <p class="wy-p">You know your business better than anyone. What I know is how to build the brand around it, so it carries you beyond the day-to-day.</p>
-          <p class="wy-t">Here&rsquo;s where that comes from.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section id="inquiries">
     <div class="wrap inq">
       <div class="inq-l"><h2>Start with your <em>free preview.</em></h2><p class="inq-s">Send your current site. Your opening screen comes first, built from your brand.</p><p class="direct"><span class="mono">Email</span><a href="mailto:info@abramsds.com">info@abramsds.com</a></p></div>
@@ -1683,8 +1758,7 @@ header nav{align-items:center}
 
 <footer>
   <div class="wrap">
-    <span class="mono">ADS · Palm Beach County, Florida</span>
-    <span class="mono">© 2026</span>
+    <span class="mono">ADS · West Palm Beach · 2026</span>
   </div>
 </footer>
 
@@ -1763,7 +1837,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     var fx=[['trust','0:01','Trust','A stock photo of a stranger.','Now, a house they built.'],['clarity','0:02','Clarity','Seven tabs and eight services.','Now, one promise.'],['action','0:03','Action','Two quote buttons, shouting.','Now, one ask.']];
     var fxe=el('<div class="ow-fx"></div>');
     fx.forEach(function(f){fxe.appendChild(el('<figure><div class="ow-fx-p"><span><img src="img/w/fx-'+f[0]+'-b.webp" alt="Before: '+f[3].replace(/\.$/,'')+'" loading="lazy"><b>Before</b></span><span class="ow-fx-a"><img src="img/w/fx-'+f[0]+'-a.webp" alt="After: '+f[4].replace(/^Now, /,'').replace(/\.$/,'')+'" loading="lazy"><b>After</b></span></div><figcaption><span class="mono">'+f[1]+' &middot; '+f[2]+'</span><p>'+f[3]+' <em>'+f[4]+'</em></p></figcaption></figure>'));});
-    ba.appendChild(fxe);
+    /* the 0:01 to 0:03 strip is off; to bring it back, append fxe to ba */
     T.lunasr=el('<figure class="tile"><div class="frame"><div class="page"><img src="img/w/lu-sv-o-refresh.webp" alt="Luna&rsquo;s Coffee at Refresh, brewed by moonlight" loading="lazy"></div></div></figure>');
     T.meridian=el('<figure class="tile" data-site="b/meridian/index.html" data-name="Meridian" tabindex="0" role="button" aria-label="Open the Meridian site"><div class="frame"><div class="page"><img src="img/w/meridian-1.webp" alt="Meridian, houses drawn for the sun" loading="lazy"><img src="img/w/meridian-2.webp" alt="" loading="lazy"></div></div></figure>');
     T.bascule2=el('<figure class="tile" data-site="b/bascule2/index.html" data-name="Bascule" tabindex="0" role="button" aria-label="Open the Bascule site"><div class="frame"><div class="page"><img src="img/w/bascule2-2.webp" alt="Bascule, a tower on the Intracoastal" loading="lazy"><img src="img/w/bascule2-1.webp" alt="" loading="lazy"></div></div></figure>');
@@ -1789,6 +1863,9 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       +'<button class="live mv ph" type="button" data-site="play/mountain-valley-app/index.html" data-direct data-name="Mountain &amp; Valley, App" aria-label="Open the Mountain and Valley app"><img src="img/w/mv-app-poster.webp" srcset="img/w/mv-app-poster-s.webp 500w, img/w/mv-app-poster.webp 1000w" sizes="(max-width:760px) 100vw, 408px" alt="" loading="lazy"><span class="live-go">'+play+'Open the app</span></button>'
       +'</div></div>');
     book.after(ref);ref.after(sig);sig.after(fla);fla.after(ar);ar.after(hd);hd.after(live);live.after(riot);riot.after(mv);
+    /* two each: Signature shows jayabrams.com and Bascule; Flagship holds Arden and Soft Riot inside its hairline.
+       Stadler, Meridian, Halden House, Luna's and Mountain & Valley are hidden, not gone: drop ow-off to bring one back */
+    fla.appendChild(ar);fla.appendChild(riot);[T.stadler,T.meridian,hd,live,mv].forEach(function(x){x.classList.add('ow-off');});
   })();
   /* next round, #visual and #ourwork: Linen & Lacquer out, Banyan Row and Cortile parked with the maybes, the three homes become one developer (Meridian),
      each question carries its offer under it, on the question's left edge, and the twenty years move to the end of the page and open into the book */
@@ -1850,7 +1927,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       ['',OP('03','Amenity spaces','271 Sea Breeze Avenue','Brooklyn, New York','The resident lobby and the lounge.',17)],
       ['',I('lobby-p')],
       ['spl',I('lounge')],['spr',I('lounge')],
-      ['bcv','<div class="tp">'+M+'<span class="bt">Palm Beach County</span></div><i class="spn"></i>']
+      ['bcv','<div class="tp">'+M+'<span class="bt">West Palm Beach</span></div><i class="spn"></i>']
     ];
     var N=P.length/2,leaves=[],ang=[],cur=0,busy=false,touched=false,NS=8;
     for(var k=0;k<N;k++){
@@ -2026,7 +2103,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
   function sfx(n){cue={n:n,t:Date.now(),on:false};if(sndOn)cue.on=play(n,0);}
   function catchUp(){if(!sndOn||!cue||cue.on)return;var el=(Date.now()-cue.t)/1000;if(el<LEN[cue.n]-.2)cue.on=play(cue.n,el);}
   if(hk){
-    var cl=hk.classList,at=function(ms,f){setTimeout(f,ms);},K=function(k){hk.setAttribute('data-k',k);cl.toggle('hs-th',k===4||k===5);};
+    var cl=hk.classList,at=function(ms,f){setTimeout(f,ms);},K=function(k){hk.setAttribute('data-k',k);cl.toggle('hs-th',(k===4||k===5)&&!cl.contains('hs-ex'));};
     var ring=hk.querySelector('.hk-ring'),arc=hk.querySelector('.hk-ring .arc'),num=hk.querySelector('.hk-num'),tg=hk.querySelector('.hk-ring .tks'),txt=[].slice.call(hk.querySelectorAll('.hk-clk p')),ems=[].slice.call(hk.querySelectorAll('.c-bot em')),tks=[];
     for(var i=0;i<30;i++){var a=i/30*Math.PI*2,c=Math.cos(a),s=Math.sin(a),l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('class','tk');l.setAttribute('x1',(100+c*90).toFixed(2));l.setAttribute('y1',(100+s*90).toFixed(2));l.setAttribute('x2',(100+c*(i%5?95:99)).toFixed(2));l.setAttribute('y2',(100+s*(i%5?95:99)).toFixed(2));tg.appendChild(l);tks.push(l);}
     /* the clock: three seconds, drawn down a tick at a time */
@@ -2101,12 +2178,15 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     at(14200,function(){scatter(0);});
     at(14450,function(){scatter(1);});
     at(14700,function(){scatter(2);});
-    at(16100,function(){cl.add('hs-which');K(4);});
+    /* excited, overwhelmed, confused: one of each, then the question, then the three before sites */
+    at(16100,function(){cl.add('hs-which','hs-ex');});
     at(16800,function(){pOn=false;});
     at(17000,liveLoad);
-    at(19300,function(){K(5);liveRun();});
-    at(23100,function(){K(6);});
-    at(24500,liveEnd);
+    at(18600,function(){K(4);});
+    at(21400,function(){cl.remove('hs-ex');cl.add('hs-th');});
+    at(23400,function(){K(5);liveRun();});
+    at(27200,function(){K(6);});
+    at(28600,liveEnd);
   }
   function sndSet(on){if(!sb)return;sb.setAttribute('aria-pressed',on?'true':'false');sb.setAttribute('aria-label',on?'Sound off':'Sound on');
     if(AC){if(AC.state==='suspended')AC.resume();AG.gain.setTargetAtTime(on?.9:0,AC.currentTime,.05);}
@@ -2144,7 +2224,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       for(var i=0;i<3;i++){
         var k=smooth(seg(ph[i][0],ph[i][1],v)),x=put(orbs[i],i,k),xa=span[i][0]*45,xb=span[i][1]*45;
         cx[i].style.strokeDashoffset=1-k;orbs[i].style.opacity=k>0&&k<1?1:0;
-        bar(i,xa,Math.min(x,xb));lbs[i].classList.toggle('on',k>0);
+        bar(i,xa,x);lbs[i].classList.toggle('on',k>0);
         if(k>0){act=i+1;num=Math.round(clamp((x-xa)/(xb-xa))*(span[i][1]-span[i][0]));}
         if(k>=1)got++;
       }

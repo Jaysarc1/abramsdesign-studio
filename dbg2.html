@@ -1,0 +1,8 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>dbg</title>
+<style>body{margin:0;background:#888;display:flex;gap:20px;padding:10px;align-items:flex-start}iframe{border:0;background:#fff;flex:none}</style>
+<script>
+var q=new URLSearchParams(location.search),w=+(q.get('w')||390),h=+(q.get('h')||844),sel=q.get('sel'),off=+(q.get('off')||0),n=+(q.get('n')||1),step=+(q.get('step')||h);
+for(var i=0;i<n;i++)(function(i){var f=document.createElement('iframe');f.width=w;f.height=h;f.src='index.html';document.body.appendChild(f);
+f.onload=function(){setTimeout(function(){try{var d=f.contentDocument,y=off+i*step;if(sel){var e=d.querySelector(sel);if(e)y+=e.getBoundingClientRect().top+f.contentWindow.scrollY;}
+d.documentElement.style.scrollBehavior='auto';f.contentWindow.scrollTo(0,y);setTimeout(function(){f.contentWindow.scrollTo(0,y+1);},400);}catch(e){document.title='err '+e;}},+(q.get('wait')||1500));};})(i);
+</script>
