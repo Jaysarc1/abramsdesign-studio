@@ -1315,15 +1315,36 @@ main>section>.wrap>.st:first-child{margin-top:0}
 }
 /* batch 11: "now what?" heading leads its section on the Signature/Flagship scale; row questions sit second */
 .cta-blk{justify-content:center;text-align:center}
-.cta-blk p{font-family:var(--display);font-weight:200;font-variation-settings:"wdth" 125;font-size:clamp(36px,4.2vw,62px);line-height:1.04;letter-spacing:-.03em}
-.cta-blk p em{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:1.1em;letter-spacing:-.01em}
-.fit-cta .fit-q{font-size:clamp(22px,2vw,30px);line-height:1.15;letter-spacing:-.01em}
+.cta-blk p{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(36px,4.2vw,62px);line-height:1.04;letter-spacing:-.018em}
+/* batch 12: back in the face of "Every reason to say no" below it; the questions take the face of the offer buttons beside them */
+.fit-cta .fit-q{font-family:var(--mono);font-weight:400;font-variation-settings:normal;font-size:15px;line-height:1.4;letter-spacing:.14em;text-transform:uppercase}
 .fit.fit-cta{margin-top:clamp(20px,2.4vw,34px)}
 /* batch 11: the turn is driven frame by frame (see turn()), so the stepped animations stand down while it runs */
 .hook.hs-turn .hk-top,.hook.hs-turn .hk-q svg,.hook.hs-turn .hk-car svg{animation:none!important;transition:none!important;will-change:transform,opacity}
 .hook.hs-turn .hk-car{opacity:1}
 .hook.hs-turn .hk-eng::after{opacity:0;transition:opacity .16s linear}
 .hook.hs-turned .hk-car svg{animation:none!important}
+/* batch 12: "You have 5 seconds" sits over the before site at the size of the lines after it; its gold rule draws on with the clock and runs down with it */
+.hk-clk{display:none}
+.hook.hs-clk:not(.hs-tick) .hk-fs .hk-ring{opacity:0}
+.hk-b.b3{max-width:20em;font-size:clamp(23px,min(4.2svh,2.9vw),46px)}
+@media (max-width:760px){.hk-b.b3{font-size:clamp(20px,5.8vw,26px)}}
+.hk-5{position:relative;display:inline-block;font-weight:inherit;color:#d9bc8c;white-space:nowrap}
+.hk-5::after{content:"";position:absolute;left:0;right:0;bottom:-.14em;height:max(2px,.07em);border-radius:2px;background:#d9bc8c;box-shadow:0 0 14px rgba(217,188,140,.45);transform:scaleX(0);transform-origin:0 50%;transition:transform .7s cubic-bezier(.2,.7,.1,1)}
+.hook.hs-which .hk-5::after{transform:scaleX(1);transition-delay:.35s}
+.hook.hs-run .hk-5::after{transform:scaleX(0);transition:transform 5s linear}
+/* batch 12: the Flagship examples breathe: 75% more room between them, and each one's name above it */
+#ow-flagship .st{margin-top:calc(var(--sp-in) * 1.75)}
+#ow-flagship>.head+.st{margin-top:clamp(16px,1.8vw,24px)}
+#ow-flagship .st .lv-pair{margin-top:0}
+.ex-nm{margin:0 0 14px;font-family:var(--display);font-weight:600;font-size:17px;line-height:1.2;letter-spacing:-.01em;color:var(--ink)}
+@media (max-width:760px){.ex-nm{text-align:center}}
+/* batch 12: each phone in the fan carries its name under it */
+.fan-n{position:absolute;left:50%;top:100%;margin-top:12px;transform:translateX(-50%);font-family:var(--display);font-weight:600;font-size:13.5px;line-height:1.2;letter-spacing:0;white-space:nowrap;color:var(--ink)}
+/* batch 12: FAQ 04's board and phone take up exactly the footprint of FAQ 03's browser above (min(420px,84%) wide, 284px tall at full size) */
+.dv-kit{--kw:min(420px,84%)}
+.dv-kit .kit-d,.dq-row.in .dv-kit .kit-d{width:calc(var(--kw) * .914);transform:translateX(-4.7%)}
+.dv-kit .kit-p,.dq-row.in .dv-kit .kit-p{left:calc(50% + var(--kw) * .345);width:calc(var(--kw) * .31);transform:translate(-50%,-50%)}
 </style>
   <div class="hook" id="hook" data-k="0" aria-label="Opening">
     <div class="hk-eng" aria-hidden="true"><svg class="hk-top" viewBox="0 0 2400 1100" preserveAspectRatio="xMidYMid meet">
@@ -1552,13 +1573,13 @@ main>section>.wrap>.st:first-child{margin-top:0}
     <canvas class="hk-cv" aria-hidden="true"></canvas>
     <div class="hk-t">
       <p class="hk-b b1"><span>Your business is a Ferrari Spider.</span></p>
-      <p class="hk-b b2"><em>But your marketing is a Ford Focus.</em></p>
-      <p class="hk-b b3"><em>Here&rsquo;s what yours is saying.</em></p>
+      <p class="hk-b b2"><em>But your marketing is a Ford Focus&hellip;</em></p>
+      <p class="hk-b b3"><span>You have <b class="hk-5">5 seconds</b> to grab someone&rsquo;s attention.</span></p>
       <p class="hk-b b4"><span>Now imagine a minor facelift.</span></p>
       <p class="hk-b b5"><span>Great branding doesn&rsquo;t start over.</span></p>
       <p class="hk-b b6"><em>It brings out what you already have.</em></p>
     </div>
-    <p class="sr-only">Your business is a Ferrari Spider. But your marketing is a Ford Focus. You have 5 seconds to grab someone&rsquo;s attention. Here&rsquo;s what yours is saying. Now imagine a minor facelift. Great branding doesn&rsquo;t start over. It brings out what you already have.</p>
+    <p class="sr-only">Your business is a Ferrari Spider. But your marketing is a Ford Focus&hellip; You have 5 seconds to grab someone&rsquo;s attention. Now imagine a minor facelift. Great branding doesn&rsquo;t start over. It brings out what you already have.</p>
     <!-- the one example, Mountain & Valley: to swap it, change the two before pictures, the two stills and data-live -->
     <div class="hk-fs"><figure class="hk-f f1"><span class="hk-bar" aria-hidden="true"><i></i><i></i><i></i></span><span class="hk-v"><picture><source media="(max-width:760px)" srcset="img/w/hk-mv-b-p.webp"><img src="img/w/hk-mv-b-d.webp" alt="" decoding="async"></picture><span class="hk-a" data-live="play/mountain-valley/index.html"><picture><source media="(max-width:760px)" srcset="img/w/mv-poster-m.webp"><img src="img/w/mv-poster.webp" alt="" decoding="async"></picture></span></span><span class="hk-scr" aria-hidden="true"><svg viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1.5v12M1.8 9.3 6 13.5l4.2-4.2"/></svg>Scroll to explore</span></figure><div class="hk-ring" aria-hidden="true"><svg viewBox="0 0 200 200"><g class="tks"></g><circle class="bg" cx="100" cy="100" r="80"/><circle class="arc" cx="100" cy="100" r="80" pathLength="1000" stroke-dasharray="1000" stroke-dashoffset="0"/></svg><b class="hk-num">5.0<small>s</small></b></div></div>
     <span class="hk-cue-t" aria-hidden="true">Scroll</span>
@@ -1732,7 +1753,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">05</span><p class="dq-q"><span>&ldquo;Why should I choose you?&rdquo;</span></p><p class="dq-a">Because we build around you. Nothing starts as a template.</p></div>
-          <figure class="dq-v dv-fan" aria-hidden="true"><span class="fan-p f1"><img src="img/w/fq-ph-halden.webp" alt="" loading="lazy"></span><span class="fan-p f3"><img src="img/w/fq-ph-mv.webp" alt="" loading="lazy"></span><span class="fan-p f2"><img src="img/w/fq-ph-lunas.webp" alt="" loading="lazy"></span></figure>
+          <figure class="dq-v dv-fan" aria-hidden="true"><span class="fan-p f1"><img src="img/w/fq-ph-sr.webp" alt="" loading="lazy"><b class="fan-n">Soft Riot</b></span><span class="fan-p f3"><img src="img/w/fq-ph-mv.webp" alt="" loading="lazy"><b class="fan-n">Mountain &amp; Valley</b></span><span class="fan-p f2"><img src="img/w/fq-ph-lunas.webp" alt="" loading="lazy"><b class="fan-n">Luna&rsquo;s Coffee</b></span></figure>
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">06</span><p class="dq-q"><span>&ldquo;You don&rsquo;t know my business.&rdquo;</span></p><p class="dq-a dq-w">You&rsquo;re right. You know it best. We build what carries it further.</p></div>
@@ -2010,12 +2031,16 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       +'</div></div>');
     book.after(ref);ref.after(sig);sig.after(fla);fla.after(ar);ar.after(hd);hd.after(live);live.after(riot);riot.after(mv);
     /* every example shows again: Flagship holds Arden, Halden House, Luna's, Soft Riot and Mountain & Valley inside its hairline */
-    fla.appendChild(ar);fla.appendChild(hd);fla.appendChild(live);fla.appendChild(riot);fla.appendChild(mv);
+    /* batch 12: Soft Riot, then Luna's, then Arden; each row named above it */
+    fla.appendChild(riot);fla.appendChild(live);fla.appendChild(ar);fla.appendChild(hd);fla.appendChild(mv);
+    [[riot,'Soft Riot'],[live,'Luna&rsquo;s Coffee'],[ar,'Arden Architects']].forEach(function(o){o[0].insertAdjacentHTML('afterbegin','<p class="ex-nm">'+o[1]+'</p>');});
+    /* batch 12: the Halden House rental app is parked with the saved-for-later pieces; remove ow-off to bring it back */
+    hd.classList.add('ow-off');
     /* Nov 7: Mountain & Valley opens the page, so its Flagship example is parked; remove ow-off to bring it back */
     mv.classList.add('ow-off');
     /* every example carries its name, quietly, on the picture itself */
     var NM=new Map([[T.apply,'Abrams Places'],[T.lunasr,'Luna&rsquo;s Caf&eacute;']]);
-    [ref,sig,fla].forEach(function(b){[].forEach.call(b.querySelectorAll('.tile,.live:not(.ph):not(.own)'),function(x){
+    [ref,sig].forEach(function(b){[].forEach.call(b.querySelectorAll('.tile,.live:not(.ph):not(.own)'),function(x){
       var nm=NM.get(x)||x.getAttribute('data-name');if(!nm)return;var host=x.classList.contains('tile')?x.querySelector('.frame'):x;
       if(host&&!host.querySelector('.ex-tag'))host.appendChild(el('<span class="ex-tag" aria-hidden="true">'+nm+'</span>'));});});
   })();
@@ -2299,8 +2324,16 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     function camGo(p){ph=p;pt0=performance.now();if(RM){ph=2;measure();vb(C.x1,C.y1,C.z1);return;}if(!run){run=1;requestAnimationFrame(frame);}}
     if(top&&car&&road){measure();vb(1781,550,C.z0*1.22);addEventListener('resize',function(){measure();if(ph===2)vb(C.x1,C.y1,C.z1);});}
     /* the hood: a thunk when it lands */
-    function thunk(){if(!sndOn||!AC)return;try{var t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(46,t+.2);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.8,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+.34);o.connect(g);g.connect(AG);o.start(t);o.stop(t+.36);
-      var n=AC.createBuffer(1,Math.floor(AC.sampleRate*.14),AC.sampleRate),d=n.getChannelData(0);for(var q=0;q<d.length;q++)d[q]=(Math.random()*2-1)*Math.pow(1-q/d.length,3);var b=AC.createBufferSource(),f=AC.createBiquadFilter(),g2=AC.createGain();f.type='lowpass';f.frequency.value=1100;g2.gain.value=.45;b.buffer=n;b.connect(f);f.connect(g2);g2.connect(AG);b.start(t);}catch(e){}}
+    function thunk(){if(!sndOn||!AC)return;try{var t=AC.currentTime+.005;
+      /* a car hood shutting: the panel's weight landing, the sheet steel ringing for a moment, then the latch catching */
+      var tone=function(f0,f1,a,d,at0){var o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.setValueAtTime(f0,at0);if(f1)o.frequency.exponentialRampToValueAtTime(f1,at0+d*.5);g.gain.setValueAtTime(.0001,at0);g.gain.exponentialRampToValueAtTime(a,at0+.005);g.gain.exponentialRampToValueAtTime(.0001,at0+d);o.connect(g);g.connect(AG);o.start(at0);o.stop(at0+d+.02);};
+      var hiss=function(at0,d,ty,f,q,a,p){var n=AC.createBuffer(1,Math.floor(AC.sampleRate*d),AC.sampleRate),x=n.getChannelData(0);for(var k=0;k<x.length;k++)x[k]=(Math.random()*2-1)*Math.pow(1-k/x.length,p);var b=AC.createBufferSource(),fl=AC.createBiquadFilter(),g=AC.createGain();fl.type=ty;fl.frequency.value=f;fl.Q.value=q;g.gain.value=a;b.buffer=n;b.connect(fl);fl.connect(g);g.connect(AG);b.start(at0);};
+      tone(118,50,.9,.34,t);                                   /* the weight */
+      tone(188,0,.2,.24,t);tone(297,0,.14,.18,t);tone(431,0,.1,.14,t);tone(612,0,.065,.1,t);tone(877,0,.04,.07,t);   /* the panel, damped steel */
+      hiss(t,.14,'lowpass',850,.7,.6,3);                       /* the impact */
+      hiss(t+.03,.022,'bandpass',3300,2.6,.42,2);              /* the latch catching */
+      hiss(t+.052,.016,'bandpass',2400,3,.22,2);
+    }catch(e){}}
     /* the reveal: the three after sites, live */
     var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:10,LS=3.7;
     /* each after renders at a real width (a phone layout on a phone), scaled a little into its frame, so it can be scrolled, tapped and used */
@@ -2379,12 +2412,12 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     at(10200,function(){smOn=0;});
     at(8480,function(){cl.add('hs-go');});
     /* the line on its own; then the site, with the clock on its corner, so the five seconds are spent looking at it; at zero it unfolds into its facelift, live and usable */
-    at(9830,function(){cl.add('hs-clk');K(3);});
-    at(12330,function(){cl.add('hs-which');K(4);liveLoad();});
-    at(13330,function(){cl.add('hs-tick');bRun();});
-    at(13830,function(){clock();sfx('clock5');});
-    var K5=19030;
-    at(K5,function(){K(5);liveRun();});
+    /* batch 12: the five seconds go straight onto the before site: the line sits over it, its gold rule runs down with the clock, and at zero it hands to the next line */
+    at(9830,function(){cl.add('hs-clk','hs-which');K(4);liveLoad();});
+    at(10530,function(){cl.add('hs-tick');bRun();});
+    at(10830,function(){clock();sfx('clock5');cl.add('hs-run');});
+    var K5=16030;
+    at(K5,function(){K(5);off('b3');liveRun();});
     /* three lines, one at a time in the same spot; the site starts down to its logo as the second shows, and the last line leaves as the crane folds */
     var B=function(c){return hk.querySelector('.hk-b.'+c);},on=function(c){var e=B(c);if(e){e.classList.remove('off');e.classList.add('on');}},off=function(c){var e=B(c);if(e){e.classList.remove('on');e.classList.add('off');}};
     at(K5+350,function(){on('b4');});
