@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><title>still</title><style>html,body{margin:0;background:#000;overflow:hidden}iframe{border:0;display:block;transform-origin:0 0}#e{position:fixed;left:0;bottom:0;color:#f60;font:12px monospace;background:#000;z-index:9;max-width:100%}</style>
+<script>
+/* temporary: a page at a set size (w, h), scaled by s, for making stills; logo=1 scrolls the M&V site to its logo. Delete before going live. */
+var q=new URLSearchParams(location.search),w=+q.get('w')||390,h=+q.get('h')||844,k=+q.get('s')||1;
+var f=document.createElement('iframe');f.width=w;f.height=h;f.style.transform='scale('+k+')';f.src=q.get('u');document.documentElement.appendChild(f);
+var E=document.createElement('div');E.id='e';document.documentElement.appendChild(E);
+f.addEventListener('load',function(){var W=f.contentWindow;W.addEventListener('error',function(ev){E.textContent+=' ERR '+ev.message+' @'+ev.lineno;});
+  if(q.get('logo'))setTimeout(function(){try{W.scrollTo(0,W.mvLogoY?W.mvLogoY():0);E.textContent+=' y='+(W.mvLogoY?Math.round(W.mvLogoY()):'none');setTimeout(function(){try{E.textContent+=' dbg '+W.mvFoldDbg();}catch(e){E.textContent+=' '+e;}},800);}catch(e){E.textContent+=' '+e;}},1500);});
+</script>

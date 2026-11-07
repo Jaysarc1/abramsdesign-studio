@@ -14,7 +14,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..400;1,9..144,300..400&family=Gilda+Display&family=Montserrat:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..400;1,9..144,300..400&family=Gilda+Display&family=Montserrat:wght@400&family=Unbounded:wght@500..700&display=swap">
 <style>
 /* Layout: a quiet plaster page, a small wordmark, and the work given most of the room.
    Every preview is a live, looping cut of that mockup's opening moment. None of them link out. */
@@ -460,6 +460,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .live img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;transition:transform 2.4s cubic-bezier(.2,.7,.1,1)}
 .live::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 52%,rgba(12,14,30,.34),rgba(12,14,30,0) 70%);transition:opacity .6s}
 .live:hover img{transform:scale(1.025)}
+.ex-tag{position:absolute;left:12px;top:12px;z-index:2;padding:5px 10px;border-radius:12px;background:rgba(18,17,15,.34);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:rgba(255,255,255,.88);font-family:var(--text);font-size:12px;font-weight:500;letter-spacing:.01em;line-height:1.2;white-space:nowrap;pointer-events:none}
+#ow-flagship .ow-hd .ow-p .ow-get{max-width:none}
 .live-go{position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:14px;padding:10px 26px 10px 10px;border-radius:12px;background:rgba(14,15,26,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(255,255,255,.28) inset,0 18px 40px -18px rgba(0,0,0,.6);font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:background .4s,box-shadow .4s}
 .live-go i{flex:none;width:44px;height:44px;border-radius:50%;background:#fff;color:#14151f;display:grid;place-items:center}
 .live-go svg{width:16px;height:16px;margin-left:3px}
@@ -513,7 +515,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .of-tier{position:relative;display:flex;flex-direction:column;min-width:0;background:var(--sheet);border-radius:6px;padding:clamp(26px,2.6vw,38px);padding-top:calc(clamp(26px,2.6vw,38px) + 26px);box-shadow:0 1px 0 var(--rule),0 24px 50px -40px rgba(0,0,0,.4);overflow:hidden}
 .of-bar{position:absolute;left:0;right:0;top:0;height:34px;display:flex;align-items:center;justify-content:center;background:var(--graphite);color:var(--plaster);font-size:12px}
 /* recommended: a tan band with dark type, a 12px break in the page colour under it, and one 2px ink line around band and card together */
-.of-tier.rec{border-radius:12px;overflow:visible;background:linear-gradient(var(--tan) 0 34px,var(--plaster) 34px 46px,var(--sheet) 46px)}
+.of-tier.rec{border-radius:12px;overflow:visible;background:linear-gradient(var(--plaster) 0 34px,var(--sheet) 34px)}
 .of-tier.rec::after{content:"";position:absolute;inset:0;border:2px solid var(--graphite);border-radius:12px;pointer-events:none}
 .of-tier.rec .of-bar{background:none;color:var(--graphite);font-weight:500;font-size:12px;letter-spacing:.14em;text-indent:.14em}
 @media (max-width:900px){.of-tier.rec{padding-top:calc(clamp(26px,2.6vw,38px) + 46px)}}
@@ -812,6 +814,8 @@ header .hpill:hover{background:var(--patina);color:var(--plaster)}
 .dq-n{color:var(--pencil)}
 .dq-q{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(34px,3.9vw,58px);line-height:1.06;letter-spacing:-.016em;color:var(--graphite);text-wrap:balance}
 .dq-q span{background:linear-gradient(var(--graphite),var(--graphite)) 0 56%/0% 2px no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.dq-a.dq-w{max-width:40ch}
+.dq-a em{font-style:italic}
 .dq-a{margin:0;max-width:28ch;font-family:var(--serif);font-weight:300;font-optical-sizing:auto;font-size:clamp(22px,1.9vw,28px);line-height:1.25;letter-spacing:-.006em;color:var(--graphite);text-wrap:balance}
 .dq-v{grid-column:4/7;margin:0;position:relative;height:clamp(220px,21vw,300px);display:flex;align-items:center;justify-content:center;gap:12px;background:none;overflow:hidden}
 .rc{width:min(250px,72%);padding:22px 22px 20px;background:#FFFDF8;color:#1F1C18;display:grid;gap:12px;box-shadow:0 1px 0 rgba(31,28,24,.06),0 18px 34px -18px rgba(31,28,24,.35);transform:rotate(-2deg)}
@@ -1058,8 +1062,8 @@ header nav{align-items:center}
 .hk-b{grid-area:1/1;margin:0 auto;max-width:17em;text-align:center;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(32px,min(6svh,4.3vw),66px);line-height:1.1;letter-spacing:-.018em;text-wrap:balance;opacity:0;transform:translateY(16px);filter:blur(5px);transition:opacity .7s ease,transform 1s cubic-bezier(.2,.7,.1,1),filter .7s ease;pointer-events:none;text-shadow:0 2px 28px rgba(0,0,0,.55)}
 .hk-b span,.hk-b em{display:block}
 .hk-b em{font-style:italic;color:#d9bc8c}
-.hk-b.b4{max-width:20em;font-size:clamp(28px,min(5svh,3.6vw),56px)}
-.hook[data-k="1"] .b1,.hook[data-k="2"] .b2,.hook[data-k="4"] .b3,.hook[data-k="5"] .b4,.hook[data-k="6"] .b5{opacity:1;transform:none;filter:none;transition-delay:.35s,.35s,.35s}
+.hk-b.b4,.hk-b.b5,.hk-b.b6{max-width:20em;font-size:clamp(28px,min(5svh,3.6vw),56px)}
+.hook[data-k="1"] .b1,.hook[data-k="2"] .b2,.hook[data-k="4"] .b3{opacity:1;transform:none;filter:none;transition-delay:.35s,.35s,.35s}
 .hook[data-k="2"] .b2{transition-delay:.9s,.9s,.9s}
 /* the sites: three dated homepages, then the same three after a refresh */
 .hk-fs{position:absolute;left:50%;top:50%;width:min(1100px,88vw);transform:translateX(-50%);display:flex;gap:clamp(14px,1.6vw,26px);pointer-events:none}
@@ -1088,7 +1092,7 @@ header nav{align-items:center}
   .hk-t{top:15%}
   .hook.hs-th .hk-t{top:25%}
   .hk-b{font-size:clamp(28px,8vw,36px)}
-  .hk-b.b4{font-size:clamp(25px,7vw,32px)}
+  .hk-b.b4,.hk-b.b5,.hk-b.b6{font-size:clamp(25px,7vw,32px)}
   .hk-clk p{font-size:clamp(23px,6.4vw,30px)}
   .hk-car,.hk-q{bottom:calc(30% - 1px)}
   .hk-road::after{bottom:30%}
@@ -1160,7 +1164,6 @@ main>section>.wrap>.st:first-child{margin-top:0}
 .hk-fs{top:27%;width:min(860px,76vw,calc(52svh * 1.6))}
 .hook[data-k="6"] .hk-fs{opacity:1}
 .hook.hs-th .f1{transition-delay:.3s}
-.hk-b.b5{max-width:19em}
 .hook.hs-th .hk-b{align-self:end}
 .hk-clk p.c-top{max-width:15em}
 .hk-fs .hk-ring{--rs:clamp(84px,9vw,124px);position:absolute;z-index:2;top:calc(var(--rs) * -.42);right:calc(var(--rs) * -.42);width:var(--rs);border-radius:50%;background:rgba(20,18,16,.88);box-shadow:0 14px 30px -12px rgba(0,0,0,.75);container-type:inline-size;opacity:0;transform:scale(.8);transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.1,1)}
@@ -1186,6 +1189,12 @@ main>section>.wrap>.st:first-child{margin-top:0}
 /* batch 8: a modern face through the opening (the serif takes over below it); a quicker turn; smoke from the first spin; the lines leave one at a time and the site stays, centred, with a cue to scroll it */
 .hk-b,.hk-clk p{font-family:var(--display);font-weight:500;font-variation-settings:"wdth" 100;letter-spacing:-.034em;line-height:1.08}
 .hk-b em,.hk-clk em{font-style:normal}
+/* the intro speaks in Mountain & Valley's own face, Unbounded, set a size down because it runs wide */
+.hk-b,.hk-clk p{font-family:"Unbounded","Archivo",sans-serif;font-weight:600;font-variation-settings:normal;letter-spacing:-.035em;line-height:1.14}
+.hk-b{font-size:clamp(26px,min(5svh,3.5vw),54px)}
+.hk-b.b4,.hk-b.b5,.hk-b.b6{font-size:clamp(23px,min(4.2svh,2.9vw),46px)}
+.hk-clk p{font-size:clamp(22px,min(3.8svh,2.6vw),42px)}
+@media (max-width:760px){.hk-b{font-size:clamp(23px,6.6vw,30px)}.hk-b.b4,.hk-b.b5,.hk-b.b6{font-size:clamp(20px,5.8vw,26px)}.hk-clk p{font-size:clamp(19px,5.4vw,25px)}}
 .hk-num{font-family:var(--display);font-weight:300;font-variation-settings:"wdth" 108;letter-spacing:-.04em}
 .hook.hs-car .hk-eng,.hook.hs-q1 .hk-eng{transition:opacity .12s linear}
 .hook.hs-q1 .q1{transition:opacity .09s linear;animation:hkQ1 .16s linear both}
@@ -1194,12 +1203,15 @@ main>section>.wrap>.st:first-child{margin-top:0}
 .hook.hs-car .q2{opacity:0;transition:opacity 0s linear .09s}
 .hook.hs-car .hk-car{transition:opacity .09s linear}
 .hook.hs-car .hk-car svg{animation:hkRise .3s cubic-bezier(.2,.6,.3,1) both}
+.hook.hs-go .hk-car{transition:transform 1.45s cubic-bezier(.5,.05,.75,.45)}
 @keyframes hkQ1{from{transform:scaleY(1.09)}to{transform:scaleY(1.06)}}
 @keyframes hkQ2{from{transform:scaleY(1.06)}to{transform:scaleY(1.03)}}
 .hook.hs-q2 .hk-road{transition:opacity .2s ease}
 .hk-smoke{z-index:2}
 .hook.hs-burn .hk-smoke i{animation:hkSmoke 2.4s cubic-bezier(.2,.6,.3,1) var(--d) both}
-.hook.hs-o1 .b5 span,.hook.hs-o2 .b5 em{opacity:0;transform:translateY(-10px);filter:blur(4px);transition:opacity .7s ease,transform .9s cubic-bezier(.4,0,.2,1),filter .7s ease}
+/* the three closing lines take turns in one spot: each in, then out, before the next */
+.hook .hk-b.on{opacity:1;transform:none;filter:none}
+.hook .hk-b.off{opacity:0;transform:translateY(-10px);filter:blur(4px);transition:opacity .7s ease,transform .9s cubic-bezier(.4,0,.2,1),filter .7s ease}
 .hook[data-k] .hk-fs{transition:top 1.4s cubic-bezier(.6,0,.2,1),transform 1.4s cubic-bezier(.6,0,.2,1)}
 .hook.hs-solo .hk-fs{top:50%;transform:translate(-50%,-50%)}
 .hk-f{position:relative}
@@ -1446,7 +1458,8 @@ main>section>.wrap>.st:first-child{margin-top:0}
       <p class="hk-b b2"><em>But your marketing is a Ford Focus.</em></p>
       <p class="hk-b b3"><em>Here&rsquo;s what yours is saying.</em></p>
       <p class="hk-b b4"><span>Now imagine a minor facelift.</span></p>
-      <p class="hk-b b5"><span>Great branding doesn&rsquo;t start over.</span><em>It brings out what you already have.</em></p>
+      <p class="hk-b b5"><span>Great branding doesn&rsquo;t start over.</span></p>
+      <p class="hk-b b6"><em>It brings out what you already have.</em></p>
     </div>
     <p class="sr-only">Your business is a Ferrari Spider. But your marketing is a Ford Focus. You have 5 seconds to grab someone&rsquo;s attention. Here&rsquo;s what yours is saying. Now imagine a minor facelift. Great branding doesn&rsquo;t start over. It brings out what you already have.</p>
     <!-- the one example, Mountain & Valley: to swap it, change the two before pictures, the two stills and data-live -->
@@ -1553,10 +1566,6 @@ main>section>.wrap>.st:first-child{margin-top:0}
         </div>
       </div>
       <div class="st rv" id="live">
-        <div class="st-row">
-          <h2 class="st-big">Open <em>for business.</em></h2>
-          <div class="st-copy"><p>Orders in, drinks out. The whole shop runs on the site.</p></div>
-        </div>
         <div class="lv-pair">
           <button class="live" type="button" data-site="play/lunas.html" data-name="Luna&rsquo;s Coffee" aria-label="Play Luna&rsquo;s Coffee, a working café">
             <img src="img/w/lunas-poster.webp" srcset="img/w/lunas-poster-s.webp 960w, img/w/lunas-poster.webp 1920w" sizes="(max-width:760px) 100vw, 840px" alt="" loading="lazy">
@@ -1569,10 +1578,6 @@ main>section>.wrap>.st:first-child{margin-top:0}
         </div>
       </div>
       <div class="st rv" id="riot">
-        <div class="st-row">
-          <h2 class="st-big">Never <em>still.</em></h2>
-          <div class="st-copy"><p>Rail to receipt. The app and the owner&rsquo;s books move with every sale.</p></div>
-        </div>
         <div class="lv-pair">
           <button class="live sr" type="button" data-site="play/soft-riot/index.html" data-name="Soft Riot" aria-label="Play Soft Riot, a working clothing store">
             <img src="img/w/softriot-poster.webp" srcset="img/w/softriot-poster-s.webp 960w, img/w/softriot-poster.webp 1920w" sizes="(max-width:760px) 100vw, 840px" alt="" loading="lazy">
@@ -1584,19 +1589,20 @@ main>section>.wrap>.st:first-child{margin-top:0}
           </button>
         </div>
       </div>
-      <div class="cta-blk rv"><p>Interested?</p><span class="cta-k">Who is each offer for?</span></div>
+      <!-- for people who have seen their preview; the cold-lead version ("Interested?") is parked in live-site/saved-for-later -->
+      <div class="cta-blk rv"><p>I like the preview you made&hellip; <em>now what?</em></p></div>
       <div class="fit fit-cta">
         <a class="fit-row rv" href="#offers" data-tab="refresh">
-          <h3 class="fit-q">Site looking a little tired?</h3>
-          <div class="fit-a"><b>You need a fresh face, not a fresh start.</b><span class="fit-go">Refresh<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+          <h3 class="fit-q">Love it, but keep your site?</h3>
+          <div class="fit-a"><b>We bring the preview&rsquo;s polish to the site you already have.</b><span class="fit-go">Refresh<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
         </a>
         <a class="fit-row rv" href="#offers" data-tab="signature">
-          <h3 class="fit-q">Look smaller than you are?</h3>
-          <div class="fit-a"><b>You need a brand, not a template.</b><span class="fit-go">Signature<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+          <h3 class="fit-q">Want the whole site built out?</h3>
+          <div class="fit-a"><b>We build it start to finish, with the preview as the blueprint.</b><span class="fit-go">Signature<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
         </a>
         <a class="fit-row rv" href="#offers" data-tab="flagship">
-          <h3 class="fit-q">Still typing the same numbers twice?</h3>
-          <div class="fit-a"><b>You need one system, not more apps.</b><span class="fit-go">Flagship<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
+          <h3 class="fit-q">Want it to run the business too?</h3>
+          <div class="fit-a"><b>We connect your site, your apps and your numbers.</b><span class="fit-go">Flagship<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
         </a>
       </div>
     </div>
@@ -1625,7 +1631,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">04</span><p class="dq-q"><span>&ldquo;So you just make websites?&rdquo;</span></p><p class="dq-a">Lol. We don&rsquo;t &ldquo;just make websites.&rdquo;</p></div>
-          <figure class="dq-v dv-tx"><p>We&rsquo;re a branding and business agency. Your brand and your tools, built to work as one.</p></figure>
+          <figure class="dq-v dv-tx"><p>We&rsquo;re a branding and business agency that builds your brand and your tools to grow your business.</p></figure>
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">05</span><p class="dq-q"><span>&ldquo;Why should I choose you?&rdquo;</span></p><p class="dq-a">Because we build around you, not a template.</p></div>
@@ -1633,18 +1639,18 @@ main>section>.wrap>.st:first-child{margin-top:0}
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">06</span><p class="dq-q"><span>&ldquo;You don&rsquo;t know my business.&rdquo;</span></p><p class="dq-a">You&rsquo;re right. We don&rsquo;t.</p></div>
-          <figure class="dq-v dv-tx"><p>You know it best. We know how to build a brand that carries it further.</p></figure>
+          <figure class="dq-v dv-tx"><p>You know it best. We know how to build a brand, and the apps, that carry it further.</p></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">07</span><p class="dq-q"><span>&ldquo;Why do you think you can help?&rdquo;</span></p><p class="dq-a">Twenty years of results.</p></div>
+          <div class="dq-l"><span class="mono dq-n">07</span><p class="dq-q"><span>&ldquo;Why do you think you can help?&rdquo;</span></p><p class="dq-a">Twenty years of <em>results</em>.</p></div>
           <figure class="dq-v dv-tx"><p>Across art, architecture and marketing, now turned to how your business is seen.</p></figure>
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">08</span><p class="dq-q"><span>&ldquo;How on earth did you find me?!&rdquo;</span></p><p class="dq-a">Ha! Great question.</p></div>
-          <figure class="dq-v dv-tx"><p>I&rsquo;m from Palm Beach County, and I keep finding great businesses hidden by their sites.</p></figure>
+          <figure class="dq-v dv-tx"><p>We&rsquo;re based in Palm Beach County, and we find great businesses using the very tools we design for yours.</p></figure>
         </li>
         <li class="dq-row rv">
-          <div class="dq-l"><span class="mono dq-n">09</span><p class="dq-q"><span>&ldquo;What will it cost?&rdquo;</span></p><p class="dq-a">Scope changes. The finish never does. Every quote begins with a conversation.</p></div>
+          <div class="dq-l"><span class="mono dq-n">09</span><p class="dq-q"><span>&ldquo;What will it cost?&rdquo;</span></p><p class="dq-a dq-w">Every quote begins with a conversation based on your needs.</p></div>
           <figure class="dq-v dv-of" aria-hidden="true"><span class="ofc"><b>Refresh</b><em>Your site, renewed.</em></span><span class="ofc"><b>Signature</b><em>Your brand, elevated.</em></span><span class="ofc"><b>Flagship</b><em>Your whole business, connected.</em></span></figure>
         </li>
       </ol>
@@ -1870,7 +1876,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     /* what each offer gets you, in one line, so nobody has to scroll to the price list to find out */
     var GET={'ow-refresh':'Your current site, sharpened: new type, spacing and photography, up to five pages.',
       'ow-signature':'A new website, start to finish, with your messaging written and ordering or booking connected.',
-      'ow-flagship':'A full rebrand, a website with a 3D centerpiece, and the system behind it: ordering, owner dashboard, books and CRM.'};
+      'ow-flagship':'A full rebrand, a website with a 3D centerpiece, and the system behind it.'};
     function band(id,name,tg,n,list){
       var no={'ow-refresh':'01','ow-signature':'02','ow-flagship':'03'}[id]||'';var d=el('<div class="ind ow-band" id="'+id+'"><div class="head ow-hd"><div class="ow-p"><h2><span class="ow-n">'+no+'</span>'+name+'</h2><em class="ow-tg">'+tg+'</em>'+(GET[id]?'<p class="ow-get">'+GET[id]+'</p>':'')+'</div></div></div>');
       if(list){var g=document.createElement('div');g.className='tiles';list.forEach(function(x){var t=T[x[0]];t.className='tile'+(x[1]?' '+x[1]:'');g.appendChild(t);});d.appendChild(g);}
@@ -1890,18 +1896,18 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     var sig=band('ow-signature','Signature','Your brand, elevated.',4,[['jay','half'],['stadler','half'],['meridian','half'],['bascule2','half']]);
     var fla=band('ow-flagship','Flagship','Your whole business, connected.',5);
     var play='<i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 1.8v12.4L13.6 8z" fill="currentColor"/></svg></i>';
-    var hd=el('<div class="st rv" id="halden"><div class="st-row"><h2 class="st-big">Your home, <em>handled.</em></h2><div class="st-copy"><p>Rent, repairs and renewals in the resident&rsquo;s hand. The owner sees each one land.</p></div></div><div class="lv-pair">'
+    var hd=el('<div class="st rv" id="halden"><div class="lv-pair">'
       +'<button class="live hd" type="button" data-site="play/halden/index.html" data-name="Halden House" aria-label="Play Halden House, a resident app with its owner board"><img src="img/w/halden-poster.webp" srcset="img/w/halden-poster-s.webp 960w, img/w/halden-poster.webp 1600w" sizes="(max-width:760px) 100vw, 840px" alt="" loading="lazy"><span class="live-go">'+play+'Run the building</span></button>'
       +'<button class="live hd ph" type="button" data-site="play/halden/index.html" data-name="Halden House" aria-label="Play the Halden House resident app"><img src="img/w/halden-app-poster.webp" srcset="img/w/halden-app-poster-s.webp 500w, img/w/halden-app-poster.webp 1000w" sizes="(max-width:760px) 100vw, 408px" alt="" loading="lazy"><span class="live-go">'+play+'Open the app</span></button>'
       +'</div></div>');
     /* Arden Architects, the studio's own site, with its materials library as the owner's side */
     var go='<span class="live-go">'+play+'See the owner&rsquo;s side</span>';
-    var ar=el('<div class="st rv" id="arden"><div class="st-row"><h2 class="st-big">Walk it <em>before it&rsquo;s built.</em></h2><div class="st-copy"><p>Five tools, one house. The model, the plans, the Library, the room board and the budget.</p></div></div><div class="lv-pair">'
+    var ar=el('<div class="st rv" id="arden"><div class="lv-pair">'
       +'<button class="live ar" type="button" data-site="play/arden/index.html" data-direct data-name="Arden Architects" aria-label="Open the Arden Architects site"><img src="img/w/arden-poster.webp" srcset="img/w/arden-poster-s.webp 960w, img/w/arden-poster.webp 1600w" sizes="(max-width:760px) 100vw, 840px" alt="" loading="lazy"><span class="live-go">'+play+'Walk the house</span></button>'
       +'<button class="live own ar ph" type="button" data-site="play/arden-library/index.html" data-direct data-name="Arden Architects, Library" aria-label="Open the owner&rsquo;s side"><img src="img/w/arden-owner-poster-m.webp" alt="" loading="lazy">'+go+'</button>'
       +'</div></div>');
     /* Mountain & Valley, an origami studio: the site folds a crane, the app teaches one */
-    var mv=el('<div class="st rv" id="mv"><div class="st-row"><h2 class="st-big">Every fold, <em>by hand.</em></h2><div class="st-copy"><p>Gifts folded to order, and classes that teach you to fold your own.</p></div></div><div class="lv-pair">'
+    var mv=el('<div class="st rv" id="mv"><div class="lv-pair">'
       +'<button class="live mv" type="button" data-site="play/mountain-valley/index.html" data-direct data-name="Mountain &amp; Valley" aria-label="Open the Mountain and Valley site"><picture><source media="(max-width:760px)" srcset="img/w/mv-poster-m.webp"><img src="img/w/mv-poster.webp" srcset="img/w/mv-poster-s.webp 960w, img/w/mv-poster.webp 1600w" sizes="840px" alt="" loading="lazy"></picture><span class="live-go">'+play+'Fold a crane</span></button>'
       +'<button class="live mv ph" type="button" data-site="play/mountain-valley-app/index.html" data-direct data-name="Mountain &amp; Valley, App" aria-label="Open the Mountain and Valley app"><img src="img/w/mv-app-poster.webp" srcset="img/w/mv-app-poster-s.webp 500w, img/w/mv-app-poster.webp 1000w" sizes="(max-width:760px) 100vw, 408px" alt="" loading="lazy"><span class="live-go">'+play+'Open the app</span></button>'
       +'</div></div>');
@@ -1910,6 +1916,11 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     fla.appendChild(ar);fla.appendChild(hd);fla.appendChild(live);fla.appendChild(riot);fla.appendChild(mv);
     /* Nov 7: Mountain & Valley opens the page, so its Flagship example is parked; remove ow-off to bring it back */
     mv.classList.add('ow-off');
+    /* every example carries its name, quietly, on the picture itself */
+    var NM=new Map([[T.apply,'Abrams Places'],[T.lunasr,'Luna&rsquo;s Caf&eacute;']]);
+    [ref,sig,fla].forEach(function(b){[].forEach.call(b.querySelectorAll('.tile,.live:not(.ph)'),function(x){
+      var nm=NM.get(x)||x.getAttribute('data-name');if(!nm)return;var host=x.classList.contains('tile')?x.querySelector('.frame'):x;
+      if(host&&!host.querySelector('.ex-tag'))host.appendChild(el('<span class="ex-tag" aria-hidden="true">'+nm+'</span>'));});});
   })();
   /* next round, #visual and #ourwork: Linen & Lacquer out, Banyan Row and Cortile parked with the maybes, the three homes become one developer (Meridian),
      each question carries its offer under it, on the question's left edge, and the twenty years move to the end of the page and open into the book */
@@ -1919,7 +1930,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     var NM={refresh:'Refresh',signature:'Signature',flagship:'Flagship'},TG={refresh:'Your site, renewed.',signature:'Your brand, elevated.',flagship:'Your whole business, connected.'};
     [].forEach.call(document.querySelectorAll('.fit-row'),function(r){var k=r.getAttribute('data-tab'),q=r.querySelector('.fit-q'),g=r.querySelector('.fit-go');if(!NM[k]||!q)return;
       var l=document.createElement('div');l.className='fit-l';q.parentNode.insertBefore(l,q);l.appendChild(q);
-      l.insertAdjacentHTML('beforeend','<span class="fit-of"><span class="fit-chip">'+NM[k]+'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span><em>'+TG[k]+'</em></span>');
+      l.insertAdjacentHTML('beforeend','<span class="fit-of"><span class="fit-chip">'+NM[k]+'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span>');
       if(g)g.remove();});
     if(h==='#visual'){
       var cut=function(k){var im=document.querySelector('#work .tile img[src="img/w/'+k+'-1.webp"]');if(!im)return null;var t=im.closest('.tile');return t;};
@@ -2194,7 +2205,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     function thunk(){if(!sndOn||!AC)return;try{var t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(46,t+.2);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.8,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+.34);o.connect(g);g.connect(AG);o.start(t);o.stop(t+.36);
       var n=AC.createBuffer(1,Math.floor(AC.sampleRate*.14),AC.sampleRate),d=n.getChannelData(0);for(var q=0;q<d.length;q++)d[q]=(Math.random()*2-1)*Math.pow(1-q/d.length,3);var b=AC.createBufferSource(),f=AC.createBiquadFilter(),g2=AC.createGain();f.type='lowpass';f.frequency.value=1100;g2.gain.value=.45;b.buffer=n;b.connect(f);f.connect(g2);g2.connect(AG);b.start(t);}catch(e){}}
     /* the reveal: the three after sites, live */
-    var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:10;
+    var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:10,LS=3.7;
     /* each after renders at a real width (a phone layout on a phone), scaled a little into its frame, so it can be scrolled, tapped and used */
     function liveSize(){lv.forEach(function(o){var w=o.a.clientWidth,h=o.a.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1024,w/.86),k=w/V;
         o.f.style.width=Math.round(V)+'px';o.f.style.height=Math.ceil(h/k)+'px';o.f.style.transform='scale('+k.toFixed(4)+')';});}
@@ -2208,7 +2219,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     /* once it has unfolded it scrolls itself, folding the crane with its sound, and stops on the finished logo; the moment anyone touches it, it is theirs */
     function liveRun(){if(!lv.length)return;lvOn=true;var t0=performance.now();
       function f(now){var t=(now-t0)/1000,go=t<40;lv.forEach(function(o){if(!o.ok)return;if(!o.f.classList.contains('on'))o.f.classList.add('on');
-          if(o.user||RM||t>DR+2.6)return;try{var w=o.w,d=w.document,end=w.mvLogoY?w.mvLogoY():640,max=Math.max(0,Math.min(end,(d.documentElement.scrollHeight||0)-w.innerHeight)),k=Math.max(0,Math.min(1,(t-2.4)/DR));w.scrollTo(0,max*(1-Math.cos(k*Math.PI))/2);}catch(e){}});
+          if(o.user||RM||t>DR+LS+.2)return;try{var w=o.w,d=w.document,end=w.mvLogoY?w.mvLogoY():640,max=Math.max(0,Math.min(end,(d.documentElement.scrollHeight||0)-w.innerHeight)),k=Math.max(0,Math.min(1,(t-LS)/DR));w.scrollTo(0,max*(1-Math.cos(k*Math.PI))/2);}catch(e){}});
         if(go)requestAnimationFrame(f);}
       requestAnimationFrame(f);}
     /* the before: a real page under the still, scrolled top to bottom in steps while the five seconds run, so the after reads against it */
@@ -2259,12 +2270,16 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     at(13830,function(){clock();sfx('clock5');});
     var K5=19030;
     at(K5,function(){K(5);liveRun();});
-    at(K5+5200,function(){K(6);});
-    /* it comes to rest on the logo; the two lines leave, the top one first, and the site is all that is left */
-    at(K5+2400+DR*1000+300,function(){cl.add('hs-o1');});
-    at(K5+2400+DR*1000+1100,function(){cl.add('hs-o2');});
-    at(K5+2400+DR*1000+1900,function(){cl.add('hs-solo');});
-    at(K5+2400+DR*1000+6400,function(){cl.add('hs-pg');});
+    /* three lines, one at a time in the same spot; the site starts down to its logo as the second shows, and the last line leaves as the crane folds */
+    var B=function(c){return hk.querySelector('.hk-b.'+c);},on=function(c){var e=B(c);if(e){e.classList.remove('off');e.classList.add('on');}},off=function(c){var e=B(c);if(e){e.classList.remove('on');e.classList.add('off');}};
+    at(K5+350,function(){on('b4');});
+    at(K5+2900,function(){off('b4');});
+    at(K5+3200,function(){K(6);on('b5');});
+    at(K5+5600,function(){off('b5');});
+    at(K5+5900,function(){on('b6');});
+    at(K5+8000,function(){off('b6');});
+    at(K5+LS*1000+DR*1000+500,function(){cl.add('hs-solo');});
+    at(K5+LS*1000+DR*1000+5000,function(){cl.add('hs-pg');});
   }
   function sndSet(on){if(!sb)return;sb.setAttribute('aria-pressed',on?'true':'false');sb.setAttribute('aria-label',on?'Sound off':'Sound on');
     if(AC){if(AC.state==='suspended')AC.resume();AG.gain.setTargetAtTime(on?.9:0,AC.currentTime,.05);}
