@@ -286,10 +286,10 @@ section{padding-block:var(--sp-sec)}
 .tile.half{grid-column:span 3}
 .tile.feat{grid-column:span 4;grid-row:span 2}
 /* each tile is the page alone, no browser chrome. The feature's page stretches so its caption lands level with the second stacked tile's */
-.frame{position:relative;border-radius:6px;overflow:hidden;background:#111;box-shadow:0 1px 0 var(--rule),0 24px 50px -34px rgba(0,0,0,.5);display:flex;flex-direction:column;transition:transform .5s cubic-bezier(.2,.7,.1,1),box-shadow .5s}
+.frame{position:relative;border-radius:6px;overflow:hidden;background:var(--tan);box-shadow:0 1px 0 var(--rule),0 24px 50px -34px rgba(0,0,0,.5);display:flex;flex-direction:column;transition:transform .5s cubic-bezier(.2,.7,.1,1),box-shadow .5s}
 .tile:hover .frame{transform:translateY(-3px);box-shadow:0 1px 0 var(--rule),0 34px 60px -34px rgba(0,0,0,.55)}
 .tile.feat .frame{flex:1}
-.page{position:relative;aspect-ratio:16/10;max-width:100%;overflow:hidden;background:#1a1a1a}
+.page{position:relative;aspect-ratio:16/10;max-width:100%;overflow:hidden;background:var(--tan)}
 .tile.feat .page{aspect-ratio:auto;flex:1;min-height:0}
 /* the feature is a touch taller than 16:10 to meet the stacked pair, so it crops from the right and keeps each headline whole */
 .tile.feat .page img{object-position:0 0}
@@ -951,19 +951,28 @@ header nav{align-items:center}
 <style>
 /* the opening: looking down into a V8, the camera swings round, and it's an old hatchback. Then three seconds on the clock, and the question */
 .hook{position:relative;height:100svh;min-height:560px;max-height:1080px;overflow:hidden;color:#efe9df;background:radial-gradient(70% 55% at 50% 38%,#2a2620 0%,#1b1916 62%,#141210 100%);perspective:1100px}
-/* the engine bay, from above */
-.hk-eng{position:absolute;inset:0;opacity:0;transform-origin:50% 62%;transform:scale(1.55);transition:opacity 1.2s ease}
-.hk-eng img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hk-eng::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(12,10,9,.9),rgba(12,10,9,.72) 24%,rgba(12,10,9,.2) 46%,rgba(12,10,9,0) 60%,rgba(12,10,9,.4))}
-.hook.hs-eng .hk-eng{opacity:1;animation:hkPull 3.6s cubic-bezier(.3,0,.25,1) forwards}
-@keyframes hkPull{from{transform:scale(1.55)}to{transform:scale(1.06)}}
-.hook.hs-swing .hk-eng{animation:hkSwing 1.05s cubic-bezier(.6,0,.35,1) forwards}
-@keyframes hkSwing{from{transform:scale(1.06);opacity:1;filter:none}to{transform:rotateX(58deg) rotateZ(-34deg) scale(.42) translateY(-16%);opacity:0;filter:blur(6px)}}
+/* the engine bay, from above: the camera pulls up and back out of a red V8 and it is sitting in a silver hatchback, hood up. The hood drops, the camera drops to the road */
+.hk-eng{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+.hk-eng .hk-top{position:absolute;inset:0;width:100%;height:100%;overflow:visible;transform-origin:50% var(--fy,62%)}
+.hk-eng::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(12,10,9,.9),rgba(12,10,9,.72) 24%,rgba(12,10,9,.2) 46%,rgba(12,10,9,0) 60%,rgba(12,10,9,.4));transition:opacity 1.6s ease}
+.hook.hs-eng .hk-eng{opacity:1}
+.hook.hs-pull .hk-eng::after{opacity:.6}
+.hook.hs-car .hk-eng{opacity:0;transition:opacity .25s ease .2s}
+.hk-top .hd-t,.hk-top .hd-u{transform-box:view-box;transform-origin:1363px 550px}
+.hk-top .hd-t{transform:scaleX(0)}
+.hook.hs-shut .hd-u{animation:hkHdU .26s cubic-bezier(.55,0,1,.45) both}
+@keyframes hkHdU{to{transform:scaleX(0)}}
+.hook.hs-shut .hd-t{animation:hkHdT .56s linear .24s both}
+@keyframes hkHdT{0%{transform:scaleX(0);animation-timing-function:cubic-bezier(.5,0,1,.6)}52%{transform:scaleX(1);animation-timing-function:ease-out}66%{transform:scaleX(.95);animation-timing-function:ease-in}80%{transform:scaleX(1);animation-timing-function:ease-out}90%{transform:scaleX(.99)}100%{transform:scaleX(1)}}
+.hook.hs-shut .hk-top{animation:hkThunk .5s ease .5s both}
+@keyframes hkThunk{0%{transform:none}25%{transform:scale(1.008,.988)}55%{transform:scale(.998,1.004)}100%{transform:none}}
+.hook.hs-drop .hk-top{animation:hkDrop .42s cubic-bezier(.55,0,.9,.45) forwards}
+@keyframes hkDrop{0%{transform:perspective(1600px) rotateX(0);opacity:1}85%{opacity:1}100%{transform:perspective(1600px) rotateX(89deg);opacity:0}}
 /* round the side: the car */
-.hk-road{position:absolute;inset:0;opacity:0;transform:translateX(40%) rotateY(-28deg) scale(1.1);filter:blur(8px);pointer-events:none}
+.hk-road{position:absolute;inset:0;opacity:0;pointer-events:none}
 .hk-road::before{content:"";position:absolute;left:50%;bottom:9%;width:min(1100px,120vw);height:46%;transform:translateX(-50%);background:radial-gradient(50% 50% at 50% 100%,rgba(239,233,223,.13),rgba(239,233,223,0) 70%)}
 .hk-road::after{content:"";position:absolute;left:0;right:0;bottom:17%;height:1px;background:linear-gradient(90deg,transparent,rgba(239,233,223,.22) 20%,rgba(239,233,223,.22) 80%,transparent)}
-.hook.hs-car .hk-road{opacity:1;transform:none;filter:none;transition:opacity .5s ease,transform 1.05s cubic-bezier(.2,.8,.2,1),filter .8s ease}
+.hook.hs-car .hk-road{opacity:1;transition:opacity .12s linear}
 .hook.hs-clk .hk-road{opacity:0;transition:opacity 1.1s ease}
 .hk-car{position:absolute;left:50%;bottom:calc(17% - 1px);width:min(720px,88vw);transform:translateX(-50%)}
 .hk-car svg{display:block;width:100%;height:auto;overflow:visible}
@@ -971,9 +980,10 @@ header nav{align-items:center}
 .hk-car .cb,.hk-car .w{transform-box:fill-box}
 .hk-car .cb{transform-origin:50% 100%}
 .hk-car .w{transform-origin:50% 50%}
-.hook.hs-car .hk-car svg{animation:hkLand .9s cubic-bezier(.3,0,.3,1) .25s both}
-@keyframes hkLand{0%{transform:translateY(-70px)}45%{transform:translateY(0)}62%{transform:translateY(-14px)}80%{transform:translateY(0)}90%{transform:translateY(-3px)}100%{transform:none}}
-.hook.hs-car .cb{animation:hkSquash .9s ease .25s both}
+.hk-car svg{transform-origin:50% 57%}
+.hook.hs-car .hk-car svg{animation:hkRise .62s cubic-bezier(.2,.9,.3,1.18) both}
+@keyframes hkRise{from{transform:perspective(1600px) rotateX(-89deg)}to{transform:perspective(1600px) rotateX(0)}}
+.hook.hs-car .cb{animation:hkSquash .9s ease .3s both}
 @keyframes hkSquash{0%,40%{transform:none}48%{transform:scale(1.03,.9)}62%{transform:scale(.99,1.03)}78%{transform:scale(1.01,.97)}100%{transform:none}}
 .hook.hs-rev1 .cb{animation:hkRevA .75s linear both}
 .hook.hs-rev2 .cb{animation:hkRevB .75s linear both}
@@ -1038,7 +1048,11 @@ header nav{align-items:center}
 .hk-bar{display:flex;gap:5px;align-items:center;height:18px;padding:0 9px;background:#e6e1d6}.hk-bar i{width:6px;height:6px;border-radius:50%;background:#c4bdae}
 .hk-v{position:relative;display:block;aspect-ratio:16/10;background:#ddd}
 .hk-v img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0}
-.hk-a{clip-path:inset(0 0 0 100%);transition:clip-path 1.3s cubic-bezier(.6,0,.2,1)}
+/* the after side of each is the site itself, running and scrolling on its own; its still sits under it until it is ready, and stays if it never is.
+   To swap a site: change the before picture, the still and data-live */
+.hk-a{position:absolute;inset:0;display:block;overflow:hidden;background:#f4f1ea;clip-path:inset(0 0 0 100%);transition:clip-path 1.3s cubic-bezier(.6,0,.2,1)}
+.hk-a iframe{position:absolute;left:0;top:0;width:1280px;height:800px;border:0;transform-origin:0 0;opacity:0;transition:opacity .7s ease;pointer-events:none;background:#fff}
+.hk-a iframe.on{opacity:1}
 .hook.hs-th .hk-f{opacity:1;transform:none}
 .hook.hs-th .f1{transition-delay:.45s}.hook.hs-th .f2{transition-delay:.65s}.hook.hs-th .f3{transition-delay:.85s}
 .hook[data-k="5"] .hk-a,.hook[data-k="6"] .hk-a{clip-path:inset(0)}
@@ -1068,17 +1082,187 @@ header nav{align-items:center}
   .hk-f.f2{left:21vw;width:58vw;z-index:2;top:16vw}
   .hook.hs-th .hk-f.f1,.hook.hs-th .hk-f.f3{transform:rotate(var(--r))}
 }
-@media (prefers-reduced-motion:reduce){.hk-b,.hk-f{transform:none!important;filter:none!important}.hook.hs-th .hk-f.f1,.hook.hs-th .hk-f.f3{transform:rotate(var(--r))!important}.hk-car .cb,.hk-car svg,.hk-car .w{animation:none!important}.hook.hs-eng .hk-eng{animation:none;transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.hk-b,.hk-f{transform:none!important;filter:none!important}.hook.hs-th .hk-f.f1,.hook.hs-th .hk-f.f3{transform:rotate(var(--r))!important}.hk-car .cb,.hk-car svg,.hk-car .w{animation:none!important}.hk-top .hd-t,.hk-top .hd-u,.hk-top{animation:none!important}.hook.hs-shut .hd-t{transform:none}.hook.hs-shut .hd-u{transform:scaleX(0)}}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-/* the offers: each a dark panel with its number, name and line */
+/* the offers: no fill, a hairline round each number, name and line */
 .ow-band .head.ow-hd{display:block;padding:0;border:0}
-.ow-p{display:grid;justify-items:center;gap:clamp(8px,.9vw,12px);padding:clamp(28px,3.4vw,46px) 24px;border-radius:12px;background:#24211d;border:1px solid rgba(255,255,255,.07);text-align:center}
-.ow-band .head.ow-hd .ow-p h2{display:flex;align-items:baseline;justify-content:center;gap:.34em;margin:0;color:#efe9df;font-size:clamp(40px,4.6vw,68px);line-height:1;letter-spacing:-.02em}
-.ow-n{font-weight:300;color:rgba(239,233,223,.6)}
-.ow-hd .ow-p .ow-tg{display:block;margin:0;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(19px,1.6vw,24px);line-height:1.3;color:rgba(239,233,223,.7)}
+.ow-p{display:grid;justify-items:center;gap:clamp(8px,.9vw,12px);padding:clamp(28px,3.4vw,46px) 24px;border-radius:12px;background:transparent;border:1px solid color-mix(in srgb,var(--graphite) 18%,transparent);text-align:center}
+.ow-band .head.ow-hd .ow-p h2{display:flex;align-items:baseline;justify-content:center;gap:.34em;margin:0;color:var(--graphite);font-size:clamp(40px,4.6vw,68px);line-height:1;letter-spacing:-.02em}
+.ow-n{font-weight:300;color:var(--pencil)}
+.ow-hd .ow-p .ow-tg{display:block;margin:0;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(19px,1.6vw,24px);line-height:1.3;color:var(--pencil)}
 </style>
   <div class="hook" id="hook" data-k="0" aria-label="Opening">
-    <div class="hk-eng" aria-hidden="true"><img src="img/w/hk-engine.svg" alt="" decoding="async" fetchpriority="high"></div>
+    <div class="hk-eng" aria-hidden="true"><svg class="hk-top" viewBox="0 0 2400 1100" preserveAspectRatio="xMidYMid meet">
+<defs>
+<radialGradient id="e-bay" cx="50%" cy="48%" r="62%"><stop offset="0" stop-color="#232326"/><stop offset=".6" stop-color="#141416"/><stop offset="1" stop-color="#08080a"/></radialGradient>
+  <linearGradient id="e-alu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f7f8"/><stop offset=".35" stop-color="#b9bcc1"/><stop offset=".55" stop-color="#e7e9ec"/><stop offset="1" stop-color="#7d8086"/></linearGradient>
+  <linearGradient id="e-aluV" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a8d92"/><stop offset=".3" stop-color="#eef0f2"/><stop offset=".6" stop-color="#b4b7bc"/><stop offset="1" stop-color="#6e7176"/></linearGradient>
+  <radialGradient id="e-cap" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#ffe27a"/><stop offset=".6" stop-color="#f0b51c"/><stop offset="1" stop-color="#a87406"/></radialGradient>
+  <radialGradient id="e-bolt" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#b7babe"/><stop offset="1" stop-color="#55585d"/></radialGradient>
+  <radialGradient id="e-tank" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#f5f2ea"/><stop offset=".7" stop-color="#cfc9bb"/><stop offset="1" stop-color="#8d887d"/></radialGradient>
+  <pattern id="e-carbon" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="18" height="18" fill="#17171a"/><rect width="9" height="9" fill="#26262a"/><rect x="9" y="9" width="9" height="9" fill="#202024"/></pattern>
+  <pattern id="e-fins" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#121214"/><rect width="12" height="3" fill="#3a3b3f"/></pattern>
+  <pattern id="e-braid" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="10" height="10" fill="#8f9297"/><path d="M0 0L10 10M10 0L0 10" stroke="#dfe1e4" stroke-width="2"/></pattern>
+  <pattern id="e-slots" width="40" height="22" patternUnits="userSpaceOnUse"><rect width="40" height="22" fill="#141416"/><rect x="4" y="6" width="32" height="8" rx="4" fill="#050506"/></pattern>
+  <radialGradient id="e-glow" cx="50%" cy="44%" r="55%"><stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<pattern id="e-crk" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#ff8a8f" fill-opacity=".22"/><circle cx="5.5" cy="5" r="1" fill="#3a0407" fill-opacity=".35"/></pattern>
+<linearGradient id="t-body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6f747c"/><stop offset=".1" stop-color="#9ea3aa"/><stop offset=".3" stop-color="#d3d6da"/><stop offset=".5" stop-color="#f1f2f4"/><stop offset=".7" stop-color="#d3d6da"/><stop offset=".9" stop-color="#9ea3aa"/><stop offset="1" stop-color="#6f747c"/></linearGradient>
+<linearGradient id="t-roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ea3aa"/><stop offset=".5" stop-color="#f4f5f7"/><stop offset="1" stop-color="#9ea3aa"/></linearGradient>
+<linearGradient id="t-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a5562"/><stop offset=".5" stop-color="#25303b"/><stop offset="1" stop-color="#1a222b"/></linearGradient>
+<linearGradient id="t-wallT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8d9298"/><stop offset="1" stop-color="#2a2c30"/></linearGradient>
+<linearGradient id="t-wallB" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#8d9298"/><stop offset="1" stop-color="#2a2c30"/></linearGradient>
+<linearGradient id="t-under" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#5d6167"/><stop offset="1" stop-color="#9a9ea5"/></linearGradient>
+<pattern id="t-pad" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="26" height="26" fill="#1c1d20"/><path d="M0 13H26" stroke="#2a2b2f" stroke-width="4"/></pattern>
+<clipPath id="t-bayclip"><rect x="1363" y="235" width="837" height="630" rx="34"/></clipPath>
+</defs>
+<!-- shadow on the road -->
+<ellipse cx="1200" cy="560" rx="1190" ry="500" fill="#000" opacity=".35"/>
+<!-- mirrors -->
+<path d="M1300 104L1318 52C1322 42 1348 40 1352 52L1350 104Z" fill="#3a3d43" stroke="#2d3036" stroke-width="4"/>
+<path d="M1300 996L1318 1048C1322 1058 1348 1060 1352 1048L1350 996Z" fill="#3a3d43" stroke="#2d3036" stroke-width="4"/>
+<!-- body -->
+<path d="M200 104L2150 104C2262 108 2318 190 2324 330L2324 770C2318 910 2262 992 2150 996L200 996C120 992 78 930 76 820L76 280C78 170 120 108 200 104Z" fill="url(#t-body)" stroke="#2d3036" stroke-width="6" stroke-linejoin="round"/>
+<path d="M210 190C800 176 1700 176 2190 196M210 910C800 924 1700 924 2190 904" fill="none" stroke="#7d828a" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+<!-- the bay, and the engine that has no business being in it -->
+<g clip-path="url(#t-bayclip)">
+<g transform="translate(2200 235) rotate(90) scale(.72) translate(-262 -100)">
+<rect width="1400" height="1400" fill="url(#e-bay)"/>
+<!-- front: bumper skin, radiator, intakes -->
+<rect x="300" y="128" width="800" height="118" rx="18" fill="url(#e-fins)"/>
+<rect x="300" y="128" width="800" height="118" rx="18" fill="none" stroke="#000" stroke-width="6"/>
+<!-- airboxes -->
+<g>
+  <rect x="300" y="270" width="210" height="130" rx="30" fill="url(#e-carbon)" stroke="#000" stroke-width="5"/>
+  <rect x="890" y="270" width="210" height="130" rx="30" fill="url(#e-carbon)" stroke="#000" stroke-width="5"/>
+  <path d="M318 290h174M908 290h174" stroke="#fff" stroke-opacity=".08" stroke-width="6" stroke-linecap="round"/>
+</g>
+<!-- intake pipes from the airboxes to the throttle bodies, with red couplers -->
+<g fill="none" stroke-linecap="round">
+  <path d="M440 380C470 450 560 430 625 470" stroke="#0c0c0d" stroke-width="64"/>
+  <path d="M960 380C930 450 840 430 775 470" stroke="#0c0c0d" stroke-width="64"/>
+  <path d="M440 380C470 450 560 430 625 470" stroke="#b3b6bb" stroke-width="52"/>
+  <path d="M960 380C930 450 840 430 775 470" stroke="#b3b6bb" stroke-width="52"/>
+  <path d="M436 372C468 440 556 420 625 458" stroke="#f3f4f6" stroke-width="12" stroke-opacity=".8"/>
+  <path d="M964 372C932 440 844 420 775 458" stroke="#f3f4f6" stroke-width="12" stroke-opacity=".8"/>
+</g>
+<g fill="#c4151e" stroke="#5a060b" stroke-width="3"><rect x="452" y="398" width="34" height="62" rx="8" transform="rotate(-30 469 429)"/><rect x="914" y="398" width="34" height="62" rx="8" transform="rotate(30 931 429)"/></g>
+<!-- strut towers -->
+<g>
+  <circle cx="335" cy="520" r="78" fill="#1b1b1e" stroke="#000" stroke-width="6"/>
+  <circle cx="1065" cy="520" r="78" fill="#1b1b1e" stroke="#000" stroke-width="6"/>
+  <circle cx="335" cy="520" r="42" fill="url(#e-bolt)"/>
+  <circle cx="1065" cy="520" r="42" fill="url(#e-bolt)"/>
+  <g fill="url(#e-bolt)"><circle cx="335" cy="460" r="9"/><circle cx="387" cy="550" r="9"/><circle cx="283" cy="550" r="9"/><circle cx="1065" cy="460" r="9"/><circle cx="1117" cy="550" r="9"/><circle cx="1013" cy="550" r="9"/></g>
+</g>
+<!-- engine: two cam covers in rosso crinkle, the carbon plenum in the V -->
+<g>
+  <rect x="438" y="560" width="152" height="600" rx="40" fill="#000" opacity=".55" transform="translate(10 14)"/>
+  <rect x="810" y="560" width="152" height="600" rx="40" fill="#000" opacity=".55" transform="translate(10 14)"/>
+  <rect x="438" y="560" width="152" height="600" rx="40" fill="#c0141d" />
+  <rect x="810" y="560" width="152" height="600" rx="40" fill="#c0141d" />
+  <rect x="438" y="560" width="152" height="600" rx="40" fill="url(#e-crk)"/>
+  <rect x="810" y="560" width="152" height="600" rx="40" fill="url(#e-crk)"/>
+  <rect x="438" y="560" width="152" height="600" rx="40" fill="none" stroke="#5a060b" stroke-width="6"/>
+  <rect x="810" y="560" width="152" height="600" rx="40" fill="none" stroke="#5a060b" stroke-width="6"/>
+  <path d="M456 600V1120M828 600V1120" stroke="#ff7a80" stroke-opacity=".45" stroke-width="6" stroke-linecap="round"/>
+  <!-- coil packs -->
+  <g fill="#0f0f11" stroke="#000" stroke-width="3">
+    <rect x="474" y="640" width="80" height="34" rx="9"/><rect x="474" y="770" width="80" height="34" rx="9"/><rect x="474" y="900" width="80" height="34" rx="9"/><rect x="474" y="1030" width="80" height="34" rx="9"/>
+    <rect x="846" y="640" width="80" height="34" rx="9"/><rect x="846" y="770" width="80" height="34" rx="9"/><rect x="846" y="900" width="80" height="34" rx="9"/><rect x="846" y="1030" width="80" height="34" rx="9"/>
+  </g>
+  <g fill="#3c3d41"><rect x="484" y="648" width="18" height="18" rx="3"/><rect x="484" y="778" width="18" height="18" rx="3"/><rect x="484" y="908" width="18" height="18" rx="3"/><rect x="484" y="1038" width="18" height="18" rx="3"/><rect x="898" y="648" width="18" height="18" rx="3"/><rect x="898" y="778" width="18" height="18" rx="3"/><rect x="898" y="908" width="18" height="18" rx="3"/><rect x="898" y="1038" width="18" height="18" rx="3"/></g>
+  <!-- cover bolts -->
+  <g fill="url(#e-bolt)">
+    <circle cx="452" cy="610" r="7"/><circle cx="576" cy="610" r="7"/><circle cx="452" cy="735" r="7"/><circle cx="576" cy="735" r="7"/><circle cx="452" cy="865" r="7"/><circle cx="576" cy="865" r="7"/><circle cx="452" cy="995" r="7"/><circle cx="576" cy="995" r="7"/><circle cx="452" cy="1110" r="7"/><circle cx="576" cy="1110" r="7"/>
+    <circle cx="824" cy="610" r="7"/><circle cx="948" cy="610" r="7"/><circle cx="824" cy="735" r="7"/><circle cx="948" cy="735" r="7"/><circle cx="824" cy="865" r="7"/><circle cx="948" cy="865" r="7"/><circle cx="824" cy="995" r="7"/><circle cx="948" cy="995" r="7"/><circle cx="824" cy="1110" r="7"/><circle cx="948" cy="1110" r="7"/>
+  </g>
+  <!-- oil filler -->
+  <circle cx="514" cy="600" r="0" fill="none"/>
+  <!-- plenum -->
+  <rect x="604" y="500" width="192" height="640" rx="64" fill="#000" opacity=".6" transform="translate(8 12)"/>
+  <rect x="604" y="500" width="192" height="640" rx="64" fill="url(#e-carbon)" stroke="#000" stroke-width="6"/>
+  <rect x="640" y="560" width="120" height="540" rx="44" fill="none" stroke="#3a3a3f" stroke-width="4"/>
+  <path d="M700 570V1090" stroke="#fff" stroke-opacity=".10" stroke-width="20" stroke-linecap="round"/>
+  <!-- throttle bodies -->
+  <circle cx="640" cy="485" r="40" fill="url(#e-alu)" stroke="#2b2c30" stroke-width="5"/>
+  <circle cx="760" cy="485" r="40" fill="url(#e-alu)" stroke="#2b2c30" stroke-width="5"/>
+  <circle cx="640" cy="485" r="18" fill="#1a1a1d"/><circle cx="760" cy="485" r="18" fill="#1a1a1d"/>
+</g>
+<!-- strut brace, polished, across the top of the engine -->
+<g>
+  <path d="M335 520C520 486 880 486 1065 520" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="48" transform="translate(8 14)" stroke-linecap="round"/>
+  <path d="M335 520C520 486 880 486 1065 520" fill="none" stroke="#6f7277" stroke-width="44" stroke-linecap="round"/>
+  <path d="M335 516C520 482 880 482 1065 516" fill="none" stroke="#d9dbde" stroke-width="30" stroke-linecap="round"/>
+  <path d="M345 508C520 476 880 476 1055 508" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-opacity=".9"/>
+  <circle cx="335" cy="520" r="24" fill="url(#e-bolt)" stroke="#2b2c30" stroke-width="3"/>
+  <circle cx="1065" cy="520" r="24" fill="url(#e-bolt)" stroke="#2b2c30" stroke-width="3"/>
+</g>
+<!-- reservoirs and caps -->
+<g>
+  <rect x="975" y="780" width="128" height="190" rx="34" fill="url(#e-tank)" stroke="#5f5a50" stroke-width="5"/>
+  <path d="M990 860h98" stroke="#7b7568" stroke-width="3" stroke-opacity=".6"/>
+  <circle cx="1039" cy="820" r="30" fill="url(#e-cap)" stroke="#7a5404" stroke-width="4"/>
+  <rect x="300" y="1150" width="104" height="104" rx="26" fill="url(#e-tank)" stroke="#5f5a50" stroke-width="5"/>
+  <circle cx="352" cy="1202" r="26" fill="url(#e-cap)" stroke="#7a5404" stroke-width="4"/>
+  <circle cx="514" cy="1130" r="24" fill="url(#e-cap)" stroke="#7a5404" stroke-width="4"/>
+  <path d="M700 1160c0 30 0 46 -16 58" fill="none" stroke="#f0b51c" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="676" cy="1226" r="13" fill="none" stroke="#f0b51c" stroke-width="8"/>
+</g>
+<!-- battery box -->
+<g>
+  <rect x="300" y="760" width="110" height="300" rx="20" fill="#121214" stroke="#000" stroke-width="5"/>
+  <path d="M316 800h78M316 840h78M316 880h78M316 920h78M316 960h78M316 1000h78" stroke="#26262a" stroke-width="8" stroke-linecap="round"/>
+</g>
+<!-- braided lines -->
+<g fill="none" stroke-linecap="round">
+  <path d="M1000 960C980 1060 900 1100 860 1170" stroke="#000" stroke-width="22" stroke-opacity=".5"/>
+  <path d="M1000 960C980 1060 900 1100 860 1170" stroke="url(#e-braid)" stroke-width="16"/>
+  <path d="M404 1190C470 1180 520 1210 560 1180" stroke="#000" stroke-width="18" stroke-opacity=".5"/>
+  <path d="M404 1190C470 1180 520 1210 560 1180" stroke="url(#e-braid)" stroke-width="12"/>
+</g>
+</g>
+<rect x="1363" y="235" width="837" height="34" fill="url(#t-wallT)"/>
+<rect x="1363" y="831" width="837" height="34" fill="url(#t-wallB)"/>
+<rect x="2172" y="235" width="28" height="630" fill="#2a2c30"/>
+</g>
+<rect x="1363" y="235" width="837" height="630" rx="34" fill="none" stroke="#1d1f23" stroke-width="8"/>
+<!-- cowl -->
+<rect x="1326" y="200" width="37" height="700" rx="8" fill="#141416"/>
+<path d="M1336 230V870M1352 230V870" stroke="#050506" stroke-width="6" stroke-dasharray="40 14"/>
+<!-- headlamps, front -->
+<path d="M2150 132C2230 136 2290 180 2310 270L2228 286C2212 220 2190 196 2150 190Z" fill="#e8eef4" stroke="#2d3036" stroke-width="5"/>
+<path d="M2150 968C2230 964 2290 920 2310 830L2228 814C2212 880 2190 904 2150 910Z" fill="#e8eef4" stroke="#2d3036" stroke-width="5"/>
+<path d="M2236 330V770" stroke="#2d3036" stroke-width="5" opacity=".6"/>
+<!-- windscreen -->
+<path d="M1322 176L1322 924L1066 872C1052 869 1046 860 1046 848L1046 252C1046 240 1052 231 1066 228Z" fill="url(#t-glass)" stroke="#2d3036" stroke-width="5"/>
+<path d="M1270 250L1180 250L1110 520L1210 520Z" fill="#fff" opacity=".1"/>
+<!-- roof, with the antenna, slightly bent -->
+<rect x="520" y="226" width="532" height="648" rx="40" fill="url(#t-roof)" stroke="#5c6168" stroke-width="4"/>
+<path d="M548 214H1040M548 886H1040" stroke="#25303b" stroke-width="22" stroke-linecap="round"/>
+<path d="M1010 560L1092 548L1120 532" fill="none" stroke="#2d3036" stroke-width="7" stroke-linecap="round"/>
+<circle cx="1010" cy="560" r="10" fill="#2d3036"/>
+<!-- the hatch: glass, the spoiler bolted on with optimism, the tall tail lamps -->
+<path d="M524 236L524 864L312 828C302 826 296 818 296 808L296 292C296 282 302 274 312 272Z" fill="url(#t-glass)" stroke="#2d3036" stroke-width="5"/>
+<path d="M470 270L400 280L360 470L440 460Z" fill="#fff" opacity=".08"/>
+<rect x="232" y="246" width="78" height="608" rx="30" fill="#2d3036"/>
+<path d="M246 280V820" stroke="#4a4e55" stroke-width="6" stroke-linecap="round"/>
+<path d="M200 104C130 108 92 150 82 230L150 236C158 178 176 160 210 158Z" fill="#c8202a" stroke="#6d0d12" stroke-width="4"/>
+<path d="M200 996C130 992 92 950 82 870L150 864C158 922 176 940 210 942Z" fill="#c8202a" stroke="#6d0d12" stroke-width="4"/>
+<path d="M120 300V800" stroke="#5c6168" stroke-width="4" opacity=".7"/>
+<!-- the hood: shut, its silver top; open, its underside, propped up towards us -->
+<g class="hd-t">
+<path d="M1363 222H2206C2216 222 2222 230 2222 240V860C2222 870 2216 878 2206 878H1363Z" fill="url(#t-body)" stroke="#2d3036" stroke-width="6" stroke-linejoin="round"/>
+<path d="M1400 420C1700 410 1980 412 2190 428M1400 680C1700 690 1980 688 2190 672" fill="none" stroke="#7d828a" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+<path d="M1420 300C1800 290 2050 296 2180 318" fill="none" stroke="#fff" stroke-width="10" stroke-opacity=".55" stroke-linecap="round"/>
+</g>
+<g class="hd-u">
+<path d="M920 700 L1363 878 L1363 222 L920 400Z" fill="#000" opacity=".28" transform="translate(-40 40)"/>
+<path d="M1363 222L1363 878L930 990C912 994 900 986 900 968L900 132C900 114 912 106 930 110Z" fill="url(#t-under)" stroke="#2d3036" stroke-width="6" stroke-linejoin="round"/>
+<path d="M1320 290L1320 810L960 900L960 200Z" fill="url(#t-pad)" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+<path d="M1340 550L920 550" stroke="#6b6f76" stroke-width="10"/>
+<path d="M1560 300L1100 236" stroke="#d4d7dc" stroke-width="9" stroke-linecap="round"/>
+</g>
+</svg></div>
     <div class="hk-road" aria-hidden="true">
       <div class="hk-smoke"><i style="--x:24%;--s:90px;--d:.05s;--dx:-30px;--dy:-60px;--k:2.4"></i><i style="--x:20%;--s:120px;--d:.25s;--dx:-90px;--dy:-80px;--k:2.6"></i><i style="--x:28%;--s:100px;--d:.4s;--dx:-40px;--dy:-120px;--k:3"></i><i style="--x:16%;--s:140px;--d:.55s;--dx:-150px;--dy:-60px;--k:2.8"></i><i style="--x:24%;--s:130px;--d:.75s;--dx:-60px;--dy:-170px;--k:3.2"></i><i style="--x:12%;--s:160px;--d:.95s;--dx:-210px;--dy:-120px;--k:3"></i><i style="--x:30%;--s:120px;--d:1.1s;--dx:40px;--dy:-150px;--k:3.4"></i><i style="--x:20%;--s:170px;--d:1.3s;--dx:-120px;--dy:-220px;--k:3.4"></i><i style="--x:36%;--s:150px;--d:1.55s;--dx:120px;--dy:-120px;--k:3.6"></i><i style="--x:26%;--s:190px;--d:1.75s;--dx:20px;--dy:-240px;--k:3.6"></i></div>
       <div class="hk-car">
@@ -1139,7 +1323,7 @@ header nav{align-items:center}
       <p class="hk-b b5"><em>And that&rsquo;s only the start.</em></p>
     </div>
     <p class="sr-only">Your business is a Ferrari. Your website is a Ford Focus. You have 3 seconds to grab someone&rsquo;s attention before they&rsquo;re either excited, overwhelmed, or confused.</p>
-    <div class="hk-fs" aria-hidden="true"><figure class="hk-f f1"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-ashlar-b.webp" alt="" decoding="async"><img class="hk-a" src="img/w/ba-after.webp" alt="" decoding="async"></span></figure><figure class="hk-f f2"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-mv-b.webp" alt="" decoding="async"><img class="hk-a" src="img/w/mv-poster.webp" alt="" decoding="async"></span></figure><figure class="hk-f f3"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-meridian-b.webp" alt="" decoding="async"><img class="hk-a" src="img/w/meridian-1.webp" alt="" decoding="async"></span></figure></div>
+    <div class="hk-fs" aria-hidden="true"><figure class="hk-f f1"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-ashlar-b.webp" alt="" decoding="async"><span class="hk-a" data-live="b/ashlar/index.html"><img src="img/w/ba-after.webp" alt="" decoding="async"></span></span></figure><figure class="hk-f f2"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-mv-b.webp" alt="" decoding="async"><span class="hk-a" data-live="play/mountain-valley/index.html"><img src="img/w/mv-poster.webp" alt="" decoding="async"></span></span></figure><figure class="hk-f f3"><span class="hk-bar"><i></i><i></i><i></i></span><span class="hk-v"><img src="img/w/hk-meridian-b.webp" alt="" decoding="async"><span class="hk-a" data-live="b/meridian/index.html"><img src="img/w/meridian-1.webp" alt="" decoding="async"></span></span></figure></div>
     <span class="hk-cue-t" aria-hidden="true">Scroll</span>
     <span class="hk-cue" aria-hidden="true"></span>
     <nav class="hk-snd" aria-label="Sound"><button class="snd" type="button" aria-pressed="false" aria-label="Sound on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><g class="off"><path d="M16 9.5l5 5M21 9.5l-5 5"/></g><g class="on"><path d="M15.5 9a4.2 4.2 0 0 1 0 6"/><path d="M18.3 6.5a8 8 0 0 1 0 11"/></g></svg></button></nav>
@@ -1795,6 +1979,24 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       else new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){start();o.disconnect();}});},{threshold:.25}).observe(book);
     }else start();
   })();
+  /* pictures: each one is fetched as it nears the screen (not left to the browser's lazy queue, which Chrome holds back in busy or background tabs),
+     gets one retry if it fails or stalls, and otherwise shows a still from the same screen, so no frame is ever left empty */
+  (function(){
+    var all=[].slice.call(document.querySelectorAll('.page img,.live img,.ow-fx img,.hk-f img'));
+    function good(i){return i.complete&&i.naturalWidth>0;}
+    function bare(i){return (i.getAttribute('src')||'').split('?')[0];}
+    function still(i){var box=i.closest('.hk-a,.page,.live,.ow-fx-p,.hk-v'),alt=box&&[].filter.call(box.querySelectorAll('img'),function(x){return x!==i&&good(x);})[0];
+      i.removeAttribute('srcset');if(alt)i.src=alt.currentSrc||alt.src;else i.style.visibility='hidden';i.setAttribute('data-still','');}
+    function retry(i){if(i._r){still(i);return;}i._r=1;i.removeAttribute('srcset');var pic=i.parentNode&&i.parentNode.tagName==='PICTURE'?i.parentNode:null;if(pic)[].forEach.call(pic.querySelectorAll('source'),function(x){x.remove();});i.src=bare(i)+'?r=1';}
+    function guard(i){if(i._g)return;i._g=1;
+      i.addEventListener('error',function(){retry(i);});
+      i.addEventListener('load',function(){if(i.decode)i.decode().catch(function(){});});
+      if(i.loading==='lazy')i.loading='eager';
+      if(i.complete&&!i.naturalWidth&&i.getAttribute('src'))retry(i);
+      setTimeout(function(){if(!good(i)&&!i._r)retry(i);},8000);}
+    if('IntersectionObserver' in window){var gio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){guard(e.target);gio.unobserve(e.target);}});},{rootMargin:'1400px 0px'});all.forEach(function(i){gio.observe(i);});}
+    else all.forEach(guard);
+  })();
   /* previews only run while they are on screen */
   var screens=[].slice.call(document.querySelectorAll('.tile'));
   [].forEach.call(document.querySelectorAll('.tiles'),function(g){[].forEach.call(g.children,function(t,i){t.style.setProperty('--d',(i*.3).toFixed(1)+'s');});});
@@ -1812,7 +2014,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     function run(from,to,D,done){var t0=null;function f(t){if(touched)return;if(!t0)t0=t;var k=Math.min(1,(t-t0)/D);setX(from+(to-from)*ease(k));if(k<1)requestAnimationFrame(f);else if(done)done();}requestAnimationFrame(f);}
     setTimeout(function(){run(0,100,2800,function(){setTimeout(function(){if(!touched)run(100,54,1800);},1800);});},1400);}
 
-  /* the opening, about twenty seconds: the V8 from above, the swing round to the hatchback, three seconds on the clock, the question, the refresh.
+  /* the opening, about twenty seconds: the V8 from above, the camera pulls back and it is under the hood of a hatchback, the hood drops, the camera drops to the road, three seconds on the clock, the question, the refresh.
      Sound comes in on the first tap anywhere (the effects ride on the moment they belong to), and the button mutes it */
   (function(){
   var hk=document.getElementById('hook'),sb=document.querySelector('.hk-snd .snd');
@@ -1851,25 +2053,60 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       P.forEach(function(p,j){if(p.g<0&&j%3===g){p.g=g;p.go=true;p.k=0;p.sx=p.x;p.sy=p.y;p.tx=r.left-h.left+r.width*(.1+Math.random()*.8);p.ty=r.top-h.top+r.height*(.3+Math.random()*.5);}});
       at(700,function(){e.classList.add('lit');});}
     addEventListener('resize',function(){if(pOn)size();});
+    /* the camera: close in on the V8, then up and back until the whole car is in frame, sitting where the side view will stand */
+    var top=hk.querySelector('.hk-top'),car=hk.querySelector('.hk-car'),road=hk.querySelector('.hk-road'),C=null,ph=0,pt0=0,run=0;
+    var RM=false;try{RM=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+    function measure(){var W=hk.clientWidth,H=hk.clientHeight,cw=car.offsetWidth,ch=car.offsetHeight,cy=road.offsetTop+car.offsetTop+ch*170/300,cx=W/2+cw*(319/640-.5),z1=cw*(586/640)/2250;
+      C={W:W,H:H,z0:Math.max(W/837,H/631)*1.1,z1:z1,x1:1200+(W/2-cx)/z1,y1:550+(H/2-cy)/z1};hk.style.setProperty('--fy',cy.toFixed(1)+'px');}
+    function vb(x,y,z){top.setAttribute('viewBox',(x-C.W/2/z).toFixed(2)+' '+(y-C.H/2/z).toFixed(2)+' '+(C.W/z).toFixed(2)+' '+(C.H/z).toFixed(2));}
+    function io(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;}
+    function frame(now){if(!C)measure();var t=(now-pt0)/1000,x,y,z;
+      if(ph===0){var k=Math.min(1,t/2.95),e=1-Math.pow(1-k,3);z=C.z0*(1.22-.22*e);x=1781;y=550;}
+      else{var k2=Math.min(1,t/1.5),e2=io(k2);z=Math.exp(Math.log(C.z0)+(Math.log(C.z1)-Math.log(C.z0))*e2);x=1781+(C.x1-1781)*e2;y=550+(C.y1-550)*e2;if(k2>=1)ph=2;}
+      vb(x,y,z);if(ph<2)requestAnimationFrame(frame);else run=0;}
+    function camGo(p){ph=p;pt0=performance.now();if(RM){ph=2;measure();vb(C.x1,C.y1,C.z1);return;}if(!run){run=1;requestAnimationFrame(frame);}}
+    if(top&&car&&road){measure();vb(1781,550,C.z0*1.22);addEventListener('resize',function(){measure();if(ph===2)vb(C.x1,C.y1,C.z1);});}
+    /* the hood: a thunk when it lands */
+    function thunk(){if(!sndOn||!AC)return;try{var t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(46,t+.2);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.8,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+.34);o.connect(g);g.connect(AG);o.start(t);o.stop(t+.36);
+      var n=AC.createBuffer(1,Math.floor(AC.sampleRate*.14),AC.sampleRate),d=n.getChannelData(0);for(var q=0;q<d.length;q++)d[q]=(Math.random()*2-1)*Math.pow(1-q/d.length,3);var b=AC.createBufferSource(),f=AC.createBiquadFilter(),g2=AC.createGain();f.type='lowpass';f.frequency.value=1100;g2.gain.value=.45;b.buffer=n;b.connect(f);f.connect(g2);g2.connect(AG);b.start(t);}catch(e){}}
+    /* the reveal: the three after sites, live */
+    var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false;
+    function liveSize(){lv.forEach(function(o){o.f.style.transform='scale('+(o.a.clientWidth/1280).toFixed(4)+')';});}
+    function liveLoad(){if(RM)return;live.forEach(function(a){var f=document.createElement('iframe'),o={a:a,f:f,ok:0,w:null};
+        f.setAttribute('tabindex','-1');f.setAttribute('aria-hidden','true');f.setAttribute('title','');f.setAttribute('sandbox','allow-scripts allow-same-origin');f.setAttribute('allow',"autoplay 'none'");
+        f.addEventListener('load',function(){try{var w=f.contentWindow,d=w.document;if(!d||!d.body||!d.body.children.length)return;d.documentElement.style.scrollBehavior='auto';o.w=w;setTimeout(function(){o.ok=1;if(lvOn)f.classList.add('on');},600);}catch(e){}});
+        f.src=a.getAttribute('data-live');a.appendChild(f);lv.push(o);});liveSize();addEventListener('resize',liveSize);}
+    function liveRun(){if(!lv.length)return;lvOn=true;var t0=performance.now();
+      function f(now){if(!lvOn)return;var t=(now-t0)/1000;lv.forEach(function(o,i){if(!o.ok)return;if(!o.f.classList.contains('on'))o.f.classList.add('on');
+          try{var d=o.w.document,max=Math.max(0,Math.min(1100,(d.documentElement.scrollHeight||0)-800)),k=Math.max(0,Math.min(1,(t-.9-i*.35)/4.2));o.w.scrollTo(0,max*(1-Math.cos(k*Math.PI))/2);}catch(e){}});
+        requestAnimationFrame(f);}
+      requestAnimationFrame(f);}
+    function liveEnd(){lvOn=false;lv.forEach(function(o){o.f.remove();});lv=[];removeEventListener('resize',liveSize);}
     /* the running order */
-    at(350,function(){cl.add('hs-eng');sfx('v8');});
+    at(350,function(){cl.add('hs-eng');sfx('v8');if(top)camGo(0);});
     at(900,function(){K(1);});
-    at(3300,function(){cl.add('hs-swing');K(0);sfx('whoosh');});
-    at(3950,function(){cl.add('hs-car');K(2);sfx('focus');});
-    at(4900,function(){cl.add('hs-rev1');});
-    at(5850,function(){cl.remove('hs-rev1');cl.add('hs-rev2');});
-    at(6100,function(){cl.remove('hs-rev2');cl.add('hs-burn');});
-    at(6950,function(){cl.add('hs-go');});
-    at(8300,function(){cl.add('hs-clk');K(3);particles();});
-    at(9100,function(){clock();sfx('clock');});
-    at(9700,function(){cl.add('hs-cbot');});
-    at(12100,function(){scatter(0);});
-    at(12350,function(){scatter(1);});
-    at(12600,function(){scatter(2);});
-    at(14000,function(){cl.add('hs-which');K(4);});
-    at(14700,function(){pOn=false;});
-    at(17200,function(){K(5);});
-    at(21000,function(){K(6);});
+    at(3300,function(){cl.add('hs-pull');K(0);sfx('whoosh');if(top&&!RM)camGo(1);});
+    at(4400,function(){K(2);});
+    at(4850,function(){cl.add('hs-shut');});
+    at(5370,thunk);
+    at(5650,function(){cl.add('hs-drop');});
+    at(6050,function(){cl.add('hs-car');sfx('focus');});
+    at(7000,function(){cl.add('hs-rev1');});
+    at(7950,function(){cl.remove('hs-rev1');cl.add('hs-rev2');});
+    at(8200,function(){cl.remove('hs-rev2');cl.add('hs-burn');});
+    at(9050,function(){cl.add('hs-go');});
+    at(10400,function(){cl.add('hs-clk');K(3);particles();});
+    at(11200,function(){clock();sfx('clock');});
+    at(11800,function(){cl.add('hs-cbot');});
+    at(14200,function(){scatter(0);});
+    at(14450,function(){scatter(1);});
+    at(14700,function(){scatter(2);});
+    at(16100,function(){cl.add('hs-which');K(4);});
+    at(16800,function(){pOn=false;});
+    at(17000,liveLoad);
+    at(19300,function(){K(5);liveRun();});
+    at(23100,function(){K(6);});
+    at(24500,liveEnd);
   }
   function sndSet(on){if(!sb)return;sb.setAttribute('aria-pressed',on?'true':'false');sb.setAttribute('aria-label',on?'Sound off':'Sound on');
     if(AC){if(AC.state==='suspended')AC.resume();AG.gain.setTargetAtTime(on?.9:0,AC.currentTime,.05);}
