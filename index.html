@@ -1359,7 +1359,8 @@ main>section>.wrap>.st:first-child{margin-top:0}
 /* batch 13: no double line above "Three offers"; the offers' own line separates them */
 .dq-row:last-child{border-bottom:0}
 /* batch 13: FAQ 01 is a real invoice */
-.rc.iv{position:relative;gap:0;padding:20px 26px 18px;font-family:var(--text)}
+.dq-v.dv-rc{height:auto;min-height:300px;padding:14px 0;overflow:visible}
+.rc.iv{position:relative;gap:0;padding:24px 28px 20px;font-family:var(--text)}
 .iv-h{display:flex;align-items:flex-start;justify-content:space-between}
 .iv-id{display:grid;justify-items:end;gap:4px}
 .iv-id b{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:24px;line-height:1;letter-spacing:-.01em}
@@ -1370,10 +1371,12 @@ main>section>.wrap>.st:first-child{margin-top:0}
 .iv-th{padding-bottom:2px}
 .iv-n{text-align:right}
 .iv-it{display:grid;gap:2px}.iv-it em{font-size:12px;color:#6E665B}
-.iv-tt{display:flex;align-items:baseline;justify-content:space-between;padding-top:12px}
+.iv-sm{position:relative;display:grid;grid-template-columns:auto 64px;justify-content:end;column-gap:20px;row-gap:6px;padding:10px 0;text-align:right;font-size:14px;font-variant-numeric:tabular-nums;border-bottom:1px solid rgba(31,28,24,.85)}
+.iv-tt{display:flex;align-items:baseline;justify-content:space-between;padding:12px 0 14px;border-bottom:1px solid rgba(31,28,24,.2)}
+.iv-ft{display:flex;align-items:baseline;justify-content:space-between;padding-top:12px}.iv-ft em{font-family:var(--serif);font-weight:300;font-size:16px;color:#2A261F}
 .iv-tt b{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:28px;line-height:1;letter-spacing:-.01em;color:#1F1C18;font-variant-numeric:tabular-nums}
-.iv-st{position:absolute;left:auto;right:118px;bottom:14px;padding:6px 12px;border:2px solid #2E5149;border-radius:6px;color:#2E5149;font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;transform:rotate(-9deg);opacity:.82;mix-blend-mode:multiply}
-@media (max-width:760px){.rc.iv{padding:22px 20px 20px}.iv-mt{font-size:14px}.iv-tb{font-size:14px}.iv-tb{grid-template-columns:minmax(0,1fr) 28px 56px}.iv-st{right:96px}}
+.iv-st{position:absolute;left:0;top:50%;margin-top:-16px;padding:6px 12px;border:2px solid #2E5149;border-radius:6px;color:#2E5149;font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;transform:rotate(-9deg);opacity:.82;mix-blend-mode:multiply}
+@media (max-width:760px){.rc.iv{padding:22px 20px 20px}.iv-mt{font-size:14px}.iv-tb{font-size:14px}.iv-tb{grid-template-columns:minmax(0,1fr) 28px 56px}.iv-st{left:0}}
 /* batch 13: the sticky note says what changed */
 .nt-n small{display:block;margin-top:8px;font-size:.66em;font-style:normal;line-height:1.25;color:#5B5346}
 </style>
@@ -1768,7 +1771,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
       <ol class="dq">
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">01</span><p class="dq-q"><span>&ldquo;What&rsquo;s the catch?&rdquo;</span></p><p class="dq-a">There isn&rsquo;t one. You see it before you invest.</p></div>
-          <figure class="dq-v dv-rc" aria-hidden="true"><div class="rc iv"><div class="iv-h"><svg class="rc-m"><use href="#adsmark"/></svg><span class="iv-id"><b>Invoice</b><span class="mono">No. 0001</span></span></div><div class="iv-mt"><span><i class="mono">Billed to</i>You</span><span><i class="mono">Issued</i>Today</span><span><i class="mono">Terms</i>None</span></div><div class="iv-tb"><span class="mono iv-th">Item</span><span class="mono iv-th iv-n">Qty</span><span class="mono iv-th iv-n">Amount</span><span class="iv-it">Your preview<em>Opening screen, built from your brand</em></span><span class="iv-n">1</span><span class="iv-n">$0.00</span><span class="iv-it">Strings attached</span><span class="iv-n">0</span><span class="iv-n">$0.00</span></div><div class="iv-tt"><span class="mono">Total due</span><b>$0.00</b></div><span class="iv-st">Nothing due</span></div></figure>
+          <figure class="dq-v dv-rc" aria-hidden="true"><div class="rc iv"><div class="iv-h"><svg class="rc-m"><use href="#adsmark"/></svg><span class="iv-id"><b>Invoice</b><span class="mono">No. 0001</span></span></div><div class="iv-mt"><span><i class="mono">Billed to</i>You</span><span><i class="mono">Issued</i>Today</span><span><i class="mono">Terms</i>None</span></div><div class="iv-tb"><span class="mono iv-th">Item</span><span class="mono iv-th iv-n">Qty</span><span class="mono iv-th iv-n">Amount</span><span class="iv-it">Your preview<em>Opening screen, built from your brand</em></span><span class="iv-n">1</span><span class="iv-n">$0.00</span><span class="iv-it">Strings attached</span><span class="iv-n">0</span><span class="iv-n">$0.00</span></div><div class="iv-sm"><span class="iv-st">Nothing due</span><span class="mono">Subtotal</span><span>$0.00</span><span class="mono">Tax</span><span>$0.00</span></div><div class="iv-tt"><span class="mono">Total</span><b>$0.00</b></div><div class="iv-ft"><em>Thank you.</em><span class="mono">abramsdesign.studio</span></div></div></figure>
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">02</span><p class="dq-q"><span>&ldquo;Why trust a stranger?&rdquo;</span></p><p class="dq-a">You shouldn&rsquo;t. So we let our work do the talking.</p></div>
