@@ -4,7 +4,7 @@
 var q=new URLSearchParams(location.search),w=+(q.get('w')||1440),h=+(q.get('h')||900),ts=(q.get('t')||'19').split(','),s=+(q.get('s')||0.5),y=+(q.get('y')||0);
 fetch('index.html').then(function(r){return r.text();}).then(function(src){
   ts.forEach(function(t){var J=(+t)*1000;
-    var inj='<base href="'+location.origin+'/"><script>(function(){var o=window.setTimeout,t0=performance.now();window.setTimeout=function(f,ms){var a=[].slice.call(arguments,2);if(performance.now()-t0<1500&&ms>0){ms=Math.max(0,ms-'+J+');}return o.apply(window,[f,ms].concat(a));};})();<\/script>';
+    var inj='<base href="'+location.origin+'/"><script>(function(){var o=window.setTimeout,t0=performance.now();window.setTimeout=function(f,ms){var a=[].slice.call(arguments,2);if(performance.now()-t0<1500&&ms>0){if(ms>'+J+')return 0;ms=0;}return o.apply(window,[f,ms].concat(a));};})();<\/script>';
     var doc=src.replace(/<head[^>]*>/i,function(m){return m+inj;});
     var box=document.createElement('div');box.style.cssText='width:'+(w*s)+'px;height:'+(h*s)+'px;overflow:hidden;position:relative';
     var f=document.createElement('iframe');f.width=w;f.height=h;f.style.cssText='transform:scale('+s+');transform-origin:0 0;position:absolute;left:0;top:0';
