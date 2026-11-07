@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Catering and events | Luna's Café</title>
+<meta name="description" content="Catering and private events by Luna's Café.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@800&display=swap">
+<link rel="stylesheet" href="sig.css">
+</head>
+<body data-page="catering">
+<header data-nav></header>
+<section class="hero"><div class="ph"><img src="img/events.webp" alt="" fetchpriority="high"></div>
+  <div class="wrap"><span class="kick rv">Catering and events</span><h1 class="h-xl rv d1">Bring Luna's<br>to your <em>night.</em></h1><p class="lede rv d2">Coffee service for offices, launches, weddings and late nights, or the whole café after close.</p><div class="acts rv d3"><a class="btn" href="#inquire">Plan an event</a><a class="btn ghost" href="#packages">See packages</a></div></div></section>
+
+<main>
+  <section class="sec" id="packages">
+    <div class="wrap">
+      <div class="head"><div class="t rv"><span class="kick">Packages</span><h2 class="h-l">Three ways<br>to <em>host.</em></h2></div>
+        <div class="d rv d1"><p class="lede">Every package can be adjusted. Tell us the date and we'll shape the rest.</p></div></div>
+      <div class="cards">
+        <div class="card rv"><div class="im"><img src="img/morning2.webp" alt="" loading="lazy" style="aspect-ratio:4/5"></div><div class="row"><h3>Morning Box</h3><span class="price">$95</span></div><p>Serves ten. Delivered.</p>
+          <ul><li>Two carafes of house drip</li><li>Ten pastries from the morning bake</li><li>Oat and whole milk, cups and sleeves</li></ul></div>
+        <div class="card rv d1"><div class="im"><img src="img/catering.webp" alt="" loading="lazy"></div><div class="row"><h3>The Coffee Bar</h3><span class="price">$325</span></div><p>Serves twenty-five. Two hours.</p>
+          <ul><li>A Luna's barista and espresso bar</li><li>Lattes, cappuccinos and cold brew</li><li>Branded cups on request</li></ul></div>
+        <div class="card rv d2"><div class="im"><img src="img/events.webp" alt="" loading="lazy"></div><div class="row"><h3>After Hours</h3><span class="price">From $1,200</span></div><p>The whole café. Up to sixty.</p>
+          <ul><li>Private use of Luna's after close</li><li>Full bar, pastry and small plates</li><li>Candlelight, music and staff</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec paper">
+    <div class="wrap">
+      <div class="head"><div class="t rv"><span class="kick">How it works</span><h2 class="h-l">You set the date.<br><em>We bring the bar.</em></h2></div></div>
+      <div class="steps">
+        <div class="rv"><h3>Tell us the night</h3><p>Date, guests and the kind of evening. We reply within a day.</p></div>
+        <div class="rv d1"><h3>We shape the menu</h3><p>Drinks, pastry and timing, tasted and confirmed with you.</p></div>
+        <div class="rv d2"><h3>We pour, you host</h3><p>We arrive early, set up quietly and leave the room as we found it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tight">
+    <div class="wrap gal">
+      <div class="g a rv"><img src="img/catering.webp" alt="Coffee and pastry spread" loading="lazy"></div>
+      <div class="g b rv d1"><img src="img/latteart.webp" alt="Latte art" loading="lazy"></div>
+      <div class="g c rv"><img src="img/cappuccino.webp" alt="Cappuccino" loading="lazy"></div>
+      <div class="g d rv d1"><img src="img/events.webp" alt="Candlelit tables" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="inquire">
+    <div class="wrap split">
+      <div class="txt" style="grid-column:1/6"><div class="rv"><span class="kick">Inquire</span><h2 class="h-l">Let's plan<br>your <em>night.</em></h2>
+        <p class="lede">We reply within one business day.</p>
+        <div class="quote" style="margin-top:44px"><div class="stars"><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg></div><p>They catered our launch and people still ask who made the coffee.</p><span>Priya S., Clematis Street</span></div></div></div>
+      <div style="grid-column:7/13" class="rv d1">
+        <form class="form" data-form="sent-cat">
+          <div class="f"><label for="c1">Name</label><input id="c1" required autocomplete="name"></div>
+          <div class="f"><label for="c2">Email</label><input id="c2" type="email" required autocomplete="email"></div>
+          <div class="f"><label for="c3">Date</label><input id="c3" type="date" required></div>
+          <div class="f"><label for="c4">Guests</label><select id="c4"><option>Up to 10</option><option>10 to 25</option><option>25 to 60</option><option>More than 60</option></select></div>
+          <div class="f full"><label for="c5">Package</label><select id="c5"><option>Morning Box</option><option>The Coffee Bar</option><option>After Hours</option><option>Not sure yet</option></select></div>
+          <div class="f full"><label for="c6">The night</label><textarea id="c6" placeholder="Where, when and what kind of evening"></textarea></div>
+          <button class="btn" type="submit">Send inquiry</button>
+        </form>
+        <div class="sent" id="sent-cat"><h3 class="h-s">Thank you.</h3><p class="body">We'll be in touch within a day to plan the details.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-foot></footer>
+<script src="sig.js"></script>
+
+</body>
+</html>

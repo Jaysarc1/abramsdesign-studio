@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Luna's Café</title>
+<meta name="description" content="Luna's Café on Clematis Street, West Palm Beach. Brewed by moonlight.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@800&family=Cutive+Mono&display=swap">
+<link rel="stylesheet" href="sig.css">
+<link rel="preload" as="image" href="img/layers/desk-bg.webp">
+<style>
+/* ---------- the desk ---------- */
+.desk{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#0a0806;touch-action:pan-y;cursor:default;user-select:none;-webkit-user-select:none}
+.scene{position:absolute;left:0;top:0;width:3520px;height:1980px;transform-origin:0 0;will-change:transform}
+.scene>img.bg{position:absolute;inset:0;width:100%;height:100%}
+.pool{position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;background:radial-gradient(1400px 1050px at 1770px 820px,rgba(255,196,120,.55),rgba(255,170,90,.12) 55%,rgba(0,0,0,0) 72%);animation:breathe 7s ease-in-out infinite;transition:opacity 1.6s var(--ease)}
+@keyframes breathe{0%,100%{opacity:.82}50%{opacity:1}}
+.night{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 1.8s var(--ease)}
+.night::before{content:"";position:absolute;inset:0;background:#070a1a;mix-blend-mode:multiply;opacity:.86}
+.night::after{content:"";position:absolute;inset:0;mix-blend-mode:screen;background:radial-gradient(1500px 1100px at 3300px -100px,rgba(120,150,230,.32),rgba(80,100,180,.08) 50%,rgba(0,0,0,0) 75%)}
+.desk.dark .night{opacity:1}.desk.dark .pool{opacity:0}
+
+.obj{position:absolute;padding:0;margin:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
+.obj .in{position:absolute;left:0;top:0;transform-origin:0 0}
+.obj.decor{cursor:default;pointer-events:none}
+.obj .lift{position:absolute;inset:0;transition:transform .9s var(--ease),filter .9s var(--ease)}
+.obj img{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.obj svg.ol{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.obj svg.ol path{fill:none;stroke:var(--sgold);stroke-width:calc(1.4px / (var(--s,1) * var(--k,1)));stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0;transition:stroke-dashoffset 1.3s var(--ease),opacity .6s}
+.obj svg.hit{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.obj svg.hit path{fill:transparent;pointer-events:all;cursor:pointer}
+.obj.on .lift{transform:translateY(-10px) scale(1.012);filter:drop-shadow(0 34px 34px rgba(0,0,0,.55))}
+.obj.on svg.ol path,.obj:focus-visible svg.ol path,.obj.trace svg.ol path{stroke-dashoffset:0;opacity:.95}
+.obj.trace svg.ol path{transition:stroke-dashoffset 1.6s var(--ease),opacity 1.2s}
+.obj.fade svg.ol path{opacity:0}
+/* the phone: tap to wake it, tap the notification to order */
+.obj[data-o="phone"]{z-index:2}
+.obj[data-o="phone"] .lift{transition:transform 1s var(--ease),filter 1s var(--ease)}
+.obj[data-o="phone"].awake .lift{transform:translateY(-40px) rotate(-8deg) scale(1.62);filter:drop-shadow(0 70px 60px rgba(0,0,0,.62))}
+.obj[data-o="phone"].awake svg.ol path{opacity:0}
+.scr{position:absolute;left:113px;top:82px;width:340px;height:748px;border-radius:44px;transform:rotate(11.75deg);overflow:hidden;opacity:0;pointer-events:none;color:#f4efe6;font-family:var(--sans);background:radial-gradient(90% 46% at 74% 14%,rgba(217,178,106,.3),rgba(217,178,106,0) 70%),radial-gradient(130% 80% at 50% 0%,#222a4c 0%,#0e1227 56%,#06070f 100%);transition:opacity .45s ease;-webkit-font-smoothing:antialiased}
+.scr::before{content:"";position:absolute;left:50%;top:15px;width:106px;height:31px;margin-left:-53px;border-radius:16px;background:#000}
+.scr .dt{position:absolute;top:82px;left:0;right:0;text-align:center;font:600 21px/1 var(--sans);letter-spacing:.01em;opacity:.86}
+.scr .ck{position:absolute;top:108px;left:0;right:0;text-align:center;font:600 110px/1 var(--sans);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.scr .ns{position:absolute;left:12px;right:12px;bottom:84px;display:flex;flex-direction:column;gap:10px}
+.scr .n{text-align:left;display:grid;grid-template-columns:44px 1fr;column-gap:13px;align-items:start;padding:16px 17px 17px;border-radius:26px;background:rgba(236,232,255,.14);opacity:0;transform:translateY(22px) scale(.97);transition:opacity .7s var(--ease),transform .9s var(--ease)}
+.scr .n i{width:44px;height:44px;border-radius:11px;background:#d9b26a;color:#0e1227;display:grid;place-items:center}
+.scr .n i svg{width:30px;height:30px}
+.scr .n .h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font:700 20px/1.15 var(--sans)}
+.scr .n .h small{font:500 16px/1 var(--sans);opacity:.6}
+.scr .n p{margin:4px 0 0;font:500 20px/1.26 var(--sans);opacity:.94}
+.scr .hb{position:absolute;bottom:13px;left:50%;width:128px;height:5px;margin-left:-64px;border-radius:3px;background:rgba(244,239,230,.86)}
+.awake .scr{opacity:1;pointer-events:auto;cursor:pointer}
+.awake .scr .n{opacity:1;transform:none;transition-delay:.35s}
+.awake .scr .n+.n{transition-delay:.55s}
+.glow{position:absolute;left:2153px;top:646px;width:1100px;height:1100px;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(closest-side,rgba(150,170,255,.34),rgba(120,140,230,.12) 45%,rgba(0,0,0,0));opacity:0;transition:opacity .8s ease}
+.desk.ph .glow{opacity:1}
+.desk.ph .tag{opacity:0}
+@media (max-width:900px){.obj[data-o="phone"].awake .lift{transform:translateY(-230px) rotate(-8deg) scale(1.62)}.hero-t,.hero-a{transition:opacity .6s var(--ease)}.desk.ph .hero-t,.desk.ph .hero-a{opacity:0}}
+/* gold foil on the bag */
+.foil{position:absolute;left:0;top:150px;width:268px;display:flex;flex-direction:column;align-items:center;pointer-events:none;color:#c9a35a;opacity:.52;transform:rotate(-1.2deg)}
+.foil svg{width:34px;height:34px}
+.foil b{font:800 19px/1 var(--word);letter-spacing:.06em;margin-top:12px}
+.foil small{font:700 8.5px/1 var(--sans);letter-spacing:.34em;margin-top:9px;opacity:.85}
+
+/* print on paper */
+.print{position:absolute;pointer-events:none;mix-blend-mode:multiply;color:#2a2016}
+.print.card{width:301px;height:454px;margin:0;transform:rotate(7.6deg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:.86}
+.print.card svg{width:54px;height:54px;color:#2a2016}
+.print.card .w{font:800 30px/1 var(--word);letter-spacing:.04em;margin-top:22px}
+.print.card .r{width:46px;height:1.5px;background:#2a2016;margin:26px 0 24px;opacity:.7}
+.print.card .t{font:400 46px/1.02 var(--serif)}
+.print.card .t i{display:block;font-style:italic}
+.print.card .s{font:600 15px/1.5 var(--sans);letter-spacing:.24em;text-transform:uppercase;margin-top:26px;opacity:.8}
+
+#steam{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 2.6s ease}
+.desk.dark #steam{opacity:0!important}
+.shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(70% 62% at 0% 100%,rgba(6,5,8,.86),rgba(6,5,8,.55) 42%,rgba(6,5,8,0) 72%),linear-gradient(180deg,rgba(6,5,8,.5),rgba(6,5,8,0) 16%)}
+.hero-t{position:absolute;left:var(--pad);bottom:clamp(34px,6.5vh,72px);z-index:3;pointer-events:none;max-width:560px}
+.hero-t h1{font:400 clamp(46px,4.1vw,68px)/.98 var(--serif);letter-spacing:-.02em;margin:0;text-shadow:0 2px 28px rgba(0,0,0,.45)}
+.hero-t h1 em{font-style:italic;color:var(--sgold)}
+.hero-t h1 span{display:block;overflow:hidden;padding-bottom:.08em}
+.hero-t h1 span>i{display:block;font-style:inherit;transform:translateY(105%);transition:transform 1.5s var(--ease)}
+.hero-t h1 span:nth-child(2)>i{transition-delay:.14s}
+.hero-a{margin:22px 0 0;font:600 11.5px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:rgba(243,236,223,.74);opacity:0;transform:translateY(10px);transition:opacity 1.2s var(--ease) .5s,transform 1.2s var(--ease) .5s}
+.desk.lit .hero-t h1 span>i{transform:none}
+.desk.lit .hero-a{opacity:1;transform:none}
+.tag{position:absolute;left:0;top:0;z-index:4;pointer-events:none;font:400 21px/1 var(--serif);font-style:italic;color:var(--cream);white-space:nowrap;opacity:0;transform:translate(-50%,-100%) translateY(8px);transition:opacity .5s var(--ease),transform .7s var(--ease);text-shadow:0 2px 16px rgba(0,0,0,.8)}
+.tag::after{content:"";display:block;width:1px;height:22px;margin:10px auto 0;background:linear-gradient(var(--sgold),rgba(217,178,106,0))}
+.tag.below::after{display:none}
+.tag.below::before{content:"";display:block;width:1px;height:22px;margin:0 auto 10px;background:linear-gradient(rgba(217,178,106,0),var(--sgold))}
+.tag.on{opacity:1;transform:translate(-50%,-100%)}
+.tag.below,.tag.below.on{transform:translate(-50%,0)}
+.spill{position:fixed;inset:0;z-index:90;pointer-events:none;clip-path:circle(0 at 50% 50%);background:radial-gradient(circle at var(--x,50%) var(--y,50%),#d9a46a 0,#a2632f 7%,#5a3418 20%,#2a1a10 38%,#120b07 70%);filter:url(#wob)}
+.spill.go{transition:clip-path 1.05s cubic-bezier(.6,0,.3,1)}
+@media (max-width:900px){
+  .shade{background:linear-gradient(0deg,rgba(6,5,8,.9),rgba(6,5,8,.55) 26%,rgba(6,5,8,0) 46%),linear-gradient(180deg,rgba(6,5,8,.55),rgba(6,5,8,0) 18%)}
+  .hero-t{bottom:calc(30px + env(safe-area-inset-bottom,0px))}
+  .hero-t h1{font-size:46px}
+  .tag{font-size:18px}
+}
+
+/* ---------- below the desk ---------- */
+.lk{display:inline-flex;align-items:center;gap:10px;font:600 14px/1 var(--sans);color:var(--cream);padding:12px 0;border-bottom:1px solid var(--line2);transition:border-color .4s,gap .5s var(--ease)}
+.lk svg{width:16px;height:16px;color:var(--sgold)}
+.lk:hover{border-color:var(--sgold);gap:14px}
+.sec.paper .lk{color:#1b1a22;border-color:rgba(27,26,34,.2)}.sec.paper .lk svg{color:#9a7a3a}
+.pk{margin-top:34px;border-top:1px solid rgba(27,26,34,.14)}
+.pk a{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:baseline;padding:20px 0;border-bottom:1px solid rgba(27,26,34,.14);transition:padding .5s var(--ease)}
+.pk a:hover{padding-left:10px}
+.pk b{font:400 25px/1.2 var(--serif)}
+.pk small{display:block;margin-top:6px;font-size:14px;color:rgba(27,26,34,.6)}
+.pk span{font:600 15px/1 var(--sans);font-variant-numeric:tabular-nums;white-space:nowrap}
+.club{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:end}
+.club .t{grid-column:1/8}.club .a{grid-column:9/13;display:flex;flex-direction:column;align-items:flex-start;gap:26px}
+.club .nums{margin-top:clamp(56px,7vw,96px);grid-column:1/-1}
+@media (max-width:900px){.club .t,.club .a{grid-column:1/-1}.club .a{margin-top:28px}}
+.band .hrs{display:grid;grid-template-columns:auto auto;justify-content:start;column-gap:28px;row-gap:6px;margin-top:28px;font-size:15px;color:rgba(243,236,223,.8)}
+.band .hrs span:nth-child(odd){color:var(--muted)}
+@media (max-width:700px){.band::after{background:linear-gradient(0deg,rgba(13,15,28,.95) 0%,rgba(13,15,28,.6) 50%,rgba(13,15,28,.2) 100%)}.band{align-items:flex-end;padding-bottom:56px}}
+
+/* phone: the two-line headline and its sub, centred */
+@media (max-width:900px){
+.hero-t{left:0;right:0;margin:0 auto;max-width:none;padding:0 20px;text-align:center}
+.hero-a{text-indent:.3em}
+}
+/* desktop: headline centred on one line, sub centred under it (phone keeps the two-line, left-aligned version) */
+@media (min-width:901px){
+.hero-t{left:0;right:0;margin:0 auto;max-width:none;padding:0 20px;text-align:center}
+.hero-t h1{white-space:nowrap;font-size:clamp(34px,4.6vw,76px)}
+.hero-t h1 span{display:inline-block;vertical-align:bottom}
+.hero-t h1 span+span{margin-left:.24em}
+.hero-a{margin-top:20px;text-indent:.3em}
+.shade{background:radial-gradient(70% 58% at 50% 100%,rgba(6,5,8,.86),rgba(6,5,8,.55) 42%,rgba(6,5,8,0) 72%),linear-gradient(180deg,rgba(6,5,8,.5),rgba(6,5,8,0) 16%)}
+}
+
+/* Nov 5: on phones the headline sits above the cup, centred, with the street over the city */
+.hero-a i{font-style:normal}.hero-a .mb{display:none}
+@media (max-width:900px){
+.hero-t{bottom:calc(60% + 4px)}
+.hero-a{text-indent:0;line-height:1.75;margin-top:16px}
+.hero-a span{display:block;padding-left:.3em}
+.hero-a .dk{display:none}.hero-a .mb{display:inline}
+.shade{background:linear-gradient(180deg,rgba(6,5,8,.78),rgba(6,5,8,.5) 34%,rgba(6,5,8,0) 46%),linear-gradient(0deg,rgba(6,5,8,.55),rgba(6,5,8,0) 22%)}
+}
+/* Nov 6: the headline above the cup. Laptops: the catering card is off the desk and the line sits over the cup. Phones: the group is lowered, clear of the nav */
+.tfade{position:absolute;left:0;right:0;top:0;height:0;pointer-events:none;background:linear-gradient(180deg,#0a0806 0,#0a0806 var(--b,0px),rgba(10,8,6,0) 100%)}
+@media (min-width:901px){
+.shade{background:radial-gradient(62% 44% at 50% 22%,rgba(6,5,8,.66),rgba(6,5,8,.3) 52%,rgba(6,5,8,0) 76%),linear-gradient(180deg,rgba(6,5,8,.5),rgba(6,5,8,0) 16%)}
+}
+@media (max-width:900px){
+.shade{background:linear-gradient(180deg,rgba(6,5,8,.7),rgba(6,5,8,.5) 30%,rgba(6,5,8,0) 52%),linear-gradient(0deg,rgba(6,5,8,.55),rgba(6,5,8,0) 22%)}
+}
+/* Nov 6, batch two: the cup in the centre of the screen, the headline raised over it, the street at the foot of the screen, and on phones the notebook's corner in the top left */
+.hero-a{position:absolute;left:0;right:0;bottom:calc(clamp(26px,4.5vh,48px) + env(safe-area-inset-bottom,0px));z-index:3;margin:0;padding:0 20px;text-align:center;pointer-events:none}
+@media (min-width:901px){.shade{background:radial-gradient(62% 44% at 50% 22%,rgba(6,5,8,.66),rgba(6,5,8,.3) 52%,rgba(6,5,8,0) 76%),linear-gradient(180deg,rgba(6,5,8,.5),rgba(6,5,8,0) 16%),linear-gradient(0deg,rgba(6,5,8,.6),rgba(6,5,8,0) 18%)}}
+@media (max-width:900px){.hero-a{margin:0}}
+</style>
+</head>
+<body data-page="home">
+<header data-nav></header>
+
+<section class="desk" id="desk" aria-label="Luna's Café">
+  <div class="scene" id="scene">
+    <img class="bg" src="img/layers/desk-bg.webp" alt="" fetchpriority="high">
+    <div class="pool"></div>
+  </div>
+  <canvas id="steam" aria-hidden="true"></canvas>
+  <div class="shade"></div>
+  <div class="hero-t">
+    <h1><span><i>Brewed by</i></span><span><i><em>moonlight.</em></i></span></h1>
+  </div>
+  <p class="hero-a"><span class="a1">Clematis <i class="dk">Street,</i><i class="mb">St.</i></span> <span class="a2">West Palm Beach</span></p>
+  <div class="tag" id="tag"></div>
+</section>
+<div class="spill" id="spill"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="wob" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="3" seed="4"/><feDisplacementMap in="SourceGraphic" scale="70"/></filter></svg>
+
+<main>
+  <section class="sec">
+    <div class="wrap">
+      <div class="head">
+        <div class="t rv"><span class="kick">The menu</span><h2 class="h-l">Small cups,<br><em>long nights.</em></h2></div>
+        <div class="d rv d1"><p class="lede">Ten things, done properly. Roasted, laminated and poured on Clematis Street.</p><p style="margin:26px 0 0"><a class="lk" href="signature-menu.html">The full menu <svg aria-hidden="true"><use href="#arr"/></svg></a></p></div>
+      </div>
+      <div class="cards">
+        <a class="card rv" href="signature-menu.html#crescent"><div class="im"><img src="img/latte.webp" alt="Crescent Latte" loading="lazy"></div><div class="row"><h3>Crescent Latte</h3><span class="price">$6.25</span></div><p>Brown butter, sea salt</p></a>
+        <a class="card rv d1" href="signature-menu.html#moonlight"><div class="im"><img src="img/coldbrew2.webp" data-fb="coldbrew" alt="Moonlight Cold Brew" loading="lazy"></div><div class="row"><h3>Moonlight Cold Brew</h3><span class="price">$5.75</span></div><p>Vanilla bean cold foam</p></a>
+        <a class="card rv d2" href="signature-menu.html#croissant"><div class="im"><img src="img/croissant.webp" alt="Butter Croissant" loading="lazy"></div><div class="row"><h3>Butter Croissant</h3><span class="price">$4.25</span></div><p>Laminated in house</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <img src="img/pour.webp" alt="" loading="lazy">
+    <div class="wrap">
+      <div class="rv" style="max-width:640px"><span class="kick">Our story</span><h2 class="h-l" style="margin-top:22px">Roasted on Clematis.<br><em>Poured by moonlight.</em></h2>
+      <p class="lede">A small roaster and a long bar, open late for the people who do their best work after dark.</p>
+      <a class="btn ghost" href="signature-story.html">Read our story <svg aria-hidden="true"><use href="#arr"/></svg></a></div>
+    </div>
+  </section>
+
+  <section class="sec paper">
+    <div class="wrap split">
+      <div class="pic rv"><img src="img/catering.webp" data-fb="latteart" alt="Luna's coffee bar at an evening event" loading="lazy"></div>
+      <div class="txt">
+        <div class="rv"><span class="kick">Catering and events</span><h2 class="h-l">Bring Luna's<br>to your <em>night.</em></h2></div>
+        <div class="pk rv d1">
+          <a href="signature-catering.html#packages"><div><b>Morning Box</b><small>Coffee and pastry for ten</small></div><span>$95</span></a>
+          <a href="signature-catering.html#packages"><div><b>The Coffee Bar</b><small>A barista and our bar, for twenty-five</small></div><span>$325</span></a>
+          <a href="signature-catering.html#packages"><div><b>After Hours</b><small>The whole café, after close</small></div><span>From $1,200</span></a>
+        </div>
+        <a class="btn rv d2" href="signature-catering.html#inquire" style="margin-top:34px">Plan an event</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="head">
+        <div class="t rv"><span class="kick">Beans and goods</span><h2 class="h-l">Take the night<br><em>home.</em></h2></div>
+        <div class="d rv d1"><p class="lede">Roasted every Tuesday and Friday, shipped the same day.</p><p style="margin:26px 0 0"><a class="lk" href="signature-shop.html">Shop all <svg aria-hidden="true"><use href="#arr"/></svg></a></p></div>
+      </div>
+      <div class="cards">
+        <a class="card rv" href="signature-shop.html#moonrise"><div class="im"><img src="img/bag-moonrise.webp" data-fb="beans" data-label="Moonrise|Light roast|" alt="Moonrise beans" loading="lazy"></div><div class="row"><h3>Moonrise</h3><span class="price">$22</span></div><p>Bergamot, peach, jasmine</p></a>
+        <a class="card rv d1" href="signature-shop.html#firstlight"><div class="im"><img src="img/bag-firstlight.webp" data-fb="beans" data-label="First Light|Medium roast|ink" alt="First Light beans" loading="lazy"></div><div class="row"><h3>First Light</h3><span class="price">$21</span></div><p>Caramel, red apple, cocoa</p></a>
+        <a class="card rv d2" href="signature-shop.html#eclipse"><div class="im"><img src="img/bag-eclipse.webp" data-fb="beans" data-label="Eclipse|Dark roast|" alt="Eclipse beans" loading="lazy"></div><div class="row"><h3>Eclipse</h3><span class="price">$20</span></div><p>Dark chocolate, cedar</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec deep">
+    <div class="wrap club">
+      <div class="t rv"><span class="kick">Moon Club</span><h2 class="h-l" style="margin-top:22px">Every tenth cup<br>is on <em>the moon.</em></h2></div>
+      <div class="a rv d1"><p class="lede">Free to join. Your first pastry is on us, and every cup after seven counts twice.</p><a class="btn" href="signature-offers.html#join">Join the club</a></div>
+      <div class="nums rv d2">
+        <div><b class="num">10<em>th</em></b><span>Cup on us</span></div>
+        <div><b class="num">2<em>&times;</em></b><span>Points after 7 PM</span></div>
+        <div><b class="num">$0</b><span>To join</span></div>
+        <div><b class="num">1</b><span>Pastry, first visit</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="head"><div class="t rv"><span class="kick">Regulars</span><h2 class="h-l">Said at the <em>bar.</em></h2></div></div>
+      <div class="quotes">
+        <div class="quote rv"><div class="stars"><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg></div><p>The Crescent Latte ruined every other latte for me.</p><span>Maya R. on Google</span></div>
+        <div class="quote rv d1"><div class="stars"><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg></div><p>The only place downtown that's open when I actually need coffee.</p><span>Andre L. on Yelp</span></div>
+        <div class="quote rv d2"><div class="stars"><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg></div><p>They catered our launch and people still ask who made the coffee.</p><span>Priya S. on Google</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <img src="img/interior2.webp" data-fb="interior" alt="Inside Luna's Café at night" loading="lazy">
+    <div class="wrap">
+      <div class="rv" style="max-width:560px"><span class="kick">Visit</span><h2 class="h-l" style="margin-top:22px">Clematis Street.<br><em>Open late.</em></h2>
+        <div class="hrs"><span>Mon to Thu</span><span class="num">6:30 AM to 9 PM</span><span>Friday</span><span class="num">6:30 AM to 10 PM</span><span>Sat and Sun</span><span class="num">7 AM to 10 PM</span></div>
+        <a class="btn ghost" href="signature-visit.html">Plan your visit <svg aria-hidden="true"><use href="#arr"/></svg></a></div>
+    </div>
+  </section>
+</main>
+
+<footer data-foot></footer>
+<script src="sig.js"></script>
+<script>
+/* ---------- the explorable desk ---------- */
+(function(){
+var SW=3520,SH=1980;
+var O={
+ notebook:{box:[0,153,1229,1509],z:.35},
+ card:{box:[2246,100,359,492],k:1.3,d:"M59,0L5,424L0,425L0,451L267,486L268,491L295,491L353,70L358,69L358,41L83,5L82,0Z",z:.2,lab:'Catering and events',tagBelow:[2480,752],go:'signature-catering.html'},
+ phone:{box:[2460,800,572,932],k:.85,f:'phone-up',d:"M214,46L188,58L177,72L170,90L154,163L141,199L133,234L122,322L38,719L38,762L52,797L73,825L88,832L153,845L190,856L276,870L312,882L358,892L377,892L384,890L399,878L413,852L477,535L482,523L502,413L522,335L536,254L549,208L553,169L533,126L523,117L500,105L445,90L275,54Z",z:.4,lab:'Order ahead',tag:[2773,850],act:'phone'},
+ cup:{box:[1370,648,824,807],f:'cup-moon',d:"M443,37L375,37L303,50L272,61L228,82L178,115L121,172L101,199L78,238L57,289L39,367L38,424L41,457L54,515L78,575L116,634L147,668L179,697L230,730L291,757L367,774L441,774L511,761L559,743L595,724L656,678L707,621L728,590L753,540L770,485L779,414L784,395L781,366L774,352L764,302L749,262L717,204L678,154L656,132L599,89L562,70L509,49Z",z:.8,lab:'The menu',tag:[1790,670],act:'spill'},
+ plant:{box:[2712,0,738,712],z:1.4}
+};
+var ORDER=['notebook','phone','cup','plant'];
+var LIVE=ORDER.filter(function(k){return O[k].lab});
+var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var desk=document.getElementById('desk'),scene=document.getElementById('scene'),tag=document.getElementById('tag');
+var els={};
+ORDER.forEach(function(k){
+  var o=O[k],b=o.box,kk=o.k||1;
+  if(k==='phone'){var gl=document.createElement('div');gl.className='glow';scene.appendChild(gl)}
+  var el=document.createElement(o.lab?'button':'div');el.className='obj'+(o.lab?'':' decor');el.dataset.o=k;
+  if(o.lab){el.type='button';el.setAttribute('aria-label',o.lab)}else el.setAttribute('aria-hidden','true');
+  el.style.cssText='left:'+b[0]+'px;top:'+b[1]+'px;width:'+(b[2]*kk)+'px;height:'+(b[3]*kk)+'px;pointer-events:none';
+  var v='0 0 '+b[2]+' '+b[3];
+  el.innerHTML='<span class="in" style="width:'+b[2]+'px;height:'+b[3]+'px;transform:scale('+kk+');--k:'+kk+'"><span class="lift"><img src="img/layers/'+(o.f||k)+'.webp" alt="">'+
+    (o.d?'<svg class="ol" viewBox="'+v+'" preserveAspectRatio="none"><path pathLength="1" d="'+o.d+'"/></svg>':'')+'</span>'+
+    (o.d?'<svg class="hit" viewBox="'+v+'" preserveAspectRatio="none"><path d="'+o.d+'"/></svg>':'')+'</span>';
+  scene.appendChild(el);els[k]=el;
+  var lift=el.querySelector('.lift');
+  if(k==='card'){
+    var cp=document.createElement('div');cp.className='print card';cp.setAttribute('aria-hidden','true');
+    cp.innerHTML='<svg><use href="#mk"/></svg><div class="w">LUNA\'S</div><div class="r"></div><div class="t">Catering<i>&amp; events</i></div><div class="s">Mornings to<br>after hours</div>';
+    cp.style.left='28px';cp.style.top='19px';
+    lift.insertBefore(cp,el.querySelector('svg.ol'));
+  }
+  if(k==='bag'){var fo=document.createElement('div');fo.className='foil';fo.innerHTML='<svg><use href="#mk"/></svg><b>LUNA\'S</b><small>MOONRISE</small>';lift.appendChild(fo)}
+  if(k==='phone'){
+    var sc=document.createElement('div');sc.className='scr';sc.setAttribute('aria-hidden','true');
+    sc.innerHTML='<div class="dt"></div><div class="ck"></div><div class="ns">'+
+      '<div class="n"><i><svg><use href="#mk"/></svg></i><div><div class="h">Luna\'s Café<small>now</small></div><p>Your order is ready at the bar. Crescent Latte, Butter Croissant.</p></div></div>'+
+      '<div class="n"><i><svg><use href="#mk"/></svg></i><div><div class="h">Moon Club<small>2m ago</small></div><p>Cup 7 of 10. Three more and the next one is on us.</p></div></div>'+
+      '</div><div class="hb"></div>';
+    lift.insertBefore(sc,el.querySelector('svg.ol'));
+  }
+});
+var night=document.createElement('div');night.className='night';scene.appendChild(night);
+
+/* ---------- framing: cover on laptops, a strip you drag on phones ---------- */
+var W,H,s,base={x:0,y:0},pan=0,panT=0,mob=false,minX=0,maxX=0;
+var COFFEE={x:1773,y:1052,r:227};
+/* the headline sits above the cup: on laptops it rides over the cup, on phones the headline, the street and the cup sit as one group, centred under the nav */
+var heroT=desk.querySelector('.hero-t'),tf=document.createElement('div');tf.className='tfade';tf.setAttribute('aria-hidden','true');desk.insertBefore(tf,desk.querySelector('.shade'));
+function fitHero(){
+  if(!heroT)return;var nv=document.getElementById('nav'),nb=nv?nv.offsetHeight:84,gh=heroT.offsetHeight,gap=mob?30:64,ct=648*s;
+  var t=Math.max(nb+14,base.y+ct-gap-gh);
+  if(t<nb+12){heroT.style.top='';heroT.style.bottom='';}else{heroT.style.top=Math.round(t)+'px';heroT.style.bottom='auto';}
+  tf.style.height=base.y>0?Math.round(base.y+120)+'px':'0px';tf.style.setProperty('--b',Math.round(base.y)+'px');
+}
+function frame(){
+  W=desk.clientWidth;H=desk.clientHeight;mob=W/H<1.05;
+  if(mob){s=H/SH*1.06;minX=W-SW*s;maxX=0}
+  else{s=Math.max(W/SW,H/SH)*1.05;base.x=Math.min(0,Math.max(W-SW*s,W/2-1782*s))}
+  base.y=Math.min(0,Math.max(H-SH*s,H/2-1051*s));
+  /* phones: the notebook slides in so its corner shows in the top left, beside the centred cup */
+  if(els.notebook){var nx=mob?Math.round((1773-(W/2)/s+Math.min(96,W*.24)/s)-1213):0,ny=mob?Math.round((Math.max(150,H*.22))/s-base.y/s-983):0;
+    els.notebook.style.left=(O.notebook.box[0]+nx)+'px';els.notebook.style.top=(O.notebook.box[1]+ny)+'px';}
+  fitHero();
+  scene.style.setProperty('--s',s);
+}
+function center(sx){return Math.min(maxX,Math.max(minX,W/2-sx*s))}
+frame();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){frame();});
+if(mob)pan=panT=center(900);
+var px=0,py=0,tx=0,ty=0;
+function apply(){
+  var ox=mob?pan:base.x-px*W*.012,oy=base.y-(mob?0:py*H*.012);
+  scene.style.transform='translate('+ox.toFixed(2)+'px,'+oy.toFixed(2)+'px) scale('+s+')';
+  for(var k in O){var z=O[k].z;els[k].style.transform='translate('+(-px*z*26).toFixed(2)+'px,'+(-py*z*20).toFixed(2)+'px)'}
+  desk._ox=ox;desk._oy=oy;
+}
+function off(k){return [-px*O[k].z*26,-py*O[k].z*20]}
+addEventListener('resize',function(){frame();if(mob)panT=pan=center(1773)});
+desk.addEventListener('pointermove',function(e){if(e.pointerType!=='mouse'||RM)return;var r=desk.getBoundingClientRect();tx=(e.clientX-r.left)/r.width*2-1;ty=(e.clientY-r.top)/r.height*2-1});
+desk.addEventListener('pointerleave',function(){tx=ty=0});
+
+/* phone: drag to look around the desk */
+var drag=null,moved=false;
+desk.addEventListener('pointerdown',function(e){if(!mob)return;drag={x:e.clientX,y:e.clientY,p:panT};moved=false});
+addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-drag.x;if(!moved&&Math.abs(dx)>8&&Math.abs(dx)>Math.abs(e.clientY-drag.y))moved=true;if(moved){panT=Math.min(maxX,Math.max(minX,drag.p+dx*1.15));pan=panT}});
+addEventListener('pointerup',function(){drag=null});
+addEventListener('pointercancel',function(){drag=null});
+desk.addEventListener('click',function(e){if(moved){e.stopPropagation();e.preventDefault();moved=false}},true);
+
+/* ---------- hover: lift, gold outline, a quiet label ---------- */
+var cur=null;
+function placeTag(){if(!cur)return;var o=O[cur],p=o.tagBelow||o.tag;if(!p)return;var e=off(cur);
+  tag.style.left=(desk._ox+(p[0]+e[0])*s)+'px';tag.style.top=(desk._oy+(p[1]+e[1])*s)+'px'}
+function enter(k){if(cur&&cur!==k)leave(cur);cur=k;els[k].classList.add('on');
+  if(O[k].lab){tag.textContent=O[k].lab;tag.classList.toggle('below',!!O[k].tagBelow);placeTag();tag.classList.add('on')}else tag.classList.remove('on')}
+function leave(k){els[k].classList.remove('on');if(cur===k){cur=null;tag.classList.remove('on')}}
+var touchy=!matchMedia('(hover:hover)').matches;
+LIVE.forEach(function(k){
+  var hit=els[k].querySelector('svg.hit path');
+  hit.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse')enter(k)});
+  hit.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse')leave(k)});
+  els[k].addEventListener('focus',function(){enter(k)});
+  els[k].addEventListener('blur',function(){leave(k)});
+  els[k].addEventListener('click',function(e){
+    if(touchy){enter(k);setTimeout(function(){act(k);setTimeout(function(){leave(k)},900)},420)}else act(k);
+  });
+});
+
+/* ---------- what each object does ---------- */
+function act(k){
+  var o=O[k];
+  if(o.go){location.href=o.go;return}
+  if(o.act==='phone'){if(awake){Luna.order();sleep()}else wake();return}
+  if(o.act==='spill')spill();
+}
+/* the phone wakes with the time and the order */
+var awake=false,sleepT=0,clockT=0,scr=els.phone.querySelector('.scr');
+var DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function tick(){var d=new Date();scr.querySelector('.dt').textContent=DAYS[d.getDay()]+', '+MON[d.getMonth()]+' '+d.getDate();
+  scr.querySelector('.ck').textContent=(d.getHours()%12||12)+':'+('0'+d.getMinutes()).slice(-2)}
+function wake(){awake=true;tick();clockT=setInterval(tick,5000);els.phone.classList.add('awake');desk.classList.add('ph');
+  if(mob)panT=center(2703);clearTimeout(sleepT);sleepT=setTimeout(sleep,10000)}
+function sleep(){awake=false;clearInterval(clockT);clearTimeout(sleepT);els.phone.classList.remove('awake');desk.classList.remove('ph')}
+desk.addEventListener('click',function(e){if(awake&&!els.phone.contains(e.target))sleep()});
+function spill(){
+  var sp=document.getElementById('spill'),e=off('cup');
+  var r=desk.getBoundingClientRect();
+  var x=r.left+desk._ox+(COFFEE.x+e[0])*s,y=r.top+desk._oy+(COFFEE.y+e[1])*s;
+  sp.style.setProperty('--x',x+'px');sp.style.setProperty('--y',y+'px');
+  sp.classList.remove('go');sp.style.clipPath='circle(0px at '+x+'px '+y+'px)';
+  void sp.offsetWidth;sp.classList.add('go');
+  sp.style.clipPath='circle('+(Math.hypot(Math.max(x,innerWidth-x),Math.max(y,innerHeight-y))*1.25)+'px at '+x+'px '+y+'px)';
+  setTimeout(function(){location.href='signature-menu.html'},RM?0:900);
+}
+addEventListener('pageshow',function(){var sp=document.getElementById('spill');sp.classList.remove('go');sp.style.clipPath='circle(0 at 50% 50%)'});
+function setLight(on){desk.classList.toggle('dark',!on);if(on)desk.classList.add('lit')}
+
+/* ---------- opening: lights come up, then one slow trace across the desk ---------- */
+desk.classList.add('dark');
+var started=false;
+function start(){
+  if(started)return;started=true;
+  setTimeout(function(){setLight(true)},RM?0:450);
+  if(mob){if(RM)pan=panT=center(1773);else setTimeout(function(){panT=center(1773)},1100)}
+  if(RM)return;
+  ['cup','phone'].forEach(function(k,i){setTimeout(function(){if(cur)return;
+    els[k].classList.add('trace');setTimeout(function(){els[k].classList.add('fade');setTimeout(function(){els[k].classList.remove('trace','fade')},1300)},1500)},2600+i*320)});
+}
+var bg=scene.querySelector('img.bg');
+if(bg.complete)start();else{bg.addEventListener('load',start);setTimeout(start,2500)}
+
+var steamPlace=function(){};
+function loop(){
+  px+=(tx-px)*.06;py+=(ty-py)*.06;
+  if(mob)pan+=(panT-pan)*.045;
+  apply();placeTag();steamPlace();
+  requestAnimationFrame(loop);
+}
+apply();requestAnimationFrame(loop);
+window.__desk={O:O,els:els,enter:enter,leave:leave,setLight:setLight,act:act,state:function(){return{s:s,ox:desk._ox,oy:desk._oy,mob:mob}}};
+
+/* ---------- steam off the cup (Harold's shader, laid over the photo) ---------- */
+var cv=document.getElementById('steam');
+window.__steam=function(THREE){
+  var r;try{r=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:false,premultipliedAlpha:true,powerPreference:'low-power'})}catch(e){return}
+  r.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
+  var U={uT:{value:0},uC:{value:new THREE.Vector2()},uR:{value:60},uA:{value:0}};
+  var mat=new THREE.ShaderMaterial({uniforms:U,transparent:true,depthTest:false,
+    vertexShader:'void main(){gl_Position=vec4(position.xy,0.,1.);}',
+    fragmentShader:'precision highp float;uniform float uT,uR,uA;uniform vec2 uC;'+
+     'float h(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}'+
+     'float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}'+
+     'float fb(vec2 p){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*n(p);p=p*2.03+vec2(3.1,1.7);a*=.5;}return s;}'+
+     'void main(){vec2 q=(gl_FragCoord.xy-uC)/uR;float y=q.y;if(y<-.6||y>4.6||abs(q.x)>2.6){gl_FragColor=vec4(0);return;}'+
+     'float t=uT,Y=max(y,0.),r=t*.2;vec2 w0=vec2(q.x*.7,y*.55-r);float c1=fb(w0+vec2(1.3,0.)),c2=fb(w0*1.6+vec2(7.,2.));'+
+     'float sway=(c1-.5)*1.7*Y+.2*Y*sin(Y*1.4-t*.28)+.08*Y*sin(Y*3.1-t*.5+c2*3.)*smoothstep(.3,1.5,Y)+.07*Y*sin(t*.09);'+
+     'float x=q.x-sway-.05*Y;float d=0.;'+
+     'for(int k=0;k<3;k++){float fk=float(k);float o=(fk-1.)*(.2+.16*Y)+(fb(vec2(Y*.6-r*.7,fk*4.1))-.5)*.7*Y;float wd=.14+.19*Y;float g=exp(-pow((x-o)/wd,2.));'+
+     'float m=fb(vec2((x-o)*2.4+fk*5.3,y*.75-r*.9)+vec2(c1,c2)*1.3);d+=g*smoothstep(.24,.74,m)*(k==1?1.:.9);}'+
+     'float f=fb(vec2(x*4.2,y*1.25-r*1.45)+vec2(c1,c2)*1.8);float fil=.45+.95*smoothstep(.32,.78,f);'+
+     'float body=smoothstep(-.55,.1,y)*(1.-smoothstep(.9,3.2,y))*(1.+.6*exp(-pow((y-.4)/.6,2.)));float den=d*fil*body;'+
+     'float lit=.78+.34*smoothstep(-1.,1.,q.x)+.25*exp(-Y*.9)+.25*smoothstep(.15,.0,den);vec3 col=min(vec3(1.),vec3(1.,.82,.6)*lit*1.12);'+
+     'float al=(1.-exp(-den*2.6))*.5*uA;al*=1.-smoothstep(1.6,2.5,abs(q.x));gl_FragColor=vec4(col*al,al);}'});
+  var scn=new THREE.Scene();scn.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat));var cam=new THREE.Camera();
+  var lw=0,lh=0;
+  steamPlace=function(){
+    if(lw!==W||lh!==H){r.setSize(W,H,false);lw=W;lh=H}
+    var pr=r.getPixelRatio(),e=off('cup');
+    var cx=desk._ox+(COFFEE.x+e[0])*s,cy=desk._oy+(COFFEE.y+e[1])*s;
+    U.uC.value.set(cx*pr,(H-cy)*pr);U.uR.value=COFFEE.r*s*pr;
+  };
+  var t0=performance.now();
+  function f(now){
+    U.uT.value=(now-t0)/1000+12;
+    var e=Math.min(1,Math.max(0,((now-t0)/1000-1.8)/3));U.uA.value=RM?1:e*e*(3-2*e);
+    if(desk.getBoundingClientRect().bottom>0)r.render(scn,cam);
+    if(!RM)requestAnimationFrame(f);else r.render(scn,cam);
+  }
+  steamPlace();cv.style.opacity='1';requestAnimationFrame(f);
+};
+var sc=document.createElement('script');sc.type='module';
+sc.textContent="import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';window.__steam(THREE);";
+document.head.appendChild(sc);
+})();
+</script>
+</body>
+</html>

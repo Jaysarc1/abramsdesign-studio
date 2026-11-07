@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Menu | Luna's Café</title>
+<meta name="description" content="The menu at Luna's Café, Clematis Street.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@800&display=swap">
+<link rel="stylesheet" href="sig.css">
+</head>
+<body data-page="menu">
+<header data-nav></header>
+<section class="hero"><div class="ph"><img src="img/hero-navycup.webp" alt="" fetchpriority="high"></div>
+  <div class="wrap"><span class="kick rv">The menu</span><h1 class="h-xl rv d1">Poured <em>to order.</em></h1><p class="lede rv d2">Ten things, made the slow way, from first light to close.</p><div class="acts rv d3"><button class="btn" data-order type="button">Order ahead</button><a class="btn ghost" href="#make">Make it yours</a></div></div></section>
+
+<main>
+  <section class="sec">
+    <div class="wrap">
+      <div class="bar-tabs rv"><h2 class="h-m">Tonight at <em>the bar.</em></h2>
+        <div class="tabs" id="tabs"><button type="button" aria-pressed="true" data-c="All">All</button><button type="button" aria-pressed="false" data-c="Coffee">Coffee</button><button type="button" aria-pressed="false" data-c="Cold">Cold</button><button type="button" aria-pressed="false" data-c="Bakery">Bakery</button><button type="button" aria-pressed="false" data-c="Kitchen">Kitchen</button></div></div>
+      <div class="cards" id="mgrid"></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <img src="img/roast.webp" alt="" loading="lazy">
+    <div class="wrap"><div class="rv" style="max-width:600px"><span class="kick">The beans</span><h2 class="h-l" style="margin-top:22px">Roasted this week.<br><em>Pulled tonight.</em></h2>
+      <p class="lede">Every shot comes from beans roasted on Clematis within the last seven days.</p>
+      <a class="btn ghost" href="signature-story.html">How we roast <svg aria-hidden="true"><use href="#arr"/></svg></a></div></div>
+  </section>
+
+  <section class="sec paper" id="make">
+    <div class="wrap">
+      <div class="head"><div class="t rv"><span class="kick">Make it yours</span><h2 class="h-l">Your cup,<br><em>your way.</em></h2></div>
+        <div class="d rv d1"><p class="lede">Every drink can be adjusted at the bar or when you order ahead.</p></div></div>
+      <div class="opts rv d1">
+        <div><h3>Size</h3><p>8 oz<br>12 oz, add $0.75<br>16 oz, add $1.25</p></div>
+        <div><h3>Milk</h3><p>Whole or skim<br>Oat, add $0.75<br>Almond, add $0.75</p></div>
+        <div><h3>Strength</h3><p>Two shots as standard<br>Extra shot, $1.00<br>Sweetness none to regular</p></div>
+        <div><h3>Extras</h3><p>Vanilla bean, $0.75<br>Cold foam, $1.00<br>Jammy egg on toast, $2.50</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap split rev">
+      <div class="pic rv"><img src="img/croissant-alt.webp" alt="Butter croissant" loading="lazy"></div>
+      <div class="txt"><div class="rv"><span class="kick">From the oven</span><h2 class="h-l">Three days<br>to <em>one croissant.</em></h2>
+        <p class="lede">Laminated by hand with cultured butter, proofed overnight and baked every morning at five. When they're gone, they're gone.</p>
+        <button class="btn" data-order type="button">Reserve yours</button></div></div>
+    </div>
+  </section>
+</main>
+<div class="dlg" id="dlg" aria-hidden="true"><div class="scrim" data-x></div><div class="box" role="dialog" aria-modal="true" aria-label="Menu item">
+  <button class="x" type="button" data-x aria-label="Close"><svg><use href="#x"/></svg></button>
+  <div class="pic"><img id="dimg" alt=""></div>
+  <div class="txt"><span class="kick" id="dcat"></span><h3 class="h-m" id="dname"></h3><p class="body" id="dlong"></p><div class="pr" id="dpr"></div><dl id="dopts"></dl><div class="sp"></div><button class="btn" data-order type="button">Order ahead</button></div>
+</div></div>
+
+<footer data-foot></footer>
+<script src="sig.js"></script>
+<script>
+(function(){
+var M=Luna.MENU,g=document.getElementById('mgrid'),dlg=document.getElementById('dlg');
+var OPT={Coffee:[['Size','8, 12 or 16 oz'],['Milk','Whole, oat, almond or skim'],['Shots','Two, or add one']],Cold:[['Size','12 or 16 oz'],['Milk','Oat, almond or whole'],['Extras','Vanilla bean or cold foam']],Bakery:[['Served','Room temperature or warmed'],['Baked','Every morning at five']],Kitchen:[['Add','Jammy egg'],['Served','All day']]};
+g.innerHTML=M.map(function(m,i){return '<button type="button" class="card rv'+(i%3?' d'+(i%3):'')+'" id="'+m.id+'" data-c="'+m.cat+'" data-id="'+m.id+'"><div class="im"><img src="img/'+m.img+'.webp" alt="'+m.name+'" loading="lazy"></div><div class="row"><h3>'+m.name+'</h3><span class="price">'+Luna.money(m.price)+'</span></div><p>'+m.line+'</p></button>'}).join('');
+Luna.watch(g);[].forEach.call(g.querySelectorAll('img'),Luna.fb);
+var tabs=document.getElementById('tabs');
+tabs.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  [].forEach.call(tabs.children,function(x){x.setAttribute('aria-pressed',x===b)});
+  var c=b.getAttribute('data-c');[].forEach.call(g.children,function(k){k.hidden=!(c==='All'||k.getAttribute('data-c')===c);if(!k.hidden)k.classList.add('in')})});
+function open(id){var m=M.filter(function(x){return x.id===id})[0];if(!m)return;
+  document.getElementById('dimg').src='img/'+m.img+'.webp';document.getElementById('dimg').alt=m.name;
+  document.getElementById('dcat').textContent=m.cat;document.getElementById('dname').textContent=m.name;
+  document.getElementById('dlong').textContent=m.long;document.getElementById('dpr').textContent=Luna.money(m.price);
+  document.getElementById('dopts').innerHTML=(OPT[m.cat]||[]).map(function(o){return '<div><dt>'+o[0]+'</dt><dd>'+o[1]+'</dd></div>'}).join('');
+  dlg.classList.add('on');dlg.setAttribute('aria-hidden','false')}
+function close(){dlg.classList.remove('on');dlg.setAttribute('aria-hidden','true')}
+g.addEventListener('click',function(e){var c=e.target.closest('[data-id]');if(c)open(c.getAttribute('data-id'))});
+dlg.addEventListener('click',function(e){if(e.target.closest('[data-x]'))close();if(e.target.closest('[data-order]'))close()});
+addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+window.__menu={open:open,close:close};
+if(location.hash){var h=location.hash.slice(1);if(M.some(function(x){return x.id===h}))setTimeout(function(){var el=document.getElementById(h);el&&el.scrollIntoView({block:'center'});setTimeout(function(){open(h)},500)},300)}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Shop | Luna's Café</title>
+<meta name="description" content="Beans and goods from Luna's Café.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@800&display=swap">
+<link rel="stylesheet" href="sig.css">
+</head>
+<body data-page="shop">
+<header data-nav></header>
+<section class="hero"><div class="ph"><img src="img/beans.webp" alt="" fetchpriority="high"></div>
+  <div class="wrap"><span class="kick rv">Beans and goods</span><h1 class="h-xl rv d1">Take the night<br><em>home.</em></h1><p class="lede rv d2">Roasted every Tuesday and Friday and shipped the same day.</p><div class="acts rv d3"><a class="btn" href="#coffee">Shop coffee</a><a class="btn ghost" href="#goods">Shop goods</a></div></div></section>
+
+<main>
+  <section class="sec" id="coffee">
+    <div class="wrap">
+      <div class="head"><div class="t rv"><span class="kick">Coffee</span><h2 class="h-l">Three roasts,<br><em>one moon.</em></h2></div>
+        <div class="d rv d1"><p class="lede">Twelve ounces, whole bean or ground to order.</p></div></div>
+      <div class="cards" id="g-coffee"></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <img src="img/roast.webp" alt="" loading="lazy">
+    <div class="wrap"><div class="rv" style="max-width:600px"><span class="kick">Subscription</span><h2 class="h-l" style="margin-top:22px">Never run<br><em>dry.</em></h2>
+      <p class="lede">Your roast every two or four weeks. Ten percent off, free shipping, skip any time.</p>
+      <button class="btn" type="button" data-add="moonrise">Start with Moonrise</button></div></div>
+  </section>
+
+  <section class="sec" id="goods">
+    <div class="wrap">
+      <div class="head"><div class="t rv"><span class="kick">Goods</span><h2 class="h-l">For the<br><em>ritual.</em></h2></div></div>
+      <div class="cards" id="g-goods"></div>
+    </div>
+  </section>
+</main>
+<div class="op" id="bagp" aria-hidden="true"><div class="scrim" data-bag-x></div><div class="box" role="dialog" aria-label="Bag">
+  <button class="x" type="button" data-bag-x aria-label="Close"><svg><use href="#x"/></svg></button>
+  <div class="bagd"><span class="kick">Your bag</span><h3 class="h-m">Take the night <em>home.</em></h3><div class="list" id="blist"></div>
+    <div id="bfoot"><div class="tot"><span>Subtotal</span><b class="num" id="btot">$0.00</b></div><a class="btn" href="#" data-hand="Square"><span class="sq"><i></i></span>Checkout on Square<span class="bar"></span></a></div>
+  </div>
+</div></div>
+
+<footer data-foot></footer>
+<script src="sig.js"></script>
+<script>
+(function(){
+var S=Luna.SHOP,KEY='luna-sig-bag',bag={};
+try{bag=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){bag={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(bag))}catch(e){}}
+var LB={moonrise:'Moonrise|Light roast|',firstlight:'First Light|Medium roast|ink',eclipse:'Eclipse|Dark roast|'};
+function card(p,i){return '<div class="card rv'+(i?' d'+i:'')+'" id="'+p.id+'"><div class="im"><span class="tagl">'+p.tag+'</span><img src="img/'+p.img+'.webp" data-fb="'+p.fb+'"'+(LB[p.id]?' data-label="'+LB[p.id]+'"':'')+' alt="'+p.name+'" loading="lazy"></div>'+
+  '<div class="row"><h3>'+p.name+'</h3><span class="price">$'+p.price+'</span></div><p>'+p.line+'</p><div class="act"><button class="btn sm" type="button" data-add="'+p.id+'">Add to bag</button></div></div>'}
+var gc=document.getElementById('g-coffee'),gg=document.getElementById('g-goods');
+gc.innerHTML=S.slice(0,3).map(card).join('');gg.innerHTML=S.slice(3).map(card).join('');
+[gc,gg].forEach(function(g){[].forEach.call(g.querySelectorAll('img'),Luna.fb);Luna.labels(g);Luna.watch(g)});
+var panel=document.getElementById('bagp'),list=document.getElementById('blist');
+function count(){var n=0;for(var k in bag)n+=bag[k];return n}
+function render(){
+  var n=count(),b=document.querySelector('[data-bag-n]');if(b){b.textContent=n;b.hidden=!n}
+  var t=0,rows=S.filter(function(p){return bag[p.id]}).map(function(p){t+=p.price*bag[p.id];
+    return '<div class="row"><img src="img/'+p.img+'.webp" data-fb="'+p.fb+'" alt=""><div><b>'+p.name+'</b><small>'+p.tag+'</small><div class="q"><button type="button" data-q="'+p.id+'" data-d="-1" aria-label="Less"><svg><use href="#minus"/></svg></button><span>'+bag[p.id]+'</span><button type="button" data-q="'+p.id+'" data-d="1" aria-label="More"><svg><use href="#plus"/></svg></button></div></div><span class="p">$'+(p.price*bag[p.id]).toFixed(2)+'</span></div>'});
+  list.innerHTML=rows.length?rows.join(''):'<div class="empty"><p class="lede">Nothing here yet.</p><button class="btn ghost" type="button" data-bag-x>Keep shopping</button></div>';
+  [].forEach.call(list.querySelectorAll('img'),Luna.fb);
+  document.getElementById('btot').textContent='$'+t.toFixed(2);document.getElementById('bfoot').style.display=rows.length?'':'none';
+}
+function openBag(){render();panel.classList.add('on');panel.setAttribute('aria-hidden','false')}
+function closeBag(){panel.classList.remove('on');panel.setAttribute('aria-hidden','true')}
+Luna.closeBag=closeBag;
+document.addEventListener('click',function(e){
+  var a=e.target.closest('[data-add]');if(a){var id=a.getAttribute('data-add');bag[id]=(bag[id]||0)+1;save();
+    if(a.classList.contains('sm')){var t=a.textContent;a.textContent='Added';setTimeout(function(){a.textContent=t},1400)}render();openBag();return}
+  var q=e.target.closest('[data-q]');if(q){var k=q.getAttribute('data-q');bag[k]=Math.max(0,(bag[k]||0)+ +q.getAttribute('data-d'));if(!bag[k])delete bag[k];save();render();return}
+  if(e.target.closest('[data-bag-open]')){openBag();return}
+  if(e.target.closest('[data-bag-x]'))closeBag();
+});
+render();window.__bag={open:openBag,close:closeBag,add:function(id){bag[id]=(bag[id]||0)+1;render()}};
+})();
+</script>
+</body>
+</html>
