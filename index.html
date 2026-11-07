@@ -1652,7 +1652,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
       </div></div>
       <section class="bk" id="book" aria-label="Selected work">
         <div class="bk-stage">
-          <div class="bk-lie"><div class="bk-book" data-st="closed" tabindex="0" role="group" aria-roledescription="magazine" aria-label="Selected work, a magazine of three New York buildings">
+          <div class="bk-lie"><div class="bk-book" data-st="closed" tabindex="0" role="group" aria-roledescription="magazine" aria-label="Twenty years of work, a magazine of renderings, renovations and websites">
             <div class="bk-shift"><div class="bk-base"></div></div>
           </div></div>
           <div class="bk-nav"><button type="button" class="bk-p" aria-label="Previous page" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M15 5l-7 7 7 7"/></svg></button><span class="bk-bar" aria-hidden="true"><i></i></span><button type="button" class="bk-n" aria-label="Next page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 5l7 7-7 7"/></svg></button></div>
@@ -2088,20 +2088,28 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     var PL=function(n,r,cap,f,t){return '<div class="pl'+(t?' t':'')+'">'+I(n,'',r)+'<span class="cap">'+cap+'</span></div>'+FO(f);};
     var OP=function(no,kk,b,ad,p,f){return '<div class="op"><span class="no">'+no+'</span><span class="kk">'+kk+'</span><b>'+b+'</b><i class="ad">'+ad+'</i>'+(p?'<p>'+p+'</p>':'')+'</div>'+FO(f);};
     var P=[
-      ['cv',I('cover-82')+'<i class="gl"></i><div class="mh">'+M+'<span>Selected work</span></div><div class="cvl"><b>Seen before<br>it was built.</b><span>Three New York buildings</span></div><i class="spn"></i>'],
+      ['cv',I('cover-82')+'<i class="gl"></i><div class="mh">'+M+'<span>Selected work</span></div><div class="cvl"><b>Twenty years<br>of work.</b><span>Renderings &middot; Renovations &middot; Websites</span></div><i class="spn"></i>'],
       ['',I('teaser')],
-      ['','<div class="tp">'+M+'<i></i><b>Selected work</b><span>Art &middot; Architecture &middot; Marketing</span><span class="bt">Abrams Design Studio</span></div>'],
-      ['','<div class="tx"><span class="kk">Foreword</span><b>Seen before it was built.</b><p>Every room and facade in these pages was drawn, lit and furnished before it existed. Twenty years across art, architecture and marketing, now turned to how your business is seen.</p></div>'+FO(3)],
-      ['','<div class="toc"><span class="kk">Contents</span><ol><li><b>Manor 82</b><em>05</em><i>333 East 82nd Street, New York</i></li><li><b>101 East 2nd</b><em>13</em><i>Renderings, New York</i></li><li><b>271 Sea Breeze</b><em>17</em><i>Amenity spaces, Brooklyn</i></li></ol></div>'+FO(4)],
+      ['','<div class="tp">'+M+'<i></i><b>Twenty years</b><span>Art &middot; Architecture &middot; Marketing</span><span class="bt">Abrams Design Studio</span></div>'],
+      ['','<div class="tx"><span class="kk">Foreword</span><b>Twenty years of work.</b><p>Buildings drawn and lit before they stood, houses taken from gutted to finished, and the sites that sell them. Art, architecture and marketing, now turned to how your business is seen.</p></div>'+FO(3)],
+      ['','<div class="toc"><span class="kk">Contents</span><ol><li><b>Manor 82</b><em>05</em><i>Rendered, then built, New York</i></li><li><b>Before. After.</b><em>13</em><i>Renovations, Palm Beach County</i></li><li><b>101 East 2nd</b><em>19</em><i>Renderings, New York</i></li><li><b>Websites</b><em>23</em><i>Sites and apps you can use</i></li><li><b>271 Sea Breeze</b><em>29</em><i>Amenity spaces, Brooklyn</i></li></ol></div>'+FO(4)],
       ['',OP('01','Rendered, then built','Manor 82','333 East 82nd Street, New York','Three rejected submissions to the historic preservation board. Then a staple of the Upper East Side.',5)],
       ['',I('entry')],
       ['spl',I('living')],['spr',I('living')],
       ['',I('street')+'<span class="tag l">Rendered</span>'],['',PL('phext','1','Penthouse at dusk',10)],
-      ['',I('built')+'<span class="tag">Built</span><i class="stp"></i>'],['',PL('kitchen','2000/1314','Penthouse kitchen',12)+'<i class="stp"></i>'],
-      ['',OP('02','Renderings','101 East 2nd Street','New York','The street front and the garden terrace.',13)],
+      ['',I('built')+'<span class="tag">Built</span>'],['',PL('kitchen','2000/1314','Penthouse kitchen',12)],
+      ['',OP('02','Renovation','Before. After.','Palm Beach County','The real before, and what each room became.',13)],
+      ['',I('rn-living-b')+'<span class="tag">Before</span>'],
+      ['spl',I('rn-living-a')],['spr',I('rn-living-a')+'<span class="tag l">After</span>'],
+      ['',I('rn-kitchen-b')+'<span class="tag">Before</span><i class="stp"></i>'],['',I('rn-kitchen-a')+'<span class="tag">After</span><i class="stp"></i>'],
+      ['',OP('03','Renderings','101 East 2nd Street','New York','The street front and the garden terrace.',19)],
       ['',I('first')],
       ['spl',I('terrace')],['spr',I('terrace')],
-      ['',OP('03','Amenity spaces','271 Sea Breeze Avenue','Brooklyn, New York','The resident lobby and the lounge.',17)],
+      ['',OP('04','Websites','Sites you can use','Ordering, shopping, walking the house','Each one works: order a coffee, shop the drop, walk the rooms.',23)],
+      ['',PL('web-lunas','1200/675','Luna&rsquo;s Coffee',24)],
+      ['',PL('web-softriot','1200/750','Soft Riot',25)],['',PL('web-arden','1200/750','Arden Architects',26)],
+      ['',PL('web-jay','960/600','jayabrams.com',27)],['',PL('web-mv','1600/1000','Mountain &amp; Valley',28)],
+      ['',OP('05','Amenity spaces','271 Sea Breeze Avenue','Brooklyn, New York','The resident lobby and the lounge.',29)],
       ['',I('lobby-p')],
       ['spl',I('lounge')],['spr',I('lounge')],
       ['bcv','<div class="tp">'+M+'<span class="bt">West Palm Beach</span></div><i class="spn"></i>']
