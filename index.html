@@ -1107,11 +1107,11 @@ header nav{align-items:center}
 .pill.pd:hover,.of-go:hover,.nx .fit-row:hover .fit-chip,.nx .fit-row:focus-visible .fit-chip,header .hpill:hover{background:var(--graphite);color:var(--plaster);border-color:var(--graphite)}
 @media (max-width:760px){header .hpill{border:0}header .hpill:hover{background:none;color:var(--patina)}}
 /* the opening: one site of each kind, then the question */
-.hk-ex{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%);width:min(1240px,92vw,calc((100svh - 300px) * 4.8 + 60px));display:flex;gap:clamp(16px,2vw,30px);pointer-events:none;z-index:1}
+.hk-ex{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%);width:min(1320px,94vw,calc((100svh - 330px) * 4 + 60px));display:flex;gap:clamp(16px,2vw,30px);pointer-events:none;z-index:1}
 .hk-ex .ex{flex:1;min-width:0;margin:0;display:grid;gap:14px;justify-items:center;opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform 1.2s cubic-bezier(.2,.7,.1,1)}
 .hook.hs-ex .ex{opacity:1;transform:none;transition-delay:.5s}
 .hook.hs-ex .e2{transition-delay:.85s}.hook.hs-ex .e3{transition-delay:1.2s}
-.hk-ex figcaption{font:500 14px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:#d9bc8c;padding-left:.24em}
+.hk-ex figcaption{font:500 15px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:#d9bc8c;padding-left:.24em}
 .ex-w{width:100%;border-radius:12px;overflow:hidden;background:#f4f1ea;box-shadow:0 30px 60px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.06)}
 .ex-p{position:relative;aspect-ratio:16/10;container-type:inline-size;overflow:hidden;font-family:Arial,Helvetica,sans-serif;text-align:left}
 .ex-p h4{margin:0}
@@ -1159,6 +1159,7 @@ header nav{align-items:center}
 .xc-h p{margin:0;font-size:2.2cqw;line-height:1.5;color:#9aa0ac}
 .xc-r{position:absolute;left:5cqw;right:5cqw;bottom:4.4cqw;display:flex;gap:6cqw;font-size:2.2cqw;color:#9aa0ac;z-index:1}
 .xc-r span{display:flex;align-items:center;gap:1.4cqw}.xc-r i{width:4cqw;height:4cqw;border-radius:50%;border:1px solid #b6bac4}
+@media (min-width:761px){.ex-p{aspect-ratio:4/3}}
 @media (max-width:760px){
   .hk-ex{top:56%;flex-direction:column;align-items:center;gap:14px;width:min(86vw,calc((100svh - 300px) / 3 * 1.6))}
   .hk-ex .ex{flex:none;width:100%;gap:8px}
