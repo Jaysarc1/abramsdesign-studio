@@ -2852,7 +2852,7 @@ body:not(.land) .obj.mug.parked{
   right:calc(clamp(392px,40vw,590px) + (min(100vw,1400px) - 104px) * .0311)!important;
   top:calc(clamp(382px,45vh,486px) + (min(100vw,1400px) - 104px) * .0982)!important}
 /* batch 20, the G550 only: the cup starts up by the status pill, in the clear space between the name and the photographs */
-body:not(.land) .obj.mug.parked{right:auto!important;left:31.3%!important;top:79px!important}
+@media (min-width:980px){html body:not(.land) .obj.mug.parked.parked{right:auto!important;left:31.3%!important;top:79px!important;bottom:auto!important}}
 
 /* ---- one left edge inside the folder, on every tab: the first tab's label,
        and everything on the left of each panel, start on the same line ---- */
