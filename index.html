@@ -1370,7 +1370,7 @@ main>section>.wrap>.st:first-child{margin-top:0}
 /* batch 13: Flagship product names take the "03 Flagship" heading font */
 #ow-flagship{--nm-fs:clamp(24px,2.1vw,30px);--nm-mb:16px;--pg:calc(var(--sp-in) * 2)}
 @media (max-width:760px){#ow-flagship{--nm-mb:14px;--pg:calc(var(--sp-in) * 2.6)}}
-.ex-nm{margin:0 0 var(--nm-mb);font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:var(--nm-fs);line-height:1.1;letter-spacing:-.014em;color:var(--graphite)}
+.ex-nm{margin:0 0 var(--nm-mb);font-family:"Newsreader",Georgia,serif;font-weight:300;font-variation-settings:"opsz" 72;font-size:var(--nm-fs);line-height:1.1;letter-spacing:-.014em;color:var(--graphite)}
 /* batch 13: a hairline between products, equal room above and below it, measured from the products themselves (not their names) */
 #ow-flagship .st+.st{margin-top:var(--pg);padding-top:calc(var(--pg) - var(--nm-fs) * 1.1 - var(--nm-mb));border-top:1px solid var(--rule)}
 #ow-flagship .st.ow-off+.st,#ow-flagship .st.ow-off{border-top:0}
@@ -1435,6 +1435,8 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
 .hook[data-k="5"] .hk-a,.hook[data-k="6"] .hk-a{clip-path:inset(0 0 0 0)}
 .hook[data-k="5"] .hk-v::after,.hook[data-k="6"] .hk-v::after{animation:none;opacity:0}
 .hook.hs-solo .hk-scr{transition-delay:.6s}
+.hook.hs-scrl .hk-scr{opacity:1;transform:translate(-50%,0);transition-delay:.6s}
+.hook.hs-scrl.hs-used .hk-scr{opacity:0;transform:translate(-50%,8px);transition-delay:0s}
 .hk-scr em{font-style:normal;font-family:inherit;font-weight:inherit;font-size:1em;margin:0}
 /* batch 15: the sound prompt, centred, then settled into the corner speaker */
 .hk-tap{position:absolute;left:50%;top:50%;z-index:4;display:flex;align-items:center;gap:11px;margin:0;padding:15px 22px 15px 18px;border:1px solid rgba(239,233,223,.22);border-radius:12px;background:rgba(14,13,12,.58);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 18px 40px -18px rgba(0,0,0,.75);color:#f4efe6;font-family:var(--display);font-weight:500;font-size:16px;line-height:1;letter-spacing:.01em;text-transform:none;white-space:nowrap;cursor:pointer;opacity:0;transform:translate(-50%,-50%) scale(.96);transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.1,1),background .3s ease,border-color .3s ease;pointer-events:none}
@@ -1715,7 +1717,7 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
     <div class="wrap st rv">
       <div class="st-row">
         <h2 class="st-big">See what <em>could be.</em></h2>
-        <div class="st-copy"><p>We create a preview of your site before you ever pay a cent. (well&hellip;a nickel now, because the US is fresh out of pennies.)</p></div>
+        <div class="st-copy"><p>We create a preview of your site before you ever pay a cent.</p></div>
       </div>
       <ol class="steps">
         <li style="--i:0"><b>Preview</b><p>Your opening screen, built from your brand.</p></li>
@@ -2159,7 +2161,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     /* every example shows again: Flagship holds Arden, Halden House, Luna's, Soft Riot and Mountain & Valley inside its hairline */
     /* batch 12: Soft Riot, then Luna's, then Arden; each row named above it */
     fla.appendChild(riot);fla.appendChild(live);fla.appendChild(ar);fla.appendChild(hd);fla.appendChild(mv);
-    [[riot,'Soft Riot'],[live,'Luna&rsquo;s Coffee'],[ar,'Arden Architects']].forEach(function(o){o[0].insertAdjacentHTML('afterbegin','<p class="ex-nm">'+o[1]+'</p>');});
+    [[riot,'Soft Riot'],[live,'Luna&rsquo;s Caf&eacute;'],[ar,'Arden Architects']].forEach(function(o){o[0].insertAdjacentHTML('afterbegin','<p class="ex-nm">'+o[1]+'</p>');});
     /* batch 12: the Halden House rental app is parked with the saved-for-later pieces; remove ow-off to bring it back */
     hd.classList.add('ow-off');
     /* Nov 7: Mountain & Valley opens the page, so its Flagship example is parked; remove ow-off to bring it back */
@@ -2425,13 +2427,18 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
   function sndBridge(w){try{if(!w.mvSound)return;acInit();if(AC&&AG)w.mvSound(AC,AG);}catch(e){}}
   /* batch 17: the engine never stops between the revs: a seamless idle loop cut from the rev's sustain runs from the first rev until the car is gone, easing down as the camera pulls away */
   var hkT0=0,bed=null,BEDK=[[.6,0],[1.3,.5],[7.3,.24],[9.6,.24],[10.4,.36],[12.6,.34],[14.4,0]];
-  function bedLoop(b){var r=b.sampleRate,a=Math.floor(.7*r),e=Math.floor(2.7*r),X=Math.floor(.35*r),L=e-a-X,o=AC.createBuffer(b.numberOfChannels,L,r);
+  function bedLoop(b,s0,s1,xf){var r=b.sampleRate,a=Math.floor((s0||.7)*r),e=Math.floor((s1||2.7)*r),X=Math.floor((xf||.35)*r),L=e-a-X,o=AC.createBuffer(b.numberOfChannels,L,r);
     for(var c=0;c<b.numberOfChannels;c++){var i=b.getChannelData(c),y=o.getChannelData(c);for(var k=0;k<L;k++){var v=i[a+k];if(k<X){var m=k/X;v=v*Math.sin(m*Math.PI/2)+i[a+L+k]*Math.cos(m*Math.PI/2);}y[k]=v;}}return o;}
   function engBed(){if(!hkT0||bed||!sndOn||!AC||!BUF.v8)return;var el=(Date.now()-hkT0)/1000;if(el>BEDK[BEDK.length-1][0]-.3)return;
     try{var src=AC.createBufferSource(),g=AC.createGain(),now=AC.currentTime;src.buffer=bedLoop(BUF.v8);src.loop=true;src.playbackRate.value=.9;src.connect(g);g.connect(AG);
       var lv=function(t){for(var i=1;i<BEDK.length;i++)if(t<BEDK[i][0]){var p=BEDK[i-1],q=BEDK[i];return p[1]+(q[1]-p[1])*Math.max(0,(t-p[0])/(q[0]-p[0]));}return 0;};
       g.gain.setValueAtTime(Math.max(.0001,lv(el)),now);BEDK.forEach(function(k){if(k[0]>el)g.gain.linearRampToValueAtTime(Math.max(.0001,k[1]),now+(k[0]-el));});
-      src.start(now);src.stop(now+(BEDK[BEDK.length-1][0]-el)+.1);bed=src;}catch(e){}}
+      src.start(now,Math.max(0,(el-.35)*.9)%src.buffer.duration);src.stop(now+(BEDK[BEDK.length-1][0]-el)+.1);bed=src;
+      /* batch 20: the idle loop's own rev that lands at about 8.9s (the sixth rev you hear) is swapped for a steady idle cut from before the rev */
+      var sw=AC.createGain(),id=AC.createBufferSource(),iw=AC.createGain(),A=8.45,B=9.3,F=.15;src.disconnect();src.connect(sw);sw.connect(g);id.buffer=bedLoop(BUF.v8,.45,1.05,.12);id.loop=true;id.playbackRate.value=.9;id.connect(iw);iw.connect(g);
+      if(el<B){var ta=now+Math.max(0,A-el),tb=now+Math.max(0,B-el);sw.gain.setValueAtTime(el>A?0:1,now);iw.gain.setValueAtTime(el>A?1:0,now);
+        if(el<A){sw.gain.setValueAtTime(1,ta);sw.gain.linearRampToValueAtTime(0,ta+F);iw.gain.setValueAtTime(0,ta);iw.gain.linearRampToValueAtTime(1,ta+F);}
+        sw.gain.setValueAtTime(0,tb-F);sw.gain.linearRampToValueAtTime(1,tb);iw.gain.setValueAtTime(1,tb-F);iw.gain.linearRampToValueAtTime(0,tb);id.start(now);id.stop(now+(B-el)+.1);}}catch(e){}}
   function catchUp(){engBed();if(!sndOn||!cue||cue.on)return;var el=(Date.now()-cue.t)/1000;if(el<LEN[cue.n]-.2)cue.on=play(cue.n,el);}
   if(hk){
     /* batch 15: a three-second hold while the Spider revs and the prompt asks for sound; everything from the pull onward waits for it */
@@ -2622,6 +2629,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     at(KR+6750,function(){off('b5');});
     at(KR+7050,function(){on('b6');});
     at(KR+9150,function(){off('b6');});
+    at(KR+LS*1000+DR*1000+250-4000,function(){cl.add('hs-scrl');});   /* batch 20: the scroll pill comes up 4s sooner, once the logo is there */
     at(KR+LS*1000+DR*1000+250,function(){cl.add('hs-solo');});
     at(KR+LS*1000+DR*1000+5000,function(){cl.add('hs-pg');});
   }

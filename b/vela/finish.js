@@ -272,6 +272,8 @@
       var a = e.target.closest && e.target.closest('a[href]'); if(!a) return;
       var m = (a.getAttribute('href') || '').match(new RegExp('^(' + IDS.join('|') + ')/(index\\.html)?(#.*)?$'));
       if(!m) return;
+      /* batch 20: the folder opens straight onto its spec sheet; the full-screen blow-up of its first photograph is gone */
+      if(true) return;
       var card = a.closest('a.card.fold') || cardFor(m[1]);
       var img = card && (card.querySelector('.shot > img') || card.querySelector('.shot img'));
       if(!img || low()) return;

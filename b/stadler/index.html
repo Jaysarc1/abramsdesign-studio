@@ -47,7 +47,7 @@ p{margin:0}
 
 header{position:absolute;inset:0 0 auto;z-index:20;padding-top:env(safe-area-inset-top,0px)}
 header .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-block:22px}
-.brand{font-family:var(--display);font-size:24px;text-decoration:none}
+.brand{font-family:var(--display);font-size:26.4px;text-decoration:none}
 header nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:16px}
 header nav a{text-decoration:none;opacity:.82}
 header nav a:hover{opacity:1}
@@ -68,7 +68,7 @@ section{position:relative;z-index:2}
 
 /* hero */
 .hero{min-height:100svh;display:grid;align-items:center;overflow:hidden}
-.accent{position:absolute;width:63px;height:63px;pointer-events:none;background-image:radial-gradient(ellipse 30% 46% at 10% 42%,rgba(255,255,255,.06),transparent 100%),linear-gradient(90deg,transparent 50%,rgba(0,0,0,.12))}
+.accent{position:absolute;width:63px;height:63px;pointer-events:none;box-shadow:inset 5px 0 5px -3px rgba(255,255,255,.07),inset 0 5px 5px -3px rgba(255,255,255,.035),inset -5px 0 5px -3px rgba(0,0,0,.2),inset 0 -5px 5px -3px rgba(0,0,0,.15);background-image:radial-gradient(ellipse 30% 46% at 10% 42%,rgba(255,255,255,.06),transparent 100%),linear-gradient(90deg,transparent 50%,rgba(0,0,0,.12))}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;width:100%;padding-block:110px 90px}
 .hero h1{font-size:clamp(64px,9.68vw,155px);line-height:.88}
 /* batch 19: "Family owned" sits alone over "Since", on its left edge; the line under the year is gone, so the address rises to meet it */
@@ -392,6 +392,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
     function r(){sd=(sd*16807)%2147483647;return sd/2147483647}
     function j(){return (1+r())*(r()<.5?-1:1)}/* batch 19: 1 to 2 percent */
     for(var y=0;y<n;y++)for(var x=0;x<n;x++){g.fillStyle='hsl('+(177+j()*1.2).toFixed(1)+',56%,'+(13+j()*.3).toFixed(2)+'%)';g.fillRect(x*t,y*t,t,t)}
+    /* batch 20: a bump map, so each one reads as a fired tile: a rounded edge caught by the light from the left (lit on its left and top, in shade on its right and bottom), a slight pillow across its face, and the faint ripple of the glaze */
+    function lg(x0,y0,x1,y1,c0,c1){var q=g.createLinearGradient(x0,y0,x1,y1);q.addColorStop(0,c0);q.addColorStop(1,c1);return q}
+    for(var y=0;y<n;y++)for(var x=0;x<n;x++){var X=x*t+1,Y=y*t+1,w=t-1,e=5;
+      g.fillStyle=lg(X,0,X+e,0,'rgba(255,255,255,.075)','rgba(255,255,255,0)');g.fillRect(X,Y,e,w);
+      g.fillStyle=lg(0,Y,0,Y+e,'rgba(255,255,255,.04)','rgba(255,255,255,0)');g.fillRect(X,Y,w,e);
+      g.fillStyle=lg(X+w,0,X+w-e,0,'rgba(0,0,0,.2)','rgba(0,0,0,0)');g.fillRect(X+w-e,Y,e,w);
+      g.fillStyle=lg(0,Y+w,0,Y+w-e,'rgba(0,0,0,.15)','rgba(0,0,0,0)');g.fillRect(X,Y+w-e,w,e);
+      var p=g.createRadialGradient(X+w*.36,Y+w*.4,2,X+w*.5,Y+w*.5,w*.72);p.addColorStop(0,'rgba(255,255,255,.022)');p.addColorStop(.7,'rgba(255,255,255,0)');p.addColorStop(1,'rgba(0,0,0,.05)');g.fillStyle=p;g.fillRect(X,Y,w,w);
+      for(var k=0;k<3;k++){var cx=X+6+r()*(w-12),cy=Y+6+r()*(w-12),rr=6+r()*12,q=g.createRadialGradient(cx,cy,0,cx,cy,rr),dk=r()<.5;q.addColorStop(0,dk?'rgba(0,0,0,.035)':'rgba(255,255,255,.02)');q.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=q;g.fillRect(cx-rr,cy-rr,rr*2,rr*2)}}
+    var im=g.getImageData(0,0,c.width,c.height),dd=im.data;for(var i=0;i<dd.length;i+=4){var v=(r()-.5)*3;dd[i]+=v;dd[i+1]+=v;dd[i+2]+=v}g.putImageData(im,0,0);
     var b=document.body,cs=getComputedStyle(b);b.style.backgroundImage=cs.backgroundImage+',url('+c.toDataURL('image/png')+')';b.style.backgroundSize='64px 64px,64px 64px,64px 64px,64px 64px,100% 100%,1024px 1024px';b.style.backgroundAttachment='scroll,scroll,scroll,scroll,fixed,scroll';
   }catch(e){}})();
 
