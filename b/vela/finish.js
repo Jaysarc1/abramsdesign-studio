@@ -1133,16 +1133,16 @@
   var DIR = src.replace(/finish\.js.*$/, '') + 'assets/images/desk/trips/';
   /* [file, words in the same hand, flaw] flaws: crease, ear (a bent corner), leak (light got in) */
   var ROLLS = {
-    g550:  [['g550-1','first look at Phuket'],['g550-2','longtail boys','crease'],['g550-0','Captain Max'],
-            ['g550-3','Mom 0, jet lag 1'],['g550-4','we made it!'],['g550-5','mango sticky rice x3','ear']],
+    /* one family to a folder */
+    g550:  [['g550-4','we made it!'],['g550-2','longtail boys','crease'],['g550-0','Captain Max'],['cl350-5','he wanted UP','ear'],
+            ['cl350-0','boarding chaos'],['cl605-2','last one in!','crease'],['cl605-0','out cold, both of them'],['f900-5','home stretch']],
     f900:  [['f900-3','Milford Sound!!'],['f900-1','Abuela in Queenstown'],['f900-2','she named every one','ear'],
-            ['f900-0','first window seat'],['f900-4','windy at Wakatipu'],['f900-5','home stretch','crease']],
-    cl350: [['cl350-5','he wanted UP','crease'],['cl350-1','NYC, finally'],['cl350-3','Bow Bridge'],
-            ['cl350-0','boarding chaos'],['cl350-4','future captain','ear'],['cl350-2','goodnight, Manhattan','leak']],
-    cj4:   [['cj4-1','Biscuit gets the window','ear'],['cj4-2','morning walk, wheels up'],['cj4-0','oops, my thumb'],
-            ['cj4-3','park day','crease'],['cj4-4','Biscuit first, always'],['cj4-5','too much sun, no regrets']],
-    cl605: [['cl605-1','Teta made it'],['cl605-2','last one in!','crease'],['cl605-3','Jiddo’s paper planes'],
-            ['cl605-0','out cold by Nassau'],['cl605-4','over the shallows'],['cl605-5','Nassau, all of us','leak']]
+            ['f900-0','first window seat'],['f900-4','windy at Wakatipu']],
+    cl350: [['cl350-1','NYC, finally'],['cl350-3','Bow Bridge'],['cl350-4','future captain','ear'],['cl350-2','goodnight, Manhattan','leak']],
+    cj4:   [['g550-1','first look at the islands'],['g550-5','mango sticky rice x3','ear'],['g550-3','Mom 0, jet lag 1'],
+            ['cj4-0','oops, my thumb'],['cl605-4','over the shallows','crease']],
+    cl605: [['cl605-5','Nassau, all of us','leak'],['cl605-1','Teta made it'],['cj4-1','Biscuit gets the window','ear'],['cl605-3','Jiddo’s paper planes'],
+            ['cj4-3','park day','crease'],['cj4-2','morning walk, wheels up'],['cj4-4','Biscuit first, always'],['cj4-5','too much sun, no regrets']]
   };
   var ROLL = ROLLS[K]; if(!ROLL) return;
   function el(t, c, p){ var e = document.createElement(t); if(c) e.className = c; if(p) p.appendChild(e); return e; }
