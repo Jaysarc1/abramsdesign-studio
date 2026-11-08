@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><title>Abrams Design Studio</title><meta name="description" content="Abrams Design Studio: brands, sites and apps, designed one at a time."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}/* the opening line holds where the mark sits, then gives way to the ADS mark */
+<!doctype html><html><head><meta charset=utf8><title>Abrams Design Studio</title><meta name="description" content="Abrams Design Studio: brands, sites and apps, designed one at a time."><meta property="og:type" content="website"><meta property="og:site_name" content="Abrams Design Studio"><meta property="og:title" content="Abrams Design Studio"><meta property="og:description" content="Brands, sites and apps, designed one at a time."><meta property="og:url" content="https://abramsdesign.studio/"><meta property="og:image" content="https://abramsdesign.studio/img/ads-share.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="ADS"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://abramsdesign.studio/img/ads-share.jpg"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}/* the opening line holds where the mark sits, then gives way to the ADS mark */
 .fold-in{display:grid;align-items:center;justify-items:center}
 .fold-in>*{grid-area:1/1}
 .fold-in .fh{text-align:center;max-width:16em;opacity:0;pointer-events:none}
@@ -14,7 +14,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..400;1,9..144,300..400&family=Gilda+Display&family=Montserrat:wght@400&family=Unbounded:wght@500..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Gilda+Display&family=Montserrat:wght@400&family=Unbounded:wght@500..700&display=swap">
 <style>
 /* Layout: a quiet plaster page, a small wordmark, and the work given most of the room.
    Every preview is a live, looping cut of that mockup's opening moment. None of them link out. */
@@ -1463,6 +1463,22 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
 .dv-note .nt-n::after{content:"";position:absolute;right:0;bottom:0;width:26px;height:26px;background:linear-gradient(315deg,rgba(0,0,0,0) 46%,rgba(30,50,0,.25) 50%,#D6FB8E 56%,#C2F06E 100%);clip-path:polygon(0 0,100% 0,0 100%)}
 .nt-n small{display:block;margin-top:12px;font-family:var(--mono);font-weight:400;font-size:12px;font-style:normal;letter-spacing:.12em;text-transform:uppercase;line-height:1.35;color:rgba(17,20,12,.72)}
 @media (max-width:760px){.dq-v.dv-note{height:auto}.dv-note .nt-n,.dq-row.in .dv-note .nt-n{width:156px;height:156px;margin-top:-34px;transform:rotate(-3.5deg)}.nt-p{padding:18px 16px 16px;font-size:13px}}
+/* batch 26: the "now what?" questions stand apart from their answers; struck doubts keep their weight under a finer line; on phones the display serif gets a heavier, lower-contrast cut so its crossbars hold, the offer tabs stack, and the long pills fit their column */
+.fit-cta .fit-q{font-weight:600}
+.dq-q{font-weight:460}
+.dq-q span{background-size:0% 1px}
+.dq-row.in .dq-q span{background-size:100% 1px}
+@media (prefers-reduced-motion:reduce){.dq-q span{background-size:100% 1px}}
+@media (max-width:760px){
+  .st-big,.inq h2,.cta-blk p,.of-title,.of-cta p,.dq-q{font-weight:420;font-variation-settings:"opsz" 72}
+  .dq-q{font-weight:480}
+  .of-tabs{flex-direction:column;align-items:stretch;width:100%;max-width:340px;margin-inline:auto;overflow:visible;gap:8px}
+  .of-tabs button{width:100%;text-align:center}
+  .inq{grid-template-columns:minmax(0,1fr)}
+  .inq-l,#inqForm{width:100%;max-width:342px;margin-inline:auto}
+  #inqForm .pill,.pin-cta .pill{letter-spacing:.08em;padding:0 18px;max-width:100%;min-width:0}
+  body{overflow-x:clip}
+}
 </style>
   <div class="hook" id="hook" data-k="0" aria-label="Opening">
     <div class="hk-eng" aria-hidden="true"><svg class="hk-top" viewBox="0 0 2400 1100" preserveAspectRatio="xMidYMid meet">
@@ -1889,7 +1905,7 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
         </li>
         <li class="dq-row rv">
           <div class="dq-l"><span class="mono dq-n">09</span><p class="dq-q"><span>&ldquo;What will it cost?&rdquo;</span></p><p class="dq-a dq-w">Every quote begins with a conversation about your needs.</p></div>
-          <figure class="dq-v dv-inv" aria-hidden="true"><div class="inv"><div class="inv-h"><span class="mono">Invitation</span><svg class="inv-m"><use href="#adsmark"/></svg></div><p class="inv-t">A first conversation, <em>about what you need.</em></p><div class="inv-w"><span>M</span><span>T</span><span class="on">W</span><span>T</span><span>F</span></div><div class="inv-b"><span class="inv-who"><i>You</i><i class="ads"><svg><use href="#adsmark"/></svg></i></span><span class="inv-go">Accept</span></div></div></figure>
+          <figure class="dq-v dv-inv" aria-hidden="true"><div class="inv"><div class="inv-h"><span class="mono">Invitation</span><svg class="inv-m"><use href="#adsmark"/></svg></div><p class="inv-t">Let&rsquo;s begin with <em>what you need.</em></p><div class="inv-w"><span>M</span><span>T</span><span class="on">W</span><span>T</span><span>F</span></div><div class="inv-b"><span class="inv-who"><i>You</i><i class="ads"><svg><use href="#adsmark"/></svg></i></span><span class="inv-go">Accept</span></div></div></figure>
         </li>
       </ol>
     </div>
