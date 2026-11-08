@@ -426,3 +426,5 @@ html body .vela-mark .vname{-webkit-text-stroke:.042em currentColor}
 /* batch 18: the prints carry a few handwritten words now, so the hand comes down to fit the border on one line */
 html body .fin-print figcaption{font-size:18px!important;white-space:nowrap!important;overflow:visible!important;letter-spacing:0!important}
 @media (max-width:740px){ html body .fin-track .fin-print figcaption{font-size:16px!important} }
+/* batch 18: "Available" rides a little higher, so it has more air above the aircraft's name */
+html body a.card.fold .fold-when.on{position:relative;top:-8px}
