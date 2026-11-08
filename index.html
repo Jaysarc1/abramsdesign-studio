@@ -2738,7 +2738,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       lget(u).then(function(html){if(t!==ltok)return;
         if(el.getAttribute('data-own')==='sr')html=html.replace('</body>',OWNSR+'</body>');
         /* batch 16: the fetched page keeps its own address, so its pictures, fonts and scripts load from its folder, not this one's */
-        var bu=new URL(u,location.href).href;if(!/<base\s/i.test(html))html=/<head[^>]*>/i.test(html)?html.replace(/<head[^>]*>/i,function(m){return m+'<base href="'+bu+'">';}):'<base href="'+bu+'">'+html;
+        var bu=new URL(u,location.href).href;/* batch 24: pages that name their files from the site root (Soft Riot, the Luna's app) keep the root, or their pictures go missing */if(!/<base\s/i.test(html)&&!/['"`]play\//.test(html))html=/<head[^>]*>/i.test(html)?html.replace(/<head[^>]*>/i,function(m){return m+'<base href="'+bu+'">';}):'<base href="'+bu+'">'+html;
         var f=document.createElement('iframe');f.title=nm;f.setAttribute('allow','fullscreen; autoplay');
         f.addEventListener('load',function(){if(t!==ltok)return;lwire(f);lview.classList.remove('wait');f.classList.add('on');},{once:true});
         f.srcdoc=html;lview.appendChild(f);lfr=f;
