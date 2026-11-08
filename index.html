@@ -2118,7 +2118,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       'ow-flagship':'A full rebrand, a website with a 3D centerpiece, and the system behind it.'};
     function band(id,name,tg,n,list){
       var no={'ow-refresh':'01','ow-signature':'02','ow-flagship':'03'}[id]||'';var d=el('<div class="ind ow-band" id="'+id+'"><div class="head ow-hd"><div class="ow-p"><h2><span class="ow-n">'+no+'</span>'+name+'</h2><em class="ow-tg">'+tg+'</em>'+(GET[id]?'<p class="ow-get">'+GET[id]+'</p>':'')+'</div></div></div>');
-      if(list){var g=document.createElement('div');g.className='tiles';list.forEach(function(x){var t=T[x[0]];t.className='tile'+(x[1]?' '+x[1]:'');g.appendChild(t);});d.appendChild(g);}
+      if(list){var g=document.createElement('div');g.className='tiles';list.forEach(function(x){var t=T[x[0]];t.className='tile'+(t.classList.contains('bf')?' bf':'')+(x[1]?' '+x[1]:'');g.appendChild(t);});d.appendChild(g);}
       return d;
     }
     /* proof: each of the three seconds, before and after */
