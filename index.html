@@ -2614,7 +2614,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     at(10830,function(){clock();sfx('clock5');cl.add('hs-run');});
     var K5=16030;
     /* batch 17: at zero the old site stays up with the clock on 0.0; "But with the right adjustments" comes up over it, and two seconds later the curtain opens (2s slower than before) */
-    var KR=K5+850;   /* batch 21: the reveal starts 1.5s sooner after "But with the right adjustments"; everything after it keeps its place relative to the reveal */
+    var KR=K5+1600;   /* batch 21: the reveal starts 0.75s sooner after "But with the right adjustments"; everything after it keeps its place relative to the reveal */
     at(K5,function(){off('b3');off('b3b');});
     at(KR,function(){K(5);liveRun();});
     /* three lines, one at a time in the same spot; the site starts down to its logo as the second shows, and the last line leaves as the crane folds */
