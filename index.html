@@ -2148,11 +2148,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     hd.classList.add('ow-off');
     /* Nov 7: Mountain & Valley opens the page, so its Flagship example is parked; remove ow-off to bring it back */
     mv.classList.add('ow-off');
-    /* every example carries its name, quietly, on the picture itself */
-    var NM=new Map();
-    [ref,sig].forEach(function(b){[].forEach.call(b.querySelectorAll('.tile,.live:not(.ph):not(.own)'),function(x){
-      var nm=NM.get(x)||x.getAttribute('data-name');if(!nm)return;var host=x.classList.contains('tile')?x.querySelector('.frame'):x;
-      if(host&&!host.querySelector('.ex-tag'))host.appendChild(el('<span class="ex-tag" aria-hidden="true">'+nm+'</span>'));});});
+    /* Nov 8: the name labels on the example pictures are gone, his call */
   })();
   /* next round, #visual and #ourwork: Linen & Lacquer out, Banyan Row and Cortile parked with the maybes, the three homes become one developer (Meridian),
      each question carries its offer under it, on the question's left edge, and the twenty years move to the end of the page and open into the book */
