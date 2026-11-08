@@ -68,7 +68,10 @@ section{position:relative;z-index:2}
 .hero{min-height:100svh;display:grid;align-items:center;overflow:hidden}
 .accent{position:absolute;width:63px;height:63px;pointer-events:none}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;width:100%;padding-block:110px 90px}
-.hero h1{font-size:clamp(72px,11vw,176px);line-height:.88}
+.hero h1{font-size:clamp(58px,8.8vw,141px);line-height:.88}
+/* batch 19: "Family owned" sits alone over "Since", on its left edge; the line under the year is gone, so the address rises to meet it */
+.hero .label{display:block;margin-bottom:18px}
+.hero h1+.call{margin-top:34px}
 .hero h1 em{font-style:normal;color:var(--copper-l)}
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.04em}
 .hero h1 .ln>span{display:inline-block;animation:rise 1.1s cubic-bezier(.2,.75,.1,1) both}
@@ -217,9 +220,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
     <i class="node" data-x="next" style="top:84px"></i>
     <div class="wrap">
       <div>
-        <span class="label">Lake Worth Beach · Family owned</span>
+        <span class="label">Family owned</span>
         <h1><span class="ln"><span>Since</span></span><span class="ln"><span><em>1980.</em></span></span></h1>
-        <p>Three generations of one family, plumbing Palm Beach County.</p>
         <a class="call" href="#visit"><small>Visit the shop</small><b>306 North J Street</b></a>
       </div>
       <div class="art in" id="valve">

@@ -310,6 +310,21 @@ section{padding-block:var(--sp-sec)}
   .play .tap.nx{animation-delay:calc(var(--d,0s) + 4.8s)}
 }
 @keyframes tap{0%,30%{opacity:0;transform:scale(1.4)}34%{opacity:1;transform:scale(1)}37%{opacity:1;transform:scale(.78)}41%,100%{opacity:0;transform:scale(1.9)}}
+/* batch 19: the two Refresh tiles hold the old site, then the new one opens over it like a curtain from the middle, with a Before / After mark */
+.bf .page img+img{opacity:1;clip-path:inset(0 50% 0 50%)}
+.bf-m{position:absolute;left:3.6%;top:15%;z-index:2;display:grid;pointer-events:none}
+.bf-m i{grid-area:1/1;font:500 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;font-style:normal;color:#F7F3EB;background:rgba(20,18,16,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:7px 11px 6px;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(247,243,235,.22)}
+.bf-m i+i{opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  .play.bf .page img+img{animation:push 12s ease-in-out var(--d,0s) infinite alternate backwards,bfc 12s cubic-bezier(.65,0,.25,1) var(--d,0s) infinite backwards}
+  .play.bf .page img:first-child{animation-duration:12s}
+  .play .bf-m i:first-child{animation:bfb 12s ease-in-out var(--d,0s) infinite backwards}
+  .play .bf-m i+i{animation:bfa 12s ease-in-out var(--d,0s) infinite backwards}
+}
+@media (prefers-reduced-motion:reduce){.bf .page img+img{clip-path:none}.bf-m i:first-child{opacity:0}.bf-m i+i{opacity:1}}
+@keyframes bfc{0%,30%{clip-path:inset(0 50% 0 50%);opacity:1}52%,90%{clip-path:inset(0 0 0 0);opacity:1}97%{clip-path:inset(0 0 0 0);opacity:0}100%{clip-path:inset(0 50% 0 50%);opacity:0}}
+@keyframes bfb{0%,30%{opacity:1}36%,92%{opacity:0}98%,100%{opacity:1}}
+@keyframes bfa{0%,44%{opacity:0}52%,90%{opacity:1}96%,100%{opacity:0}}
 @keyframes swap{0%,40%{opacity:0}52%,88%{opacity:1}100%{opacity:0}}
 @media (max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tile,.tile.half{grid-column:span 1}.tile.feat{grid-column:1/-1;grid-row:auto}.tile.feat .page{aspect-ratio:16/10;flex:none}}
 @media (max-width:560px){.tiles{grid-template-columns:1fr}.tile.feat{grid-column:auto}}
@@ -2117,8 +2132,8 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     T.stadler=el('<figure class="tile" data-site="b/stadler/index.html" data-name="Stadler Plumbing" tabindex="0" role="button" aria-label="Open the Stadler Plumbing site"><div class="frame"><div class="page"><img src="img/w/stadler-1.webp" alt="Stadler Plumbing, a copper line through a glazed tile wall" loading="lazy"><img src="img/w/stadler-2.webp" alt="" loading="lazy"></div></div></figure>');
     T.jay.setAttribute('data-site','b/jay/index.html');T.jay.setAttribute('data-name','jayabrams.com');T.jay.setAttribute('tabindex','0');T.jay.setAttribute('role','button');T.jay.setAttribute('aria-label','Open the jayabrams.com site');
     /* batch 16: Refresh shows the two refreshes, Unique Places and Meridian; Signature's fourth slot is Vela, the aircraft broker */
-    T.up=el('<figure class="tile" data-site="b/unique-places/index.html" data-direct data-name="Unique Places" tabindex="0" role="button" aria-label="Open the Unique Places site"><div class="frame"><div class="page"><img src="img/w/up-0.webp" alt="Unique Places&rsquo; old site"><img src="img/w/up-1.webp" alt="Unique Places, homes by the water, after its refresh"></div></div></figure>');
-    T.meridianr=el('<figure class="tile" data-site="b/meridian-refresh/index.html" data-name="Meridian" tabindex="0" role="button" aria-label="Open the Meridian site"><div class="frame"><div class="page"><img src="img/w/mr-0.webp" alt="Meridian&rsquo;s old site" loading="lazy"><img src="img/w/mr-1.webp" alt="Meridian, houses drawn for the sun, after its refresh" loading="lazy"></div></div></figure>');
+    T.up=el('<figure class="tile bf" data-site="b/unique-places/index.html" data-direct data-name="Unique Places" tabindex="0" role="button" aria-label="Open the Unique Places site"><div class="frame"><div class="page"><img src="img/w/up-0.webp" alt="Unique Places&rsquo; old site"><img src="img/w/up-1.webp" alt="Unique Places, homes by the water, after its refresh"><span class="bf-m" aria-hidden="true"><i>Before</i><i>After</i></span></div></div></figure>');
+    T.meridianr=el('<figure class="tile bf" data-site="b/meridian-refresh/index.html" data-name="Meridian" tabindex="0" role="button" aria-label="Open the Meridian site"><div class="frame"><div class="page"><img src="img/w/mr-0.webp" alt="Meridian&rsquo;s old site" loading="lazy"><img src="img/w/mr-1.webp" alt="Meridian, houses drawn for the sun, after its refresh" loading="lazy"><span class="bf-m" aria-hidden="true"><i>Before</i><i>After</i></span></div></div></figure>');
     T.vela=el('<figure class="tile" data-site="b/vela/index.html" data-direct data-name="Vela" tabindex="0" role="button" aria-label="Open the Vela site"><div class="frame"><div class="page"><img src="img/w/vela-1.webp" alt="Vela, aircraft for sale laid out on a desk" loading="lazy"><img src="img/w/vela-2.webp" alt="" loading="lazy"></div></div></figure>');
     var ref=band('ow-refresh','Refresh','Your site, renewed.',2,[['up','half'],['meridianr','half']]);
     var sig=band('ow-signature','Signature','Your brand, elevated.',4,[['jay','half'],['stadler','half'],['vela','half'],['bascule2','half']]);
@@ -2515,7 +2530,8 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     /* the running order */
     hkT0=Date.now();at(350,function(){cl.add('hs-eng');sfx('v8');engBed();if(top)camGo(0);});
     /* batch 16: three revs through the hold, each catching the last one's tail */
-    setTimeout(function(){sfx('v8');},2550);/* batch 18: the third rev is gone, so the idle carries straight into the car's own rev and drive-off */
+    setTimeout(function(){sfx('v8');},2550);setTimeout(function(){sfx('v8');},4750);
+    /* batch 19: the third rev is back; the rev inside the car's own sound that came just before its final rev (about 0.7s to 1.35s into it) is muted in hk-focus.m4a */
     setTimeout(tapSettle,3300+HOLD-150);
     at(900,function(){K(1);});
     at(3300,function(){cl.add('hs-pull');K(0);sfx('whoosh');if(top&&!RM)camGo(1);});

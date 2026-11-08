@@ -11,12 +11,14 @@ a[href*="instagram.com"],a[href^="mailto:"],a[href*="maps"]{pointer-events:none!
   function kill(){document.querySelectorAll('a[href*="instagram.com"],a[href^="mailto:"]').forEach(function(a){a.removeAttribute('href');a.removeAttribute('target');a.setAttribute('aria-disabled','true');});}
   /* the sound button: lifted out of the bottom row to the top right, its centre on the logo's centre line, midway between the right palms */
   function snd(){var b=document.querySelector('button[aria-label*="ambient" i],button[aria-label*="sound" i]');if(!b)return;
-    /* batch 18: on phones the subtitle sits under the wordmark, so the button goes back to its own place in the bottom row, level with View Work */
-    if(innerWidth<700){b.classList.remove('ads-snd');b.style.top=b.style.left=b.style.right='';b.style.opacity='';b.style.pointerEvents='';return;}
-    var logo=document.querySelector('a[aria-label*="home" i] svg,a[aria-label*="home" i] img,a[aria-label*="home" i]');
-    var y=logo?logo.getBoundingClientRect().top+logo.getBoundingClientRect().height/2+scrollY:Math.max(48,innerHeight*.075);
+    /* batch 19: the button sits just after the wordmark, on its centre line, at every width */
+    var mk=document.querySelector('a[aria-label*="home" i]');
+    if(!mk){b.classList.remove('ads-snd');return;}
+    var r=mk.getBoundingClientRect(),c=mk.children,R=r.right;for(var k=0;k<c.length;k++){var q=c[k].getBoundingClientRect();if(q.width)R=Math.max(R,q.right);}
+    var w=b.offsetWidth||44,gap=innerWidth<700?14:26,x=Math.round(R+gap);
+    if(x+w>innerWidth-12){b.classList.remove('ads-snd');b.style.top=b.style.left=b.style.right='';b.style.opacity='';b.style.pointerEvents='';return;}
     if(scrollY>innerHeight){b.style.opacity='0';b.style.pointerEvents='none';}else{b.style.opacity='';b.style.pointerEvents='';}
-    b.classList.add('ads-snd');var w=b.offsetWidth||44;b.style.top=(y-scrollY-w/2).toFixed(0)+'px';if(innerWidth<700){b.style.right='16px';b.style.left='auto';}else{b.style.right='auto';b.style.left=Math.round(innerWidth*.72-w/2)+'px';}}
+    b.classList.add('ads-snd');b.style.top=(r.top+r.height/2-w/2).toFixed(0)+'px';b.style.right='auto';b.style.left=x+'px';}
   /* links into the stories open on the site itself */
   document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var u=new URL(a.getAttribute('href'),'https://uniqueplaces.vercel.app/');if(u.origin==='https://uniqueplaces.vercel.app'&&u.pathname!=='/'){e.preventDefault();e.stopPropagation();location.href=u.href;}},true);
   var go=function(){kill();snd();};
@@ -25,10 +27,10 @@ a[href*="instagram.com"],a[href^="mailto:"],a[href*="maps"]{pointer-events:none!
 })();
 </script><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" href="/_next/static/media/5f402bd2d8eef81a-s.p.16whm0euli40m.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="preload" href="/_next/static/media/81cef6a21128489e-s.p.0rb1wy2~c~egv.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="preload" href="/_next/static/media/9433d1a810498265-s.p.0h26ys03~gfbk.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="preload" as="image" imageSrcSet="/_next/image?url=%2Fimg%2Flanding%2Fdusk-pool.jpg&amp;w=640&amp;q=85 640w, /_next/image?url=%2Fimg%2Flanding%2Fdusk-pool.jpg&amp;w=750&amp;q=85 750w, /_next/image?url=%2Fimg%2Flanding%2Fdusk-pool.jpg&amp;w=828&amp;q=85 828w, /_next/image?url=%2Fimg%2Flanding%2Fdusk-pool.jpg&amp;w=1080&amp;q=85 1080w, /_next/image?url=%2Fimg%2Flanding%2Fdusk-pool.jpg&amp;w=1200&amp;q=85 1200w, /_next/image?url=%2Fimg%2Flanding%2Fdusk-pool.jpg&amp;w=1920&amp;q=85 1920w, /_next/image?url=%2Fimg%2Flanding%2Fdusk-pool.jpg&amp;w=2048&amp;q=85 2048w, /_next/image?url=%2Fimg%2Flanding%2Fdusk-pool.jpg&amp;w=3840&amp;q=85 3840w" imageSizes="100vw"/><link rel="stylesheet" href="/_next/static/chunks/13c1sr5ph4hal.css" data-precedence="next"/><meta name="next-size-adjust" content=""/><meta name="theme-color" content="#f4efe7"/><title>Unique Places</title><meta name="description" content="A thoughtful approach to neighborhoods."/><meta property="og:title" content="Unique Places"/><meta property="og:description" content="A thoughtful approach to neighborhoods."/><meta property="og:image" content="https://uniqueplaces.vercel.app/img/landing/dusk-pool.jpg"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Unique Places"/><meta name="twitter:description" content="A thoughtful approach to neighborhoods."/><meta name="twitter:image" content="https://uniqueplaces.vercel.app/img/landing/dusk-pool.jpg"/><link rel="icon" href="/icon.png?icon.03x5s9lhr88_1.png" sizes="512x512" type="image/png"/><link rel="apple-touch-icon" href="/apple-icon.png?apple-icon.02qa182i_user.png" sizes="180x180" type="image/png"/><style id="ads-b18">
 /* batch 18: the title moves up under the wordmark as its subtitle, set in the wordmark's own face (inherited from the same line: same family, medium weight, wide caps tracking), scaled down */
-.up18-top h1.ads-sub{margin:15px 0 0;padding:0 0 0 var(--track);font-family:inherit;font-style:normal;font-weight:500;font-size:12px;line-height:1.85;letter-spacing:var(--track);text-transform:uppercase;text-align:center;text-indent:0;color:#F4EFE7;opacity:.8;--track:0.24em;white-space:nowrap}
+.up18-top h1.ads-sub{margin:8px 0 0;padding:0 0 0 var(--track);font-family:inherit;font-style:normal;font-weight:500;font-size:14px;line-height:1.8;letter-spacing:var(--track);text-transform:uppercase;text-align:center;text-indent:0;color:#F4EFE7;opacity:.8;--track:0.24em;white-space:nowrap}
 /* padding-left equal to the tracking cancels the space letter-spacing leaves after the last letter, so each line sits on the true centre */
 @media (min-width:768px){
-  .up18-top h1.ads-sub{margin-top:21px;font-size:13px;line-height:1.6;--track:0.32em}
+  .up18-top h1.ads-sub{margin-top:10px;font-size:17px;line-height:1.5;--track:0.3em}
   .up18-top h1.ads-sub .ads-br,.up18-top h1.ads-sub br.ads-br{display:none}
 }
 /* batch 18: View Work a touch larger, lifted, with its thin scroll line drawing down beneath it */

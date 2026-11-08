@@ -18,7 +18,7 @@ Intentional offsets:
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Manrope:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap">
 <style>
 :root{
   --night:#0B1220;
@@ -86,7 +86,8 @@ header:not(.solid) nav .btn{opacity:0;pointer-events:none}
 .hero>.wrap{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(56px,10vh,104px)}
 .hero .grid{align-items:end}
 .hl{grid-column:1 / span 6}
-h1{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(60px,6.2vw,100px);line-height:1;letter-spacing:-.022em;white-space:nowrap}
+/* batch 19: the headline is set in Playfair Display, the serif he picked */
+h1{margin:0;font-family:"Playfair Display",Georgia,serif;font-weight:400;font-size:clamp(60px,6.2vw,100px);line-height:1.04;letter-spacing:-.012em;white-space:nowrap}
 h1 span{display:block}
 h1 em{color:var(--brass)}
 h1 .br{display:none}
