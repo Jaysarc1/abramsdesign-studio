@@ -863,7 +863,7 @@ const dropLaunch = dr => addDays(d0(Date.now()), -dr.ago) + 12 * 3600e3;
 const NEXT_DROP = addDays(d0(Date.now()), 3) + 19 * 3600e3;
 const ckey = (id, c = 0) => (COLS[id] && COLS[id][c] ? COLS[id][c].k : id);
 const colName = (id, c = 0) => (COLS[id] && COLS[id][c] ? COLS[id][c].n : PX[id].col);
-const img = (id, v = 'f', c = 0) => `play/soft-riot-app/img/${v === v.toLowerCase() ? 's' : 'l'}/${ckey(id, c)}-${v.toLowerCase()}.webp?v=${IMV}`;
+const img = (id, v = 'f', c = 0) => `img/${v === v.toLowerCase() ? 's' : 'l'}/${ckey(id, c)}-${v.toLowerCase()}.webp?v=${IMV}`;
 const pic = (id, v = 'f', cls = '', c = 0) => `<img src="${img(id, v, c)}" alt=""${cls ? ` class="${cls}"` : ''} draggable="false" decoding="async">`;
 
 /* ---------- order stages ---------- */
