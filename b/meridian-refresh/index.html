@@ -6,13 +6,16 @@
 <title>Meridian</title>
 <!--
 ALIGNMENT NOTES
-Grid: 12 columns, max width 1344px, 32px gutter, page gutter 24px (phones: 4 columns, 16px gutter, 16px page gutter).
+Grid: 12 columns, 32px gutter. Page gutter (--gut) is half the old centred inset: max(24px, 25vw - 324px), so 36px at 1440 and 156px at 1920; the right side moves out by the same amount (phones: 4 columns, 16px gutter, 16px page gutter).
 Copy starts on column 1. Readouts start on column 7 (storm) or column 8 (sun).
 Intentional offsets:
 - Hero louvers: one blade per grid column, split at the gutter centres, so the house is revealed column by column.
 - 01 The drawing: the photograph and its traced drawing start on column 5 and bleed off the right edge; every traced line sits on the photograph's own edges. The light that turns the drawing into the house spreads from the December sun, wherever that falls.
 - 02 The sun: the back wall sits on column 1 and the glass on column 5; sun, rays and arc sit on the true noon altitude for 26.7 N.
+- "Built 2025" plate sits 32px in from the photograph's own bottom-right corner, as a label on the print, not on the grid.
 - Storm meter: the category ticks and the wind front sit at true positions on a 0 to 220 mph scale, not on columns.
+- 04 to 09: every heading, ledger, caption and question starts on column 1's edge; the load path drawing and the questions list start on column 7, the two short quotes on column 9.
+- Process rail: one hairline across the full grid width at the dots' centre line (icon 72px + 22px gap + half the 11px dot).
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,26 +34,30 @@ Intentional offsets:
   --ink-2:#5A6378;
   --rule:#DDD5C6;
   --on-dark:rgba(243,238,229,.86);
-  --mute-dark:rgba(243,238,229,.6);
+  --mute-dark:rgba(243,238,229,.68);
   --serif:"Fraunces",Georgia,"Times New Roman",serif;
   --sans:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --ease:cubic-bezier(.2,.7,.2,1);
+  --gut:max(24px,calc(25vw - 324px));
   color-scheme:light;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--night);color:var(--ink);font-family:var(--sans);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
-.wrap{max-width:1344px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.wrap{margin:0 auto;padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px))}
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
-.eyebrow{margin:0;font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
+.eyebrow{margin:0;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
 .eyebrow i{font-style:normal;color:var(--mute-dark);margin-right:14px}
 .num{font-variant-numeric:lining-nums tabular-nums}
 
-/* button: 12px radius, an arrow cell divided by a hairline */
-.btn{display:inline-flex;align-items:center;background:var(--brass);color:#16130E;font-family:var(--sans);font-weight:600;font-size:17px;line-height:1;padding:0 0 0 26px;height:58px;text-decoration:none;border:0;border-radius:12px;cursor:pointer;transition:background .35s var(--ease)}
-.btn svg{width:18px;height:18px;box-sizing:content-box;padding:0 20px;margin-left:22px;height:58px;border-left:1px solid rgba(22,19,14,.22);transition:transform .45s var(--ease)}
-.btn:hover,.btn:focus-visible{background:var(--brass-2)}
+/* button: 12px radius, gold stroke with no fill, an arrow cell divided by a hairline */
+.btn{display:inline-flex;align-items:center;background:transparent;color:var(--bone);font-family:var(--sans);font-weight:600;font-size:17px;line-height:1;padding:0 0 0 26px;height:58px;text-decoration:none;border:1.5px solid var(--brass);border-radius:12px;cursor:pointer;transition:background .35s var(--ease),border-color .35s var(--ease),color .35s}
+.btn svg{width:18px;box-sizing:content-box;padding:0 20px;margin-left:22px;height:auto;align-self:stretch;color:var(--brass);border-left:1px solid rgba(217,163,91,.45);transition:transform .45s var(--ease)}
+.btn:hover,.btn:focus-visible{background:rgba(217,163,91,.1);border-color:var(--brass-2)}
+.btn.ink{color:var(--ink);border-color:var(--brass-ink)}
+.btn.ink svg{color:var(--brass-ink);border-left-color:rgba(154,106,44,.4)}
+.btn.ink:hover,.btn.ink:focus-visible{background:rgba(154,106,44,.08)}
 .btn:hover svg{transform:translateX(3px)}
 .btn:focus-visible{outline:2px solid var(--brass);outline-offset:4px}
 
@@ -61,12 +68,12 @@ header .wrap{display:flex;align-items:center;height:88px}
 .logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
 .logo svg{width:28px;height:28px;color:var(--brass);flex:none}
 .logo b{font-weight:600;font-size:15px;letter-spacing:.3em;text-transform:uppercase;margin-right:-.3em}
-.logo span{font-size:13px;font-weight:500;letter-spacing:.06em;color:var(--mute-dark);padding-left:14px;margin-left:4px;border-left:1px solid rgba(243,238,229,.24);line-height:1.1}
+.logo span{font-size:14px;font-weight:500;letter-spacing:.06em;color:var(--mute-dark);padding-left:14px;margin-left:4px;border-left:1px solid rgba(243,238,229,.24);line-height:1.1}
 nav{margin-left:auto;display:flex;align-items:center;gap:40px;font-size:16px;font-weight:500}
 nav a.t{text-decoration:none;color:rgba(243,238,229,.74);transition:color .3s}
 nav a.t:hover{color:var(--bone)}
 nav .btn{height:48px;font-size:15px;padding-left:20px;transition:background .35s,opacity .6s}
-nav .btn svg{height:48px;padding:0 16px;margin-left:18px;width:16px}
+nav .btn svg{padding:0 16px;margin-left:18px;width:16px}
 header:not(.solid) nav .btn{opacity:0;pointer-events:none}
 .js header>.wrap{opacity:0;transition:opacity 1.4s ease}
 .js header.up>.wrap{opacity:1}
@@ -91,9 +98,9 @@ h1 .br{display:none}
 .idx{grid-column:7 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px;margin:0;padding:0;list-style:none}
 .idx a{display:block;text-decoration:none;color:var(--bone);border-top:1px solid rgba(243,238,229,.3);padding-top:18px;transition:border-color .4s}
 .idx a:hover{border-top-color:var(--brass)}
-.idx i{display:block;font-style:normal;font-size:13px;font-weight:600;letter-spacing:.18em;color:var(--brass)}
+.idx i{display:block;font-style:normal;font-size:14px;font-weight:600;letter-spacing:.18em;color:var(--brass)}
 .idx b{display:block;margin-top:10px;font-family:var(--serif);font-weight:300;font-size:26px;line-height:1.1}
-.idx span{display:block;margin-top:8px;font-size:14px;color:var(--mute-dark)}
+.idx span{display:block;margin-top:8px;font-size:15px;color:rgba(243,238,229,.74)}
 
 /* shared section type */
 .ch2{margin:18px 0 0;font-family:var(--serif);font-weight:300;font-size:clamp(40px,3.9vw,60px);line-height:1.05;letter-spacing:-.015em;text-wrap:balance}
@@ -113,7 +120,7 @@ h1 .br{display:none}
 .dl .ink{fill:none;stroke:var(--ink);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
 .dl .gold{fill:none;stroke:var(--brass-2);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
 .dl .an{fill:none;stroke:var(--brass-ink);stroke-width:1;stroke-linecap:round}
-.dl .lab{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.14em;fill:var(--brass-ink)}
+.dl .lab{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.14em;fill:var(--brass-ink)}
 .dl .lab.k{fill:var(--ink-2);letter-spacing:.1em}
 .dtx{position:absolute;left:0;right:0;bottom:80px}
 .dtx .in{grid-column:1 / span 4}
@@ -125,9 +132,9 @@ h1 .br{display:none}
 .built .dtx .eyebrow i{color:var(--mute-dark)}
 .dtx p.s{margin:22px 0 0;font-size:18px;line-height:1.55;color:var(--ink-2);max-width:30ch}
 .built .dtx p.s{color:var(--on-dark)}
-.tblk{position:absolute;right:max(24px,calc((100vw - 1344px)/2 + 24px));bottom:80px;margin:0;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);text-align:right;line-height:1.7}
+.tblk{position:absolute;right:var(--gut);bottom:80px;margin:0;font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);text-align:right;line-height:1.7}
 .tblk b{display:block;font-weight:600;color:var(--brass-ink)}
-.built .tblk{color:var(--mute-dark)}
+.built .tblk{color:rgba(243,238,229,.82);right:32px;bottom:32px;text-shadow:0 1px 14px rgba(0,0,0,.45)}
 .built .tblk b{color:var(--brass)}
 
 /* 02 the sun */
@@ -141,7 +148,7 @@ h1 .br{display:none}
 .sun .ch2 span{display:block}
 .sun .sh p{margin:28px 0 0;font-family:var(--sans);font-size:18px;line-height:1.55;letter-spacing:0;color:var(--ink-2);max-width:34ch}
 .ro{grid-column:1 / span 5;grid-row:3;align-self:end;padding-bottom:64px;font-variant-numeric:lining-nums tabular-nums}
-.ro-m{display:block;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
+.ro-m{display:block;font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2)}
 .ro-row{display:flex;align-items:flex-end;gap:32px;margin-top:8px}
 .ro-row>b{flex:none;width:2.3em;font-family:var(--serif);font-weight:300;font-size:clamp(76px,7vw,112px);line-height:.86;letter-spacing:-.03em}
 .ro dl{flex:1;margin:0;display:grid;padding-bottom:4px}
@@ -181,7 +188,7 @@ h1 .br{display:none}
 .st-top .eyebrow{grid-column:1 / span 6;grid-row:1;align-self:start}
 .st-top .ch2{grid-column:1 / span 6;grid-row:2}
 .read{grid-column:7 / span 6;grid-row:1 / span 2;align-self:end}
-.read .cat{display:block;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-bottom:8px}
+.read .cat{display:block;font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-bottom:8px}
 .read .big{display:flex;align-items:baseline;gap:18px;font-family:var(--serif);font-weight:300;font-size:clamp(150px,15.5vw,236px);line-height:.8;letter-spacing:-.035em;font-variant-numeric:lining-nums tabular-nums}
 .read .big small{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mute-dark)}
 .gauge{position:relative;display:grid;gap:30px}
@@ -200,18 +207,18 @@ h1 .br{display:none}
 .bar.code.past .lab b,.bar.code.past .lab span{color:rgba(243,238,229,.38)}
 .bar.us.hold .fill{background:var(--brass-2);box-shadow:0 0 28px rgba(217,163,91,.45)}
 .bar.us.hold .lab span{color:var(--brass)}
-.scale{display:flex;justify-content:space-between;font-size:13px;color:rgba(243,238,229,.5);margin-top:-14px;font-variant-numeric:tabular-nums}
+.scale{display:flex;justify-content:space-between;font-size:14px;color:rgba(243,238,229,.62);margin-top:-14px;font-variant-numeric:tabular-nums}
 .front{position:absolute;left:0;top:0;width:0;pointer-events:none;will-change:transform}
 .front i{position:absolute;left:-1px;width:2px;background:var(--bone);box-shadow:0 0 14px rgba(243,238,229,.5);transition:background .4s,box-shadow .4s}
 .gauge.hold .front i{background:var(--brass-2);box-shadow:0 0 18px rgba(217,163,91,.7)}
 
 /* the ocean house, full bleed */
 .work{position:relative;height:clamp(460px,78vh,800px);background:var(--night);overflow:hidden}
-.work img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
-.work::after{content:"";position:absolute;inset:auto 0 0;height:55%;background:linear-gradient(180deg,rgba(9,14,24,0),rgba(9,14,24,.66));pointer-events:none}
+.work img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+.work::after{content:"";position:absolute;inset:auto 0 0;height:60%;background:linear-gradient(180deg,rgba(9,14,24,0),rgba(9,14,24,.42) 45%,rgba(9,14,24,.8));pointer-events:none}
 .work>.wrap{position:relative;z-index:1;height:100%;display:flex;align-items:flex-end;padding-bottom:56px}
-.work p{margin:0;color:#fff;font-family:var(--serif);font-weight:300;font-size:clamp(30px,2.8vw,42px);line-height:1.12;text-shadow:0 1px 18px rgba(0,0,0,.3)}
-.work p em{display:block;font-family:var(--sans);font-style:normal;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-2);margin-bottom:12px;text-shadow:none}
+.work p{margin:0;color:#fff;font-family:var(--serif);font-weight:300;font-size:clamp(34px,3.2vw,50px);line-height:1.12;text-shadow:0 1px 22px rgba(0,0,0,.45)}
+.work p em{display:block;font-family:var(--sans);font-style:normal;font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-2);margin-bottom:12px;text-shadow:none}
 .js .work img{clip-path:inset(0 9% 0 9%);transform:scale(1.06);transition:clip-path 2.2s cubic-bezier(.6,0,.2,1),transform 3.8s var(--ease)}
 .js .work.on img{clip-path:inset(0 0 0 0);transform:none}
 
@@ -222,15 +229,204 @@ h1 .br{display:none}
 .book .h2 em{color:var(--brass)}
 .book .side{margin:32px 0 0;color:var(--on-dark);font-size:20px;max-width:30ch}
 form{grid-column:7 / span 6;display:grid;gap:24px;align-self:end}
-label{display:grid;gap:8px;font-size:15px;font-weight:500;color:var(--mute-dark)}
+label{display:grid;gap:8px;font-size:16px;font-weight:500;color:var(--mute-dark)}
 input,select{font:inherit;font-size:19px;color:var(--bone);background:transparent;border:0;border-bottom:1px solid var(--line);padding:12px 0;outline:none;border-radius:0;-webkit-appearance:none;appearance:none;transition:border-color .3s}
 select{background-image:linear-gradient(45deg,transparent 50%,var(--bone) 50%),linear-gradient(135deg,var(--bone) 50%,transparent 50%);background-position:calc(100% - 14px) 52%,calc(100% - 8px) 52%;background-size:6px 6px;background-repeat:no-repeat}
 select option{color:var(--ink)}
 input:focus,select:focus{border-color:var(--brass)}
 form .btn{justify-self:start;margin-top:14px}
 .thanks{margin:0;font-family:var(--serif);font-weight:300;font-size:34px;line-height:1.2}
-footer{padding-block:36px;background:var(--night);color:rgba(243,238,229,.5);border-top:1px solid var(--line);font-size:14px}
-footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+footer{padding-block:56px 36px;background:var(--night);color:rgba(243,238,229,.6);border-top:1px solid var(--line);font-size:15px}
+.ft-top{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;padding-bottom:36px;border-bottom:1px solid var(--line)}
+.ft-top .logo{color:var(--bone)}
+.ft-nav{display:flex;flex-wrap:wrap;gap:12px 36px}
+.ft-nav a{color:rgba(243,238,229,.78);text-decoration:none;font-size:15px;font-weight:500;transition:color .3s}
+.ft-nav a:hover{color:var(--brass-2)}
+.ft-bot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:28px}
+
+/* ---------- build-out: shared ---------- */
+.blk{padding-block:136px}
+.blk.dk{background:var(--night);color:var(--bone)}
+.blk.dp{background:var(--deep);color:var(--bone)}
+.blk.ps{background:var(--sheet);color:var(--ink)}
+.ps .eyebrow{color:var(--brass-ink)}
+.ps .eyebrow i{color:var(--ink-2)}
+.hd{grid-column:1 / span 6}
+.hd .ch2 span{display:block}
+.hd p.s{margin:24px 0 0;font-size:18px;line-height:1.55;max-width:38ch}
+.dk .hd p.s,.dp .hd p.s{color:var(--on-dark)}
+.ps .hd p.s{color:var(--ink-2)}
+/* line drawings draw themselves in when they arrive */
+.js [data-draw] .dw{stroke-dasharray:1 1;stroke-dashoffset:1;transition:stroke-dashoffset 2.4s var(--ease)}
+.js [data-draw].on .dw{stroke-dashoffset:0}
+.js [data-draw] .fd{opacity:0;transition:opacity 1.6s var(--ease) 1.4s}
+.js [data-draw].on .fd{opacity:1}
+
+/* 04 the load path */
+.lp .hd{grid-column:1 / span 5;grid-row:1}
+.lp-fig{grid-column:7 / -1;grid-row:1 / span 2;align-self:center;margin:0}
+.lp-fig svg{display:block;width:100%;max-width:560px;height:auto;overflow:visible}
+.k-ln{fill:none;stroke:rgba(243,238,229,.66);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.k-t{fill:none;stroke:rgba(243,238,229,.34);stroke-width:1.1;stroke-linecap:round}
+.k-gl{fill:none;stroke:#8FB2DA;stroke-width:1.5}
+.k-au{fill:none;stroke:var(--brass);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.k-fl{fill:none;stroke:#6F93C2;stroke-width:1.2;stroke-dasharray:7 6}
+.k-c circle{fill:var(--deep);stroke:var(--brass);stroke-width:1.5}
+.k-c text{font-family:var(--sans);font-size:20px;font-weight:600;fill:var(--brass-2)}
+.ledger{grid-column:1 / span 5;grid-row:2;margin:56px 0 0;padding:0;list-style:none}
+.ledger li{display:grid;grid-template-columns:34px 172px minmax(0,1fr);column-gap:24px;align-items:center;padding:22px 0;border-top:1px solid var(--line)}
+.ledger li:last-child{border-bottom:1px solid var(--line)}
+.ledger .k{width:34px;height:34px;border:1.5px solid var(--brass);border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:600;color:var(--brass-2)}
+.ledger b{font-family:var(--serif);font-weight:300;font-size:54px;line-height:1;letter-spacing:-.02em;white-space:nowrap;font-variant-numeric:lining-nums tabular-nums}
+.ledger b small{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute-dark);margin-left:8px}
+.ledger p{margin:0;font-size:16px;line-height:1.5;color:var(--on-dark)}
+
+/* 05 the houses */
+.hz .hd{margin-bottom:64px}
+.hz-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:80px}
+.hz-c{margin:0}
+.plate{position:relative;aspect-ratio:16 / 10;background:#EFE8DB;border:1px solid var(--rule);overflow:hidden}
+.plate::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(20,27,42,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(20,27,42,.05) 1px,transparent 1px);background-size:32px 32px}
+.plate svg{position:absolute;inset:0;width:100%;height:100%}
+.plate .tag{position:absolute;left:20px;top:20px;z-index:1;font-size:13px;font-weight:600;letter-spacing:.14em;color:var(--brass-ink);border:1px solid var(--brass-ink);border-radius:12px;padding:5px 12px;line-height:1.2;background:rgba(239,232,219,.7)}
+.e-ink{fill:none;stroke:var(--ink);stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round}
+.e-t{fill:none;stroke:var(--ink);stroke-opacity:.42;stroke-width:1.1;stroke-linecap:round}
+.e-gl{fill:none;stroke:#2C4470;stroke-width:1.3}
+.e-pl{fill:none;stroke:#2F4A3A;stroke-width:1.5;stroke-linecap:round}
+.e-wt{fill:none;stroke:#2C4470;stroke-opacity:.6;stroke-width:1.2;stroke-linecap:round}
+.hz-c figcaption{margin-top:26px}
+.hz-c h3{margin:0;font-family:var(--serif);font-weight:300;font-size:34px;line-height:1.1;letter-spacing:-.01em}
+.hz-c .meta{display:block;margin-top:10px;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-ink)}
+.hz-c p{margin:12px 0 0;font-size:17px;line-height:1.55;color:var(--ink-2);max-width:46ch}
+
+/* 06 the palette */
+.pl-grid{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px;margin-top:64px}
+.sw{margin:0}
+.sw .tex{position:relative;aspect-ratio:4 / 5;overflow:hidden;background:#1A263C}
+.sw .tex svg{position:absolute;inset:0;width:100%;height:100%;display:block;transition:transform 2.6s var(--ease)}
+.sw:hover .tex svg{transform:scale(1.045)}
+.sw .tex::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(243,238,229,.08);pointer-events:none}
+.sw figcaption{margin-top:24px}
+.sw i{display:block;font-style:normal;font-size:14px;font-weight:600;letter-spacing:.18em;color:var(--brass)}
+.sw h3{margin:10px 0 0;font-family:var(--serif);font-weight:300;font-size:30px;line-height:1.1}
+.sw p{margin:10px 0 0;font-size:16px;line-height:1.55;color:var(--on-dark);max-width:30ch}
+.sw .spec{display:block;margin-top:14px;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute-dark)}
+
+/* 07 the process */
+.steps{grid-column:1 / -1;position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));column-gap:32px;margin:72px 0 0;padding:0;list-style:none}
+.steps .rl{position:absolute;left:0;right:0;top:99px;height:1px;background:var(--rule)}
+.steps .rl i{position:absolute;inset:0;background:var(--brass);transform-origin:0 50%}
+.js .steps .rl i{transform:scaleX(0);transition:transform 3.6s var(--ease)}
+.js .steps .rl.on i{transform:none}
+.step svg{display:block;width:72px;height:72px;overflow:visible}
+.step .ic{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.step .ig{fill:none;stroke:var(--brass-ink);stroke-width:1.5;stroke-linecap:round}
+.step .dt{position:relative;z-index:1;display:block;width:11px;height:11px;margin-top:22px;border-radius:50%;background:var(--sheet);border:1.5px solid rgba(90,99,120,.6);transition:background .8s var(--ease) 1s,border-color .8s var(--ease) 1s}
+.js .step.on .dt,.step .dt{background:var(--brass);border-color:var(--brass)}
+.js .step:not(.on) .dt{background:var(--sheet);border-color:rgba(90,99,120,.6)}
+.step .no{display:block;margin-top:28px;font-size:14px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-ink)}
+.step h3{margin:10px 0 0;font-family:var(--serif);font-weight:300;font-size:30px;line-height:1.1}
+.step p{margin:12px 0 0;font-size:16px;line-height:1.55;color:var(--ink-2)}
+
+/* 08 in their words */
+.wd .eyebrow{grid-column:1 / -1;margin-bottom:40px}
+.wd blockquote{margin:0}
+.q1{grid-column:1 / span 7}
+.q1 p{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(36px,3.4vw,56px);line-height:1.14;letter-spacing:-.012em;text-wrap:balance}
+.q1 .qm,.qx .qm{color:var(--brass)}
+.qx{grid-column:9 / -1;display:grid;align-content:start}
+.qx blockquote+blockquote{margin-top:36px;padding-top:36px;border-top:1px solid var(--line)}
+.qx p{margin:0;font-family:var(--serif);font-weight:300;font-size:25px;line-height:1.3}
+.wd cite{display:block;margin-top:22px;font-style:normal;font-size:14px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.wd cite span{color:var(--mute-dark)}
+.q1 cite{margin-top:32px}
+
+/* 09 questions */
+.fq .hd{grid-column:1 / span 5;align-self:start;position:sticky;top:128px}
+.fq .hd .btn{margin-top:36px}
+.fq-l{grid-column:7 / -1}
+.fq details{border-top:1px solid var(--rule)}
+.fq details:last-child{border-bottom:1px solid var(--rule)}
+.fq summary{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:26px 0;cursor:pointer;list-style:none;font-family:var(--serif);font-weight:300;font-size:26px;line-height:1.25;transition:color .3s}
+.fq summary::-webkit-details-marker{display:none}
+.fq summary:hover{color:var(--brass-ink)}
+.fq summary:focus-visible{outline:2px solid var(--brass-ink);outline-offset:4px}
+.pm{flex:none;position:relative;width:20px;height:20px}
+.pm::before,.pm::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;margin-top:-.75px;background:var(--brass-ink);transition:transform .5s var(--ease)}
+.pm::after{transform:rotate(90deg)}
+.fq details[open] .pm::after{transform:rotate(0)}
+.fq .a{margin:-4px 0 0;padding:0 56px 30px 0;font-size:17px;line-height:1.6;color:var(--ink-2);max-width:60ch}
+.fq details[open] .a{animation:fqin .8s var(--ease)}
+@keyframes fqin{from{opacity:0;transform:translateY(-8px)}}
+
+/* close: the studio's own details */
+.reach{margin:48px 0 0;display:grid;gap:22px}
+.reach div{display:grid;gap:4px}
+.reach dt{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
+.reach dd{margin:0;font-size:18px;line-height:1.5;color:var(--on-dark)}
+.reach a{color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(217,163,91,.5);transition:border-color .3s}
+.reach a:hover{border-bottom-color:var(--brass-2)}
+
+@media (min-width:901px) and (max-width:1200px){
+  .ledger li{grid-template-columns:34px minmax(0,1fr);row-gap:8px}
+  .ledger p{grid-column:2}
+}
+@media (max-width:900px){
+  .blk{padding-block:96px}
+  .hd,.wd .eyebrow{text-align:center}
+  .hd p.s{margin-inline:auto}
+  .lp .hd,.lp-fig,.ledger{grid-row:auto}
+  .lp-fig{margin-top:48px}
+  .lp-fig svg{margin-inline:auto;max-width:440px}
+  .ledger{margin-top:48px}
+  .ledger li{grid-template-columns:1fr;justify-items:center;text-align:center;row-gap:10px;padding:26px 0}
+  .ledger p{max-width:32ch}
+  .hz .hd{margin-bottom:48px}
+  .hz-grid{grid-template-columns:1fr;row-gap:64px}
+  .hz-c figcaption{text-align:center}
+  .hz-c p{margin-inline:auto}
+  .pl-grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px;row-gap:48px;margin-top:48px}
+  .sw figcaption{text-align:center}
+  .sw p{margin-inline:auto}
+  .steps{grid-template-columns:1fr;margin-top:56px}
+  .steps .rl,.step .dt{display:none}
+  .step{text-align:center}
+  .step svg{margin:0 auto}
+  .step .no{margin-top:20px}
+  .step p{max-width:34ch;margin-inline:auto}
+  .step+.step::before{content:"";display:block;width:1px;height:44px;background:var(--brass);opacity:.5;margin:36px auto 36px}
+  .wd .eyebrow{margin-bottom:32px}
+  .q1,.qx{text-align:center}
+  .qx{margin-top:56px;padding-top:44px;border-top:1px solid var(--line)}
+  .fq .hd{position:static}
+  .fq-l{margin-top:48px}
+  .reach{justify-items:start}
+}
+@media (max-width:520px){
+  .blk{padding-block:80px}
+  .hd p.s{font-size:17px}
+  .lp-fig svg{max-width:100%}
+  .ledger b{font-size:48px}
+  .hz-c h3{font-size:30px}
+  .hz-c p{font-size:16px}
+  .plate .tag{left:12px;top:12px}
+  .sw h3{font-size:22px}
+  .sw p{font-size:15px}
+  .sw .spec{font-size:12px;letter-spacing:.1em}
+  .step h3{font-size:28px}
+  .q1 p{font-size:30px}
+  .qx p{font-size:22px}
+  .fq summary{font-size:21px;padding:22px 0}
+  .fq .a{font-size:16px;padding-right:0}
+  .ft-top,.ft-bot{flex-direction:column;align-items:center;text-align:center}
+  .ft-nav{justify-content:center;gap:12px 24px}
+}
+@media (prefers-reduced-motion:reduce){
+  .js [data-draw] .dw{stroke-dashoffset:0;transition:none}
+  .js [data-draw] .fd{opacity:1;transition:none}
+  .js .steps .rl i{transform:none;transition:none}
+  .sw .tex svg{transition:none}
+}
 
 /* reveals: each block gets its moment */
 .rv{transition:opacity 1.3s var(--ease),transform 1.3s var(--ease)}
@@ -274,11 +470,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   form{margin-top:48px}
 }
 @media (max-width:520px){
-  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  :root{--gut:16px}
   header .wrap{height:72px}
   .logo b{font-size:14px}
   nav .btn{height:44px;font-size:14px;padding-left:16px}
-  nav .btn svg{height:44px;padding:0 13px;margin-left:14px}
+  nav .btn svg{padding:0 13px;margin-left:14px}
   h1{font-size:clamp(50px,14.4vw,58px);line-height:1.02}
   h1 .br{display:block}
   .lede{font-size:18px;margin:20px 0 30px}
@@ -309,14 +505,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   .bar .lab span{font-size:24px}
   .track{height:10px}
   .scale{font-size:12px}
-  .work p{font-size:28px}
+  .work p{font-size:30px}
+  .work img{object-position:42% 62%}
   .work>.wrap{padding-bottom:36px}
   .h2{font-size:44px}
   .book .h2{font-size:52px}
   .stat b{font-size:52px}
   .stat>span{font-size:15px}
   .btn{height:56px}
-  .btn svg{height:56px}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -386,7 +582,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
           <p class="tblk"><b>Sheet A-201</b>Northeast elevation</p>
         </div>
         <div class="dl built" id="dbuilt">
-          <div class="ph" id="dph"><img src="img/house.jpg" alt="The same house, built: board-formed concrete and glass at dusk" loading="lazy"></div>
+          <div class="ph" id="dph"><!-- swap: construction (the traced lines in LN, IW/IH and TIP are drawn on this photograph's own edges: retrace them when it changes) --><img src="img/construction.webp" alt="The house mid-build, looking out through the framed opening to the pool shell" loading="lazy"></div>
           <svg id="dgold" aria-hidden="true"></svg>
           <div class="dtx"><div class="wrap grid"><div class="in">
             <p class="eyebrow"><i>01</i>The house</p>
@@ -452,9 +648,266 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     </div>
   </section>
 
+  <section class="blk dp lp" id="load" aria-label="The load path">
+    <div class="wrap grid">
+      <div class="hd">
+        <p class="eyebrow rv"><i>04</i>The load path</p>
+        <h2 class="ch2 rv"><span>One unbroken line,</span> <span>roof to bedrock.</span></h2>
+        <p class="s rv">Wind doesn't push a house over. It lifts it. We tie every slab to every wall to every pile, so the roof has nowhere to go.</p>
+      </div>
+      <figure class="lp-fig" data-draw aria-hidden="true">
+        <svg viewBox="0 0 560 670">
+          <defs><pattern id="lpe" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path class="nd" d="M0,0 V9" stroke="#F3EEE5" stroke-opacity=".14" stroke-width="1"/></pattern></defs>
+          <rect class="nd fd" x="0" y="470" width="560" height="200" fill="url(#lpe)"/>
+          <path class="k-ln" d="M0 470 H560"/>
+          <path class="k-fl nd fd" d="M0 448 H560"/>
+          <path class="k-t" d="M0 236 H56 M46 229 L56 236 L46 243 M0 290 H56 M46 283 L56 290 L46 297 M0 344 H56 M46 337 L56 344 L46 351"/>
+          <path class="k-t" d="M200 160 V108 M192 118 L200 108 L208 118 M300 160 V100 M292 110 L300 100 L308 110 M400 160 V108 M392 118 L400 108 L408 118"/>
+          <path class="k-ln" d="M40 172 H534 V190 H40 Z"/>
+          <path class="k-ln" d="M80 190 V410 M104 190 V410"/>
+          <path class="k-ln" d="M414 190 V410 M426 190 V410"/>
+          <path class="k-gl" d="M452 206 V410 M458 206 V410 M446 206 H464 M446 410 H464"/>
+          <path class="k-t" d="M104 300 H414 M104 360 H414"/>
+          <path class="k-ln" d="M70 410 H490 V430 H70 Z"/>
+          <path class="k-ln" d="M80 430 V500 M480 430 V500"/>
+          <path class="k-ln" d="M60 500 H500 V530 H60 Z"/>
+          <path class="k-ln" d="M92 530 V640 L100 652 L108 640 V530 M272 530 V640 L280 652 L288 640 V530 M452 530 V640 L460 652 L468 640 V530"/>
+          <path class="k-au" d="M92 172 V515 L100 530 V648"/>
+          <path class="k-au" d="M420 172 V505 L460 528 V648"/>
+          <g class="k-c nd fd"><circle cx="300" cy="70" r="16"/><text x="300" y="77" text-anchor="middle">A</text></g>
+          <g class="k-c nd fd"><circle cx="512" cy="300" r="16"/><text x="512" y="307" text-anchor="middle">B</text></g>
+          <g class="k-c nd fd"><circle cx="530" cy="420" r="16"/><text x="530" y="427" text-anchor="middle">C</text></g>
+          <g class="k-c nd fd"><circle cx="336" cy="604" r="16"/><text x="336" y="611" text-anchor="middle">D</text></g>
+        </svg>
+      </figure>
+      <ol class="ledger">
+        <li class="rv"><span class="k">A</span><b><span data-n="200">200</span><small>mph</small></b><p>Every connection, slab to footing, sized for it. Code asks for 170.</p></li>
+        <li class="rv"><span class="k">B</span><b>9<small>lb</small></b><p>A 2×4 fired at 34 mph into every window and door. It bounces.</p></li>
+        <li class="rv"><span class="k">C</span><b>+3<small>ft</small></b><p>Finished floor above the base flood elevation. The county asks for one.</p></li>
+        <li class="rv"><span class="k">D</span><b><span data-n="40">40</span><small>ft</small></b><p>Auger-cast piles, down past the sand to the limestone.</p></li>
+      </ol>
+    </div>
+  </section>
+
   <section class="work" id="work" aria-label="A Meridian house in Palm Beach County">
-    <img src="img/estate.webp" alt="A white two-story home with black trim and a three-car garage" loading="lazy">
+    <!-- swap: backyard -->
+    <img src="img/backyard.webp" alt="A low white house opening onto a pool and terrace, wrapped in palms and tropical planting" loading="lazy">
     <div class="wrap"><p class="rv"><em>8 ft overhangs · Rated 200 mph</em>Palm Beach County.</p></div>
+  </section>
+
+  <section class="blk ps hz" id="houses" aria-label="The houses">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+      <pattern id="hzh" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path class="nd" d="M0,0 V7" stroke="#2C4470" stroke-opacity=".38" stroke-width="1"/></pattern>
+    </defs></svg>
+    <div class="wrap grid">
+      <div class="hd">
+        <p class="eyebrow rv"><i>05</i>The houses</p>
+        <h2 class="ch2 rv"><span>Four lots.</span> <span>Four suns.</span></h2>
+        <p class="s rv">No two lots face the same way, so no two of our houses do either. A few from the last three years.</p>
+      </div>
+      <div class="hz-grid">
+        <figure class="hz-c rv">
+          <div class="plate" data-draw aria-hidden="true"><span class="tag">A-104</span>
+            <svg viewBox="0 0 640 400">
+              <rect class="nd fd" x="200" y="212" width="270" height="44" fill="url(#hzh)"/>
+              <g class="nd fd"><circle cx="150" cy="78" r="22" fill="#E8BC80" fill-opacity=".3"/><circle cx="150" cy="78" r="9" fill="#D9A35B"/></g>
+              <path class="e-ink" d="M20 330 H620"/>
+              <path class="e-ink" d="M60 196 H580 V212 H60 Z"/>
+              <path class="e-ink" d="M110 212 V330 M200 212 V330 M470 212 V330 M540 212 V330"/>
+              <path class="e-t" d="M110 240 H200 M110 268 H200 M110 296 H200 M470 240 H540 M470 268 H540 M470 296 H540"/>
+              <path class="e-gl" d="M245 212 V330 M290 212 V330 M335 212 V330 M380 212 V330 M425 212 V330"/>
+              <path class="e-pl" d="M578 330 C574 280 578 230 585 186 M585 186 C565 176 545 182 532 198 M585 186 C570 166 548 160 534 164 M585 186 C590 164 584 148 572 140 M585 186 C600 166 618 164 630 172 M585 186 C604 180 620 192 626 208"/>
+            </svg>
+          </div>
+          <figcaption><h3>The Inlet House</h3><span class="meta">Jupiter · 2024 · 4,200 sq ft</span><p>A long, low house that opens to the inlet and turns its back on the afternoon.</p></figcaption>
+        </figure>
+        <figure class="hz-c rv">
+          <div class="plate" data-draw aria-hidden="true"><span class="tag">A-211</span>
+            <svg viewBox="0 0 640 400">
+              <rect class="nd fd" x="300" y="130" width="240" height="40" fill="url(#hzh)"/>
+              <rect class="nd fd" x="150" y="236" width="240" height="32" fill="url(#hzh)"/>
+              <g class="nd fd"><circle cx="500" cy="62" r="22" fill="#E8BC80" fill-opacity=".3"/><circle cx="500" cy="62" r="9" fill="#D9A35B"/></g>
+              <path class="e-ink" d="M20 330 H430 M430 322 V346"/>
+              <path class="e-wt" d="M440 350 C450 346 460 346 470 350 S490 354 500 350 S520 346 530 350 S550 354 560 350 S580 346 590 350 S610 354 620 350 M470 366 C480 362 490 362 500 366 S520 370 530 366 S550 362 560 366 S580 370 590 366"/>
+              <path class="e-ink" d="M120 236 V330 M420 236 V330"/>
+              <path class="e-ink" d="M110 224 H430 V236 H110 Z"/>
+              <path class="e-gl" d="M150 236 V330 M210 236 V330 M270 236 V330 M330 236 V330 M390 236 V330"/>
+              <path class="e-ink" d="M200 130 V224 M560 130 V224"/>
+              <path class="e-ink" d="M180 116 H580 V130 H180 Z"/>
+              <path class="e-t" d="M220 130 V224 M240 130 V224 M260 130 V224 M280 130 V224"/>
+              <path class="e-gl" d="M300 130 V224 M360 130 V224 M420 130 V224 M480 130 V224 M540 130 V224"/>
+              <path class="e-pl" d="M66 330 C70 280 64 230 58 180 M58 180 C78 170 98 176 110 192 M58 180 C72 160 94 154 108 158 M58 180 C52 158 58 142 70 134 M58 180 C42 160 24 158 12 166 M58 180 C38 174 22 186 16 202"/>
+            </svg>
+          </div>
+          <figcaption><h3>The Canal House</h3><span class="meta">Delray Beach · 2025 · 3,600 sq ft</span><p>Two stories on a canal, the upper one reaching out over the water to shade the dock.</p></figcaption>
+        </figure>
+        <figure class="hz-c rv">
+          <div class="plate" data-draw aria-hidden="true"><span class="tag">R-058</span>
+            <svg viewBox="0 0 640 400">
+              <rect class="nd fd" x="120" y="238" width="400" height="18" fill="url(#hzh)"/>
+              <g class="nd fd"><circle cx="128" cy="66" r="22" fill="#E8BC80" fill-opacity=".3"/><circle cx="128" cy="66" r="9" fill="#D9A35B"/></g>
+              <path class="e-ink" d="M20 330 H620"/>
+              <path class="e-ink" d="M90 330 V306 H550 V330"/>
+              <path class="e-t" d="M290 314 H350 M284 322 H356"/>
+              <path class="e-ink" d="M120 238 V306 M520 238 V306"/>
+              <path class="e-ink" d="M88 230 L320 168 L552 230 Z"/>
+              <path class="e-ink" d="M88 230 H552 V238 H88 Z"/>
+              <path class="e-gl" d="M150 250 H230 V290 H150 Z M190 250 V290 M410 250 H490 V290 H410 Z M450 250 V290 M280 246 H360 V306 M280 246 V306 M320 246 V306"/>
+              <path class="e-t" d="M70 306 V330 M66 310 L74 302 M66 334 L74 326"/>
+              <path class="e-pl" d="M558 330 C548 304 566 288 582 300 C590 282 620 288 616 310 C630 314 628 330 612 330"/>
+              <path class="e-pl" d="M50 330 C46 280 52 236 60 196 M60 196 C80 186 100 192 112 208 M60 196 C74 176 96 170 110 174 M60 196 C54 174 60 158 72 150 M60 196 C44 176 26 174 14 182 M60 196 C40 190 24 202 18 218"/>
+            </svg>
+          </div>
+          <figcaption><h3>The Ranch, Rebuilt</h3><span class="meta">Lake Worth Beach · 2023 · 2,100 sq ft</span><p>A 1958 ranch kept to its own footprint, raised three feet and given back its breeze.</p></figcaption>
+        </figure>
+        <figure class="hz-c rv">
+          <div class="plate" data-draw aria-hidden="true"><span class="tag">A-302</span>
+            <svg viewBox="0 0 640 400">
+              <rect class="nd fd" x="180" y="200" width="280" height="36" fill="url(#hzh)"/>
+              <g class="nd fd"><circle cx="320" cy="64" r="22" fill="#E8BC80" fill-opacity=".3"/><circle cx="320" cy="64" r="9" fill="#D9A35B"/></g>
+              <path class="e-ink" d="M20 330 H620"/>
+              <path class="e-ink" d="M100 330 V322 H540 V330"/>
+              <path class="e-ink" d="M120 186 H520 V200 H120 Z"/>
+              <path class="e-ink" d="M150 200 V322 M490 200 V322"/>
+              <path class="e-gl" d="M180 208 H460 M180 200 V322 M215 208 V322 M250 208 V322 M285 208 V322 M320 200 V322 M355 208 V322 M390 208 V322 M425 208 V322 M460 200 V322"/>
+              <path class="e-pl" d="M14 196 C0 166 24 138 52 146 C60 118 100 116 110 140 C130 134 140 160 126 176 C138 196 112 212 92 202 C78 216 40 214 30 202 C20 206 12 202 14 196 Z M62 204 C60 250 56 290 50 330 M74 204 C76 250 78 290 84 330 M40 206 V300 M96 206 V286"/>
+              <path class="e-pl" d="M626 196 C640 166 616 138 588 146 C580 118 540 116 530 140 C510 134 500 160 514 176 C502 196 528 212 548 202 C562 216 600 214 610 202 C620 206 628 202 626 196 Z M578 204 C580 250 584 290 590 330 M566 204 C564 250 562 290 556 330 M600 206 V300 M544 206 V286"/>
+            </svg>
+          </div>
+          <figcaption><h3>The Pavilion</h3><span class="meta">Manalapan · 2025 · 5,800 sq ft</span><p>One thin roof on slender columns, glass all round, set between two old banyans.</p></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk dk pl" id="palette" aria-label="The palette">
+    <div class="wrap grid">
+      <div class="hd">
+        <p class="eyebrow rv"><i>06</i>The palette</p>
+        <h2 class="ch2 rv"><span>Four materials that</span> <span>already know the weather.</span></h2>
+      </div>
+      <div class="pl-grid">
+        <figure class="sw rv">
+          <div class="tex"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <filter id="cq1" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" seed="3"/><feColorMatrix values="0 0 0 0 .44  0 0 0 0 .37  0 0 0 0 .27  5 0 0 0 -2.95"/></filter>
+            <filter id="cq2" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".07" numOctaves="3" seed="8"/><feColorMatrix values="0 0 0 0 .58  0 0 0 0 .5  0 0 0 0 .38  7 0 0 0 -4.25"/></filter>
+            <filter id="cq3" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="2" seed="11"/><feColorMatrix values="0 0 0 0 .98  0 0 0 0 .95  0 0 0 0 .88  0 5 0 0 -2.9"/></filter>
+            <linearGradient id="cqg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E2D5BC"/><stop offset="1" stop-color="#CDBD9E"/></linearGradient>
+            <rect width="400" height="500" fill="url(#cqg)"/>
+            <rect width="400" height="500" filter="url(#cq2)"/>
+            <rect width="400" height="500" filter="url(#cq1)"/>
+            <rect width="400" height="500" filter="url(#cq3)"/>
+            <rect y="248" width="400" height="3" fill="#8E7D5F" opacity=".45"/><rect x="214" y="0" width="3" height="248" fill="#8E7D5F" opacity=".4"/><rect x="118" y="251" width="3" height="249" fill="#8E7D5F" opacity=".4"/>
+          </svg></div>
+          <figcaption><i>01</i><h3>Coquina stone</h3><p>Shell and coral, quarried in the Keys. Cool underfoot at noon in August.</p><span class="spec">Terraces · Pool decks</span></figcaption>
+        </figure>
+        <figure class="sw rv">
+          <div class="tex"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <filter id="cy1" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".14 .006" numOctaves="3" seed="5"/><feColorMatrix values="0 0 0 0 .3  0 0 0 0 .18  0 0 0 0 .09  3.4 0 0 0 -1.5"/></filter>
+            <filter id="cy2" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".7 .02" numOctaves="2" seed="2"/><feColorMatrix values="0 0 0 0 .86  0 0 0 0 .64  0 0 0 0 .42  0 3 0 0 -1.55"/></filter>
+            <linearGradient id="cyg" x1="0" y1="0" x2="1" y2=".4"><stop offset="0" stop-color="#B07C4C"/><stop offset=".55" stop-color="#9A6538"/><stop offset="1" stop-color="#7E4F2A"/></linearGradient>
+            <rect width="400" height="500" fill="url(#cyg)"/>
+            <rect width="400" height="500" filter="url(#cy1)"/>
+            <rect width="400" height="500" filter="url(#cy2)"/>
+            <g fill="#3A2312" opacity=".62"><ellipse cx="62" cy="128" rx="4" ry="19"/><ellipse cx="84" cy="342" rx="3" ry="13"/><ellipse cx="190" cy="214" rx="4" ry="24"/><ellipse cx="306" cy="96" rx="3" ry="15"/><ellipse cx="338" cy="398" rx="4" ry="21"/><ellipse cx="236" cy="452" rx="3" ry="11"/></g>
+            <rect x="132" width="3" height="500" fill="#2E1B0C" opacity=".6"/><rect x="135" width="1" height="500" fill="#F2D3AE" opacity=".22"/>
+            <rect x="266" width="3" height="500" fill="#2E1B0C" opacity=".6"/><rect x="269" width="1" height="500" fill="#F2D3AE" opacity=".22"/>
+          </svg></div>
+          <figcaption><i>02</i><h3>Pecky cypress</h3><p>Sinker cypress for every soffit. Termites leave it alone, and so does the salt.</p><span class="spec">Soffits · Ceilings</span></figcaption>
+        </figure>
+        <figure class="sw rv">
+          <div class="tex"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <linearGradient id="glg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FB0C4"/><stop offset=".42" stop-color="#3E6580"/><stop offset=".62" stop-color="#1D3549"/><stop offset="1" stop-color="#0F1E2C"/></linearGradient>
+            <linearGradient id="glr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <rect width="400" height="500" fill="url(#glg)"/>
+            <path d="M0 300 C80 292 160 296 240 290 S360 296 400 292 V500 H0 Z" fill="#0B1622" opacity=".55"/>
+            <g fill="none" stroke="#0B1622" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"><path d="M96 300 C100 250 98 200 92 156"/><path d="M92 156 C70 146 50 152 38 168 M92 156 C78 136 56 130 42 134 M92 156 C98 134 92 118 80 110 M92 156 C110 136 128 134 142 142 M92 156 C114 150 130 162 136 178"/></g>
+            <polygon points="-40,0 70,0 300,500 190,500" fill="url(#glr)"/>
+            <polygon points="150,0 178,0 408,500 380,500" fill="#fff" opacity=".07"/>
+            <rect x="262" width="12" height="500" fill="#0B1220"/><rect x="262" width="2" height="500" fill="#9FB3C2" opacity=".5"/>
+          </svg></div>
+          <figcaption><i>03</i><h3>Impact glass</h3><p>Laminated nine-sixteenths thick. When it breaks, it holds, and the storm stays outside.</p><span class="spec">Every opening · Large missile</span></figcaption>
+        </figure>
+        <figure class="sw rv">
+          <div class="tex"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <linearGradient id="ssg" x1="0" y1="0" x2="1" y2=".35"><stop offset="0" stop-color="#7A848A"/><stop offset=".38" stop-color="#B5BDC1"/><stop offset=".52" stop-color="#D8DDDF"/><stop offset=".72" stop-color="#99A2A7"/><stop offset="1" stop-color="#6A747A"/></linearGradient>
+            <pattern id="ssp" width="80" height="500" patternUnits="userSpaceOnUse"><rect x="0" width="2" height="500" fill="#F7F9F9" opacity=".7"/><rect x="2" width="5" height="500" fill="#2F363B" opacity=".42"/><rect x="7" width="34" height="500" fill="#000" opacity=".05"/></pattern>
+            <filter id="ssn" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9 .015" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .4 -.12"/></filter>
+            <rect width="400" height="500" fill="url(#ssg)"/>
+            <rect width="400" height="500" filter="url(#ssn)"/>
+            <rect x="-38" width="480" height="500" fill="url(#ssp)"/>
+          </svg></div>
+          <figcaption><i>04</i><h3>Standing seam</h3><p>Twenty-four gauge Galvalume, seams every sixteen inches, clipped for 200 mph.</p><span class="spec">Roofs · Thirty-year finish</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk ps pr" id="process" aria-label="The process">
+    <div class="wrap grid">
+      <div class="hd">
+        <p class="eyebrow rv"><i>07</i>The process</p>
+        <h2 class="ch2 rv"><span>Sketch to keys,</span> <span>one team the whole way.</span></h2>
+      </div>
+      <ol class="steps">
+        <li class="rl" aria-hidden="true" data-draw><i></i></li>
+        <li class="step" data-draw>
+          <svg viewBox="0 0 72 72" aria-hidden="true"><path class="ic" d="M4 56 H68"/><path class="ig" d="M8 56 C14 34 30 20 50 18"/><path class="ic" d="M52 10 A8 8 0 1 1 51.9 10 M52 4 V0 M60 6 L63 3 M44 6 L41 3 M64 14 H68"/><path class="ic" d="M14 56 V36 L24 40 L14 44"/></svg>
+          <span class="dt"></span>
+          <span class="no">01 · Week one</span><h3>Walk the lot</h3><p>At noon. We read the sun, the wind and the water table before we draw a line.</p>
+        </li>
+        <li class="step" data-draw>
+          <svg viewBox="0 0 72 72" aria-hidden="true"><path class="ic" d="M10 6 H46 L56 16 V66 H10 Z M46 6 V16 H56"/><path class="ic" d="M18 46 H48 M22 46 V32 H44 V46 M18 32 L33 24 L48 32"/><path class="ig" d="M36 66 L66 66 L66 40 Z"/></svg>
+          <span class="dt"></span>
+          <span class="no">02 · Weeks two to ten</span><h3>Draw</h3><p>Plans, sections and a sun study for every wall of glass, drawn by the people who will build it.</p>
+        </li>
+        <li class="step" data-draw>
+          <svg viewBox="0 0 72 72" aria-hidden="true"><path class="ic" d="M10 6 H54 V66 H10 Z"/><path class="ic" d="M18 18 H46 M18 26 H46 M18 34 H34"/><path class="ig" d="M46 40 A12 12 0 1 1 45.9 40 M46 44 A8 8 0 1 1 45.9 44 M41 52 L44.5 55.5 L51 49"/></svg>
+          <span class="dt"></span>
+          <span class="no">03 · Weeks ten to eighteen</span><h3>Permit</h3><p>We file with the county and answer every comment ourselves. You never chase a reviewer.</p>
+        </li>
+        <li class="step" data-draw>
+          <svg viewBox="0 0 72 72" aria-hidden="true"><path class="ic" d="M4 66 H68 M16 66 V8 M10 14 H66 M16 8 L28 14 M22 66 L16 58 L10 66"/><path class="ic" d="M54 14 V30"/><path class="ig" d="M42 30 H66 V36 H42 Z"/><path class="ic" d="M46 66 V48 H64 V66"/></svg>
+          <span class="dt"></span>
+          <span class="no">04 · Months five to fourteen</span><h3>Build</h3><p>Our own crews pour, frame and close it in. One superintendent, from the first pile to the last coat.</p>
+        </li>
+        <li class="step" data-draw>
+          <svg viewBox="0 0 72 72" aria-hidden="true"><path class="ic" d="M22 24 A12 12 0 1 1 21.9 24 M22 32 A4 4 0 1 1 21.9 32"/><path class="ic" d="M34 36 H66 M56 36 V46 M64 36 V44"/><path class="ig" d="M44 16 L49 21 M56 6 V14 M62 20 H69"/></svg>
+          <span class="dt"></span>
+          <span class="no">05 · Day one</span><h3>Keys</h3><p>A walk-through at noon, a binder with every spec, and ten years of us on call.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="blk dp wd" id="words" aria-label="In their words">
+    <div class="wrap grid">
+      <p class="eyebrow rv"><i>08</i>In their words</p>
+      <blockquote class="q1 rv"><p><span class="qm">“</span>The storm came through the October after we moved in. We watched it from the kitchen, and in the morning we swept up some leaves.<span class="qm">”</span></p><cite>Dana <span>· Jupiter</span></cite></blockquote>
+      <div class="qx">
+        <blockquote class="rv"><p><span class="qm">“</span>They showed us where the sun would land on Christmas morning. It lands exactly there.<span class="qm">”</span></p><cite>Marcus <span>· Delray Beach</span></cite></blockquote>
+        <blockquote class="rv"><p><span class="qm">“</span>The same people drew it and built it. Nobody ever said it was someone else's problem.<span class="qm">”</span></p><cite>Elena <span>· Lake Worth Beach</span></cite></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk ps fq" id="faq" aria-label="Questions">
+    <div class="wrap grid">
+      <div class="hd">
+        <p class="eyebrow rv"><i>09</i>Questions</p>
+        <h2 class="ch2 rv"><span>What people ask</span> <span>us on the lot.</span></h2>
+        <p class="s rv">Anything not here, ask us at noon on your own site.</p>
+        <a class="btn ink rv" href="#start">Book a site walk<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5"/></svg></a>
+      </div>
+      <div class="fq-l rv">
+        <details><summary>What does a Meridian house cost?<span class="pm" aria-hidden="true"></span></summary><p class="a">Most of our new houses land between $650 and $950 a square foot, built. You get a fixed number before we break ground, not after.</p></details>
+        <details><summary>How long from first walk to keys?<span class="pm" aria-hidden="true"></span></summary><p class="a">Twelve to eighteen months for a new house. Permits take three to four of those, and we carry them for you.</p></details>
+        <details><summary>Will you build another architect's plans?<span class="pm" aria-hidden="true"></span></summary><p class="a">Rarely. The overhangs, the walls and the storm rating are drawn as one thing, so we draw them ourselves.</p></details>
+        <details><summary>Do you take on renovations?<span class="pm" aria-hidden="true"></span></summary><p class="a">When the bones are worth keeping. If they aren't, we'll tell you honestly on the first walk.</p></details>
+        <details><summary>Where do you build?<span class="pm" aria-hidden="true"></span></summary><p class="a">Palm Beach and Martin counties, from Tequesta down to Boca Raton, and the barrier islands in between.</p></details>
+        <details><summary>What does the warranty cover?<span class="pm" aria-hidden="true"></span></summary><p class="a">Ten years on the structure, the roof and every opening. If water gets in where it shouldn't, we come back.</p></details>
+      </div>
+    </div>
   </section>
 
   <section class="book" id="start" aria-label="Start a project">
@@ -462,6 +915,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       <div class="lt">
         <h2 class="h2 rv">Start with <em>the site.</em></h2>
         <p class="side rv">Send us your lot. We'll walk it at noon, when the sun tells us the most.</p>
+        <dl class="reach rv">
+          <div><dt>The studio</dt><dd>418 Datura Street<br>West Palm Beach, Florida 33401</dd></div>
+          <div><dt>Write</dt><dd><a href="mailto:studio@meridian.build">studio@meridian.build</a></dd></div>
+          <div><dt>Site walks</dt><dd>Monday to Saturday, at noon</dd></div>
+        </dl>
       </div>
       <form id="f" class="rv">
         <label>Name<input name="name" autocomplete="name" required></label>
@@ -474,7 +932,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   </section>
 </main>
 
-<footer><div class="wrap"><span>Meridian · Design and build</span><span>On the coast</span></div></footer>
+<footer><div class="wrap">
+  <div class="ft-top">
+    <a class="logo" href="#top" aria-label="Meridian, back to top"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="14" cy="14" r="6.5"/><path d="M14 1v26"/></svg><b>Meridian</b></a>
+    <div class="ft-nav"><a href="#drawn">The drawing</a><a href="#sun">The sun</a><a href="#storm">The storm</a><a href="#houses">Houses</a><a href="#process">Process</a><a href="#faq">Questions</a></div>
+  </div>
+  <div class="ft-bot"><span>Meridian · Design and build</span><span>On the coast</span></div>
+</div></footer>
 
 <script>
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -485,8 +949,9 @@ const seg=(p,a,b)=>clamp((p-a)/(b-a));
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 const $=id=>document.getElementById(id);
 const f1=v=>(+v).toFixed(1);
+/* the page gutter is read from the CSS (--gut), so every drawn line lands on the same columns as the type */
 const gridOf=()=>{const W=document.documentElement.clientWidth,n=W<=900?4:12,g=W<=900?16:32;
-  const inner=(W>1344?1344:W)-2*(W<=520?16:24),left=W>1344?(W-1344)/2+24:(W<=520?16:24),col=(inner-(n-1)*g)/n;return {W,n,g,left,col,inner,x:i=>left+i*(col+g)}};
+  const left=parseFloat(getComputedStyle(document.querySelector('.wrap')).paddingLeft)||(W<=520?16:24),inner=W-2*left,col=(inner-(n-1)*g)/n;return {W,n,g,left,col,inner,x:i=>left+i*(col+g)}};
 
 /* hero: louvers open column by column, the house's lights come on, then the words */
 (()=>{
@@ -510,13 +975,19 @@ const gridOf=()=>{const W=document.documentElement.clientWidth,n=W<=900?4:12,g=W
 })();
 
 /* 01 the drawing becomes the house.
-   The architect's lines are traced on the photograph's own edges (image space 1680 x 944), so they land exactly on the concrete.
+   The architect's lines are traced on the photograph's own edges (image space 2400 x 1340): the door frame, the joists, the wing's roof and the pool shell.
+   The overhang the sun is measured against is the wing's roof, whose tip sits at 1012, 481 to 512; the sun stands outside it, to the right.
    Scroll draws them in, then light spreads from the December sun and the paper turns into the built house. */
 (()=>{
   const run=$('drun'),stage=$('dstage'),ring=$('dring'),paper=stage.querySelector('.paper'),built=$('dbuilt'),ph=$('dph'),img=ph.querySelector('img'),sp=$('dpaper'),sg=$('dgold');
-  const IW=1680,IH=944;
-  const LN=[[605,572,605,797],[605,602,950,482],[606,572,980,392,1240,452],[980,392,980,890],[950,482,950,880],[610,797,950,805],[1125,492,1125,880],[1125,492,1357,505],[1125,802,1680,800],[1240,45,1240,445],[990,222,1240,45,1357,105],[1357,105,1357,500],[1214,140,1214,440],[752,379,752,395],[752,379,963,223],[752,395,966,247],[963,223,1028,243],[966,247,1030,252,1212,300],[1357,235,1680,90],[1357,503,1600,448,1680,430],[1420,250,1680,145],[1425,440,1680,372],[1425,248,1425,440],[1470,230,1470,428],[1590,181,1590,396],[1645,159,1645,381],[820,402,820,470],[865,347,865,450],[1010,277,1010,397],[1043,292,1043,400],[1194,325,1194,432],[1450,497,1450,805],[1525,497,1525,805],[1167,525,1167,800],[1210,527,1210,800],[1252,535,1252,800],[1297,540,1297,800]];
-  const TIP=[752,387],RAD=Math.PI/180;
+  const IW=2400,IH=1340;
+  const LN=[[622,1036,622,220,1972,220,1972,1036],[681,1013,681,254,1906,254,1906,1013],[527,1036,2040,1036],[527,150,527,1036],[527,135,2400,135],[681,337,1906,337],
+    [0,190,135,238],[135,238,135,900],[138,283,222,312,527,312],[222,312,222,900],
+    [832,338,1012,481,1012,512,752,370],[764,492,764,738],[814,512,814,738],[815,585,1436,585],[815,623,1505,625],
+    [948,872,1098,740,1421,740,1690,878],[1101,740,1101,800],[1136,832,1421,832],[1421,740,1421,832],[880,898,1740,898],
+    [545,0,638,135],[717,0,800,135],[892,0,944,135],[1048,0,1075,135],[1208,0,1213,135],[1376,0,1340,135],[1536,0,1468,135],
+    [1685,0,1596,135],[1833,0,1726,135],[1984,0,1864,135],[2128,0,1989,135],[2273,0,2115,135],[2420,0,2242,135]];
+  const TIP=[1012,496],RAD=Math.PI/180;
   let s=1,ox=0,oy=0,W=0,H=0,sun=[0,0],Rmax=1,inks=[],golds=[],ann=[],lens=[],annLen=[];
   const P=(x,y)=>[ox+x*s,oy+y*s];
   const poly=a=>{let d='';for(let i=0;i<a.length;i+=2){const [x,y]=P(a[i],a[i+1]);d+=(i?'L':'M')+f1(x)+','+f1(y)}return d};
@@ -524,40 +995,41 @@ const gridOf=()=>{const W=document.documentElement.clientWidth,n=W<=900?4:12,g=W
     W=stage.clientWidth;H=stage.clientHeight;const G=gridOf(),narrow=W<=900;
     let rx,ry,rw,rh,fx;
     if(narrow){const tb=Math.max(...[...stage.querySelectorAll('.dtx')].map(e=>e.getBoundingClientRect().bottom))-stage.getBoundingClientRect().top;
-      rx=0;ry=Math.round(tb+28);rw=W;rh=H-ry;fx=515}
-    else{rx=Math.round(G.x(4));ry=0;rw=W-rx;rh=H;fx=500}
+      rx=0;ry=Math.round(tb+28);rw=W;rh=H-ry;fx=680}
+    else{rx=Math.round(G.x(4));ry=0;rw=W-rx;rh=H;fx=580}
     s=Math.max(rw/IW,rh/IH);
     ox=Math.min(rx,Math.max(rx+rw-IW*s,rx-fx*s));oy=ry+(rh-IH*s)*(narrow?.35:.5);
     Object.assign(ph.style,{left:rx+'px',top:ry+'px',width:rw+'px',height:rh+'px'});
     Object.assign(img.style,{left:(ox-rx)+'px',top:(oy-ry)+'px',width:IW*s+'px',height:IH*s+'px'});
     paper.style.setProperty('--gx',rx+'px');paper.style.setProperty('--gy',ry+'px');paper.style.setProperty('--gm',narrow?(ry+40)+'px':(rx+120)+'px');
     /* sun arc centred on the overhang's tip: June noon 87 deg, December noon 40 deg */
-    const R=narrow?200:250;
-    const sJ=[TIP[0]-R*Math.cos(87*RAD),TIP[1]-R*Math.sin(87*RAD)],sD=[TIP[0]-R*Math.cos(40*RAD),TIP[1]-R*Math.sin(40*RAD)];
-    const [jx,jy]=P(...sJ),[dx,dy]=P(...sD),[tx,ty]=P(TIP[0],379),[ux,uy]=P(TIP[0],395);
+    const R=narrow?190:230;
+    const sJ=[TIP[0]+R*Math.cos(87*RAD),TIP[1]-R*Math.sin(87*RAD)],sD=[TIP[0]+R*Math.cos(40*RAD),TIP[1]-R*Math.sin(40*RAD)];
+    const [jx,jy]=P(...sJ),[dx,dy]=P(...sD),[tx,ty]=P(TIP[0],481),[ux,uy]=P(TIP[0],512);
     sun=[dx,dy];Rmax=Math.max(Math.hypot(dx,dy),Math.hypot(W-dx,dy),Math.hypot(dx,H-dy),Math.hypot(W-dx,H-dy))+160;
     /* December ray slips under the overhang into the room; June ray lands on top of it */
-    const dl=Math.hypot(ux-dx,uy-dy),dux=(ux-dx)/dl,duy=(uy-dy)/dl,inn=78*s/.95;
+    const dl=Math.hypot(ux-dx,uy-dy),dux=(ux-dx)/dl,duy=(uy-dy)/dl,inn=110*s/.95;
     const [ex,ey]=[ux+dux*inn,uy+duy*inn];
-    /* overhang depth: along the slab edge from the tip back to the glass line */
-    const [ax,ay]=P(752,379),[bx,by]=P(865,295.5),nx=-.595,ny=-.805,off=16;
-    const A=[ax+nx*off,ay+ny*off],B=[bx+nx*off,by+ny*off],rot=Math.atan2(by-ay,bx-ax)/RAD;
+    /* overhang depth: along the wing's roof edge from the tip back to the wall */
+    const [ax,ay]=P(1012,481),[bx,by]=P(832,338),nx=.622,ny=-.783,off=16;
+    const A=[ax+nx*off,ay+ny*off],B=[bx+nx*off,by+ny*off];let rot=Math.atan2(by-ay,bx-ax)/RAD;if(rot>90)rot-=180;else if(rot<-90)rot+=180;
     const sgx=(x,y,l)=>`M${f1(x-l*.7)},${f1(y+l*.7)}L${f1(x+l*.7)},${f1(y-l*.7)}`;
     const mid=[(A[0]+B[0])/2+nx*12,(A[1]+B[1])/2+ny*12];
-    const arc=(r,a0,a1)=>{let d='';for(let t=a0;t<=a1+.01;t+=1){const x=tx-r*Math.cos(t*RAD),y=ty-r*Math.sin(t*RAD);d+=(d?'L':'M')+f1(x)+','+f1(y)}return d};
+    const arc=(r,a0,a1)=>{let d='';for(let t=a0;t<=a1+.01;t+=1){const x=tx+r*Math.cos(t*RAD),y=ty-r*Math.sin(t*RAD);d+=(d?'L':'M')+f1(x)+','+f1(y)}return d};
     const ink=LN.map(l=>`<path class="ink" d="${poly(l)}"/>`).join('');
-    sp.innerHTML=`${ink}
+    const clip=id=>`<clipPath id="${id}"><rect x="${rx}" y="${ry}" width="${rw}" height="${rh}"/></clipPath>`;
+    sp.innerHTML=`<defs>${clip('dclp')}</defs><g clip-path="url(#dclp)">${ink}</g>
       <g id="dann" style="opacity:0">
-        <path class="an" d="M${f1(tx-.08*R*s*4)},${f1(ty)}H${f1(tx)}" stroke-dasharray="3 5"/>
+        <path class="an" d="M${f1(tx+.32*R*s)},${f1(ty)}H${f1(tx)}" stroke-dasharray="3 5"/>
         <path class="an" d="${arc(R*s,40,87)}" stroke-dasharray="2 6" stroke-opacity=".7"/>
         <path class="an ray" d="M${f1(jx)},${f1(jy+14)}L${f1(tx)},${f1(ty)}"/>
         <path class="an ray" d="M${f1(dx+dux*14)},${f1(dy+duy*14)}L${f1(ex)},${f1(ey)}" stroke-dasharray="5 4"/>
         <path class="an" d="M${f1(A[0])},${f1(A[1])}L${f1(B[0])},${f1(B[1])}${sgx(...A,5)}${sgx(...B,5)}M${f1(ax)},${f1(ay)}L${f1(A[0]+nx*5)},${f1(A[1]+ny*5)}M${f1(bx)},${f1(by)}L${f1(B[0]+nx*5)},${f1(B[1]+ny*5)}"/>
         <text class="lab k" x="${f1(mid[0])}" y="${f1(mid[1])}" text-anchor="middle" transform="rotate(${f1(rot)} ${f1(mid[0])} ${f1(mid[1])})" style="font-family:var(--serif);font-size:16px;letter-spacing:0;font-weight:400">8′–0″</text>
         <g class="sunj"><circle cx="${f1(jx)}" cy="${f1(jy)}" r="9" fill="none" stroke="#9A6A2C" stroke-width="1.2"/><text class="lab" x="${f1(jx+20)}" y="${f1(jy+5)}">${narrow?'87°':'JUNE · 87°'}</text></g>
-        <g class="sund"><circle cx="${f1(dx)}" cy="${f1(dy)}" r="22" fill="#E8BC80" fill-opacity=".28"/><circle cx="${f1(dx)}" cy="${f1(dy)}" r="9" fill="#D9A35B"/>${narrow?`<text class="lab" x="${f1(dx+22)}" y="${f1(dy+5)}">40°</text>`:`<text class="lab" x="${f1(dx-30)}" y="${f1(dy+5)}" text-anchor="end">DECEMBER · 40°</text>`}</g>
+        <g class="sund"><circle cx="${f1(dx)}" cy="${f1(dy)}" r="22" fill="#E8BC80" fill-opacity=".28"/><circle cx="${f1(dx)}" cy="${f1(dy)}" r="9" fill="#D9A35B"/>${narrow?`<text class="lab" x="${f1(dx+22)}" y="${f1(dy+5)}">40°</text>`:`<text class="lab" x="${f1(dx+30)}" y="${f1(dy+5)}">DECEMBER · 40°</text>`}</g>
       </g>`;
-    sg.innerHTML=LN.map(l=>`<path class="gold" d="${poly(l)}"/>`).join('')+`<circle id="dglow" cx="${f1(dx)}" cy="${f1(dy)}" r="60" fill="url(#dg)"/><defs><radialGradient id="dg"><stop offset="0" stop-color="#E8BC80" stop-opacity=".9"/><stop offset=".25" stop-color="#E8BC80" stop-opacity=".35"/><stop offset="1" stop-color="#E8BC80" stop-opacity="0"/></radialGradient></defs>`;
+    sg.innerHTML=`<defs>${clip('dclg')}</defs><g clip-path="url(#dclg)">`+LN.map(l=>`<path class="gold" d="${poly(l)}"/>`).join('')+`</g><circle id="dglow" cx="${f1(dx)}" cy="${f1(dy)}" r="60" fill="url(#dg)"/><defs><radialGradient id="dg"><stop offset="0" stop-color="#E8BC80" stop-opacity=".9"/><stop offset=".25" stop-color="#E8BC80" stop-opacity=".35"/><stop offset="1" stop-color="#E8BC80" stop-opacity="0"/></radialGradient></defs>`;
     inks=[...sp.querySelectorAll('.ink')];golds=[...sg.querySelectorAll('.gold')];
     lens=inks.map(e=>{const L=e.getTotalLength();e.style.strokeDasharray=L+' '+L;return L});
     ann=$('dann');
@@ -769,6 +1241,14 @@ const gridOf=()=>{const W=document.documentElement.clientWidth,n=W<=900?4:12,g=W
   const io2=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io2.unobserve(e.target);const el=e.target,N=+el.dataset.n;
     setTimeout(()=>{const t0=performance.now(),D=2200;const f=n=>{const p=Math.min(1,(n-t0)/D);el.textContent=fmt(el,N*ease(p));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)},300+i*520)})},{threshold:.4});
   ns.forEach(n=>io2.observe(n));
+})();
+/* line drawings (load path, houses, process) draw in, one after another, when they arrive */
+(()=>{
+  const els=[...document.querySelectorAll('[data-draw]')];
+  els.forEach(el=>{let i=0;el.querySelectorAll('path:not(.nd)').forEach(p=>{p.setAttribute('pathLength','1');p.classList.add('dw');p.style.transitionDelay=(Math.min(i++,36)*55)+'ms'})});
+  if(RM){els.forEach(e=>e.classList.add('on'));return}
+  const io=new IntersectionObserver(es=>{es.filter(e=>e.isIntersecting).forEach((e,i)=>{io.unobserve(e.target);setTimeout(()=>e.target.classList.add('on'),250+i*450)})},{threshold:.2,rootMargin:'0px 0px -10% 0px'});
+  els.forEach(e=>io.observe(e));
 })();
 {const h=document.querySelector('header'),hero=$('hero');const f=()=>h.classList.toggle('solid',scrollY>hero.offsetHeight-100);addEventListener('scroll',f,{passive:true});f()}
 {const w=$('work');if(RM)w.classList.add('on');else new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){o.disconnect();setTimeout(()=>w.classList.add('on'),200)}},{threshold:.3}).observe(w)}
