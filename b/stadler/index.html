@@ -47,7 +47,7 @@ p{margin:0}
 
 header{position:absolute;inset:0 0 auto;z-index:20;padding-top:env(safe-area-inset-top,0px)}
 header .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-block:22px}
-.brand{font-family:var(--display);font-size:26.4px;text-decoration:none}
+.brand{font-family:var(--display);font-size:29px;text-decoration:none}
 header nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:16px}
 header nav a{text-decoration:none;opacity:.82}
 header nav a:hover{opacity:1}
@@ -68,7 +68,7 @@ section{position:relative;z-index:2}
 
 /* hero */
 .hero{min-height:100svh;display:grid;align-items:center;overflow:hidden}
-.accent{position:absolute;width:63px;height:63px;pointer-events:none;box-shadow:inset 2.5px 0 2.5px -1.5px rgba(255,255,255,.07),inset 0 2.5px 2.5px -1.5px rgba(255,255,255,.035),inset -5px 0 5px -3px rgba(0,0,0,.2),inset 0 -5px 5px -3px rgba(0,0,0,.15);background-image:radial-gradient(ellipse 30% 46% at 10% 42%,rgba(255,255,255,.06),transparent 100%),linear-gradient(90deg,transparent 50%,rgba(0,0,0,.12))}
+.accent{position:absolute;width:63px;height:63px;pointer-events:none;box-shadow:inset 1.75px 0 1.75px -1px rgba(255,255,255,.07),inset 0 1.75px 1.75px -1px rgba(255,255,255,.035),inset -5px 0 5px -3px rgba(0,0,0,.2),inset 0 -5px 5px -3px rgba(0,0,0,.15);background-image:radial-gradient(ellipse 30% 46% at 10% 42%,rgba(255,255,255,.06),transparent 100%),linear-gradient(90deg,transparent 50%,rgba(0,0,0,.12))}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;width:100%;padding-block:110px 90px}
 .hero h1{font-size:clamp(64px,9.68vw,155px);line-height:.88}
 /* batch 19: "Family owned" sits alone over "Since", on its left edge; the line under the year is gone, so the address rises to meet it */
@@ -397,8 +397,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
     /* batch 20: a bump map, so each one reads as a fired tile: a rounded edge caught by the light from the left (lit on its left and top, in shade on its right and bottom), a slight pillow across its face, and the faint ripple of the glaze */
     function lg(x0,y0,x1,y1,c0,c1){var q=g.createLinearGradient(x0,y0,x1,y1);q.addColorStop(0,c0);q.addColorStop(1,c1);return q}
     for(var y=0;y<n;y++)for(var x=0;x<n;x++){var X=x*t+1,Y=y*t+1,w=t-1,e=5;
-      /* batch 21: the lit edge is half as wide (2.5px), same strength */
-      var h=e/2;g.fillStyle=lg(X,0,X+h,0,'rgba(255,255,255,.075)','rgba(255,255,255,0)');g.fillRect(X,Y,h,w);
+      /* batch 21: the lit edge is half as wide; batch 22: 30% tighter again (1.75px), same strength */
+      var h=e*.35;g.fillStyle=lg(X,0,X+h,0,'rgba(255,255,255,.075)','rgba(255,255,255,0)');g.fillRect(X,Y,h,w);
       g.fillStyle=lg(0,Y,0,Y+h,'rgba(255,255,255,.04)','rgba(255,255,255,0)');g.fillRect(X,Y,w,h);
       g.fillStyle=lg(X+w,0,X+w-e,0,'rgba(0,0,0,.2)','rgba(0,0,0,0)');g.fillRect(X+w-e,Y,e,w);
       g.fillStyle=lg(0,Y+w,0,Y+w-e,'rgba(0,0,0,.15)','rgba(0,0,0,0)');g.fillRect(X,Y+w-e,w,e);
@@ -441,14 +441,20 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
       else{var m=snap((P.y+N.y)/2);cur.push([P.x,m],[N.x,m],[N.x,N.y])}
     }
     pieces.push(cur);
+    /* batch 22: a branch tees off the riser just under its cap, runs left along a tile row and turns down at 45 degrees into the open wall, carrying water like the main line */
+    var br=null;
+    if(!narrow){var f0=pieces[0][0],h1=main.querySelector('.hero h1'),tr=h1?h1.getBoundingClientRect().right-mr.left:0,by=snap(f0[1]+18),dg=Math.round(innerWidth*.06),run=Math.round(innerWidth*.22);
+      if(f0[0]-run-dg<tr+48)run=Math.max(0,f0[0]-dg-tr-48);
+      if(run>120){br=[[f0[0],by],[f0[0]-run,by],[f0[0]-run-dg,by+dg]];pieces.push(br)}}
     var d='',jhtml='',mhtml='';total=0;
     pieces.forEach(function(pts){
       var len=0,s='M'+pts[0][0].toFixed(1)+' '+pts[0][1].toFixed(1);
-      pts.forEach(function(p,k){if(k){s+='L'+p[0].toFixed(1)+' '+p[1].toFixed(1);len+=Math.abs(p[0]-pts[k-1][0])+Math.abs(p[1]-pts[k-1][1]);if(k<pts.length-1)jhtml+='<circle class="joint" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="9"/>'}});
+      pts.forEach(function(p,k){if(k){s+='L'+p[0].toFixed(1)+' '+p[1].toFixed(1);len+=Math.hypot(p[0]-pts[k-1][0],p[1]-pts[k-1][1]);if(k<pts.length-1)jhtml+='<circle class="joint" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="9"/>'}});
       pts.len=len;d+=s;mhtml+='<path d="'+s+'" stroke-dasharray="'+(len+2)+' '+(len+2)+'" stroke-dashoffset="'+(len+2)+'"/>';
     });
     lay.forEach(function(p){p.setAttribute('d',d)});
-    var f=pieces[0][0];jhtml+='<rect class="joint" x="'+(f[0]-17).toFixed(1)+'" y="'+(f[1]-6).toFixed(1)+'" width="34" height="10" rx="3"/>';joints.innerHTML=jhtml;mask.innerHTML=mhtml;
+    var f=pieces[0][0];jhtml+='<rect class="joint" x="'+(f[0]-17).toFixed(1)+'" y="'+(f[1]-6).toFixed(1)+'" width="34" height="10" rx="3"/>';
+    if(br){var e2=br[2];jhtml+='<circle class="joint" cx="'+br[0][0].toFixed(1)+'" cy="'+br[0][1].toFixed(1)+'" r="9"/><rect class="joint" x="'+(e2[0]-17).toFixed(1)+'" y="'+(e2[1]-3).toFixed(1)+'" width="34" height="10" rx="3" transform="rotate(45 '+e2[0].toFixed(1)+' '+e2[1].toFixed(1)+')"/>'}joints.innerHTML=jhtml;mask.innerHTML=mhtml;
     svg.setAttribute('height',main.offsetHeight);svg.setAttribute('viewBox','0 0 '+main.offsetWidth+' '+main.offsetHeight);
   }
   /* how much of each piece is drawn: everything above the scroll head */
@@ -456,7 +462,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
     var len=0;
     for(var k=1;k<pts.length;k++){var a=pts[k-1],b=pts[k];
       if(Math.abs(a[1]-b[1])<1){if(head<a[1])return len;len+=Math.abs(b[0]-a[0])}
-      else{if(head<=a[1])return len;var seg=Math.abs(b[1]-a[1]);if(head<b[1])return len+(head-a[1]);len+=seg}}
+      else{if(head<=a[1])return len;var seg=Math.hypot(b[0]-a[0],b[1]-a[1]),dy=Math.abs(b[1]-a[1]);if(head<b[1])return len+seg*(head-a[1])/dy;len+=seg}}
     return len;
   }
   var mpaths=[];

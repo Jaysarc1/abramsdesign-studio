@@ -313,7 +313,7 @@ section{padding-block:var(--sp-sec)}
 /* batch 19: the two Refresh tiles hold the old site, then the new one opens over it like a curtain from the middle, with a Before / After mark */
 .bf .page img+img{opacity:1;clip-path:inset(0 50% 0 50%)}
 .bf-m{position:absolute;left:3.6%;top:15%;z-index:2;display:grid;pointer-events:none}
-.bf-m i{grid-area:1/1;font:500 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;font-style:normal;color:#F7F3EB;background:rgba(20,18,16,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:7px 11px 6px;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(247,243,235,.22)}
+.bf-m i{grid-area:1/1;font:500 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;font-style:normal;color:#F7F3EB;background:rgba(20,18,16,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:7px 11px 6px calc(11px + .16em);text-align:center;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(247,243,235,.22)}
 .bf-m i+i{opacity:0}
 @media (prefers-reduced-motion:no-preference){
   .play.bf .page img+img{animation:push 12s ease-in-out var(--d,0s) infinite alternate backwards,bfc 12s cubic-bezier(.65,0,.25,1) var(--d,0s) infinite backwards}
@@ -2420,13 +2420,15 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
   function acInit(){if(AC)return;var C=window.AudioContext||window.webkitAudioContext;if(!C)return;try{AC=new C();}catch(e){AC=null;return;}
     AG=AC.createGain();AG.gain.value=sndOn?.9:0;AG.connect(AC.destination);
     ['v8','whoosh','focus','clock5'].forEach(function(n){if(!window.fetch)return;fetch('img/w/hk-'+n+'.m4a').then(function(r){return r.arrayBuffer();}).then(function(b){return new Promise(function(res,rej){AC.decodeAudioData(b,res,rej);});}).then(function(d){BUF[n]=d;catchUp();}).catch(function(){});});}
-  function play(n,off){if(!AC||!BUF[n])return false;try{var s=AC.createBufferSource();s.buffer=BUF[n];s.connect(AG);s.start(0,Math.max(0,off||0));return true;}catch(e){return false;}}
-  function sfx(n){cue={n:n,t:Date.now(),on:false};if(sndOn)cue.on=play(n,0);}
+  /* batch 22: each effect plays through its own level, so one rev can sit at half while the camera pulls out */
+  var lastG=null;
+  function play(n,off,lv){if(!AC||!BUF[n])return false;try{var s=AC.createBufferSource(),g=AC.createGain();g.gain.value=lv==null?1:lv;s.buffer=BUF[n];s.connect(g);g.connect(AG);s.start(0,Math.max(0,off||0));if(n==='v8')lastG=g;return true;}catch(e){return false;}}
+  function sfx(n,lv){cue={n:n,t:Date.now(),on:false,lv:lv};if(sndOn)cue.on=play(n,0,lv);}
   /* a tap inside the live site counts as the first tap; and the site's own paper sounds play through this page's sound, so the mute holds */
   function tapOn(){if(sndUser||sndOn)return;sndOn=true;acInit();sndSet(true);}
   function sndBridge(w){try{if(!w.mvSound)return;acInit();if(AC&&AG)w.mvSound(AC,AG);}catch(e){}}
   /* batch 17: the engine never stops between the revs: a seamless idle loop cut from the rev's sustain runs from the first rev until the car is gone, easing down as the camera pulls away */
-  var hkT0=0,bed=null,BEDK=[[.6,0],[1.3,.5],[7.3,.24],[9.6,.24],[10.4,.36],[12.6,.34],[14.4,0]];
+  var hkT0=0,bed=null,BEDK=[[.6,0],[1.3,.5],[7.3,.5],[8.1,.25],[9.4,.25],[10.2,.5],[12.6,.45],[14.4,0]];   /* batch 22: the idle holds until the camera pulls out, eases to half as it does, and comes back to full for the last rev before the car drives off */
   function bedLoop(b,s0,s1,xf){var r=b.sampleRate,a=Math.floor((s0||.7)*r),e=Math.floor((s1||2.7)*r),X=Math.floor((xf||.35)*r),L=e-a-X,o=AC.createBuffer(b.numberOfChannels,L,r);
     for(var c=0;c<b.numberOfChannels;c++){var i=b.getChannelData(c),y=o.getChannelData(c);for(var k=0;k<L;k++){var v=i[a+k];if(k<X){var m=k/X;v=v*Math.sin(m*Math.PI/2)+i[a+L+k]*Math.cos(m*Math.PI/2);}y[k]=v;}}return o;}
   function engBed(){if(!hkT0||bed||!sndOn||!AC||!BUF.v8)return;var el=(Date.now()-hkT0)/1000;if(el>BEDK[BEDK.length-1][0]-.3)return;
@@ -2436,7 +2438,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       var lv=function(t){for(var i=1;i<BEDK.length;i++)if(t<BEDK[i][0]){var p=BEDK[i-1],q=BEDK[i];return p[1]+(q[1]-p[1])*Math.max(0,(t-p[0])/(q[0]-p[0]));}return 0;};
       g.gain.setValueAtTime(Math.max(.0001,lv(el)),now);BEDK.forEach(function(k){if(k[0]>el)g.gain.linearRampToValueAtTime(Math.max(.0001,k[1]),now+(k[0]-el));});
       src.start(now,Math.max(0,(el-.35)*.9)%src.buffer.duration);src.stop(now+(BEDK[BEDK.length-1][0]-el)+.1);bed=src;}catch(e){}}
-  function catchUp(){engBed();if(!sndOn||!cue||cue.on)return;var el=(Date.now()-cue.t)/1000;if(el<LEN[cue.n]-.2)cue.on=play(cue.n,el);}
+  function catchUp(){engBed();if(!sndOn||!cue||cue.on)return;var el=(Date.now()-cue.t)/1000;if(el<LEN[cue.n]-.2)cue.on=play(cue.n,el,cue.lv);}
   if(hk){
     /* batch 15: a three-second hold while the Spider revs and the prompt asks for sound; everything from the pull onward waits for it */
     var HOLD=4000,cl=hk.classList,at=function(ms,f){setTimeout(f,ms>=3300?ms+HOLD:ms);},K=function(k){hk.setAttribute('data-k',k);cl.toggle('hs-th',k>=4);};
@@ -2536,10 +2538,12 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     hkT0=Date.now();at(350,function(){cl.add('hs-eng');sfx('v8');engBed();if(top)camGo(0);});
     /* batch 16: three revs through the hold, each catching the last one's tail */
     setTimeout(function(){sfx('v8');},2550);setTimeout(function(){sfx('v8');},4750);
+    /* batch 22: the engine keeps revving as the camera pulls out, at half (the third rev's tail eases down with it), and the last rev before the car drives off is back at full */
+    setTimeout(function(){sfx('v8',.5);},6950);setTimeout(function(){sfx('v8');},9150);
     /* batch 19: the third rev is back; both revs at the start of the car's own sound (about 10s and 10.6s, its first 1.34s) are silenced in hk-focus.m4a, and the timer is back to its batch 18 tick at 37.5% of its volume, with the chime at 18.75% */
     setTimeout(tapSettle,3300+HOLD-150);
     at(900,function(){K(1);});
-    at(3300,function(){cl.add('hs-pull');K(0);sfx('whoosh');if(top&&!RM)camGo(1);});
+    at(3300,function(){cl.add('hs-pull');K(0);var g=lastG;sfx('whoosh');if(g&&AC){try{g.gain.setTargetAtTime(.5,AC.currentTime,.25);}catch(e){}}if(top&&!RM)camGo(1);});
     at(4400,function(){K(2);});
     at(4850,function(){cl.add('hs-shut');});
     at(5370,thunk);
