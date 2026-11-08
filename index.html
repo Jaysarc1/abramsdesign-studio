@@ -1403,6 +1403,9 @@ main>section>.wrap>.st:first-child{margin-top:0}
 .fit-a b{font-weight:300;font-size:clamp(20px,1.6vw,23px);line-height:1.3;letter-spacing:-.004em;max-width:30ch}
 .nx .fit-chip{height:48px;padding:0 22px;font-size:14px;letter-spacing:.12em}
 @media (min-width:761px){.fit-cta .fit-l .fit-q{flex:0 0 calc(32ch + 32 * .12em)}}
+/* batch 17: the questions take the same serif as the statements across from them */
+.fit-cta .fit-q{font-family:var(--serif);font-weight:300;font-optical-sizing:auto;font-variation-settings:normal;font-size:clamp(20px,1.6vw,23px);line-height:1.3;letter-spacing:-.004em;text-transform:none;color:var(--graphite)}
+@media (min-width:761px){.fit-cta .fit-l .fit-q{flex:0 0 15.5em}}
 @media (min-width:761px) and (max-width:1080px){.fit-cta .fit-l{flex-direction:column;align-items:flex-start;gap:14px}.fit-cta .fit-l .fit-q{flex:none;white-space:normal}}
 @media (max-width:760px){header .hpill{white-space:nowrap}}
 header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:currentColor;stroke-width:3.6px;stroke-linejoin:round}
@@ -1412,11 +1415,11 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
 .hk-b.b2 .yr{color:color-mix(in srgb,#d9bc8c 50%,#fff)}
 .hk-b.b3b{max-width:20em;font-size:clamp(23px,min(4.2svh,2.9vw),46px)}
 @media (max-width:760px){.hk-b.b3b{font-size:clamp(20px,5.8vw,26px)}}
-.hook .hk-a{clip-path:inset(0 50% 0 50%);transition:clip-path 1.9s cubic-bezier(.65,0,.25,1)}
+.hook .hk-a{clip-path:inset(0 50% 0 50%);transition:clip-path 3.9s cubic-bezier(.65,0,.25,1)}
 .hook[data-k="5"] .hk-a,.hook[data-k="6"] .hk-a{clip-path:inset(0 0 0 0)}
 .hook[data-k="5"] .hk-v::after,.hook[data-k="6"] .hk-v::after{animation:none;opacity:0}
 .hook.hs-solo .hk-scr{transition-delay:.6s}
-.hk-scr em{font-style:italic;font-family:var(--serif);font-weight:400;font-size:1.08em;margin:0 -.04em}
+.hk-scr em{font-style:normal;font-family:inherit;font-weight:inherit;font-size:1em;margin:0}
 /* batch 15: the sound prompt, centred, then settled into the corner speaker */
 .hk-tap{position:absolute;left:50%;top:50%;z-index:4;display:flex;align-items:center;gap:11px;margin:0;padding:15px 22px 15px 18px;border:1px solid rgba(239,233,223,.22);border-radius:12px;background:rgba(14,13,12,.58);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 18px 40px -18px rgba(0,0,0,.75);color:#f4efe6;font-family:var(--display);font-weight:500;font-size:16px;line-height:1;letter-spacing:.01em;text-transform:none;white-space:nowrap;cursor:pointer;opacity:0;transform:translate(-50%,-50%) scale(.96);transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.1,1),background .3s ease,border-color .3s ease;pointer-events:none}
 .hk-tap.on{opacity:1;transform:translate(-50%,-50%);pointer-events:auto}
@@ -2114,7 +2117,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     T.stadler=el('<figure class="tile" data-site="b/stadler/index.html" data-name="Stadler Plumbing" tabindex="0" role="button" aria-label="Open the Stadler Plumbing site"><div class="frame"><div class="page"><img src="img/w/stadler-1.webp" alt="Stadler Plumbing, a copper line through a glazed tile wall" loading="lazy"><img src="img/w/stadler-2.webp" alt="" loading="lazy"></div></div></figure>');
     T.jay.setAttribute('data-site','b/jay/index.html');T.jay.setAttribute('data-name','jayabrams.com');T.jay.setAttribute('tabindex','0');T.jay.setAttribute('role','button');T.jay.setAttribute('aria-label','Open the jayabrams.com site');
     /* batch 16: Refresh shows the two refreshes, Unique Places and Meridian; Signature's fourth slot is Vela, the aircraft broker */
-    T.up=el('<figure class="tile" data-site="https://uniqueplaces.vercel.app/" data-direct data-name="Unique Places" tabindex="0" role="button" aria-label="Open the Unique Places site"><div class="frame"><div class="page"><img src="img/w/up-1.webp" alt="Unique Places, homes by the water" loading="lazy"><img src="img/w/up-2.webp" alt="" loading="lazy"></div></div></figure>');
+    T.up=el('<figure class="tile" data-site="b/unique-places/index.html" data-direct data-name="Unique Places" tabindex="0" role="button" aria-label="Open the Unique Places site"><div class="frame"><div class="page"><img src="img/w/up-0.webp" alt="Unique Places&rsquo; old site"><img src="img/w/up-1.webp" alt="Unique Places, homes by the water, after its refresh"></div></div></figure>');
     T.meridianr=el('<figure class="tile" data-site="b/meridian-refresh/index.html" data-name="Meridian" tabindex="0" role="button" aria-label="Open the Meridian site"><div class="frame"><div class="page"><img src="img/w/mr-0.webp" alt="Meridian&rsquo;s old site" loading="lazy"><img src="img/w/mr-1.webp" alt="Meridian, houses drawn for the sun, after its refresh" loading="lazy"></div></div></figure>');
     T.vela=el('<figure class="tile" data-site="b/vela/index.html" data-direct data-name="Vela" tabindex="0" role="button" aria-label="Open the Vela site"><div class="frame"><div class="page"><img src="img/w/vela-1.webp" alt="Vela, aircraft for sale laid out on a desk" loading="lazy"><img src="img/w/vela-2.webp" alt="" loading="lazy"></div></div></figure>');
     var ref=band('ow-refresh','Refresh','Your site, renewed.',2,[['up','half'],['meridianr','half']]);
@@ -2408,7 +2411,16 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
   /* a tap inside the live site counts as the first tap; and the site's own paper sounds play through this page's sound, so the mute holds */
   function tapOn(){if(sndUser||sndOn)return;sndOn=true;acInit();sndSet(true);}
   function sndBridge(w){try{if(!w.mvSound)return;acInit();if(AC&&AG)w.mvSound(AC,AG);}catch(e){}}
-  function catchUp(){if(!sndOn||!cue||cue.on)return;var el=(Date.now()-cue.t)/1000;if(el<LEN[cue.n]-.2)cue.on=play(cue.n,el);}
+  /* batch 17: the engine never stops between the revs: a seamless idle loop cut from the rev's sustain runs from the first rev until the car is gone, easing down as the camera pulls away */
+  var hkT0=0,bed=null,BEDK=[[.6,0],[1.3,.5],[7.3,.24],[9.6,.24],[10.4,.36],[12.6,.34],[14.4,0]];
+  function bedLoop(b){var r=b.sampleRate,a=Math.floor(.7*r),e=Math.floor(2.7*r),X=Math.floor(.35*r),L=e-a-X,o=AC.createBuffer(b.numberOfChannels,L,r);
+    for(var c=0;c<b.numberOfChannels;c++){var i=b.getChannelData(c),y=o.getChannelData(c);for(var k=0;k<L;k++){var v=i[a+k];if(k<X){var m=k/X;v=v*Math.sin(m*Math.PI/2)+i[a+L+k]*Math.cos(m*Math.PI/2);}y[k]=v;}}return o;}
+  function engBed(){if(!hkT0||bed||!sndOn||!AC||!BUF.v8)return;var el=(Date.now()-hkT0)/1000;if(el>BEDK[BEDK.length-1][0]-.3)return;
+    try{var src=AC.createBufferSource(),g=AC.createGain(),now=AC.currentTime;src.buffer=bedLoop(BUF.v8);src.loop=true;src.playbackRate.value=.9;src.connect(g);g.connect(AG);
+      var lv=function(t){for(var i=1;i<BEDK.length;i++)if(t<BEDK[i][0]){var p=BEDK[i-1],q=BEDK[i];return p[1]+(q[1]-p[1])*Math.max(0,(t-p[0])/(q[0]-p[0]));}return 0;};
+      g.gain.setValueAtTime(Math.max(.0001,lv(el)),now);BEDK.forEach(function(k){if(k[0]>el)g.gain.linearRampToValueAtTime(Math.max(.0001,k[1]),now+(k[0]-el));});
+      src.start(now);src.stop(now+(BEDK[BEDK.length-1][0]-el)+.1);bed=src;}catch(e){}}
+  function catchUp(){engBed();if(!sndOn||!cue||cue.on)return;var el=(Date.now()-cue.t)/1000;if(el<LEN[cue.n]-.2)cue.on=play(cue.n,el);}
   if(hk){
     /* batch 15: a three-second hold while the Spider revs and the prompt asks for sound; everything from the pull onward waits for it */
     var HOLD=4000,cl=hk.classList,at=function(ms,f){setTimeout(f,ms>=3300?ms+HOLD:ms);},K=function(k){hk.setAttribute('data-k',k);cl.toggle('hs-th',k>=4);};
@@ -2463,7 +2475,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       hiss(t+.052,.016,'bandpass',2400,3,.22,2);
     }catch(e){}}
     /* the reveal: the three after sites, live */
-    var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:27,LS=3.7;
+    var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:20,LS=5.7;
     /* each after renders at a real width (a phone layout on a phone), scaled a little into its frame, so it can be scrolled, tapped and used */
     function liveSize(){lv.forEach(function(o){var w=o.a.clientWidth,h=o.a.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1600,w/.86),k=w/V;
         o.f.style.width=Math.round(V)+'px';o.f.style.height=Math.ceil(h/k)+'px';o.f.style.transform='scale('+k.toFixed(4)+')';});}
@@ -2487,9 +2499,9 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     var bPend=0;function bLoad(){if(bf||!bv||RM)return;bf=document.createElement('iframe');bf.className='hk-bs';bf.setAttribute('title','Mountain & Valley, before');bf.setAttribute('tabindex','-1');bf.setAttribute('aria-hidden','true');bf.setAttribute('sandbox','allow-scripts allow-same-origin');
       bf.addEventListener('load',function(){try{var w=bf.contentWindow,d=w.document;if(!d||!d.body)return;d.documentElement.style.scrollBehavior='auto';bw=w;bSize();setTimeout(function(){bf.classList.add('on');},400);if(bPend)bRun();}catch(e){}});
       bf.src='b/before/mv2/index.html';bv.insertBefore(bf,bv.querySelector('.hk-a'));bSize();addEventListener('resize',bSize);}
-    function bRun(){if(!bw){bPend=1;return;}bPend=0;var t0=performance.now(),P=[[0,0],[.5,0],[1.9,.36],[2.4,.36],[3.7,.74],[4.2,.74],[5.1,1]];
+    function bRun(){if(!bw){bPend=1;return;}bPend=0;var t0=performance.now(),P=[[0,0],[1.6,0],[2.7,.55],[3.3,.55],[4.4,1.15],[5.1,1.15]];
       function f(now){var t=(now-t0)/1000,y=1;for(var i=1;i<P.length;i++){if(t<P[i][0]){var a=P[i-1],b=P[i],k=(t-a[0])/(b[0]-a[0]);k=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;y=a[1]+(b[1]-a[1])*k;break;}}
-        try{var d=bw.document,max=Math.max(0,(d.documentElement.scrollHeight||0)-bw.innerHeight);bw.scrollTo(0,max*y);}catch(e){}
+        try{var d=bw.document,max=Math.max(0,(d.documentElement.scrollHeight||0)-bw.innerHeight);bw.scrollTo(0,Math.min(max,bw.innerHeight*y));}catch(e){}
         if(t<P[P.length-1][0])requestAnimationFrame(f);}
       requestAnimationFrame(f);}
     /* the burnout: smoke laid down at the rear tyre's contact patch, frame by frame, so it starts with the spin and trails the car as it goes */
@@ -2505,7 +2517,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     function smoke(now){if(!smOn)return;if(now-smLast>38){smLast=now;var go=cl.contains('hs-go');if(!puff(go)&&go){smOn=0;return;}if(!go||Math.random()<.6)puff(go);}requestAnimationFrame(smoke);}
     function smokeOn(){if(RM||!sm||!wr||!sm.animate)return;smOn=1;smLast=0;requestAnimationFrame(smoke);}
     /* the running order */
-    at(350,function(){cl.add('hs-eng');sfx('v8');if(top)camGo(0);});
+    hkT0=Date.now();at(350,function(){cl.add('hs-eng');sfx('v8');engBed();if(top)camGo(0);});
     /* batch 16: three revs through the hold, each catching the last one's tail */
     setTimeout(function(){sfx('v8');},2550);setTimeout(function(){sfx('v8');},4750);
     setTimeout(tapSettle,3300+HOLD-150);
@@ -2547,7 +2559,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     function capOff(){var hc=hk.querySelector('.hk-car .wr .hc');if(!hc||!road||!road.animate||RM)return;var r=hc.getBoundingClientRect(),o=road.getBoundingClientRect();if(!r.width)return;
       var NS='http://www.w3.org/2000/svg',v=document.createElementNS(NS,'svg'),d=r.width,R=d/2,u=d/61;
       v.setAttribute('viewBox','134.5 219.5 61 61');v.style.cssText='position:absolute;left:0;top:0;width:'+d.toFixed(1)+'px;height:'+d.toFixed(1)+'px;overflow:visible;z-index:2;will-change:transform;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35))';
-      v.appendChild(hc.cloneNode(true));road.appendChild(v);hc.style.opacity='0';
+      v.appendChild(hc.cloneNode(true));road.appendChild(v);hc.style.opacity='0';capSnd();
       /* batch 16: no growing and no rolling away. it drops off the wheel onto the road where it is, then tips over toward the camera (pivoting on its bottom edge, so it ends lying just in front of where it landed) and settles like a coin */
       var x=r.left-o.left,y=r.top-o.top,g=(44-30.5)*u,c=g+d*.1,A=12*Math.PI/180,
         B=function(dx,bot,sy,rot){return 'translate('+(x+dx).toFixed(1)+'px,'+(y+bot+R-R*sy).toFixed(1)+'px) scaleY('+sy.toFixed(3)+') rotate('+rot.toFixed(0)+'deg)';},
@@ -2565,6 +2577,16 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
         {offset:.92,transform:B(d*.05,c,T(90),21)},
         {offset:.96,transform:B(d*.05,c,T(87),21)},
         {transform:B(d*.05,c,T(90),21)}],{duration:1400,easing:'linear',fill:'forwards'});}
+    /* batch 17: the hubcap is heard: a sharp metal pop as it lets go, a clank as it hits the road, a smaller one on the bounce, then a coin-like rattle as it rolls over and settles */
+    function capSnd(){if(!sndOn||!AC)return;try{var t=AC.currentTime+.005;
+      var ring=function(at0,fs,a,d){fs.forEach(function(f,i){var o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.setValueAtTime(f,at0);g.gain.setValueAtTime(.0001,at0);g.gain.exponentialRampToValueAtTime(a/(1+i*.6),at0+.003);g.gain.exponentialRampToValueAtTime(.0001,at0+d/(1+i*.25));o.connect(g);g.connect(AG);o.start(at0);o.stop(at0+d+.05);});};
+      var hit=function(at0,d,f,q,a){var n=AC.createBuffer(1,Math.floor(AC.sampleRate*d),AC.sampleRate),x=n.getChannelData(0);for(var k=0;k<x.length;k++)x[k]=(Math.random()*2-1)*Math.pow(1-k/x.length,3);var b=AC.createBufferSource(),fl=AC.createBiquadFilter(),g=AC.createGain();fl.type='bandpass';fl.frequency.value=f;fl.Q.value=q;g.gain.value=a;b.buffer=n;b.connect(fl);fl.connect(g);g.connect(AG);b.start(at0);};
+      var M=[1180,2730,4310,6020];
+      hit(t,.05,2600,1.4,.55);ring(t,[1720,3960,6400],.16,.32);                 /* the pop */
+      hit(t+.42,.09,900,.9,.75);ring(t+.42,M,.22,.55);                         /* it hits the road */
+      hit(t+.59,.05,1300,1,.35);ring(t+.59,M,.1,.35);                          /* the bounce */
+      [[.92,.13],[1.12,.1],[1.2,.08],[1.29,.06],[1.34,.045],[1.38,.035],[1.41,.025],[1.43,.018]].forEach(function(r,i){hit(t+r[0],.03,2100+i*120,1.6,r[1]*2.2);ring(t+r[0],[M[0]*1.04,M[1]*1.03,M[2]],r[1],.22);});   /* the roll and the coin-like settle */
+      }catch(e){}}
     at(8640,capOff);
     /* the line on its own; then the site, with the clock on its corner, so the five seconds are spent looking at it; at zero it unfolds into its facelift, live and usable */
     /* batch 12: the five seconds go straight onto the before site: the line sits over it, its gold rule runs down with the clock, and at zero it hands to the next line */
@@ -2572,19 +2594,21 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     at(10530,function(){cl.add('hs-tick');bRun();});
     at(10830,function(){clock();sfx('clock5');cl.add('hs-run');});
     var K5=16030;
-    at(K5,function(){K(5);off('b3');off('b3b');liveRun();});
+    /* batch 17: at zero the old site stays up with the clock on 0.0; "But with the right adjustments" comes up over it, and two seconds later the curtain opens (2s slower than before) */
+    var KR=K5+2350;
+    at(K5,function(){off('b3');off('b3b');});
+    at(KR,function(){K(5);liveRun();});
     /* three lines, one at a time in the same spot; the site starts down to its logo as the second shows, and the last line leaves as the crane folds */
     var B=function(c){return hk.querySelector('.hk-b.'+c);},on=function(c){var e=B(c);if(e){e.classList.remove('off');e.classList.add('on');}},off=function(c){var e=B(c);if(e){e.classList.remove('on');e.classList.add('off');}};
     at(13300,function(){off('b3');on('b3b');});
     at(K5+350,function(){on('b4');});
-    /* batch 16b: "But with the right adjustments" holds a full 1.5s longer; the two lines after it move back with it */
-    at(K5+4400,function(){off('b4');});
-    at(K5+4700,function(){K(6);on('b5');});
-    at(K5+7100,function(){off('b5');});
-    at(K5+7400,function(){on('b6');});
-    at(K5+9500,function(){off('b6');});
-    at(K5+LS*1000+DR*1000+250,function(){cl.add('hs-solo');});
-    at(K5+LS*1000+DR*1000+5000,function(){cl.add('hs-pg');});
+    at(KR+4050,function(){off('b4');});
+    at(KR+4350,function(){K(6);on('b5');});
+    at(KR+6750,function(){off('b5');});
+    at(KR+7050,function(){on('b6');});
+    at(KR+9150,function(){off('b6');});
+    at(KR+LS*1000+DR*1000+250,function(){cl.add('hs-solo');});
+    at(KR+LS*1000+DR*1000+5000,function(){cl.add('hs-pg');});
   }
   function sndSet(on){if(on&&tp&&!tp.classList.contains('gone')){tp.classList.add('gone');tp.classList.remove('on');}if(!sb)return;sb.setAttribute('aria-pressed',on?'true':'false');sb.setAttribute('aria-label',on?'Sound off':'Sound on');
     if(AC){if(AC.state==='suspended')AC.resume();AG.gain.setTargetAtTime(on?.9:0,AC.currentTime,.05);}
