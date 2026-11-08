@@ -161,11 +161,21 @@
       next.click(); setTimeout(step, 60); })();
   }
 
+  var TRIP_DIR = (document.querySelector('script[src*="finish.js"]') || {}).src ? document.querySelector('script[src*="finish.js"]').src.replace(/finish\.js.*$/, '') + 'assets/images/desk/' : 'assets/images/desk/';
+  var TRIP = {
+    g550:  [TRIP_DIR + 'trip-g550.webp',  'Captain Max'],
+    f900:  [TRIP_DIR + 'trip-f900.webp',  'first window seat'],
+    cl350: [TRIP_DIR + 'trip-cl350.webp', 'boarding chaos'],
+    cj4:   [TRIP_DIR + 'trip-cj4.webp',   'oops, my thumb'],
+    cl605: [TRIP_DIR + 'trip-cl605.webp', 'out cold by Nassau']
+  };
   function makePrint(h, small){
     var f = el('figure', 'fin-print');
-    var img = el('img', '', f); img.src = h.img; img.alt = ''; img.loading = 'lazy';
+    /* batch 18: the prints are the buyers' own snapshots from their trips, each with a few words in the same hand */
+    var T = TRIP[h.k];
+    var img = el('img', '', f); img.src = T ? T[0] : h.img; img.alt = ''; img.loading = 'lazy';
     img.decoding = 'async';
-    var cap = el('figcaption', '', f); cap.textContent = h.name;
+    var cap = el('figcaption', '', f); cap.textContent = T ? T[1] : h.name;
     f.dataset.prop = h.k;
     var c = cardFor(h.k);
     if(c){ var st = c.querySelector('.status .dot.no'); if(st) img.style.filter = 'grayscale(1) contrast(1.04)'; }
@@ -196,7 +206,7 @@
       Array.prototype.forEach.call(prints.children, function(p){
         if(!p.classList.contains('fin-print')) return;
         p.tabIndex = 0; p.setAttribute('role', 'button');
-        p.setAttribute('aria-label', 'Show ' + p.querySelector('figcaption').textContent);
+        p.setAttribute('aria-label', 'Show the ' + (FULL[p.dataset.prop] || p.querySelector('figcaption').textContent));
         function go(e){ e.preventDefault(); e.stopPropagation(); prints.classList.remove('fin-on');
           if(window.APSound) window.APSound.shuffle(); bringUp(p.dataset.prop); }
         p.addEventListener('click', go);
@@ -254,13 +264,7 @@
     /* --- props that wait on his photographs --- */
     props(frame, track);
 
-    /* --- the line about the specifications, said once, at the foot of the desk --- */
-    var sub = document.querySelector('.pad-page .pad-sub');
-    if(sub && !document.querySelector('.fin-fair')){
-      var fair = el('p', 'fin-fair'); fair.textContent = sub.textContent.trim();
-      var host = document.querySelector('.deskmain') || (frame && frame.parentNode) || document.body;
-      host.appendChild(fair);
-    }
+    /* batch 18: the line about the specifications at the foot of the desk is gone */
 
     /* --- a folder opens into its spec sheet --- */
     document.addEventListener('click', function(e){
@@ -705,4 +709,413 @@
   function go(){place();setTimeout(place,600);setTimeout(place,1800);}
   if(document.readyState==='complete') go(); else addEventListener('load',go);
   addEventListener('resize',function(){clearTimeout(go.t);go.t=setTimeout(place,150);});
+})();
+/* batch 18: the cup can be knocked over, and the phone chimes the first time it is picked up.
+   Pick the cup up three times (the third grab arms it, it goes over when you let go) or swing it hard
+   while holding it, and it tips onto its side where it is, coffee running out of the mouth across
+   whatever it lands on. The sounds go through the site's own switch (APSound), so mute holds. */
+(function(){
+  'use strict';
+  var html = document.documentElement;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function low(){ return reduce || html.classList.contains('perf-low'); }
+  function ss(k, v){ try { if(v === undefined) return sessionStorage.getItem(k);
+    sessionStorage.setItem(k, v); } catch(e){ return null; } }
+
+  /* ---------- sound: quiet, and only when the site's sound is on ---------- */
+  var actx = null, bus = null;
+  function ac(){
+    if(!(window.APSound && window.APSound.enabled && window.APSound.enabled())) return null;
+    if(!actx){ var AC = window.AudioContext || window.webkitAudioContext; if(!AC) return null;
+      actx = new AC(); bus = actx.createGain(); bus.gain.value = .9; bus.connect(actx.destination); }
+    if(actx.state === 'suspended') actx.resume();
+    return actx;
+  }
+  function env(c, g, t0, peak, att, dur){
+    g.gain.setValueAtTime(.0001, t0);
+    g.gain.exponentialRampToValueAtTime(peak, t0 + att);
+    g.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
+  }
+  function noise(c, o){
+    var t0 = c.currentTime + (o.delay || 0), len = Math.max(1, Math.floor(c.sampleRate * o.dur));
+    var b = c.createBuffer(1, len, c.sampleRate), d = b.getChannelData(0);
+    for(var i = 0; i < len; i++) d[i] = Math.random()*2 - 1;
+    var s = c.createBufferSource(); s.buffer = b;
+    var f = c.createBiquadFilter(); f.type = o.type || 'bandpass'; f.Q.value = o.q || .8;
+    f.frequency.setValueAtTime(o.f, t0);
+    if(o.to) f.frequency.exponentialRampToValueAtTime(o.to, t0 + o.dur);
+    var g = c.createGain(); env(c, g, t0, o.gain, o.att || .002, o.dur);
+    s.connect(f); f.connect(g); g.connect(bus); s.start(t0); s.stop(t0 + o.dur + .02);
+  }
+  function tone(c, o){
+    var t0 = c.currentTime + (o.delay || 0), osc = c.createOscillator(), g = c.createGain();
+    osc.type = o.type || 'sine'; osc.frequency.setValueAtTime(o.f, t0);
+    if(o.to) osc.frequency.exponentialRampToValueAtTime(o.to, t0 + o.dur);
+    env(c, g, t0, o.gain, o.att || .003, o.dur);
+    osc.connect(g); g.connect(bus); osc.start(t0); osc.stop(t0 + o.dur + .02);
+  }
+  /* ceramic on wood: a low knock, the click of the glaze, then it rocks once and settles */
+  function clunk(delay){
+    var c = ac(); if(!c) return; delay = delay || 0;
+    tone(c,  {f:168, to:96,  dur:.16, gain:.065, delay:delay});
+    noise(c, {f:520, type:'lowpass', q:.7, dur:.07, gain:.045, delay:delay});
+    noise(c, {f:2700, q:4, dur:.035, gain:.02, delay:delay});
+    tone(c,  {f:1860, to:1830, dur:.09, gain:.005, type:'triangle', delay:delay});
+    tone(c,  {f:190, to:120, dur:.08, gain:.022, delay:delay + .085});
+    noise(c, {f:2900, q:4, dur:.025, gain:.009, delay:delay + .085});
+    tone(c,  {f:200, to:130, dur:.06, gain:.009, delay:delay + .15});
+  }
+  /* and the coffee going: a soft wash, a few drops after it */
+  function splash(delay){
+    var c = ac(); if(!c) return; delay = delay || 0;
+    noise(c, {f:650, to:1500, q:.7, dur:.30, att:.03, gain:.03, delay:delay});
+    noise(c, {f:300, type:'lowpass', q:.6, dur:.24, att:.04, gain:.018, delay:delay + .02});
+    noise(c, {f:3800, q:.8, dur:.16, att:.01, gain:.007, delay:delay + .11});
+  }
+  /* a soft rising three-note chime, like a message arriving */
+  function chime(){
+    var c = ac(); if(!c) return false;
+    [1318.51, 1661.22, 1975.53].forEach(function(f, i){
+      var d = .12 + i*.085;
+      tone(c, {f:f, dur:.34, gain:.016, att:.005, delay:d});
+      tone(c, {f:f*2, dur:.16, gain:.0035, att:.004, delay:d});
+    });
+    return true;
+  }
+
+  /* ---------- the phone: first time it's picked up this session ---------- */
+  addEventListener('pointerdown', function(e){
+    if(e.button > 0 || !e.isTrusted) return;
+    if(!(e.target && e.target.closest && e.target.closest('.obj.phone'))) return;
+    if(ss('v18-chime')) return;
+    if(chime()) ss('v18-chime', '1');
+  }, true);
+
+  /* ---------- the cup ---------- */
+  var KEY = 'v18-grabs', SPEED = 2.5, SPAN = 60;
+  var spilt = false, g = null;   /* g: the grab in progress */
+  function grabs(){ return parseInt(ss(KEY) || '0', 10) || 0; }
+
+  function mugOf(t){ return t && t.closest ? t.closest('.obj.mug') : null; }
+
+  addEventListener('pointerdown', function(e){
+    var mug = mugOf(e.target); if(!mug) return;
+    if(spilt){ e.stopPropagation(); e.preventDefault(); return; }
+    if(e.button > 0) return;
+    g = {id:e.pointerId, mug:mug, x0:e.clientX, y0:e.clientY, moved:false, pts:[{x:e.clientX, y:e.clientY, t:e.timeStamp}]};
+  }, true);
+
+  addEventListener('pointermove', function(e){
+    if(spilt && mugOf(e.target)){ e.stopPropagation(); return; }
+    if(!g || e.pointerId !== g.id) return;
+    var now = e.timeStamp;
+    g.pts.push({x:e.clientX, y:e.clientY, t:now});
+    while(g.pts.length > 2 && now - g.pts[1].t > 160) g.pts.shift();
+    if(!g.moved){
+      if(Math.abs(e.clientX - g.x0) < 4 && Math.abs(e.clientY - g.y0) < 4) return;
+      g.moved = true; ss(KEY, String(grabs() + 1));
+    }
+    /* a hard swing: the hand averaging over 2.5px a millisecond for 60ms or more */
+    var i = g.pts.length - 1, len = 0;
+    while(i > 0 && now - g.pts[i - 1].t <= SPAN + 25){
+      len += Math.hypot(g.pts[i].x - g.pts[i-1].x, g.pts[i].y - g.pts[i-1].y); i--; }
+    var span = now - g.pts[i].t;
+    if(span >= SPAN - 8 && len / span > SPEED){
+      e.stopPropagation();           /* the cup stops where the hand let it go */
+      knock(g.mug, dirOf(g), g);
+    }
+  }, true);
+
+  function up(e){
+    if(!g || e.pointerId !== g.id) return;
+    var cur = g; g = null;
+    if(spilt){ setTimeout(function(){ cur.mug.classList.add('v18-inert'); }, 0); return; }
+    if(cur.moved && grabs() >= 3){
+      var d = dirOf(cur);
+      setTimeout(function(){ knock(cur.mug, d, null); }, 0);   /* after the drag has set it down */
+    }
+  }
+  addEventListener('pointerup', up, true);
+  addEventListener('pointercancel', up, true);
+
+  /* the way the hand was going; a cup goes over in the direction it was moving */
+  function dirOf(gr){
+    var p = gr.pts, n = p.length - 1, last = p[n], a = p[0];
+    for(var i = n; i >= 0; i--){ a = p[i]; if(last.t - a.t > 90) break; }
+    var dx = last.x - a.x, dy = last.y - a.y;
+    if(Math.hypot(dx, dy) < 6){ dx = last.x - gr.x0; dy = last.y - gr.y0; }
+    if(Math.hypot(dx, dy) < 6) return Math.PI * .86;
+    return Math.atan2(dy, dx);
+  }
+
+  /* ---------- light: from the upper left, as in the photographs ---------- */
+  var LX = -.55, LY = -.83;
+  function mix(a, b, k){ return [0,1,2].map(function(i){ return Math.round(a[i] + (b[i] - a[i])*k); }); }
+  function rgb(c){ return 'rgb(' + c.join(',') + ')'; }
+  /* a lying cylinder lit from above-left: the colour across it, from one side to the other */
+  function shade(u, nx, ny){
+    var k = .62, lx = LX*k, ly = LY*k, lz = Math.sqrt(1 - k*k);
+    var nz = Math.sqrt(Math.max(0, 1 - u*u)), nl = u*(nx*lx + ny*ly) + nz*lz;
+    var b = Math.max(0, nl);
+    /* the half-vector seen across the cylinder: a lying cup always shows one bright line along it */
+    var hn = nx*lx + ny*ly, hz = lz + 1, hl = Math.hypot(hn, hz);
+    var sp = .8*Math.pow(Math.max(0, (u*hn + nz*hz)/hl), 60);
+    var c = mix([164,156,143], [250,248,244], Math.pow(b, .7));
+    return mix(c, [255,255,255], sp*.9);
+  }
+
+  /* ---------- the cup on its side, seen from above ---------- */
+  function cupSVG(R, a, side){
+    var L = R*2.24, x0 = -L/2, x1 = L/2, s = side;
+    var ca = Math.cos(a), sa = Math.sin(a), nx = -sa, ny = ca;
+    var lx = LX*ca + LY*sa, ly = -LX*sa + LY*ca;            /* the light in the cup's own frame */
+    var ext = Math.hypot(L/2 + R*.4, R*1.55) + R*.5 + 16, S = Math.ceil(ext*2);
+    var f = function(v){ return (+v).toFixed(2); };
+    var stops = '';
+    for(var i = 0; i <= 32; i++){ var u = -1 + i/16; stops += '<stop offset="' + f(i/32) + '" stop-color="' + rgb(shade(u, nx, ny)) + '"/>'; }
+    var hc = shade(s*.55, nx, ny), hdark = mix(hc, [120,110,96], .55);
+    var shx = -lx*R*.16, shy = -ly*R*.16;                   /* shadows fall away from the light */
+    var body = 'M' + f(x1) + ' ' + f(-R) + 'L' + f(x0) + ' ' + f(-R) + 'A' + f(R*.17) + ' ' + f(R) + ' 0 0 0 ' + f(x0) + ' ' + f(R) + 'L' + f(x1) + ' ' + f(R) + 'Z';
+    var hp = 'M' + f(-L*.26) + ' ' + f(s*R*.82) + 'C' + f(-L*.29) + ' ' + f(s*R*1.62) + ' ' + f(L*.17) + ' ' + f(s*R*1.62) + ' ' + f(L*.15) + ' ' + f(s*R*.82);
+    var hw = R*.2, mo = x1 + R*.01;
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + S + ' ' + S + '" aria-hidden="true" focusable="false">' +
+      '<defs>' +
+        '<linearGradient id="v18b" gradientUnits="userSpaceOnUse" x1="0" y1="' + f(-R) + '" x2="0" y2="' + f(R) + '">' + stops + '</linearGradient>' +
+        '<linearGradient id="v18f" gradientUnits="userSpaceOnUse" x1="' + f(x0 - R*.17) + '" y1="0" x2="' + f(x0 + L*.4) + '" y2="0">' +
+          '<stop offset="0" stop-color="#4A3E30" stop-opacity=".26"/><stop offset="1" stop-color="#4A3E30" stop-opacity="0"/></linearGradient>' +
+        '<radialGradient id="v18i" gradientUnits="userSpaceOnUse" cx="' + f(mo - lx*R*.06) + '" cy="' + f(-ly*R*.3) + '" r="' + f(R*.95) + '">' +
+          '<stop offset="0" stop-color="#7C6A57"/><stop offset=".5" stop-color="#46362A"/><stop offset="1" stop-color="#1E150E"/></radialGradient>' +
+        '<filter id="v18s" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="' + f(R*.11) + '"/></filter>' +
+        '<filter id="v18c" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="' + f(R*.035) + '"/></filter>' +
+        '<filter id="v18h" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="' + f(R*.025) + '"/></filter>' +
+      '</defs>' +
+      '<g transform="translate(' + f(S/2) + ' ' + f(S/2) + ') rotate(' + f(a*180/Math.PI) + ')">' +
+        /* the soft shadow it throws, and the tight dark one where it meets the surface */
+        '<g transform="translate(' + f(shx) + ' ' + f(shy) + ')" filter="url(#v18s)" opacity=".5" fill="#140A03">' +
+          '<path d="' + body + '"/><ellipse cx="' + f(x1) + '" cy="0" rx="' + f(R*.3) + '" ry="' + f(R) + '"/>' +
+          '<path d="' + hp + '" fill="none" stroke="#140A03" stroke-width="' + f(hw) + '" stroke-linecap="round"/></g>' +
+        '<g transform="translate(' + f(shx*.3) + ' ' + f(shy*.3) + ')" filter="url(#v18c)" opacity=".45" fill="#140A03">' +
+          '<rect x="' + f(x0) + '" y="' + f(-R*.92) + '" width="' + f(L) + '" height="' + f(R*1.84) + '" rx="' + f(R*.3) + '"/></g>' +
+        /* the handle, standing off one side */
+        '<path d="' + hp + '" fill="none" stroke="' + rgb(hdark) + '" stroke-width="' + f(hw*1.18) + '" stroke-linecap="round" transform="translate(' + f(-lx*R*.05) + ' ' + f(-ly*R*.05) + ')"/>' +
+        '<path d="' + hp + '" fill="none" stroke="' + rgb(hc) + '" stroke-width="' + f(hw) + '" stroke-linecap="round"/>' +
+        '<path d="' + hp + '" fill="none" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="' + f(hw*.24) + '" stroke-linecap="round" filter="url(#v18h)" transform="translate(' + f(lx*R*.05) + ' ' + f(ly*R*.05) + ')"/>' +
+        /* the body */
+        '<path d="' + body + '" fill="url(#v18b)"/>' +
+        '<path d="' + body + '" fill="url(#v18f)"/>' +
+        '<path d="M' + f(x0 + R*.05) + ' ' + f(-R*.86) + 'A' + f(R*.13) + ' ' + f(R*.86) + ' 0 0 0 ' + f(x0 + R*.05) + ' ' + f(R*.86) + '" fill="none" stroke="#8E8473" stroke-opacity=".38" stroke-width="' + f(R*.025) + '"/>' +
+        '<path d="' + body + '" fill="none" stroke="#7E7462" stroke-opacity=".32" stroke-width=".7"/>' +
+        /* the mouth: the lip, the dark inside, and coffee on the lip where it ran out */
+        '<ellipse cx="' + f(x1) + '" cy="0" rx="' + f(R*.3) + '" ry="' + f(R) + '" fill="url(#v18b)"/>' +
+        '<ellipse cx="' + f(x1) + '" cy="0" rx="' + f(R*.3) + '" ry="' + f(R) + '" fill="none" stroke="#7E7462" stroke-opacity=".35" stroke-width=".7"/>' +
+        '<ellipse cx="' + f(mo) + '" cy="0" rx="' + f(R*.235) + '" ry="' + f(R*.86) + '" fill="url(#v18i)"/>' +
+        '<ellipse cx="' + f(mo) + '" cy="0" rx="' + f(R*.235) + '" ry="' + f(R*.86) + '" fill="none" stroke="#2B1A0C" stroke-opacity=".55" stroke-width="' + f(R*.03) + '"/>' +
+        '<path d="M' + f(mo + R*.2) + ' ' + f(R*.35) + 'Q' + f(mo + R*.29) + ' ' + f(R*.05) + ' ' + f(mo + R*.21) + ' ' + f(-R*.3) + '" fill="none" stroke="#3A2210" stroke-opacity=".55" stroke-width="' + f(R*.05) + '" stroke-linecap="round" filter="url(#v18h)"/>' +
+        /* the glaze catching the lamp along its length */
+        '<path d="M' + f(x0 + R*.25) + ' 0H' + f(x1 - R*.36) + '" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="' + f(R*.07) + '" stroke-linecap="round" filter="url(#v18h)" transform="translate(0 ' + f(hiY(nx, ny)*R) + ')"/>' +
+      '</g></svg>';
+    function hiY(nx2, ny2){            /* where across the body the brightest line falls */
+      var best = 0, bv = -1;
+      for(var u = -1; u <= 1; u += .02){ var c = shade(u, nx2, ny2), v = c[0] + c[1] + c[2]; if(v > bv){ bv = v; best = u; } }
+      return best;
+    }
+  }
+
+  /* ---------- what the coffee lands on ---------- */
+  function surface(x, y, skip){
+    if(x < 0 || y < 0 || x > innerWidth || y > innerHeight || !document.elementsFromPoint) return 'wood';
+    var list = document.elementsFromPoint(x, y), n = null;
+    for(var i = 0; i < list.length; i++){
+      var c = list[i];
+      if(skip.contains(c) || c.closest('.desk-objects > .obj, .v18-spill, .fin-steam, .lens, .toyhint')) continue;
+      if(c.classList && (c.classList.contains('desk-objects') || c.classList.contains('desk-marks'))) continue;
+      n = c; break;
+    }
+    if(!n) return 'wood';
+    if(n.tagName === 'IMG') return n.closest('.notepad') ? 'paper' : 'wood';   /* a glossy print holds it like varnish */
+    for(var e = n; e && e !== document.body && e !== html; e = e.parentElement){
+      var cs = getComputedStyle(e), bi = cs.backgroundImage;
+      if(bi && bi !== 'none') return /wood/i.test(bi) ? 'wood' : 'paper';
+      var m = (cs.backgroundColor || '').match(/[\d.]+/g);
+      if(m && m.length >= 3 && (m.length < 4 || +m[3] > .5)){
+        var lum = (.2126*m[0] + .7152*m[1] + .0722*m[2]) / 255;
+        return lum > .55 ? 'paper' : 'wood';
+      }
+    }
+    return 'wood';
+  }
+
+  function ease(t){ t = Math.max(0, Math.min(1, t)); return 1 - Math.pow(1 - t, 3); }
+
+  /* ---------- the spill: one organic shape that runs out of the mouth ---------- */
+  function spillCanvas(R, a, kind, mx, my){
+    var H = Math.ceil(R*3.7), dpr = Math.min(2, window.devicePixelRatio || 1);
+    /* cut to the page, so coffee running off the edge never widens or lengthens it */
+    var de = document.documentElement, pw = de.clientWidth - scrollX;
+    var phh = Math.max(document.body.scrollHeight, de.scrollHeight) - scrollY;
+    var cl = Math.max(0, Math.ceil(H - mx)), cr = Math.max(0, Math.ceil(mx + H - pw));
+    var ct = Math.max(0, Math.ceil(H - my - scrollY)), cbt = Math.max(0, Math.ceil(my + H - phh));
+    var W = Math.max(1, H*2 - cl - cr), Hh = Math.max(1, H*2 - ct - cbt);
+    var cv = document.createElement('canvas');
+    cv.className = 'v18-spill' + (kind === 'paper' ? ' on-paper' : '');
+    cv.setAttribute('aria-hidden', 'true');
+    cv.width = Math.round(W*dpr); cv.height = Math.round(Hh*dpr);
+    cv.style.width = W + 'px'; cv.style.height = Hh + 'px';
+    var ctx = cv.getContext('2d'); if(!ctx) return null;
+    var ca = Math.cos(a), sa = Math.sin(a);
+    var lx = LX*ca + LY*sa, ly = -LX*sa + LY*ca;
+    var rnd = Math.random;
+    var ph = [rnd()*6.28, rnd()*6.28, rnd()*6.28, rnd()*6.28];
+    var cb = R*.95, rx = R*1.45, ry = R*1.0;
+    var fingers = [], nF = 2 + Math.round(rnd());
+    for(var k = 0; k < nF; k++) fingers.push({th:(k % 2 ? 1 : -1)*(.25 + rnd()*.85), amp:R*(.2 + rnd()*.24), w:.16 + rnd()*.1});
+    fingers.push({th:Math.PI*(rnd() < .5 ? .62 : -.62), amp:R*.16, w:.3});   /* it creeps back along the cup a little */
+    function base(th){
+      var c = Math.cos(th), s = Math.sin(th);
+      var r = rx*ry / Math.sqrt(ry*ry*c*c + rx*rx*s*s);
+      return r * (1 + .07*c) * (1 + .07*Math.sin(3*th + ph[0]) + .05*Math.sin(5*th + ph[1]) + .03*Math.sin(8*th + ph[2]) + .016*Math.sin(13*th + ph[3]));
+    }
+    function fing(th){
+      var v = 0;
+      fingers.forEach(function(F){ var d = Math.atan2(Math.sin(th - F.th), Math.cos(th - F.th)); v += F.amp*Math.exp(-(d*d)/(2*F.w*F.w)); });
+      return v;
+    }
+    var N = 168, B = [], Fv = [];
+    for(var j = 0; j < N; j++){ var th = j/N*Math.PI*2; B.push(base(th)); Fv.push(fing(th)); }
+    var drops = [];
+    for(var q = 0; q < 6; q++){
+      var da = (rnd() - .5)*1.7, dist = R*(1.9 + rnd()*1.25);
+      drops.push({x:Math.cos(da)*dist, y:Math.sin(da)*dist, r:.9 + rnd()*1.7, delay:30 + rnd()*110, dur:260 + rnd()*170});
+    }
+    var P = kind === 'paper'
+      ? {c0:'rgba(70,38,13,.80)', c1:'rgba(96,55,22,.62)', c2:'rgba(118,71,30,.50)', edge:'rgba(58,30,9,.6)', ew:2.1, gl:.17, sheen:.06, drop:'rgba(92,52,20,.62)'}
+      : {c0:'rgba(24,12,4,.90)', c1:'rgba(36,19,8,.84)', c2:'rgba(54,30,12,.74)', edge:'rgba(12,6,2,.6)', ew:1.3, gl:.32, sheen:.11, drop:'rgba(34,18,7,.84)'};
+    var canBlur = 'filter' in ctx;
+    function path(t){
+      var g0 = ease(t/850), g1 = ease((t - 150)/900), cx = cb*g0, p = new Path2D();
+      var pts = [];
+      for(var j = 0; j < N; j++){
+        var th = j/N*Math.PI*2, r = B[j]*(.08 + .92*g0) + Fv[j]*g1;
+        pts.push([cx + Math.cos(th)*r, Math.sin(th)*r]);
+      }
+      var m0 = [(pts[N-1][0] + pts[0][0])/2, (pts[N-1][1] + pts[0][1])/2];
+      p.moveTo(m0[0], m0[1]);
+      for(var i = 0; i < N; i++){ var A = pts[i], Bn = pts[(i + 1) % N];
+        p.quadraticCurveTo(A[0], A[1], (A[0] + Bn[0])/2, (A[1] + Bn[1])/2); }
+      p.closePath();
+      return {p:p, cx:cx, g:g0};
+    }
+    function draw(t){
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.translate(H - cl, H - ct); ctx.rotate(a);
+      var o = path(t), p = o.p;
+      var gr = ctx.createRadialGradient(0, 0, 0, 0, 0, R*2.7);
+      gr.addColorStop(0, P.c0); gr.addColorStop(.45, P.c1); gr.addColorStop(1, P.c2);
+      ctx.fillStyle = gr; ctx.fill(p);
+      if(canBlur) ctx.filter = 'blur(.5px)';
+      ctx.strokeStyle = P.edge; ctx.lineWidth = P.ew; ctx.stroke(p);
+      ctx.save(); ctx.clip(p);
+      /* the meniscus catches the lamp on the side facing it */
+      if(canBlur) ctx.filter = 'blur(.7px)';
+      ctx.save(); ctx.translate(-lx*2.2, -ly*2.2);
+      ctx.strokeStyle = 'rgba(255,238,214,' + P.gl + ')'; ctx.lineWidth = 1.4; ctx.stroke(p); ctx.restore();
+      if(canBlur) ctx.filter = 'none';
+      /* and a soft reflection of it across the wet surface */
+      var hx = o.cx + lx*R*.55*o.g, hy = ly*R*.5*o.g, hr = R*.95*(.3 + .7*o.g);
+      var sh = ctx.createRadialGradient(hx, hy, 0, hx, hy, hr);
+      sh.addColorStop(0, 'rgba(255,240,220,' + P.sheen + ')'); sh.addColorStop(1, 'rgba(255,240,220,0)');
+      ctx.fillStyle = sh; ctx.fillRect(hx - hr, hy - hr, hr*2, hr*2);
+      ctx.restore();
+      if(canBlur) ctx.filter = 'none';
+      /* a few drops thrown clear, which land and stay */
+      drops.forEach(function(d){
+        var k = ease((t - d.delay)/d.dur); if(t < d.delay) return;
+        var x = d.x*k, y = d.y*k, ang = Math.atan2(d.y, d.x), st = 1 + 1.5*(1 - k);
+        ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+        ctx.beginPath(); ctx.ellipse(0, 0, d.r*st, d.r*(.75 + .25*k), 0, 0, Math.PI*2);
+        ctx.fillStyle = P.drop; ctx.fill(); ctx.restore();
+      });
+    }
+    return {el:cv, x:H - cl, y:H - ct, draw:draw, end:1150};
+  }
+
+  /* ---------- over it goes ---------- */
+  function knock(mug, dir, gr){
+    if(spilt || !mug || !mug.offsetParent) return;
+    spilt = true;
+    ss(KEY, '0');
+    mug.classList.remove('grabbing', 'carried', 'sloshing');
+    document.body.classList.remove('dragging');
+    if(!gr) mug.classList.add('v18-inert');
+    setTimeout(function(){ mug.classList.add('v18-inert'); }, 1600);   /* even if the hand's release never reaches it */
+
+    var w = mug.offsetWidth, h = mug.offsetHeight;
+    var R = w*.445, rimX = w*.469, rimY = h*.417;
+    var dx = Math.cos(dir), dy = Math.sin(dir), side = Math.random() < .5 ? 1 : -1;
+    var off = R*.4, cupX = rimX + dx*off, cupY = rimY + dy*off;
+
+    /* the cup on its side, drawn in the mug so it stays with it */
+    var wrap = document.createElement('span'); wrap.className = 'v18-cup'; wrap.setAttribute('aria-hidden', 'true');
+    wrap.innerHTML = cupSVG(R, dir, side);
+    var svg = wrap.firstChild, S = parseFloat(svg.getAttribute('viewBox').split(' ')[2]);
+    /* cut to the page, as the spill is */
+    var mr = mug.getBoundingClientRect(), de = document.documentElement;
+    var bx = mr.left + cupX - S/2, by = mr.top + cupY - S/2;
+    var cl = Math.max(0, Math.ceil(-scrollX - bx)), cr = Math.max(0, Math.ceil(bx + S - (de.clientWidth - scrollX)));
+    var ct = Math.max(0, Math.ceil(-scrollY - by));
+    var cb = Math.max(0, Math.ceil(by + S - (Math.max(document.body.scrollHeight, de.scrollHeight) - scrollY)));
+    var vw = Math.max(1, S - cl - cr), vh = Math.max(1, S - ct - cb);
+    svg.setAttribute('viewBox', cl + ' ' + ct + ' ' + vw + ' ' + vh);
+    wrap.style.width = vw + 'px'; wrap.style.height = vh + 'px';
+    wrap.style.left = (cupX - S/2 + cl) + 'px'; wrap.style.top = (cupY - S/2 + ct) + 'px';
+    wrap.style.transformOrigin = (S/2 - cl) + 'px ' + (S/2 - ct) + 'px';
+    wrap.style.opacity = '0';
+    mug.appendChild(wrap);
+    mug.classList.add('empty');                        /* the steam stops */
+
+    /* the coffee, on the layer under the cup */
+    var mx = mr.left + cupX + dx*(R*1.12 + R*.06), my = mr.top + cupY + dy*(R*1.12 + R*.06);
+    var kind = surface(mx + dx*R, my + dy*R, mug);
+    var sp = spillCanvas(R, dir, kind, mx, my);
+    if(sp){
+      var cv = sp.el, z = getComputedStyle(mug).zIndex;
+      cv.style.left = '0px'; cv.style.top = '0px';
+      if(z && z !== 'auto') cv.style.zIndex = z;
+      mug.parentNode.insertBefore(cv, mug);
+      var r0 = cv.getBoundingClientRect();
+      cv.style.left = Math.round(mx - sp.x - r0.left) + 'px';
+      cv.style.top = Math.round(my - sp.y - r0.top) + 'px';
+    }
+
+    var spin = mug.querySelector('.mugspin') || mug.firstElementChild;
+    if(low()){
+      wrap.style.opacity = '1'; mug.classList.add('v18-spilt');
+      if(sp) sp.draw(sp.end);
+      clunk(0); splash(.05);
+      return;
+    }
+    /* the photograph lurches the way it's going and is gone; the drawn cup lands, rocks once, settles */
+    var ang = side*(4 + Math.random()*3);
+    if(spin && spin.animate){
+      spin.animate([{opacity:1, transform:'translate(0,0) scale(1)'},
+                    {opacity:0, transform:'translate(' + (dx*R*.3).toFixed(1) + 'px,' + (dy*R*.3).toFixed(1) + 'px) scale(.96)'}],
+                   {duration:220, easing:'cubic-bezier(.5,0,.75,0)', fill:'forwards'});
+    }
+    if(wrap.animate){
+      wrap.animate([
+        {opacity:0, transform:'translate(' + (-dx*R*.32).toFixed(1) + 'px,' + (-dy*R*.32).toFixed(1) + 'px) rotate(' + (-ang) + 'deg) scale(.95)'},
+        {opacity:1, offset:.42, transform:'translate(' + (dx*R*.04).toFixed(1) + 'px,' + (dy*R*.04).toFixed(1) + 'px) rotate(' + (ang*.3).toFixed(2) + 'deg) scale(1)'},
+        {opacity:1, offset:.7, transform:'translate(0,0) rotate(' + (-ang*.1).toFixed(2) + 'deg) scale(1)'},
+        {opacity:1, transform:'translate(0,0) rotate(0deg) scale(1)'}
+      ], {duration:480, delay:90, easing:'cubic-bezier(.22,1,.36,1)', fill:'forwards'});
+    } else wrap.style.opacity = '1';
+    setTimeout(function(){ wrap.style.opacity = '1'; mug.classList.add('v18-spilt'); }, 260);
+    clunk(.17); splash(.26);
+    if(sp){
+      var t0 = 0;
+      setTimeout(function(){
+        (function f(t){ if(!t0) t0 = t; var e = t - t0; sp.draw(e); if(e < sp.end) requestAnimationFrame(f); })(performance.now());
+      }, 200);
+    }
+  }
 })();

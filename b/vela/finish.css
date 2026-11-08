@@ -406,3 +406,23 @@ html:not(.perf-low) .obj.mug.photo:not(.carried):not(.tipped) .mugimg{
 /* batch 17: phones: back arrow left, wordmark centred, caption clears the copy, tabs in two even lines */
 @media (max-width:560px){html body .topbar-in .backlink,html body .backlink{position:absolute!important;left:16px!important;top:50%!important;transform:translateY(-50%)!important;width:36px!important;height:36px!important;padding:0!important;gap:0!important;justify-content:center!important;font-size:0!important;margin:0!important}html body .backlink span{font-size:15px!important;line-height:1}}
 @media (max-width:560px){html body .hero-photo.instants{margin-bottom:56px!important}html body .tabs{flex-wrap:nowrap!important;align-items:flex-end!important}html body .tabs .tab{white-space:normal!important;flex:1 1 0!important;min-width:0!important;font-size:12px!important;letter-spacing:.02em!important;line-height:1.25!important;padding:9px 4px!important;text-align:center!important}}
+/* batch 18: the coffee ring under the cup is 7% smaller, scaled about its own centre so it stays where it was */
+html body .restring{transform:rotate(-14deg) scale(.93)}
+/* batch 18: the wordmark reads heavier (a stroke in its own colour thickens Italiana, which has one weight) and sits 8px lower, still centred */
+html body .topbar .wordmark.vela-mark{transform:translate(-50%,calc(-50% + 8px))!important}
+html body .vela-mark .vname{-webkit-text-stroke:.042em currentColor}
+/* batch 18: no specifications line at the foot of the desk */
+.fin-fair{display:none!important}
+/* batch 18: knock the cup over. The tipped cup is drawn inside the mug (the photo fades out), the spill is a canvas
+   under it on the same layer; neither takes a click, so the folder and its tabs work through them */
+.v18-spill{position:absolute;pointer-events:none;display:block}
+.v18-spill.on-paper{mix-blend-mode:multiply}
+.obj.mug.v18-spilt{cursor:default!important}
+.obj.mug.v18-inert{pointer-events:none!important}
+.obj.mug.v18-spilt > :not(.v18-cup){opacity:0!important;transition:opacity .16s ease}
+.obj.mug.v18-spilt .fin-ol{display:none!important}
+.obj.mug .v18-cup{position:absolute;pointer-events:none;overflow:visible;display:block}
+.obj.mug .v18-cup svg{display:block;width:100%;height:100%;overflow:visible}
+/* batch 18: the prints carry a few handwritten words now, so the hand comes down to fit the border on one line */
+html body .fin-print figcaption{font-size:18px!important;white-space:nowrap!important;overflow:visible!important;letter-spacing:0!important}
+@media (max-width:740px){ html body .fin-track .fin-print figcaption{font-size:16px!important} }
