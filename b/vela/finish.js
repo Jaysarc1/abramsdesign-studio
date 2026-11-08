@@ -437,6 +437,10 @@
       'A Challenger 650 comes to market Monday'
     ];
     var n = Math.floor(Math.random()*NEWS.length);
+    /* the wallpaper is a find: it shows only when a hand wakes the phone */
+    function egg(e){ if(e && e.isTrusted === false) return; phone.classList.add('fin-egg'); }
+    phone.addEventListener('click', egg);
+    phone.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' ') egg(e); });
     function lift(on){
       if(!on || narrow()){ phone.style.scale = ''; phone.style.translate = ''; return; }
       if(phone.style.scale) return;
@@ -449,6 +453,7 @@
       phone.style.scale = k.toFixed(3); phone.style.translate = Math.round(nx - cx) + 'px ' + Math.round(ny - cy) + 'px';
     }
     new MutationObserver(function(){
+      if(!phone.classList.contains('awake') && phone.classList.contains('fin-egg')) phone.classList.remove('fin-egg');
       lift(phone.classList.contains('awake') && !/grab|held|carried/.test(phone.className));
       if(!phone.classList.contains('awake') || phone._finWas) { if(!phone.classList.contains('awake')) phone._finWas = false; return; }
       phone._finWas = true;
@@ -501,6 +506,51 @@
     typewriter();
     signature();
     stamps();
+    pillMidway();
+  }
+
+  /* ---------- the status pill sits exactly halfway ----------
+     Halfway between the foot of the spec-sheet line above it and the top of
+     the aircraft's name below it, measured on the glyphs the browser drew,
+     not on the boxes round them. Offsets ignore transforms, so the entrance
+     animation can't throw the measurement off; the pill moves with `top`
+     (it is position:relative), so nothing else on the page moves with it. */
+  function pillMidway(){
+    var pill = document.querySelector('.hero-text .status');
+    var label = document.querySelector('.hero-top .label-caps');
+    var h1 = document.querySelector('.hero-text h1');
+    if(!pill || !label || !h1) return;
+    var cv = document.createElement('canvas'), g = cv.getContext && cv.getContext('2d');
+    if(!g || !('fontBoundingBoxAscent' in (g.measureText('x') || {}))) return;
+    function top(el){ var y = 0; while(el){ y += el.offsetTop; el = el.offsetParent; } return y; }
+    function metrics(el, text){
+      var cs = getComputedStyle(el);
+      g.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+      var m = g.measureText(text);
+      var lh = parseFloat(cs.lineHeight);
+      if(!lh) lh = m.fontBoundingBoxAscent + m.fontBoundingBoxDescent;
+      var pad = parseFloat(cs.paddingTop) + parseFloat(cs.borderTopWidth);
+      var base = top(el) + pad + (lh - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent))/2 + m.fontBoundingBoxAscent;
+      return {base: base, ink: m.actualBoundingBoxAscent};
+    }
+    function place(){
+      pill.style.top = '';
+      if(!pill.offsetParent || getComputedStyle(pill).display === 'none') return;
+      var lt = (label.textContent || '').trim(); if(getComputedStyle(label).textTransform === 'uppercase') lt = lt.toUpperCase();
+      var first = (h1.firstChild && h1.firstChild.nodeType === 3 ? h1.firstChild.nodeValue : h1.textContent).trim();
+      if(!lt || !first) return;
+      var above = metrics(label, lt).base;                 /* capitals sit on the line */
+      var nm = metrics(h1, first), below = nm.base - nm.ink;
+      var rel = parseFloat(getComputedStyle(pill).top) || 0;   /* a stylesheet may already nudge it */
+      var pt = top(pill) - rel, ph = pill.offsetHeight;
+      var want = above + (below - above - ph)/2;
+      var d = Math.round((want - pt)*2)/2;
+      if(Math.abs(d) < 60) pill.style.top = d + 'px';
+    }
+    var go = function(){ requestAnimationFrame(place); };
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(go); else go();
+    addEventListener('load', go);
+    var t; addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(place, 120); });
   }
 
   /* ---------- keys that clack ---------- */

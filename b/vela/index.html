@@ -3009,6 +3009,27 @@ a.card.fold .card-title{font-size:clamp(34px,3.9vw,52px);line-height:1}
   .shotcap .card-title{font-size:clamp(26px,6.9vw,32px)!important;line-height:1.02!important}
   .photocap .cap-title{font-size:clamp(34px,9vw,42px);line-height:1}
 }
+
+
+/* ==========================================================================
+   PASS 42
+   ========================================================================== */
+
+/* ---- the print stays inside the folder. The row was sized by the
+       photograph's own height, so a tall picture pushed the row (and the
+       print) past the folder's bottom edge and off the screen. The row is
+       now exactly the folder's height. The print is also 15% larger: its
+       side of the folder is 15% wider. ---- */
+@media (min-width:980px) and (min-height:620px){
+  html.desk body.land a.card.fold{grid-template-rows:minmax(0,1fr)!important;
+    grid-template-columns:minmax(0,50.6%) minmax(0,1fr)!important}
+  html.desk body.land a.card.fold .shot{min-height:0!important;align-self:stretch!important}
+  html.desk body.land a.card.fold .shot > img{height:100%!important}
+}
+/* a small desk has less paper to give, so the print takes less of it */
+@media (min-width:980px) and (max-width:1179px) and (min-height:620px){
+  html.desk body.land a.card.fold{grid-template-columns:minmax(0,47%) minmax(0,1fr)!important}
+}
 </style>
 <link rel="stylesheet" href="finish.css">
 </head>

@@ -353,11 +353,17 @@ html body .notepad .pad-page h1.pad-h{font-family:var(--hand)!important;font-wei
   html.desk body.land .hero{min-height:calc(min(268px,62vw) * .8 + 34px)!important}
 }
 
-/* ---------- the phone: a classic on the lock screen ---------- */
-.phone .screen{background:#07070A url("https://images.unsplash.com/photo-1564404084965-c9628b6064e9?w=420&h=840&q=80&auto=format&fit=crop") 50% 50%/cover no-repeat!important}
+/* ---------- the phone: plain black glass until someone picks it up ----------
+   The classic on the lock screen is a find: it only comes up when the phone
+   is tapped by hand, never on its own. */
+.phone .screen{background:#07070A!important}
+.phone.awake .screen{background:linear-gradient(170deg,#141B26,#07090D 72%)!important}
 .phone .screen::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:rgba(4,6,10,.66);transition:background .6s ease}
-.phone.awake .screen::before{background:linear-gradient(180deg,rgba(6,10,18,.34),rgba(6,10,18,.06) 42%,rgba(6,10,18,.5))}
+  background:
+    linear-gradient(180deg,rgba(6,10,18,.34),rgba(6,10,18,.06) 42%,rgba(6,10,18,.5)),
+    url("https://images.unsplash.com/photo-1564404084965-c9628b6064e9?w=420&h=840&q=80&auto=format&fit=crop") 50% 50%/cover no-repeat;
+  opacity:0;transition:opacity .6s ease}
+.phone.awake.fin-egg .screen::before{opacity:1}
 .phone .screen > *{position:relative;z-index:1}
 .phone .msg{background:rgba(18,20,26,.5)!important;backdrop-filter:blur(6px)}
 
@@ -366,3 +372,26 @@ html body .notepad .pad-page h1.pad-h{font-family:var(--hand)!important;font-wei
 
 /* specs line stays on one line on phones */
 @media (max-width:560px){.card .specs,.specs{letter-spacing:.02em;white-space:nowrap}}
+
+
+/* ==========================================================================
+   The cup and the phone, again
+   ========================================================================== */
+
+/* ---- the coffee is in the photograph now; the drawn disc over it goes ---- */
+.mugbrew{display:none!important}
+/* set down on the desk: a tight, dark contact under the foot and a soft
+   fall-off away from the light, not a cup hovering over its own shadow */
+html:not(.perf-low) .obj.mug.photo:not(.carried):not(.tipped) .mugimg{
+  filter:drop-shadow(0 1px 1.5px rgba(22,12,4,.5))
+         drop-shadow(-3px 7px 6px rgba(22,12,4,.36))
+         drop-shadow(-9px 20px 20px rgba(22,12,4,.24))!important}
+
+/* ---- both notifications are set the same: the lower one was a span of
+       inline text sitting on the body's 16px line, so its lines ran far
+       apart. Every line on the screen is a block on its own small leading. ---- */
+.phone .msg{display:block!important;font-size:7.5px!important;line-height:1.18!important}
+.phone .msg .who{display:flex!important;font-size:7.5px!important;line-height:1.2!important}
+.phone .msg .txt{display:block!important;font-size:7.5px!important;line-height:1.18!important;
+  margin-top:1px!important}
+.phone .msg.fin-n + .msg{margin-top:4px!important}

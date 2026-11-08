@@ -2814,6 +2814,59 @@ a.card.fold .card-title{font-size:clamp(34px,3.9vw,52px);line-height:1}
   .shotcap .card-title{font-size:clamp(26px,6.9vw,32px)!important;line-height:1.02!important}
   .photocap .cap-title{font-size:clamp(34px,9vw,42px);line-height:1}
 }
+
+
+/* ==========================================================================
+   PASS 42
+   ========================================================================== */
+
+/* ---- the prints, 15% larger, and the stack boxed to the prints themselves:
+       the empty band under them, where a drawn cup once sat, is gone, so the
+       folder can come straight up underneath ---- */
+@media (min-width:821px){
+  .instants{aspect-ratio:1000/828}
+  .ins-card{width:85.1%;height:73.3%;left:8.3%;top:15.3%}
+  .ins-nav{bottom:0}
+  /* the counter and its bars: centred over the stack, level with the
+     spec-sheet line, with clear space between them and the prints */
+  .ins-count{left:50%;right:auto;top:-45px;bottom:auto;transform:translateX(-50%);
+    line-height:19.5px;white-space:nowrap}
+  .ins-bars{left:50%;right:auto;top:-14px;bottom:auto;transform:translateX(-50%);
+    width:min(200px,34%)}
+  /* halfway between the spec-sheet line and the name; finish.js measures
+     the glyphs and sets the exact figure */
+  .hero-text .status{top:-8px}
+  /* the folder starts right under the hero */
+  .hero{padding-bottom:22px}
+  .hero-bottom{display:none}
+}
+@media (max-width:820px){
+  .instants{aspect-ratio:1/1.1}
+  .ins-card{width:85.1%;height:74.1%;left:8.4%;top:12.5%}
+  .photocap{top:53.4%}
+  .ins-count{left:50%;right:auto;transform:translateX(-50%);white-space:nowrap}
+  .ins-bars{left:50%;right:auto;transform:translateX(-50%)}
+}
+/* the cup keeps its place against the lower-left corner of the larger prints */
+body:not(.land) .obj.mug.parked{
+  right:calc(clamp(392px,40vw,590px) + (min(100vw,1400px) - 104px) * .0311)!important;
+  top:calc(clamp(382px,45vh,486px) + (min(100vw,1400px) - 104px) * .0982)!important}
+
+/* ---- one left edge inside the folder, on every tab: the first tab's label,
+       and everything on the left of each panel, start on the same line ---- */
+.tabs{padding-left:10px}
+.tabpanel,#p-heads{padding:30px 30px 34px}
+.tabpanel .listing,.tabpanel .frame{padding-top:0}
+.tabpanel .index a{padding-left:0}
+.checkcopy > h3:first-child{margin-top:0}
+.checkcopy ul{margin-left:0;list-style:none}
+.checkcopy li{position:relative;padding-left:18px}
+.checkcopy li::before{content:"";position:absolute;left:0;top:.68em;
+  width:5px;height:5px;border-radius:50%;background:currentColor}
+@media (max-width:700px){
+  .tabs{padding-left:5px}
+  .tabpanel,#p-heads{padding:22px 18px 26px}
+}
 </style>
 <link rel="stylesheet" href="../finish.css">
 </head>

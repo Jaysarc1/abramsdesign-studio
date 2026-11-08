@@ -11,7 +11,7 @@ a[href*="instagram.com"],a[href^="mailto:"],a[href*="maps"]{pointer-events:none!
   function kill(){document.querySelectorAll('a[href*="instagram.com"],a[href^="mailto:"]').forEach(function(a){a.removeAttribute('href');a.removeAttribute('target');a.setAttribute('aria-disabled','true');});}
   /* the sound button: lifted out of the bottom row to the top right, its centre on the logo's centre line, midway between the right palms */
   function snd(){var b=document.querySelector('button[aria-label*="ambient" i],button[aria-label*="sound" i]');if(!b)return;
-    var logo=document.querySelector('header a img,header img,header svg,[class*="logo"] img,[class*="logo"] svg');
+    var logo=document.querySelector('a[aria-label*="home" i] svg,a[aria-label*="home" i] img,a[aria-label*="home" i]');
     var y=logo?logo.getBoundingClientRect().top+logo.getBoundingClientRect().height/2+scrollY:Math.max(48,innerHeight*.075);
     if(scrollY>innerHeight){b.style.opacity='0';b.style.pointerEvents='none';}else{b.style.opacity='';b.style.pointerEvents='';}
     b.classList.add('ads-snd');var w=b.offsetWidth||44;b.style.top=(y-scrollY-w/2).toFixed(0)+'px';if(innerWidth<700){b.style.right='16px';b.style.left='auto';}else{b.style.right='auto';b.style.left=Math.round(innerWidth*.72-w/2)+'px';}}
