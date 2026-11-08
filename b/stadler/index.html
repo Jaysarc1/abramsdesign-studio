@@ -68,7 +68,7 @@ section{position:relative;z-index:2}
 
 /* hero */
 .hero{min-height:100svh;display:grid;align-items:center;overflow:hidden}
-.accent{position:absolute;width:63px;height:63px;pointer-events:none;box-shadow:inset 1.75px 0 1.75px -1px rgba(255,255,255,.07),inset 0 1.75px 1.75px -1px rgba(255,255,255,.035),inset -5px 0 5px -3px rgba(0,0,0,.2),inset 0 -5px 5px -3px rgba(0,0,0,.15);background-image:radial-gradient(ellipse 30% 46% at 10% 42%,rgba(255,255,255,.06),transparent 100%),linear-gradient(90deg,transparent 50%,rgba(0,0,0,.12))}
+.accent{position:absolute;width:63px;height:63px;pointer-events:none;box-shadow:inset 1.225px 0 1.225px -1px rgba(255,255,255,.07),inset 0 1.225px 1.225px -1px rgba(255,255,255,.035),inset -5px 0 5px -3px rgba(0,0,0,.2),inset 0 -5px 5px -3px rgba(0,0,0,.15);background-image:radial-gradient(ellipse 30% 46% at 10% 42%,rgba(255,255,255,.06),transparent 100%),linear-gradient(90deg,transparent 50%,rgba(0,0,0,.12))}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;width:100%;padding-block:110px 90px}
 .hero h1{font-size:clamp(64px,9.68vw,155px);line-height:.88}
 /* batch 19: "Family owned" sits alone over "Since", on its left edge; the line under the year is gone, so the address rises to meet it */
@@ -393,12 +393,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
     function j(){return (1+r())*(r()<.5?-1:1)}/* batch 19: 1 to 2 percent */
     /* batch 21: tile to tile, hue moves 1 to 1.2 percent and lightness 0 to 0.85 percent, up or down, of the base glaze */
     function sg(){return r()<.5?-1:1}
-    for(var y=0;y<n;y++)for(var x=0;x<n;x++){g.fillStyle='hsl('+(177*(1+sg()*(.01+r()*.002))).toFixed(2)+',56%,'+(13*(1+sg()*r()*.0085)).toFixed(3)+'%)';g.fillRect(x*t,y*t,t,t)}
+    for(var y=0;y<n;y++)for(var x=0;x<n;x++){g.fillStyle='hsl('+(177*(1+sg()*(.01+r()*.002))).toFixed(2)+',56%,'+(13*(1+sg()*(.01+r()*.005+r()*.0085))).toFixed(3)+'%)';g.fillRect(x*t,y*t,t,t)}
     /* batch 20: a bump map, so each one reads as a fired tile: a rounded edge caught by the light from the left (lit on its left and top, in shade on its right and bottom), a slight pillow across its face, and the faint ripple of the glaze */
     function lg(x0,y0,x1,y1,c0,c1){var q=g.createLinearGradient(x0,y0,x1,y1);q.addColorStop(0,c0);q.addColorStop(1,c1);return q}
     for(var y=0;y<n;y++)for(var x=0;x<n;x++){var X=x*t+1,Y=y*t+1,w=t-1,e=5;
-      /* batch 21: the lit edge is half as wide; batch 22: 30% tighter again (1.75px), same strength */
-      var h=e*.35;g.fillStyle=lg(X,0,X+h,0,'rgba(255,255,255,.075)','rgba(255,255,255,0)');g.fillRect(X,Y,h,w);
+      /* batch 21: the lit edge is half as wide; batch 22: 30% tighter again (1.75px), same strength; batch 23: 30% tighter again (1.225px) */
+      var h=e*.245;g.fillStyle=lg(X,0,X+h,0,'rgba(255,255,255,.075)','rgba(255,255,255,0)');g.fillRect(X,Y,h,w);
       g.fillStyle=lg(0,Y,0,Y+h,'rgba(255,255,255,.04)','rgba(255,255,255,0)');g.fillRect(X,Y,w,h);
       g.fillStyle=lg(X+w,0,X+w-e,0,'rgba(0,0,0,.2)','rgba(0,0,0,0)');g.fillRect(X+w-e,Y,e,w);
       g.fillStyle=lg(0,Y+w,0,Y+w-e,'rgba(0,0,0,.15)','rgba(0,0,0,0)');g.fillRect(X,Y+w-e,w,e);
