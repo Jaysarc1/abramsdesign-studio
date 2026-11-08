@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home | Unique Places</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Raleway:wght@400;500;600&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;font:15px/1.8 Raleway,"Helvetica Neue",Arial,sans-serif;color:#555;background:#fff}
+img{max-width:100%;display:block}
+.w{max-width:980px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:400;color:#2f2f2f}
+
+/* header */
+.hd{text-align:center;padding:34px 20px 0;background:#fff}
+.lg{font:400 34px/1 "Playfair Display",Georgia,serif;letter-spacing:.32em;color:#2f2f2f;text-transform:uppercase;padding-left:.32em}
+.lg small{display:block;font:500 12px/1 Raleway,sans-serif;letter-spacing:.42em;color:#8a9a95;margin-top:12px}
+.nv{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 34px;padding:24px 0 18px;font-size:14px;color:#555}
+.nv span.on{color:#4b7f7a;border-bottom:1px solid #4b7f7a}
+
+/* hero slideshow */
+.hero{position:relative;height:600px;background:#6f7b78 url(https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=70&auto=format&fit=crop) center 55%/cover;display:flex;align-items:center;justify-content:center;text-align:center}
+.hero:before{content:"";position:absolute;inset:0;background:rgba(20,28,27,.38)}
+.hero .in{position:relative;color:#fff;max-width:760px;padding:0 24px}
+.hero h1{margin:0;color:#fff;font-size:50px;line-height:1.18}
+.hero p{margin:18px 0 30px;font-size:17px;letter-spacing:.04em}
+.pill{display:inline-block;background:#4b7f7a;color:#fff;font-size:14px;letter-spacing:.06em;padding:12px 40px;border-radius:30px}
+.pill.o{background:none;border:1px solid #4b7f7a;color:#4b7f7a}
+.ar{position:absolute;top:50%;margin-top:-22px;color:#fff;font:300 46px/44px Raleway,sans-serif;opacity:.85}
+.ar.l{left:28px}.ar.r{right:28px}
+.dt{position:absolute;left:0;right:0;bottom:24px;display:flex;justify-content:center;gap:10px}
+.dt i{width:9px;height:9px;border-radius:50%;border:1px solid #fff}
+.dt i:first-child{background:#fff}
+
+/* intro */
+.it{text-align:center;padding:80px 0 40px}
+.it h2{font-size:36px;margin:0 0 14px}
+.it .ln{width:50px;height:1px;background:#4b7f7a;margin:0 auto 20px}
+.it p{max-width:640px;margin:0 auto;color:#777}
+
+/* project strip */
+.pj{padding:10px 0 80px}
+.pj .g{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.pj .c img{width:100%;height:280px;object-fit:cover}
+.pj .c h3{margin:18px 0 2px;font-size:21px}
+.pj .c .lc{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#8a9a95;margin:0 0 8px}
+.pj .c p{margin:0 0 10px;font-size:14px;color:#777}
+.pj .c a{font-size:14px;color:#4b7f7a;text-decoration:underline}
+.pj .mo{text-align:center;margin-top:44px}
+
+/* about */
+.ab{background:#f3f1ed;padding:80px 0}
+.ab .w{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.ab img{width:100%;height:440px;object-fit:cover}
+.ab h2{font-size:38px;margin:0 0 6px}
+.ab .tg{font:italic 17px "Playfair Display",Georgia,serif;color:#4b7f7a;margin:0 0 20px}
+.ab p{margin:0 0 24px;font-size:14px;color:#666}
+
+/* strip */
+.qt{position:relative;padding:90px 20px;text-align:center;background:#55615e url(https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=70&auto=format&fit=crop) center/cover}
+.qt:before{content:"";position:absolute;inset:0;background:rgba(25,35,33,.5)}
+.qt p{position:relative;margin:0 auto;max-width:720px;color:#fff;font:italic 26px/1.5 "Playfair Display",Georgia,serif}
+
+/* contact */
+.co{padding:80px 0 90px}
+.co h2{text-align:center;font-size:36px;margin:0 0 10px}
+.co .ln{width:50px;height:1px;background:#4b7f7a;margin:0 auto 46px}
+.co .g{display:grid;grid-template-columns:1fr 1.5fr;gap:50px}
+.co .inf p{margin:0 0 18px;font-size:14px}
+.co .inf b{display:block;font-weight:600;color:#2f2f2f;letter-spacing:.06em}
+form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+form label{display:block;font-size:13px;color:#777;margin-bottom:4px}
+form input,form textarea{width:100%;font:14px Raleway,sans-serif;border:0;border-bottom:1px solid #9aa8a4;background:#fff;padding:8px 2px;color:#333;border-radius:0}
+form textarea{height:110px;resize:none;border:1px solid #c9d1ce;padding:8px}
+form .f{grid-column:1/-1}
+form button{grid-column:1/-1;justify-self:end;font:500 14px Raleway,sans-serif;letter-spacing:.06em;background:#4b7f7a;color:#fff;border:0;padding:12px 54px;border-radius:30px;cursor:pointer}
+
+/* footer */
+.fo{border-top:1px solid #e3e3e3;padding:40px 20px 34px;text-align:center;font-size:13px;color:#888}
+.fo .lgf{font:400 18px "Playfair Display",Georgia,serif;letter-spacing:.3em;color:#2f2f2f;text-transform:uppercase;margin-bottom:16px}
+.so{display:flex;justify-content:center;gap:14px;margin-bottom:18px}
+.so span{width:30px;height:30px;border-radius:50%;background:#2f2f2f;display:flex;align-items:center;justify-content:center;cursor:default}
+.so svg{width:14px;height:14px;fill:#fff}
+.fo p{margin:4px 0}
+
+@media(max-width:760px){
+  .lg{font-size:24px;letter-spacing:.22em;padding-left:.22em}
+  .lg small{letter-spacing:.24em}
+  .nv{gap:4px 18px;font-size:14px}
+  .hero{height:460px}
+  .hero h1{font-size:32px}
+  .ar{display:none}
+  .pj .g,.ab .w,.co .g{grid-template-columns:1fr}
+  .ab img{height:300px}
+  .qt p{font-size:21px}
+  form{grid-template-columns:1fr}
+  form button{justify-self:stretch}
+}
+</style></head>
+<body>
+
+<header class="hd">
+  <div class="lg">Unique Places<small>Renovation &amp; Development</small></div>
+  <nav class="nv"><span class="on">Home</span><span>About</span><span>Projects</span><span>Our Process</span><span>Contact</span></nav>
+</header>
+
+<section class="hero">
+  <span class="ar l">&lsaquo;</span><span class="ar r">&rsaquo;</span>
+  <div class="in">
+    <h1>Transforming the overlooked and giving it a second life</h1>
+    <p>Boutique home renovation &amp; development in South Florida</p>
+    <span class="pill">Learn More</span>
+  </div>
+  <div class="dt"><i></i><i></i><i></i></div>
+</section>
+
+<section class="it"><div class="w">
+  <h2>A thoughtful approach to neighborhoods</h2>
+  <div class="ln"></div>
+  <p>We find homes with good bones in great neighborhoods and bring them back to life with modern design, quality craftsmanship and respect for the community around them.</p>
+</div></section>
+
+<section class="pj"><div class="w">
+  <div class="g">
+    <div class="c">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=70&auto=format&fit=crop" alt="Modern Oasis">
+      <h3>Modern Oasis</h3><p class="lc">Boynton Beach</p>
+      <p>A dated 1970s ranch reimagined as an open, light-filled modern home with a resort-style backyard.</p>
+      <a>Read More</a>
+    </div>
+    <div class="c">
+      <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=70&auto=format&fit=crop" alt="Grand Reconstruction" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=70&auto=format&fit=crop'">
+      <h3>Grand Reconstruction</h3><p class="lc">Boca Raton</p>
+      <p>A full structural rebuild of a storm-damaged family home, now stronger and more beautiful than ever.</p>
+      <a>Read More</a>
+    </div>
+    <div class="c">
+      <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=70&auto=format&fit=crop" alt="Coastal Revival">
+      <h3>Coastal Revival</h3><p class="lc">Delray Beach</p>
+      <p>A complete interior renovation with a new chef&rsquo;s kitchen, refinished floors and custom millwork.</p>
+      <a>Read More</a>
+    </div>
+  </div>
+  <div class="mo"><span class="pill o">View All Projects</span></div>
+</div></section>
+
+<section class="ab"><div class="w">
+  <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=70&auto=format&fit=crop" alt="Unique Places renovated home">
+  <div>
+    <h2>About Us</h2>
+    <p class="tg">Every house has a story.</p>
+    <p>Unique Places is a boutique renovation and development company based in South Florida. We specialize in finding properties that others have passed by and transforming them into beautiful, functional homes that families will love for years to come. Our team brings together experience in construction, design and real estate, and we manage every project from start to finish, from the initial purchase and permitting through demolition, construction, finishes and final staging. We believe that a great renovation should feel like it belongs in its neighborhood, so we take the time to understand the character of each street and community before we ever put a hammer to a wall. Whether it&rsquo;s a small cottage that needs a little love or a full reconstruction from the ground up, we approach every project with the same care, attention to detail and commitment to quality. We are proud to have completed projects in Boynton Beach, Boca Raton, Delray Beach, Lake Worth and the surrounding areas, and we are always looking for our next opportunity to give an overlooked property a second life.</p>
+    <span class="pill">Read More</span>
+  </div>
+</div></section>
+
+<section class="qt"><p>&ldquo;We don&rsquo;t just renovate houses. We restore neighborhoods, one home at a time.&rdquo;</p></section>
+
+<section class="co"><div class="w">
+  <h2>Contact Us</h2>
+  <div class="ln"></div>
+  <div class="g">
+    <div class="inf">
+      <p>Have a property you&rsquo;d like us to look at, or interested in one of our homes? We&rsquo;d love to hear from you.</p>
+      <p><b>Office</b>South Florida</p>
+      <p><b>Email</b>info@mysite.com</p>
+      <p><b>Phone</b>561-555-0123</p>
+    </div>
+    <form onsubmit="return false">
+      <div><label>First Name</label><input type="text"></div>
+      <div><label>Last Name</label><input type="text"></div>
+      <div><label>Email *</label><input type="email"></div>
+      <div><label>Phone</label><input type="tel"></div>
+      <div class="f"><label>Message</label><textarea></textarea></div>
+      <button type="button">Submit</button>
+    </form>
+  </div>
+</div></section>
+
+<footer class="fo">
+  <div class="lgf">Unique Places</div>
+  <div class="so">
+    <span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 7h3V3h-3c-2.8 0-5 2.2-5 5v2H6v4h3v7h4v-7h3l1-4h-4V8c0-.6.4-1 1-1z"/></svg></span>
+    <span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zm0 2a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM17.3 5.5a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg></span>
+    <span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.5 3a2.5 2.5 0 110 5 2.5 2.5 0 010-5zM2.5 9.5h4V21h-4zM9 9.5h3.8v1.6c.6-1 1.9-1.9 3.8-1.9 4 0 4.7 2.6 4.7 6V21h-4v-5.2c0-1.3 0-2.9-1.8-2.9s-2.1 1.4-2.1 2.8V21H9z"/></svg></span>
+  </div>
+  <p>info@mysite.com &nbsp;|&nbsp; 561-555-0123</p>
+  <p>&copy; 2021 by Unique Places. Proudly created with Wix.com</p>
+</footer>
+
+</body></html>
