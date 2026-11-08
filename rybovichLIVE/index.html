@@ -1,0 +1,892 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+
+
+
+<!--
+ALIGNMENT NOTES
+Concept: the logo is the boat. The 02 sheer line, with its outboard and "& Sons", rides on a sea drawn in single lines. Every drawing on the page is one line, in their navy, ivory and brass.
+Grid: 12 columns, max content width 1344px, 32px gutter (16px on phones), side padding clamp(24px,4.2vw,64px) with a 16px floor and the safe-area max().
+- Header: its own band, the sky's top colour under a 10% dark veil, with one hairline rule under it; the scene starts below the rule, so nothing moves behind the words. The links are centred on the page axis. No logo up top: the hero mark is the logo. No phone number up top; it lives in the closing band.
+- Hero mark (No. 2, version 12): #9's boat line unchanged; the bow keeps 4's curve and stops level with the top of the outboard, the hull bottom sits on the first sea line, the outboard leg and plate sit below it; the gold wake trails from the plate (the prop), rising to the surface astern. RYBOVICH and "& Sons" are one block, centred on the hull's flat run (from the stern corner to where the bow begins to rise), so the name sits on the boat's side; "& Sons" tilts up 8 degrees and tucks under the end of the name, its ampersand crossing into the foot of the C, keylined in the sky's colour. The name block (RYBOVICH to the end of "& Sons") is centred on the page axis; the boat comes with it. The shade pool follows the name block.
+- Sky: keeps the hour (visitor's clock against Palm Beach sunrise and sunset): dawn, late morning, day, sunset, dusk, night shift the sky, the sea lines and the gold. Weather (live Palm Beach conditions when the feed answers, otherwise a slow cycle): calm, wind, rough seas, rain. Everything is line work: line clouds, a line sun or crescent moon, wind strokes, rain strokes. A soft pool of shade sits behind the name so it reads in every light. Changes ease over several seconds.
+- Late morning (9:30 to 12:30): the big bright day. White rises softly from the horizon into clear blue with no band at the horizon; the white stops just below the horizon so the water under the name is clean and dark and the name reads crisp. The sun stays a warm line (no fill, so nothing competes with the mark); far boats turn soft navy so they read against the light horizon.
+- Hero foot: "Begin Hull 7" and the line under it, both centred on the page axis, under the name. The sound control sits on the right content edge, level with the line (under it, centred, on phones): one wave line and the word Sound. The wave is the volume: its brass knob rides on the line, and the wave grows taller as the sound gets louder. No separate slider.
+- Depth: far to near, each layer moves faster: sun, far clouds (small, low, soft), near clouds, horizon boats, pilings, skiff and marker, the sea lines, wind strokes, and now and then something close gliding slowly through the foreground (a fin or a gull), softly out of focus, in its own lane below the hull so nothing crosses the boat. Only one channel marker is ever on the water; its red light flashes three times as it crosses, about 25 seconds apart, starting a quarter of the way over, and the water stays clear about a minute before the next comes in. On a clear evening or night, about a minute in and then every few minutes, a shooting star. The fin keeps one lane for its whole pass. A few seconds after the pilings come into view a gull flies in, lands on the tallest, and stays until they pass; from sunset on, the boats out on the water show a small warm bow light, full by dusk and through the night (and again before dawn). Clouds never rise above one ceiling, so the top of the sky stays open. The boat holds the centre; the water runs past it. Everything drifts one way only.
+- Sea state follows the sky: calm (glassy, few waves), breeze (a few knots), wind, rough (sharp crests), rain, fog.
+- Sound (off until asked): sea wash always; wind, rain, gulls by day, a bell buoy at night, a distant horn in fog. Built in the browser, quiet.
+- Sections: every eyebrow, heading and paragraph starts on the left content edge (col 1).
+- The line section: the copy (cols 1-4) is bottom-aligned with the drawing (cols 5-12), so the paragraph stands on the boat's waterline.
+- The board: the line runs cols 1-12; seven stations evenly spaced, Hull 1 on the left content edge, Hull 7 on the right.
+- Two panels: cols 1-6 and 7-12, split by one hairline; drawing, title and text share each panel's left edge.
+- Closing: heading, lede and address cols 1-5; form cols 8-12.
+- Intentional offsets:
+  1) "& Sons" tilts up 8 degrees, its ampersand crossing into the C, and runs past the end of RYBOVICH. Purpose: a hand-lettered flourish, so the mark isn't too perfect. The name itself is centred on the hull.
+  2) The mark bobs very slightly (a couple of pixels, a fraction of a degree) and holds the centre in every sea. Purpose: it floats, while the sea, sky and weather carry the motion around it.
+  3) The name block is centred on the page axis and on the hull's flat run, so the boat itself sits slightly right of centre (the bow is longer than the stern). Purpose: the name reads centred, and still sits on the boat's side where a name is painted.
+  4) The sea lines tighten toward the horizon and open toward the viewer. Purpose: depth with nothing but lines.
+  5) Hull 7 is an open ring in brass where 1-6 are filled navy. Purpose: it is the one still to be built.
+SELLS
+Buyer: an owner ready to commission a custom sportfisherman. Outcome: a boat drawn and built by hand by the family that has done it since 1919.
+Proof: Hulls 1 to 6, the Rybovich name since 1919. Hook: Hull 7 is the next one on the board. One CTA: "Begin Hull 7".
+-->
+<title>Rybovich Full Site</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: a line-drawn sea under the logo, then paper sheets where every drawing is one line. One deliberate look in both themes. */
+:root{
+  color-scheme:light;
+  --navy:#0F1D35;--navy-2:#080F1D;--navy-rgb:15 29 53;
+  --ivory:#F6F1E7;--ivory-rgb:246 241 231;
+  --paper:#F2EDE2;
+  --brass:#A57E2A;--brass-2:#C9A04A;
+  --mute:rgb(19 35 63/.66);
+  --f-display:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --f-text:"Hanken Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --side:clamp(24px,4.2vw,64px);--gap:32px;--max:1344px;
+  --ease:cubic-bezier(.22,.61,.36,1);--ease-io:cubic-bezier(.65,0,.35,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--navy-2)}
+body{font-family:var(--f-text);color:var(--navy);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{width:100%;max-width:calc(var(--max) + 2*var(--side));margin-inline:auto;padding-left:max(var(--side),16px,env(safe-area-inset-left,0px));padding-right:max(var(--side),16px,env(safe-area-inset-right,0px))}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap)}
+.g12>*{min-width:0}
+.sc{font-size:12px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--brass-2);outline-offset:4px}
+h2{text-wrap:balance}
+
+.cta{display:inline-flex;align-items:center;gap:18px;padding-bottom:9px;font-size:12.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;background:linear-gradient(var(--brass-2),var(--brass-2)) left bottom/100% 1px no-repeat}
+.cta i{display:block;width:30px;height:1px;background:currentColor;position:relative;transition:width .5s var(--ease)}
+.cta i::after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:1px solid currentColor;border-right:1px solid currentColor;transform:rotate(45deg)}
+.cta:hover i{width:48px}
+
+/* ---------- hero: the sea ---------- */
+.hero{position:relative;height:calc(100vh - var(--adsc,0px));height:calc(100svh - var(--adsc,0px));min-height:600px;max-height:1100px;overflow:hidden;color:var(--ivory);
+  background:radial-gradient(120% 80% at 50% 36%,#13233F 0%,#0C182D 46%,var(--navy-2) 100%)}
+.hero canvas{position:absolute;left:0;right:0;bottom:0;top:var(--hh,88px);width:100%;height:calc(100% - var(--hh,88px));display:block}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:24%;background:linear-gradient(rgb(14 26 48/0),rgb(14 26 48/.88));pointer-events:none;z-index:1}
+.mark{position:absolute;left:0;top:var(--hh,88px);width:var(--bw,900px);height:auto;overflow:visible;z-index:2;will-change:transform}
+.mark .wm{font-family:var(--f-display);font-weight:700;fill:var(--ivory)}
+.mark .it{font-family:var(--f-display);font-style:italic;font-weight:700;fill:var(--brass-2)}
+.mark .kot{font-family:var(--f-display);font-style:italic;font-weight:700;fill:#000;stroke:#000;stroke-width:5;stroke-linejoin:round}
+.mark .g{stroke:var(--brass-2);fill:none;stroke-linecap:round;stroke-linejoin:round}
+.js .mark .dr{stroke-dasharray:1 1;stroke-dashoffset:1}
+.js .mark .fd,.js .mark .fd2{opacity:0}
+.js .hero.on .mark .dr{stroke-dashoffset:0;transition:stroke-dashoffset 3s var(--ease-io) 3.8s}
+.js .hero.on .mark .fd{opacity:1;transition:opacity 1.8s ease 6.4s}
+.js .hero.on .mark .fd2{opacity:1;transition:opacity 1.6s ease 7.5s}
+/* the one-liner: in the sky after the scene arrives, holds while the hull is drawn, then gives way as the name lands. Its colour follows the sky behind it. */
+.ol{position:absolute;left:0;right:0;top:var(--oly,40%);z-index:2;margin:0;padding-inline:max(var(--side),16px);transform:translateY(-50%);text-align:center;pointer-events:none;color:var(--olc,var(--ivory));font-family:var(--f-display);font-weight:600;font-size:clamp(30px,3.3vw,52px);line-height:1.1;letter-spacing:-.008em;text-wrap:balance;transition:color 1s}
+.ol span{display:inline-block}
+.ol em{display:inline-block;font-style:italic;font-weight:500;color:var(--brass-2);transition:color 1s}
+.js .ol span,.js .ol em{opacity:0;transform:translateY(12px)}
+.js .hero.on .ol span{opacity:1;transform:none;transition:opacity 1.6s var(--ease) 1.4s,transform 1.8s var(--ease) 1.4s}
+.js .hero.on .ol em{opacity:1;transform:none;transition:opacity 1.6s var(--ease) 2.3s,transform 1.8s var(--ease) 2.3s,color 1s}
+.js .hero.on .ol{opacity:0;transition:opacity 1.6s ease 6s,color 1s}
+.tfs{position:absolute;left:0;right:0;top:var(--tfy,72%);z-index:3;margin:0;transform:translateY(-50%);text-align:center;pointer-events:none;color:rgb(var(--ivory-rgb)/.78);font:600 11px/1 var(--f-text);letter-spacing:.32em;text-indent:.32em;text-transform:uppercase}
+.js .tfs{opacity:0}
+.js .hero.on .tfs{animation:tfs 6.6s ease .5s both}
+@keyframes tfs{0%{opacity:0}15%{opacity:1}82%{opacity:1}100%{opacity:0}}
+.js .hero.on .tfs.gone{animation:none;opacity:0;transition:opacity .6s}
+
+.hd{position:absolute;left:0;right:0;top:0;z-index:3;padding:max(30px,env(safe-area-inset-top,0px)) 0 24px;background:linear-gradient(rgb(6 12 26/.1),rgb(6 12 26/.1)),var(--skyt,#1B3358);transition:background-color 1s}
+.hd::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:rgb(var(--ivory-rgb)/.16);transform-origin:left center}
+.js .hd::after{transform:scaleX(0);transition:transform 2.4s var(--ease-io) 7.4s}
+.js .hero.on .hd::after{transform:none}
+.hd .wrap{display:flex;justify-content:center}
+.hd nav{display:flex;gap:44px}
+.hd nav a{font-size:14.5px;font-weight:500;color:rgb(var(--ivory-rgb)/.82);transition:color .3s}
+.hd nav a:hover{color:var(--ivory)}
+.foot .cta{color:var(--ivory)}
+.foot{position:absolute;left:0;right:0;bottom:max(40px,env(safe-area-inset-bottom,0px));z-index:3}
+.foot .wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:30px}
+.foot .b{display:inline-block}
+.foot p{margin:0;color:rgb(var(--ivory-rgb)/.78);text-align:center;cursor:default}
+.sndw{position:absolute;right:max(var(--side),16px,env(safe-area-inset-right,0px));bottom:-1px;display:flex;align-items:center;gap:12px}
+.snd{display:inline-flex;align-items:center;padding:6px 0;border:0;background:none;cursor:pointer;color:rgb(var(--ivory-rgb)/.62);font:600 11.5px/1 var(--f-text);letter-spacing:.24em;text-transform:uppercase;transition:color .4s}
+.snd:hover,.snd[aria-pressed=true]{color:var(--ivory)}
+.wvw{position:relative;display:block;width:60px;height:16px;cursor:pointer}
+.wvw svg{width:60px;height:16px;display:block;overflow:visible}
+.wvw path{fill:none;stroke:var(--brass-2);stroke-width:1.2;stroke-linecap:round;transition:opacity .6s}
+.wvw .kn{fill:var(--brass-2);transition:opacity .6s}
+.wvw .wv,.wvw .kn{opacity:0}.sndw.on .wv,.sndw.on .kn{opacity:1}.sndw.on .fl{opacity:0}
+.sndw[hidden]{display:none}
+.vol{position:absolute;left:-2px;top:-6px;width:64px;height:28px;margin:0;opacity:0;pointer-events:none;cursor:ew-resize;-webkit-appearance:none;appearance:none;background:transparent}
+.sndw.on .vol{pointer-events:auto}
+.wvw:focus-within svg{outline:1px solid rgb(var(--ivory-rgb)/.4);outline-offset:6px;border-radius:2px}
+.vol::-webkit-slider-runnable-track{height:28px;background:transparent}
+.vol::-moz-range-track{height:28px;background:transparent}
+.vol::-webkit-slider-thumb{-webkit-appearance:none;width:4px;height:28px;background:transparent;border:0}
+.vol::-moz-range-thumb{width:4px;height:28px;background:transparent;border:0}
+
+/* reveal: visible at rest, choreographed when script runs */
+.js .rv{opacity:0;transform:translateY(14px);transition:opacity 1.3s var(--ease),transform 1.4s var(--ease)}
+.js .on .rv,.js .rv.on{opacity:1;transform:none}
+
+/* ---------- the line ---------- */
+.sheet{background:var(--paper);color:var(--navy)}
+.line{padding-block:clamp(96px,12vw,168px) clamp(80px,9vw,128px)}
+.line .g12{align-items:end}
+.line .copy{grid-column:1/5;padding-bottom:4px}
+.eyebrow{display:flex;align-items:center;gap:16px;margin:0;color:var(--navy)}
+.eyebrow::before{content:"";width:40px;height:1px;background:var(--brass);flex:none}
+.line h2,.board h2,.close h2{margin:22px 0 0;font-family:var(--f-display);font-weight:600;font-size:clamp(44px,5.2vw,78px);line-height:.98;letter-spacing:-.012em}
+h2 em{font-style:italic;font-weight:500;color:var(--brass)}
+.line p.body{margin:26px 0 0;font-size:18px;color:var(--mute);max-width:22em}
+.draw{grid-column:5/13}
+.draw svg{display:block;width:100%;height:auto;overflow:visible}
+.ln path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.ln .k{stroke:var(--navy);stroke-width:1.5}
+.ln .kf{stroke:rgb(var(--navy-rgb)/.5);stroke-width:1}
+.ln .b{stroke:var(--brass);stroke-width:2.6}
+.js .ln .dr{stroke-dasharray:1 1;stroke-dashoffset:1}
+.js .on .ln .dr{stroke-dashoffset:0;transition:stroke-dashoffset var(--d,3s) var(--ease-io) var(--t,0s)}
+
+/* ---------- the board ---------- */
+.board{padding-block:clamp(88px,10vw,140px);border-top:1px solid rgb(var(--navy-rgb)/.14)}
+.board .head{grid-column:1/8}
+.track{grid-column:1/-1;margin-top:clamp(56px,7vw,96px);position:relative}
+.track ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr)) auto;position:relative}
+.track li{position:relative;padding-top:34px;min-width:0}
+.track li:last-child{text-align:right}
+.track .dot{position:absolute;top:-6px;left:0;width:12px;height:12px;border-radius:50%;background:var(--navy)}
+.track li:last-child .dot{left:auto;right:0;background:var(--paper);border:1.5px solid var(--brass);width:14px;height:14px;top:-7px}
+.track .n{display:block;font-family:var(--f-display);font-variant-numeric:lining-nums;font-weight:600;font-size:clamp(34px,4vw,56px);line-height:1}
+.track li:last-child .n{font-style:italic;font-weight:500;color:var(--brass)}
+.track .lb{display:block;margin-top:8px;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgb(var(--navy-rgb)/.6);white-space:nowrap}
+.track .caret{display:inline-block;width:1.5px;height:12px;margin-left:6px;vertical-align:-1px;background:var(--brass);animation:caret 1.1s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+.track .rail{position:absolute;left:6px;right:7px;top:-1px;height:1px;background:rgb(var(--navy-rgb)/.45);transform-origin:left center}
+.js .track .rail{transform:scaleX(0)}
+.js .track.on .rail{transform:none;transition:transform 3.2s var(--ease-io) .2s}
+.js .track li{opacity:0;transition:opacity 1s ease}
+.js .track.on li{opacity:1}
+
+/* ---------- two panels ---------- */
+.panels{padding-block:0 clamp(96px,11vw,150px)}
+.panels .g12{border-top:1px solid rgb(var(--navy-rgb)/.14)}
+.pn{grid-column:span 6;padding-top:clamp(56px,6vw,80px);min-width:0;position:relative}
+.pn+.pn::before{content:"";position:absolute;left:calc(var(--gap)/-2);top:0;bottom:0;width:1px;background:rgb(var(--navy-rgb)/.14)}
+.pn svg{display:block;width:clamp(150px,16vw,210px);height:auto;overflow:visible}
+.pn h3{margin:40px 0 0;font-family:var(--f-display);font-weight:600;font-size:clamp(32px,3vw,44px);line-height:1}
+.pn p{margin:16px 0 0;font-size:17.5px;color:var(--mute);max-width:24em}
+
+/* ---------- closing: back to the sea ---------- */
+.close{position:relative;overflow:hidden;color:var(--ivory);background:linear-gradient(var(--navy-2),#132643 55%,var(--navy-2));padding-block:clamp(104px,11vw,150px) 0}
+.close canvas{position:absolute;left:0;right:0;bottom:0;width:100%;height:46%;display:block}
+.close .g12{position:relative;z-index:1}
+.close .eyebrow{color:var(--ivory)}
+.close .eyebrow::before{background:var(--brass-2)}
+.close h2 em{color:var(--brass-2)}
+.close .left{grid-column:1/6}
+.close .lede{margin:24px 0 0;font-size:18px;color:rgb(var(--ivory-rgb)/.74);max-width:23em}
+.close .addr{margin:30px 0 0;font-size:15px;line-height:1.75;color:rgb(var(--ivory-rgb)/.74)}
+.close .addr span{user-select:all}
+form{grid-column:8/13;display:grid;gap:26px;align-content:start;padding-top:40px}
+label{display:block;font-size:11.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgb(var(--ivory-rgb)/.62)}
+input{display:block;width:100%;margin-top:10px;padding:10px 0 12px;background:transparent;border:0;border-bottom:1px solid rgb(var(--ivory-rgb)/.32);color:var(--ivory);font:inherit;font-size:18px;border-radius:0}
+input:focus{outline:none;border-bottom-color:var(--brass-2)}
+button.cta{border:0;cursor:pointer;justify-self:start;margin-top:8px;font-family:var(--f-text);background-color:transparent;color:var(--ivory)}
+.sent{margin:0;color:var(--brass-2);font-size:15px;min-height:1.5em}
+.spacer{height:clamp(220px,26vw,360px)}
+.ft{position:relative;z-index:1;background:var(--navy-2);border-top:1px solid rgb(var(--ivory-rgb)/.1);padding-block:26px max(30px,env(safe-area-inset-bottom,0px));font-size:13px;letter-spacing:.04em;color:rgb(var(--ivory-rgb)/.6)}
+.ft .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+@media (max-width:860px){
+  :root{--gap:16px}
+  .hd nav{gap:24px}
+  .hd nav a{font-size:13.5px}
+  .foot .wrap{gap:22px}
+  .foot p{line-height:1.9}
+  .sndw{position:static}
+  .line .copy,.draw,.board .head,.close .left,form{grid-column:1/-1}
+  .draw{margin-top:56px}
+  .pn{grid-column:1/-1}
+  .pn+.pn{margin-top:56px;border-top:1px solid rgb(var(--navy-rgb)/.14)}
+  .pn+.pn::before{display:none}
+  .track .lb{font-size:9.5px;letter-spacing:.14em}
+  .track li .lb.h{visibility:hidden}
+  form{padding-top:48px}
+}
+@media (prefers-reduced-motion:reduce){
+  .js .ol{display:none}
+  .js .hero.on .tfs{animation:none;opacity:1}
+  .js .rv,.js .mark *,.js .ln *,.js .track *{opacity:1!important;transform:none!important;stroke-dashoffset:0!important;transition:none!important}
+  .track .caret{animation:none}
+}
+</style>
+
+<!-- ADS credit: one quiet line along the very top, on its own strip. The strip follows the sky through the day: always the sky's own colour at that hour, several shades lighter, never grey; its words switch to dark only if the strip turns light. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@500&display=swap">
+<style>
+:root{--adsc:26px}
+#ads-credit{position:relative;z-index:31;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;height:var(--adsc);margin:0;padding:0 16px;background-color:var(--ads-band,#4A5C7E);color:#FFFFFF;font:500 10px/1 "Figtree","Helvetica Neue",Arial,sans-serif;letter-spacing:.24em;text-indent:.24em;text-transform:uppercase;text-decoration:none;white-space:nowrap;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;transition:background-color 1.2s}
+#ads-credit span{display:block;color:var(--ads-ink,rgb(255 255 255/.86));opacity:1;transition:opacity .5s ease,color 1s}
+#ads-credit:hover span,#ads-credit:focus-visible span{opacity:1}
+#ads-credit:focus-visible{outline:1px solid currentColor;outline-offset:-5px}
+
+</style>
+<a id="ads-credit" href="https://abramsdesign.studio" target="_blank" rel="noopener" data-sky="#top"><span>Concept by Abrams Design Studio</span></a>
+<script>
+(() => {
+  /* headers pinned to the window start under the line, then settle to the top as it scrolls away */
+  const b = document.getElementById('ads-credit'), R = document.documentElement;
+  const y = () => R.style.setProperty('--adsy', Math.max(0, b.offsetHeight - scrollY) + 'px');
+  y(); addEventListener('scroll', y, { passive: true }); addEventListener('resize', y);
+  /* the sky lives in the hero, which comes after this line, so look for it once the page is read */
+  const go = () => { const sky = b.dataset.sky && document.querySelector(b.dataset.sky);
+  if (sky) { let k = '';
+    const c = () => { const m = (getComputedStyle(sky).getPropertyValue('--skyt').match(/[\d.]+/g) || [27, 51, 88]).map(Number);
+      /* the sky's own colour at this hour, lifted several shades toward white: same hue, never grey */
+      const [r, g0, bl] = m.slice(0, 3).map(v => v / 255), mx = Math.max(r, g0, bl), mn = Math.min(r, g0, bl), d = mx - mn;
+      let h = 0, l = (mx + mn) / 2, sa = d ? d / (1 - Math.abs(2 * l - 1)) : 0;
+      if (d) h = mx === r ? ((g0 - bl) / d) % 6 : mx === g0 ? (bl - r) / d + 2 : (r - g0) / d + 4;
+      l = Math.min(.8, l + .12); /* keep the hue and its strength, only lift the light */
+      const C = (1 - Math.abs(2 * l - 1)) * sa, X = C * (1 - Math.abs(h % 2 - 1)), o = l - C / 2, q = [[C,X,0],[X,C,0],[0,C,X],[0,X,C],[X,0,C],[C,0,X]][((Math.floor(h) % 6) + 6) % 6];
+      const t = q.map(v => Math.round((v + o) * 255)), key = t.join(',');
+      if (key === k) return; k = key;
+      const yv = .2126 * t[0] + .7152 * t[1] + .0722 * t[2];
+      b.style.setProperty('--ads-band', 'rgb(' + key + ')');
+      b.style.setProperty('--ads-ink', yv > 165 ? 'rgb(14 26 48/.84)' : 'rgb(255 255 255/.88)'); };
+    c(); new MutationObserver(c).observe(sky, { attributes: true, attributeFilter: ['style'] }); } };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
+})();
+</script>
+<section class="hero" id="top" aria-label="Michael Rybovich and Sons">
+  <canvas id="sea" aria-hidden="true"></canvas>
+  <svg class="mark" id="mark" viewBox="10 72 646 140" role="img" aria-label="Rybovich and Sons">
+    <defs><mask id="ko" maskUnits="userSpaceOnUse" x="0" y="0" width="700" height="260"><rect width="700" height="260" fill="#fff"/><text class="kot" x="481.2" y="128.8" font-size="43" text-anchor="end" transform="rotate(-8 481.2 128.8)">&amp; Sons</text></mask></defs>
+    <text class="wm fd" x="307.2" y="119" font-size="56" text-anchor="middle" textLength="290" lengthAdjust="spacing" mask="url(#ko)">RYBOVICH</text>
+        <text class="it fd2" x="481.2" y="128.8" font-size="43" text-anchor="end" transform="rotate(-8 481.2 128.8)">&amp; Sons</text>
+        <path class="g dr" pathLength="1" stroke-width="3.4" d="M632.7 81 C622.8 93.7 611.9 107.2 600 120 C566 156 520 166 450 166 H108 C103.5 166 101 164 100.2 160.1 L90 112 C90 96 80 84 64 82 C48 80 36 90 36 102 C36 110 42 114 52 114 V198 L46 206"/>
+        <path class="g fd2" stroke-width="3.4" d="M44 180 H60"/>
+  </svg>
+
+  <p class="ol" id="ol"><span>Every hull begins as</span> <em>a single line.</em></p>
+  <p class="tfs" id="tfs" aria-hidden="true">Tap for sound</p>
+
+  <header class="hd">
+    <div class="wrap">
+      <nav class="rv" style="transition-delay:7.8s" aria-label="Primary"><a href="#builds">Custom Builds</a><a href="#builds">Service</a><a href="#board">The Board</a></nav>
+    </div>
+  </header>
+
+  <div class="foot">
+    <div class="wrap">
+      <a class="cta rv" style="transition-delay:8s" href="#begin">Begin Hull 7<i></i></a>
+      <p class="sc rv" style="transition-delay:8.3s">Custom Boat Works · Since 1919</p>
+      <div class="sndw rv" style="transition-delay:8.6s"><span class="wvw"><svg viewBox="0 0 60 16" aria-hidden="true"><path class="fl" d="M1 8H59"/><path class="wv" d="M1 8H59"/><circle class="kn" cx="18" cy="8" r="3.4"/></svg><input class="vol" type="range" min="0" max="100" value="30" aria-label="Sound volume" tabindex="-1"></span><button class="snd" type="button" aria-pressed="false" aria-label="Sea sound">Sound</button></div>
+    </div>
+  </div>
+</section>
+
+<div class="sheet">
+  <section class="line" id="line">
+    <div class="wrap g12">
+      <div class="copy">
+        <p class="eyebrow sc rv">Drawn by hand</p>
+        <h2 class="rv" style="transition-delay:.25s">Every hull begins as <em>a single line.</em></h2>
+        <p class="body rv" style="transition-delay:.5s">Six custom boats, drawn and built by the Rybovich family. Hull&nbsp;7 is yours.</p>
+      </div>
+      <div class="draw">
+        <svg class="ln" viewBox="0 4 1000 306" role="img" aria-label="A sportfisherman drawn in one continuous line">
+          <path class="kf dr" style="--t:2.6s;--d:2s" pathLength="1" d="M488 62 C400 48 300 30 196 14"/>
+          <path class="k dr" style="--t:.2s;--d:4.4s" pathLength="1" d="M992 300 L850 300 C878 276 908 226 930 170 L907 174.0 L884 177.8 L861 181.4 L838 185.0 L815 188.3 L792 191.6 L769 194.7 L746 197.7 L723 200.5 L700 203.3 C664 194 632 174 590 168 C560 165 540 165 522 165 L498 58 L516 54 L442 54 L462 58 L446 165 C420 165 398 165 380 166 C372 188 366 208 362 228.5 L332 229.5 L302 230.3 L272 231.0 L242 231.4 L212 231.8 L182 231.9 L150 232.0 L156 300 C120 306 70 296 8 302"/>
+          <path class="b dr" style="--t:3.8s;--d:2.4s" pathLength="1" d="M150 232.0 L180 232.0 L210 231.8 L240 231.5 L270 231.0 L300 230.4 L330 229.5 L360 228.5 L390 227.4 L420 226.0 L450 224.4 L480 222.7 L510 220.7 L540 218.5 L570 216.1 L600 213.5 L630 210.7 L660 207.7 L690 204.4 L720 200.9 L750 197.2 L780 193.2 L810 189.1 L840 184.7 L870 180.0 L900 175.1 L930 170.0"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="board" id="board">
+    <div class="wrap g12">
+      <div class="head">
+        <p class="eyebrow sc rv">The board</p>
+        <h2 class="rv" style="transition-delay:.25s">Six built. <em>One open.</em></h2>
+      </div>
+      <div class="track" id="track">
+        <span class="rail"></span>
+        <ol>
+          <li style="transition-delay:.5s"><span class="dot"></span><span class="n">1</span><span class="lb">Hull No.</span></li>
+          <li style="transition-delay:.9s"><span class="dot"></span><span class="n">2</span><span class="lb h">Hull No.</span></li>
+          <li style="transition-delay:1.3s"><span class="dot"></span><span class="n">3</span><span class="lb h">Hull No.</span></li>
+          <li style="transition-delay:1.7s"><span class="dot"></span><span class="n">4</span><span class="lb h">Hull No.</span></li>
+          <li style="transition-delay:2.1s"><span class="dot"></span><span class="n">5</span><span class="lb h">Hull No.</span></li>
+          <li style="transition-delay:2.5s"><span class="dot"></span><span class="n">6</span><span class="lb h">Hull No.</span></li>
+          <li style="transition-delay:3.2s"><span class="dot"></span><span class="n">7</span><span class="lb">Yours<span class="caret"></span></span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="panels" id="builds">
+    <div class="wrap g12">
+      <div class="pn">
+        <svg class="ln" viewBox="0 0 210 150" role="img" aria-label="A hull section in one line">
+          <path class="kf dr" style="--t:.2s;--d:1.6s" pathLength="1" d="M4 30 H206 M105 6 V146"/>
+          <path class="k dr" style="--t:.6s;--d:2.8s" pathLength="1" d="M18 22 C24 70 46 112 84 128 C94 132 100 136 105 142 C110 136 116 132 126 128 C164 112 186 70 192 22"/>
+          <path class="b dr" style="--t:2.6s;--d:1.4s" pathLength="1" d="M18 22 L192 22"/>
+        </svg>
+        <h3 class="rv" style="transition-delay:.4s">Custom Builds</h3>
+        <p class="rv" style="transition-delay:.6s">Sportfishermen designed, lofted and built by hand in Palm Beach Gardens.</p>
+      </div>
+      <div class="pn">
+        <svg class="ln" viewBox="0 0 210 150" role="img" aria-label="A boat held in slings, in one line">
+          <path class="kf dr" style="--t:.2s;--d:1.6s" pathLength="1" d="M4 146 H206"/>
+          <path class="k dr" style="--t:.6s;--d:2.8s" pathLength="1" d="M10 12 H200 M58 12 V78 M152 12 V78"/>
+          <path class="k dr" style="--t:1.4s;--d:2.4s" pathLength="1" d="M20 70 C70 74 140 74 196 62 C190 90 170 106 142 110 H62 C40 104 26 90 20 70"/>
+          <path class="b dr" style="--t:2.8s;--d:1.4s" pathLength="1" d="M20 70 C70 74 140 74 196 62"/>
+        </svg>
+        <h3 class="rv" style="transition-delay:.4s">Service</h3>
+        <p class="rv" style="transition-delay:.6s">Refit, repair and care from the yard that knows how she was built.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="close" id="begin">
+  <canvas id="sea2" aria-hidden="true"></canvas>
+  <div class="wrap g12">
+    <div class="left">
+      <p class="eyebrow sc rv">Hull No. 7</p>
+      <h2 class="rv" style="transition-delay:.25s">Begin <em>Hull 7.</em></h2>
+      <p class="lede rv" style="transition-delay:.5s">Tell us how you fish and where. We'll take it from the first line on the board to sea trials.</p>
+      <p class="addr rv" style="transition-delay:.7s"><span>2175 Idlewild Road, Palm Beach Gardens, Florida 33410</span><br><span>561-627-9168</span></p>
+    </div>
+    <form id="f" class="rv" style="transition-delay:.6s" novalidate>
+      <label for="fn">Name<input id="fn" name="n" autocomplete="name"></label>
+      <label for="fc">Phone or email<input id="fc" name="c" autocomplete="email"></label>
+      <label for="fl">Length you have in mind<input id="fl" name="l" inputmode="numeric"></label>
+      <button class="cta" type="submit">Begin Hull 7<i></i></button>
+      <p class="sent" aria-live="polite"></p>
+    </form>
+  </div>
+  <div class="spacer"></div>
+</section>
+<footer class="ft"><div class="wrap"><span>Michael Rybovich &amp; Sons, Custom Boat Works</span><span>Concept by Abrams Design Studio</span></div></footer>
+
+<script>
+(function(){
+  var d=document.documentElement,rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!rm)d.classList.add('js');
+  function cl01(v){return v<0?0:v>1?1:v}
+
+  /* a sea drawn in lines: tight at the horizon, open toward the viewer. Chop and sharp crests come from the weather. */
+  function Sea(cv,o){
+    var ctx=cv.getContext('2d'),W=0,H=0,N=o.n,L=[],t0=null,self=this,vis=true,raf=0,M=o.mod||{amp:1,spd:1,swl:1,ch:1,rk:0,lc:'246,241,231',la:1},wt=0,pe=null;
+    function build(){
+      var r=cv.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);
+      W=r.width;H=r.height;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+      var sc=Math.max(.55,Math.min(1.25,W/1440)),top=H*o.top;L=[];
+      for(var i=0;i<N;i++){var t=i/(N-1);
+        L.push({t:t,y:top+(H*1.02-top)*Math.pow(t,1.7),A:(1.6+17*Math.pow(t,1.35))*sc,
+          k:2*Math.PI/((110+520*t)*sc),v:10+46*t,p1:i*1.71,p2:i*2.93,p3:i*.57,
+          a:o.al(t),w:.65+.75*t,sw:(5+9*t)*sc*o.swell});}
+      self.sc=sc;self.W=W;self.H=H;
+    }
+    function y(l,x,T){var X=x+T*l.v,ch=M.ch==null?1:M.ch,rk=M.rk||0;
+      return l.y+l.A*M.amp*(.6*Math.sin(X*l.k+l.p1)+.28*ch*Math.sin(2.3*X*l.k-l.p2-T*.6)+.12*ch*ch*Math.sin(5.1*X*l.k+l.p3)
+        +rk*.75*(Math.abs(Math.sin(1.4*X*l.k+l.p2*.5-T*.35))-.64))
+        +l.sw*M.swl*Math.sin(2*Math.PI*(x+T*26)/(W*.95+600)+.8);}
+    this.y0=function(x,T){return L.length?y(L[0],x,T):0};
+    this.yl=function(i,x,T){return y(L[Math.max(0,Math.min(N-1,i))],x,T)};
+    this.N=N;this.ly=function(i){return L.length?L[Math.max(0,Math.min(N-1,i))].y:0};
+    function frame(ts){
+      if(t0===null)t0=ts;var e=(ts-t0)/1000;wt+=(pe==null?0:Math.min(.25,e-pe))*M.spd;pe=e;var T=rm?0:wt;
+      ctx.clearRect(0,0,W,H);if(o.before)o.before(ctx,T,e);
+      for(var i=0;i<N;i++){var l=L[i],p=1;
+        if(o.draw&&!rm){p=Math.min(1,Math.max(0,(e-.25-i*.045)/2.6));p=p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;}
+        if(p<=0)continue;
+        var xe=p*(W+8),oc=o.occLi&&i<o.occLi();if(oc){ctx.save();o.occClip(ctx)}ctx.beginPath();
+        for(var x=-4;x<=xe;x+=6){var yy=y(l,x,T);x<=-4?ctx.moveTo(x,yy):ctx.lineTo(x,yy);}
+        ctx.strokeStyle='rgba('+M.lc+','+(l.a*M.la).toFixed(3)+')';ctx.lineWidth=l.w;ctx.stroke();if(oc)ctx.restore()}
+      if(o.after)o.after(ctx,T,e);
+      if(!rm&&vis)raf=requestAnimationFrame(frame);else raf=0;
+    }
+    this.build=build;
+    build();
+    window.addEventListener('resize',function(){if(o.onResize)o.onResize();build();if(o.onBuilt)o.onBuilt();if(!raf)raf=requestAnimationFrame(frame)});
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis&&!raf)raf=requestAnimationFrame(frame)}).observe(cv);
+    this.start=function(){if(!raf)raf=requestAnimationFrame(frame)};
+  }
+
+  /* hero: the mark rides the first line, under a sky that keeps Palm Beach's hour and weather */
+  var hero=document.querySelector('.hero'),cv=document.getElementById('sea'),mk=document.getElementById('mark'),hd=hero.querySelector('.hd'),foot=hero.querySelector('.foot p');
+  /* NX: centre of the name block (RYBOVICH to the end of "& Sons"). It sits on the page axis. */
+  var VX=10,VY=72,VW=646,PX=334,WL=166,NX=321.7,s=1,ox=0,oy=0;
+  /* HZF: the horizon, as a share of the scene's height. BL: the sea line the boat floats on, about halfway into the water. */
+  var HZF=.5,BL=15,CLC=.24;
+  function hx(h){return [parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)]}
+  function mix(a,b,k){return [a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k,a[2]+(b[2]-a[2])*k]}
+  function rgb(c,al){return 'rgba('+Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])+','+(al==null?1:Math.max(0,al).toFixed(3))+')'}
+  /* sky by hour: top, middle, horizon, sea, fog tint; gold; sea-line tint and strength; sun strength; glow, moon, stars, pool behind the name.
+     morn is the big bright late morning: white rising from the horizon into clear blue (hw), the sun a warm line, the water clean under the name */
+  var SKY={
+    dawn:  {t:'#22335C',m:'#56608A',h:'#C29A92',s:'#1A2A4E',f:'#B8A9B2',g:'#CFA052',l:'#F7E7DD',la:1,  sun:.55,gl:.5, moon:0, star:.15,pool:.38,nav:.5},
+    morn:  {t:'#2B76C0',m:'#86BAE4',h:'#F3F7F9',s:'#1C4772',f:'#C9DDEC',g:'#CDA24C',l:'#F6F1E7',la:.92,sun:.5, gl:.22,moon:0, star:0,  pool:.18,nav:0,hw:1},
+    day:   {t:'#24527F',m:'#3A6F9F',h:'#94B6D0',s:'#1A3D63',f:'#A9B9C7',g:'#C9A04A',l:'#F6F1E7',la:.92,sun:.5, gl:.22,moon:0, star:0,  pool:.5,nav:0},
+    sunset:{t:'#1D2146',m:'#53334F',h:'#AE583B',s:'#1B203F',f:'#9C7C78',g:'#D3943F',l:'#F9E2CB',la:1,  sun:.75,gl:.7, moon:0, star:0,  pool:.46,nav:.65},
+    dusk:  {t:'#0F1739',m:'#262958',h:'#5A4572',s:'#111834',f:'#4C4C69',g:'#C69B4C',l:'#E9E2EE',la:.95,sun:0,  gl:.15,moon:.5,star:.55,pool:.26,nav:1},
+    night: {t:'#0A1328',m:'#132442',h:'#1C3155',s:'#0D182F',f:'#2C3A52',g:'#C29A46',l:'#F6F1E7',la:.9, sun:0,  gl:0,  moon:1, star:1,  pool:.14,nav:1}
+  };
+  /* weather: sea height, flow, swell, chop, sharp crests; cloud count and drift; wind, rain, fog, storm darkening, sea-line strength */
+  var WX={
+    calm:  {amp:.36,spd:.55,swl:.45,ch:.3, rk:0,  cl:2,cv:.7, wind:0,  rain:0,fog:0,dim:0,  lf:.72},
+    breeze:{amp:1,  spd:1,  swl:1,  ch:1,  rk:0,  cl:4,cv:1.1,wind:.3, rain:0,fog:0,dim:0,  lf:1},
+    wind:  {amp:1.45,spd:1.45,swl:1.5,ch:1.25,rk:.35,cl:5,cv:1.9,wind:1,rain:0,fog:0,dim:.06,lf:1},
+    rough: {amp:1.95,spd:1.85,swl:2.4,ch:1.35,rk:.6,  cl:6,cv:1.7,wind:.65,rain:0,fog:0,dim:.24,lf:1.05},
+    rain:  {amp:1.4,spd:1.3,swl:1.6,ch:1.15,rk:.3,cl:8,cv:1.4,wind:.35,rain:1,fog:0,dim:.42,lf:.95},
+    fog:   {amp:.6, spd:.7, swl:.7, ch:.55,rk:0,  cl:0,cv:.6, wind:0,  rain:0,fog:1,dim:0,  lf:.8}
+  };
+  var DARK=[14,24,42],C=['t','m','h','s','f','g','l'],FK={t:.42,m:.62,h:.8,s:.45};
+  function target(ph,wx){var a=SKY[ph],b=WX[wx],o={},i,c;
+    for(i=0;i<C.length;i++){c=hx(a[C[i]]);
+      if(FK[C[i]]){c=mix(c,DARK,b.dim*(C[i]=='h'?1.35:C[i]=='s'?.6:1));c=mix(c,hx(a.f),b.fog*FK[C[i]])}
+      o[C[i]]=c}
+    var DP=ph=='morn'?.1:.3;o.t=mix(o.t,[5,10,20],DP);o.m=mix(o.m,[5,10,20],DP*.85);o.s=mix(o.s,[5,10,20],DP);o.h=mix(o.h,[5,10,20],DP*.5);
+    o.la=a.la;o.sunA=a.sun*Math.max(0,1-b.dim*2.4)*(1-b.fog*.6);o.gl=a.gl*Math.max(0,1-b.dim*2.4)*(1-b.fog*.4);
+    o.moon=a.moon*Math.max(0,1-b.dim*3)*(1-b.fog*.7);o.star=a.star*Math.max(0,1-b.dim*3.5)*(1-b.fog);o.pool=a.pool*(1-b.fog*.25)+b.dim*.1;o.nav=a.nav;o.hw=a.hw||0;
+    for(i in b)o[i]=b[i];return o}
+  function lerp(S,T,k){for(var i in T){if(typeof T[i]=='number')S[i]+=(T[i]-S[i])*k;else for(var j=0;j<T[i].length;j++)S[i][j]+=(T[i][j]-S[i][j])*k}}
+  function clone(o){return JSON.parse(JSON.stringify(o))}
+
+  /* the hour comes from the visitor's clock; sunrise and sunset from Palm Beach (late-October defaults until the feed answers) */
+  var SR=7.3,SS=18.7,live=null,fPh=null,fWx=null;
+  function hourNow(){var d=new Date();return d.getHours()+d.getMinutes()/60+d.getSeconds()/3600}
+  function phaseNow(){var h=hourNow();
+    if(h<SR-.8||h>=SS+1.4)return'night';if(h<SR+.8)return'dawn';if(h>=9.5&&h<12.5)return'morn';if(h<SS-.8)return'day';if(h<SS+.35)return'sunset';return'dusk'}
+  /* the sun's place in its arc, 0 at sunrise to 1 at sunset; a previewed hour uses that hour's place */
+  function sunF(ph){if(ph=='dawn')return .03;if(ph=='morn')return .3;if(ph=='day')return .4;if(ph=='sunset')return .985;if(ph=='dusk')return 1.06;if(ph=='night')return 1.2;
+    return (hourNow()-SR)/(SS-SR)}
+  var CYC=['calm','breeze','wind','rough','rain','breeze','fog','calm'];
+  function wxNow(){if(live)return live;return CYC[Math.floor(Date.now()/40000)%CYC.length]}
+  function hrs(t){var m=/T(\d+):(\d+)/.exec(t||'');return m?+m[1]+m[2]/60:null}
+  function feed(){
+    if(!window.fetch)return;var ac=window.AbortController?new AbortController():null;if(ac)setTimeout(function(){ac.abort()},7000);
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=26.84&longitude=-80.06&current=weather_code,wind_speed_10m,cloud_cover,visibility&daily=sunrise,sunset&timezone=America%2FNew_York&wind_speed_unit=mph&forecast_days=1',ac?{signal:ac.signal}:{})
+      .then(function(r){return r.json()}).then(function(j){var c=j.current,w=c.wind_speed_10m,k=c.weather_code,v=c.visibility;
+        live=(k>=51&&k<=67)||(k>=80&&k<=82)||k>=95?'rain':(k==45||k==48||(v!=null&&v<2500))?'fog':w>=22?'rough':w>=14?'wind':w>=6?'breeze':'calm';
+        var a=hrs(j.daily&&j.daily.sunrise[0]),b=hrs(j.daily&&j.daily.sunset[0]);if(a)SR=a;if(b)SS=b;
+        setTimeout(feed,15*60000)}).catch(function(){});
+  }
+  feed();
+
+  /* preview for presenting: tap the line at the foot of the hero to step through, or keys 1-5 / q w e r t y / 0 */
+  var PRE=[null,['dawn','calm'],['morn','calm'],['day','breeze'],['day','wind'],['day','rough'],['day','rain'],['day','fog'],['sunset','calm'],['sunset','rough'],['dusk','fog'],['night','calm'],['night','rain']],pi=0;
+  function setPre(p){fPh=p?p[0]:null;fWx=p?p[1]:null}
+  if(foot)foot.addEventListener('click',function(){pi=(pi+1)%PRE.length;setPre(PRE[pi])});
+  addEventListener('keydown',function(ev){var t=ev.target;if(t&&t.closest&&t.closest('input,textarea,select,button')||ev.metaKey||ev.ctrlKey||ev.altKey)return;
+    var ph={'1':'dawn','2':'day','3':'sunset','4':'dusk','5':'night'}[ev.key],wx={q:'calm',w:'breeze',e:'wind',r:'rough',t:'rain',y:'fog'}[ev.key];
+    if(ph)fPh=ph;else if(wx)fWx=wx;else if(ev.key=='0'){fPh=fWx=null;pi=0}});
+  (function(){var h=(location.hash||'').slice(1).split('-');if(SKY[h[0]])fPh=h[0];if(WX[h[1]])fWx=h[1];if(WX[h[0]])fWx=h[0]})();
+
+  var SBD=[{x:.2,y:.32,v:34,dir:1,s:1,ph:0,o:0},{x:.25,y:.27,v:34,dir:1,s:.9,ph:1.3,o:0},{x:.7,y:.18,v:26,dir:-1,s:.8,ph:2.6,o:0}];
+  var key='',TG=null,S=null,le=null,STARS=[],CL=[],WD=[],RN=[],FB=[],BT=[],ph='day',wx='calm';
+  (function(){var r=7;function rnd(){r=(r*16807)%2147483647;return (r-1)/2147483646}
+    for(var i=0;i<34;i++)STARS.push([rnd(),rnd()*.82,rnd(),.4+rnd()*1.1]);
+    /* clouds: x, height in the sky, size; size sets depth, so small clouds sit lower, paler, softer and slower. None rises above the ceiling (CLC), so the top of the sky stays open */
+    var cd=[[.17,.38,1.15],[.8,.42,.85],[.56,.5,.6],[.36,.4,.95],[.95,.52,.68],[.05,.56,.58],[.68,.38,1.05],[.44,.6,.52]];
+    for(i=0;i<cd.length;i++){var z=cl01((cd[i][2]-.5)/.65);CL.push({r:i,x:cd[i][0],y:cd[i][1],s:cd[i][2],z:z,v:1.6+9*z*z,a:.12+.13*z,o:0})}
+    CL.sort(function(a,b){return a.z-b.z});
+    for(i=0;i<11;i++)WD.push([rnd(),.12+rnd()*.78,.5+rnd()*.9,.6+rnd()*.8]);
+    for(i=0;i<170;i++)RN.push([rnd(),rnd(),.7+rnd()*.6,rnd()]);
+    for(i=0;i<5;i++)FB.push({x:rnd(),y:.9+rnd()*.22,w:.35+rnd()*.35,v:4+rnd()*6,o:0});
+    /* distant boats on the horizon: kind, start, heading, speed (px/s at 1440 wide) */
+    BT.push({k:0,x:.12,dir:-1,v:5.5,o:0},{k:1,x:.7,dir:1,v:8,o:0},{k:2,x:.42,dir:-1,v:3.2,o:0},{k:3,x:.9,dir:-1,v:2.2,o:0})})();
+  var M={amp:1,spd:1,swl:1,ch:1,rk:0,lc:'246,241,231',la:1};
+  var wo=0,hp=0,pp=0,sp=0,bv=0;
+
+  function sky(ctx,T,e){
+    var W=sea.W,H=sea.H,u0=sea.sc,hz=H*HZF;ph=fPh||phaseNow();wx=fWx||wxNow();var k2=ph+'-'+wx;
+    if(k2!=key){key=k2;TG=target(ph,wx);if(!S){S=clone(TG);S.sx=.8;S.sh=.5}}
+    var dt=le==null?0:Math.min(.25,e-le);le=e;
+    /* the sun follows the hour: up from the right at sunrise, high at midday, down on the left at sunset */
+    var f=sunF(fPh),fc=Math.max(-.2,Math.min(1.2,f));TG.sx=.88-.76*cl01(fc);TG.sh=Math.sin(Math.PI*cl01(fc))*.72-(fc<0?-fc:fc>1?fc-1:0)*.9;
+    lerp(S,TG,rm?1:1-Math.exp(-dt/2.6));
+    M.amp=S.amp;M.spd=S.spd;M.swl=S.swl;M.ch=S.ch;M.rk=S.rk;M.la=S.la*S.lf;M.lc=Math.round(S.l[0])+','+Math.round(S.l[1])+','+Math.round(S.l[2]);
+    var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,rgb(S.t));g.addColorStop(.32,rgb(S.m));g.addColorStop(HZF,rgb(S.h));for(var gk=1;gk<=6;gk++){var gq=gk/6,gd=.045*gq,gl0=gd/.16,ge=1-Math.pow(1-gq,2.6);g.addColorStop(HZF+gd,rgb(mix(S.h,S.s,gl0+(ge-gl0)*S.hw)))}g.addColorStop(HZF+.16,rgb(S.s));g.addColorStop(1,rgb(mix(S.s,[8,14,28],.5)));
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    hero.style.setProperty('--skyt',rgb(S.t));
+    var nar=W<=860,sx=S.sx*W,sy=hz-S.sh*hz,sr=(nar?44:Math.max(52,74*u0))*(1+.25*cl01(1-S.sh*2.2));
+    /* the one-liner sits low in the sky and steps clear of the sun or moon; its ink follows the sky behind it: navy and brass on a bright sky, ivory and gold on a deep one */
+    if(olE){olN=(olN+1)%45;if(olN==1||!olB){var r1=olE.firstElementChild.getBoundingClientRect(),r2=olE.lastElementChild.getBoundingClientRect();olB=[Math.max(r1.right,r2.right)-Math.min(r1.left,r2.left),Math.max(r1.bottom,r2.bottom)-Math.min(r1.top,r2.top)]}
+      var ow=olB[0]/2+18,oh=olB[1]/2+18,oy=hz*(nar?.72:.8),bod=[];if(sy-sr<hz)bod.push([sx,sy,sr*1.25]);if(S.moon>.01)bod.push([W*.78,hz*.26,24*Math.max(.8,u0)*1.4]);
+      for(var bi=0;bi<bod.length;bi++){var bb=bod[bi];if(Math.abs(bb[0]-W/2)<ow+bb[2]&&Math.abs(bb[1]-oy)<oh+bb[2]){var dn=bb[1]+bb[2]+oh,up=bb[1]-bb[2]-oh;oy=dn+oh<=hz-10?dn:up-oh>=12?up:oy}}
+      var of=oy/H,oc=of<=.32?mix(S.t,S.m,of/.32):mix(S.m,S.h,(of-.32)/Math.max(.01,HZF-.32)),lum=(.2126*oc[0]+.7152*oc[1]+.0722*oc[2])/255,lt=lum>.62;
+      var ok2=(lt?1:0)+'|'+Math.round(oy/4)+'|'+Math.round(S.g[0]/6)+Math.round(S.g[1]/6);if(ok2!=olK){olK=ok2;olE.style.setProperty('--oly',(parseFloat(hero.style.getPropertyValue('--hh'))||0)+oy+'px');olE.style.setProperty('--olc',lt?'#13233F':'#F6F1E7');olE.style.setProperty('--ola',lt?'#9C7524':rgb(S.g))}}
+    if(S.gl>.01){var r=ctx.createRadialGradient(sx,sy,0,sx,sy,Math.max(W,H)*.6);r.addColorStop(0,rgb(S.g,.3*S.gl));r.addColorStop(1,rgb(S.g,0));ctx.fillStyle=r;ctx.fillRect(0,0,W,H)}
+    /* a pool of shade behind the name so it reads in every light; it follows the boat */
+    var pcx=cxN||W/2,py=(wyN||hz)-(WL-106)*s,pr=Math.max(220,560*s);
+    if(S.pool>.01){var pg=ctx.createRadialGradient(pcx,py,0,pcx,py,pr);pg.addColorStop(0,rgb([12,22,42],S.pool));pg.addColorStop(.55,rgb([12,22,42],S.pool*.6));pg.addColorStop(1,rgb([12,22,42],0));
+      ctx.save();ctx.translate(pcx,py);ctx.scale(1,.62);ctx.translate(-pcx,-py);ctx.fillStyle=pg;ctx.fillRect(pcx-pr,py-pr,pr*2,pr*2);ctx.restore()}
+    ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.beginPath();ctx.rect(0,0,W,hz-1);ctx.clip();
+    /* stars and moon */
+    if(S.star>.01)for(var i=0;i<STARS.length;i++){var st=STARS[i],a=S.star*(.35+.3*Math.sin(e*.8+st[2]*9))*(st[3]>1.2?1.2:.8);
+      ctx.fillStyle=rgb(S.l,a);ctx.beginPath();ctx.arc(st[0]*W,st[1]*hz,st[3]*.85,0,6.283);ctx.fill()}
+    if(S.star>.5&&!rm)shoot(ctx,e,W,hz,u0);
+    if(S.moon>.01){var mr=24*Math.max(.8,u0),mx=W*.78,my=hz*.26,dd=mr*.5,r2=mr*.92,xi=(mr*mr-r2*r2+dd*dd)/(2*dd),yi=Math.sqrt(Math.max(0,mr*mr-xi*xi));
+      var mg=ctx.createRadialGradient(mx,my,0,mx,my,mr*4);mg.addColorStop(0,rgb(S.g,.08*S.moon));mg.addColorStop(1,rgb(S.g,0));ctx.fillStyle=mg;ctx.fillRect(mx-mr*4,my-mr*4,mr*8,mr*8);
+      ctx.save();ctx.translate(mx,my);ctx.rotate(-.5);ctx.beginPath();ctx.arc(0,0,mr,Math.atan2(-yi,xi),Math.atan2(yi,xi),true);ctx.arc(dd,0,r2,Math.atan2(yi,xi-dd),Math.atan2(-yi,xi-dd),false);
+      ctx.strokeStyle=rgb(S.g,.7*S.moon);ctx.lineWidth=1.3;ctx.stroke();ctx.restore()}
+    /* sun: large and far back, soft-edged, with a slow pulse of light rings */
+    if(S.sunA>.01&&sy<hz+sr){var sa=S.sunA,bt=rm?0:Math.sin(e*2*Math.PI/7.5),scol=mix(S.g,[255,238,200],.3*S.hw);
+      var sg=ctx.createRadialGradient(sx,sy,0,sx,sy,sr*1.05);sg.addColorStop(0,rgb(S.g,.16*sa*(1+.15*bt)));sg.addColorStop(.85,rgb(S.g,.1*sa*(1+.15*bt)));sg.addColorStop(1,rgb(S.g,0));
+      if(S.hw<.99){ctx.globalAlpha=1-S.hw;ctx.fillStyle=sg;ctx.beginPath();ctx.arc(sx,sy,sr*1.05,0,6.283);ctx.fill();ctx.globalAlpha=1}
+      ctx.filter='blur(.7px)';ctx.strokeStyle=rgb(scol,.55*sa*(1+.6*S.hw));ctx.lineWidth=1.3+.3*S.hw;ctx.beginPath();ctx.arc(sx,sy,sr*(1+.012*bt),0,6.283);ctx.stroke();
+      if(!rm)for(var pk=0;pk<2;pk++){var q0=((e/7.5)+pk*.5)%1,rr=sr*(1.08+q0*.85),aa=sa*.42*Math.pow(1-q0,2)*Math.min(1,q0*6);
+        ctx.strokeStyle=rgb(scol,aa*(1+.5*S.hw));ctx.lineWidth=1.1;ctx.beginPath();ctx.arc(sx,sy,rr,0,6.283);ctx.stroke()}
+      ctx.filter='none'}
+    /* clouds: far ones small, low, pale and soft; near ones larger and quicker. They only ever drift one way. */
+    var ck=rm?1:Math.min(1,Math.max(0,(e-1.4)/3.2));
+    for(var c=0;c<CL.length;c++){var q=CL[c];q.o+=dt*q.v*S.cv*u0;
+      var vis=cl01(S.cl-q.r);
+      if(vis<=0)continue;
+      var u=u0*q.s*(1+S.dim*.5),span=W+360*u0,x=((q.x*W-q.o)%span+span)%span-180*u0,yy=Math.max(q.y*hz*(1+S.dim*.2),CLC*hz+58*u);
+      ctx.save();ctx.filter=q.z<.35?'blur(1.4px)':q.z<.65?'blur(.7px)':'none';ctx.translate(x,yy);ctx.scale(u,u);ctx.lineWidth=1/u;ctx.strokeStyle=rgb(S.l,q.a*ck*vis*(1+S.dim*1.4));
+      ctx.beginPath();ctx.moveTo(-118,0);ctx.lineTo(-80,0);ctx.bezierCurveTo(-80,-34,-30,-40,-22,-18);ctx.bezierCurveTo(-18,-52,40,-58,46,-20);ctx.bezierCurveTo(52,-36,92,-34,90,0);ctx.lineTo(132,0);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(-56,10);ctx.lineTo(36,10);ctx.stroke();ctx.restore()}
+    /* birds high in the sky, a few, gliding with now and then a few wingbeats */
+    if(ph!='night'){var bk2=cl01(1-S.rain*1.5-S.fog*1.2)*ck;
+      for(var bi=0;bi<SBD.length;bi++){var bd=SBD[bi];bd.o+=dt*bd.v*u0;if(bk2<.01)continue;var span3=W*2.8,bx2=((bd.x*span3+bd.dir*bd.o)%span3+span3)%span3-W*.3;
+        if(bx2<-30||bx2>W+30)continue;var by2=bd.y*hz+Math.sin(e*.3+bd.ph)*8*u0,burst=cl01((Math.sin(e*.5+bd.ph)-.25)*3),fl=Math.sin(e*7.5+bd.ph)*burst-.15*(1-burst),gs2=u0*.8*bd.s;
+        ctx.save();ctx.translate(bx2,by2);ctx.scale(gs2*bd.dir,gs2);ctx.lineWidth=1/gs2;ctx.strokeStyle=rgb(S.l,.42*bk2);ctx.beginPath();
+        ctx.moveTo(-11,-3+fl*5);ctx.quadraticCurveTo(-5,-6-fl*4,0,-1);ctx.quadraticCurveTo(5,-6-fl*4,11,-3+fl*5);ctx.stroke();ctx.restore()}}
+    /* wind: long thin strokes streaming across the sky, faster than anything else */
+    wo+=dt*(.5+.5*S.wind);
+    if(S.wind>.01)for(i=0;i<WD.length;i++){var w=WD[i],ln=(70+90*w[3])*u0,sp2=W+ln*2,wx0=((w[0]*sp2-wo*(300+220*w[2])*u0)%sp2+sp2)%sp2-ln,wy0=w[1]*hz;
+      var wg=ctx.createLinearGradient(wx0,0,wx0+ln,0);wg.addColorStop(0,rgb(S.l,0));wg.addColorStop(.5,rgb(S.l,.22*S.wind*ck));wg.addColorStop(1,rgb(S.l,0));
+      ctx.strokeStyle=wg;ctx.lineWidth=.8;ctx.beginPath();ctx.moveTo(wx0,wy0);ctx.quadraticCurveTo(wx0+ln*.5,wy0-4*u0,wx0+ln,wy0);ctx.stroke()}
+    ctx.restore();
+    if(snd)snd.tick(e,S,ph);
+    if(wvp)wave(e);
+  }
+
+  /* distant boats, drawn in the same single line, small and soft on the horizon */
+  /* a boat's bow light at night: one small warm point with a soft glow */
+  function blight(ctx,x,y,u0,a){var r=17*u0,g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,'rgba(255,232,186,'+(.6*a).toFixed(3)+')');g.addColorStop(.3,'rgba(255,226,176,'+(.2*a).toFixed(3)+')');g.addColorStop(1,'rgba(255,226,176,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,6.283);ctx.fill();
+    /* its short shimmer on the water below */
+    var y0=y+5*u0,y1=y+19*u0,rg=ctx.createLinearGradient(0,y0,0,y1);rg.addColorStop(0,'rgba(255,226,176,'+(.32*a).toFixed(3)+')');rg.addColorStop(1,'rgba(255,226,176,0)');
+    ctx.fillStyle=rg;for(var q=0;q<4;q++)ctx.fillRect(x-(q%2?1.6:2.4)*u0,y0+q*3.6*u0,(q%2?3.2:4.8)*u0,1*u0);
+    ctx.fillStyle='rgba(255,248,226,'+(.98*a).toFixed(3)+')';ctx.beginPath();ctx.arc(x,y,2.1*Math.max(.8,u0),0,6.283);ctx.fill()}
+  function boat(ctx,k,x,y,u,dir,al,col){
+    ctx.save();ctx.translate(x,y);ctx.scale(u*dir,u);ctx.lineWidth=1/u;ctx.strokeStyle=rgb(col,al);ctx.beginPath();
+    if(k==0){ctx.moveTo(-22,0);ctx.lineTo(20,0);ctx.lineTo(26,-6);ctx.moveTo(-22,0);ctx.lineTo(-24,-5);ctx.moveTo(-2,-3);ctx.lineTo(-2,-46);ctx.lineTo(18,-6);ctx.lineTo(-2,-6);ctx.moveTo(-4,-42);ctx.lineTo(-18,-7);ctx.lineTo(-4,-7)}
+    else if(k==1){ctx.moveTo(-26,0);ctx.lineTo(18,0);ctx.quadraticCurveTo(26,-1,30,-8);ctx.moveTo(-26,0);ctx.lineTo(-26,-7);ctx.moveTo(-14,-7);ctx.lineTo(10,-7);ctx.lineTo(4,-14);ctx.lineTo(-10,-14);ctx.moveTo(-6,-14);ctx.lineTo(-6,-26);ctx.lineTo(4,-26);ctx.moveTo(-1,-26);ctx.lineTo(-1,-14)}
+    else if(k==3){ctx.moveTo(-16,0);ctx.lineTo(12,0);ctx.lineTo(16,-5);ctx.moveTo(-16,0);ctx.lineTo(-17,-4);ctx.moveTo(-2,0);ctx.lineTo(-2,-8);ctx.lineTo(4,-8);
+      ctx.moveTo(-12,-3);ctx.lineTo(-20,-10);ctx.quadraticCurveTo(-23,-4,-24,2)}
+    else{ctx.moveTo(-40,0);ctx.lineTo(38,0);ctx.lineTo(42,-7);ctx.lineTo(-40,-7);ctx.closePath();ctx.moveTo(-34,-7);ctx.lineTo(-34,-15);ctx.lineTo(-22,-15);ctx.lineTo(-22,-7);ctx.moveTo(-30,-15);ctx.lineTo(-30,-20)}
+    ctx.stroke();ctx.restore()}
+
+  var sea=new Sea(cv,{n:30,top:HZF,draw:true,occLi:function(){return wyN?BL:-1},occClip:function(ctx){ctx.beginPath();ctx.rect(0,0,sea.W,sea.H);hullPath(ctx,true);ctx.clip('evenodd')},swell:1,mod:M,al:function(t){return .16+.5*Math.pow(t,.8)},
+    onResize:size,before:sky,
+    after:function(ctx,T,e){
+      var W=sea.W,H=sea.H,hz=H*HZF,u0=sea.sc,dt=Math.min(.25,e-(this.pe==null?e:this.pe));this.pe=e;
+      if(!S)return;
+      var nar=W<=860;
+      /* distant boats sit on the horizon, soft and faint, each holding its own heading */
+      var bk=rm?1:cl01((e-5.5)/3),nl=S.nav;occl(ctx,W,H);
+      for(var b=0;b<BT.length;b++){var bo=BT[b];bo.o+=dt*bo.v*u0;var span=W+300*u0,bx=((bo.x*W+bo.dir*bo.o)%span+span)%span-150*u0;
+        if(nar&&b==2)continue;
+        var by=sea.y0(bx,T)-.5,al=.34*bk*(1-S.fog*.85)*(1-S.dim*.8);if(al<.01)continue;
+        var bu=u0*2.7*[.47,.56,.66,.47][bo.k];ctx.filter='blur(.6px)';boat(ctx,bo.k,bx,by,bu,bo.dir,al*(1+.9*S.hw),S.hw>.01?mix(S.l,[30,62,104],.62*S.hw):S.l);ctx.filter='none';
+        if(nl>.01){var BW=[[26,-6],[30,-8],[42,-7],[16,-5]][bo.k];blight(ctx,bx+bo.dir*BW[0]*bu,by+BW[1]*bu,u0,nl*bk*(1-S.fog*.5))}}
+      ctx.restore();
+      /* haze on the horizon, always a little; fog thickens it and veils the sea and sky */
+      var fc=mix(S.f,S.h,.35),hzA=.06+.56*S.fog,hb=H*(.1+.16*S.fog),hlo=hb*.9*(1-.85*S.hw*(1-S.fog)),hpk=.52+(hb/(hb+hlo)-.52)*S.hw;
+      var hg=ctx.createLinearGradient(0,hz-hb,0,hz+hlo);hg.addColorStop(0,rgb(fc,0));hg.addColorStop(hpk,rgb(fc,hzA));hg.addColorStop(1,rgb(fc,0));
+      ctx.fillStyle=hg;ctx.fillRect(0,hz-hb,W,hb+hlo);
+      if(S.fog>.02){ctx.fillStyle=rgb(fc,.2*S.fog);ctx.fillRect(0,0,W,H);
+        for(var fi=0;fi<FB.length;fi++){var fb=FB[fi];fb.o+=dt*fb.v*u0;var fw=W*fb.w,fs=W+fw*2,fx=((fb.x*fs-fb.o)%fs+fs)%fs-fw,fy=hz*fb.y;
+          ctx.save();ctx.translate(fx,fy);ctx.scale(1,.16);var fg=ctx.createRadialGradient(0,0,0,0,0,fw);fg.addColorStop(0,rgb(fc,.38*S.fog));fg.addColorStop(1,rgb(fc,0));
+          ctx.fillStyle=fg;ctx.beginPath();ctx.arc(0,0,fw,0,6.283);ctx.fill();ctx.restore()}}
+      occl(ctx,W,H);details(ctx,T,e,dt,W,H,hz,u0,nar);ctx.restore();
+      /* foreground pass-bys are nearer than the boat, so the hull does not hide them */
+      passby(ctx,T,e,W,H,u0,ph=='day'||ph=='dawn'||ph=='sunset',S.l,1);
+      /* the boat is the logo: it holds the centre and stays calm in every sea, with only a slight bob so it floats */
+      var rough=cl01((S.amp-.36)/1.59),k0=rm?0:cl01((e-4)/4);
+      hp+=dt*2*Math.PI/6.8;pp+=dt*2*Math.PI/8.3;
+      var cx=W/2,dx=Math.max(24,90*s),
+          wl=sea.ly(BL),wy=wl+.18*((sea.yl(BL,cx-dx,T)+sea.yl(BL,cx,T)+sea.yl(BL,cx+dx,T))/3-wl)+s*1.6*(Math.sin(hp)*.75+Math.sin(hp*1.9+.7)*.25)*k0,
+          a=.0045*(Math.sin(pp+.9)*.75+Math.sin(pp*1.6+2)*.25)*k0;
+      mk.style.transform='translate('+(cx-ox).toFixed(2)+'px,'+(wy-oy+tp).toFixed(2)+'px) rotate('+a.toFixed(4)+'rad)';
+      cxN=cx;wyN=wy;
+      /* the mark takes the light: gold warms at sunset; "& Sons" keylines in the sky's own colour */
+      var ty=wy-(WL-128.8)*s,f=ty/H,c0=f<.32?mix(S.t,S.m,f/.32):mix(S.m,S.h,Math.min(1,(f-.32)/.26));
+      mk.style.setProperty('--brass-2',rgb(S.g));mk.style.setProperty('--hb',rgb(mix(c0,[12,22,42],Math.min(1,S.pool*1.1))));
+      /* sun on the water at either end of the day */
+      var sx=S.sx*W,sr=(nar?44:Math.max(52,74*u0));
+      if(S.sunA>.05&&S.sh<.22&&S.sh>-.25){var sk=S.sunA*cl01(1-Math.abs(S.sh)/.22);
+        for(var i=1;i<7;i++){var yy=hz+i*i*3.2*u0+4,hw=sr*(1.1-i*.13);ctx.strokeStyle=rgb(S.g,sk*(.5-i*.06));ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(sx-hw,yy);ctx.lineTo(sx+hw,yy);ctx.stroke()}}
+      /* wake: lines trailing off the + crossbar on the outboard leg (the prop), rising to the surface as they spread astern; longer in a bigger sea */
+      var k=rm?1:Math.min(1,Math.max(0,(e-3.2)/2.2));
+      if(k>0){var gc=S.g,lx=(52-NX)*s,ly2=(180-WL)*s,sx2=cx+lx*Math.cos(a)-ly2*Math.sin(a),sy=wy+lx*Math.sin(a)+ly2*Math.cos(a),len=Math.min(W*.24,300*s+80)*(.85+.3*rough);
+        for(var j=0;j<3;j++){
+          var g=ctx.createLinearGradient(sx2,0,sx2-len,0);g.addColorStop(0,rgb(gc,(.75-j*.2)*k));g.addColorStop(1,rgb(gc,0));
+          ctx.beginPath();
+          for(var q=0;q<=len;q+=6){var x=sx2-q,y2=sea.yl(BL,x,T)+(sy-sea.yl(BL,sx2,T))*(1-q/len)+(j*1.6+q*.018*j)*s+Math.sin(q*.05-T*2+j)*.8*s;q?ctx.lineTo(x,y2):ctx.moveTo(x,y2)}
+          ctx.strokeStyle=g;ctx.lineWidth=1.2-j*.2;ctx.stroke()}}
+      /* rain: two depths of fine strokes, each falling along the slant it is drawn at, with rings where it lands */
+      if(S.rain>.01){var sl=-(.14+.42*S.wind),pass;
+        for(pass=0;pass<2;pass++){var near=pass==1,ln=(near?22:11)*(.8+.4*u0),fall=near?760:430;
+          ctx.lineWidth=near?.9:.6;ctx.strokeStyle=rgb(S.l,(near?.3:.16)*S.rain);ctx.beginPath();
+          for(i=0;i<RN.length;i++){var rd=RN[i];if((rd[3]>.62)!=near)continue;
+            var ry=((rd[1]*(H+80)+e*fall*rd[2])%(H+80))-40,rx=(((rd[0]*(W+240)+ry*sl)%(W+240))+(W+240))%(W+240)-120,l2=ln*rd[2];
+            ctx.moveTo(rx-sl*l2,ry-l2);ctx.lineTo(rx,ry)}
+          ctx.stroke()}
+        ctx.lineWidth=.7;
+        /* where drops land: rings on the water all the way to the foreground, more and larger up close, with a small crown of spray on the near water */
+        for(i=0;i<48;i++){var cyc=e*1.25+i*.618,n=Math.floor(cyc),fr=cyc-n,h1=Math.sin(i*127.1+n*311.7)*43758.5453,h2=Math.sin(i*269.5+n*183.3)*12543.123;
+          h1-=Math.floor(h1);h2-=Math.floor(h2);var li=Math.min(29,6+Math.floor(Math.sqrt(h2)*24)),dn=li/29,px=h1*W,py=sea.yl(li,px,T),rs=(1.5+7*fr)*(.3+1.7*Math.pow(dn,1.5))*u0;
+          if(wyN&&li<BL+3&&Math.abs(px-cxN)<330*s)continue;
+          ctx.lineWidth=.6+.7*dn;ctx.strokeStyle=rgb(S.l,(.3+.5*dn)*(1-fr*fr)*S.rain);ctx.beginPath();ctx.ellipse(px,py,rs,rs*.26,0,0,6.283);ctx.stroke();
+          if(dn>.6&&fr<.32){var c2=fr/.32,ch2=(4+7*dn)*u0*Math.sin(Math.PI*c2),sp=(2+5*c2)*u0*dn;ctx.strokeStyle=rgb(S.l,.75*(1-c2)*S.rain);ctx.beginPath();
+            ctx.moveTo(px-sp*.4,py);ctx.lineTo(px-sp,py-ch2);ctx.moveTo(px,py);ctx.lineTo(px,py-ch2*1.2);ctx.moveTo(px+sp*.4,py);ctx.lineTo(px+sp,py-ch2);ctx.stroke()}}}
+    }});
+
+  /* ocean details, placed by depth on the sea lines and drifting astern at that depth's pace: a fishing skiff, pilings with a gull on the tallest, a channel marker, gulls skimming low, and now and then a fin */
+  var OB=[{t:'pile',li:7,x:.096,sp:2.6,o:0},{t:'skiff',li:5,x:.37,sp:2.3,o:0},{t:'buoy',li:10,x:.345,sp:2.9,o:0}],GL={o:0},FIN={next:55,start:-1,x0:0};
+  /* one scale for every detail: a unit is half a foot, and size grows with distance below the horizon, as the sea lines do */
+  function dsc(li,u0){return 1.7*u0*(.3+12*Math.pow(li/29,1.7))}
+  var FT={pile:.9,skiff:1,buoy:.75};
+  /* gulls come and go: each perch is empty most of the time; now and then a gull glides in, sits a while, and flies off */
+  var PER={pile:[],buoy:[[0,-27.8,-1]]},PS={pile:[],buoy:[{}]};
+  function ease(p){return p*p*(3-2*p)}
+  function gull(ctx,x,y,dir,gs,fly,fl){ctx.save();ctx.translate(x,y);ctx.scale(gs*dir,gs);ctx.beginPath();
+    if(!fly){ctx.moveTo(-6,-1);ctx.quadraticCurveTo(-1,-6,4,-5);ctx.lineTo(5.5,-7.5);ctx.moveTo(4,-5);ctx.lineTo(7,-5.2);ctx.moveTo(-6,-1);ctx.lineTo(-9,.5);ctx.moveTo(-1,-1.5);ctx.lineTo(0,1.6)}
+    else{ctx.moveTo(-11,-3+fl*5);ctx.quadraticCurveTo(-5,-6-fl*4,0,-1);ctx.quadraticCurveTo(5,-6-fl*4,11,-3+fl*5)}
+    ctx.stroke();ctx.restore()}
+  /* the piling's gull: a few seconds after the pilings come into view it flies in, lands on the tallest, and stays until they pass off screen. Seated it faces the way the boat runs, breathes, and now and then turns its head to look along the water */
+  var SIT={t:6,a:0,a0:0,a1:0,st:0,seen:-9,land:0};
+  function sitter(ctx,x,y,e,sc){var g=.46,F=3.2;
+    if(e-SIT.seen>4){SIT.st=0;SIT.land=e+3+Math.random()*4}SIT.seen=e;
+    if(SIT.st==0){if(e<SIT.land)return;SIT.st=1;SIT.t0=e}
+    if(SIT.st==1){var p=(e-SIT.t0)/F;if(p<.94){var k=1-ease(Math.min(1,p));ctx.save();ctx.lineWidth=.95/(sc*g);
+        gull(ctx,x-90*g*k,y-60*g*k*k-5*g*Math.sin(Math.PI*p),1,g,true,Math.sin(e*7)*(.3+.7*k));ctx.restore();return}
+      SIT.st=2;SIT.t=e+5}
+    if(e>SIT.t){SIT.a0=SIT.a;SIT.a1=SIT.a1?0:(Math.random()<.5?-.32:.22);SIT.ts=e;SIT.t=e+7+Math.random()*9}
+    var hp=SIT.ts==null?1:ease(Math.min(1,(e-SIT.ts)/.5)),ha=SIT.a=SIT.a0+(SIT.a1-SIT.a0)*hp,br=Math.sin(e*1.6)*.25;
+    ctx.save();ctx.translate(x,y);ctx.scale(g,g);ctx.lineWidth=.95/(sc*g);ctx.beginPath();
+    ctx.moveTo(-1.2,0);ctx.lineTo(-1.2,-1.6);ctx.moveTo(1.2,0);ctx.lineTo(1.2,-1.9);
+    ctx.moveTo(-12,-4.6);ctx.lineTo(-6.5,-3.4);ctx.quadraticCurveTo(-1,1.1+br*.4,3.6,-2.4);ctx.quadraticCurveTo(5.4,-4.3,4.4,-6.4);
+    ctx.moveTo(-12,-4.6);ctx.quadraticCurveTo(-4,-9.2-br,2.6,-7.2);
+    ctx.moveTo(-8.6,-5.4);ctx.quadraticCurveTo(-2.5,-7.6-br*.6,1.8,-4.4);ctx.stroke();
+    ctx.save();ctx.translate(3.4,-6.6);ctx.rotate(ha);ctx.beginPath();ctx.arc(1.4,-2.3,2.1,0,6.283);ctx.moveTo(3.4,-2.6);ctx.lineTo(6.6,-2.2);ctx.lineTo(3.3,-1.6);ctx.stroke();
+    ctx.fillStyle=ctx.strokeStyle;ctx.beginPath();ctx.arc(2.2,-2.8,.42,0,6.283);ctx.fill();ctx.restore();ctx.restore()}
+  function perches(ctx,type,e,ok,gs){var L=PER[type],st=PS[type];
+    for(var i=0;i<L.length;i++){var q=st[i],P=L[i],d=P[2];if(q.s==null){q.s=0;q.t=e+6+Math.random()*30}
+      if(q.s==0&&e>q.t&&ok){q.s=1;q.t0=e}
+      if(q.s==1&&e-q.t0>2.8){q.s=2;q.t=e+16+Math.random()*34}
+      if(q.s==2&&(e>q.t||!ok)){q.s=3;q.t0=e}
+      if(q.s==3&&e-q.t0>2.4){q.s=0;q.t=e+30+Math.random()*60}
+      if(q.s==2)gull(ctx,P[0],P[1],d,gs,false);
+      else if(q.s==1){var p=(e-q.t0)/2.8,k=1-ease(Math.min(1,p));if(p>.92)gull(ctx,P[0],P[1],d,gs,false);
+        else gull(ctx,P[0]-d*70*gs*k,P[1]-46*gs*k*k-4*gs*Math.sin(Math.PI*p),d,gs,true,Math.sin(e*8)*(.35+.65*k))}
+      else if(q.s==3){var p2=ease(Math.min(1,(e-q.t0)/2.4));gull(ctx,P[0]+d*80*gs*p2,P[1]-5*gs-60*gs*p2*p2,d,gs,true,Math.sin(e*10))}}}
+  /* the channel marker, and its red light: a short flash, three times as it crosses, day and night; in fog the light scatters into the haze around it as a wide, soft red halo */
+  function buoy(ctx,bl,sc){ctx.beginPath();ctx.moveTo(-6,1);ctx.lineTo(-4,-15);ctx.lineTo(4,-15);ctx.lineTo(6,1);ctx.moveTo(-3,-15);ctx.lineTo(0,-27);ctx.lineTo(3,-15);ctx.moveTo(-4.5,-7);ctx.lineTo(4.5,-7);ctx.stroke();
+    var fg=S.fog,R=[255,58,46];if(bl<.01)return;
+    ctx.save();ctx.globalCompositeOperation='lighter';
+    if(fg>.05){var fr=(50+150*fg)*sea.sc/sc,hg=ctx.createRadialGradient(0,-29.5,0,0,-29.5,fr);hg.addColorStop(0,rgb(R,.3*fg*bl));hg.addColorStop(.4,rgb(R,.12*fg*bl));hg.addColorStop(1,rgb(R,0));
+      ctx.fillStyle=hg;ctx.save();ctx.translate(0,-29.5);ctx.scale(1.35,1);ctx.translate(0,29.5);ctx.beginPath();ctx.arc(0,-29.5,fr,0,6.283);ctx.fill();ctx.restore()}
+    var gr=22*(1+fg*.6),lg=ctx.createRadialGradient(0,-29.5,0,0,-29.5,gr);lg.addColorStop(0,rgb(R,.7*bl));lg.addColorStop(.3,rgb(R,.28*bl));lg.addColorStop(1,rgb(R,0));ctx.fillStyle=lg;ctx.beginPath();ctx.arc(0,-29.5,gr,0,6.283);ctx.fill();
+    ctx.fillStyle=rgb([255,150,135],bl);ctx.beginPath();ctx.arc(0,-29.5,2.4,0,6.283);ctx.fill();ctx.restore()}
+  /* now and then something close glides through the foreground, softly out of focus: a fin that surfaces, glides and slips under, or a gull gliding past.
+     Each moves at one steady, slow pace and rides a smoothed water line, in its own lane below the hull, so nothing crosses the boat. */
+  var PB={next:14,t0:-1,i:0,K:['fin','gull']};
+  function passby(ctx,T,e,W,H,u0,day,col,fogK){if(rm||!wyN)return;
+    var mg=120*u0,V={fin:58,buoy:52,gull:74}[PB.kd]||58;
+    if(PB.t0<0&&e>PB.next){var kd=PB.K[PB.i%PB.K.length];PB.i++;if(kd=='gull'&&!(day&&S.rain<.4&&S.fog<.6))kd='fin';PB.kd=kd;PB.t0=e;V={fin:58,buoy:52,gull:74}[kd];
+      PB.x0=kd=='fin'?W*(.58+Math.random()*.26):W+mg;PB.D=kd=='fin'?13:(W+mg*2)/(V*u0)}
+    if(PB.t0<0)return;var te=e-PB.t0;if(te>PB.D){PB.t0=-1;PB.li=null;PB.next=e+30+Math.random()*20;return}
+    var x=PB.x0-te*V*u0,h={fin:62,buoy:80,gull:30}[PB.kd]*u0,clear=wyN+52*s,li=PB.li;
+    /* the lane is chosen once, as it comes in, so the boat's own rise and fall never moves it to another line mid-pass */
+    if(li==null||PB.lw!=W){li=20;while(li<28&&sea.ly(li)-h<clear)li++;PB.li=li;PB.lw=W}
+    var ly=sea.ly(li),y=ly+.25*(sea.yl(li,x,T)-ly);
+    fogK=1-S.fog*.4;ctx.save();ctx.filter='blur(1px)';ctx.lineCap='round';ctx.lineJoin='round';
+    if(PB.kd=='fin'){var sc=3.2*u0,up=cl01(te/2.6)*cl01((PB.D-te)/3.2),em=up*up*(3-2*up);
+      ctx.beginPath();ctx.rect(x-60*sc,y-30*sc,140*sc,30*sc+1);ctx.clip();ctx.translate(x,y+(1-em)*22*sc);ctx.scale(sc,sc);ctx.lineWidth=1.3/sc;ctx.strokeStyle=rgb(col,.7*fogK);
+      ctx.beginPath();ctx.moveTo(-7,1);ctx.quadraticCurveTo(-4,-10,3,-19);ctx.quadraticCurveTo(3,-8,9,1);ctx.stroke();ctx.restore();ctx.save();ctx.filter='blur(1px)';
+      ctx.translate(x,y);ctx.scale(sc,sc);ctx.lineWidth=.9/sc;ctx.strokeStyle=rgb(col,.38*em*fogK);
+      ctx.beginPath();ctx.moveTo(9,1);ctx.quadraticCurveTo(22,2.5,38,1.5);ctx.moveTo(-7,1.5);ctx.quadraticCurveTo(10,5,32,4.5);ctx.stroke()}
+    else if(PB.kd=='buoy'){var sc=2.9*u0;ctx.translate(x,y+Math.sin(e*1.1)*2*u0);ctx.rotate(Math.sin(e*.9)*.03);ctx.scale(sc,sc);ctx.lineWidth=1.3/sc;ctx.strokeStyle=rgb(col,.62*fogK);buoy(ctx,0,sc);
+      ctx.strokeStyle=rgb(col,.3*fogK);ctx.beginPath();ctx.ellipse(0,1.5,10,1.6,0,0,6.283);ctx.stroke()}
+    else{var gs=2.6*u0,gy=clear+14*u0+Math.sin(te*.5)*6*u0,burst=cl01((Math.sin(te*.6)-.3)*3),fl=Math.sin(te*4.5)*burst-.15*(1-burst);ctx.translate(x,gy);ctx.scale(gs,gs);ctx.lineWidth=1.3/gs;ctx.strokeStyle=rgb(col,.68*fogK);
+      ctx.beginPath();ctx.moveTo(-11,-3+fl*5);ctx.quadraticCurveTo(-5,-6-fl*4,0,-1);ctx.quadraticCurveTo(5,-6-fl*4,11,-3+fl*5);ctx.stroke()}
+    ctx.restore()}
+  /* the channel marker: one on the water at a time. It drifts across once, its light flashing three times on the way, about every 25 seconds once it is a quarter of the way over; then the water stays clear about a minute before the next one comes in */
+    function mloc(ob,e,dt,W,v,sc){var m=60*sc;
+    if(ob.px==null){ob.px=W*.86;ob.pt=-99;ob.wt=0;ob.n=0}
+    if(ob.wt>e)return -1e4;if(ob.wt){ob.wt=0;ob.n=0;ob.px=W+m}
+    var x0=ob.px;ob.px-=dt*v;if(x0>W*.74&&ob.px<=W*.74){ob.pt=e;ob.n=1;ob.nx=e+22+Math.random()*6}
+    if(ob.n&&ob.n<3&&e>=ob.nx&&ob.px>W*.08){ob.pt=e;ob.n++;ob.nx=e+22+Math.random()*6}
+    if(ob.px<-m){ob.wt=e+55+Math.random()*15;return -1e4}return ob.px}
+  /* one flash: a quick rise, a slow fade, about a second and a half */
+  function flash(t){return t<0?0:t<.18?t/.18:Math.exp(-(t-.18)*2.4)}
+  /* now and then on a clear night a shooting star: rare, about a minute after evening comes on and then every few minutes, a thin streak falling the way the scene drifts */
+  var SH={next:-1,t0:-1};
+  function shoot(ctx,e,W,hz,u0){if(SH.next<0)SH.next=e+55+Math.random()*15;
+    if(SH.t0<0&&e>SH.next){SH.t0=e;SH.x=W*(.22+Math.random()*.4);SH.y=hz*(.08+Math.random()*.25);SH.a=Math.PI*(.82+Math.random()*.06)}
+    if(SH.t0<0)return;var t=(e-SH.t0)/1.1;if(t>1){SH.t0=-1;SH.next=e+180+Math.random()*180;return}
+    var L=150*u0,p=t*L*1.4,hx=SH.x+Math.cos(SH.a)*p,hy=SH.y+Math.sin(SH.a)*p*.45,tl=L*Math.min(1,t*3),
+      tx=hx-Math.cos(SH.a)*tl,ty=hy-Math.sin(SH.a)*tl*.45,fd=Math.sin(Math.PI*t)*S.star,g=ctx.createLinearGradient(tx,ty,hx,hy);
+    g.addColorStop(0,rgb(S.l,0));g.addColorStop(1,rgb(S.l,.85*fd));ctx.strokeStyle=g;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(hx,hy);ctx.stroke();
+    ctx.fillStyle=rgb(S.l,fd);ctx.beginPath();ctx.arc(hx,hy,1.3,0,6.283);ctx.fill()}
+  function wloc(ob,W,u0,dt,v){ob.o+=dt*v;var span=W*ob.sp,x=((ob.x*span-ob.o)%span+span)%span-W*.15;return x}
+  function details(ctx,T,e,dt,W,H,hz,u0,nar){
+    var fogK=1-S.fog*.75,k=rm?1:cl01((e-6)/3),col=S.l,day=ph=='day'||ph=='dawn'||ph=='sunset';if(k<=0)return;
+    ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+    for(var i=0;i<OB.length;i++){var ob=OB[i],t=ob.li/29,sc=dsc(ob.li,u0)*FT[ob.t],x=ob.t=='buoy'?mloc(ob,e,dt,W,(4+30*t)*S.spd*u0,sc):wloc(ob,W,u0,dt,(4+30*t)*S.spd*u0);
+      if(x<-60*sc||x>W+60*sc)continue;
+      var y=sea.yl(ob.li,x,T),sl=Math.atan2(sea.yl(ob.li,x+8,T)-sea.yl(ob.li,x-8,T),16),al=(.3+.35*t)*k*fogK;
+      ctx.save();ctx.translate(x,y);ctx.lineWidth=1/sc;ctx.strokeStyle=rgb(col,al);ctx.scale(sc,sc);
+      if(ob.t=='pile'){var P=[[-15,36,-.03],[0,46,.02],[11,31,-.05]];
+        for(var j=0;j<P.length;j++){var px=P[j][0],ph2=P[j][1];ctx.save();ctx.translate(px,0);ctx.rotate(P[j][2]);ctx.beginPath();
+          ctx.moveTo(-1.6,1);ctx.lineTo(-1.6,-ph2);ctx.lineTo(1.6,-ph2);ctx.lineTo(1.6,1);ctx.stroke();ctx.restore();
+          ctx.beginPath();ctx.ellipse(px,1,4,1.1,0,0,6.283);ctx.strokeStyle=rgb(col,al*.6);ctx.stroke();ctx.strokeStyle=rgb(col,al)}
+        perches(ctx,'pile',e,day&&S.rain<.5&&S.fog<.6,.33);sitter(ctx,.9,-46.6,e,sc)}
+      else if(ob.t=='skiff'){ctx.rotate(sl*.8);ctx.beginPath();ctx.moveTo(-22,0);ctx.lineTo(16,0);ctx.quadraticCurveTo(21,-1,24,-7);ctx.moveTo(-22,0);ctx.lineTo(-22,-6);ctx.moveTo(-2,-1);ctx.lineTo(-2,-10);ctx.lineTo(5,-10);
+        ctx.moveTo(-12,-1);ctx.lineTo(-12,-7);ctx.lineTo(-10.5,-12);ctx.moveTo(-12,-7);ctx.lineTo(-13.5,-1);ctx.moveTo(-10.5,-11);ctx.lineTo(-14.5,-8.5);ctx.moveTo(-13.5,-7.5);ctx.lineTo(-25,-17);ctx.stroke();
+        ctx.beginPath();ctx.arc(-10.2,-13.4,1.3,0,6.283);ctx.stroke();var nl2=S.nav;if(nl2>.01){ctx.save();ctx.scale(1/sc,1/sc);blight(ctx,24*sc,-7*sc,u0,nl2*k*(1-S.fog*.5));ctx.restore()}var tw=Math.sin(e*.9)*.8;ctx.strokeStyle=rgb(col,al*.7);ctx.lineWidth=.6/sc;ctx.beginPath();ctx.moveTo(-25,-17);ctx.quadraticCurveTo(-29+tw,-8,-30,2);ctx.stroke()}
+      else{ctx.rotate(sl*1.4+Math.sin(e*1.3)*.04);buoy(ctx,flash(e-ob.pt)*k,sc);perches(ctx,'buoy',e,day&&S.rain<.5&&S.fog<.6,.4)}
+      ctx.restore()}
+    /* gulls skimming low, a pair, by day */
+    if(day&&S.rain<.4&&S.fog<.6){GL.o+=dt*46*u0;var span=W*3.4,gx=((W*1.1-GL.o)%span+span)%span-W*.2;
+      for(var g=0;g<2;g++){var x=gx+g*34*u0,y=hz+H*.035-g*10*u0+Math.sin(e*.7+g)*4*u0,fl=Math.sin(e*5.2+g*1.7),gs=u0*.95;if(x<-30||x>W+30)continue;
+        ctx.save();ctx.translate(x,y);ctx.scale(gs,gs);ctx.lineWidth=1/gs;ctx.strokeStyle=rgb(col,.5*k*fogK);ctx.beginPath();
+        ctx.moveTo(-10,-2+fl*4);ctx.quadraticCurveTo(-5,-5-fl*3,0,0);ctx.quadraticCurveTo(5,-5-fl*3,10,-2+fl*4);ctx.stroke();ctx.restore()}}
+    else GL.o+=dt*46*u0;
+    /* a fin, once in a long while, crossing slowly and slipping under again */
+    if(!rm&&e>FIN.next&&FIN.start<0){FIN.start=e;FIN.x0=W*(.62+Math.random()*.2)}
+    if(FIN.start>=0){var fe=e-FIN.start,D=11;if(fe>D){FIN.start=-1;FIN.next=e+150+Math.random()*90}
+      else{var li=11,sc2=dsc(li,u0)*.42,fx=FIN.x0-fe*W*.026,fy=sea.yl(li,fx,T),up=cl01(fe/1.8)*cl01((D-fe)/2.2),em=up*up*(3-2*up);
+        ctx.save();ctx.beginPath();ctx.rect(fx-40*sc2,fy-40*sc2,90*sc2,40*sc2+.5);ctx.clip();ctx.translate(fx,fy+(1-em)*20*sc2);ctx.scale(sc2,sc2);ctx.lineWidth=1.1/sc2;
+        ctx.strokeStyle=rgb(col,.62*fogK);ctx.beginPath();ctx.moveTo(-7,1);ctx.quadraticCurveTo(-4,-10,3,-19);ctx.quadraticCurveTo(3,-8,9,1);ctx.stroke();ctx.restore();
+        ctx.save();ctx.translate(fx,fy);ctx.scale(sc2,sc2);ctx.lineWidth=.7/sc2;ctx.strokeStyle=rgb(col,.35*em*fogK);ctx.beginPath();
+        ctx.moveTo(9,1);ctx.quadraticCurveTo(22,2.5,36,1.5);ctx.moveTo(-7,1.5);ctx.quadraticCurveTo(10,5,30,4.5);ctx.stroke();ctx.restore()}}
+    ctx.restore();
+  }
+  var cxN=0,wyN=0,tp=0;
+  /* the hull stands in front of everything out on the water: nothing is drawn inside its outline or behind the name */
+  var HULL=[[62,79],[636,79],[632.7,81],[600,120],[520,160],[450,166],[108,166],[100.2,160.1],[90,112],[86,96],[64,86]];
+  function hullPath(ctx,add){if(!add)ctx.beginPath();for(var i=0;i<HULL.length;i++){var x=cxN+(HULL[i][0]-NX)*s,y=wyN+(HULL[i][1]-WL)*s;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.closePath()}
+  function occl(ctx,W,H){ctx.save();if(!wyN)return;ctx.beginPath();ctx.rect(0,0,W,H);
+    for(var i=0;i<HULL.length;i++){var x=cxN+(HULL[i][0]-NX)*s,y=wyN+(HULL[i][1]-WL)*s;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+    ctx.closePath();ctx.clip('evenodd')}
+  var olE=document.getElementById('ol'),olK='',olN=0,olB=null;
+  function size(){
+    var hh=hd.getBoundingClientRect().height;hero.style.setProperty('--hh',hh+'px');tp=0;
+    var W=hero.clientWidth,bw=W<=860?W*.86:Math.min(W*.6,1000);s=bw/VW;
+    mk.style.setProperty('--bw',bw+'px');ox=(NX-VX)*s;oy=(WL-VY)*s;mk.style.transformOrigin=ox+'px '+oy+'px';
+    requestAnimationFrame(tfsAt);
+  }
+  /* "Tap for sound" sits centred in the water, halfway between the name and the foot */
+  var tfsE=document.getElementById('tfs');
+  function tfsAt(){if(!tfsE)return;var hr=hero.getBoundingClientRect(),mb=mk.getBoundingClientRect().bottom,ft=hero.querySelector('.foot').getBoundingClientRect().top;tfsE.style.setProperty('--tfy',((mb+ft)/2-hr.top)+'px')}
+  size();sea.build();sea.start();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();sea.build()});
+
+  /* sound: built in the browser, quiet, off until asked for. Sea wash always; wind, rain, fog horn, gulls by day, a bell buoy at night. */
+  var snd=null,hv=true,sb=hero.querySelector('.snd'),sw=hero.querySelector('.sndw'),vr=hero.querySelector('.vol');
+  /* the wave is the volume: the knob rides on the line, and the wave grows taller as the sound gets louder */
+  var wvp=sw&&sw.querySelector('.wv'),wkn=sw&&sw.querySelector('.kn'),wvA=0,wvL=-1;
+  function wave(e){var v=vr.value/100,on2=sw.classList.contains('on'),tA=on2?1.1+3.6*v:0;wvA+=(tA-wvA)*.12;if(Math.abs(wvA-tA)<.01)wvA=tA;
+    var phs=rm?0:e*4.2,kx=1+v*58,k2=Math.round(kx*10)+'|'+wvA.toFixed(3)+'|'+(rm?0:Math.round(e*30));if(k2==wvL)return;wvL=k2;
+    function yf(x){var t=Math.min(1,x/6,(60-x)/6);return 8+wvA*t*Math.sin(x*2*Math.PI/12-phs)}
+    var d='M1 '+yf(1).toFixed(2);for(var x=2;x<=59;x++)d+='L'+x+' '+yf(x).toFixed(2);wvp.setAttribute('d',d);wkn.setAttribute('cx',kx.toFixed(2));wkn.setAttribute('cy',yf(kx).toFixed(2))}
+  try{var sv=localStorage.getItem('ryb-vol');if(sv!=null&&vr)vr.value=sv}catch(_){}
+  function Sound(){
+    var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;
+    var ac=new AC(),self=this,on=false,heroVis=true,last=0,nx={gull:0,bell:0,horn:0};
+    var master=ac.createGain();master.gain.value=0;
+    var comp=ac.createDynamicsCompressor();comp.threshold.value=-20;comp.ratio.value=3;master.connect(comp);comp.connect(ac.destination);
+    function noise(sec,brown){var n=ac.sampleRate*sec,b=ac.createBuffer(2,n,ac.sampleRate);
+      for(var c=0;c<2;c++){var d=b.getChannelData(c),l=0;for(var i=0;i<n;i++){var w=Math.random()*2-1;if(brown){l=(l+.02*w)/1.02;d[i]=l*3.5}else d[i]=w}}return b}
+    var WN=noise(4,false),BN=noise(6,true);
+    function loop(buf){var s=ac.createBufferSource();s.buffer=buf;s.loop=true;s.start(0,Math.random()*2);return s}
+    function chain(src,nodes){var p=src;for(var i=0;i<nodes.length;i++){p.connect(nodes[i]);p=nodes[i]}return p}
+    function bq(type,f,Q){var b=ac.createBiquadFilter();b.type=type;b.frequency.value=f;if(Q!=null)b.Q.value=Q;return b}
+    function gn(v){var g=ac.createGain();g.gain.value=v;return g}
+    var seaLp=bq('lowpass',420,.4),seaG=gn(0);chain(loop(BN),[seaLp,seaG,master]);
+    var surfBp=bq('bandpass',900,.6),surfG=gn(0);chain(loop(WN),[surfBp,surfG,master]);
+    var windBp=bq('bandpass',500,5),windG=gn(0);chain(loop(WN),[windBp,windG,master]);
+    var rainHp=bq('highpass',2600,.5),rainLp=bq('lowpass',9000,.5),rainG=gn(0);chain(loop(WN),[rainHp,rainLp,rainG,master]);
+    function set(p,v,tc){p.setTargetAtTime(v,ac.currentTime,tc||.4)}
+    function pan(v){if(ac.createStereoPanner){var p=ac.createStereoPanner();p.pan.value=v;return p}return gn(1)}
+    function drop(t){var s=ac.createBufferSource();s.buffer=WN;var b=bq('bandpass',1800+Math.random()*4200,3),g=gn(0),p=pan(Math.random()*1.6-.8);
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.025+Math.random()*.04,t+.002);g.gain.exponentialRampToValueAtTime(.0001,t+.03+Math.random()*.03);
+      chain(s,[b,g,p,master]);s.start(t,Math.random()*3,.08);}
+    function gull(t,pv){var f0=1050+Math.random()*250,o=ac.createOscillator(),lf=ac.createOscillator(),lg=gn(f0*.025),b=bq('bandpass',f0*2,1.2),lp=bq('lowpass',3800),g=gn(0),p=pan(pv);
+      o.type='sawtooth';lf.frequency.value=26+Math.random()*8;lf.connect(lg);lg.connect(o.frequency);
+      o.frequency.setValueAtTime(f0*1.02,t);o.frequency.linearRampToValueAtTime(f0*1.28,t+.07);o.frequency.exponentialRampToValueAtTime(f0*.7,t+.42);
+      b.frequency.setValueAtTime(f0*2.2,t);b.frequency.exponentialRampToValueAtTime(f0*1.5,t+.42);
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.032,t+.035);g.gain.setValueAtTime(.03,t+.2);g.gain.exponentialRampToValueAtTime(.0001,t+.46);
+      chain(o,[b,lp,g,p,master]);o.start(t);lf.start(t);o.stop(t+.5);lf.stop(t+.5)}
+    function bell(t,pv){var f=392,pr=[[1,1],[2.01,.45],[2.42,.32],[3.02,.18],[4.1,.08]],p=pan(pv),out=gn(.03);out.connect(p);p.connect(master);
+      for(var i=0;i<pr.length;i++){var o=ac.createOscillator(),g=gn(0);o.frequency.value=f*pr[i][0];
+        g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(pr[i][1],t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+4.5/(1+i*.6));
+        o.connect(g);g.connect(out);o.start(t);o.stop(t+5)}}
+    function horn(t){var o1=ac.createOscillator(),o2=ac.createOscillator(),lp=bq('lowpass',360,.7),g=gn(0),p=pan(-.4);o1.type=o2.type='sawtooth';o1.frequency.value=98;o2.frequency.value=98.7;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.045,t+.8);g.gain.setValueAtTime(.045,t+3);g.gain.linearRampToValueAtTime(0,t+4.6);
+      o1.connect(lp);o2.connect(lp);chain(lp,[g,p,master]);o1.start(t);o2.start(t);o1.stop(t+4.8);o2.stop(t+4.8)}
+    var vol=.3;function lvl(){return on&&heroVis?.62*Math.pow(vol,1.7):0}
+    this.volume=function(v){vol=v;set(master.gain,lvl(),.15)};
+    this.toggle=function(){on=!on;if(on&&ac.state!='running')ac.resume();set(master.gain,lvl(),on?.9:.35);return on};
+    this.vis=function(v){heroVis=v;set(master.gain,lvl(),.8)};
+    this.pause=function(h){if(!on)return;if(h)ac.suspend();else ac.resume()};
+    this.tick=function(e,S,ph){if(!on||e-last<.1)return;last=e;var t=ac.currentTime;
+      var rough=cl01((S.amp-.36)/1.59),wash=.5+.5*Math.sin(e*2*Math.PI/7.5)*Math.sin(e*2*Math.PI/19+1);
+      set(seaG.gain,(.12+.28*rough+.06*S.wind)*(.45+.55*wash),.3);set(seaLp.frequency,300+520*rough+260*wash,.3);
+      set(surfG.gain,.09*rough*(.25+.75*wash),.25);
+      set(windG.gain,.16*S.wind*(.6+.4*Math.sin(e*.23)*Math.sin(e*.11+2)),.5);set(windBp.frequency,380+420*(.5+.5*Math.sin(e*.17+2*Math.sin(e*.07))),.6);
+      set(rainG.gain,.11*S.rain,.6);
+      if(S.rain>.05){var n=Math.round(S.rain*5*Math.random()+S.rain*2);for(var i=0;i<n;i++)drop(t+Math.random()*.1)}
+      var day=ph=='day'||ph=='dawn'||ph=='sunset';
+      if(!nx.gull)nx.gull=e+6+Math.random()*10;
+      if(e>nx.gull){if(day&&S.rain<.3&&S.fog<.5&&rough<.7){var pv=Math.random()*1.4-.7,c=1+Math.floor(Math.random()*3);for(i=0;i<c;i++)gull(t+.1+i*(.38+Math.random()*.25),pv)}nx.gull=e+16+Math.random()*26}
+      if(!nx.bell)nx.bell=e+9+Math.random()*8;
+      if(e>nx.bell){if((!day||S.fog>.5)&&rough<.6){var bp=.55;bell(t+.05,bp);bell(t+1.1+Math.random()*.4,bp)}nx.bell=e+22+Math.random()*24}
+      if(!nx.horn)nx.horn=e+4;
+      if(e>nx.horn){if(S.fog>.6)horn(t+.1);nx.horn=e+34+Math.random()*24}
+    };
+  }
+  if(sb){
+    sb.addEventListener('click',function(){if(!snd)snd=new Sound();if(!snd){sw.hidden=true;return}snd.volume(vr.value/100);var v=snd.toggle();if(tfsE)tfsE.classList.add('gone');sb.setAttribute('aria-pressed',v?'true':'false');sw.classList.toggle('on',v);vr.tabIndex=v?0:-1;if(v)snd.vis(hv);try{sessionStorage.setItem('ryb-snd',v?'1':'0')}catch(_){}});
+    sw.querySelector('.wvw').addEventListener('click',function(ev){if(!sw.classList.contains('on')){ev.preventDefault();sb.click()}});
+    vr.addEventListener('input',function(){if(snd)snd.volume(vr.value/100);try{localStorage.setItem('ryb-vol',vr.value)}catch(_){}});
+    if(!(window.AudioContext||window.webkitAudioContext))sw.hidden=true;
+    try{if(sw.hidden||sessionStorage.getItem('ryb-snd'))tfsE.hidden=true}catch(_){}
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){hv=es[0].isIntersecting;if(snd)snd.vis(hv)},{threshold:.15}).observe(hero);
+    document.addEventListener('visibilitychange',function(){if(snd)snd.pause(document.hidden)});
+    /* sound starts on the visitor's first tap or click anywhere (or Enter/Space), muted until then; the Sound toggle still mutes, and a mute holds for the visit */
+    var first=function(ev){if(ev.type=='keydown'&&ev.key!='Enter'&&ev.key!==' ')return;document.removeEventListener('click',first);document.removeEventListener('keydown',first);if(tfsE)tfsE.classList.add('gone');
+      if(snd||sw.hidden)return;try{if(sessionStorage.getItem('ryb-snd')=='0')return}catch(_){}sb.click()};
+    document.addEventListener('click',first);document.addEventListener('keydown',first);
+  }
+
+/* closing: the same sea, no boat */
+  var sea2=new Sea(document.getElementById('sea2'),{n:22,top:.06,draw:false,swell:.7,al:function(t){return .08+.34*t}});
+  sea2.start();
+
+  /* reveals: each section takes its moment */
+  function on(el){el.classList.add('on')}
+  var secs='.line,.board,.track,.pn,.close';
+  if(rm){document.querySelectorAll('.hero,'+secs).forEach(on)}
+  else{
+    setTimeout(function(){on(hero)},120);
+    var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){on(x.target);io.unobserve(x.target)}})},{threshold:.25,rootMargin:'0px 0px -6% 0px'}):null;
+    document.querySelectorAll(secs).forEach(function(el){io?io.observe(el):on(el)});
+    setTimeout(function(){document.querySelectorAll(secs).forEach(function(el){if(el.getBoundingClientRect().top<innerHeight)on(el)})},700);
+  }
+  document.getElementById('f').addEventListener('submit',function(e){e.preventDefault();this.querySelector('.sent').textContent="Concept preview: messages aren't sent.";});
+})();
+</script>
+
+
+
+</body></html>
