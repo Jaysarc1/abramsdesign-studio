@@ -403,3 +403,6 @@ html:not(.perf-low) .obj.mug.photo:not(.carried):not(.tipped) .mugimg{
   html body:not(.land) .obj.phone.parked{left:auto!important;right:30px!important;top:var(--v17t,668px)!important;bottom:auto!important}
   html body:not(.land) .obj.mug.parked{left:max(556px,38.6vw)!important;right:auto!important;top:var(--v17t,456px)!important;bottom:auto!important}
 }
+/* batch 17: phones: back arrow left, wordmark centred, caption clears the copy, tabs in two even lines */
+@media (max-width:560px){html body .topbar-in .backlink,html body .backlink{position:absolute!important;left:16px!important;top:50%!important;transform:translateY(-50%)!important;width:36px!important;height:36px!important;padding:0!important;gap:0!important;justify-content:center!important;font-size:0!important;margin:0!important}html body .backlink span{font-size:15px!important;line-height:1}}
+@media (max-width:560px){html body .hero-photo.instants{margin-bottom:56px!important}html body .tabs{flex-wrap:nowrap!important;align-items:flex-end!important}html body .tabs .tab{white-space:normal!important;flex:1 1 0!important;min-width:0!important;font-size:12px!important;letter-spacing:.02em!important;line-height:1.25!important;padding:9px 4px!important;text-align:center!important}}
