@@ -1812,7 +1812,7 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
       <div class="cta-blk rv"><p>I like the preview you made&hellip; <em>now what?</em></p></div>
       <div class="fit fit-cta">
         <a class="fit-row rv" href="#offers" data-tab="refresh">
-          <h3 class="fit-q">Love it, but keeping your site?</h3>
+          <h3 class="fit-q">Like it, but keeping your site?</h3>
           <div class="fit-a"><b>We bring the preview&rsquo;s polish to the site you already have.</b><span class="fit-go">Refresh<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></div>
         </a>
         <a class="fit-row rv" href="#offers" data-tab="signature">
@@ -2471,7 +2471,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
       hiss(t+.052,.016,'bandpass',2400,3,.22,2);
     }catch(e){}}
     /* the reveal: the three after sites, live */
-    var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:20,LS=5.7;
+    var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:20,LS=3.2;/* batch 18: the folding starts 2.5s sooner */
     /* each after renders at a real width (a phone layout on a phone), scaled a little into its frame, so it can be scrolled, tapped and used */
     function liveSize(){lv.forEach(function(o){var w=o.a.clientWidth,h=o.a.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1600,w/.86),k=w/V;
         o.f.style.width=Math.round(V)+'px';o.f.style.height=Math.ceil(h/k)+'px';o.f.style.transform='scale('+k.toFixed(4)+')';});}
@@ -2515,7 +2515,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     /* the running order */
     hkT0=Date.now();at(350,function(){cl.add('hs-eng');sfx('v8');engBed();if(top)camGo(0);});
     /* batch 16: three revs through the hold, each catching the last one's tail */
-    setTimeout(function(){sfx('v8');},2550);setTimeout(function(){sfx('v8');},4750);
+    setTimeout(function(){sfx('v8');},2550);/* batch 18: the third rev is gone, so the idle carries straight into the car's own rev and drive-off */
     setTimeout(tapSettle,3300+HOLD-150);
     at(900,function(){K(1);});
     at(3300,function(){cl.add('hs-pull');K(0);sfx('whoosh');if(top&&!RM)camGo(1);});
@@ -2573,15 +2573,17 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
         {offset:.92,transform:B(d*.05,c,T(90),21)},
         {offset:.96,transform:B(d*.05,c,T(87),21)},
         {transform:B(d*.05,c,T(90),21)}],{duration:1400,easing:'linear',fill:'forwards'});}
-    /* batch 17: the hubcap is heard: a sharp metal pop as it lets go, a clank as it hits the road, a smaller one on the bounce, then a coin-like rattle as it rolls over and settles */
-    function capSnd(){if(!sndOn||!AC)return;try{var t=AC.currentTime+.005;
-      var ring=function(at0,fs,a,d){fs.forEach(function(f,i){var o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.setValueAtTime(f,at0);g.gain.setValueAtTime(.0001,at0);g.gain.exponentialRampToValueAtTime(a/(1+i*.6),at0+.003);g.gain.exponentialRampToValueAtTime(.0001,at0+d/(1+i*.25));o.connect(g);g.connect(AG);o.start(at0);o.stop(at0+d+.05);});};
-      var hit=function(at0,d,f,q,a){var n=AC.createBuffer(1,Math.floor(AC.sampleRate*d),AC.sampleRate),x=n.getChannelData(0);for(var k=0;k<x.length;k++)x[k]=(Math.random()*2-1)*Math.pow(1-k/x.length,3);var b=AC.createBufferSource(),fl=AC.createBiquadFilter(),g=AC.createGain();fl.type='bandpass';fl.frequency.value=f;fl.Q.value=q;g.gain.value=a;b.buffer=n;b.connect(fl);fl.connect(g);g.connect(AG);b.start(at0);};
-      var M=[1180,2730,4310,6020];
-      hit(t,.05,2600,1.4,.55);ring(t,[1720,3960,6400],.16,.32);                 /* the pop */
-      hit(t+.42,.09,900,.9,.75);ring(t+.42,M,.22,.55);                         /* it hits the road */
-      hit(t+.59,.05,1300,1,.35);ring(t+.59,M,.1,.35);                          /* the bounce */
-      [[.92,.13],[1.12,.1],[1.2,.08],[1.29,.06],[1.34,.045],[1.38,.035],[1.41,.025],[1.43,.018]].forEach(function(r,i){hit(t+r[0],.03,2100+i*120,1.6,r[1]*2.2);ring(t+r[0],[M[0]*1.04,M[1]*1.03,M[2]],r[1],.22);});   /* the roll and the coin-like settle */
+    /* batch 18: the hubcap clacks: thin stamped metal, short and dry, no ringing tone; 30% quieter than batch 17 */
+    function capSnd(){if(!sndOn||!AC)return;try{var t=AC.currentTime+.005,G=AC.createGain();G.gain.value=.7;G.connect(AG);
+      var clk=function(at0,a,f,d){var n=AC.createBuffer(1,Math.floor(AC.sampleRate*d),AC.sampleRate),x=n.getChannelData(0);for(var k=0;k<x.length;k++)x[k]=(Math.random()*2-1)*Math.pow(1-k/x.length,6);
+        var b=AC.createBufferSource(),hp=AC.createBiquadFilter(),pk=AC.createBiquadFilter(),g=AC.createGain();hp.type='highpass';hp.frequency.value=f*.55;pk.type='peaking';pk.frequency.value=f;pk.Q.value=2.5;pk.gain.value=9;g.gain.value=a;
+        b.buffer=n;b.connect(hp);hp.connect(pk);pk.connect(g);g.connect(G);b.start(at0);
+        [1.0,1.47,2.09,2.81].forEach(function(m,i){var o=AC.createOscillator(),og=AC.createGain(),q=at0+.001;o.type='triangle';o.frequency.setValueAtTime(f*m*(1+(Math.random()-.5)*.03),q);og.gain.setValueAtTime(.0001,q);og.gain.exponentialRampToValueAtTime(a*.09/(1+i),q+.002);og.gain.exponentialRampToValueAtTime(.0001,q+.045+.02/(1+i));o.connect(og);og.connect(G);o.start(q);o.stop(q+.09);});};
+      var thud=function(at0,a){var o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.setValueAtTime(210,at0);o.frequency.exponentialRampToValueAtTime(95,at0+.06);g.gain.setValueAtTime(.0001,at0);g.gain.exponentialRampToValueAtTime(a,at0+.004);g.gain.exponentialRampToValueAtTime(.0001,at0+.09);o.connect(g);g.connect(G);o.start(at0);o.stop(at0+.12);};
+      clk(t,.5,2400,.035);clk(t+.018,.25,3100,.02);                                   /* it pops off the wheel */
+      thud(t+.42,.35);clk(t+.42,.7,1700,.05);clk(t+.445,.35,2300,.03);                 /* it clacks onto the road */
+      clk(t+.59,.32,2000,.035);                                                         /* the bounce */
+      [[.92,.26],[1.08,.22],[1.18,.18],[1.26,.15],[1.32,.12],[1.37,.1],[1.405,.08],[1.43,.06],[1.45,.045],[1.465,.03]].forEach(function(r,i){clk(t+r[0],r[1],1900+((i%3)*260),.022);});   /* it rattles over and settles like a dropped lid */
       }catch(e){}}
     at(8640,capOff);
     /* the line on its own; then the site, with the clock on its corner, so the five seconds are spent looking at it; at zero it unfolds into its facelift, live and usable */

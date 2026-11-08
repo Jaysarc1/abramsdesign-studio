@@ -9,7 +9,6 @@ ALIGNMENT NOTES
 Grid: 12 columns, 32px gutter. Page gutter (--gut) is half the old centred inset: max(24px, 25vw - 324px), so 36px at 1440 and 156px at 1920; the right side moves out by the same amount (phones: 4 columns, 16px gutter, 16px page gutter).
 Copy starts on column 1. Readouts start on column 7 (storm) or column 8 (sun).
 Intentional offsets:
-- Hero louvers: one blade per grid column, split at the gutter centres, so the house is revealed column by column.
 - 01 The drawing: the photograph and its traced drawing start on column 5 and bleed off the right edge; every traced line sits on the photograph's own edges. The light that turns the drawing into the house spreads from the December sun, wherever that falls.
 - 02 The sun: the back wall sits on column 1 and the glass on column 5; sun, rays and arc sit on the true noon altitude for 26.7 N.
 - "Built 2025" plate sits 32px in from the photograph's own bottom-right corner, as a label on the print, not on the grid.
@@ -84,9 +83,6 @@ header:not(.solid) nav .btn{opacity:0;pointer-events:none}
 .hero .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:12% 50%}
 .hero .ph .base{filter:brightness(.42) saturate(.55)}
 .hero .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,22,.86) 0%,rgba(8,12,22,.58) 36%,rgba(8,12,22,0) 64%),linear-gradient(0deg,rgba(8,12,22,.9) 0%,rgba(8,12,22,.62) 18%,rgba(8,12,22,0) 42%),linear-gradient(180deg,rgba(8,12,22,.5) 0%,rgba(8,12,22,0) 20%)}
-.louvers{position:absolute;inset:0;pointer-events:none}
-.louvers i{position:absolute;top:0;bottom:0;background:linear-gradient(90deg,#0B1220 0%,#111B2E 78%,#1A263C 100%);transform-origin:0 50%;will-change:transform}
-.louvers i::after{content:"";position:absolute;top:0;bottom:0;right:0;width:1px;background:rgba(217,163,91,.38)}
 .hero>.wrap{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(56px,10vh,104px)}
 .hero .grid{align-items:end}
 .hl{grid-column:1 / span 6}
@@ -522,7 +518,6 @@ footer{padding-block:56px 36px;background:var(--night);color:rgba(243,238,229,.6
   .js .hero .ph{transform:none}
   .js .hero .ph .on{opacity:1}
   .js .work img{clip-path:none;transform:none;transition:none}
-  .louvers{display:none}
   .storm,.drawn{height:auto}
   .stage,.dstage{position:relative;height:100svh}
   .pin{height:auto}
@@ -552,12 +547,11 @@ footer{padding-block:56px 36px;background:var(--night);color:rgba(243,238,229,.6
       <img class="on" src="img/hero.jpg" alt="A low white stucco house under a deep overhang and a palm" fetchpriority="high">
     </div>
     <div class="shade"></div>
-    <div class="louvers" aria-hidden="true"></div>
     <div class="wrap">
       <div class="grid">
         <div class="hl">
           <h1><span class="in" style="margin-top:22px">Built for <i class="br"></i>hurricanes.</span><span class="in"><em>Shaped by <i class="br"></i>the sun.</em></span></h1>
-          <p class="lede in">Drawn around the path of the sun, built by the hands that drew them.</p>
+          <p class="lede in">Drawn by the path of the sun.</p>
           <a class="btn in" href="#start">Start a project<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5"/></svg></a>
         </div>
         <ul class="idx">
@@ -953,24 +947,13 @@ const f1=v=>(+v).toFixed(1);
 const gridOf=()=>{const W=document.documentElement.clientWidth,n=W<=900?4:12,g=W<=900?16:32;
   const left=parseFloat(getComputedStyle(document.querySelector('.wrap')).paddingLeft)||(W<=520?16:24),inner=W-2*left,col=(inner-(n-1)*g)/n;return {W,n,g,left,col,inner,x:i=>left+i*(col+g)}};
 
-/* hero: louvers open column by column, the house's lights come on, then the words */
+/* hero: the page opens straight onto the house (no intro curtain); its lights come on, then the words */
 (()=>{
-  const hero=$('hero'),lv=hero.querySelector('.louvers'),ins=[...hero.querySelectorAll('.in')],hd=document.querySelector('header');
+  const hero=$('hero'),ins=[...hero.querySelectorAll('.in')],hd=document.querySelector('header');
   const words=d=>{ins.forEach((e,i)=>setTimeout(()=>e.classList.add('on'),d+i*170));setTimeout(()=>hd.classList.add('up'),d+300)};
-  if(RM){lv.remove();hero.classList.add('lit');ins.forEach(e=>e.classList.add('on'));hd.classList.add('up');return}
-  const G=gridOf(),cuts=[0];for(let i=1;i<G.n;i++)cuts.push(G.x(i)-G.g/2);cuts.push(G.W);
-  const blades=[];for(let i=0;i<G.n;i++){const b=document.createElement('i');b.style.left=cuts[i]+'px';b.style.width=(cuts[i+1]-cuts[i]+1)+'px';lv.appendChild(b);blades.push(b)}
+  if(RM){hero.classList.add('lit');ins.forEach(e=>e.classList.add('on'));hd.classList.add('up');return}
   const img=hero.querySelector('.ph .on');
-  const go=()=>{
-    const DUR=1500,ST=G.n>6?85:150,T0=performance.now()+350;
-    const outE=t=>1-Math.pow(1-t,3.2);
-    const f=now=>{let live=false;blades.forEach((b,i)=>{const p=clamp((now-T0-i*ST)/DUR);b.style.transform=`scaleX(${(1-outE(p)).toFixed(4)})`;if(p<1)live=true});
-      if(live)requestAnimationFrame(f);else lv.remove()};
-    requestAnimationFrame(f);
-    const end=350+(G.n-1)*ST+DUR;
-    setTimeout(()=>hero.classList.add('lit'),end-900);
-    words(end-300);
-  };
+  const go=()=>{setTimeout(()=>hero.classList.add('lit'),60);words(600)};
   (img.decode?img.decode().catch(()=>{}):Promise.resolve()).then(go);
 })();
 
