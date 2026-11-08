@@ -1322,9 +1322,11 @@ footer .g12{row-gap:32px; align-items:start}
     const M = WMK, L = lightL();
     if (RM) { draw(ctx, P, ox, M.cy, M.sc, { dpr, shadow:1 }); drawMark(1, L); if (p >= C0) drawPage(0, 1, L); return; }
     const w = clamp((p - YS) / (W1 - YS)), mv = ease(clamp(w / .42)), u = clamp((w - .05) / .85);
-    const v = 1 - (u < 2 / 3 ? 1 - Math.cos(u * Math.PI * 2 * 3) : 0) * .95 * Math.pow(Math.sin(Math.PI * u), .5);
+    /* batch 21: the wings turn straight over at the top into the second beat (no rest between beats), and the second downstroke is scaled to the floor above the name instead of being clipped flat against it */
+    const dn = (u < 2 / 3 ? Math.abs(Math.sin(u * Math.PI * 3)) : 0) * Math.pow(Math.sin(Math.PI * u), .5), fl = lerp(-.9, -.3, mv);
+    const v = 1 - dn * (1 - fl);
     const s = Math.exp(lerp(Math.log(sc), Math.log(M.sc), mv)), y = lerp(oy, M.cy, mv) - (u < 2 / 3 ? Math.sin(u * Math.PI * 6) : 0) * Math.sin(Math.PI * u) * s * F8.h * .05;
-    flap(P, Math.max(v, lerp(-.9, -.3, mv)));   // once it sits above the name, the downstroke stays short of the letters
+    flap(P, Math.max(v, fl));   // once it sits above the name, the downstroke stays short of the letters
     draw(ctx, P, ox, y, s, { dpr, shadow:lerp(1, .7, mv) });
     drawMark(clamp((p - WM0) / (WM1 - WM0)), L);
     if (p >= C0) { const t = ease(clamp((p - C0) / (C1 - C0))); drawPage(PA * (1 - t), smooth(0, .1, t), L); }

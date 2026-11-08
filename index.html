@@ -2430,15 +2430,12 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
   function bedLoop(b,s0,s1,xf){var r=b.sampleRate,a=Math.floor((s0||.7)*r),e=Math.floor((s1||2.7)*r),X=Math.floor((xf||.35)*r),L=e-a-X,o=AC.createBuffer(b.numberOfChannels,L,r);
     for(var c=0;c<b.numberOfChannels;c++){var i=b.getChannelData(c),y=o.getChannelData(c);for(var k=0;k<L;k++){var v=i[a+k];if(k<X){var m=k/X;v=v*Math.sin(m*Math.PI/2)+i[a+L+k]*Math.cos(m*Math.PI/2);}y[k]=v;}}return o;}
   function engBed(){if(!hkT0||bed||!sndOn||!AC||!BUF.v8)return;var el=(Date.now()-hkT0)/1000;if(el>BEDK[BEDK.length-1][0]-.3)return;
-    try{var src=AC.createBufferSource(),g=AC.createGain(),now=AC.currentTime;src.buffer=bedLoop(BUF.v8);src.loop=true;src.playbackRate.value=.9;src.connect(g);g.connect(AG);
+    try{var src=AC.createBufferSource(),g=AC.createGain(),now=AC.currentTime;
+      /* batch 21: the bed under the revs is a steady idle with no rev of its own (cut from before the rev), so the softer rev that followed each loud one is gone; only the three revs and the car's own sound rev now */
+      src.buffer=bedLoop(BUF.v8,.45,1.05,.12);src.loop=true;src.playbackRate.value=.9;src.connect(g);g.connect(AG);
       var lv=function(t){for(var i=1;i<BEDK.length;i++)if(t<BEDK[i][0]){var p=BEDK[i-1],q=BEDK[i];return p[1]+(q[1]-p[1])*Math.max(0,(t-p[0])/(q[0]-p[0]));}return 0;};
       g.gain.setValueAtTime(Math.max(.0001,lv(el)),now);BEDK.forEach(function(k){if(k[0]>el)g.gain.linearRampToValueAtTime(Math.max(.0001,k[1]),now+(k[0]-el));});
-      src.start(now,Math.max(0,(el-.35)*.9)%src.buffer.duration);src.stop(now+(BEDK[BEDK.length-1][0]-el)+.1);bed=src;
-      /* batch 20: the idle loop's own rev that lands at about 8.9s (the sixth rev you hear) is swapped for a steady idle cut from before the rev */
-      var sw=AC.createGain(),id=AC.createBufferSource(),iw=AC.createGain(),A=8.45,B=9.3,F=.15;src.disconnect();src.connect(sw);sw.connect(g);id.buffer=bedLoop(BUF.v8,.45,1.05,.12);id.loop=true;id.playbackRate.value=.9;id.connect(iw);iw.connect(g);
-      if(el<B){var ta=now+Math.max(0,A-el),tb=now+Math.max(0,B-el);sw.gain.setValueAtTime(el>A?0:1,now);iw.gain.setValueAtTime(el>A?1:0,now);
-        if(el<A){sw.gain.setValueAtTime(1,ta);sw.gain.linearRampToValueAtTime(0,ta+F);iw.gain.setValueAtTime(0,ta);iw.gain.linearRampToValueAtTime(1,ta+F);}
-        sw.gain.setValueAtTime(0,tb-F);sw.gain.linearRampToValueAtTime(1,tb);iw.gain.setValueAtTime(1,tb-F);iw.gain.linearRampToValueAtTime(0,tb);id.start(now);id.stop(now+(B-el)+.1);}}catch(e){}}
+      src.start(now,Math.max(0,(el-.35)*.9)%src.buffer.duration);src.stop(now+(BEDK[BEDK.length-1][0]-el)+.1);bed=src;}catch(e){}}
   function catchUp(){engBed();if(!sndOn||!cue||cue.on)return;var el=(Date.now()-cue.t)/1000;if(el<LEN[cue.n]-.2)cue.on=play(cue.n,el);}
   if(hk){
     /* batch 15: a three-second hold while the Spider revs and the prompt asks for sound; everything from the pull onward waits for it */
