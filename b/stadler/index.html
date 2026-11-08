@@ -29,9 +29,11 @@ body{margin:0;color:var(--cream);font-family:var(--body);font-size:18px;line-hei
   background-image:
     linear-gradient(rgba(238,243,239,.075) 1px,transparent 1px),
     linear-gradient(90deg,rgba(238,243,239,.075) 1px,transparent 1px),
-    radial-gradient(circle at 22% 17%,rgba(255,255,255,.075),transparent 14%),
-    linear-gradient(160deg,transparent 55%,rgba(0,0,0,.14));
-  background-size:64px 64px}
+    radial-gradient(ellipse 30% 46% at 10% 42%,rgba(255,255,255,.0375),transparent 100%),
+    linear-gradient(90deg,transparent 50%,rgba(0,0,0,.12)),
+    linear-gradient(90deg,rgba(238,243,239,.035),transparent 55%);
+  /* batch 19: one light from the left: every tile carries the same soft highlight on its left side (half as strong as before) and falls off to its right, under a faint wash across the wall from the left edge */
+  background-size:64px 64px,64px 64px,64px 64px,64px 64px,100% 100%;background-attachment:scroll,scroll,scroll,scroll,fixed}
 a{color:inherit}
 svg{display:block;max-width:100%}
 :focus-visible{outline:3px solid var(--copper-l);outline-offset:3px}
@@ -66,7 +68,7 @@ section{position:relative;z-index:2}
 
 /* hero */
 .hero{min-height:100svh;display:grid;align-items:center;overflow:hidden}
-.accent{position:absolute;width:63px;height:63px;pointer-events:none}
+.accent{position:absolute;width:63px;height:63px;pointer-events:none;background-image:radial-gradient(ellipse 30% 46% at 10% 42%,rgba(255,255,255,.06),transparent 100%),linear-gradient(90deg,transparent 50%,rgba(0,0,0,.12))}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;width:100%;padding-block:110px 90px}
 .hero h1{font-size:clamp(58px,8.8vw,141px);line-height:.88}
 /* batch 19: "Family owned" sits alone over "Since", on its left edge; the line under the year is gone, so the address rises to meet it */
@@ -386,15 +388,15 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-bet
   /* batch 16: every glazed tile a touch different, its hue and depth nudged 1 to 3 percent up or down, so the wall reads as fired by hand */
   (function(){try{var c=document.createElement('canvas'),n=16,t=64;c.width=c.height=n*t;var g=c.getContext('2d'),sd=19;
     function r(){sd=(sd*16807)%2147483647;return sd/2147483647}
-    function j(){return (1+r()*2)*(r()<.5?-1:1)}
+    function j(){return (1+r())*(r()<.5?-1:1)}/* batch 19: 1 to 2 percent */
     for(var y=0;y<n;y++)for(var x=0;x<n;x++){g.fillStyle='hsl('+(177+j()*1.2).toFixed(1)+',56%,'+(13+j()*.3).toFixed(2)+'%)';g.fillRect(x*t,y*t,t,t)}
-    var b=document.body,cs=getComputedStyle(b);b.style.backgroundImage=cs.backgroundImage+',url('+c.toDataURL('image/png')+')';b.style.backgroundSize='64px 64px,64px 64px,64px 64px,64px 64px,1024px 1024px';
+    var b=document.body,cs=getComputedStyle(b);b.style.backgroundImage=cs.backgroundImage+',url('+c.toDataURL('image/png')+')';b.style.backgroundSize='64px 64px,64px 64px,64px 64px,64px 64px,100% 100%,1024px 1024px';b.style.backgroundAttachment='scroll,scroll,scroll,scroll,fixed,scroll';
   }catch(e){}})();
 
   /* a few lighter and darker glazed tiles in the hero */
   var acc=document.getElementById('accents'),glaze=['#14504b','#0a2422','#1a5c55','#0d3e3b','#2b5f57'];
   var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
-  for(var i=0;i<22;i++){var d=document.createElement('i');d.className='accent';d.style.left=(Math.floor(rnd()*30)*64+1)+'px';d.style.top=(Math.floor(rnd()*16)*64+1)+'px';d.style.background=glaze[Math.floor(rnd()*glaze.length)];d.style.opacity=(.35+rnd()*.4).toFixed(2);acc.appendChild(d)}
+  for(var i=0;i<22;i++){var d=document.createElement('i');d.className='accent';d.style.left=(Math.floor(rnd()*30)*64+1)+'px';d.style.top=(Math.floor(rnd()*16)*64+1)+'px';d.style.backgroundColor=glaze[Math.floor(rnd()*glaze.length)];d.style.opacity=(.35+rnd()*.4).toFixed(2);acc.appendChild(d)}
 
   /* copper stubs inside each drawing get the same three-layer pipe */
   [].forEach.call(document.querySelectorAll('.art .pp'),function(p){
