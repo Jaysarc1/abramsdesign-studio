@@ -1185,6 +1185,17 @@
     pile.style.left = Math.round(right + (room - w) / 2 - g.left) + 'px';
     pile.style.top = Math.round(top + (bot - top - ph) / 2 - g.top - 6) + 'px';
   }
+  /* a long caption shrinks to the print rather than running off its edge */
+  function fit(root){
+    var cs = root.querySelectorAll('.trip-print figcaption');
+    for(var i = 0; i < cs.length; i++){
+      var c = cs[i]; c.style.fontSize = '';
+      if(!c.clientWidth) continue;
+      var f = parseFloat(getComputedStyle(c).fontSize), n = 0;
+      while(c.scrollWidth > c.clientWidth + 1 && n++ < 12){ f *= .93; c.style.fontSize = f + 'px'; }
+    }
+  }
+  var place0 = place; place = function(){ place0(); fit(pile); };
   place(); addEventListener('resize', function(){ clearTimeout(place.t); place.t = setTimeout(place, 120); });
   addEventListener('load', place); setTimeout(place, 900); setTimeout(place, 2200);
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(place);
@@ -1239,7 +1250,7 @@
     lastFocus = document.activeElement; at = 0; paint();
     var r = pile.getBoundingClientRect(), top = cards[0];
     html.classList.add('trip-open');
-    view.classList.add('in');
+    view.classList.add('in'); fit(view);
     if(!reduce){
       var t = top.getBoundingClientRect();
       var s = r.width / (t.width || 1);
