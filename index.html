@@ -323,8 +323,9 @@ section{padding-block:var(--sp-sec)}
 }
 @media (prefers-reduced-motion:reduce){.bf .page img+img{clip-path:none}.bf-m i:first-child{opacity:0}.bf-m i+i{opacity:1}}
 @keyframes bfc{0%,30%{clip-path:inset(0 50% 0 50%);opacity:1}52%,90%{clip-path:inset(0 0 0 0);opacity:1}97%{clip-path:inset(0 0 0 0);opacity:0}100%{clip-path:inset(0 50% 0 50%);opacity:0}}
-@keyframes bfb{0%,30%{opacity:1}36%,92%{opacity:0}98%,100%{opacity:1}}
-@keyframes bfa{0%,44%{opacity:0}52%,90%{opacity:1}96%,100%{opacity:0}}
+/* the mark flips as the curtain passes its midpoint, and flips back as the old site returns */
+@keyframes bfb{0%,39%{opacity:1}42%,93%{opacity:0}97%,100%{opacity:1}}
+@keyframes bfa{0%,39%{opacity:0}42%,93%{opacity:1}97%,100%{opacity:0}}
 @keyframes swap{0%,40%{opacity:0}52%,88%{opacity:1}100%{opacity:0}}
 @media (max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tile,.tile.half{grid-column:span 1}.tile.feat{grid-column:1/-1;grid-row:auto}.tile.feat .page{aspect-ratio:16/10;flex:none}}
 @media (max-width:560px){.tiles{grid-template-columns:1fr}.tile.feat{grid-column:auto}}
