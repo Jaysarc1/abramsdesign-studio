@@ -1121,3 +1121,147 @@
     }
   }
 })();
+/* batch 25: each aircraft keeps its own roll of prints from its own trips. They sit on the desk between
+   the name and the photographs; pick the pile up and the desk falls out of focus while you leaf through it. */
+(function(){
+  'use strict';
+  var K = window.VELA_ID;
+  if(!K || !document.body || document.body.classList.contains('land')) return;
+  var html = document.documentElement;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var src = (document.querySelector('script[src*="finish.js"]') || {}).src || '';
+  var DIR = src.replace(/finish\.js.*$/, '') + 'assets/images/desk/trips/';
+  /* [file, words in the same hand, flaw] flaws: crease, ear (a bent corner), leak (light got in) */
+  var ROLLS = {
+    g550:  [['g550-1','first look at Phuket'],['g550-2','longtail boys','crease'],['g550-0','Captain Max'],
+            ['g550-3','Mom 0, jet lag 1'],['g550-4','we made it!'],['g550-5','mango sticky rice x3','ear']],
+    f900:  [['f900-3','Milford Sound!!'],['f900-1','Abuela in Queenstown'],['f900-2','she named every one','ear'],
+            ['f900-0','first window seat'],['f900-4','windy at Wakatipu'],['f900-5','home stretch','crease']],
+    cl350: [['cl350-5','he wanted UP','crease'],['cl350-1','NYC, finally'],['cl350-3','Bow Bridge'],
+            ['cl350-0','boarding chaos'],['cl350-4','future captain','ear'],['cl350-2','goodnight, Manhattan','leak']],
+    cj4:   [['cj4-1','Biscuit gets the window','ear'],['cj4-2','morning walk, wheels up'],['cj4-0','oops, my thumb'],
+            ['cj4-3','park day','crease'],['cj4-4','Biscuit first, always'],['cj4-5','too much sun, no regrets']],
+    cl605: [['cl605-1','Teta made it'],['cl605-2','last one in!','crease'],['cl605-3','Jiddo’s paper planes'],
+            ['cl605-0','out cold by Nassau'],['cl605-4','over the shallows'],['cl605-5','Nassau, all of us','leak']]
+  };
+  var ROLL = ROLLS[K]; if(!ROLL) return;
+  function el(t, c, p){ var e = document.createElement(t); if(c) e.className = c; if(p) p.appendChild(e); return e; }
+  function print(r, cls){
+    var f = el('figure', 'trip-print' + (r[2] ? ' fl-' + r[2] : '') + (cls ? ' ' + cls : ''));
+    var w = el('div', 'tp-win', f);
+    var i = el('img', '', w); i.src = DIR + r[0] + '.webp'; i.alt = ''; i.decoding = 'async';
+    el('figcaption', '', f).textContent = r[1];
+    return f;
+  }
+
+  /* ---- the pile on the desk ---- */
+  var grid = document.querySelector('.hero-grid'), photo = document.querySelector('.hero-photo'),
+      text = document.querySelector('.hero-text');
+  if(!grid || !photo || !text) return;
+  var pile = el('div', 'trip-pile');
+  pile.tabIndex = 0; pile.setAttribute('role', 'button');
+  pile.setAttribute('aria-label', 'Pick up the prints from their trips');
+  ROLL.slice(0, 4).reverse().forEach(function(r){ pile.appendChild(print(r)); });
+  grid.insertBefore(pile, text);
+
+  function place(){
+    pile.style.removeProperty('left'); pile.style.removeProperty('top'); pile.style.removeProperty('--tp-w');
+    if(innerWidth <= 820){ pile.classList.remove('tp-abs'); return; }
+    pile.classList.add('tp-abs');
+    var g = grid.getBoundingClientRect(), p = photo.getBoundingClientRect();
+    var h1 = text.querySelector('h1'), sub = text.querySelector('.hero-sub'), spec = text.querySelector('.hero-spec');
+    var right = 0;
+    [h1, sub, text.querySelector('.status')].forEach(function(n){
+      if(!n) return;
+      /* the words, not their boxes */
+      var rg = document.createRange(); rg.selectNodeContents(n);
+      var rs = rg.getClientRects(); for(var i = 0; i < rs.length; i++) right = Math.max(right, rs[i].right);
+    });
+    var top = h1 ? h1.getBoundingClientRect().top : g.top;
+    var bot = spec ? spec.getBoundingClientRect().top : g.top + 300;
+    var room = p.left - right, w = Math.max(120, Math.min(196, room - 92, (bot - top) * .66));
+    pile.style.setProperty('--tp-w', Math.round(w) + 'px');
+    var ph = w * 1.2;
+    pile.style.left = Math.round(right + (room - w) / 2 - g.left) + 'px';
+    pile.style.top = Math.round(top + (bot - top - ph) / 2 - g.top - 6) + 'px';
+  }
+  place(); addEventListener('resize', function(){ clearTimeout(place.t); place.t = setTimeout(place, 120); });
+  addEventListener('load', place); setTimeout(place, 900); setTimeout(place, 2200);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+
+  /* ---- picked up ---- */
+  var view = null, cards = [], at = 0, lastFocus = null;
+  function snd(){ if(window.APSound && window.APSound.shuffle) window.APSound.shuffle(); }
+  function build(){
+    view = el('div', 'trip-view', document.body);
+    view.setAttribute('role', 'dialog'); view.setAttribute('aria-modal', 'true');
+    view.setAttribute('aria-label', 'Prints from the trip');
+    el('div', 'tv-bokeh', view);
+    var deck = el('div', 'tv-deck', view);
+    ROLL.forEach(function(r, i){ var c = print(r, 'tv-card'); c.style.setProperty('--tv-r', ((i * 37) % 9 - 4) * .8 + 'deg'); deck.appendChild(c); cards.push(c); });
+    var bar = el('div', 'tv-bar', view);
+    var prev = el('button', 'tv-btn tv-prev', bar); prev.type = 'button'; prev.setAttribute('aria-label', 'Previous print'); prev.innerHTML = '&larr;';
+    var count = el('span', 'tv-count', bar);
+    var next = el('button', 'tv-btn tv-next', bar); next.type = 'button'; next.setAttribute('aria-label', 'Next print'); next.innerHTML = '&rarr;';
+    var done = el('button', 'tv-close', view); done.type = 'button'; done.textContent = 'Put them down';
+    prev.addEventListener('click', function(e){ e.stopPropagation(); go(-1); });
+    next.addEventListener('click', function(e){ e.stopPropagation(); go(1); });
+    done.addEventListener('click', function(e){ e.stopPropagation(); close(); });
+    deck.addEventListener('click', function(e){ e.stopPropagation();
+      var r = deck.getBoundingClientRect(); go(e.clientX < r.left + r.width * .35 ? -1 : 1); });
+    view.addEventListener('click', close);
+    var x0 = null;
+    deck.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+    deck.addEventListener('touchend', function(e){ if(x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if(Math.abs(dx) > 40){ e.preventDefault(); go(dx < 0 ? 1 : -1); } });
+    view._count = count;
+  }
+  function paint(){
+    cards.forEach(function(c, i){
+      var d = (i - at + cards.length) % cards.length;
+      c.classList.toggle('on', d === 0);
+      c.style.zIndex = String(cards.length - d);
+      c.style.setProperty('--tv-d', Math.min(d, 3));
+      c.setAttribute('aria-hidden', d === 0 ? 'false' : 'true');
+    });
+    view._count.textContent = (at + 1) + ' / ' + cards.length;
+  }
+  function go(n){
+    var out = cards[at];
+    out.classList.remove('tv-out-l', 'tv-out-r'); void out.offsetWidth;
+    out.classList.add(n > 0 ? 'tv-out-l' : 'tv-out-r');
+    setTimeout(function(){ out.classList.remove('tv-out-l', 'tv-out-r'); }, 520);
+    at = (at + n + cards.length) % cards.length; paint(); snd();
+  }
+  function open(){
+    if(!view) build();
+    lastFocus = document.activeElement; at = 0; paint();
+    var r = pile.getBoundingClientRect(), top = cards[0];
+    html.classList.add('trip-open');
+    view.classList.add('in');
+    if(!reduce){
+      var t = top.getBoundingClientRect();
+      var s = r.width / (t.width || 1);
+      top.style.transition = 'none';
+      top.style.transform = 'translate(' + (r.left + r.width / 2 - (t.left + t.width / 2)) + 'px,' +
+        (r.top + r.height / 2 - (t.top + t.height / 2)) + 'px) scale(' + s.toFixed(3) + ') rotate(-6deg)';
+      void top.offsetWidth; top.style.transition = ''; top.style.transform = '';
+    }
+    pile.classList.add('tp-up'); snd();
+    setTimeout(function(){ var b = view.querySelector('.tv-next'); if(b) b.focus({preventScroll:true}); }, 60);
+  }
+  function close(){
+    if(!view || !view.classList.contains('in')) return;
+    view.classList.remove('in'); html.classList.remove('trip-open'); pile.classList.remove('tp-up');
+    if(lastFocus && lastFocus.focus) lastFocus.focus({preventScroll:true});
+  }
+  pile.addEventListener('click', function(e){ e.preventDefault(); open(); });
+  pile.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); } });
+  addEventListener('keydown', function(e){
+    if(!view || !view.classList.contains('in')) return;
+    if(e.key === 'Escape') close();
+    else if(e.key === 'ArrowRight') go(1);
+    else if(e.key === 'ArrowLeft') go(-1);
+  });
+})();
