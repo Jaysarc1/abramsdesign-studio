@@ -2539,7 +2539,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     /* batch 16: three revs through the hold, each catching the last one's tail */
     setTimeout(function(){sfx('v8');},2550);setTimeout(function(){sfx('v8');},4750);
     /* batch 22: the engine keeps revving as the camera pulls out, at half (the third rev's tail eases down with it), and the last rev before the car drives off is back at full */
-    setTimeout(function(){sfx('v8',.5);},6950);/* batch 23 test: 5th rev muted for a listen, was setTimeout(function(){sfx('v8');},9150); */
+    /* batch 23 test: 4th rev muted for a listen, was setTimeout(function(){sfx('v8',.5);},6950); */setTimeout(function(){sfx('v8');},9150);
     /* batch 19: the third rev is back; both revs at the start of the car's own sound (about 10s and 10.6s, its first 1.34s) are silenced in hk-focus.m4a, and the timer is back to its batch 18 tick at 37.5% of its volume, with the chime at 18.75% */
     setTimeout(tapSettle,3300+HOLD-150);
     at(900,function(){K(1);});
