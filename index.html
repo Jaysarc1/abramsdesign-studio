@@ -2532,7 +2532,7 @@ document.getElementById('inqForm').addEventListener('submit',function(e){e.preve
     hkT0=Date.now();at(350,function(){cl.add('hs-eng');sfx('v8');engBed();if(top)camGo(0);});
     /* batch 16: three revs through the hold, each catching the last one's tail */
     setTimeout(function(){sfx('v8');},2550);setTimeout(function(){sfx('v8');},4750);
-    /* batch 19: the third rev is back; the rev inside the car's own sound that came just before its final rev (about 0.7s to 1.35s into it) is muted in hk-focus.m4a */
+    /* batch 19: the third rev is back; the rev at about 10s, the hit that opens the car's own sound (its first 0.6s), is silenced in hk-focus.m4a, and the timer's tick and chime are each half as loud again */
     setTimeout(tapSettle,3300+HOLD-150);
     at(900,function(){K(1);});
     at(3300,function(){cl.add('hs-pull');K(0);sfx('whoosh');if(top&&!RM)camGo(1);});
