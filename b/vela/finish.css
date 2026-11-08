@@ -395,3 +395,11 @@ html:not(.perf-low) .obj.mug.photo:not(.carried):not(.tipped) .mugimg{
 .phone .msg .txt{display:block!important;font-size:7.5px!important;line-height:1.18!important;
   margin-top:1px!important}
 .phone .msg.fin-n + .msg{margin-top:4px!important}
+/* batch 17: the spec line stays on one line on the folder, under the cup */
+@media (min-width:561px){a.card.fold .specs{white-space:nowrap!important;max-width:none!important;width:auto!important;letter-spacing:.06em!important}}
+/* batch 17: on the aircraft pages the phone lies on the desk to the right of the folder, below the prints,
+   and the cup sits on the prints' lower-left corner with its handle clear of the folder tabs (finish.js keeps both in step with the tabs) */
+@media (min-width:980px){
+  html body:not(.land) .obj.phone.parked{left:auto!important;right:30px!important;top:var(--v17t,668px)!important;bottom:auto!important}
+  html body:not(.land) .obj.mug.parked{left:max(556px,38.6vw)!important;right:auto!important;top:var(--v17t,456px)!important;bottom:auto!important}
+}

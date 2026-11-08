@@ -688,3 +688,21 @@
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
+/* batch 17: the parked cup and phone on the aircraft pages follow the folder tabs, so the cup's handle never sits on a tab and the phone never covers the prints */
+(function(){
+  if(document.body && document.body.classList.contains('land')) return;
+  function place(){
+    if(innerWidth<980||document.body.classList.contains('land')) return;
+    var tabs=document.querySelector('.tabs'),mug=document.querySelector('.obj.mug.parked'),ph=document.querySelector('.obj.phone.parked');
+    if(!tabs) return;
+    var t=tabs.getBoundingClientRect().top;
+    [[mug,14],[ph,-57]].forEach(function(o){var e=o[0];if(!e)return;
+      if(!e.classList.contains('parked'))return;
+      var r=e.getBoundingClientRect(),cur=parseFloat(getComputedStyle(e).top)||0;
+      var want=(o[1]>0)?(t-o[1]-r.height):(t+o[1]);
+      e.style.setProperty('--v17t',(cur+(want-r.top)).toFixed(0)+'px');});
+  }
+  function go(){place();setTimeout(place,600);setTimeout(place,1800);}
+  if(document.readyState==='complete') go(); else addEventListener('load',go);
+  addEventListener('resize',function(){clearTimeout(go.t);go.t=setTimeout(place,150);});
+})();
