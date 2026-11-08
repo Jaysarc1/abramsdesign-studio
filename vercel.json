@@ -1,11 +1,4 @@
 {
-  "redirects": [
-    {
-      "source": "/:p(harrishillLIVE|rybovichLIVE|handalLIVE)",
-      "destination": "/:p/",
-      "permanent": false
-    }
-  ],
   "rewrites": [
     {
       "source": "/((?!(?:b|img|play|cards|api/(?:desk|up|unpack|cards|stats))(?:/|$)).+)",
