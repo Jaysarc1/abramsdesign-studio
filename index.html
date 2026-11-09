@@ -1482,6 +1482,17 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
   #inqForm .pill,.pin-cta .pill{letter-spacing:.08em;padding:0 18px;max-width:100%;min-width:0}
   body{overflow-x:clip}
 }
+/* inquiry form, Nov 9: sends to info@ through his Google account */
+.iq-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+#inqForm{position:relative}
+#inqForm.sent>:not(.iq-done),.iq-done[hidden]{display:none}
+.iq-done{display:grid;gap:10px;animation:iqIn .9s cubic-bezier(.2,.7,.2,1) both}
+.iq-t{margin:0;font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(34px,3.6vw,52px);line-height:1.05;letter-spacing:-.015em;color:var(--graphite)}
+.iq-l{margin:0;font-size:clamp(17px,1.4vw,19px);line-height:1.5;color:var(--pencil)}
+.iq-l span{color:var(--graphite)}
+#inqForm button:disabled{opacity:.6;cursor:default}
+@keyframes iqIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.iq-done{animation:none}}
 </style>
   <div class="hook" id="hook" data-k="0" aria-label="Opening">
     <div class="hk-eng" aria-hidden="true"><svg class="hk-top" viewBox="0 0 2400 1100" preserveAspectRatio="xMidYMid meet">
@@ -2045,12 +2056,14 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
       <div class="inq-l"><h2>Your preview, <em>brought to life.</em></h2><p class="inq-s">Already have one? Send the site it&rsquo;s for. New here? Send your current site, and your opening screen comes first, built from your brand.</p><p class="direct"><span class="mono">Email</span><a href="mailto:info@abramsds.com">info@abramsds.com</a></p></div>
       <form id="inqForm" novalidate>
         <div class="two">
-          <div class="f"><label for="iq-name">Name</label><input id="iq-name" autocomplete="name"></div>
-          <div class="f"><label for="iq-mail">Email</label><input id="iq-mail" type="email" autocomplete="email" required></div>
+          <div class="f"><label for="iq-name">Name</label><input id="iq-name" name="name" autocomplete="name"></div>
+          <div class="f"><label for="iq-mail">Email</label><input id="iq-mail" name="email" type="email" autocomplete="email" required></div>
         </div>
-        <div class="f"><label for="iq-site">Current website</label><input id="iq-site" inputmode="url" placeholder="yourbusiness.com"></div>
+        <div class="f"><label for="iq-site">Current website</label><input id="iq-site" name="website" inputmode="url" placeholder="yourbusiness.com"></div>
+        <div class="iq-hp" aria-hidden="true"><label for="iq-nick">Nickname</label><input id="iq-nick" name="nickname" tabindex="-1" autocomplete="off"></div>
         <button type="submit" class="pill pd">Let&rsquo;s bring your preview to life</button>
-        <p class="msg" id="iqMsg" hidden>Preview only. Inquiries aren't sent yet.</p>
+        <p class="msg" id="iqMsg" role="alert" hidden></p>
+        <div class="iq-done" id="iqDone" role="status" hidden><p class="iq-t">Thank you.</p><p class="iq-l">Your note is in. We&rsquo;ll write back to <span id="iqTo"></span>.</p></div>
       </form>
     </div>
   </section>
@@ -2072,7 +2085,21 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
 </div>
 
 <script>
-document.getElementById('inqForm').addEventListener('submit',function(e){e.preventDefault();document.getElementById('iqMsg').hidden=false;});
+(function(){
+  var F=document.getElementById('inqForm'),M=document.getElementById('iqMsg'),B=F.querySelector('button[type=submit]'),L=B.innerHTML;
+  var URL_='https://script.google.com/macros/s/AKfycbwjo8k8gF0BtIMXFJ9noJpWoRzXgXAPepp_15M9LxcudYpHvQjkpZb8yT-GF9Pqs4_x/exec';
+  F.addEventListener('submit',function(e){
+    e.preventDefault();
+    var em=F.email.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){M.textContent='Add an email we can write back to.';M.hidden=false;F.email.focus();return;}
+    M.hidden=true;B.disabled=true;B.textContent='Sending\u2026';
+    fetch(URL_,{method:'POST',mode:'no-cors',body:new URLSearchParams(new FormData(F))}).then(function(){
+      document.getElementById('iqTo').textContent=em;F.classList.add('sent');document.getElementById('iqDone').hidden=false;
+    },function(){
+      B.disabled=false;B.innerHTML=L;M.textContent='That didn\u2019t go through. Write to info@abramsds.com instead.';M.hidden=false;
+    });
+  });
+})();
 
 (function(){
   try{if(/^#italic$/.test(location.hash))document.documentElement.classList.add('it');}catch(e){}
