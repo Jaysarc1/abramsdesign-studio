@@ -1,4 +1,16 @@
 {
+  "redirects": [
+    {
+      "source": "/destany",
+      "destination": "/destany/",
+      "permanent": false
+    },
+    {
+      "source": "/destany/books",
+      "destination": "/destany/books/",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!(?:b|img|play|cards|api/(?:desk|up|unpack|cards|stats))(?:/|$)).+)",
