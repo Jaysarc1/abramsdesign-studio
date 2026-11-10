@@ -1,0 +1,212 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Arden House Drawings</title>
+
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a quiet studio wall. The sheet set as a 3-up row; tap any frame to open it in the sheet viewer. */
+:root{
+  --bg:#f2f1ee; --fg:#1d1e1c; --mute:#6c6d68; --rule:rgba(29,30,28,.14); --frame:#e6e4df; --veil:#121211;
+  --serif:"Instrument Serif",Georgia,serif; --ui:"Geist","Helvetica Neue",Arial,sans-serif; --mono:"Geist Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121211;--fg:#ecebe7;--mute:#9a9a94;--rule:rgba(236,235,231,.14);--frame:#1c1c1a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121211;--fg:#ecebe7;--mute:#9a9a94;--rule:rgba(236,235,231,.14);--frame:#1c1c1a;color-scheme:dark}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--ui);font-weight:300;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1360px;margin:0 auto;padding-block:56px 96px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}
+@media (max-width:640px){.wrap{padding-block:32px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+header{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,6vw,76px);line-height:.95;margin:0;letter-spacing:-.01em}
+.meta{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);text-align:right;line-height:1.9}
+section{padding-top:56px}
+h2{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 24px;font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.grid{display:grid;gap:40px 28px}
+.views{grid-template-columns:repeat(2,minmax(0,1fr))}
+.sheets{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:860px){.sheets{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.views,.sheets{grid-template-columns:1fr;gap:32px}}
+figure{margin:0;cursor:zoom-in}
+figure:focus-visible{outline:1px solid var(--fg);outline-offset:6px}
+.ph{background:var(--frame);overflow:hidden}
+.views .ph{aspect-ratio:16/10}
+.sheets .ph{aspect-ratio:17/11}
+.ph img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.sheets .ph img{object-fit:contain}
+figure:hover .ph img{transform:scale(1.025)}
+figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-top:14px}
+.t{font-family:var(--serif);font-size:24px;line-height:1.1}
+.s{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+/* sheet viewer: the sheet on a dark stage; pinch, wheel or double tap to zoom, drag to pan, only Close leaves */
+.lb{position:fixed;inset:0;z-index:20;background:var(--veil);display:grid;grid-template-rows:auto minmax(0,1fr) auto;opacity:0;visibility:hidden;transition:opacity .45s,visibility 0s linear .45s;color:#ecebe7;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.lb.on{opacity:1;visibility:visible;transition:opacity .45s}
+.lb .top,.lb .bar{display:flex;align-items:center;gap:16px;padding:14px 20px}
+.lb .top{justify-content:space-between}
+.lb .cap{min-width:0;display:flex;align-items:baseline;gap:14px}
+.lb .cap .t{font-size:24px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb .cap .s{color:#9a9a94}
+.lb .stage{position:relative;overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.lb .stage.drag{cursor:grabbing}
+.lb .stage img{position:absolute;left:0;top:0;width:4050px;height:2700px;max-width:none;transform-origin:0 0;will-change:transform;-webkit-user-drag:none;pointer-events:none}
+.lb .stage.ease img{transition:transform .38s cubic-bezier(.2,.7,.2,1)}
+.lb .bar{justify-content:center;padding-bottom:18px}
+.lb .grp{display:flex;align-items:center;gap:8px}
+.lb .grp+.grp{padding-left:16px;border-left:1px solid rgba(236,235,231,.16)}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#ecebe7;height:40px;min-width:40px;padding:0 15px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(236,235,231,.22);border-radius:40px;transition:background .3s,opacity .3s;-webkit-tap-highlight-color:transparent}
+.btn.ic{padding:0;width:40px;font-size:15px;letter-spacing:0}
+.btn:hover{background:rgba(236,235,231,.12)}
+.btn:disabled{opacity:.35;cursor:default;background:none}
+.btn:focus-visible{outline:1px solid #ecebe7;outline-offset:2px}
+.btn .pct{display:inline-block;min-width:4ch;text-align:center}
+#zf{width:92px}
+.lk{width:10px;height:12px;display:inline-block;vertical-align:-1px;flex:none}
+.lock{display:inline-flex;align-items:center;gap:8px;color:var(--mute)}
+.lock b{font-weight:500;color:var(--fg)}
+.btn.locked{cursor:default;gap:9px;color:rgba(236,235,231,.62);border-style:solid;border-color:rgba(236,235,231,.16)}
+.btn.locked:hover{background:none}
+.btn.locked em{font-style:normal;color:rgba(236,235,231,.42)}
+@media (max-width:640px){
+  .lb .top{padding:10px 12px 8px 16px}.lb .cap .t{font-size:20px}.lb .cap .s{display:none}
+  .lb .bar{padding:8px 12px 14px;gap:10px}.lb .grp{gap:6px}.lb .grp+.grp{padding-left:10px}
+  .btn{height:44px;min-width:44px;padding:0 13px}.btn.ic{width:44px}.lb .bar .pset{display:none}.lock .w{display:none}
+}
+.meta b{font-weight:500;color:var(--fg)}
+.stamp{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 44px);z-index:5;display:flex;align-items:center;gap:14px;padding:15px 20px;border-radius:999px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid var(--rule);font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;line-height:1;color:var(--mute);white-space:nowrap;pointer-events:none}
+.stamp b{font-weight:500;color:var(--fg)}
+.stamp i{width:1px;height:12px;background:var(--rule);display:block}
+@media (max-width:640px){.stamp{bottom:calc(env(safe-area-inset-bottom,0px) + 30px);padding:12px 16px;gap:10px;font-size:11.5px}.stamp .s{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<style>/* on abramsdesign.studio */.stamp .s{display:none!important}</style></head><body>
+<div class="wrap">
+  <header>
+    <h1>Arden House</h1>
+    <div class="meta">Design development<br><b>Rev 17.8.19</b></div>
+  </header>
+  <section>
+    <h2><span>Drawing set</span><span>8 sheets &nbsp;·&nbsp; <span class="lock"><svg class="lk" viewBox="0 0 12 14" aria-hidden="true"><rect x="1.5" y="6" width="9" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M3.6 6V4.2a2.4 2.4 0 0 1 4.8 0V6" fill="none" stroke="currentColor" stroke-width="1.1"/></svg><b>PDF set</b><span class="w">&nbsp;with purchase</span></span></span></h2>
+    <div class="grid sheets" id="sheets"></div>
+  </section>
+</div>
+
+<div class="stamp"><span class="s">Concept by Abrams Design Studio</span><span class="s"><i></i></span><b>Rev 17.8.19</b></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Sheet">
+  <div class="top">
+    <div class="cap"><span class="t" id="lbt"></span><span class="s" id="lbs"></span></div>
+    <button class="btn" id="lbx">Close</button>
+  </div>
+  <div class="stage" id="stage"><img id="lbi" alt="" width="4050" height="2700" draggable="false"></div>
+  <div class="bar">
+    <div class="grp"><button class="btn ic" id="lbp" aria-label="Previous sheet">&#8592;</button><button class="btn ic" id="lbn" aria-label="Next sheet">&#8594;</button></div>
+    <div class="grp"><button class="btn ic" id="zo" aria-label="Zoom out">&minus;</button><button class="btn" id="zf" aria-label="Fit sheet"><span class="pct" id="zp">Fit</span></button><button class="btn ic" id="zi" aria-label="Zoom in">+</button></div>
+    <div class="grp pset"><span class="btn locked" role="note" aria-label="PDF set, available with purchase"><svg class="lk" viewBox="0 0 12 14" aria-hidden="true"><rect x="1.5" y="6" width="9" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M3.6 6V4.2a2.4 2.4 0 0 1 4.8 0V6" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>PDF set <em>With purchase</em></span></div>
+  </div>
+</div>
+
+<script>
+const SHEETS=[['G1','Cover sheet'],['A0','Site plan'],['L1','Landscape lighting plan'],['A1','Ground floor plan'],['A2','Second floor plan'],['A3','Roof plan'],['A4','Elevations, northeast and southwest'],['A5','Elevations, northwest and southeast'],['A6','Building sections']];
+const lo=n=>`img/set17/${n}.webp`, hi=n=>`img/set17hi/${n}.webp`;
+document.getElementById('sheets').innerHTML=SHEETS.map(([n,t],i)=>`<figure tabindex="0" data-i="${i}"><div class="ph"><img loading="lazy" src="${lo(n)}" alt="${t}"></div><figcaption><span class="t">${t}</span><span class="s">${n}</span></figcaption></figure>`).join('');
+const $=id=>document.getElementById(id), lb=$('lb'), stage=$('stage'), img=$('lbi');
+const IW=4050, IH=2700, MAXS=1.6;
+let cur=0, s=1, tx=0, ty=0, fitS=1, last=null;
+
+// view state: s is image pixels to screen pixels; the sheet is held so it never drifts off the stage
+function fit0(){ const W=stage.clientWidth, H=stage.clientHeight, pad=W<640?8:28; fitS=Math.min((W-pad*2)/IW,(H-pad*2)/IH); }
+function clamp(){
+  const W=stage.clientWidth, H=stage.clientHeight; s=Math.min(Math.max(s,fitS),Math.max(MAXS,fitS));
+  const w=IW*s, h=IH*s;
+  tx = w<=W ? (W-w)/2 : Math.min(0,Math.max(W-w,tx));
+  ty = h<=H ? (H-h)/2 : Math.min(0,Math.max(H-h,ty));
+}
+function draw(ease){
+  clamp(); stage.classList.toggle('ease',!!ease);
+  img.style.transform=`translate3d(${tx}px,${ty}px,0) scale(${s})`;
+  const z=s/fitS; $('zp').textContent = z<1.02 ? 'Fit' : Math.round(z*100)+'%';
+  $('zo').disabled = z<1.02; $('zi').disabled = s>=Math.max(MAXS,fitS)-1e-4;
+}
+function zoomAt(ns,cx,cy,ease){ const k=Math.min(Math.max(ns,fitS),Math.max(MAXS,fitS))/s; tx=cx-(cx-tx)*k; ty=cy-(cy-ty)*k; s*=k; draw(ease); }
+function fit(ease){ fit0(); s=fitS; tx=ty=0; draw(ease); }
+const mid=()=>[stage.clientWidth/2,stage.clientHeight/2];
+$('zi').onclick=()=>zoomAt(s*1.6,...mid(),true);
+$('zo').onclick=()=>zoomAt(s/1.6,...mid(),true);
+$('zf').onclick=()=>fit(true);
+
+function show(i){
+  cur=(i+SHEETS.length)%SHEETS.length; const [n,t]=SHEETS[cur];
+  img.src=lo(n); img.alt=t; $('lbt').textContent=t; $('lbs').textContent=n;
+  const h=new Image(); h.onload=()=>{ if(SHEETS[cur][0]===n) img.src=h.src; }; h.src=hi(n);
+  fit(false);
+}
+function open(i){ lb.classList.add('on'); document.body.style.overflow='hidden'; requestAnimationFrame(()=>show(i)); $('lbx').focus(); }
+function close(){ lb.classList.remove('on'); document.body.style.overflow=''; }
+$('lbx').onclick=close; $('lbn').onclick=()=>show(cur+1); $('lbp').onclick=()=>show(cur-1);
+document.addEventListener('click',e=>{ const f=e.target.closest('figure[data-i]'); if(f) open(+f.dataset.i); });
+document.addEventListener('keydown',e=>{
+  const f=e.target.closest&&e.target.closest('figure[data-i]');
+  if(f&&(e.key==='Enter'||e.key===' ')){ e.preventDefault(); open(+f.dataset.i); return; }
+  if(!lb.classList.contains('on')) return;
+  if(e.key==='Escape') close(); else if(e.key==='ArrowRight') show(cur+1); else if(e.key==='ArrowLeft') show(cur-1);
+  else if(e.key==='+'||e.key==='=') $('zi').click(); else if(e.key==='-') $('zo').click(); else if(e.key==='0') fit(true);
+});
+addEventListener('resize',()=>{ if(!lb.classList.contains('on')) return; const was=s<=fitS*1.001; fit0(); if(was) s=fitS; draw(false); });
+
+// wheel and trackpad pinch zoom about the pointer
+stage.addEventListener('wheel',e=>{
+  e.preventDefault(); const r=stage.getBoundingClientRect();
+  const d=e.deltaMode===1?e.deltaY*16:e.deltaY;
+  zoomAt(s*Math.exp(-d*(e.ctrlKey?.012:.0016)), e.clientX-r.left, e.clientY-r.top, false);
+},{passive:false});
+
+// pointers: one finger or the mouse drags, two fingers pinch, a double tap zooms in or back to fit,
+// a swipe at fit turns the sheet
+const P=new Map(); let g=null, tapT=0, tapX=0, tapY=0;
+const pt=e=>{ const r=stage.getBoundingClientRect(); return [e.clientX-r.left,e.clientY-r.top]; };
+function gesture(){
+  const v=[...P.values()];
+  if(v.length===1) g={n:1,x:v[0][0],y:v[0][1],tx,ty,sx:v[0][0],sy:v[0][1],moved:false,t:performance.now()};
+  else if(v.length>=2){ const [a,b]=v, cx=(a[0]+b[0])/2, cy=(a[1]+b[1])/2; g={n:2,d:Math.hypot(a[0]-b[0],a[1]-b[1])||1,cx,cy,s,tx,ty,moved:true}; }
+  else g=null;
+}
+stage.addEventListener('pointerdown',e=>{ stage.setPointerCapture(e.pointerId); P.set(e.pointerId,pt(e)); gesture(); stage.classList.add('drag'); stage.classList.remove('ease'); });
+stage.addEventListener('pointermove',e=>{
+  if(!P.has(e.pointerId)||!g) return; P.set(e.pointerId,pt(e)); const v=[...P.values()];
+  if(g.n===1){
+    const [x,y]=v[0]; if(Math.hypot(x-g.sx,y-g.sy)>6) g.moved=true;
+    if(s>fitS*1.001){ tx=g.tx+(x-g.x); ty=g.ty+(y-g.y); draw(false); }
+  } else if(v.length>=2){
+    const [a,b]=v, cx=(a[0]+b[0])/2, cy=(a[1]+b[1])/2, k=Math.hypot(a[0]-b[0],a[1]-b[1])/g.d;
+    let ns=Math.min(Math.max(g.s*k,fitS*.85),Math.max(MAXS,fitS)*1.15); const q=ns/g.s;
+    s=ns; tx=cx-(g.cx-g.tx)*q; ty=cy-(g.cy-g.ty)*q;
+    img.style.transform=`translate3d(${tx}px,${ty}px,0) scale(${s})`;
+  }
+});
+function up(e){
+  if(!P.has(e.pointerId)) return; const end=pt(e); P.delete(e.pointerId);
+  const was=g;
+  if(was&&was.n===2){ draw(true); if(P.size===1) gesture(); else { g=null; stage.classList.remove('drag'); } return; }
+  stage.classList.remove('drag'); g=null; if(!was) return;
+  if(!was.moved){
+    const now=performance.now();
+    if(now-tapT<320 && Math.hypot(end[0]-tapX,end[1]-tapY)<30){ tapT=0; if(s>fitS*1.05) fit(true); else zoomAt(fitS*3,end[0],end[1],true); }
+    else { tapT=now; tapX=end[0]; tapY=end[1]; }
+  } else if(s<=fitS*1.001){
+    const dx=end[0]-was.sx, dy=end[1]-was.sy;
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5 && performance.now()-was.t<700) show(cur+(dx<0?1:-1));
+  }
+}
+stage.addEventListener('pointerup',up); stage.addEventListener('pointercancel',up);
+stage.addEventListener('dblclick',e=>e.preventDefault());
+// keep the page itself from zooming while the viewer is open (iOS gesture events)
+['gesturestart','gesturechange'].forEach(t=>document.addEventListener(t,e=>{ if(lb.classList.contains('on')) e.preventDefault(); },{passive:false}));
+</script>
+
+
+</body></html>
+
+</body></html>
