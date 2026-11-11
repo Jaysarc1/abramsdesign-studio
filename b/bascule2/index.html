@@ -850,11 +850,11 @@ function makeRenderer(canvas){let r;try{r=new THREE.WebGLRenderer({canvas,antial
   const S=(x,y,z)=>new THREE.Vector3(x,y,z).applyAxisAngle(new THREE.Vector3(0,1,0),A);
   /* the rest of floor 31's glass, around the residence */
   {const gm=new THREE.MeshStandardMaterial({color:col(0x1d2740),roughness:.12,metalness:.75,envMapIntensity:2});
-   const a=new THREE.Mesh(new THREE.BoxGeometry(W0-.2-RL,.84,D0-.2),gm);a.position.set(-GA+(W0-.2-RL)/2,FL+.5,0);
-   const b=new THREE.Mesh(new THREE.BoxGeometry(RL,.84,D0-.2-RD),gm);b.position.set(GA-RL/2,FL+.5,-GB+(D0-.2-RD)/2);floorG.add(a,b)}
+   const a=new THREE.Mesh(new THREE.BoxGeometry(W0-.2-RL-.03,.84,D0-.2),gm);a.position.set(-GA+(W0-.2-RL-.03)/2,FL+.5,0);
+   const b=new THREE.Mesh(new THREE.BoxGeometry(RL,.84,D0-.2-RD-.03),gm);b.position.set(GA-RL/2,FL+.5,-GB+(D0-.2-RD-.03)/2);floorG.add(a,b)}
   /* ---- the room, in metres ---- */
-  const room=new THREE.Group();room.scale.setScalar(SC);room.position.set(GA,FL+.08+.002,GB);floorG.add(room);
-  const LM=RL*3.4,DM=RD*3.4,HM=.84*3.4;
+  const room=new THREE.Group();room.scale.setScalar(SC);room.position.set(GA,FL+.08+.006,GB);floorG.add(room);
+  const LM=RL*3.4,DM=RD*3.4,HM=.84*3.4,HC=HM-.06;
   const mat=(c,r=.8,m=0,e)=>new THREE.MeshStandardMaterial({color:col(c),roughness:r,metalness:m,envMapIntensity:.6,...(e||{})});
   const M={floor:mat(0xa89a85,.3,.05),wall:mat(0xbcb09f,.95),ceil:mat(0xc9bfb1,.95),walnut:mat(0x5b3f2b,.62),oak:mat(0x8a6c4e,.7),boucle:mat(0xdcd3c5,1),linen:mat(0x9c8e7b,1),trav:mat(0xcbb79b,.75),bronze:mat(0x2a2521,.45,.6),brass:mat(0xc9a46a,.32,1),stone:mat(0x1d1c1c,.3,.1),rug:mat(0x9f927f,1),leaf:mat(0x3a4a3a,.9),dark:mat(0x232020,.8)};
   const glowM=c=>new THREE.MeshBasicMaterial({color:col(c),toneMapped:false});
@@ -866,16 +866,16 @@ function makeRenderer(canvas){let r;try{r=new THREE.WebGLRenderer({canvas,antial
   const cyl=(r1,r2,h,m,x,y,z,seg=40)=>{const o=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,seg),m);o.position.set(x,y+h/2,z);room.add(o);return o};
   /* shell */
   const fl=new THREE.Mesh(new THREE.PlaneGeometry(LM,DM),M.floor);fl.rotation.x=-Math.PI/2;fl.position.set(-LM/2,0,-DM/2);room.add(fl);
-  const ce=new THREE.Mesh(new THREE.PlaneGeometry(LM,DM),M.ceil);ce.rotation.x=Math.PI/2;ce.position.set(-LM/2,HM,-DM/2);room.add(ce);
-  const w1=new THREE.Mesh(new THREE.PlaneGeometry(DM,HM),M.wall);w1.rotation.y=Math.PI/2;w1.position.set(-LM,HM/2,-DM/2);room.add(w1);
-  const w2=new THREE.Mesh(new THREE.PlaneGeometry(LM,HM),M.wall);w2.position.set(-LM/2,HM/2,-DM);room.add(w2);
+  const ce=new THREE.Mesh(new THREE.PlaneGeometry(LM,DM),M.ceil);ce.rotation.x=Math.PI/2;ce.position.set(-LM/2,HC,-DM/2);room.add(ce);
+  const w1=new THREE.Mesh(new THREE.PlaneGeometry(DM,HC),M.wall);w1.rotation.y=Math.PI/2;w1.position.set(-LM,HC/2,-DM/2);room.add(w1);
+  const w2=new THREE.Mesh(new THREE.PlaneGeometry(LM,HC),M.wall);w2.position.set(-LM/2,HC/2,-DM);room.add(w2);
   /* ceiling coves along the glass, and a recessed slot of light */
-  box(LM-.4,.03,.05,glowM(0xffd7a8),-LM/2-.2,HM-.08,-.42);box(.05,.03,DM-.4,glowM(0xffd7a8),-.42,HM-.08,-DM/2-.2);
-  box(LM,.12,.4,M.ceil,-LM/2,HM-.12,-.2);box(.4,.12,DM,M.ceil,-.2,HM-.12,-DM/2);
+  box(LM-.4,.03,.05,glowM(0xffd7a8),-LM/2-.2,HC-.1,-.42);box(.05,.03,DM-.4,glowM(0xffd7a8),-.42,HC-.1,-DM/2-.2);
+  box(LM-.01,.118,.4,M.ceil,-LM/2+.005,HC-.12,-.2);box(.4,.118,DM-.41,M.ceil,-.2,HC-.12,-DM/2-.205);
   /* the corner glass: bronze mullions, floor to ceiling */
-  for(let z=0;z>=-DM;z-=1.64)box(.07,HM,.12,M.bronze,-.03,0,z);
-  for(let x=-1.64;x>=-LM;x-=1.64)box(.12,HM,.07,M.bronze,x,0,-.03);
-  box(.14,HM,.14,M.bronze,-.05,0,-.05);
+  for(let z=0;z>=-DM;z-=1.64)box(.07,HC,.12,M.bronze,-.03,0,z);
+  for(let x=-1.64;x>=-LM;x-=1.64)box(.12,HC,.07,M.bronze,x,0,-.03);
+  box(.14,HC,.14,M.bronze,-.05,0,-.05);
   box(LM,.06,.1,M.bronze,-LM/2,0,-.04);box(.1,.06,DM,M.bronze,-.04,0,-DM/2);
   /* kitchen: walnut wall along the back, a stone island */
   box(.66,2.5,DM-.6,M.walnut,-LM+.33,0,-DM/2-.3);
@@ -904,12 +904,12 @@ function makeRenderer(canvas){let r;try{r=new THREE.WebGLRenderer({canvas,antial
    const a=new THREE.Mesh(new THREE.PlaneGeometry(2.4,1.5),new THREE.MeshStandardMaterial({map:tx,roughness:.9}));a.position.set(-4.9,1.55,-DM+.03);room.add(a);box(2.5,.04,.03,M.brass,-4.9,.78,-DM+.03)}
   box(2.2,.06,.42,M.walnut,-4.9,.74,-DM+.25);box(.06,.74,.36,M.brass,-5.95,0,-DM+.25);box(.06,.74,.36,M.brass,-3.85,0,-DM+.25);
   /* a cluster of glass pendants over the living room */
-  const pend=[];for(const [x,z,h] of [[-2.45,-3.2,1.95],[-2.2,-2.9,2.12],[-2.75,-2.95,2.04],[-2.35,-3.55,2.22]]){box(.006,HM-h,.006,M.brass,x,h,z);const s=new THREE.Mesh(new THREE.SphereGeometry(.11,24,16),glowM(0xfff1dc));s.position.set(x,h,z);room.add(s);pend.push(s)}
+  const pend=[];for(const [x,z,h] of [[-2.45,-3.2,1.95],[-2.2,-2.9,2.12],[-2.75,-2.95,2.04],[-2.35,-3.55,2.22]]){box(.006,HC-h-.002,.006,M.brass,x,h,z);const s=new THREE.Mesh(new THREE.SphereGeometry(.11,24,16),glowM(0xfff1dc));s.position.set(x,h,z);room.add(s);pend.push(s)}
   /* sheer curtains stacked at the ends of the glass */
   {const cv=document.createElement('canvas');cv.width=512;cv.height=2;const c=cv.getContext('2d');for(let x=0;x<512;x++){const a=.34+.16*Math.sin(x*.09)+.07*Math.sin(x*.023+1);c.fillStyle=`rgba(240,232,220,${a.toFixed(3)})`;c.fillRect(x,0,1,4)}
    const tx=new THREE.CanvasTexture(cv);tx.encoding=THREE.sRGBEncoding;const cm=new THREE.MeshStandardMaterial({map:tx,transparent:true,roughness:1,side:THREE.DoubleSide,depthWrite:false});
-   const c1=new THREE.Mesh(new THREE.PlaneGeometry(1.1,HM-.15),cm);c1.rotation.y=-Math.PI/2;c1.position.set(-.2,(HM-.15)/2,-DM+.75);room.add(c1);
-   const c2=new THREE.Mesh(new THREE.PlaneGeometry(1.1,HM-.15),cm);c2.position.set(-LM+.75,(HM-.15)/2,-.2);room.add(c2)}
+   const c1=new THREE.Mesh(new THREE.PlaneGeometry(1.1,HC-.15),cm);c1.rotation.y=-Math.PI/2;c1.position.set(-.2,(HC-.15)/2,-DM+.75);room.add(c1);
+   const c2=new THREE.Mesh(new THREE.PlaneGeometry(1.1,HC-.15),cm);c2.position.set(-LM+.75,(HC-.15)/2,-.2);room.add(c2)}
   /* light */
   const pl=(c,i,d,x,y,z)=>{const l=new THREE.PointLight(col(c),i,d,2);l.position.set(x,y,z);room.add(l);return l};
   pl(0xffc086,1.45,2.4,-2.45,1.85,-3.2);pl(0xffc791,1.05,2.0,-6.2,1.8,-1.4);pl(0xffcf9f,.8,2.0,-8.2,2.2,-4.4);pl(0xffd9b0,.5,2.4,-4.9,2.4,-6.6);
@@ -920,8 +920,8 @@ function makeRenderer(canvas){let r;try{r=new THREE.WebGLRenderer({canvas,antial
    const s2=new THREE.Sprite(sm);s2.scale.set(3.2,.7,1);s2.position.set(-6.2,1.9,-1.4);room.add(s2)}
   /* the corner glass, seen from outside: reflective until you reach it */
   const gpm=new THREE.MeshStandardMaterial({color:col(0x1d2740),roughness:.08,metalness:.85,envMapIntensity:2.2,transparent:true,opacity:.5,depthWrite:false});
-  const gE=new THREE.Mesh(new THREE.PlaneGeometry(DM,HM),gpm);gE.rotation.y=Math.PI/2;gE.position.set(.02,HM/2,-DM/2);
-  const gS=new THREE.Mesh(new THREE.PlaneGeometry(LM,HM),gpm);gS.position.set(-LM/2,HM/2,.02);room.add(gE,gS);
+  const gE=new THREE.Mesh(new THREE.PlaneGeometry(DM,HC),gpm);gE.rotation.y=Math.PI/2;gE.position.set(.02,HC/2,-DM/2);
+  const gS=new THREE.Mesh(new THREE.PlaneGeometry(LM,HC),gpm);gS.position.set(-LM/2,HC/2,.02);room.add(gE,gS);
   /* the brass band climbing the tower */
   const ring=new THREE.Group();{const rm=new THREE.MeshBasicMaterial({color:col(0xf0d4a4),toneMapped:false,transparent:true}),a=(W0+.9)/2,b=(D0+.9)/2,t=.1;
     for(const [w,d,x,z] of [[2*a+t,t,0,b],[2*a+t,t,0,-b],[t,2*b,a,0],[t,2*b,-a,0]]){const m=new THREE.Mesh(new THREE.BoxGeometry(w,.1,d),rm);m.position.set(x,0,z);ring.add(m)};ring.mat=rm}
