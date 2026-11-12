@@ -1237,6 +1237,11 @@ main>section>.wrap>.st:first-child{margin-top:0}
   .hook.hs-solo .hk-fs{top:calc(50% - var(--cue) / 2 + 8px);width:min(1320px,70vw,calc((min(100svh,1080px) - var(--cue) - 64px) * 1.6))}
 }
 .hk-f{position:relative}
+/* skip intro: sits where the Scroll cue will be, there for the whole opening, gone once the opening has played */
+.hk-skip{position:absolute;left:50%;bottom:calc(clamp(28px,5svh,56px) + env(safe-area-inset-bottom,0px));z-index:5;margin:0;padding:12px 18px 12px 20px;border:1px solid rgba(239,233,223,.26);border-radius:12px;background:rgba(14,13,12,.42);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:rgba(239,233,223,.86);font-family:var(--mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;line-height:1;cursor:pointer;opacity:0;transform:translate(-50%,6px);pointer-events:none;transition:opacity 1s ease,transform 1s ease,background .3s ease,color .3s ease}
+.hook.hs-sk .hk-skip{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.hook.hs-sk.hs-solo .hk-skip{opacity:0;transform:translate(-50%,6px);pointer-events:none;transition-duration:.6s}
+.hk-skip:hover,.hk-skip:focus-visible{background:rgba(14,13,12,.7);color:#efe9df}
 .hk-scr{position:absolute;left:50%;bottom:clamp(14px,2.4vw,24px);z-index:2;display:flex;align-items:center;gap:9px;padding:10px 16px;border-radius:12px;background:rgba(14,13,12,.78);box-shadow:0 10px 24px -10px rgba(0,0,0,.6);color:#f4efe6;font-family:var(--display);font-weight:500;font-size:13px;line-height:1;letter-spacing:.01em;white-space:nowrap;opacity:0;transform:translate(-50%,8px);transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.1,1);pointer-events:none}
 .hk-scr svg{width:12px;height:16px;animation:hkScr 1.6s ease-in-out infinite}
 @keyframes hkScr{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
@@ -1739,6 +1744,7 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
     <div class="hk-fs"><figure class="hk-f f1"><span class="hk-bar" aria-hidden="true"><i></i><i></i><i></i></span><span class="hk-v"><picture><source media="(max-width:760px)" srcset="img/w/hk-mv-b-p.webp"><img src="img/w/hk-mv-b-d.webp" alt="" decoding="async"></picture><span class="hk-a" data-live="play/mountain-valley/index.html"><picture><source media="(max-width:760px)" srcset="img/w/mv-poster-m.webp"><img src="img/w/mv-poster.webp" alt="" decoding="async"></picture></span></span><span class="hk-scr" aria-hidden="true"><svg viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1.5v12M1.8 9.3 6 13.5l4.2-4.2"/></svg><span>Scroll here to explore</span></span></figure><div class="hk-ring" aria-hidden="true"><svg viewBox="0 0 200 200"><g class="tks"></g><circle class="bg" cx="100" cy="100" r="80"/><circle class="arc" cx="100" cy="100" r="80" pathLength="1000" stroke-dasharray="1000" stroke-dashoffset="0"/></svg><b class="hk-num">5.0<small>s</small></b></div></div>
     <span class="hk-cue-t" aria-hidden="true">Scroll</span>
     <span class="hk-cue" aria-hidden="true"></span>
+    <button class="hk-skip" type="button">Skip intro</button>
     <button class="hk-tap" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><g class="wv"><path d="M15.5 9a4.2 4.2 0 0 1 0 6"/><path d="M18.3 6.5a8 8 0 0 1 0 11"/></g></svg><span>Tap for audio</span></button>
     <nav class="hk-snd" aria-label="Sound"><button class="snd" type="button" aria-pressed="false" aria-label="Sound on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><g class="off"><path d="M16 9.5l5 5M21 9.5l-5 5"/></g><g class="on"><path d="M15.5 9a4.2 4.2 0 0 1 0 6"/><path d="M18.3 6.5a8 8 0 0 1 0 11"/></g></svg></button></nav>
   </div>
@@ -2692,10 +2698,15 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
     if(on)catchUp();}
   if(sb){
     sb.addEventListener('click',function(e){e.stopPropagation();sndUser=true;acInit();sndOn=!sndOn;sndSet(sndOn);});
-    var first=function(e){removeEventListener('pointerdown',first,true);removeEventListener('keydown',first,true);if(sndUser||(e.target&&e.target.closest&&e.target.closest('.snd')))return;sndOn=true;acInit();sndSet(true);};
+    var first=function(e){removeEventListener('pointerdown',first,true);removeEventListener('keydown',first,true);if(sndUser||(e.target&&e.target.closest&&e.target.closest('.snd,.hk-skip')))return;sndOn=true;acInit();sndSet(true);};
     addEventListener('pointerdown',first,true);addEventListener('keydown',first,true);
     if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!sndOn)return;if(es[0].isIntersecting){if(AC&&AC.state==='suspended')AC.resume();}else{if(AC&&AC.suspend)AC.suspend();}},{threshold:0}).observe(hk);
   }
+  })();
+  /* skip intro: shows a moment after the opening starts; takes the visitor straight to the first section */
+  (function(){var hk=document.getElementById('hook'),sk=hk&&hk.querySelector('.hk-skip');if(!sk)return;
+    setTimeout(function(){hk.classList.add('hs-sk');},1400);
+    sk.addEventListener('click',function(e){e.stopPropagation();var y=hk.getBoundingClientRect().bottom+scrollY;scrollTo({top:y,behavior:'smooth'});});
   })();
   /* the bar slides in once the full-screen hero has scrolled away */
   var hdr=document.querySelector('header'),fold=document.getElementById('hook'),root=document.documentElement;
