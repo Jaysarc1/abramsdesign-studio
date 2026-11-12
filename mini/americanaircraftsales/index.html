@@ -86,6 +86,7 @@ body.hello .top{opacity:1;transform:none}
 .mark{display:flex;align-items:center;gap:18px}
 .mark b{font:600 13px/1 var(--f-sans);font-stretch:125%;letter-spacing:.34em;text-transform:uppercase}
 .mark i{font:400 19px/1 var(--f-disp);font-style:normal;letter-spacing:.04em;color:var(--ink-2);padding-left:18px;border-left:1px solid rgba(20,18,23,.3)}
+.sslot{flex:none;width:40px;height:40px;margin-right:clamp(26px,2.8vw,44px)}
 .links{display:flex;gap:clamp(30px,3.4vw,56px);font:500 15px/1 var(--f-nav);letter-spacing:.32em;text-transform:uppercase;color:var(--ink)}
 .links a{margin-right:-.32em}
 .links a{padding:8px 0;position:relative}
@@ -101,9 +102,10 @@ h1 .ln{display:block;overflow:hidden;padding-bottom:.1em}
 h1 .ln span{display:block;transform:translateY(105%);transition:transform 1.9s var(--ease)}
 h1 .ln+.ln span{transition-delay:.22s}
 body.hello h1 .ln span{transform:none}
-.cue{position:absolute;z-index:3;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--gold-2);transform:translateX(-50%);opacity:0;transition:opacity 1.4s var(--ease) 1s}
+.cue{position:absolute;z-index:3;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(46,39,35,.82);font-weight:600;transform:translateX(-50%);opacity:0;transition:opacity 1.4s var(--ease) 1s}
 body.hello .cue{opacity:1}
-.cue span{width:1px;height:42px;background:linear-gradient(var(--gold-2),rgba(240,216,172,0));animation:cue 2.8s var(--ease) infinite}
+.cue{text-shadow:0 0 18px rgba(250,244,234,.9)}
+.cue span{width:1px;height:42px;background:linear-gradient(rgba(46,39,35,.7),rgba(46,39,35,0));animation:cue 2.8s var(--ease) infinite}
 .low{left:calc(var(--m) + env(safe-area-inset-left,0px));bottom:calc(clamp(40px,8vh,88px) + env(safe-area-inset-bottom,0px));color:var(--cream)}
 .big{font:400 clamp(34px,min(3.8vw,7vh),74px)/1 var(--f-disp);letter-spacing:-.005em;text-shadow:0 2px 30px rgba(10,6,4,.25)}
 
@@ -155,7 +157,9 @@ h2.t{font:400 clamp(32px,3.5vw,56px)/1.02 var(--f-disp);letter-spacing:-.008em;t
 .spot .tag{position:absolute;left:0;bottom:22px;width:300px;margin-left:-150px;text-align:center;background:radial-gradient(closest-side,rgba(18,12,8,.42),rgba(18,12,8,0));padding-top:18px;opacity:0;transform:translateY(16px);transition:opacity 1.2s var(--ease),transform 1.4s var(--ease)}
 .spot .tag::after{content:"";display:block;width:1px;height:56px;margin:18px auto 0;background:linear-gradient(rgba(240,216,172,0),var(--gold-2));transform:scaleY(0);transform-origin:bottom;transition:transform 1.2s var(--ease) .2s}
 .spot.dn .tag{bottom:auto;top:22px;display:flex;flex-direction:column-reverse}
-.spot.dn .tag::after{margin:0 auto 18px;background:linear-gradient(var(--gold-2),rgba(240,216,172,0));transform-origin:top}
+.spot.dn .tag::after{margin:0 auto 18px;}
+.spot.sky .tag{top:16px;padding-top:0}
+.spot.sky .tag::after{height:22px;margin:0 auto 14px;background:linear-gradient(var(--gold-2),rgba(240,216,172,0));transform-origin:top}
 .spot b{display:block;font:400 44px/.95 var(--f-disp);color:var(--cream);text-shadow:0 4px 30px rgba(10,6,4,.55)}
 .spot small{display:block;margin-top:12px;color:var(--gold-2);text-shadow:0 2px 16px rgba(10,6,4,.7)}
 .spot.on .ring{opacity:1;transform:none}
@@ -163,18 +167,25 @@ h2.t{font:400 clamp(32px,3.5vw,56px)/1.02 var(--f-disp);letter-spacing:-.008em;t
 .spot.on .tag::after{transform:none}
 
 /* ---------- Logbook: every landing, drawn ---------- */
-.log{background:var(--ink)}
-.lgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(40px,6vw,100px);align-items:start}
-.field{position:sticky;top:calc(var(--band) + env(safe-area-inset-top,0px) + 10vh)}
-.lnum{margin-top:clamp(40px,6vh,64px);display:grid;gap:30px}
-.lnum div{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:22px;align-items:baseline;padding-bottom:26px;border-bottom:1px solid var(--hair)}
-.lnum b{font:400 clamp(40px,3.8vw,62px)/.9 var(--f-disp);font-variant-numeric:lining-nums tabular-nums;min-width:3.4ch}
+.log{position:relative;height:400vh;background:var(--ink)}
+.lpin{position:sticky;top:calc(var(--band) + env(safe-area-inset-top,0px));height:var(--vh);display:flex;align-items:center;overflow:hidden;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.lpin .wrap{width:100%}
+.lnum div>*{transition:opacity 1.1s var(--ease)}
+.lnum.act div>*{opacity:.3}
+.lnum.act div.on>*{opacity:1}
+.fkey .cap{opacity:0;transform:translateY(8px);transition:opacity 1.4s var(--ease),transform 1.6s var(--ease)}
+.field.formed .fkey .cap{opacity:1;transform:none}
+.lgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(40px,6vw,100px);align-items:center}
+.field{position:relative}
+.lnum{margin-top:clamp(18px,4.6vh,64px);display:grid;gap:clamp(10px,2.8vh,30px)}
+.lnum div{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:22px;align-items:baseline;padding-bottom:clamp(10px,2.6vh,26px);border-bottom:1px solid var(--hair)}
+.lnum b{font:400 clamp(36px,min(3.8vw,7vh),62px)/.9 var(--f-disp);font-variant-numeric:lining-nums tabular-nums;min-width:3.4ch}
 .lnum span{color:var(--muted);font:300 15px/1.45 var(--f-sans)}
 .lnum span .cap{display:block;color:var(--gold-2);margin-bottom:6px}
-.eng{margin-top:26px;color:var(--muted);font:300 15px/1.6 var(--f-sans);max-width:28em}
+.eng{margin-top:clamp(14px,3vh,26px);color:var(--muted);font:300 15px/1.6 var(--f-sans);max-width:28em}
 .eng b{font-weight:500;color:var(--cream)}
 
-.field canvas{display:block;width:100%;height:auto}
+.field canvas{display:block;width:100%}
 .fkey{display:flex;justify-content:space-between;gap:16px;margin-top:20px;color:var(--muted)}
 .fkey .cap{color:var(--gold-2)}
 .fkey .n{font:400 24px/1 var(--f-disp);color:var(--cream);font-variant-numeric:tabular-nums lining-nums}
@@ -306,8 +317,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   .flight{height:782vh}
   .film{object-position:50% 50%}
   .top{justify-content:center;height:64px}
-  .links{gap:28px;font-size:14px;letter-spacing:.28em}
-  .links a{margin-right:-.28em}
+  .links{gap:22px;font-size:13px;letter-spacing:.24em}
+  .links a{margin-right:-.24em}
+  .sslot{width:36px;margin-right:16px}
   .mark{flex-direction:column;gap:9px}
   .mark b{font-size:12px;letter-spacing:.3em;text-indent:.3em}
   .mark i{border-left:0;padding-left:0;font-size:17px}
@@ -331,8 +343,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   .lnum div{grid-template-columns:minmax(0,1fr);gap:10px;justify-items:center;text-align:center}
   .lnum b{min-width:0}
   .eng{margin-left:auto;margin-right:auto}
-  .fkey{flex-direction:column;align-items:center;gap:10px}
-  .field{position:relative;top:auto}
+  .fkey{justify-content:center;align-items:baseline;gap:18px;margin-top:12px}
+  .lpin{align-items:flex-start;padding-top:clamp(20px,4vh,40px)}
+  .lgrid{gap:clamp(12px,2.4vh,22px)}
+  .lnum{margin-top:clamp(12px,2.4vh,22px);gap:0;grid-template-areas:"s"}
+  .lnum div{grid-area:s;border-bottom:0;padding-bottom:0;gap:6px}
+  .lnum b{font-size:clamp(38px,6vh,48px)}
+  .lnum div:not(.on)>*{opacity:0!important}
+  .eng{margin-top:12px;font-size:14px}
+  .log{height:360vh}
   .tri{grid-template-columns:1fr 1fr;gap:10px}
   .tri figure:nth-child(2){margin-bottom:0}
   .tri figure:nth-child(3){grid-column:1/-1;aspect-ratio:16/10}
@@ -369,15 +388,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   footer .wrap{justify-content:center;text-align:center}
 }
 /* Sound: a quiet control that stays in the corner on every section */
-.snd{position:fixed;z-index:30;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px))}
-.snd .ib{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;border:0;cursor:pointer;color:var(--cream);background:rgba(20,18,23,.34);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,240,214,.22);transition:background .5s,box-shadow .5s;-webkit-tap-highlight-color:transparent}
+.snd{position:fixed;z-index:30;left:0;top:0;opacity:0;visibility:hidden;transition:opacity 1.6s var(--ease),visibility 0s 1.6s}
+body.hello .snd{opacity:1;visibility:visible;transition:opacity 1.6s var(--ease),transform 1.4s var(--ease)}
+.snd .ib{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;border:0;cursor:pointer;color:var(--cream);background:rgba(20,18,23,.34);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,240,214,.22);transition:background .5s,box-shadow .5s;-webkit-tap-highlight-color:transparent}
 .snd .ib:hover,.snd .ib[aria-expanded="true"]{background:rgba(20,18,23,.5);box-shadow:inset 0 0 0 1px rgba(255,240,214,.45)}
+.snd.sky .ib{color:var(--ink);background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:inset 0 0 0 1px rgba(20,18,23,.22)}
+.snd.sky .ib:hover,.snd.sky .ib[aria-expanded="true"]{background:rgba(255,250,240,.28);box-shadow:inset 0 0 0 1px rgba(20,18,23,.4)}
 .snd .ib:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .snd svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .snd .x{display:none}.snd.mute .w{display:none}.snd.mute .x{display:inline}.snd.lo .w2{display:none}
 .snd.on .w1{animation:wv 2.6s ease-in-out infinite}.snd.on .w2{animation:wv 2.6s ease-in-out .35s infinite}
 @keyframes wv{0%,100%{opacity:.3}50%{opacity:1}}
-.volp{position:absolute;right:0;bottom:calc(100% + 10px);width:232px;padding:18px 20px 20px;display:grid;gap:14px;border-radius:16px;color:var(--cream);background:rgba(20,18,23,.82);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 0 0 1px rgba(255,240,214,.16),0 24px 60px rgba(0,0,0,.4);opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity .4s var(--ease),transform .55s var(--ease)}
+.volp{position:absolute;left:0;top:calc(100% + 10px);width:232px;padding:18px 20px 20px;display:grid;gap:14px;border-radius:16px;color:var(--cream);background:rgba(20,18,23,.82);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 0 0 1px rgba(255,240,214,.16),0 24px 60px rgba(0,0,0,.4);opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .4s var(--ease),transform .55s var(--ease)}
 .volp.open{opacity:1;transform:none;pointer-events:auto}
 .volp .hd{display:flex;justify-content:space-between;align-items:baseline;font:500 12px/1 var(--f-sans);font-stretch:118%;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-2)}
 .volp output{font:400 13px/1 var(--f-sans);letter-spacing:0;color:var(--cream);font-variant-numeric:tabular-nums}
@@ -388,7 +410,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 .volp input::-moz-range-track{height:2px;background:rgba(255,240,214,.2)}
 .volp input::-moz-range-progress{height:2px;background:var(--gold-2)}
 .volp input::-moz-range-thumb{width:14px;height:14px;border:0;border-radius:50%;background:var(--gold-2)}
-@media (max-width:760px){.snd{right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .pre{opacity:1;transform:none;filter:none}
@@ -410,6 +431,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
     <div class="rmark"><img class="lm" src="aas-mark-ink.png" alt="" width="275" height="246"><img class="lw" src="aas-word-ink.png" alt="American Aircraft Sales" width="1408" height="57"></div>
 
     <header class="top">
+      <span class="sslot" aria-hidden="true"></span>
       <nav class="links"><a href="#cabin">Aircraft</a><a href="#services">Services</a><a href="#contact">Contact</a></nav>
     </header>
 
@@ -451,7 +473,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   <div class="cview">
     <div class="stage">
       <img src="tour.webp" alt="The long ivory cabin of a Gulfstream, evening light in every window">
-      <div class="spot dn" data-x="640" data-y="66" style="left:50%;top:9.2%"><span class="ring"></span><div class="tag"><b>Starlink</b><small class="cap">Connected at altitude</small></div></div>
+      <div class="spot dn sky" data-x="640" data-y="34" style="left:50%;top:4.76%"><span class="ring"></span><div class="tag"><b>Starlink</b><small class="cap">Connected at altitude</small></div></div>
       <div class="spot" data-x="176" data-y="452" style="left:13.75%;top:63.2%"><span class="ring"></span><div class="tag"><b>2022</b><small class="cap">Interior by Duncan Aviation</small></div></div>
       <div class="spot" data-x="838" data-y="300" style="left:65.5%;top:42%"><span class="ring"></span><div class="tag"><b>18</b><small class="cap">Passengers</small></div></div>
     </div>
@@ -462,7 +484,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   </div>
 </section>
 
-<section class="sec log" id="log" data-band="ink">
+<section class="log" id="log" data-band="ink" aria-label="The logbook">
+  <div class="lpin">
   <div class="wrap lgrid">
     <div>
       <h2 class="t rv">Read the <span class="g">logbook.</span></h2>
@@ -474,9 +497,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
       <p class="eng rv">Rolls-Royce <b>BR700-710C4-11</b> engines, enrolled on <b>CorporateCare</b>.</p>
     </div>
     <div class="field rv">
-      <canvas id="dots" aria-label="1,059 marks, one for every landing of this G550, and one open mark for the next" role="img"></canvas>
+      <canvas id="dots" aria-label="1,059 marks, one for every landing of this G550, gathering into the aircraft, and one open mark ahead of it for the next" role="img"></canvas>
       <div class="fkey"><span class="cap">The next one is yours</span><span class="n" id="dn">0</span></div>
     </div>
+  </div>
   </div>
 </section>
 
@@ -644,50 +668,104 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   var chs=[].slice.call(d.querySelectorAll('[data-a]')), hero=d.querySelector('.ch-hero'), cue=d.querySelector('.cue'), rmark=d.querySelector('.rmark'), topb=d.querySelector('.top'), finEl=d.querySelector(".tcall");
   function vis(el,p){var a=+el.dataset.a,b=+el.dataset.b,c=+el.dataset.c,e=+el.dataset.d;if(p<=a||p>=e)return 0;if(p<b)return (p-a)/(b-a);if(p<=c)return 1;return 1-(p-c)/(e-c)}
 
+  /* Speaker: seated left of Aircraft; stays there once the header has gone */
+  var sslot=d.querySelector('.sslot'), slinks=d.querySelector('.links'), sndEl=d.getElementById('snd'), sx=-1, sy=-1, rx=-1, sk=null, spos='';
+  function seat(){var fr=flight.getBoundingClientRect();
+    if(fr.bottom>=innerHeight-1||sy<0){var r=sslot.getBoundingClientRect(),ck=sslot.closest('.cockpit'),oy=fr.bottom>=innerHeight-1?0:parseFloat(getComputedStyle(ck).top)-ck.getBoundingClientRect().top;sx=Math.round(r.left);sy=Math.round(r.top+oy+(r.height-40)/2);rx=Math.round(slinks.getBoundingClientRect().right-40)}
+    var sky=fr.bottom>sy+60, pos=(sky?sx:rx)+','+sy;
+    if(sky!==sk){sk=sky;sndEl.classList.toggle('sky',sky)}
+    if(pos!==spos){spos=pos;sndEl.style.transform='translate3d('+(sky?sx:rx)+'px,'+sy+'px,0)'}}
+
   /* Cabin: the still is pinned and gently explored, one detail at a time */
   var cab=d.getElementById('cabin'), cview=cab.querySelector('.cview'), stage=cab.querySelector('.stage'), spots=[].slice.call(stage.querySelectorAll('.spot'));
-  var cx=null, cy=0, cs=null, lastK=-2;
+  var cfx=null, cfy=0, cs=null, lastK=-2;
   function cabin(){
     var W=cview.clientWidth,H=cview.clientHeight,p=prog(cab,H);
     var k=p<.16?-1:Math.min(spots.length-1,Math.floor((p-.16)/.27));
     if(k!==lastK){lastK=k;spots.forEach(function(s,i){s.classList.toggle('on',i===k)});cab.classList.toggle('go',k>=0)}
     var c0=Math.max(W/1280,H/715), s=c0*(k>=0?(W<760?2.1:1.9):1.02);
     var fx=k>=0?+spots[k].dataset.x:640, fy=k>=0?+spots[k].dataset.y:357;
-    if(cs===null)cs=s;
-    var e=reduce?1:.045; cs+=(s-cs)*e;
-    var tx=W/2-fx*cs, ty=H*.6-fy*cs;
-    tx=Math.min(0,Math.max(W-1280*cs,tx)); ty=Math.min(0,Math.max(H-715*cs,ty));
-    if(cx===null){cx=tx;cy=ty}
-    cx+=(tx-cx)*e*1.6; cy+=(ty-cy)*e*1.6;
+    if(cs===null){cs=s;cfx=fx;cfy=fy}
+    var e=reduce?1:.045; cs+=(s-cs)*e; cfx+=(fx-cfx)*e; cfy+=(fy-cfy)*e;
+    var cx=W/2-cfx*cs, cy=H*.6-cfy*cs;
+    cx=Math.min(0,Math.max(W-1280*cs,cx)); cy=Math.min(0,Math.max(H-715*cs,cy));
     stage.style.transform='translate3d('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px,0) scale('+cs.toFixed(4)+')';
     stage.style.setProperty('--inv',(1/cs).toFixed(4));
   }
 
-  /* Logbook: one mark per landing, drawn as the section passes */
-  var lsec=d.getElementById('log'), cv=d.getElementById('dots'), ctx=cv.getContext('2d'), dn=d.getElementById('dn'), N=1059, cols=53, drawn=-1, dpr=1;
+  /* Logbook: the section pins; after a beat the marks arrive one landing at a time,
+     then gather, tail to nose, into the G550 itself, and one open mark waits ahead of it */
+  var lsec=d.getElementById('log'), field=lsec.querySelector('.field'), cv=d.getElementById('dots'), ctx=cv.getContext('2d'), dn=d.getElementById('dn'), lnum=lsec.querySelector('.lnum'), lrows=[].slice.call(lnum.children), N=1059, dpr=1, LW=0, LH=0, P=[], R=2, NOSE=null, HEAD=0, lastN=-1, lastRow=-2;
+  function rnd(i){var x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+  /* G550 planform in metres, nose along +x (length 29.4 m, span 28.5 m) */
+  var PLAN=[
+    [[0,-.35],[1.2,-.75],[4.6,-1.15],[7.5,-1.2],[23,-1.2],[25.6,-1.08],[27.6,-.8],[28.8,-.42],[29.4,0],[28.8,.42],[27.6,.8],[25.6,1.08],[23,1.2],[7.5,1.2],[4.6,1.15],[1.2,.75],[0,.35]],
+    [[18.2,-1.1],[10.6,-13.4],[9.2,-14.25],[8.5,-13.4],[10.9,-4.6],[11.9,-1.1]],
+    [[18.2,1.1],[10.6,13.4],[9.2,14.25],[8.5,13.4],[10.9,4.6],[11.9,1.1]],
+    [[4.4,-1.1],[9.6,-1.1],[9.8,-1.55],[9.4,-2.95],[4.6,-2.95],[4.2,-2.1]],
+    [[4.4,1.1],[9.6,1.1],[9.8,1.55],[9.4,2.95],[4.6,2.95],[4.2,2.1]],
+    [[4.3,-.6],[1.1,-5.3],[.05,-5.3],[1.2,-.6]],
+    [[4.3,.6],[1.1,5.3],[.05,5.3],[1.2,.6]]
+  ];
   function sizeDots(){
     dpr=Math.min(2,devicePixelRatio||1);
-    cols=cv.parentNode.clientWidth<520?27:34;
-    var rows=Math.ceil((N+1)/cols), w=cv.parentNode.clientWidth, cell=w/cols;
-    cv.width=Math.round(w*dpr); cv.height=Math.round(rows*cell*dpr); cv.style.height=(rows*cell)+'px'; drawn=-1;
+    var w=cv.parentNode.clientWidth, phone=innerWidth<760, vhh=lsec.querySelector('.lpin').clientHeight||innerHeight;
+    var h=Math.round(Math.min(w*(phone?.86:.8),vhh*(phone?.42:.66)));
+    if(w===LW&&h===LH)return; LW=w;LH=h;
+    cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);cv.style.height=h+'px';
+    /* lay the aircraft out: climbing a few degrees, room ahead of the nose for the next mark */
+    HEAD=-.2; var ca=Math.cos(HEAD), sa=Math.sin(HEAD), xs=[], ys=[];
+    PLAN.forEach(function(poly){poly.forEach(function(q){xs.push(q[0]*ca-q[1]*sa);ys.push(q[0]*sa+q[1]*ca)})});
+    var x0=Math.min.apply(0,xs),x1=Math.max.apply(0,xs),y0=Math.min.apply(0,ys),y1=Math.max.apply(0,ys);
+    var room=w*.17, sc=Math.min((w-room-w*.06)/(x1-x0),(h*.9)/(y1-y0)), ox=w*.03+((w-room-w*.06)-(x1-x0)*sc)/2-x0*sc, oy=(h-(y1-y0)*sc)/2-y0*sc;
+    function tp(q){return [ox+(q[0]*ca-q[1]*sa)*sc, oy+(q[0]*sa+q[1]*ca)*sc]}
+    NOSE=tp([29.4,0]);
+    var m=document.createElement('canvas');m.width=w;m.height=h;var mc=m.getContext('2d');mc.fillStyle='#000';
+    PLAN.forEach(function(poly){mc.beginPath();poly.forEach(function(q,i){var t=tp(q);i?mc.lineTo(t[0],t[1]):mc.moveTo(t[0],t[1])});mc.closePath();mc.fill()});
+    var al=mc.getImageData(0,0,w,h).data;
+    function sample(g){var out=[],rh=g*.866,row=0;for(var y=g/2;y<h;y+=rh,row++){for(var x=(row%2?g:g/2);x<w;x+=g){var ix=Math.round(x),iy=Math.round(y);if(ix<w&&iy<h&&al[(iy*w+ix)*4+3]>128)out.push([x,y])}}return out}
+    var lo=1,hi=40,pts;for(var it=0;it<22;it++){var g=(lo+hi)/2;if(sample(g).length>=N)lo=g;else hi=g}
+    pts=sample(lo);var pick=[];for(var k=0;k<N;k++)pick.push(pts[Math.floor(k*pts.length/N)]);
+    R=Math.max(1.05,lo*.3);
+    /* each landing: where it first appears in the field, when it arrives, when it joins the aircraft */
+    var ux=ca, uy=sa; var proj=pick.map(function(q){return (q[0]-NOSE[0])*ux+(q[1]-NOSE[1])*uy}), pmin=Math.min.apply(0,proj), pmax=Math.max.apply(0,proj);
+    var ord=pick.map(function(_,i){return i}).sort(function(a,b){return rnd(a+7)-rnd(b+7)}), at=[];ord.forEach(function(i,k){at[i]=k});
+    P=pick.map(function(q,i){var ang=rnd(i+3)*6.283, rad=Math.sqrt(rnd(i+9));
+      return {tx:q[0],ty:q[1],sx:w*.5+Math.cos(ang)*rad*w*.47,sy:h*.5+Math.sin(ang)*rad*h*.46,ph:rnd(i+21)*6.283,ord:at[i],del:(proj[i]-pmin)/(pmax-pmin||1)}});
+    lastN=-1;
   }
-  function drawDots(n){
-    if(n===drawn)return; drawn=n;
-    var w=cv.width, cell=w/cols, r=Math.max(1.1*dpr,cell*.17);
-    ctx.clearRect(0,0,w,cv.height);
-    for(var i=0;i<=N;i++){
-      var x=(i%cols+.5)*cell, y=(Math.floor(i/cols)+.5)*cell;
-      ctx.beginPath();
-      if(i===N){ctx.arc(x,y,r*1.5,0,6.283);ctx.strokeStyle=n>=N?'#F0D8AC':'rgba(240,216,172,.25)';ctx.lineWidth=dpr;ctx.stroke();continue}
-      ctx.arc(x,y,r,0,6.283);
-      ctx.fillStyle=i<n?(i>n-24?'#F0D8AC':'rgba(212,176,122,.82)'):'rgba(240,216,172,.08)';
-      ctx.fill();
-    }
-    dn.textContent=Math.min(n,N).toLocaleString('en-US');
-  }
+  function inOut(x){x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2}
   function dots(){
-    var r=lsec.getBoundingClientRect(), p=clamp((innerHeight*.7-r.top)/(r.height*.72));
-    drawDots(reduce?N:Math.round(ss(p)*N));
+    var r=lsec.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight)return;
+    var vh=lsec.querySelector('.lpin').clientHeight, p=reduce?1:clamp(-r.top/(r.height-vh)), t=performance.now()/1000;
+    /* a beat, then the landings arrive; then they gather; then the aircraft flies on and the next mark opens */
+    var A0=.1,A1=.36,G0=.42,G1=.74,F0=.84;
+    var n=Math.round(ss((p-A0)/(A1-A0))*N), g=(p-G0)/(G1-G0), fly=ss((p-G1)/(1-G1)), fin=ss((p-F0)/.08);
+    var row=p<A0?-1:p<G0?0:p<G1?1:2; if(innerWidth<760&&row<0)row=0;
+    if(row!==lastRow){lastRow=row;lnum.classList.toggle('act',row>=0);lrows.forEach(function(el,i){el.classList.toggle('on',i===row)})}
+    field.classList.toggle('formed',fin>.5);
+    if(n!==lastN){lastN=n;dn.textContent=n.toLocaleString('en-US')}
+    var w=cv.width/dpr,h=cv.height/dpr; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+    var bx=Math.cos(HEAD)*fly*w*.045, by=Math.sin(HEAD)*fly*w*.045+Math.sin(t*.7)*2*fly;
+    var glint=((t*.16)%1.6)-.3;
+    for(var i=0;i<P.length;i++){var o=P[i]; if(o.ord>=n)continue;
+      var k=inOut((g-o.del*.42)/.58), dr=1-k;
+      var px=o.sx+Math.sin(t*.32+o.ph)*5*dr, py=o.sy+Math.cos(t*.27+o.ph*1.3)*5*dr;
+      var dx=o.tx-px, dy=o.ty-py, arc=Math.sin(Math.PI*k)*.22;
+      var x=px+dx*k-dy*arc+bx*k, y=py+dy*k+dx*arc+by*k;
+      var fresh=n-o.ord<26&&n<N, a=k>=1?.86:(.42+.36*(.5+.5*Math.sin(t*1.1+o.ph)))*(1-k)+.86*k;
+      if(k>=1&&fly>0){var gd=Math.abs((1-o.del)-glint);if(gd<.08)a=Math.min(1,a+(1-gd/.08)*.4*fly)}
+      ctx.beginPath();ctx.arc(x,y,R*(fresh?1.25:1),0,6.283);
+      ctx.fillStyle=fresh?'#F7E6C4':'rgba(212,176,122,'+a.toFixed(3)+')';ctx.fill();
+    }
+    /* the open mark, ahead of the nose, with the line it will fly */
+    if(fin>0&&NOSE){var ex=NOSE[0]+bx+Math.cos(HEAD)*w*.11, ey=NOSE[1]+by+Math.sin(HEAD)*w*.11, sx2=NOSE[0]+bx+Math.cos(HEAD)*R*4, sy2=NOSE[1]+by+Math.sin(HEAD)*R*4;
+      ctx.globalAlpha=fin;
+      for(var j=1;j<6;j++){var f=j/6;ctx.beginPath();ctx.arc(sx2+(ex-sx2)*f,sy2+(ey-sy2)*f,R*.55,0,6.283);ctx.fillStyle='rgba(240,216,172,'+(.15+.45*f).toFixed(2)+')';ctx.fill()}
+      var pulse=.5+.5*Math.sin(t*1.6);
+      ctx.beginPath();ctx.arc(ex,ey,R*2.6+pulse*R*.6,0,6.283);ctx.strokeStyle='#F0D8AC';ctx.lineWidth=1.2;ctx.stroke();
+      ctx.beginPath();ctx.arc(ex,ey,R*5+pulse*R*2,0,6.283);ctx.strokeStyle='rgba(240,216,172,'+(.28*(1-pulse)).toFixed(3)+')';ctx.lineWidth=1;ctx.stroke();
+      ctx.globalAlpha=1}
   }
   sizeDots();addEventListener('resize',sizeDots);
 
@@ -851,7 +929,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
     var fr=flight.getBoundingClientRect();if(window.__air)window.__air(fr.bottom>innerHeight*.3?Math.max(1-ss((q-.12)/.14),ss((q-.86)/.08)):0,fr.bottom>innerHeight*.5);
     chs.forEach(function(el){var o=ease(vis(el,q));el.style.opacity=o.toFixed(3);if(el.classList.contains('ch')){el.style.transform=el===finEl?'translate3d(0,calc(-50% + '+((1-o)*22).toFixed(1)+'px),0)':'translate3d(0,'+((1-o)*22).toFixed(1)+'px,0)';el.classList.toggle('live',o>.5)}});
     if(ready&&dur){var t=Math.min(dur-.05,q*dur);cur+=(t-cur)*(reduce?1:.14);if(Math.abs(v.currentTime-cur)>1/30&&!v.seeking)v.currentTime=cur}
-    cabin();dots();par();window.__globe();svc();walk();reach();band();
+    seat();cabin();dots();par();window.__globe();svc();walk();reach();band();
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
