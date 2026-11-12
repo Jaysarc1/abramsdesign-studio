@@ -1,20 +1,45 @@
 {
-  "redirects": [
+ "redirects": [
+  {
+   "source": "/mini",
+   "destination": "/mini/",
+   "permanent": false
+  },
+  {
+   "source": "/destany",
+   "destination": "/destany/",
+   "permanent": false
+  },
+  {
+   "source": "/destany/books",
+   "destination": "/destany/books/",
+   "permanent": false
+  }
+ ],
+ "rewrites": [
+  {
+   "source": "/((?!(?:b|img|play|mini|cards|api/(?:desk|up|unpack|cards|stats))(?:/|$)).+)",
+   "destination": "https://ads-view-phi.vercel.app/$1"
+  }
+ ],
+ "headers": [
+  {
+   "source": "/mini/(.*)",
+   "headers": [
     {
-      "source": "/destany",
-      "destination": "/destany/",
-      "permanent": false
-    },
-    {
-      "source": "/destany/books",
-      "destination": "/destany/books/",
-      "permanent": false
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
     }
-  ],
-  "rewrites": [
+   ]
+  },
+  {
+   "source": "/mini",
+   "headers": [
     {
-      "source": "/((?!(?:b|img|play|cards|api/(?:desk|up|unpack|cards|stats))(?:/|$)).+)",
-      "destination": "https://ads-view-phi.vercel.app/$1"
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
     }
-  ]
+   ]
+  }
+ ]
 }

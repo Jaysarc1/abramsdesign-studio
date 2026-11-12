@@ -1,0 +1,270 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+
+
+<!--
+ALIGNMENT NOTES
+Grid: 12 columns, max width 1320px, 24px gutters, side padding max(16px, safe-area) widening to 40px from 900px.
+Header: logo on column 1 (the firm's own logo file, unchanged), CTA right-aligned to column 12.
+Hero: copy on columns 1-4, bottom-aligned to the photograph's base; one finished room fills columns 5-12; its caption row (name left, room thumbnails right) uses the same ink rule as the Rooms band.
+Intentional offsets, each with its purpose:
+ 0. The hero photo is sized by viewport height so photo and caption row sit inside the first screen.
+ 1. The copy block sits on the photo's base line, not its centre, so headline and room share one floor.
+ 2. Thumbnails right-align to column 12, the same edge as the header button above them.
+ 4. Rooms band: 7 + 5 columns on row 1, 5 + 7 on row 2 (mirrored on purpose so the two rows interlock); each row shares one top and bottom line.
+ 5. Consultation band: proof on columns 1-5, form on columns 7-12 (column 6 is the breathing gap).
+-->
+<!--
+SELLS
+Buyer: a Palm Beach, Manalapan or Jupiter homeowner furnishing or redoing a whole house.
+Fear: rooms that look like everyone else's, or a designer who doesn't listen.
+Outcome: rooms with real personality and colour that still feel calm and right for Palm Beach.
+Proof: over 30 years in practice, Kips Bay Decorator Show House, AD PRO directory, Platinum 1stDibs, Elle Decor and New York Social Diary press, NCIDQ and ASID credentials.
+Primary CTA (same wording everywhere): "Book a design consultation".
+-->
+<title>Gil Walsh Interiors</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Figtree:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Concept: one finished room at a time, full and photo-real; the thumbnails beside its caption change the room with a slow crossfade. */
+:root{
+  color-scheme: light;
+  --ground:#F2EFED; --ground-2:#E9E4E1; --white:#FBFAF9;
+  --ink:#191818; --ink-2:#4F4B49; --line:#2A2827; --hair:rgba(25,24,24,.14);
+  --red:#C8232B;
+  --max:1320px; --gut:24px;
+  --display:"Italiana", "Didot", "Bodoni 72", Georgia, serif;
+  --sans:"Figtree", "Helvetica Neue", Arial, sans-serif;
+  --mono:"Geist Mono", ui-monospace, Menlo, monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--ground);-webkit-text-size-adjust:100%}
+body{background:var(--ground);color:var(--ink);font:400 17px/1.6 var(--sans);overflow-x:hidden}
+img,canvas{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:calc(var(--max) + 80px);margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+@media (min-width:900px){.wrap{padding-left:max(40px, env(safe-area-inset-left, 0px));padding-right:max(40px, env(safe-area-inset-right, 0px))}}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gut)}
+.mono{font:500 12px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+
+header{position:fixed;top:env(safe-area-inset-top, 0px);left:0;right:0;z-index:20;transition:background .4s, box-shadow .4s}
+header.solid{background:rgba(242,239,237,.93);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--hair)}
+.hbar{display:flex;align-items:center;justify-content:space-between;height:96px}
+.logo{height:62px;width:auto}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--ink);color:var(--white);text-decoration:none;font:500 15px/1 var(--sans);letter-spacing:.03em;padding:18px 26px;border:0;cursor:pointer;border-radius:999px;transition:background .3s}
+.btn:hover{background:#000}
+.btn svg{width:18px;height:10px;transition:transform .3s}.btn:hover svg{transform:translateX(4px)}
+.btn.sm{padding:14px 20px;font-size:14px}
+
+/* hero */
+.hero{padding-top:128px;padding-bottom:24px}
+.hero .grid{align-items:end}
+.hcopy{grid-column:1 / span 4;padding-right:12px;padding-bottom:86px}
+.hcopy h1{font:400 clamp(50px,4.8vw,74px)/1 var(--display);letter-spacing:-.005em;margin:22px 0 24px}
+.hcopy p{font-size:18px;color:var(--ink-2);max-width:30ch;margin-bottom:34px}
+.hroom{grid-column:5 / span 8}
+.hroom .im{position:relative;overflow:hidden;background:var(--ground-2);height:max(420px, calc(calc(100svh - var(--adsc,0px)) - 128px - 110px))}
+.hroom .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 2.2s ease, transform 10s ease}
+.hroom .im img.on{opacity:1;transform:scale(1.025)}
+.hroom .cap{display:flex;justify-content:space-between;align-items:center;gap:24px;border-top:1px solid var(--ink);margin-top:16px;padding-top:12px}
+.hroom h3{font:400 26px/1.2 var(--display)}
+.hroom .cap .mono{display:block;margin-top:2px}
+.tiles{display:flex;gap:10px}
+.tile{position:relative;width:56px;height:56px;background:var(--ground-2);border:0;cursor:pointer;padding:0;overflow:hidden;opacity:.55;transition:opacity .4s}
+.tile img{width:100%;height:100%;object-fit:cover}
+.tile:hover,.tile.on{opacity:1}
+.tile.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--red)}
+.tile:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+/* proof */
+.proof{padding-block:110px 40px}
+.proof .q{grid-column:1 / span 8;font:400 clamp(34px,3.6vw,54px)/1.12 var(--display)}
+.proof .src{grid-column:1 / span 8;margin-top:18px}
+.acc{grid-column:1 / -1;margin-top:64px;border-top:1px solid var(--hair);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gut)}
+.acc div{padding:22px 0;border-bottom:1px solid var(--hair)}
+.acc b{display:block;font:600 16px/1.35 var(--sans)}
+.acc span{font-size:15px;color:var(--ink-2)}
+.press{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:40px;font:400 24px/1.2 var(--display);color:var(--ink-2)}
+
+section{padding-block:110px}
+.shead{grid-column:1 / -1;display:grid;grid-template-columns:subgrid;margin-bottom:48px;align-items:end}
+.shead .mono{grid-column:1 / span 3;align-self:start;padding-top:12px}
+.shead h2{grid-column:4 / span 8;font:400 clamp(40px,4.4vw,66px)/1.04 var(--display)}
+.room{position:relative}
+.room .im{overflow:hidden;background:var(--ground-2);height:560px}
+.room img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.room:hover img{transform:scale(1.03)}
+.room .cap{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--ink);margin-top:16px;padding-top:12px}
+.room h3{font:400 26px/1.2 var(--display)}
+.r1{grid-column:1 / span 7}.r2{grid-column:8 / span 5}.r3{grid-column:1 / span 5;margin-top:64px}.r4{grid-column:6 / span 7;margin-top:64px}
+.rowcta{grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;margin-top:64px;border-top:1px solid var(--hair);padding-top:28px}
+.rowcta p{color:var(--ink-2)}
+
+.team .p{grid-column:span 4;border-top:1px solid var(--ink);padding-top:16px}
+.team .p h3{font:400 30px/1.15 var(--display)}
+.team .p p{color:var(--ink-2);font-size:16px;margin-top:6px}
+
+.inq{background:var(--white);border-top:1px solid var(--hair)}
+.inq .left{grid-column:1 / span 5}
+.inq h2{font:400 clamp(44px,4.8vw,72px)/1 var(--display);margin:18px 0 28px}
+.inq ul{list-style:none;border-top:1px solid var(--hair)}
+.inq li{padding:13px 0;border-bottom:1px solid var(--hair);font-size:16px}
+.contact{margin-top:30px;line-height:1.7;color:var(--ink-2)}
+form{grid-column:7 / span 6;display:grid;gap:18px;align-content:start}
+label{display:grid;gap:8px;font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+input,textarea{font:400 18px/1.4 var(--sans);color:var(--ink);background:transparent;border:0;border-bottom:1px solid rgba(25,24,24,.3);padding:10px 0 12px;border-radius:0;outline:none}
+input:focus,textarea:focus{border-bottom-color:var(--ink)}
+textarea{min-height:96px;resize:vertical}
+form .btn{justify-self:start;margin-top:10px}
+.thanks{font:400 24px/1.3 var(--display);min-height:1.3em}
+footer{background:var(--white);padding-block:24px;font-size:13px;color:var(--ink-2);border-top:1px solid var(--hair)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:899px){
+  header{background:rgba(242,239,237,.94);box-shadow:0 1px 0 var(--hair)}
+  .hbar{height:72px}.logo{height:46px}.hbar .btn{display:none}
+  .hero{padding-top:104px}
+  .hcopy,.hroom{grid-column:1 / -1}
+  .hcopy{padding-bottom:40px}
+  .hroom .im{height:auto;aspect-ratio:4/5}
+  .hroom .cap{flex-direction:column;align-items:flex-start;gap:14px}
+  .tile{width:52px;height:52px}
+  .proof .q,.proof .src{grid-column:1 / -1}
+  .acc{grid-template-columns:1fr 1fr}
+  .shead .mono,.shead h2{grid-column:1 / -1}.shead h2{margin-top:12px}
+  .r1,.r2,.r3,.r4{grid-column:1 / -1;margin-top:40px}.r1{margin-top:0}
+  .room .im{height:auto;aspect-ratio:4/5}
+  .team .p{grid-column:1 / -1;margin-bottom:24px}
+  .inq .left,form{grid-column:1 / -1}form{margin-top:48px}
+  section{padding-block:80px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hroom .im img,.room img,.tile{transition:none}
+}
+</style>
+
+<!-- ADS credit: one quiet line along the very top, the same size, place and type on every concept; only its two colours follow this page -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@500&display=swap">
+<style>
+:root{--adsc:26px}
+#ads-credit{position:relative;z-index:31;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;height:var(--adsc);margin:0;padding:0 16px;background:#F2EFED;color:#191818;font:500 10px/1 "Figtree","Helvetica Neue",Arial,sans-serif;letter-spacing:.24em;text-indent:.24em;text-transform:uppercase;text-decoration:none;white-space:nowrap;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;transition:background-color 1s}
+#ads-credit span{display:block;color:inherit;opacity:1;transition:opacity .5s ease}
+#ads-credit:hover span,#ads-credit:focus-visible span{opacity:1}
+#ads-credit:focus-visible{outline:1px solid currentColor;outline-offset:-5px}
+#hd{translate:0 var(--adsy,var(--adsc))}
+</style>
+<a id="ads-credit" href="https://abramsdesign.studio" target="_blank" rel="noopener"><span>Concept by Abrams Design Studio</span></a>
+<script>
+(() => {
+  /* headers pinned to the window start under the line, then settle to the top as it scrolls away */
+  const b = document.getElementById('ads-credit'), R = document.documentElement;
+  const y = () => R.style.setProperty('--adsy', Math.max(0, b.offsetHeight - scrollY) + 'px');
+  y(); addEventListener('scroll', y, { passive: true }); addEventListener('resize', y);
+  const sky = b.dataset.sky && document.querySelector(b.dataset.sky);
+  if (sky) { const c = () => b.style.setProperty('--ads-sky', getComputedStyle(sky).getPropertyValue('--skyt').trim() || '#1B3358'); new MutationObserver(c).observe(sky, { attributes: true, attributeFilter: ['style'] }); }
+})();
+</script>
+<header id="hd"><div class="wrap hbar">
+  <a href="#top" aria-label="Gil Walsh Interiors"><img class="logo" src="img/logo.png" alt="Gil Walsh Interiors"></a>
+  <a class="btn sm" href="#consult">Book a design consultation</a>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap grid">
+  <div class="hcopy">
+    <span class="mono">Palm Beach · Over 30 years</span>
+    <h1>Rooms with a point of view.</h1>
+    <p>Colourful, collected Palm Beach interiors by Gil Walsh Interiors.</p>
+    <a class="btn" href="#consult">Book a design consultation <svg viewBox="0 0 18 10"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a>
+  </div>
+  <article class="hroom">
+    <div class="im" id="hph"><img class="on" src="img/artistic-sea-hero.jpg" alt="Artistic Sea, a guest cottage living room in Manalapan" style="object-position:52% 50%"></div>
+    <div class="cap">
+      <div id="hlab"><h3>Artistic Sea</h3><span class="mono">Manalapan · Guest cottage</span></div>
+      <div class="tiles" role="group" aria-label="Choose a room">
+        <button class="tile on" aria-label="Artistic Sea" data-src="img/artistic-sea-hero.jpg" data-name="Artistic Sea" data-meta="Manalapan · Guest cottage" data-pos="52% 50%"><img src="img/artistic-sea-hero.jpg" alt=""></button>
+        <button class="tile" aria-label="Palm Beach Perfection" data-src="img/pb-perfection-dining.jpg" data-name="Palm Beach Perfection" data-meta="Palm Beach · Dining room" data-pos="60% 50%"><img src="img/pb-perfection-dining.jpg" alt=""></button>
+        <button class="tile" aria-label="Loxahatchee Club" data-src="img/loxahatchee-club.jpg" data-name="Loxahatchee Club" data-meta="Jupiter · Living room" data-pos="55% 50%"><img src="img/loxahatchee-club.jpg" alt=""></button>
+        <button class="tile" aria-label="Cabana Tropicale" data-src="img/cabana-tropicale.jpg" data-name="Cabana Tropicale" data-meta="Cabana" data-pos="50% 50%"><img src="img/cabana-tropicale.jpg" alt=""></button>
+      </div>
+    </div>
+  </article>
+</div></div>
+
+<div hidden class="proof"><div class="wrap grid">
+  <p class="q">“The Interior Designer to Know in Palm Beach.”</p>
+  <span class="mono src">New York Social Diary</span>
+  <div class="acc">
+    <div><b>Kips Bay Decorator Show House</b><span>New York</span></div>
+    <div><b>AD PRO Directory</b><span>Architectural Digest</span></div>
+    <div><b>Platinum Dealer</b><span>1stDibs</span></div>
+    <div><b>NCIDQ · ASID</b><span>Gil Walsh, Principal</span></div>
+  </div>
+  <div class="press"><span>Elle Decor</span><span>Palm Beach Illustrated</span><span>Forbes Global Properties</span><span>Ocean Home</span><span>New England Home</span></div>
+</div></div>
+
+<section hidden id="rooms"><div class="wrap grid">
+  <div class="shead"><span class="mono">01 · Rooms</span><h2>Finished rooms, each one its own.</h2></div>
+  <article class="room r1"><div class="im"><img src="img/pb-perfection-dining.jpg" alt="Ocean-view dining room, Palm Beach Perfection" loading="lazy"></div><div class="cap"><h3>Palm Beach Perfection</h3><span class="mono">Dining</span></div></article>
+  <article class="room r2"><div class="im"><img src="img/pb-pink.jpg" alt="Garden loggia, Palm Beach Pink" loading="lazy"></div><div class="cap"><h3>Palm Beach Pink</h3><span class="mono">Loggia</span></div></article>
+  <article class="room r3"><div class="im"><img src="img/pb-dining-detail.jpg" alt="Collected tabletop with green lamps and books" loading="lazy"></div><div class="cap"><h3>A collected tabletop</h3><span class="mono">Detail</span></div></article>
+  <article class="room r4"><div class="im"><img src="img/serene-retreat.jpg" alt="White living room, Serene Retreat at Frenchman's Creek" loading="lazy"></div><div class="cap"><h3>Serene Retreat</h3><span class="mono">Frenchman's Creek</span></div></article>
+  <div class="rowcta"><p>Photography by Cutrona.</p>
+    <a class="btn" href="#consult">Book a design consultation <svg viewBox="0 0 18 10"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a></div>
+</div></section>
+
+<section hidden class="team" style="padding-top:0"><div class="wrap grid">
+  <div class="shead"><span class="mono">02 · Studio</span><h2>The people behind the rooms.</h2></div>
+  <div class="p"><h3>Gil Walsh</h3><p>Principal · NCIDQ, ASID</p></div>
+  <div class="p"><h3>Ashleigh Wilson</h3><p>Principal Interior Designer · NCIDQ</p></div>
+  <div class="p"><h3>Lauryl Guse</h3><p>Creative Director</p></div>
+</div></section>
+
+<section hidden class="inq" id="consult"><div class="wrap grid">
+  <div class="left">
+    <span class="mono">Consultations</span>
+    <h2>Book a design consultation.</h2>
+    <ul>
+      <li>Over 30 years designing Palm Beach homes</li>
+      <li>Kips Bay Decorator Show House designer</li>
+      <li>Published in Elle Decor and Palm Beach Illustrated</li>
+    </ul>
+    <p class="contact">561-932-0631<br>5505 S. Dixie Highway, Suite 2<br>West Palm Beach, Florida 33405</p>
+  </div>
+  <form id="f" novalidate>
+    <label>Your name<input name="n" autocomplete="name"></label>
+    <label>Email or phone<input name="c" autocomplete="email"></label>
+    <label>Which rooms are you thinking about?<textarea name="q" placeholder="The whole house, a living room, a new build..."></textarea></label>
+    <button class="btn" type="submit">Book a design consultation <svg viewBox="0 0 18 10"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
+    <p class="thanks" id="ty" aria-live="polite"></p>
+  </form>
+</div></section>
+</main>
+<footer hidden><div class="wrap"><span>Gil Walsh Interiors · West Palm Beach</span><span>Concept by Abrams Design Studio</span></div></footer>
+
+<script>
+(() => {
+  const hd = document.getElementById('hd');
+  const onS = () => hd.classList.toggle('solid', scrollY > 40); addEventListener('scroll', onS, { passive: true }); onS();
+  document.getElementById('f').addEventListener('submit', e => { e.preventDefault(); document.getElementById('ty').textContent = 'Thank you. Concept preview: messages aren’t sent.'; });
+
+  /* thumbnails: click crossfades that room into the hero */
+  const ph = document.getElementById('hph'), lab = document.getElementById('hlab');
+  document.querySelectorAll('.tile').forEach(t => {
+    t.addEventListener('click', () => {
+      if (t.classList.contains('on')) return;
+      document.querySelectorAll('.tile').forEach(x => x.classList.toggle('on', x === t));
+      const n = new Image(); n.src = t.dataset.src; n.alt = t.dataset.name; n.style.objectPosition = t.dataset.pos;
+      ph.appendChild(n); requestAnimationFrame(() => requestAnimationFrame(() => n.classList.add('on')));
+      const old = [...ph.querySelectorAll('img')].filter(x => x !== n);
+      setTimeout(() => old.forEach(x => x.remove()), 2300); old.forEach(x => x.classList.remove('on'));
+      lab.innerHTML = `<h3>${t.dataset.name}</h3><span class="mono">${t.dataset.meta}</span>`;
+    });
+  });
+})();
+</script>
+
+
+</body></html>
