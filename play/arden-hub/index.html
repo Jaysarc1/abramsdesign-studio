@@ -139,6 +139,20 @@ body.inmod #back:hover{box-shadow:inset 0 0 0 1px var(--hov)}
 .revp p{margin:0;font:300 26px/1.12 var(--disp);font-variation-settings:"opsz" 72;max-width:15ch}
 .revp .lbl{color:#bdb3a4}
 .chips{display:flex}.chips i{flex:1;height:34px}
+.vwp{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gal{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.gal button{display:block;padding:0;border:0;background:var(--thumb);border-radius:6px;overflow:hidden;cursor:zoom-in}
+.gal button:first-child{grid-column:1/-1}
+.gal img{display:block;width:100%;height:auto;aspect-ratio:var(--ar);object-fit:cover;transition:transform 1.4s var(--ease)}
+@media (hover:hover){.gal button:hover img{transform:scale(1.015)}}
+.gal button:focus-visible{outline:1.5px solid var(--fg);outline-offset:3px}
+.lb{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:rgba(14,12,10,.94);animation:rise .5s var(--ease) both}
+.lb img{max-width:calc(100vw - 32px);max-height:calc(100dvh - 120px);width:auto;height:auto;border-radius:4px}
+.lb button{position:absolute;width:44px;height:44px;border-radius:var(--r);display:grid;place-items:center;color:#efe8dc;background:rgba(255,255,255,.08);border:0}
+.lb button svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.4}
+.lb .x{top:max(16px,env(safe-area-inset-top,0px));right:16px}
+.lb .pv2{left:16px;top:50%;transform:translateY(-50%)}.lb .nx{right:16px;top:50%;transform:translateY(-50%)}
+@media (max-width:760px){.gal{grid-template-columns:minmax(0,1fr);gap:12px}.lb .pv2,.lb .nx{top:auto;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:none}}
 .schp{position:absolute;inset:0;padding:18px 20px;background:var(--sheet);color:#25211c;display:grid;align-content:start;gap:0}
 .schp div{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:12px;padding:10px 0;border-bottom:1px solid rgba(37,33,28,.08);font:400 13px/1.2 var(--ui)}
 .schp b{font:400 12px/1.2 var(--type);letter-spacing:.02em}
@@ -294,7 +308,7 @@ body.inmod #back:hover{box-shadow:inset 0 0 0 1px var(--hov)}
       <button class="card rv" data-go="plans"><div class="ch"><span class="n">02</span><h3>Plans</h3><span class="go"><svg viewBox="0 0 12 12"><path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8"/></svg></span></div>
         <div class="pv"><div class="sheetp" style="background-image:url(img/set17/A1.webp)"></div></div><div class="cf"><span>Nine sheets</span><span>View only</span></div></button>
       <button class="card rv" data-go="views"><div class="ch"><span class="n">03</span><h3>Views</h3><span class="go"><svg viewBox="0 0 12 12"><path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8"/></svg></span></div>
-        <div class="pv"><div class="revp"><span class="lbl">REVERIE</span><p>Revive the space. Refine the details. Revere the result.</p><div class="chips" id="chips"></div></div></div><div class="cf"><span>Room briefs for renders</span><span></span></div></button>
+        <div class="pv"><img class="vwp" src="img/views/v09-s.webp" alt="" loading="lazy"></div><div class="cf"><span>Rendered perspectives</span><span>10</span></div></button>
     </div>
   </section>
 
@@ -446,7 +460,6 @@ $('#ledTot').textContent = money(house);
 const top6 = [...done].sort((a, b) => roomTot(b) - roomTot(a)).slice(0, 6), max = roomTot(top6[0]) || 1;
 $('#ledBars').innerHTML = top6.map(r => `<div><span>${esc(r.name)}</span><i style="width:${(roomTot(r) / max * 100).toFixed(1)}%"></i></div>`).join('');
 const prim = ROOMS.find(r => r.id === 'primary') || done[0];
-$('#chips').innerHTML = [...new Set(prim.sel.map(s => chipColor(s.l)).filter(Boolean))].slice(0, 8).map(c => `<i style="background:${c}"></i>`).join('');
 $('#schp').innerHTML = done.flatMap(r => r.sel.map(s => [s.t, LIB[s.l].name, r.name])).slice(0, 7).map(([t, n, r]) => `<div><b>${esc(t)}</b><span>${esc(n)}</span><span>${esc(r)}</span></div>`).join('');
 
 function fitFrames(){ $$('.pv[data-frame]').forEach(pv => { const f = pv.querySelector('iframe'); if (!f) return; const w = +pv.dataset.w, s = pv.clientWidth / w;
@@ -474,17 +487,23 @@ function open(k){
   else if (k === 'views') views();
   else if (k === 'ledger') ledger();
 }
+const VIEWS = [[2752,1536],[2752,1536],[3062,1408],[2752,1536],[2752,1536],[3132,1344],[2752,1536],[2752,1536],[3062,1408],[3106,1344]].map(([w, h], i) => ({f: 'img/views/v' + String(i + 1).padStart(2, '0'), w, h}));
 function views(){
-  const r = ROOMS.find(x => x.id === briefRoom) || prim; const seen = new Set(), pal = [];
-  r.sel.forEach(s => { const L = LIB[s.l]; const id = L.sw ? s.l : L.mat; if (!id || seen.has(id) || !LIB[id] || !LIB[id].sw) return; seen.add(id); pal.push([s.t, LIB[id]]) });
-  stage.innerHTML = `<div class="pane gut"><span class="lbl">REVERIE · ${esc(r.name)}</span><h2>Views</h2>
-    <p class="motto">Revive the space. Refine the details. Revere the result.</p>
-    <div class="pills">${done.map(x => `<button data-room="${x.id}" aria-pressed="${x.id === r.id}">${esc(x.name)}</button>`).join('')}</div>
-    <div class="brief"><div><div class="sh"><span class="lbl">Palette</span><i></i><span>${pal.length}</span></div>
-      <div class="palette">${pal.map(([t, L]) => `<div><i style="background:${L.sw.k === 'leaf' ? `linear-gradient(135deg,${L.sw.a} 0 50%,${L.sw.b} 50% 75%,${L.sw.c} 75%)` : L.sw.c}"></i><b>${esc(t)}</b><span>${esc(L.name.replace(/,.*$/, ''))}</span></div>`).join('')}</div></div>
-    <div><div class="sh"><span class="lbl">In the room</span><i></i><span>${r.sel.length} items</span></div>
-      <div class="list">${r.sel.map(s => `<div><b>${esc(s.t)}</b><span>${esc(LIB[s.l].name)}</span><em>${esc(s.s)}</em></div>`).join('')}</div></div></div></div>`;
+  stage.innerHTML = `<div class="pane gut"><h2>Views</h2>
+    <div class="gal">${VIEWS.map((v, i) => `<button data-view="${i}" aria-label="View ${i + 1} of ${VIEWS.length}"><img src="${v.f}-s.webp" srcset="${v.f}-s.webp 1200w, ${v.f}.webp 2400w" sizes="(max-width:760px) 100vw, ${i ? '620px' : '1240px'}" style="--ar:${v.w}/${v.h}" alt="" ${i > 1 ? 'loading="lazy" ' : ''}decoding="async"></button>`).join('')}</div></div>`;
 }
+let lbi = 0;
+function lb(i){
+  lbi = (i + VIEWS.length) % VIEWS.length; let el = $('.lb');
+  if (!el){ el = document.createElement('div'); el.className = 'lb'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Views');
+    el.innerHTML = '<img alt=""><button class="x" aria-label="Close"><svg viewBox="0 0 16 16"><path d="M3 3l10 10M13 3 3 13"/></svg></button><button class="pv2" aria-label="Previous"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></button><button class="nx" aria-label="Next"><svg viewBox="0 0 16 16"><path d="m6 3 5 5-5 5"/></svg></button>';
+    el.addEventListener('click', e => { if (e.target.closest('.nx')) lb(lbi + 1); else if (e.target.closest('.pv2')) lb(lbi - 1); else if (!e.target.closest('img')) el.remove() });
+    let sx = null; el.addEventListener('touchstart', e => sx = e.touches[0].clientX, {passive:true});
+    el.addEventListener('touchend', e => { if (sx === null) return; const d = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(d) > 40) lb(lbi + (d < 0 ? 1 : -1)) });
+    document.body.appendChild(el) }
+  el.querySelector('img').src = VIEWS[lbi].f + '.webp'; el.querySelector('.x').focus({preventScroll:true});
+}
+addEventListener('keydown', e => { if (!$('.lb')) return; e.stopImmediatePropagation(); if (e.key === 'Escape') $('.lb').remove(); else if (e.key === 'ArrowRight') lb(lbi + 1); else if (e.key === 'ArrowLeft') lb(lbi - 1) }, true);
 function ledger(){
   const mx = Math.max(...done.map(roomTot)), quotes = ROOMS.reduce((a, r) => a + r.sel.filter(s => s.st === 'Quote').length, 0), kept = ROOMS.reduce((a, r) => a + r.sel.filter(s => s.st === 'Kept').length, 0);
   stage.innerHTML = `<div class="pane gut"><span class="lbl">From the board · ${esc(TODAY)}</span><h2>Ledger</h2>
@@ -493,7 +512,7 @@ function ledger(){
       <td class="bar"><i style="width:${(roomTot(r) / mx * 100).toFixed(1)}%"></i></td><td class="r">${money(roomTot(r))}</td></tr>`).join('')}</tbody>
     <tfoot><tr><td class="mu" colspan="2">${quotes} awaiting quote · ${kept} kept</td><td class="hide"></td><td class="bar"></td><td class="r big">${money(house)}</td></tr></tfoot></table></div>`;
 }
-stage.addEventListener('click', e => { const rb = e.target.closest('[data-room]'); if (rb){ briefRoom = rb.dataset.room; tap(.5); views() } });
+stage.addEventListener('click', e => { const vb = e.target.closest('[data-view]'); if (vb){ lb(+vb.dataset.view); return } const rb = e.target.closest('[data-room]'); if (rb){ briefRoom = rb.dataset.room; tap(.5); views() } });
 
 function route(){
   const h = location.hash.slice(1), ok = PARTS.includes(h);

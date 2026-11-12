@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Arden House Model, Rev 17.8.21</title>
+<title>Arden House Model, Rev 17.9</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet">
@@ -265,6 +265,11 @@ body.desk .credit i{background:rgba(28,29,28,.3)}
 .trans .sep.on{display:block}
 .trans .rd{width:7px;height:7px;border-radius:50%;background:#c9564a;flex:none}
 .trans #tRec.live{color:var(--on)}
+/* Rev 17.9 (Jason): Square, a toggle with the same dot as the menus; Frames and Export view say what they are doing */
+.trans .tb i.dt{width:7px;height:7px;border-radius:50%;box-sizing:border-box;border:1px solid var(--on-3);flex:none;transition:background .35s,border-color .35s}
+.trans .tb[aria-pressed="true"] i.dt{background:var(--brass);border-color:var(--brass)}
+.trans #tSq[aria-pressed="true"]{color:var(--on)}
+.trans #tFrm.live,.trans #tStl.live{color:var(--on)}
 .trans #tRec.live .rd{animation:rp 1.2s ease-in-out infinite}
 @keyframes rp{50%{opacity:.25}}
 .cue{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%);padding:14px 26px 14px calc(26px + .3em);border-radius:14px;background:var(--glass-2);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid var(--rule);font-size:11.5px;letter-spacing:.3em;color:var(--on);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .6s,visibility 0s .6s;white-space:nowrap}
@@ -286,7 +291,10 @@ body.walking .hint{top:calc(max(18px,env(safe-area-inset-top)) + 70px)}
   .trans .lbl{max-width:none;min-width:0}
   .trans .lbl .s{display:none}
   .trans #tRec span,.trans #tFrm span,.trans #tPan span{display:none}
-  .trans #tRec.live span{display:inline}
+  .trans #tRec.live span,.trans #tFrm.live span,.trans #tStl.live span{display:inline}
+  .trans #tStl span{display:none}
+  .trans #tStl{flex:none;padding:0 10px}
+  .trans #tSq{flex:none;padding:0 12px 0 calc(12px + .1em)}
   .trans #tRec,.trans #tFrm,.trans #tPan{flex:none;padding:0 10px}
   .trans .sep{margin:0 2px}
   .wk{left:12px;right:12px;top:auto;width:auto;bottom:calc(env(safe-area-inset-bottom) + 102px);max-height:48vh;display:none!important}
@@ -524,9 +532,66 @@ canvas#c{bottom:auto;height:calc(100% - var(--footH))}
 .foot{position:fixed;left:0;right:0;bottom:0;height:var(--footH);box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom);display:flex;align-items:center;justify-content:center;background:#14120f;z-index:1;pointer-events:none}
 .foot span{font:500 9px/1 "Geist Mono",ui-monospace,monospace;letter-spacing:.26em;padding-left:.26em;text-transform:uppercase;color:var(--on-3);opacity:.75;white-space:nowrap}
 body.shot .foot{display:none}
+
+/* Rev 17.10 (Jason): place a camera on the plan with the view beside it, then accept */
+.cpw{position:fixed;left:0;top:0;width:50%;height:calc(100% - var(--footH));display:none;flex-direction:column;box-sizing:border-box;background:#161513;border-right:1px solid var(--rule);z-index:40;color:var(--on);font:13px -apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif}
+body.cpon .cpw{display:flex}
+body.cpon canvas#c{left:50%;width:50%}
+body.cpon .top,body.cpon .wk,body.cpon .mm,body.cpon .trans,body.cpon .cmp,body.cpon #deskSlot,body.cpon #saveSlot,body.cpon .hint,body.cpon .stick,body.cpon .cross,body.cpon .dock,body.cpon .clr,body.cpon .sides,body.cpon .ms,body.cpon .rlw,body.cpon .menu,body.cpon #msnap,body.cpon #mlabs{display:none!important}
+.cpw .ch{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px 12px}
+.cpw .ch b{font:500 12px "Geist Mono",ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--on)}
+.cpw .ch span{display:block;margin-top:5px;font-size:12px;color:var(--on-3)}
+.cpf{display:flex;gap:2px;padding:2px;height:36px;box-sizing:border-box;border-radius:12px;border:1px solid var(--rule);background:rgba(244,241,234,.04)}
+.cpf button{appearance:none;border:0;border-radius:10px;background:transparent;color:var(--on-2);font:400 12px "Geist Mono",ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;padding:0 12px;cursor:pointer}
+.cpf button[aria-pressed="true"]{background:var(--on);color:var(--ink)}
+.cpv{position:relative;flex:1;min-height:0;margin:0 20px;border-radius:12px;overflow:hidden;background:#11100e;border:1px solid var(--rule)}
+.cpv canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
+.cpz{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column;gap:6px}
+.cpz button{appearance:none;width:36px;height:36px;border-radius:12px;border:1px solid var(--rule);background:rgba(20,19,17,.72);color:var(--on);font:400 18px/1 -apple-system,sans-serif;cursor:pointer}
+.cpz button:hover{background:rgba(244,241,234,.12)}
+.cpk{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--on-3);pointer-events:none;max-width:calc(100% - 70px)}
+.cps{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;padding:14px 20px 0}
+.cps label{display:flex;flex-direction:column;gap:8px;font:400 12px "Geist Mono",ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--on-2)}
+.cps label span{display:flex;justify-content:space-between}
+.cps label output{color:var(--on);letter-spacing:.04em}
+.cps input[type=range]{width:100%;margin:0;accent-color:#d9b67c;height:24px}
+.cpa{display:flex;gap:10px;padding:14px 20px 18px}
+.cpa button{appearance:none;flex:1;height:44px;border-radius:12px;font:500 12px "Geist Mono",ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.cpa .no{background:transparent;color:var(--on-2);border:1px solid var(--rule)}
+.cpa .no:hover{color:var(--on)}
+.cpa .ok{background:var(--on);color:var(--ink);border:1px solid var(--on)}
+.cpl{position:fixed;left:calc(50% + 16px);top:16px;z-index:40;display:none;padding:8px 12px;border-radius:12px;background:var(--glass-2);border:1px solid var(--rule);font:400 12px "Geist Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--on-2);pointer-events:none;white-space:nowrap}
+body.cpon .cpl{display:block}
+#wkFoot{flex-wrap:wrap}
+#wkFoot #wkCam{flex:1 0 100%;border-radius:12px}
+/* the model's sides, one tap each */
+.sides{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--footH) + 12px);display:none;align-items:center;gap:2px;height:40px;box-sizing:border-box;padding:3px;border-radius:12px;background:var(--glass);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid var(--rule)}
+body.desk .sides{display:flex}
+.sides .lb{font:400 12px "Geist Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--on-3);padding:0 10px 0 12px}
+.sides button{appearance:none;border:0;height:100%;padding:0 14px;border-radius:9px;background:transparent;color:var(--on-2);font:400 12px "Geist Mono",ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;cursor:pointer;transition:background .3s,color .3s}
+.sides button:hover{color:var(--on)}
+.sides button[aria-pressed="true"]{background:var(--on);color:var(--ink)}
+body.desk .sides{color:var(--on)}
+@media (max-width:640px){
+  .cpw{width:100%;height:50%;border-right:0;border-bottom:1px solid var(--rule)}
+  body.cpon canvas#c{left:0;width:100%;top:50%;height:calc(50% - var(--footH))}
+  .cpl{left:50%;transform:translateX(-50%);top:calc(50% + 10px)}
+  .cpw .ch{padding:max(10px,env(safe-area-inset-top)) 12px 8px}
+  .cpw .ch span{display:none}
+  .cpf{height:34px}.cpf button{padding:0 10px}
+  .cpv{margin:0 12px}
+  .cpk{display:none}
+  .cps{padding:8px 12px 0;gap:8px 14px}
+  .cps label{gap:2px}
+  .cpa{padding:8px 12px 10px}
+  .cpa button{height:40px}
+  .sides{left:12px;right:12px;transform:none;justify-content:center}
+  .sides .lb{display:none}
+  .sides button{flex:1;padding:0 4px;letter-spacing:.06em}
+}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
-<style>/* on abramsdesign.studio */.deskw,#deskSlot{display:none!important}</style></head>
+</head>
 <body>
 <canvas id="c" tabindex="0"></canvas>
 <div class="load" id="load"><div class="t">Arden House</div><div class="bar"><i id="lbar"></i></div></div>
@@ -552,6 +617,7 @@ body.shot .foot{display:none}
     <div class="wf" id="wkFoot">
       <button class="ctl" id="wkPlan" aria-pressed="true"><i></i><span>Plan</span></button>
       <button class="ctl" id="wkEdit" aria-pressed="false"><span>Edit path</span></button>
+      <button class="ctl" id="wkCam" title="Place a camera (C)" aria-keyshortcuts="C"><span>Place a camera</span></button>
     </div>
     <div class="wf we" id="wkEditBar">
       <button class="ctl" id="wkDone" aria-pressed="true"><span>Done</span></button>
@@ -568,12 +634,15 @@ body.shot .foot{display:none}
     <button class="tb" id="tSpd" aria-pressed="false" aria-label="Speed">1x</button>
     <button class="tb" id="tPan"><svg viewBox="0 0 16 16"><path d="M2 9.5c2.5-3 9.5-3 12 0"/><path d="M11.6 7.2 14 9.5l-2.9.9"/></svg><span>Pan</span></button>
     <button class="tb" id="tA"><span></span></button>
+    <button class="tb" id="tSq" aria-pressed="false" aria-label="Square the camera"><i class="dt"></i><span>Square</span></button>
     <button class="tb" id="tB"><span></span></button>
     <button class="tb" id="tC"><span></span></button>
     <i class="sep" id="tSep"></i>
     <button class="tb" id="tRec"><i class="rd"></i><span>Record</span></button>
     <button class="tb" id="tFrm"><svg viewBox="0 0 16 16"><rect x="2" y="3.5" width="9" height="7" rx="1"/><path d="M5 12.5h9V5.5"/></svg><span>Frames</span></button>
+    <button class="tb" id="tStl" aria-label="Export this view"><svg viewBox="0 0 16 16"><rect x="1.5" y="4" width="13" height="9" rx="1.5"/><circle cx="8" cy="8.5" r="2.4"/><path d="M5.5 4l1-1.6h3L10.5 4"/></svg><span>Export view</span></button>
   </div>
+  <div class="sides" id="sides" role="group" aria-label="Quick views"><span class="lb">Sides</span><button data-k="persp-water-side">3D</button><button data-k="elev-south">Water side</button><button data-k="elev-north">Front</button><button data-k="elev-east">Northwest</button><button data-k="elev-west">Southeast</button></div>
   <div class="cue mono" id="cue"></div>
   <div class="rlw" id="roamLab" aria-hidden="true"></div>
   <div class="cmp" id="cmp" aria-hidden="true"><svg viewBox="-23 -23 46 46"><path class="tk" d="M0-19.5v2.6M19.5 0h-2.6M0 19.5v-2.6M-19.5 0h2.6"/><g id="cmpN"><path class="nd" d="M0-12.5 3.6 1.2 0-.6-3.6 1.2z"/><path class="sd" d="M0 10.5 3.6 1.2 0-.6-3.6 1.2z"/><text id="cmpT" x="0" y="-16.4">N</text></g></svg></div>
@@ -601,7 +670,20 @@ body.shot .foot{display:none}
   <div class="cross" id="cross"></div>
   <div class="cap"></div>
 </div>
-<footer class="foot"><span>Concept by Abrams Design Studio</span></footer>
+<div class="cpw" id="cpw" role="dialog" aria-label="Place a camera">
+  <div class="ch"><div><b>Place a camera</b><span>Tap the plan to set it, drag the dot to move, drag the ring to turn</span></div>
+    <div class="cpf" id="cpFl" role="group" aria-label="Floor"><button data-fl="L1" aria-pressed="true">Ground</button><button data-fl="L2" aria-pressed="false">Upper</button><button data-fl="R" aria-pressed="false">Roof</button></div></div>
+  <div class="cpv" id="cpv"><canvas id="cpCv" tabindex="0" aria-label="Plan"></canvas>
+    <div class="cpz"><button id="cpZi" aria-label="Zoom in">+</button><button id="cpZo" aria-label="Zoom out">&minus;</button></div>
+    <div class="cpk" id="cpK"></div></div>
+  <div class="cps">
+    <label><span>Turn <output id="cpTurnO"></output></span><input type="range" id="cpTurn" min="0" max="359" step="1"></label>
+    <label><span>Tilt <output id="cpTiltO"></output></span><input type="range" id="cpTilt" min="-35" max="35" step="0.5"></label>
+  </div>
+  <div class="cpa"><button class="no" id="cpNo">Cancel</button><button class="ok" id="cpOk">Accept</button></div>
+</div>
+<div class="cpl" id="cpl">What the camera sees</div>
+<footer class="foot"><span>Meerah by Abrams Design Studio</span></footer>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -1028,8 +1110,9 @@ function sheet(url, w, x, z, ry, y){
   m.rotation.x=-Math.PI/2; m.rotation.z=ry; m.position.set(x,TOP+y,z); m.receiveShadow=true; m.castShadow=true; props.add(m); return m;
 }
 // Rev 09: drawings, tools and materials gathered in front of the model so all three read together in every 3D view
-sheet('a2-desk-r178.webp', .6, -.655, .655, .1, .0012);   // Rev 17.8.4: clear of the base
-sheet('a1-desk-r178.webp', .62, -.525, .715, -.04, .0024);
+// Rev 17.11 (Jason): the plans, roll and pencils turned as one group, square to the model's water side edge
+sheet('a2-desk-r178.webp', .75, -.4411, .6768, -.1236, .0012);   // Rev 17.14 (Jason): moved in to the model's water-side front corner, same offset to A-101
+sheet('a1-desk-r178.webp', .775, -.29, .75, -.2636, .0024);   // Rev 17.14 (Jason): at the model's water-side front corner, tucked about 2" under the water edge as on Desk composition
 const paper = new THREE.MeshStandardMaterial({color:0xfbfaf8,roughness:.9,side:THREE.DoubleSide});
 function roll(r, len, x, z, ry, turns){
   const g=new THREE.Group();
@@ -1040,7 +1123,7 @@ function roll(r, len, x, z, ry, turns){
     const cap=new THREE.Mesh(new THREE.RingGeometry(r*.2,r,40),new THREE.MeshStandardMaterial({color:0xf2f0ec,roughness:.9,side:THREE.DoubleSide})); cap.rotation.x=Math.PI/2; cap.position.y=s*len/2*.995; g.add(cap);}
   g.rotation.set(Math.PI/2,0,0); const o=new THREE.Group(); o.add(g); o.rotation.y=ry; o.position.set(x,TOP+r,z); props.add(o); return o;
 }
-roll(.05,.62,-.905,.625,.22,3);   // Rev 17.8.4: one roll, as on the desk
+roll(.05,.62,-1.0,.40,-.2636,3);   // Rev 17.14 (Jason): moved up to where the plans were;   // Rev 17.8.4: one roll, as on the desk; Rev 17.12: moved with the plans, still at their curled edge
 // steel ruler and two pencils
 {
   const ru=new THREE.Mesh(new THREE.BoxGeometry(.32,.0015,.03),[new THREE.MeshStandardMaterial({color:0xb9bcbe,metalness:.8,roughness:.35}),new THREE.MeshStandardMaterial({color:0xb9bcbe,metalness:.8,roughness:.35}),new THREE.MeshStandardMaterial({map:TX.ruler,color:0xb4b8bb,metalness:.55,roughness:.3}),new THREE.MeshStandardMaterial({color:0xb9bcbe,metalness:.8,roughness:.35}),new THREE.MeshStandardMaterial({color:0xb9bcbe,metalness:.8,roughness:.35}),new THREE.MeshStandardMaterial({color:0xb9bcbe,metalness:.8,roughness:.35})]);
@@ -1048,12 +1131,13 @@ roll(.05,.62,-.905,.625,.22,3);   // Rev 17.8.4: one roll, as on the desk
   const pm=new THREE.MeshStandardMaterial({color:0x151515,roughness:.45}), wood=new THREE.MeshStandardMaterial({color:0xd9b98d,roughness:.8}), lead=new THREE.MeshStandardMaterial({color:0x222222});
   const pencil=(x,z,ry)=>{const g=new THREE.Group();const b=new THREE.Mesh(new THREE.CylinderGeometry(.0042,.0042,.17,6),pm);g.add(b);const c=new THREE.Mesh(new THREE.ConeGeometry(.0042,.02,6),wood);c.position.y=.095;g.add(c);const l=new THREE.Mesh(new THREE.ConeGeometry(.0013,.006,6),lead);l.position.y=.106;g.add(l);
     g.rotation.set(Math.PI/2,0,0);const o=new THREE.Group();o.add(g);o.rotation.y=ry;o.position.set(x,TOP+.0024+.0042,z);o.traverse(m=>m.castShadow=m.receiveShadow=true);props.add(o);};
-  pencil(-.325,.805,-.45); pencil(-.285,.83,-.6);
+  pencil(-.0718,.915,-.6736);   // Rev 17.13: rides along on A-101
   // material swatches: limestone, oak, perforated walnut
   const sw=(x,z,mat,ry)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(.11,.012,.11),mat);m.position.set(x,TOP+.006,z);m.rotation.y=ry;m.castShadow=m.receiveShadow=true;props.add(m);};
-  sw(.023,.747,new THREE.MeshStandardMaterial({map:TX.lime,roughness:.85}),-.06);
-  sw(.153,.755,new THREE.MeshStandardMaterial({map:TX.oak,roughness:.6}),-.06);
-  sw(.283,.763,new THREE.MeshStandardMaterial({map:TX.perf,roughness:.6}),-.06);
+  // Rev 17.11 (Jason): the three samples in a row square to the model's right edge, 2" off it; Rev 17.12: slid down so the last one lines up with the water-side edge
+  sw(.4095,.4586,new THREE.MeshStandardMaterial({map:TX.lime,roughness:.85}),-.5236);
+  sw(.3445,.5712,new THREE.MeshStandardMaterial({map:TX.oak,roughness:.6}),-.5236);
+  sw(.2795,.6838,new THREE.MeshStandardMaterial({map:TX.perf,roughness:.6}),-.5236);
 }
 // Rev 17.7: a soft contact shadow under each thing on the table, so it reads set down
 const deskCS = new THREE.Group(); props.add(deskCS);
@@ -1064,8 +1148,8 @@ const deskCS = new THREE.Group(); props.add(deskCS);
   const cs = (x, z, w, d, ry, a, par)=>{ const m = new THREE.Mesh(new THREE.PlaneGeometry(w, d), new THREE.MeshBasicMaterial({map:tx, transparent:true, opacity:a, depthWrite:false, polygonOffset:true, polygonOffsetFactor:-1, polygonOffsetUnits:-2}));
     m.rotation.x = -Math.PI / 2; m.rotation.z = ry; m.position.set(x, TOP + .0004, z); m.renderOrder = 1; m.userData.nobb = true; (par || deskCS).add(m); return m; };
   cs(-.86, -.2, .29, .29, 0, .42);                                  // lamp base
-  cs(-.905, .625, .14, .7, .22, .34);   // the roll
-  [[.023, .747], [.153, .755], [.283, .763]].forEach(([x, z])=>cs(x, z, .15, .15, -.06, .32));   // swatches
+  cs(-1.0, .40, .14, .7, -.2636, .34);   // the roll
+  [[.4095, .4586], [.3445, .5712], [.2795, .6838]].forEach(([x, z])=>cs(x, z, .15, .15, -.5236, .32));   // swatches
 }
 // potted palm by the window
 let pottedPalm = null;
@@ -1087,6 +1171,24 @@ const catcher = new THREE.Mesh(new THREE.PlaneGeometry(6,6), new THREE.ShadowMat
 /* ---------- modes & controls ---------- */
 const orbit = new OrbitControls(camera, canvas);
 orbit.enableDamping = true; orbit.dampingFactor = .07; orbit.rotateSpeed=.6;
+// Rev 17.13 (Jason): the wheel eases in and out in small steps. three's own wheel zoom took a 5% jump on every wheel event,
+// so a smooth-scrolling mouse or a trackpad lunged forward. Caught at the window before OrbitControls sees it; pinch on a phone is untouched.
+const ZM = {f:1};
+addEventListener('wheel', e=>{
+  if (e.target !== canvas || mode === 'walk' || SHOT || !orbit.enabled) return;
+  e.preventDefault(); e.stopPropagation();
+  let d = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * 400 : e.deltaY;
+  d = Math.max(-120, Math.min(120, d));
+  ZM.f = Math.max(.3, Math.min(3, ZM.f * Math.exp(d * (e.ctrlKey ? .006 : .0011))));
+}, {capture:true, passive:false});
+function tickWheel(dt){
+  if (Math.abs(ZM.f - 1) < 1e-4 || tween){ ZM.f = 1; return; }
+  const k = Math.pow(ZM.f, Math.min(1, dt * 10)); ZM.f /= k;
+  const cm = orbit.object;
+  if (cm.isOrthographicCamera){ cm.zoom = Math.max(orbit.minZoom, Math.min(orbit.maxZoom, cm.zoom / k)); cm.updateProjectionMatrix(); return; }
+  const off = cm.position.clone().sub(orbit.target), L = off.length() || 1, nL = Math.max(orbit.minDistance, Math.min(orbit.maxDistance, L * k));
+  cm.position.copy(orbit.target).add(off.multiplyScalar(nL / L));
+}
 let mode = 'model', mini = null, MC = new THREE.Vector3();
 const hint = document.getElementById('hint'), stickEl=document.getElementById('stick'), knob=document.getElementById('knob'), cross=document.getElementById('cross'), ttl=document.getElementById('ttl');
 const touchy = matchMedia('(pointer:coarse)').matches;
@@ -1097,12 +1199,20 @@ function setHint(t){hint.textContent=t;hint.style.opacity=1;clearTimeout(setHint
 const PRESET = {
   'persp-water-side':[10,38,2.05,34], 'persp-west-corner':[-44,36,2.05,34], 'aerial-southeast':[40,56,2.1,34], 'aerial-northwest':[-138,54,2.1,34],
   'persp-street-entry':[-158,22,1.75,34], 'persp-northeast':[152,26,1.8,34], 'elev-south':[0,4,3.1,17], 'elev-north':[180,4,3.1,17],
-  'elev-east':[90,4,3.1,17], 'elev-west':[-90,4,3.1,17], 'roof-plan':[180,89.5,2.75,22]
+  'elev-east':[90,4,3.1,17], 'elev-west':[-90,4,3.1,17], 'roof-plan':[180,89.5,2.75,22],
+  'desk-composition':[-6,17,2.75,28]   // Rev 17.11 (Jason): a still life for rendering, the room behind
 };
+const CMP_T = [-.1,-.05,.2];
 function presetCam(name, onDesk){
   let [az,el,d,fov]=PRESET[name]||PRESET['persp-water-side'];
   const flat = el<10||el>80;
   lamp.visible = !(onDesk && el>80);
+  if (onDesk && name==='desk-composition'){
+    pivot.rotation.y = -30*Math.PI/180;
+    d *= Math.max(1, Math.min(2.4, 1.6/(camera.aspect||1.6)));   // a narrow screen steps back so the whole still life fits across
+    const a=az*Math.PI/180, e=el*Math.PI/180, tgt=MC.clone().add(new THREE.Vector3(CMP_T[0],CMP_T[1],CMP_T[2]));
+    return {pos:tgt.clone().add(new THREE.Vector3(Math.sin(a)*Math.cos(e), Math.sin(e), Math.cos(a)*Math.cos(e)).multiplyScalar(d)), tgt, fov};
+  }
   // Rev 10: in the preview the model sits turned 30 deg clockwise (seen from above) on its board by default
   const turn = onDesk && name==='persp-water-side' ? -30*Math.PI/180 : 0;
   if (onDesk){ const az0 = flat ? 0 : 10; pivot.rotation.y = (az0-az)*Math.PI/180 + turn; az = az0; if (el<10){ el = 7; d = 2.35; } }
@@ -1231,7 +1341,7 @@ function tickSpin(){
 const ocam = new THREE.OrthographicCamera(-1, 1, 1, -1, .005, 12);
 let orthoV = null, curView = 'persp-water-side';
 const VIEWS = [
-  ['Perspective', [['persp-water-side','Water side'], ['persp-west-corner','East corner'], ['persp-northeast','West corner'], ['persp-street-entry','Street'], ['aerial-southeast','Aerial, water'], ['aerial-northwest','Aerial, street']]],
+  ['Perspective', [['desk-composition','Desk composition'], ['persp-water-side','Water side'], ['persp-west-corner','East corner'], ['persp-northeast','West corner'], ['persp-street-entry','Street'], ['aerial-southeast','Aerial, water'], ['aerial-northwest','Aerial, street']]],
   ['Elevations', [['elev-south','Northeast'], ['elev-north','Southwest'], ['elev-east','Northwest'], ['elev-west','Southeast']]],
   ['Plans', [['roof-plan','Roof and site']]]
 ];
@@ -1339,7 +1449,7 @@ function itemName(sec, k){
   if (sec === 'plans') return VNAME[k] || '';
   return '';
 }
-function navSync(){
+function navSync(){ sidesSync();
   navEl.querySelectorAll('.pill').forEach(b=>{
     const s = b.dataset.nav, sv = b.querySelector('.sv');
     b.setAttribute('aria-pressed', s === navSec);
@@ -1360,6 +1470,8 @@ function buildMenu(sec){
     M_.append(mh('Move freely'));
     for (const [k, t, d] of EXPLORE) M_.append(mi(t, d, on('explore', k), ()=>{ close(); act('explore', k); }));
   } else if (sec === 'views'){
+    M_.append(mh('Camera'));
+    { const b = mi('Place a camera', 'On the plan, beside the view', false, ()=>{ close(); cpOpen(); }); b.insertAdjacentHTML('beforeend', '<kbd class="mono">C</kbd>'); b.title = 'Place a camera (C)'; M_.append(b); }
     M_.append(mh('At eye level'));
     for (const st of STATIONS){
       const b = mi(st.label, FLOORS[st.floor], on('views', st.id), ()=>{ close(); act('views', st.id); });
@@ -1450,7 +1562,7 @@ function act(sec, k){
 /* ---------- the playback bar: pause, direction, speed, the walk's stops, the pan, record and frames ---------- */
 const transEl = document.getElementById('trans'), T_ = id=>document.getElementById(id);
 const tPlay = T_('tPlay'), tPrev = T_('tPrev'), tNext = T_('tNext'), tLbl = T_('tLbl'), tDir = T_('tDir'), tSpd = T_('tSpd'), tPan = T_('tPan');
-const tA = T_('tA'), tB = T_('tB'), tC = T_('tC'), tSep = T_('tSep'), tRec = T_('tRec'), tFrm = T_('tFrm');
+const tA = T_('tA'), tB = T_('tB'), tC = T_('tC'), tSep = T_('tSep'), tRec = T_('tRec'), tFrm = T_('tFrm'), tSq = T_('tSq'), tStl = T_('tStl');
 let dl = null;                                          // the page's file saving, where the viewer allows it
 const show = (el, on)=>el.classList.toggle('on', !!on);
 function transSync(){
@@ -1463,23 +1575,26 @@ function transSync(){
   const panUI = walk && ps > 0, aimUI = walk && AIM.on && !panUI;
   const bar = panUI || aimUI;
   show(tPrev, walk && !bar && !busy); show(tNext, walk && !bar && !busy); show(tLbl, walk && !bar);
-  show(tPlay, !bar && !(busy && !REC)); show(tDir, motion === 'spin' && !busy); show(tSpd, (moving || walk) && !bar && !busy);
+  show(tPlay, !bar && !(busy && !REC));
+  show(tSq, aimUI); if (aimUI) tSq.setAttribute('aria-pressed', !!AIM.sq); show(tDir, motion === 'spin' && !busy); show(tSpd, (moving || walk) && !bar && !busy);
   show(tPan, walk && !bar && !busy);
-  const playing = walk ? (WP.play || WP.goal !== null) : !paused;
+  const playing = walk ? (WP.play || WP.goal !== null || !!WP.route || !!WP.seg) : !paused;   // Rev 17.9 (Jason): any walk in motion can be paused
   tPlay.classList.toggle('paused', !playing);
   tPlay.querySelector('span').textContent = walk ? (playing ? 'Pause' : 'Play walk') : (paused ? 'Play' : 'Pause');
   const labs = aimUI ? (AIM.kind === 'add' ? ['Add camera', 'Not now'] : ['Set view', 'Cancel']) : ps === 1 ? ['Set start', 'Cancel'] : ps === 2 ? ['Set end', 'Cancel'] : ps === 3 ? ['Stop'] : ps === 4 ? (dl ? ['Save', 'Redo', 'Delete'] : ['Redo', 'Done']) : [];
   [tA, tB, tC].forEach((b, i)=>{ show(b, bar && labs[i]); b.querySelector('span').textContent = labs[i] || ''; b.classList.toggle('hi', i === 0 && ps !== 3); });
   const ex = !!dl && !bar;
-  show(tSep, ex); show(tRec, ex && !FR.busy); show(tFrm, ex && !REC);
+  show(tSep, ex); show(tRec, ex && !FR.busy); show(tFrm, ex && !REC && !FR.still); show(tStl, ex && walk && !REC && (!FR.busy || FR.still));
+  tFrm.classList.toggle('live', FR.busy && !FR.still); tStl.classList.toggle('live', !!FR.still);
   tRec.classList.toggle('live', !!REC); if (!REC) tRec.querySelector('span').textContent = 'Record';
   if (!FR.busy) tFrm.querySelector('span').textContent = 'Frames';
+  if (!FR.still) tStl.querySelector('span').textContent = 'Export view';
   if (walk){ const s = stopsList(), c = s.findIndex(q=>q.i === curStop()); tLbl.querySelector('.n').textContent = s.length ? `${c + 1} / ${s.length}` : ''; tLbl.querySelector('.s').textContent = c >= 0 ? s[c].n : ''; }
   tSpd.textContent = spinSpd + 'x'; tSpd.setAttribute('aria-pressed', spinSpd === 2);
   tDir.setAttribute('aria-pressed', spinDir < 0);
 }
 tPlay.addEventListener('click', ()=>{
-  if (mode === 'walk'){ if (WP.play || WP.goal !== null) walkStop(); else walkPlay(); }
+  if (mode === 'walk'){ if (WP.play || WP.goal !== null || WP.route || WP.seg){ walkStop(); setHint('Walk paused'); } else walkPlay(); }
   else setPaused(!paused);
   canvas.focus();
 });
@@ -1493,7 +1608,9 @@ tA.addEventListener('click', ()=>{ if (AIM.on && !PAN.step) aimPress(0); else pa
 tB.addEventListener('click', ()=>{ if (AIM.on && !PAN.step) aimPress(1); else panPress(1); canvas.focus(); });
 tC.addEventListener('click', ()=>{ panPress(2); canvas.focus(); });
 tRec.addEventListener('click', ()=>{ if (REC) recEnd(); else recCycle(); canvas.focus(); });
-tFrm.addEventListener('click', ()=>{ if (!FR.busy) framesExport(); canvas.focus(); });
+tFrm.addEventListener('click', ()=>{ if (!FR.busy) framesExport(); else if (!FR.still) FR.stop = true; canvas.focus(); });   // Rev 17.9 (Jason): Frames can be stopped
+tSq.addEventListener('click', ()=>{ aimSquare(); canvas.focus(); });
+tStl.addEventListener('click', ()=>{ if (!FR.busy) stillExport(); canvas.focus(); });
 const cueEl = document.getElementById('cue');
 function cue(t, sub, ms=1800){ cueEl.innerHTML = ''; cueEl.append(document.createTextNode(t)); if (sub){ const s = document.createElement('small'); s.textContent = sub; cueEl.append(s); } cueEl.classList.add('on'); clearTimeout(cue.h); if (ms) cue.h = setTimeout(()=>cueEl.classList.remove('on'), ms); }
 function cueOff(){ clearTimeout(cue.h); cueEl.classList.remove('on'); }
@@ -1617,10 +1734,13 @@ function applyLighting(){
   roomFill.intensity = inDesk ? .3 * Lp : 0;
   setEnv(inDesk ? mix(.06, .26) : (dusk?.18:eve?.3:.5));
   if (miniLights) miniLights.visible = inDesk && lightsOn;
+  dayFill.visible = !lightsOn && !inDesk;
   roomG.visible = props.visible = slab.visible = ped.visible = !clean;
   catcher.visible = clean;
 }
 let miniLights=null;
+const dayFill = new THREE.Group(); scene.add(dayFill);
+const DAYFILL = {i: 18, d: 15};   // Rev 17.8.22: interior daylight fill (site and walk views; the desk model stays as it was)
 function setEnv(k){ scene.traverse(o=>{ const ms=o.material?(Array.isArray(o.material)?o.material:[o.material]):[]; for(const m of ms){ if(m.envMapIntensity===undefined) continue; if(m.userData.envBase===undefined) m.userData.envBase=m.envMapIntensity; m.envMapIntensity=m.userData.envBase*k; } }); }
 
 /* ---------- walking ---------- */
@@ -1880,7 +2000,8 @@ function segBlocked(a, b){
   for (const h of [.9, 1.5]){ ray.set(new THREE.Vector3(a.x, Math.max(a.y, b.y) + h, a.z), d); ray.far = L; if (ray.intersectObjects(colliders, false).length) return true; }
   return Math.abs(b.y - a.y) > 1.5 && L < Math.abs(b.y - a.y);   // a climb steeper than any stair is a cut
 }
-function placeAt(i){ const v = stopPos(i); player.pos.copy(v); player.yaw = stopYaw(i); player.pitch = -.04; WP.i = i; WP.settle = null; curStation = null; }
+function placeAt(i){ const v = stopPos(i); player.pos.copy(v); player.yaw = stopYaw(i); player.pitch = -.04; WP.i = i; WP.settle = null; curStation = null;
+  const p = WP.pts[i]; if (p && isFinite(p.t)) player.pitch = p.t; if (p && p.sq && isFinite(p.v)) player.pitch = p.v; sqMark(i); }
 // the straight glide of 17.6, kept for a leg the floor map cannot route (another floor): a cut where it would pass a wall
 function walkGo(i, instant){
   if (!WP.pts.length) return;
@@ -1899,6 +2020,7 @@ function cutTo(i){
 }
 function arrive(i){
   WP.i = i; WP.seg = null; WP.route = null;
+  { const p = WP.pts[i]; sqMark(i); if (p && p.sq && isFinite(p.v)) WP.settleP = p.v; else if (p && isFinite(p.t)) WP.settleP = p.t; }
   if (WP.goal !== null){
     if (i === WP.goal){ WP.goal = null; WP.hold = 0; if (WP.play){ WP.play = false; if (REC && REC.kind === 'walk') setTimeout(()=>{ if (REC && REC.kind === 'walk') recEnd(); }, 1200); } }
     else WP.hold = WP.play && !WP.pts[i].via ? 1.4 : 0.001;
@@ -1920,7 +2042,7 @@ function walkStep(d){                       // the playback arrows: the previous
 // a stop picked freely (the list, the plan, a ring in Edit): straight there, the shortest way round the furniture
 function walkTo(i){
   WP.play = false; WP.goal = null; WP.hold = 0; WP.seg = null; WP.route = null;
-  if (i === WP.i && player.pos.distanceTo(stopPos(i)) < .3){ WP.settle = stopYaw(i); listSync(); transSync(); return; }
+  if (i === WP.i && player.pos.distanceTo(stopPos(i)) < .3){ WP.settle = stopYaw(i); { const p = WP.pts[i]; sqMark(i); if (p && p.sq && isFinite(p.v)) WP.settleP = p.v; else if (p && isFinite(p.t)) WP.settleP = p.t; } listSync(); transSync(); return; }
   const R = chainRoute([i]); if (R){ startRoute(R, i); return; }
   WP.goal = i; walkGo(i);
 }
@@ -1936,7 +2058,7 @@ function walkPlay(){
   if (WP.i >= WP.pts.length - 1) placeAt(0);
   WP.play = true; WP.goal = WP.pts.length - 1; WP.hold = .6; WP.route = null; transSync();
 }
-function walkStop(){ WP.play = false; WP.goal = null; WP.seg = null; WP.route = null; WP.hold = 0; if (typeof transSync === 'function') transSync(); }
+function walkStop(){ WP.play = false; WP.goal = null; WP.seg = null; WP.route = null; WP.hold = 0; WP.settleP = null; if (typeof transSync === 'function') transSync(); }
 function tickWalk(dt){
   tickZoom(dt); tickRoam(dt);
   if (WP.cut || PAN.step === 3) return;
@@ -1944,6 +2066,10 @@ function tickWalk(dt){
   if (WP.settle !== null && WP.settle !== undefined){
     if (look) WP.settle = null;
     else { player.yaw = lerpAng(player.yaw, WP.settle, 1 - Math.exp(-dt * 5)); if (Math.abs(lerpAng(0, WP.settle - player.yaw, 1)) < .003) WP.settle = null; }
+  }
+  if (WP.settleP !== null && WP.settleP !== undefined && !WP.seg){
+    if (look) WP.settleP = null;
+    else { player.pitch += (WP.settleP - player.pitch) * (1 - Math.exp(-dt * 5)); if (Math.abs(WP.settleP - player.pitch) < .002){ player.pitch = WP.settleP; WP.settleP = null; } }
   }
   if (WP.seg){
     const s = WP.seg, sp = 1.35 * spinSpd; s.t = Math.min(1, s.t + dt * sp / s.len);
@@ -1991,7 +2117,7 @@ function buildPathFx(){
   if (marks.length){
     chev = new THREE.InstancedMesh(chevGeo, chevMat, marks.length); chev.renderOrder = 6;
     const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), Y = new THREE.Vector3(0, 1, 0), one = new THREE.Vector3(1, 1, 1);
-    marks.forEach((mk, i)=>{ q.setFromAxisAngle(Y, mk.yaw); m4.compose(mk.v.clone().setY(mk.v.y + .002), q, one); chev.setMatrixAt(i, m4); chev.setColorAt(i, PATH_COL); chevS.push(mk.s); });
+    marks.forEach((mk, i)=>{ q.setFromAxisAngle(Y, mk.yaw + Math.PI); m4.compose(mk.v.clone().setY(mk.v.y + .002), q, one); chev.setMatrixAt(i, m4); chev.setColorAt(i, PATH_COL); chevS.push(mk.s); });
     pathG.add(chev);
   }
   WP.pts.forEach((p, i)=>{
@@ -2186,7 +2312,7 @@ async function panSave(){
 /* ---------- Rev 17.6 (Jason): export. Record makes a video of one full turn, one full orbit or the whole walk; Frames saves
    the same move as a numbered still sequence in a zip. Both are offered to the viewer to save. ---------- */
 let REC = null;
-const FR = {busy:false};
+const FR = {busy:false, stop:false, still:false};
 const VTYPES = ['video/mp4;codecs=avc1.640028', 'video/mp4;codecs=avc1', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm'];
 function recBegin(kind){
   if (REC || !canvas.captureStream || typeof MediaRecorder === 'undefined'){ if (kind === 'pan'){ return; } setHint('Recording is not available in this browser'); return; }
@@ -2225,7 +2351,7 @@ async function framesExport(){
   if (!dl || FR.busy) return;
   let JSZip; try { JSZip = await loadZip(); } catch(e){ setHint('Frames could not start just now'); return; }
   const kind = mode === 'walk' ? 'walk' : motion === 'spin' ? 'turntable' : 'orbit';
-  FR.busy = true; walkStop(); transSync();
+  FR.busy = true; FR.stop = false; walkStop(); sqOff(); transSync();
   const zip = new JSZip(), lab = tFrm.querySelector('span'), poses = [];
   const save0 = {pr:pivot.rotation.y, cp:camera.position.clone(), pp:player.pos.clone(), yaw:player.yaw, pitch:player.pitch};
   if (kind === 'turntable'){ for (let k = 0; k < 120; k++) poses.push(()=>{ pivot.rotation.y = save0.pr - spinDir * k * 2 * Math.PI / 120; }); }
@@ -2256,12 +2382,14 @@ async function framesExport(){
       const P_ = poses[k];
       if (typeof P_ === 'function') P_(); else { camera.position.set(P_.p.x, P_.p.y + EYE, P_.p.z); camera.rotation.order = 'YXZ'; camera.rotation.set(-.04, P_.yaw, 0); }
       if (mode !== 'walk') camera.updateMatrixWorld();
+      if (FR.stop){ ok = false; break; }
       const b = await grab(); zip.file(`arden-house-${kind}-${String(k + 1).padStart(4, '0')}.jpg`, b);
-      lab.textContent = `${k + 1} / ${poses.length}`;
+      lab.textContent = `Stop · ${k + 1} / ${poses.length}`;
       if (k % 4 === 3) await new Promise(r=>setTimeout(r, 0));
     }
   } catch(e){ ok = false; }
   pivot.rotation.y = save0.pr; camera.position.copy(save0.cp); player.pos.copy(save0.pp); player.yaw = save0.yaw; player.pitch = save0.pitch; if (mode !== 'walk') camera.lookAt(orbit.target);
+  if (FR.stop){ FR.busy = false; FR.stop = false; transSync(); setHint('Frames stopped'); return; }
   lab.textContent = 'Zipping'; let blob = null;
   if (ok) try { blob = await zip.generateAsync({type:'blob', compression:'STORE'}); } catch(e){ ok = false; }
   FR.busy = false; transSync();
@@ -2484,11 +2612,16 @@ function roamCompute(){
   for (const c of cand){ if (ROAM.list.length >= 6) break; if (ROAM.list.some(o=>Math.abs(Math.atan2(Math.sin(o.ang - c.ang), Math.cos(o.ang - c.ang))) < .45)) continue; ROAM.list.push(c); }
   const here = player.pos.clone();
   ROAM.list.forEach((c, i)=>{
-    const dx = Math.cos(c.ang), dy = Math.sin(c.ang), P = [A[0] + dx * 42, A[1] + dy * 42];
+    // Rev 17.9 (Jason: the arrows were "underneath" me): each arrow sits out along its own walk, where a 6' eye sees the floor
+    // (about 11' ahead, the bottom of the view), not at your feet; it points the way that walk goes from there
+    const pl = c.cells.map(cellXY); pl[0] = A; let L = 0; const cum = [0];
+    for (let k = 1; k < pl.length; k++){ L += Math.hypot(pl[k][0] - pl[k - 1][0], pl[k][1] - pl[k - 1][1]); cum.push(L); }
+    const at = D=>{ D = Math.max(0, Math.min(L, D)); let k = 1; while (k < pl.length - 1 && cum[k] < D) k++; const a = pl[k - 1], b = pl[k], u = (D - cum[k - 1]) / Math.max(1e-6, cum[k] - cum[k - 1]); return [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u]; };
+    const D = Math.max(42, Math.min(132, L - 18)), P = at(D), P0 = at(D - 30);
     const v = W(P[0], P[1], here.y / K); const gnd = groundAt(v, 1.2); v.y = (gnd === null ? here.y : gnd) + .013;
-    const yaw = planYaw(A, [A[0] + dx, A[1] + dy]);
+    const yaw = Math.hypot(P[0] - P0[0], P[1] - P0[1]) > 1 ? planYaw(P0, P) : planYaw(A, [A[0] + Math.cos(c.ang), A[1] + Math.sin(c.ang)]);
     const disc = new THREE.Mesh(roamDisc, roamDiscMat); disc.position.copy(v); disc.renderOrder = 5;
-    const m = new THREE.Mesh(roamGeo, roamMat.clone()); m.position.copy(v).setY(v.y + .002); m.rotation.y = yaw; m.renderOrder = 6;
+    const m = new THREE.Mesh(roamGeo, roamMat.clone()); m.position.copy(v).setY(v.y + .002); m.rotation.y = yaw + Math.PI; m.renderOrder = 6;   // Rev 17.9 (Jason): the arrow's point leads away from you, as on Street View (it pointed back at you)
     const hit = new THREE.Mesh(new THREE.CircleGeometry(.42, 20).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({visible:false})); hit.position.copy(v); hit.userData.roam = i;
     ROAM.g.add(disc, m, hit); c.mesh = m; c.hit = hit; c.pos = v;
     if (ROAM.lab){ const l = document.createElement('div'); l.className = 'rl mono'; l.textContent = c.n.charAt(0) + c.n.slice(1).toLowerCase(); ROAM.lab.append(l); c.el = l; }
@@ -2528,21 +2661,27 @@ function roamPick(e){
 canvas.addEventListener('pointermove', e=>{ if (e.pointerType !== 'mouse' || mode !== 'walk' || look) return; const i = roamPick(e); if (i !== ROAM.hov){ ROAM.hov = i; canvas.style.cursor = i >= 0 ? 'pointer' : ''; } });
 
 /* ---------- aiming a camera (Jason): in Edit, pick a stop and turn to set its view; pick a room to add a camera there ---------- */
-const AIM = {on:false, kind:null, i:-1, room:null};
+const AIM = {on:false, kind:null, i:-1, room:null, sq:false};
 const yawToH = y=>{ const dx = -Math.sin(y), dz = -Math.cos(y); return Math.round(Math.atan2(-dz, dx) * 180 / Math.PI * 10) / 10; };
 function aimBegin(kind, i, room){
   AIM.on = true; AIM.kind = kind; AIM.i = i; AIM.room = room || null; walkStop();
+  AIM.sq = kind === 'set' && !!(WP.pts[i] && WP.pts[i].sq);
   if (MM.big){ MM.big = false; mmEl.classList.remove('big'); }        // the plan steps aside so the view can be aimed
-  cue(kind === 'add' ? 'Aim the new camera' : 'Aim this camera', touchy ? 'drag to look, then Add camera' : 'hold the mouse to look, then ' + (kind === 'add' ? 'Add camera' : 'Set view'), 0);
+  aimCue();
   transSync(); listSync();
 }
-function aimEnd(msg){ const back = AIM.on && MM.edit; AIM.on = false; AIM.kind = null; AIM.i = -1; AIM.room = null; if (back) mmOpen(true); if (msg) cue(msg, null, 1500); else cueOff(); transSync(); listSync(); }
+function aimCue(){ const k = AIM.kind === 'add', go = k ? 'Add camera' : 'Set view';
+  cue(k ? 'Aim the new camera' : 'Aim this camera', AIM.sq ? (touchy ? 'square: drag up or down to raise or lower the frame, then ' : 'square: hold the mouse and move up or down to raise or lower the frame, then ') + go : (touchy ? 'drag to look, then ' : 'hold the mouse to look, then ') + go, 0); }
+// Rev 17.9 (Jason): Square holds the camera level, verticals truly vertical; looking up or down slides the frame instead of tilting it
+function aimSquare(){ if (!AIM.on) return; AIM.sq = !AIM.sq; aimCue(); transSync(); }
+function aimEnd(msg){ const back = AIM.on && MM.edit; AIM.on = false; AIM.kind = null; AIM.i = -1; AIM.room = null; AIM.sq = false; if (back) mmOpen(true); if (msg) cue(msg, null, 1500); else cueOff(); transSync(); listSync(); }
 function aimPress(k){
   if (k !== 0){ aimEnd(); return; }
-  const h = yawToH(player.yaw);
-  if (AIM.kind === 'set'){ const p = WP.pts[AIM.i]; if (p){ p.h = h; savePath(); buildPathFx(); } aimEnd('View set'); }
+  const h = yawToH(player.yaw), sq = AIM.sq, v = Math.round(player.pitch * 1000) / 1000;
+  const keep = p=>{ delete p.t; if (sq){ p.sq = 1; p.v = v; } else { delete p.sq; delete p.v; } return p; };
+  if (AIM.kind === 'set'){ const p = WP.pts[AIM.i]; if (p){ p.h = h; keep(p); savePath(); buildPathFx(); sqMark(AIM.i); } aimEnd(sq ? 'Square view set' : 'View set'); }
   else { const A = toPlan(player.pos), f = playerFloor(), n = AIM.room || roomName(f, A[0] / 12, A[1] / 12);
-    WP.pts.push({x:Math.round(A[0] / 12 * 4) / 4, y:Math.round(A[1] / 12 * 4) / 4, f, n, h}); WP.i = WP.pts.length - 1; savePath(); buildPathFx();
+    WP.pts.push(keep({x:Math.round(A[0] / 12 * 4) / 4, y:Math.round(A[1] / 12 * 4) / 4, f, n, h})); WP.i = WP.pts.length - 1; savePath(); buildPathFx(); sqMark(WP.i);
     aimEnd('Camera added as stop ' + stopsList().length); }
 }
 // a room chosen from the panel or the plan: walk there, the shortest way, then offer to add a camera
@@ -2562,6 +2701,44 @@ function roomGo(r){
     go(); requestAnimationFrame(()=>canvas.classList.remove('out'));
   }, 330);
 }
+
+/* ---------- Rev 17.9 (Jason): the square camera. Held level so verticals stay truly vertical (two-point), framed up or down by
+   sliding the frame the way an architectural shift lens does, never by tilting. On while aiming with Square on, and at any stop
+   saved square; walking off it hands the view back. ---------- */
+const SQ = {k:0, at:-1, pos:new THREE.Vector3()};
+function sqMark(i){ SQ.at = i; SQ.pos.copy(player.pos); }
+function sqWant(){
+  if (mode !== 'walk' || PAN.step || SHOT) return false;
+  if (AIM.on) return !!AIM.sq;
+  if (WP.seg || WP.route || WP.cut || SQ.at < 0) return false;
+  const p = WP.pts[SQ.at]; return !!(p && p.sq) && Math.hypot(player.pos.x - SQ.pos.x, player.pos.z - SQ.pos.z) < .2;
+}
+function sqOff(){ SQ.k = 0; if (camera.view && camera.view.enabled) camera.clearViewOffset(); }
+function sqApply(dt){
+  SQ.k += ((sqWant() ? 1 : 0) - SQ.k) * Math.min(1, dt * 8); if (SQ.k < .002) SQ.k = 0; else if (SQ.k > .998) SQ.k = 1;
+  const k = SQ.k; camera.rotation.order = 'YXZ'; camera.rotation.set(player.pitch * (1 - k), player.yaw, 0);
+  if (!k){ if (camera.view && camera.view.enabled) camera.clearViewOffset(); return; }
+  // where the eye was aimed lands on the centre of the frame: the frame slides by that point's height on a level camera
+  const s = Math.max(-.5, Math.min(.5, Math.tan(player.pitch) / Math.tan(camera.fov * Math.PI / 360) / 2)) * k;
+  camera.setViewOffset(1000, 1000, 0, -s * 1000, 1000, 1000);
+}
+// Export view: the view as the camera sees it, 3840 px on the long side, no path, arrows or panels, saved for rendering
+async function stillExport(){
+  if (!dl || FR.busy) return;
+  FR.busy = true; FR.still = true; transSync(); tStl.querySelector('span').textContent = 'Exporting';
+  await new Promise(r=>requestAnimationFrame(()=>r()));
+  const w0 = cvW(), h0 = cvH(), sc = 3840 / Math.max(w0, h0), w = Math.round(w0 * sc), h = Math.round(h0 * sc);
+  const vis = [pathG, ROAM.g].map(o=>[o, o.visible]); vis.forEach(([o])=>o.visible = false);
+  const pr = renderer.getPixelRatio(); let blob = null;
+  try { renderer.setPixelRatio(1); renderer.setSize(w, h, false); linesRes(); if (composer) composer.setSize(w, h); blob = await grabPng(); } catch(e){ blob = null; }
+  renderer.setSize(w0, h0, false); renderer.setPixelRatio(pr); vis.forEach(([o, v])=>o.visible = v); resize();
+  const st = SQ.at >= 0 && WP.pts[SQ.at] && !WP.pts[SQ.at].via && Math.hypot(player.pos.x - SQ.pos.x, player.pos.z - SQ.pos.z) < .2 ? WP.pts[SQ.at].n : 'view';
+  const mm = Math.round(12 / Math.tan(camera.fov * Math.PI / 360)), slug = String(st).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'view';
+  FR.busy = false; FR.still = false; transSync();
+  if (!blob){ setHint('The view could not be exported just now'); return; }
+  try { await dl.save({filename:`arden-house-${slug}-${mm}mm${SQ.k > .5 ? '-square' : ''}.png`, data:blob}); setHint('View exported'); } catch(e){ if (e && e.code !== 'declined') setHint('The view was not saved'); }
+}
+const grabPng = ()=>new Promise(r=>{ draw(); canvas.toBlob(r, 'image/png'); });
 
 /* ---------- Rev 17.6 (Jason): a north arrow that turns with the view, and a tape that measures the model to scale.
    True north runs toward plan +x, -y (the drawings' north arrow, 315 on the turned sheets). The tape reads in the house's own
@@ -2893,6 +3070,7 @@ addEventListener('keydown', e=>{
   if (k === 'm'){ msSet(!MS.on); if (menuFor === 'more') buildMenu('more'); }
   else if (k === 'p' && mode === 'walk') document.getElementById('wkPlan').click();
   else if (k === 'n'){ setCompass(!cmpOn); if (menuFor === 'more') buildMenu('more'); }
+  else if (k === 'c' && !(CP && CP.on)) cpOpen();
 });
 // the north arrow sits on top of the Walk plan, right edges flush, and rides up with it when the plan opens
 let _cmpAt = '';
@@ -3022,20 +3200,22 @@ function frame(){
     }
     tickWalk(dt); tickVPan(dt);
     snapGround(false);
+    if (CP && CP.on) cpApply();
     camera.position.set(player.pos.x, player.pos.y+EYE, player.pos.z);
-    camera.rotation.order='YXZ'; camera.rotation.set(player.pitch, player.yaw, 0);
+    sqApply(dt);
     mmTick(); tickPathFx(t);
   } else if (!SHOT){
+    if (SQ.k || (camera.view && camera.view.enabled)) sqOff();
     tickSpin(); tickPan(dt);
     orbit.autoRotate = motion==='orbit' && !paused && !tween; orbit.autoRotateSpeed = 60/48*spinSpd;
     if (orbit.autoRotate){ cycleAng += 2*Math.PI/48*spinSpd*dt; if (REC && REC.kind==='orbit' && cycleAng >= 2*Math.PI) recEnd(); }
-    orbit.update(dt);
+    tickWheel(dt); orbit.update(dt);
     if (mode==='model'){ const o=orbit.target, c=MC, lim=.55; const dx=Math.max(-lim,Math.min(lim,o.x-c.x))-(o.x-c.x), dy=Math.max(-.12,Math.min(.25,o.y-c.y))-(o.y-c.y), dz=Math.max(-lim,Math.min(lim,o.z-c.z))-(o.z-c.z);
       if (dx||dy||dz){ const cm=orbit.object; o.x+=dx; o.y+=dy; o.z+=dz; cm.position.x+=dx; cm.position.y+=dy; cm.position.z+=dz; } }
     if (mode!=='walk') pathG.visible = false;
   }
   sky.position.copy(camera.position);
-  cmpTick(); msTick(); uiTick();
+  cmpTick(); msTick(); uiTick(); deskVis();
   draw();
   requestAnimationFrame(frame);
 }
@@ -3051,6 +3231,8 @@ function frame(){
     const L = new THREE.PointLight(0xffc68c, 9, 12, 1.6); L.position.copy(W(x,y,z)); houseLights.add(L);
     const d = new THREE.Mesh(new THREE.CircleGeometry(.12,24), new THREE.MeshBasicMaterial({color:0xfff0d8})); d.position.copy(W(x,y,z+5)); d.rotation.x=Math.PI/2; houseLights.add(d);
   }
+  // Rev 17.8.22 (Jason): "make the interiors brighter": a soft daylight fill at each ceiling light, on only while the house lights are off, so the rooms read through the glass; short reach so the outside keeps its look
+  for (const [x,y,z] of data.lights){ const F = new THREE.PointLight(0xfff2e2, DAYFILL.i, DAYFILL.d, 1.4); F.position.copy(W(x,y,z-14)); dayFill.add(F); }
   const pl = new THREE.PointLight(0x3fe0e8, 5, 9, 1.6); pl.position.copy(W((data.pool[0]+data.pool[2])/2,(data.pool[1]+data.pool[3])/2,-10)); houseLights.add(pl);
   // potted palm in the studio, a real crown at room scale
   { const c=new THREE.Mesh(crownGeo(92,18,77), MAT.frond); c.scale.setScalar(K*.42); c.rotation.x=-Math.PI/2; c.position.y=1.15; c.castShadow=true; pottedPalm.add(c);
@@ -3125,7 +3307,7 @@ function frame(){
     WP.pts = loadPath(); buildPathFx(); listSync(); navLoad(); usInit();
     setMode('model', true); setCompass(true); if (Q.get('lines')) setLines(Q.get('lines'));
     window.__ms = MS; window.__msHit = msHit; window.__msPick = msPick; window.__msSet = msSet;
-    window.__view = showView; window.__lines = setLines; window.__turn = ()=>[motion, +pivot.rotation.y.toFixed(3)]; window.__act = act; window.__wp = WP; window.__pan = PAN; window.__mmOpen = mmOpen; window.__MM = MM; window.__nav = NAV; window.__walkTo = walkTo; window.__roam = ROAM; window.__player = player; window.__roamGo = roamGo; window.__roomGo = roomGo; window.__editPick = editPick; window.__walkEdit = walkEdit; window.__placeAt = placeAt; window.__mode = ()=>mode; window.__mmStop = i=>{ const L = MM.lay, r = mmCv.getBoundingClientRect(), p = WP.pts[i]; return L ? [r.left + L.ox + (L.x1 - p.x * 12) * L.sc, r.top + L.oy + (p.y * 12 - L.y0) * L.sc] : null; };
+    window.__view = showView; window.__PRESET = PRESET; window.__CMPT = CMP_T; window.__lines = setLines; window.__turn = ()=>[motion, +pivot.rotation.y.toFixed(3)]; window.__act = act; window.__wp = WP; window.__pan = PAN; window.__mmOpen = mmOpen; window.__MM = MM; window.__nav = NAV; window.__walkTo = walkTo; window.__roam = ROAM; window.__player = player; window.__roamGo = roamGo; window.__roomGo = roomGo; window.__editPick = editPick; window.__walkEdit = walkEdit; window.__placeAt = placeAt; window.__mode = ()=>mode; window.__mmStop = i=>{ const L = MM.lay, r = mmCv.getBoundingClientRect(), p = WP.pts[i]; return L ? [r.left + L.ox + (L.x1 - p.x * 12) * L.sc, r.top + L.oy + (p.y * 12 - L.y0) * L.sc] : null; };
     // saving files, where the viewer allows it (the claude.ai page); without it Record, Frames and Save stay hidden
     (async()=>{ try { const c = window.claude; dl = c && c.use ? await c.use('downloads') : null; } catch(e){ dl = null; } if (window.__dlStub) dl = window.__dlStub; transSync(); })();
     requestAnimationFrame(frame);
@@ -3180,11 +3362,11 @@ function UmbrellaSession(o) {
   function show(step) { modal.querySelectorAll('.us-step').forEach(e => e.hidden = e.dataset.s !== String(step)); modal.classList.add('open'); setTimeout(() => { const b = modal.querySelector(`.us-step[data-s="${step}"] .solid`); b && b.focus(); }, 60); }
   function hide() { modal.classList.remove('open'); }
   function leave() {
-    dirty = false; $('.us-leave').classList.add('on');
+    dirty = false; if (!o.deskUrl) return; $('.us-leave').classList.add('on');
     setTimeout(() => { if (o.deskUrl) { const a = document.createElement('a'); a.href = o.deskUrl; a.target = '_top'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); } }, 650);
     setTimeout(() => $('.us-leave').classList.remove('on'), 4000);
   }
-  function exit() { click(); if (dirty) show(1); else leave(); }
+  function exit() { click(); if (o.back && o.back()) return; if (dirty) show(1); else leave(); }
   o.deskEl.querySelector('.us-desk').addEventListener('click', exit);
   saveBtn.addEventListener('click', e => { click(); const op = !menu.classList.contains('open'); menu.classList.toggle('open', op); saveBtn.setAttribute('aria-expanded', op); paint(); e.stopPropagation(); });
   document.addEventListener('click', e => { if (!o.saveEl.contains(e.target)) { menu.classList.remove('open'); saveBtn.setAttribute('aria-expanded', 'false'); } });
@@ -3217,12 +3399,173 @@ function UmbrellaSession(o) {
   };
 }
 
+/* ---------- Rev 17.10 (Jason): drop a camera on the plan, move, turn and tilt it there while the view beside it shows
+   what it sees, then Accept; the camera joins the walk as a stop. And the model's sides, one tap each ---------- */
+var CP = {on:false, f:'L1', x:0, y:0, h:0, t:-.04, v:null, z:1.4, cx:0, cy:0, ext:null, drag:null, ptrs:new Map(), dirty:true};
+const cpEl = document.getElementById('cpw'), cpCv = document.getElementById('cpCv'), cpG = cpCv.getContext('2d');
+const cpTurn = document.getElementById('cpTurn'), cpTilt = document.getElementById('cpTilt'), cpTurnO = document.getElementById('cpTurnO'), cpTiltO = document.getElementById('cpTiltO');
+const cpFl = document.getElementById('cpFl'), cpK = document.getElementById('cpK');
+const cpN = h=>((h % 360) + 360) % 360;
+function cpExt(){
+  if (CP.ext) return CP.ext;
+  const d = MM.d; let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  const add = (x, y)=>{ x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); };
+  (d.foot_g || []).forEach(q=>add(q[0], q[1])); if (d.pool){ add(d.pool[0], d.pool[1]); add(d.pool[2], d.pool[3]); }
+  if (!(x1 > x0)) [x0, y0, x1, y1] = d.ext;
+  const m = 96; return CP.ext = [x0 - m, y0 - m, x1 + m, y1 + m];
+}
+// where the camera stands: the floor under it, off the furniture the way a stop is
+function cpSnap(){ let x = CP.x, y = CP.y; if (NAV.ok && navClr(CP.f, x, y) < CLR_BODY){ const k = navSnap(CP.f, x, y, CLR_PLAN); if (k >= 0) [x, y] = cellXY(k); } return [x, y]; }
+function cpPos(){ const [x, y] = cpSnap(), v = W(x, y, LVZ[CP.f]), g = groundAt(v, .9); if (g !== null) v.y = g; CP.v = v; CP.dirty = true; }
+function cpApply(){ if (!CP.v) cpPos(); player.pos.copy(CP.v); player.yaw = headYaw(CP.h); player.pitch = CP.t; }
+function cpSync(){
+  cpTurn.value = Math.round(cpN(CP.h)); cpTurnO.textContent = Math.round(cpN(CP.h)) + '°';
+  const td = Math.round(CP.t * 180 / Math.PI * 2) / 2; cpTilt.value = td; cpTiltO.textContent = (td > 0 ? '+' : '') + td + '°';
+  cpFl.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.fl === CP.f));
+  cpK.textContent = (roomName(CP.f, CP.x / 12, CP.y / 12) || '') ; CP.dirty = true;
+}
+function cpOpen(){
+  if (CP.on || SHOT) return;
+  if (!MM.d){ cue('The plan is still loading'); return; }
+  openMenu(null); if (PAN.step) panCancel();
+  if (mode !== 'walk') setMode('walk');
+  walkStop(); if (MS.on) msSet(false); if (SQ.k) sqOff();
+  const q = toPlan(player.pos); CP.f = playerFloor(); CP.x = q[0]; CP.y = q[1]; CP.h = yawToH(player.yaw); CP.t = Math.max(-35, Math.min(35, player.pitch * 180 / Math.PI)) * Math.PI / 180;
+  CP.save = {pos:player.pos.clone(), yaw:player.yaw, pitch:player.pitch};
+  CP.cx = CP.x; CP.cy = CP.y; CP.z = 1.6; CP.v = null; CP.on = true;
+  document.body.classList.add('cpon'); cpPos(); cpSync();
+  requestAnimationFrame(()=>{ resize(); cpDraw(); cpCv.focus({preventScroll:true}); });
+}
+function cpClose(keep){ if (!CP.on) return; CP.on = false; if (!keep && CP.save){ player.pos.copy(CP.save.pos); player.yaw = CP.save.yaw; player.pitch = CP.save.pitch; } CP.drag = null; CP.ptrs.clear(); document.body.classList.remove('cpon'); requestAnimationFrame(()=>{ resize(); canvas.focus(); }); }
+function cpAccept(){
+  const [x, y] = cpSnap(), r4 = n=>Math.round(n / 12 * 4) / 4;
+  const s = {x:r4(x), y:r4(y), f:CP.f, n:roomName(CP.f, r4(x), r4(y)), h:Math.round(cpN(CP.h) * 10) / 10, t:Math.round(CP.t * 1000) / 1000};
+  WP.pts.push(s); savePath(); buildPathFx(); listSync(); transSync();
+  const i = WP.pts.length - 1, k = WP.pts.filter(p=>!p.via).length;
+  cpClose(true); placeAt(i); listSync(); transSync(); cue('Camera ' + k + ' added', s.n || '');
+}
+// the plan, turned as on the drawings, centred on (cx, cy) at zoom z
+function cpLay(){
+  const r = cpCv.getBoundingClientRect(), Wc = r.width, Hc = r.height, [x0, y0, x1, y1] = cpExt(), pad = 16;
+  const s0 = Math.min((Wc - 2 * pad) / (x1 - x0), (Hc - 2 * pad) / (y1 - y0)), sc = s0 * CP.z;
+  return {Wc, Hc, sc, r, U:(x, y)=>[Wc / 2 + (CP.cx - x) * sc, Hc / 2 + (y - CP.cy) * sc], P:(u, v)=>[CP.cx - (u - Wc / 2) / sc, CP.cy + (v - Hc / 2) / sc]};
+}
+function cpRing(L){ const a = CP.h * Math.PI / 180, [u, v] = L.U(CP.x, CP.y), R = 58; return [u - Math.cos(a) * R, v + Math.sin(a) * R]; }
+function cpDraw(){
+  if (!CP.on) return; CP.dirty = false;
+  const L = cpLay(), dpr = Math.min(devicePixelRatio || 1, 2), bw = Math.round(L.Wc * dpr), bh = Math.round(L.Hc * dpr);
+  if (L.Wc < 2) return;
+  if (cpCv.width !== bw || cpCv.height !== bh){ cpCv.width = bw; cpCv.height = bh; }
+  const g = cpG, S = MM.site, F = MM.P[CP.f], sc = L.sc, px = 1 / sc;
+  g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, bw, bh);
+  g.setTransform(-dpr * sc, 0, 0, dpr * sc, dpr * (L.Wc / 2 + CP.cx * sc), dpr * (L.Hc / 2 - CP.cy * sc));
+  g.fillStyle = 'rgba(122,178,196,.16)'; g.fill(S.water);
+  g.fillStyle = CP.f === 'L1' ? 'rgba(244,241,234,.075)' : 'rgba(244,241,234,.045)'; g.fill(S.terr);
+  g.fillStyle = 'rgba(244,241,234,.13)'; g.fill(S.dock);
+  g.fillStyle = 'rgba(110,196,210,.34)'; g.fill(S.pool);
+  g.fillStyle = 'rgba(244,241,234,.085)'; g.fill(F.foot);
+  g.fillStyle = 'rgba(244,241,234,.92)'; g.fill(F.walls); g.strokeStyle = 'rgba(244,241,234,.55)'; g.lineWidth = .5 * px; g.stroke(F.walls);
+  g.strokeStyle = 'rgba(176,208,220,.85)'; g.lineWidth = .9 * px; g.stroke(F.glass);
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // room names, where they fit
+  g.font = '400 12px "Geist Mono", ui-monospace, monospace'; g.textAlign = 'center'; g.textBaseline = 'middle'; if ('letterSpacing' in g) g.letterSpacing = '1px';
+  const taken = [];
+  if (sc > .55) for (const [n, at] of F.rooms){
+    if (n.length < 4 || /^(CL\.|BATH|STOR\.|MECH\.|POWDER|COURT|W\.C\.)$/.test(n)) continue;
+    const [u, v] = L.U(at[0], at[1]), w = g.measureText(n).width / 2 + 4, bx = [u - w, v - 9, u + w, v + 9];
+    if (taken.some(t=>bx[0] < t[2] && bx[2] > t[0] && bx[1] < t[3] && bx[3] > t[1])) continue;
+    taken.push(bx); g.fillStyle = 'rgba(244,241,234,.5)'; g.fillText(n, u, v);
+  }
+  if ('letterSpacing' in g) g.letterSpacing = '0px';
+  // the walk's other cameras on this floor, quiet
+  WP.pts.forEach(p=>{ if (p.via || p.f !== CP.f) return; const [u, v] = L.U(p.x * 12, p.y * 12); g.beginPath(); g.arc(u, v, 4, 0, Math.PI * 2); g.fillStyle = 'rgba(20,19,17,.85)'; g.fill(); g.lineWidth = 1.2; g.strokeStyle = 'rgba(217,182,124,.75)'; g.stroke(); });
+  // the camera: what it takes in, which way it looks, and the ring to turn it
+  const [cu, cv] = L.U(CP.x, CP.y), a = CP.h * Math.PI / 180, du = -Math.cos(a), dv = Math.sin(a);
+  const hf = 2 * Math.atan(Math.tan(camera.fov * Math.PI / 360) * camera.aspect), Ls = Math.max(90, Math.min(260, 192 * sc));
+  const b0 = Math.atan2(dv, du);
+  g.beginPath(); g.moveTo(cu, cv); g.arc(cu, cv, Ls, b0 - hf / 2, b0 + hf / 2); g.closePath();
+  const gr = g.createRadialGradient(cu, cv, 0, cu, cv, Ls); gr.addColorStop(0, 'rgba(217,182,124,.42)'); gr.addColorStop(1, 'rgba(217,182,124,.04)');
+  g.fillStyle = gr; g.fill(); g.lineWidth = 1; g.strokeStyle = 'rgba(217,182,124,.7)'; g.stroke();
+  const [ru, rv] = cpRing(L);
+  g.beginPath(); g.moveTo(cu, cv); g.lineTo(ru, rv); g.lineWidth = 1.5; g.strokeStyle = '#d9b67c'; g.stroke();
+  g.beginPath(); g.arc(ru, rv, 9, 0, Math.PI * 2); g.fillStyle = CP.drag && CP.drag.k === 'rot' ? '#d9b67c' : 'rgba(20,19,17,.9)'; g.fill(); g.lineWidth = 2; g.strokeStyle = '#d9b67c'; g.stroke();
+  g.beginPath(); g.arc(cu, cv, 11, 0, Math.PI * 2); g.fillStyle = '#f4f1ea'; g.fill(); g.lineWidth = 2; g.strokeStyle = '#d9b67c'; g.stroke();
+  g.beginPath(); g.moveTo(cu + du * 6, cv + dv * 6); g.lineTo(cu - dv * 4 - du * 3, cv + du * 4 - dv * 3); g.lineTo(cu + dv * 4 - du * 3, cv - du * 4 - dv * 3); g.closePath(); g.fillStyle = '#1c1d1c'; g.fill();
+  // where the walker will really stand, when the spot is on the furniture
+  const [sx, sy] = cpSnap(); if (Math.hypot(sx - CP.x, sy - CP.y) > 2){ const [su, sv] = L.U(sx, sy); g.setLineDash([3, 3]); g.beginPath(); g.arc(su, sv, 7, 0, Math.PI * 2); g.lineWidth = 1.2; g.strokeStyle = 'rgba(244,241,234,.7)'; g.stroke(); g.setLineDash([]); }
+}
+function cpTick(){ if (CP.on && CP.dirty) cpDraw(); requestAnimationFrame(cpTick); }
+requestAnimationFrame(cpTick);
+addEventListener('resize', ()=>{ if (CP.on){ CP.dirty = true; } });
+// pointer: the dot moves, the ring turns, the plan slides; a tap sets the camera there; two fingers zoom
+cpCv.addEventListener('pointerdown', e=>{
+  e.preventDefault(); cpCv.setPointerCapture(e.pointerId); CP.ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+  if (CP.ptrs.size === 2){ const [p, q] = [...CP.ptrs.values()]; CP.drag = {k:'pinch', d0:Math.hypot(p[0] - q[0], p[1] - q[1]), z0:CP.z}; return; }
+  const L = cpLay(), u = e.clientX - L.r.left, v = e.clientY - L.r.top, [cu, cv] = L.U(CP.x, CP.y), [ru, rv] = cpRing(L), hit = touchy ? 26 : 16;
+  if (Math.hypot(u - ru, v - rv) < hit) CP.drag = {k:'rot'};
+  else if (Math.hypot(u - cu, v - cv) < hit) CP.drag = {k:'move', ou:u - cu, ov:v - cv};
+  else CP.drag = {k:'pan', u, v, cx:CP.cx, cy:CP.cy, moved:false};
+  CP.dirty = true;
+});
+cpCv.addEventListener('pointermove', e=>{
+  if (!CP.ptrs.has(e.pointerId)) return; CP.ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+  const d = CP.drag; if (!d) return;
+  const L = cpLay(), u = e.clientX - L.r.left, v = e.clientY - L.r.top;
+  if (d.k === 'pinch' && CP.ptrs.size === 2){ const [p, q] = [...CP.ptrs.values()]; CP.z = Math.max(.6, Math.min(8, d.z0 * Math.hypot(p[0] - q[0], p[1] - q[1]) / Math.max(1, d.d0))); CP.dirty = true; return; }
+  if (d.k === 'rot'){ const [cu, cv] = L.U(CP.x, CP.y); CP.h = Math.round(Math.atan2(v - cv, -(u - cu)) * 180 / Math.PI * 2) / 2; CP.dirty = true; cpSync(); }
+  else if (d.k === 'move'){ const q = L.P(u - d.ou, v - d.ov); CP.x = q[0]; CP.y = q[1]; cpPos(); cpSync(); }
+  else if (d.k === 'pan'){ if (Math.hypot(u - d.u, v - d.v) > 5) d.moved = true; if (d.moved){ CP.cx = d.cx + (u - d.u) / L.sc; CP.cy = d.cy - (v - d.v) / L.sc; CP.dirty = true; } }
+});
+function cpUp(e){
+  const had = CP.ptrs.delete(e.pointerId), d = CP.drag; if (!had) return;
+  if (d && d.k === 'pinch'){ if (CP.ptrs.size === 0) CP.drag = null; return; }
+  CP.drag = null;
+  if (d && d.k === 'pan' && !d.moved && e.type === 'pointerup'){ const L = cpLay(), q = L.P(e.clientX - L.r.left, e.clientY - L.r.top); CP.x = q[0]; CP.y = q[1]; cpPos(); cpSync(); }
+  if (d && d.k === 'move'){ const [x, y] = cpSnap(); CP.x = x; CP.y = y; cpPos(); cpSync(); }
+  CP.dirty = true;
+}
+cpCv.addEventListener('pointerup', cpUp); cpCv.addEventListener('pointercancel', cpUp);
+cpCv.addEventListener('wheel', e=>{ e.preventDefault(); const L = cpLay(), u = e.clientX - L.r.left, v = e.clientY - L.r.top, q = L.P(u, v);
+  CP.z = Math.max(.6, Math.min(8, CP.z * Math.exp(-e.deltaY * .0015))); const L2 = cpLay(), q2 = L2.P(u, v); CP.cx += q[0] - q2[0]; CP.cy += q[1] - q2[1]; CP.dirty = true; }, {passive:false});
+const cpZoom = f=>{ CP.z = Math.max(.6, Math.min(8, CP.z * f)); CP.dirty = true; };
+document.getElementById('cpZi').addEventListener('click', ()=>cpZoom(1.35));
+document.getElementById('cpZo').addEventListener('click', ()=>cpZoom(1 / 1.35));
+cpTurn.addEventListener('input', ()=>{ CP.h = +cpTurn.value; cpSync(); });
+cpTilt.addEventListener('input', ()=>{ CP.t = +cpTilt.value * Math.PI / 180; cpSync(); });
+cpFl.querySelectorAll('button').forEach(b=>b.addEventListener('click', ()=>{ CP.f = b.dataset.fl; cpPos(); cpSync(); }));
+document.getElementById('cpNo').addEventListener('click', ()=>cpClose());
+document.getElementById('cpOk').addEventListener('click', cpAccept);
+document.getElementById('wkCam').addEventListener('click', e=>{ e.stopPropagation(); cpOpen(); });
+// keys while placing: arrows move it (Shift for a foot), Q and E turn it, R and F tilt it, Enter accepts, Escape cancels
+addEventListener('keydown', e=>{
+  if (!CP.on) return; const t = e.target; if (t && /^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName || '') && e.key !== 'Escape' && e.key !== 'Enter') return;
+  const st = e.shiftKey ? 12 : 3, k = e.key;
+  const mv = {ArrowUp:[0, -1], ArrowDown:[0, 1], ArrowLeft:[1, 0], ArrowRight:[-1, 0]}[k];   // the plan is turned, as on the drawings
+  if (mv){ CP.x += mv[0] * st; CP.y += mv[1] * st; cpPos(); cpSync(); }
+  else if (k === 'q' || k === 'Q'){ CP.h = CP.h + (e.shiftKey ? 15 : 2); cpSync(); }
+  else if (k === 'e' || k === 'E'){ CP.h = CP.h - (e.shiftKey ? 15 : 2); cpSync(); }
+  else if (k === 'r' || k === 'R'){ CP.t = Math.min(35, CP.t * 180 / Math.PI + 1) * Math.PI / 180; cpSync(); }
+  else if (k === 'f' || k === 'F'){ CP.t = Math.max(-35, CP.t * 180 / Math.PI - 1) * Math.PI / 180; cpSync(); }
+  else if (k === 'Enter'){ cpAccept(); }
+  else if (k === 'Escape'){ cpClose(); }
+  else return;
+  e.preventDefault(); e.stopImmediatePropagation();
+}, true);
+// the model's sides, one tap each
+function sidesSync(){
+  const el = document.getElementById('sides'); if (!el) return;
+  el.querySelectorAll('button').forEach(b=>{ const k = b.dataset.k, on = navItem === k || (k === 'persp-water-side' && navSec === 'explore' && navItem === 'model'); b.setAttribute('aria-pressed', on); });
+}
+document.getElementById('sides').querySelectorAll('button').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); const k = b.dataset.k; act(k.startsWith('elev') ? 'plans' : 'aerials', k); sidesSync(); }));
+sidesSync();
+
 var US = null, usBase = null, US_ID = 'casalirio-model', US_KS = 'umbrella:casalirio-model:saved';   // var: the boot may call usInit first
 function usTouch(){ let b = usBase; try { const v = JSON.parse(localStorage.getItem(US_KS) || 'null'); if (v && v.s && v.s.path) b = JSON.stringify(v.s.path); } catch(e){}
   if (JSON.stringify(WP.pts) !== b) US.change(); }
+let deskV; function deskVis(){ const v = mode !== 'model'; if (v !== deskV){ deskV = v; const d = document.getElementById('deskSlot'); if (d) d.style.visibility = v ? '' : 'hidden'; } }
 function usInit(){ if (SHOT || US) return;
   usBase = JSON.stringify(WP.pts);
-  US = UmbrellaSession({ id:US_ID, title:'Model', deskUrl:'https://claude.ai/artifact/2zwPBYMkFJ3DrkqBvu6JKZ',
+  US = UmbrellaSession({ id:US_ID, title:'Model', back:()=>{ if (mode === 'model') return false; act('explore', 'model'); canvas.focus(); return true; }, deskUrl:null,   // Rev 17.13 (Jason): no outside link; Desk brings you back to the desk view and hides while you're on it
     deskEl:document.getElementById('deskSlot'), saveEl:document.getElementById('saveSlot'),
     get:()=>({path:WP.pts.map(p=>({...p}))}),
     set:v=>{ if (!v || !Array.isArray(v.path) || v.path.length < 2) return; WP.pts = v.path.map(p=>({...p})); WP.i = Math.min(WP.i, WP.pts.length - 1);
@@ -3233,6 +3576,5 @@ function usInit(){ if (SHOT || US) return;
 </script>
 </body>
 </html>
-
 
 </body></html>
