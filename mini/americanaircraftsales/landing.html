@@ -67,8 +67,31 @@ body.open .port{clip-path:inset(0 0 0 0 round 0)}
 .bezel{display:none}
 /* Entry: this jet's own cabin wall; the middle window opens onto the clouds */
 .entry{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none}
-html.intro,html.intro body{overflow:hidden;overscroll-behavior:none}
-.edim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 30vmax 38vmax at var(--wx,50%) var(--wy,45%),rgba(12,8,6,.55),rgba(9,6,5,.97) 70%)}
+html.intro{overflow:hidden;overscroll-behavior:none}
+.ecabw{position:absolute;inset:0;z-index:4;overflow:hidden;pointer-events:none}
+.ecab{position:absolute;left:0;top:0;width:1678px;height:937px;transform-origin:0 0;will-change:transform,opacity}
+.ecab img{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.eglass{position:absolute;left:728px;top:218px;width:224px;height:312px}
+.ecloud{position:absolute;inset:0;z-index:3;width:100%;height:100%;pointer-events:none}
+.esplit .tapsnd{position:absolute;left:50%;bottom:calc(30px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);color:rgba(250,240,222,.86);font-weight:600;white-space:nowrap;opacity:0;transition:opacity 1.8s var(--ease)}
+.esplit .tapsnd.on{opacity:1}
+/* Opening: the scene closed as a split, the line across the seam; the halves part onto the dark cabin */
+.esplit{position:absolute;inset:0;z-index:6;pointer-events:none}
+.esplit .eh{position:absolute;left:0;right:0;height:50%;background:linear-gradient(180deg,#1C1713,#100D0B);will-change:transform}
+.esplit .et{top:0}
+.esplit .eb{bottom:0;background:linear-gradient(0deg,#1C1713,#100D0B)}
+.esplit .eh::after{content:"";position:absolute;left:10%;right:10%;height:1px;background:linear-gradient(90deg,rgba(214,186,142,0),rgba(214,186,142,.34),rgba(214,186,142,0))}
+.esplit .et::after{bottom:0}.esplit .eb::after{top:0}
+.esplit .ew{position:absolute;left:20px;right:20px;text-align:center;font:400 clamp(40px,min(4.6vw,8vh),88px)/1 var(--f-disp);letter-spacing:-.01em;color:rgba(246,236,218,.94);opacity:0;transition:opacity 2.4s var(--ease)}
+.esplit .et .ew{bottom:.26em}
+.esplit .eb .ew{top:.16em;transition-delay:.6s}
+.esplit.in .ew{opacity:1}
+.esplit .ew span{display:block}
+.eskip{position:absolute;z-index:7;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);height:40px;padding:0 20px;border-radius:12px;border:1px solid rgba(246,236,218,.3);background:rgba(18,14,11,.3);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:rgba(246,236,218,.92);font:500 13px/1 var(--f-nav);letter-spacing:.26em;text-indent:.26em;text-transform:uppercase;white-space:nowrap;cursor:pointer;opacity:0;visibility:hidden;transition:opacity 1.6s var(--ease),visibility 0s 1.6s,background .5s}
+.eskip.on{opacity:1;visibility:visible;transition:opacity 1.6s var(--ease),visibility 0s,background .5s}
+.eskip:hover{background:rgba(18,14,11,.5)}
+.eveil{position:absolute;inset:0;z-index:8;background:#EEE2CF;opacity:0;pointer-events:none;transition:opacity .8s var(--ease)}
+.eveil.on{opacity:1}
 .entry img{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0;will-change:transform,opacity,filter}
 .ch-hero{opacity:0}
 .ch-hero h1 .ln span{transform:none;transition:none}
@@ -85,7 +108,7 @@ body.open .film{transform:scale(1)}
 body.on .sig{opacity:1;transform:none}
 body.open .sig{opacity:0;transform:translateY(-10px);transition:opacity .8s var(--ease),transform 1.2s var(--ease)}
 
-.rmark{position:absolute;z-index:3;left:50%;top:50%;width:min(440px,calc(100% - 64px));display:flex;flex-direction:column;align-items:center;gap:clamp(20px,3.4vh,30px);transform:translate(-50%,-50%);opacity:0;pointer-events:none}
+.rmark{position:absolute;z-index:3;left:50%;top:50%;width:min(520px,calc(100% - 48px));display:flex;flex-direction:column;align-items:center;gap:clamp(20px,3.4vh,30px);transform:translate(-50%,-50%);opacity:0;pointer-events:none}
 .rmark .lm{width:clamp(64px,7vw,88px);height:auto}
 .rmark .lw{width:100%;height:auto}
 /* header */
@@ -327,6 +350,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   .mark i{border-left:0;padding-left:0;font-size:17px}
   .ch-hero{left:20px;right:20px;font-size:clamp(36px,10.4vw,46px)}
   h1{font-size:clamp(38px,10.4vw,46px)}
+  .esplit .ew{font-size:clamp(36px,10.4vw,46px)}
   .low{left:20px;right:20px;text-align:center;bottom:calc(36px + env(safe-area-inset-bottom,0px))}
   .big{font-size:clamp(32px,9vw,40px)}
   .glass{left:16px;right:16px;width:auto;bottom:calc(16px + env(safe-area-inset-bottom,0px));text-align:center}
@@ -414,7 +438,7 @@ html.landing .flight~section,html.landing footer{display:none}
 }
 </style>
 
-<script>document.documentElement.classList.add('landing');window.AAS_FULL='https://abramsdesign.studio/americanaircraftsales'</script>
+<script>document.documentElement.classList.add('landing');window.AAS_FULL='https://abramsdesign.studio/americanaircraftsalesfullsite/'</script>
 <a id="ads-credit" href="https://abramsdesign.studio" target="_blank" rel="noopener"><span>Concept by Abrams Design Studio</span></a>
 
 <section class="flight" id="flight" data-band="sky" aria-label="American Aircraft Sales">
@@ -427,8 +451,11 @@ html.landing .flight~section,html.landing footer{display:none}
       <div class="vign"></div>
       <div class="grain" aria-hidden="true"></div>
     </div>
-    <div class="entry" aria-hidden="true"><img class="esky" src="e-sky.webp" alt="" width="2240" height="1494"><img class="epane" src="e-window.webp" alt="" width="2752" height="1536"><div class="edim"></div></div>
+    <div class="entry" aria-hidden="true"><img class="esky" src="e-sky.webp" alt="" width="2240" height="1494"></div>
     <div class="rmark"><img class="lm" src="aas-mark-ink.png" alt="" width="275" height="246"><img class="lw" src="aas-word-ink.png" alt="American Aircraft Sales" width="1408" height="57"></div>
+    <div class="ecabw" aria-hidden="true"><div class="ecab"><div class="eglass"><img src="e-glass0.webp" alt="" fetchpriority="high"><img src="e-glass1.webp" alt="" style="opacity:0"><img src="e-glass2.webp" alt="" style="opacity:0"><img src="e-glass3.webp" alt="" style="opacity:0"><img src="e-glass4.webp" alt="" style="opacity:0"><img src="e-glass5.webp" alt="" style="opacity:0"></div><img src="e-cab0.webp" alt="" fetchpriority="high"><img src="e-cab1.webp" alt="" style="opacity:0"><img src="e-cab2.webp" alt="" style="opacity:0"><img src="e-cab3.webp" alt="" style="opacity:0"><img src="e-cab4.webp" alt="" style="opacity:0"><img src="e-cab5.webp" alt="" style="opacity:0"></div></div>
+    <div class="esplit" aria-hidden="true"><div class="eh et"><div class="ew"><span>The calm side</span></div></div><div class="eh eb"><div class="ew"><span>of owning the sky.</span></div></div><div class="tapsnd cap">Tap for sound</div></div>
+    <button class="eskip" type="button">Skip intro</button><div class="eveil" aria-hidden="true"></div>
 
     <header class="top">
       <span class="sslot" aria-hidden="true"></span>
@@ -438,6 +465,7 @@ html.landing .flight~section,html.landing footer{display:none}
     <div class="ch ch-hero">
       <h1><span class="ln"><span>The calm side</span></span><span class="ln"><span>of owning the sky.</span></span></h1>
     </div>
+    <canvas class="ecloud" aria-hidden="true"></canvas>
     <div class="cue cap">Scroll<span></span></div>
 
     <div class="ch low" data-a=".3" data-b=".34" data-c=".44" data-d=".48">
@@ -653,7 +681,7 @@ html.landing .flight~section,html.landing footer{display:none}
 
   /* Entry: a cabin window in the dark, then it opens into the sky */
   var opened=false;
-  function open(){if(opened)return;opened=true;body.classList.add('on','open');setTimeout(function(){body.classList.add('hello')},reduce?0:1500)}
+  function open(){if(opened||itOn)return;opened=true;body.classList.add('on','open');setTimeout(function(){body.classList.add('hello')},reduce?0:1500)}
   if(reduce){body.classList.add('on','open','hello');opened=true}
   else{
     requestAnimationFrame(function(){requestAnimationFrame(function(){body.classList.add('on')})});
@@ -667,7 +695,9 @@ html.landing .flight~section,html.landing footer{display:none}
   var v=d.querySelector('.film'), flight=d.getElementById('flight'), dur=0, cur=0, ready=false;
   function arm(src){v.src=src;v.addEventListener('loadedmetadata',function(){dur=v.duration||25.58;ready=true;var p=v.play();if(p&&p.then)p.then(function(){v.pause()}).catch(function(){})},{once:true})}
   var FILM=Math.min(screen.width,screen.height)*(devicePixelRatio||1)>=1000&&innerWidth>=900?'film.mp4':'film-720.mp4';
-  fetch(FILM).then(function(r){if(!r.ok)throw 0;return r.blob()}).then(function(b){arm(URL.createObjectURL(b))}).catch(function(){arm(FILM)});
+  /* the film waits until the opening frames are in, so they arrive first */
+  var filmOn=false;function loadFilm(){if(filmOn)return;filmOn=true;fetch(FILM).then(function(r){if(!r.ok)throw 0;return r.blob()}).then(function(b){arm(URL.createObjectURL(b))}).catch(function(){arm(FILM)})}
+  if(reduce)loadFilm();else setTimeout(loadFilm,9000);
   var chs=[].slice.call(d.querySelectorAll('[data-a]')), hero=d.querySelector('.ch-hero'), cue=d.querySelector('.cue'), rmark=d.querySelector('.rmark'), topb=d.querySelector('.top'), finEl=d.querySelector(".tcall");
   function vis(el,p){var a=+el.dataset.a,b=+el.dataset.b,c=+el.dataset.c,e=+el.dataset.d;if(p<=a||p>=e)return 0;if(p<b)return (p-a)/(b-a);if(p<=c)return 1;return 1-(p-c)/(e-c)}
 
@@ -882,21 +912,57 @@ html.landing .flight~section,html.landing footer{display:none}
     if(k==='sky'&&!opened)k='night';
     if(k!==lastBand){lastBand=k;root.style.setProperty('--band-bg',bands[k][0]);root.style.setProperty('--band-fg',bands[k][1])}}
 
-  /* Entry: start on the cabin wall, push in a straight line through the middle window, then the clouds clear.
-     Geometry of the window glass in e-window.webp (px). Swap the image for a video later by keeping these numbers. */
-  var esky=d.querySelector('.esky'), epane=d.querySelector('.epane'), EW=2752, EH=1536, GX=960.5, GY=611, GA=180.5, GB=247, SW=2240, SH=1494;
-  /* Intro: plays on its own (no scrolling). Dark cabin, lights come up, the camera moves through the middle window,
-     the line and then the logo land; scrolling opens from there. A wheel, swipe or key plays it out faster.
-     IK = [seconds, entry progress]. To swap in a rendered video later, drive introP from video.currentTime instead. */
-  var edim=d.querySelector('.edim'), IK=[[0,0],[1.4,.003],[4.2,.09],[4.6,.1],[5.9,.128],[6.5,.158],[7.4,.186]], itT=0, itLast=0, itSpd=1, itOn=!reduce, unlockP=-1;
+  /* Entry: a dark cabin, shot in bracketed exposures, brightens as the camera moves in a straight line through the middle window.
+     Glass geometry of e-cab*.webp in px (keep these numbers for a later video swap). */
+  var esky=d.querySelector('.esky'), ecab=d.querySelector('.ecab'), cabs=[].slice.call(ecab.querySelectorAll(':scope>img')), eglass=ecab.querySelector('.eglass'), glass=[].slice.call(eglass.querySelectorAll('img')), tap=d.querySelector('.tapsnd'), ecv=d.querySelector('.ecloud'), esp=d.querySelector('.esplit'), eh=[].slice.call(esp.querySelectorAll('.eh')), ews=[].slice.call(esp.querySelectorAll('.ew span')), skip=d.querySelector('.eskip'), veil=d.querySelector('.eveil'),
+      EW=1678, EH=937, GX=840, GY=374, GA=106, GB=150, SW=2240, SH=1494, T0=performance.now();
+  /* Live clouds, drawn in front of the line and the logo. They billow and drift, and part to reveal each one. */
+  var CL=(function(){
+    if(reduce||!ecv)return null;var g=null;try{g=ecv.getContext('webgl',{alpha:true,premultipliedAlpha:true,antialias:false})}catch(e){}if(!g)return null;
+    var FS=['#ifdef GL_FRAGMENT_PRECISION_HIGH','precision highp float;','#else','precision mediump float;','#endif',
+    'uniform vec2 R;uniform float T,C,H,Z;',
+    'float hh(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}',
+    'float nn(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);return mix(mix(mix(hh(i),hh(i+vec3(1,0,0)),f.x),mix(hh(i+vec3(0,1,0)),hh(i+vec3(1,1,0)),f.x),f.y),mix(mix(hh(i+vec3(0,0,1)),hh(i+vec3(1,0,1)),f.x),mix(hh(i+vec3(0,1,1)),hh(i+vec3(1,1,1)),f.x),f.y),f.z);}',
+    'float fb(vec3 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*nn(p);p=p*2.02+vec3(1.7,9.2,3.1);a*=.5;}return v;}',
+    'float f3(vec3 p){float v=0.,a=.5;for(int i=0;i<3;i++){v+=a*nn(p);p=p*2.02+vec3(4.1,2.3,7.7);a*=.5;}return v;}',
+    'void main(){vec2 uv=(gl_FragCoord.xy-.5*R)/R.y;',
+    ' vec3 q=vec3(uv*2.3/Z+vec2(T*.03,T*.007),T*.05);',
+    ' vec2 w=vec2(f3(q),f3(q+vec3(5.2,1.3,2.8)))-.5;vec3 r=q+vec3(w*.3,0.);',
+    ' float d=fb(r),d2=fb(r+vec3(-.06,.07,.02));',
+    ' float th=mix(.8,.06,C),a=smoothstep(th,th+.24,d);',
+    ' float e=length(uv*vec2(.6,1.))+(d-.5)*.5;a*=smoothstep(H-.16,H+.06,e);',
+    ' float sh=clamp(.55+(d-d2)*5.,0.,1.);',
+    ' vec3 c=mix(vec3(.80,.66,.52),vec3(1.,.96,.9),sh)*mix(1.03,.9,smoothstep(th+.15,th+.5,d))*(.8+.3*smoothstep(.32,.78,d));',
+    ' gl_FragColor=vec4(c*a,a);}'].join('\n');
+    function sh(t,src){var o=g.createShader(t);g.shaderSource(o,src);g.compileShader(o);return g.getShaderParameter(o,g.COMPILE_STATUS)?o:null}
+    var v=sh(g.VERTEX_SHADER,'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}'), fr=sh(g.FRAGMENT_SHADER,FS);if(!v||!fr)return null;
+    var pr=g.createProgram();g.attachShader(pr,v);g.attachShader(pr,fr);g.linkProgram(pr);if(!g.getProgramParameter(pr,g.LINK_STATUS))return null;g.useProgram(pr);
+    var bf=g.createBuffer();g.bindBuffer(g.ARRAY_BUFFER,bf);g.bufferData(g.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),g.STATIC_DRAW);
+    var al=g.getAttribLocation(pr,'a');g.enableVertexAttribArray(al);g.vertexAttribPointer(al,2,g.FLOAT,false,0,0);
+    var U={};['R','T','C','H','Z'].forEach(function(k){U[k]=g.getUniformLocation(pr,k)});g.clearColor(0,0,0,0);
+    return function(t,C,H,Z){var w=Math.max(2,Math.round(ecv.clientWidth*.5)),h=Math.max(2,Math.round(ecv.clientHeight*.5));
+      if(ecv.width!==w||ecv.height!==h){ecv.width=w;ecv.height=h;g.viewport(0,0,w,h)}
+      g.uniform2f(U.R,w,h);g.uniform1f(U.T,t);g.uniform1f(U.C,C);g.uniform1f(U.H,H);g.uniform1f(U.Z,Z);g.clear(g.COLOR_BUFFER_BIT);g.drawArrays(g.TRIANGLES,0,3)};
+  })();
+  if(!CL&&ecv)ecv.style.display='none';
+  /* Intro: plays on its own (no scrolling), one move at a time with a held beat between each:
+     the closed split with the line and "Tap for sound"; the halves part onto the dark cabin; the light comes up through the brackets;
+     the slow push through the window into the clouds; through the clouds to the logo. Scrolling opens from there.
+     A wheel, swipe or key plays it out faster; "Skip intro" goes straight to the logo.
+     IK = [seconds, entry progress]; equal neighbours are holds. To swap in a rendered video later, drive introP from video.currentTime instead. */
+  var IK=[[0,0],[3.6,0],[7,.008],[8.2,.008],[12.2,.03],[13.2,.03],[19.2,.092],[19.9,.1],[22.4,.146],[25,.165],[25.7,.172]], itT=0, itLast=0, itSpd=1, itOn=!reduce, itReady=false, unlockP=-1, unlockAt=0;
   if(itOn){root.classList.add('intro');try{history.scrollRestoration='manual'}catch(e){}scrollTo(0,0);
-    var itReady=false, itGo=function(){if(!itReady){itReady=true;itLast=performance.now()}};
-    Promise.all([esky,epane].map(function(im){return im.decode?im.decode().catch(function(){}):0})).then(itGo);setTimeout(itGo,3000);
+    var itGo=function(){if(!itReady){itReady=true;itLast=performance.now();esp.classList.add('in');setTimeout(loadFilm,800);setTimeout(function(){if(itOn&&itT<3.4)tap.classList.add('on')},1600)}};
+    /* the opening frames first; the brighter brackets keep loading behind the closed split */
+    Promise.all([cabs[0],glass[0],esky].map(function(im){return im.decode?im.decode().catch(function(){}):0})).then(itGo);setTimeout(itGo,8000);
     var itFF=function(){if(itOn)itSpd=4};
     addEventListener('wheel',itFF,{passive:true});
     addEventListener('touchmove',function(e){if(itOn){itFF();e.preventDefault()}},{passive:false});
     addEventListener('keydown',function(e){if(itOn&&/^(ArrowDown|PageDown| |Spacebar|End)$/.test(e.key)){itFF();e.preventDefault()}});
-  }
+    addEventListener('pointerdown',function(){tap.classList.remove('on')},{once:true});
+    skip.addEventListener('click',function(){if(!itOn||skip.dataset.done)return;skip.dataset.done=1;skip.classList.remove('on');veil.classList.add('on');
+      setTimeout(function(){itT=24.2;itSpd=1;itLast=performance.now();setTimeout(function(){veil.style.transition='opacity 1.4s var(--ease)';veil.classList.remove('on')},120)},820)});
+  }else{skip.style.display='none';esp.classList.add('in')}
   function introP(){
     if(!itReady)return 0;var now=performance.now();itT+=Math.min(.1,(now-itLast)/1000)*itSpd;itLast=now;
     for(var i=1;i<IK.length;i++)if(itT<IK[i][0])return IK[i-1][1]+(IK[i][1]-IK[i-1][1])*(itT-IK[i-1][0])/(IK[i][0]-IK[i-1][0]);
@@ -904,32 +970,52 @@ html.landing .flight~section,html.landing footer{display:none}
   }
   function endIntro(){
     itOn=false;var end=IK[IK.length-1][1], top=flight.getBoundingClientRect().top+scrollY, span=flight.offsetHeight-innerHeight;
-    root.classList.remove('intro');scrollTo(0,Math.round(top+end*span));unlockP=prog(flight);
-    edim.style.display='none';body.classList.add('hello');
+    root.classList.remove('intro');scrollTo(0,Math.round(top+end*span));unlockP=prog(flight);unlockAt=performance.now();
+    tap.classList.remove('on');skip.classList.remove('on');loadFilm();open();body.classList.add('hello');
   }
   function entry(p){
     var ck=flight.firstElementChild, w=ck.clientWidth, h=ck.clientHeight;
     var c0=Math.max(w/EW,h/EH), ox=Math.min(0,Math.max(w-EW*c0,w/2-GX*c0)), oy=Math.min(0,Math.max(h-EH*c0,h/2-GY*c0));
-    var g0x=ox+GX*c0, g0y=oy+GY*c0, zx=w/2/(GA*c0), zy=h/2/(GB*c0), Zm=Math.pow(Math.pow(zx,3)+Math.pow(zy,3),1/3)*1.18;
-    var z=reduce?(p>.01?1:0):ss(p/.09), Z=Math.pow(Zm,z), s=c0*Z, ax=g0x+(w/2-g0x)*z, ay=g0y+(h/2-g0y)*z;
-    epane.style.transform='translate3d('+(ax-GX*s).toFixed(1)+'px,'+(ay-GY*s).toFixed(1)+'px,0) scale('+s.toFixed(4)+')';
-    if(itOn){var dm=1-ss((itT-.25)/2.4);edim.style.opacity=dm.toFixed(3);edim.style.setProperty('--wx',ax.toFixed(0)+'px');edim.style.setProperty('--wy',ay.toFixed(0)+'px')}
-    epane.style.opacity=(1-ss((z-.9)/.1)).toFixed(3);epane.style.visibility=z>=1?'hidden':'visible';
-    var gone=ss((p-.218)/.05), k=Math.max(w/SW,h/SH)*(1+.14*z+.3*gone), sx=(w-SW*k)/2, sy=(h-SH*k)/2;
+    var g0x=ox+GX*c0, g0y=oy+GY*c0, zx=w/2/(GA*c0), zy=h/2/(GB*c0), Zm=Math.pow(Math.pow(zx,3.2)+Math.pow(zy,3.2),1/3.2)*1.18;
+    /* the split parts, and the line goes with it */
+    var so=ss(p/.008);eh[0].style.transform='translate3d(0,'+(-so*100).toFixed(2)+'%,0)';eh[1].style.transform='translate3d(0,'+(so*100).toFixed(2)+'%,0)';
+    esp.style.visibility=so>=1?'hidden':'visible';var wo=(1-ss(p/.0055)).toFixed(3);ews[0].style.opacity=ews[1].style.opacity=wo;
+    skip.classList.toggle('on',itOn&&itReady&&p>=.0076&&!skip.dataset.done);
+    var z=reduce?(p>.03?1:0):ss((p-.03)/.062), Z=Math.pow(Zm,z), s=c0*Z, ax=g0x+(w/2-g0x)*z, ay=g0y+(h/2-g0y)*z;
+    ecab.style.transform='translate3d('+(ax-GX*s).toFixed(1)+'px,'+(ay-GY*s).toFixed(1)+'px,0) scale('+s.toFixed(4)+')';
+    ecab.style.opacity=(1-ss((z-.9)/.1)).toFixed(3);ecab.style.visibility=z>=1?'hidden':'visible';
+    /* exposure: each brighter bracket fades in over the last as the camera moves */
+    var ex=reduce?1:ss((p-.008)/.022), x=ex*(cabs.length-1);
+    for(var i=1;i<cabs.length;i++)cabs[i].style.opacity=glass[i].style.opacity=clamp(x-(i-1)).toFixed(3);
+    /* the sunrise in the glass gives way to the live sky as the window comes close */
+    var go=1-ss((z-.22)/.42);eglass.style.opacity=go.toFixed(3);eglass.style.visibility=go<=0?'hidden':'visible';
+    if(itOn&&p>.0004)tap.classList.remove('on');
+    var gone=ss((p-.218)/.05), t=(performance.now()-T0)/1000, k=Math.max(w/SW,h/SH)*(1+.14*z+.08*ss((p-.09)/.11)+.3*gone), sx=(w-SW*k)/2, sy=(h-SH*k)/2;
     esky.style.transform='translate3d('+sx.toFixed(1)+'px,'+sy.toFixed(1)+'px,0) scale('+k.toFixed(4)+')';
-    esky.style.opacity=(1-gone).toFixed(3);esky.style.filter=gone>.005?'blur('+(gone*14).toFixed(1)+'px)':'none';esky.style.visibility=gone>=1?'hidden':'visible';
+    var lit=ex<1?'brightness('+(.45+.55*ex).toFixed(3)+') saturate('+(1.4-.4*ex).toFixed(3)+')':'';
+    esky.style.opacity=(1-gone).toFixed(3);esky.style.filter=gone>.005?'blur('+(gone*14).toFixed(1)+'px)':(lit||'none');esky.style.visibility=gone>=1?'hidden':'visible';
+    if(CL){
+      var C=(.38+.62*ss((p-.075)/.022))*(1-ss((p-.2)/.05)),
+          H=-.35+.95*ss((p-.148)/.017)-.95*ss((p-.182)/.016)+3*ss((p-.2)/.05),
+          ZZ=1+.35*ss((p-.06)/.05)+.45*ss((p-.098)/.05)+.6*ss((p-.2)/.05), on=p<.25;
+      ecv.style.visibility=on?'visible':'hidden';ecv.style.filter=lit||'none';
+      if(on)CL(t,C,H,ZZ);
+    }
+    return z;
   }
   function frame(){
     var p=prog(flight);
-    if(itOn){var ip=introP();if(ip<0){endIntro();p=prog(flight)}else p=ip}
+    if(itOn){if(scrollY>1)scrollTo(0,0);var ip=introP();if(ip<0){endIntro();p=prog(flight)}else p=ip}
     if(p>.002)open();
     var P0=.24, F0=60/614, q=p<P0?p/P0*F0:F0+(p-P0)/(1-P0)*(1-F0);
     entry(p);
-    var hin=ss((p-.068)/.03), h=hin*(1-ss((p-.128)/.024)), lg=ss((p-.158)/.026)*(1-ss((p-.2)/.022));
-    hero.style.opacity=h.toFixed(3);hero.style.transform='translate3d(0,'+((1-hin)*10+(hin-h)*-14).toFixed(1)+'px,0)';hero.style.filter=h>.995?'none':'blur('+((1-h)*9).toFixed(1)+'px)';
+    /* With live clouds the line and the logo are simply there, and the clouds reveal and hide them; they swap only under full cover */
+    var h=0, lg=CL?(p>=.141&&p<.199?1:0):ss((p-.148)/.017)*(1-ss((p-.182)/.016));
+    var hs=1.035-.035*ss((p-.1)/.03), ls=1.04-.04*ss((p-.148)/.03);
+    hero.style.opacity=h;hero.style.transform='scale('+hs.toFixed(4)+')';hero.style.filter='none';
     if(body.classList.contains('hello'))topb.style.opacity=(1-ss((q-.901)/.028)).toFixed(3);
-    rmark.style.opacity=lg.toFixed(3);rmark.style.transform='translate(-50%,calc(-50% + '+((1-lg)*12).toFixed(1)+'px))';rmark.style.filter=lg>.995?'none':'blur('+((1-lg)*6).toFixed(1)+'px)';
-    cue.style.visibility=!reduce&&(itOn||unlockP<0||Math.abs(p-unlockP)>.008)?'hidden':'visible';cue.style.opacity=itOn?'0':'';
+    rmark.style.opacity=lg;rmark.style.transform='translate(-50%,-50%) scale('+ls.toFixed(4)+')';rmark.style.filter='none';
+    cue.style.visibility=!reduce&&(itOn||unlockP<0||Math.abs(p-unlockP)>.008)?'hidden':'visible';cue.style.opacity=itOn||performance.now()-unlockAt<2200?'0':'';
     var fr=flight.getBoundingClientRect();if(window.__air)window.__air(fr.bottom>innerHeight*.3?Math.max(1-ss((q-.12)/.14),ss((q-.86)/.08)):0,fr.bottom>innerHeight*.5);
     chs.forEach(function(el){var o=ease(vis(el,q));el.style.opacity=o.toFixed(3);if(el.classList.contains('ch')){el.style.transform=el===finEl?'translate3d(0,calc(-50% + '+((1-o)*22).toFixed(1)+'px),0)':'translate3d(0,'+((1-o)*22).toFixed(1)+'px,0)';el.classList.toggle('live',o>.5)}});
     if(ready&&dur){var t=Math.min(dur-.05,q*dur);cur+=(t-cur)*(reduce?1:.14);if(Math.abs(v.currentTime-cur)>1/30&&!v.seeking)v.currentTime=cur}
