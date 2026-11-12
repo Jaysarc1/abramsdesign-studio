@@ -2542,11 +2542,11 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
     /* the reveal: the three after sites, live */
     var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:20,LS=3.2;/* batch 18: the folding starts 2.5s sooner */
     /* each after renders at a real width (a phone layout on a phone), scaled a little into its frame, so it can be scrolled, tapped and used */
-    function liveSize(){lv.forEach(function(o){var w=o.a.clientWidth,h=o.a.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1600,w/.86),k=w/V;
+    function liveSize(){lv.forEach(function(o){var w=o.a.clientWidth,h=o.a.clientHeight;if(!w||!h)return;var V=w<600?Math.max(360,w/.86):Math.max(1600,w/.86),k=Math.min(1,w/V);/* never scaled past 1:1, so it stays sharp */
         o.f.style.width=Math.round(V)+'px';o.f.style.height=Math.ceil(h/k)+'px';o.f.style.transform='scale('+k.toFixed(4)+')';});}
     function liveLoad(){if(lv.length)return;live.forEach(function(a){var f=document.createElement('iframe'),o={a:a,f:f,ok:0,w:null,user:0};
         f.setAttribute('title','Mountain & Valley, after its facelift');f.setAttribute('sandbox','allow-scripts allow-same-origin allow-forms');f.setAttribute('allow',"autoplay 'none'");
-        f.addEventListener('load',function(){try{var w=f.contentWindow,d=w.document;if(!d||!d.body||!d.body.children.length)return;d.documentElement.style.scrollBehavior='auto';o.w=w;
+        f.addEventListener('load',function(){try{var w=f.contentWindow,d=w.document;if(!d||!d.body||!d.body.children.length)return;d.documentElement.style.scrollBehavior='auto';o.w=w;var sb=d.createElement('style');sb.textContent='html{scrollbar-width:none}::-webkit-scrollbar{display:none}';d.head.appendChild(sb);
           ['pointerdown','wheel','touchstart','keydown'].forEach(function(e){d.addEventListener(e,function(ev){o.user=1;cl.add('hs-used');if(ev.type!=='wheel')tapOn();},{passive:true,capture:true});});
           sndBridge(w);
           setTimeout(function(){o.ok=1;if(lvOn)f.classList.add('on');},600);}catch(e){}});
@@ -2559,7 +2559,7 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
       requestAnimationFrame(f);}
     /* the before: a real page under the still, scrolled top to bottom in steps while the five seconds run, so the after reads against it */
     var bv=hk.querySelector('.hk-f.f1 .hk-v'),bf=null,bw=null;
-    function bSize(){if(!bf)return;var w=bv.clientWidth,h=bv.clientHeight;if(!w||!h)return;var V=w<600?Math.min(430,Math.max(360,w/.86)):Math.max(1024,w/.86),k=w/V;
+    function bSize(){if(!bf)return;var w=bv.clientWidth,h=bv.clientHeight;if(!w||!h)return;var V=w<600?Math.max(360,w/.86):Math.max(1024,w/.86),k=Math.min(1,w/V);
       bf.style.width=Math.round(V)+'px';bf.style.height=Math.ceil(h/k)+'px';bf.style.transform='scale('+k.toFixed(4)+')';}
     var bPend=0;function bLoad(){if(bf||!bv||RM)return;bf=document.createElement('iframe');bf.className='hk-bs';bf.setAttribute('title','Mountain & Valley, before');bf.setAttribute('tabindex','-1');bf.setAttribute('aria-hidden','true');bf.setAttribute('sandbox','allow-scripts allow-same-origin');
       bf.addEventListener('load',function(){try{var w=bf.contentWindow,d=w.document;if(!d||!d.body)return;d.documentElement.style.scrollBehavior='auto';bw=w;bSize();setTimeout(function(){bf.classList.add('on');},400);if(bPend)bRun();}catch(e){}});
