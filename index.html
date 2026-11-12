@@ -1230,6 +1230,12 @@ main>section>.wrap>.st:first-child{margin-top:0}
 .hook .hk-b.off{opacity:0;transform:translateY(-10px);filter:blur(4px);transition:opacity .7s ease,transform .9s cubic-bezier(.4,0,.2,1),filter .7s ease}
 .hook[data-k] .hk-fs{transition:top 1.4s cubic-bezier(.6,0,.2,1),transform 1.4s cubic-bezier(.6,0,.2,1)}
 .hook.hs-solo .hk-fs{top:50%;transform:translate(-50%,-50%)}
+/* Nov 12: once it stands alone, the window grows to fill the screen above the scroll cue, at a real desktop browser's 16:10 */
+@media (min-width:761px){
+  .hook{--cue:calc(clamp(36px,7svh,72px) + clamp(40px,7svh,64px) + 44px)}
+  .hook[data-k] .hk-fs{transition:top 1.4s cubic-bezier(.6,0,.2,1),transform 1.4s cubic-bezier(.6,0,.2,1),width 1.4s cubic-bezier(.6,0,.2,1)}
+  .hook.hs-solo .hk-fs{top:calc(50% - var(--cue) / 2 + 8px);width:min(1320px,70vw,calc((min(100svh,1080px) - var(--cue) - 64px) * 1.6))}
+}
 .hk-f{position:relative}
 .hk-scr{position:absolute;left:50%;bottom:clamp(14px,2.4vw,24px);z-index:2;display:flex;align-items:center;gap:9px;padding:10px 16px;border-radius:12px;background:rgba(14,13,12,.78);box-shadow:0 10px 24px -10px rgba(0,0,0,.6);color:#f4efe6;font-family:var(--display);font-weight:500;font-size:13px;line-height:1;letter-spacing:.01em;white-space:nowrap;opacity:0;transform:translate(-50%,8px);transition:opacity .6s ease,transform .8s cubic-bezier(.2,.7,.1,1);pointer-events:none}
 .hk-scr svg{width:12px;height:16px;animation:hkScr 1.6s ease-in-out infinite}
@@ -2542,7 +2548,7 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
     /* the reveal: the three after sites, live */
     var live=[].slice.call(hk.querySelectorAll('.hk-a[data-live]')),lv=[],lvOn=false,DR=RM?0:20,LS=3.2;/* batch 18: the folding starts 2.5s sooner */
     /* each after renders at a real width (a phone layout on a phone), scaled a little into its frame, so it can be scrolled, tapped and used */
-    function liveSize(){lv.forEach(function(o){var w=o.a.clientWidth,h=o.a.clientHeight;if(!w||!h)return;var V=w<600?Math.max(360,w/.86):Math.max(1600,w/.86),k=Math.min(1,w/V);/* never scaled past 1:1, so it stays sharp */
+    function liveSize(){lv.forEach(function(o){var w=o.a.clientWidth,h=o.a.clientHeight;if(!w||!h)return;var V=innerWidth<=760?Math.max(360,w/.86):Math.max(1440,w),k=Math.min(1,w/V);/* never scaled past 1:1, so it stays sharp; on a computer always the real desktop site, scaled down whole */
         o.f.style.width=Math.round(V)+'px';o.f.style.height=Math.ceil(h/k)+'px';o.f.style.transform='scale('+k.toFixed(4)+')';});}
     function liveLoad(){if(lv.length)return;live.forEach(function(a){var f=document.createElement('iframe'),o={a:a,f:f,ok:0,w:null,user:0};
         f.setAttribute('title','Mountain & Valley, after its facelift');f.setAttribute('sandbox','allow-scripts allow-same-origin allow-forms');f.setAttribute('allow',"autoplay 'none'");
@@ -2550,7 +2556,7 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
           ['pointerdown','wheel','touchstart','keydown'].forEach(function(e){d.addEventListener(e,function(ev){o.user=1;cl.add('hs-used');if(ev.type!=='wheel')tapOn();},{passive:true,capture:true});});
           sndBridge(w);
           setTimeout(function(){o.ok=1;if(lvOn)f.classList.add('on');},600);}catch(e){}});
-        f.src=a.getAttribute('data-live');a.appendChild(f);lv.push(o);});liveSize();addEventListener('resize',liveSize);}
+        f.src=a.getAttribute('data-live');a.appendChild(f);lv.push(o);});liveSize();addEventListener('resize',liveSize);if(window.ResizeObserver)new ResizeObserver(liveSize).observe(live[0]);}
     /* once it has unfolded it scrolls itself, folding the crane with its sound, and stops on the finished logo; the moment anyone touches it, it is theirs */
     function liveRun(){if(!lv.length)return;lvOn=true;var t0=performance.now();
       function f(now){var t=(now-t0)/1000,go=t<40;lv.forEach(function(o){if(!o.ok)return;if(!o.f.classList.contains('on'))o.f.classList.add('on');
@@ -2559,11 +2565,11 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
       requestAnimationFrame(f);}
     /* the before: a real page under the still, scrolled top to bottom in steps while the five seconds run, so the after reads against it */
     var bv=hk.querySelector('.hk-f.f1 .hk-v'),bf=null,bw=null;
-    function bSize(){if(!bf)return;var w=bv.clientWidth,h=bv.clientHeight;if(!w||!h)return;var V=w<600?Math.max(360,w/.86):Math.max(1024,w/.86),k=Math.min(1,w/V);
+    function bSize(){if(!bf)return;var w=bv.clientWidth,h=bv.clientHeight;if(!w||!h)return;var V=innerWidth<=760?Math.max(360,w/.86):Math.max(1440,w),k=Math.min(1,w/V);
       bf.style.width=Math.round(V)+'px';bf.style.height=Math.ceil(h/k)+'px';bf.style.transform='scale('+k.toFixed(4)+')';}
     var bPend=0;function bLoad(){if(bf||!bv||RM)return;bf=document.createElement('iframe');bf.className='hk-bs';bf.setAttribute('title','Mountain & Valley, before');bf.setAttribute('tabindex','-1');bf.setAttribute('aria-hidden','true');bf.setAttribute('sandbox','allow-scripts allow-same-origin');
       bf.addEventListener('load',function(){try{var w=bf.contentWindow,d=w.document;if(!d||!d.body)return;d.documentElement.style.scrollBehavior='auto';bw=w;bSize();setTimeout(function(){bf.classList.add('on');},400);if(bPend)bRun();}catch(e){}});
-      bf.src='b/before/mv2/index.html';bv.insertBefore(bf,bv.querySelector('.hk-a'));bSize();addEventListener('resize',bSize);}
+      bf.src='b/before/mv2/index.html';bv.insertBefore(bf,bv.querySelector('.hk-a'));bSize();addEventListener('resize',bSize);if(window.ResizeObserver)new ResizeObserver(bSize).observe(bv);}
     function bRun(){if(!bw){bPend=1;return;}bPend=0;var t0=performance.now(),P=[[0,0],[1.6,0],[2.7,.55],[3.3,.55],[4.4,1.15],[5.1,1.15]];
       function f(now){var t=(now-t0)/1000,y=P[P.length-1][1];/* batch 23: past the last point it holds where it stopped, not at one screen (that was the jump back) */for(var i=1;i<P.length;i++){if(t<P[i][0]){var a=P[i-1],b=P[i],k=(t-a[0])/(b[0]-a[0]);k=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;y=a[1]+(b[1]-a[1])*k;break;}}
         try{var d=bw.document,max=Math.max(0,(d.documentElement.scrollHeight||0)-bw.innerHeight);bw.scrollTo(0,Math.min(max,bw.innerHeight*y));}catch(e){}
