@@ -20,7 +20,7 @@ One CTA: "Reserve a residence".
 <title>Bascule</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Newsreader:opsz,wght@6..72,400&family=Manrope:wght@400;500;600&display=swap">
 <style>
 /* Layout: a live model of the tower at dusk on the water; black and champagne */
 :root{
@@ -253,6 +253,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   .js .rv.pre,.js .hero .in,.js header .wrap,.js .ani{opacity:1;transform:none}
   .views,.fly{height:auto}.vstage,.fstage{position:relative}
 }
+/* hero, Nov 8: one line in the studio's Newsreader, wordmark above, place line last */
+.hl{max-width:none}
+header .logo{transition:opacity .6s}
+header:not(.solid) .logo{opacity:0;pointer-events:none}
+.hmark{margin:0 0 22px;font-family:var(--serif);font-size:32px;font-weight:500;line-height:1;letter-spacing:.08em;text-transform:uppercase;color:var(--ivory)}
+.hero h1{font-family:"Newsreader",Georgia,"Times New Roman",serif;font-weight:400;font-style:normal;font-variation-settings:"opsz" 24;font-size:clamp(44px,5.2vw,84px);line-height:1.05;letter-spacing:-.01em;white-space:nowrap}
+.hero h1 em{font-style:normal}
+.hero .lede{margin:10px 0 0;max-width:none;line-height:1.2;white-space:nowrap}
+@media (max-width:520px){
+  .hmark{font-size:26px;margin-bottom:16px}
+  .hero h1{font-size:clamp(28px,10.4vw,44px)}
+  .hero .lede{font-size:clamp(13px,4.1vw,19px);margin-top:8px}
+  .hero .wrap{padding-bottom:40px}
+}
 </style>
 <script>if(window.top===window){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","z8qtahj70m");}</script>
 </head><body>
@@ -274,10 +288,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
     <canvas id="gl" aria-label="A model of the Bascule tower at dusk on the Intracoastal, its sold residences lit"></canvas>
     <div class="wrap">
       <div class="hl">
-        <p class="kick in">West Palm Beach · On the Intracoastal</p>
-        <h1><span class="in">Live above</span><span class="in"><em>the water.</em></span></h1>
+        <p class="hmark in" aria-hidden="true">Bascule</p>
+        <h1 class="in">Live above <em>the water.</em></h1>
         <p class="lede in">260 residences, from $2.4M. Completion in 2028.</p>
-        <a class="btn in" href="#book">Reserve a residence <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9h13M10 4l5 5-5 5"/></svg></a>
       </div>
     </div>
     <div class="sold in" aria-live="polite"><b><span id="sc">212</span><i>/ 260</i></b><span>Residences sold</span></div>
@@ -366,7 +379,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
   </section>
 </main>
 
-<footer><div class="wrap"><span>Bascule Residences · West Palm Beach</span><span>Renderings are artistic concepts</span></div></footer>
+<footer><div class="wrap"><span>Bascule Residences · West Palm Beach · On the Intracoastal</span><span>Renderings are artistic concepts</span></div></footer>
 
 <script>
 document.documentElement.classList.add('js');
