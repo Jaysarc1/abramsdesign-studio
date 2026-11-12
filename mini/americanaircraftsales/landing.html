@@ -1,0 +1,981 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>American Aircraft Sales</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:wght@500;600&family=Archivo:wdth,wght@62..125,300..700&family=Montserrat:wght@500&display=swap">
+<style>
+/* One flight, then the aircraft told through its own logbook.
+   Type: Italiana, a hairline Didone, carries the voice and every large figure; Archivo, opened to its widest cut,
+   sets the engraved capitals; Archivo at normal width carries the few plain sentences. No italics: emphasis is gold.
+   A single committed golden-hour look, so it ignores the viewer's light/dark theme. */
+:root{
+  color-scheme:dark;
+  --band:26px;
+  --band-bg:#2E2723;--band-fg:#D6C4A2;
+  --night:#110E0C;
+  --ink:#141217;
+  --ink-2:#3A332C;
+  --umber:#1E1814;
+  --slate:#1C2029;
+  --paper:#EFE7D9;
+  --paper-2:#E6DCCB;
+  --cream:#FBF5EA;
+  --gold:#D4B07A;--gold-2:#F0D8AC;--gold-3:#9A7A48;
+  --muted:rgba(251,245,234,.62);
+  --hair:rgba(240,216,172,.18);
+  --f-disp:"Italiana","Bodoni Moda",Didot,"Bodoni 72","Times New Roman",serif;
+  --f-nav:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
+  --f-sans:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --gut-l:max(16px,env(safe-area-inset-left,0px));
+  --gut-r:max(16px,env(safe-area-inset-right,0px));
+  --m:clamp(24px,4.6vw,80px);
+  --vh:calc(100dvh - var(--band) - env(safe-area-inset-top,0px));
+  --ease:cubic-bezier(.16,1,.3,1);
+  --glide:cubic-bezier(.76,0,.18,1);
+  --pw:24vh;--ph:34vh;--pr:11vh;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--night)}
+body{background:var(--night);color:var(--cream);font:400 16px/1.6 var(--f-sans);font-stretch:100%;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+em{font-style:normal}
+.g{color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:4px}
+/* engraved capitals */
+.cap{font:500 12px/1.2 var(--f-sans);font-stretch:125%;letter-spacing:.3em;text-transform:uppercase}
+
+/* Concept band: identical everywhere, only its colours follow what is under it */
+#ads-credit{position:sticky;top:env(safe-area-inset-top,0px);z-index:31;display:flex;align-items:center;justify-content:center;width:100%;height:var(--band);padding:0 16px;background:var(--band-bg);color:var(--band-fg);font:500 10px/1 Montserrat,"Helvetica Neue",Arial,sans-serif;letter-spacing:.3em;text-indent:.3em;text-transform:uppercase;white-space:nowrap;transition:background-color .9s,color .9s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--band-bg);transition:background-color .9s}
+
+/* ---------- The flight ---------- */
+.flight{position:relative;height:939vh;background:var(--night)}
+.cockpit{position:sticky;top:calc(var(--band) + env(safe-area-inset-top,0px));height:var(--vh);overflow:hidden;
+  background:radial-gradient(42vh 50vh at 50% 50%,rgba(240,196,132,.16),rgba(240,196,132,0) 70%),linear-gradient(180deg,#17120F,#0E0B09)}
+.bezel{position:absolute;left:50%;top:50%;width:calc(var(--pw) + 40px);height:calc(var(--ph) + 40px);border-radius:calc(var(--pr) + 20px);transform:translate(-50%,-50%) scale(.94);opacity:0;
+  background:linear-gradient(165deg,#3B322B 0%,#241D18 46%,#17120E 100%);
+  box-shadow:inset 0 1px 0 rgba(255,236,206,.14),inset 0 0 0 1px rgba(240,216,172,.10),0 40px 80px -30px rgba(0,0,0,.8);
+  transition:opacity 1.6s var(--ease),transform 2.4s var(--glide)}
+.bezel::after{content:"";position:absolute;inset:14px;border-radius:calc(var(--pr) + 6px);box-shadow:inset 0 0 0 1px rgba(240,216,172,.28),inset 0 10px 24px rgba(0,0,0,.55)}
+body.on .bezel{opacity:1;transform:translate(-50%,-50%) scale(1)}
+body.open .bezel{opacity:0;transform:translate(-50%,-50%) scale(3.4);transition:opacity 1.1s var(--ease),transform 2.4s var(--glide)}
+.port{position:absolute;inset:0;overflow:hidden;clip-path:inset(calc(50% - var(--ph) / 2) calc(50% - var(--pw) / 2) round var(--pr));opacity:0;transition:clip-path 2.4s var(--glide),opacity 1.6s var(--ease)}
+body.on .port{opacity:1}
+body.open .port{clip-path:inset(0 0 0 0 round 0)}
+.port{clip-path:none;opacity:1}
+.bezel{display:none}
+/* Entry: this jet's own cabin wall; the middle window opens onto the clouds */
+.entry{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none}
+.entry img{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0;will-change:transform,opacity,filter}
+.ch-hero{opacity:0}
+.ch-hero h1 .ln span{transform:none;transition:none}
+.film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:56% 50%;background:#b7a58c url(poster.webp) center/cover;transform:scale(1.16);transition:transform 3.2s var(--glide)}
+body.open .film{transform:scale(1)}
+.lift{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(242,232,214,.34) 0%,rgba(242,232,214,0) 36%)}
+.floor{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(0deg,rgba(14,10,8,.66) 0%,rgba(14,10,8,.22) 30%,rgba(14,10,8,0) 52%)}
+.vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 55% 52%,rgba(0,0,0,0) 58%,rgba(16,10,8,.32) 100%)}
+.grain{position:absolute;inset:-50%;pointer-events:none;opacity:.06;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain .9s steps(5) infinite}
+
+.sig{display:none;position:absolute;left:0;right:0;top:calc(50% + var(--ph) / 2 + 52px);text-align:center;color:var(--cream);opacity:0;transform:translateY(14px);transition:opacity 1.6s var(--ease) .5s,transform 1.8s var(--ease) .5s}
+.sig b{display:block;font:500 13px/1 var(--f-sans);font-stretch:125%;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase}
+.sig i{display:block;margin-top:14px;font:400 26px/1 var(--f-disp);font-style:normal;color:var(--gold);letter-spacing:.06em}
+body.on .sig{opacity:1;transform:none}
+body.open .sig{opacity:0;transform:translateY(-10px);transition:opacity .8s var(--ease),transform 1.2s var(--ease)}
+
+.rmark{position:absolute;z-index:3;left:50%;top:50%;width:min(440px,calc(100% - 64px));display:flex;flex-direction:column;align-items:center;gap:clamp(20px,3.4vh,30px);transform:translate(-50%,-50%);opacity:0;pointer-events:none}
+.rmark .lm{width:clamp(64px,7vw,88px);height:auto}
+.rmark .lw{width:100%;height:auto}
+/* header */
+.top{position:absolute;inset:0 0 auto;z-index:4;display:flex;align-items:center;justify-content:flex-end;height:clamp(68px,9vh,96px);
+  padding:0 calc(var(--m) + env(safe-area-inset-right,0px)) 0 calc(var(--m) + env(safe-area-inset-left,0px));color:var(--ink);opacity:0;transform:translateY(-8px);transition:opacity 1.6s var(--ease),transform 1.6s var(--ease)}
+body.hello .top{opacity:1;transform:none}
+.mark{display:flex;align-items:center;gap:18px}
+.mark b{font:600 13px/1 var(--f-sans);font-stretch:125%;letter-spacing:.34em;text-transform:uppercase}
+.mark i{font:400 19px/1 var(--f-disp);font-style:normal;letter-spacing:.04em;color:var(--ink-2);padding-left:18px;border-left:1px solid rgba(20,18,23,.3)}
+.sslot{flex:none;width:40px;height:40px;margin-right:clamp(26px,2.8vw,44px)}
+.links{display:flex;gap:clamp(30px,3.4vw,56px);font:500 15px/1 var(--f-nav);letter-spacing:.32em;text-transform:uppercase;color:var(--ink)}
+.links a{margin-right:-.32em}
+.links a{padding:8px 0;position:relative}
+.links a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease)}
+.links a:hover::after{transform:scaleX(1)}
+
+.ch{position:absolute;z-index:3;opacity:0;will-change:opacity,transform;pointer-events:none}
+.ch.live{pointer-events:auto}
+.ch-hero{left:0;right:0;top:50%;text-align:center;color:var(--ink);opacity:1;margin-top:-.95em;font-size:clamp(40px,min(4.6vw,8vh),88px)}
+.ch-hero h1{font-size:inherit}
+h1{font:400 clamp(42px,min(5vw,8.6vh),98px)/.95 var(--f-disp);letter-spacing:-.01em}
+h1 .ln{display:block;overflow:hidden;padding-bottom:.1em}
+h1 .ln span{display:block;transform:translateY(105%);transition:transform 1.9s var(--ease)}
+h1 .ln+.ln span{transition-delay:.22s}
+body.hello h1 .ln span{transform:none}
+.cue{position:absolute;z-index:3;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(46,39,35,.82);font-weight:600;transform:translateX(-50%);opacity:0;transition:opacity 1.4s var(--ease) 1s}
+body.hello .cue{opacity:1}
+.cue{color:rgba(250,240,222,.92);text-shadow:0 1px 14px rgba(20,12,8,.55)}
+.cue span{width:1px;height:42px;background:linear-gradient(rgba(250,240,222,.8),rgba(250,240,222,0));animation:cue 2.8s var(--ease) infinite}
+.low{left:calc(var(--m) + env(safe-area-inset-left,0px));bottom:calc(clamp(40px,8vh,88px) + env(safe-area-inset-bottom,0px));color:var(--cream)}
+.big{font:400 clamp(34px,min(3.8vw,7vh),74px)/1 var(--f-disp);letter-spacing:-.005em;text-shadow:0 2px 30px rgba(10,6,4,.25)}
+
+/* featured aircraft */
+.fin{left:0;right:0;top:50%;margin-top:-1em;text-align:center;color:var(--ink)}
+.fin .big{text-shadow:none}
+.tcall{left:0;right:0;top:50%;margin:0 auto;width:min(640px,calc(100% - 40px));text-align:center;color:var(--ink)}
+.tcall h2{font:400 clamp(40px,min(4.4vw,8vh),84px)/1 var(--f-disp);letter-spacing:-.01em}
+.tcall h2 .g{color:var(--gold-3)}
+.tcall .tel{margin-top:clamp(22px,3.4vh,34px);font:400 clamp(26px,2.4vw,36px)/1 var(--f-disp);letter-spacing:.04em}
+.tcall .addr{margin-top:12px;font:400 14px/1.6 var(--f-sans);color:var(--ink-2)}
+.tcall .cbtn{margin-top:clamp(22px,3.6vh,34px);display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.tcall .btn.g{color:var(--ink);border-color:rgba(20,18,23,.35);background:rgba(255,255,255,.25)}
+.glass{left:calc(var(--m) + env(safe-area-inset-left,0px));bottom:calc(clamp(32px,6vh,72px) + env(safe-area-inset-bottom,0px));width:min(420px,calc(100% - 32px));border-radius:18px;padding:24px 26px 22px;color:var(--cream);
+  background:linear-gradient(160deg,rgba(28,22,20,.6),rgba(20,16,16,.42));border:1px solid rgba(255,236,206,.2);-webkit-backdrop-filter:blur(22px) saturate(1.3);backdrop-filter:blur(22px) saturate(1.3);box-shadow:0 30px 60px -30px rgba(10,6,4,.6),inset 0 1px 0 rgba(255,240,214,.16)}
+.glass .k{display:flex;justify-content:space-between;align-items:center;color:var(--gold-2)}
+.glass .k span:last-child{color:var(--muted)}
+.glass h2{margin-top:14px;font:400 30px/1 var(--f-disp)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px;padding-top:18px;border-top:1px solid rgba(240,216,172,.24)}
+.stats div{font:400 12px/1.35 var(--f-sans);color:var(--muted)}
+.stats b{display:block;font:400 24px/1 var(--f-disp);color:var(--cream);margin-bottom:6px;font-variant-numeric:lining-nums}
+.btn{height:48px;padding:0 24px;border-radius:12px;font:500 12px/1 var(--f-sans);font-stretch:118%;letter-spacing:.2em;text-transform:uppercase;display:inline-flex;align-items:center;justify-content:center;gap:14px;cursor:pointer;border:0;transition:transform .7s var(--ease),background .5s,box-shadow .5s}
+.btn svg{width:16px;height:10px;flex:none}
+.btn.p{background:var(--gold-2);color:var(--ink);box-shadow:0 10px 30px -12px rgba(20,12,4,.6)}
+.btn.p:hover{transform:translateY(-2px)}
+.btn.g{background:rgba(255,248,236,.06);color:var(--cream);border:1px solid rgba(255,240,214,.28)}
+.btn.g:hover{background:rgba(255,248,236,.14)}
+.glass .btn{margin-top:22px;width:100%}
+
+/* ---------- Shared ---------- */
+.sec{padding-block:clamp(96px,14vh,160px);padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(0px,3vw,40px)}
+h2.t{font:400 clamp(32px,3.5vw,56px)/1.02 var(--f-disp);letter-spacing:-.008em;text-wrap:balance}
+.lede{margin-top:22px;max-width:30em;color:var(--muted);font:300 17px/1.6 var(--f-sans)}
+
+/* ---------- Cabin: the aircraft, pinned and explored ---------- */
+.cabin{position:relative;height:440vh;background:var(--umber)}
+.cview{position:sticky;top:calc(var(--band) + env(safe-area-inset-top,0px));height:var(--vh);overflow:hidden;background:#211A15}
+.stage{position:absolute;left:0;top:0;width:1280px;height:715px;transform-origin:0 0;will-change:transform}
+.stage img{display:block;width:100%;height:100%;max-width:none}
+.cview::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(20,14,10,.55) 0%,rgba(20,14,10,0) 30%,rgba(20,14,10,0) 62%,rgba(20,14,10,.6) 100%)}
+.ctitle{position:absolute;z-index:3;left:calc(var(--m) + env(safe-area-inset-left,0px));top:clamp(48px,9vh,96px);transition:opacity 1.2s var(--ease),transform 1.4s var(--ease)}
+.ctitle .cap{color:var(--gold-2)}
+.ctitle h2{margin-top:16px;font:400 clamp(32px,3.5vw,56px)/1.02 var(--f-disp);color:var(--cream)}
+.cabin.go .ctitle{opacity:0;transform:translateY(-14px)}
+.spot{position:absolute;z-index:2;width:0;height:0;transform:scale(var(--inv,1))}
+.spot .ring{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;border:1px solid var(--gold-2);background:rgba(240,216,172,.22);opacity:0;transform:scale(.4);transition:opacity .9s var(--ease),transform 1.2s var(--ease)}
+.spot .ring::after{content:"";position:absolute;inset:-10px;border-radius:50%;border:1px solid rgba(240,216,172,.5);animation:halo 2.8s var(--ease) infinite}
+.spot .tag{position:absolute;left:0;bottom:22px;width:300px;margin-left:-150px;text-align:center;background:radial-gradient(closest-side,rgba(18,12,8,.42),rgba(18,12,8,0));padding-top:18px;opacity:0;transform:translateY(16px);transition:opacity 1.2s var(--ease),transform 1.4s var(--ease)}
+.spot .tag::after{content:"";display:block;width:1px;height:56px;margin:18px auto 0;background:linear-gradient(rgba(240,216,172,0),var(--gold-2));transform:scaleY(0);transform-origin:bottom;transition:transform 1.2s var(--ease) .2s}
+.spot.dn .tag{bottom:auto;top:22px;display:flex;flex-direction:column-reverse}
+.spot.dn .tag::after{margin:0 auto 18px;}
+.spot.sky .tag{top:16px;padding-top:0}
+.spot.sky .tag::after{height:22px;margin:0 auto 14px;background:linear-gradient(var(--gold-2),rgba(240,216,172,0));transform-origin:top}
+.spot b{display:block;font:400 44px/.95 var(--f-disp);color:var(--cream);text-shadow:0 4px 30px rgba(10,6,4,.55)}
+.spot small{display:block;margin-top:12px;color:var(--gold-2);text-shadow:0 2px 16px rgba(10,6,4,.7)}
+.spot.on .ring{opacity:1;transform:none}
+.spot.on .tag{opacity:1;transform:none}
+.spot.on .tag::after{transform:none}
+
+/* ---------- Logbook: every landing, drawn ---------- */
+.log{background:var(--ink)}
+.lgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(40px,6vw,100px);align-items:start}
+.field{position:sticky;top:calc(var(--band) + env(safe-area-inset-top,0px) + 10vh)}
+.lnum{margin-top:clamp(40px,6vh,64px);display:grid;gap:30px}
+.lnum div{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:22px;align-items:baseline;padding-bottom:26px;border-bottom:1px solid var(--hair)}
+.lnum b{font:400 clamp(40px,3.8vw,62px)/.9 var(--f-disp);font-variant-numeric:lining-nums tabular-nums;min-width:3.4ch}
+.lnum span{color:var(--muted);font:300 15px/1.45 var(--f-sans)}
+.lnum span .cap{display:block;color:var(--gold-2);margin-bottom:6px}
+.eng{margin-top:26px;color:var(--muted);font:300 15px/1.6 var(--f-sans);max-width:28em}
+.eng b{font-weight:500;color:var(--cream)}
+
+.field canvas{display:block;width:100%;height:auto}
+.fkey{display:flex;justify-content:space-between;gap:16px;margin-top:20px;color:var(--muted)}
+.fkey .cap{color:var(--gold-2)}
+.fkey .n{font:400 24px/1 var(--f-disp);color:var(--cream);font-variant-numeric:tabular-nums lining-nums}
+
+/* ---------- Detail ---------- */
+.detail{background:var(--paper);color:var(--ink)}
+.tri{display:grid;grid-template-columns:.78fr .82fr 1.6fr;gap:clamp(12px,1.6vw,22px);align-items:end}
+.tri figure{position:relative;overflow:hidden;border-radius:12px;background:var(--paper-2)}
+.tri figure:nth-child(1){aspect-ratio:3/4}
+.tri figure:nth-child(2){aspect-ratio:4/5;margin-bottom:clamp(30px,7vh,90px)}
+.tri figure:nth-child(3){aspect-ratio:16/11}
+.tri img{position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;will-change:transform}
+.dline{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:end;margin-top:clamp(40px,6vh,70px)}
+.dline h2{font:400 clamp(30px,3.2vw,52px)/1.02 var(--f-disp);text-wrap:balance}
+.dline .cap{color:var(--gold-3);text-align:right;line-height:2}
+
+/* ---------- Range: a turning globe, every route drawn from home ---------- */
+.range{position:relative;height:620vh;background:radial-gradient(80vw 70vh at 66% 50%,#1D1A21 0%,var(--ink) 70%)}
+.gview{position:sticky;top:calc(var(--band) + env(safe-area-inset-top,0px));height:var(--vh);overflow:hidden;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);align-items:center;gap:clamp(20px,3vw,60px);padding-left:calc(var(--m) + env(safe-area-inset-left,0px));padding-right:calc(var(--m) + env(safe-area-inset-right,0px))}
+.ghead .cap{color:var(--gold-2)}
+.ghead h2{margin-top:16px}
+.dest{list-style:none;margin-top:clamp(24px,4vh,40px);border-top:1px solid var(--hair)}
+.dest li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:clamp(9px,1.5vh,14px) 2px;border-bottom:1px solid rgba(240,216,172,.1);color:rgba(251,245,234,.3);transition:color .9s var(--ease),padding 1s var(--ease)}
+.dest li b{font:400 clamp(20px,1.7vw,26px)/1 var(--f-disp)}
+.dest li span{font:500 12px/1 var(--f-sans);font-stretch:112%;letter-spacing:.16em;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.dest li.on{color:var(--cream);padding-left:10px}
+.dest li.on span{color:var(--gold-2)}
+.dest li.done{color:rgba(251,245,234,.62)}
+.gwrap{position:relative;height:100%;min-width:0}
+#globe{position:absolute;inset:0;width:100%;height:100%}
+.gread{position:absolute;right:2%;bottom:clamp(28px,8vh,80px);text-align:right}
+.gread b{display:block;font:400 clamp(44px,4.6vw,72px)/.9 var(--f-disp);font-variant-numeric:tabular-nums lining-nums}
+.gread .cap{display:block;margin-top:10px;color:var(--gold-2)}
+
+/* ---------- Hangar: each aircraft on the 1968 to today line ---------- */
+.hangar{background:var(--ink)}
+.hhead{display:flex;justify-content:space-between;align-items:end;gap:24px}
+.count{font:400 clamp(72px,8.4vw,128px)/.8 var(--f-disp);color:var(--gold);letter-spacing:-.02em}
+.ledger{margin-top:clamp(40px,6vh,64px)}
+.lrow{display:grid;grid-template-columns:74px minmax(0,1.1fr) minmax(0,1fr) 150px;gap:28px;align-items:center;padding:24px 4px;border-bottom:1px solid rgba(240,216,172,.14);position:relative}
+.lrow.hd{padding:0 4px 14px;color:var(--muted);border-bottom:1px solid var(--hair)}
+.lrow.hd .axis{border:0}
+.lrow.hd .axis span{position:absolute;top:0;font:500 12px/1 var(--f-sans);font-stretch:118%;letter-spacing:.18em}
+.lrow.hd .axis span:last-child{right:0}
+.yr{font:400 22px/1 var(--f-disp);color:var(--gold)}
+.ac{font:400 clamp(24px,2.2vw,34px)/1.05 var(--f-disp)}
+.axis{position:relative;height:14px;border-bottom:1px solid rgba(240,216,172,.22)}
+.axis i{position:absolute;bottom:-4px;left:0;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--gold-2);transition:left 2.2s var(--ease)}
+.axis i::before{content:"";position:absolute;right:3px;bottom:3px;height:1px;width:var(--span,0px);background:linear-gradient(90deg,rgba(240,216,172,0),rgba(240,216,172,.55))}
+.sn{text-align:right;color:var(--muted);font:500 12px/1 var(--f-sans);font-stretch:112%;letter-spacing:.14em;font-variant-numeric:tabular-nums}
+.lrow.wanted{color:var(--gold-2);transition:padding .8s var(--ease)}
+.lrow.wanted .yr{font:500 12px/1.2 var(--f-sans);font-stretch:125%;letter-spacing:.24em;color:var(--gold-2);text-transform:uppercase}
+.lrow.wanted .ac{color:var(--gold-2)}
+.lrow.wanted .sn{color:var(--gold-2)}
+.lrow.wanted:hover{padding-left:14px}
+.lrow.wanted::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 1s var(--ease)}
+.lrow.wanted:hover::after{transform:scaleX(1)}
+
+/* ---------- Services: names on the left, the aircraft answers on the right ---------- */
+.svc-sec{background:linear-gradient(180deg,var(--ink) 0%,var(--slate) 22%,var(--slate) 100%)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,5vw,90px);margin-top:clamp(40px,6vh,64px)}
+.svc{list-style:none}
+.svc li{display:flex;align-items:baseline;gap:clamp(16px,2vw,30px);min-height:clamp(96px,17vh,150px);align-items:center;border-bottom:1px solid rgba(240,216,172,.12);color:rgba(251,245,234,.32);transition:color 1s var(--ease)}
+.svc li span{width:34px;flex:none;color:var(--gold)}
+.svc li b{font:400 clamp(30px,3.2vw,52px)/1.05 var(--f-disp);font-weight:400;transition:transform 1.2s var(--ease);transform-origin:left center}
+.svc li.on{color:var(--cream)}
+.svc li.on b{transform:translateX(10px)}
+.media{position:sticky;top:calc(var(--band) + env(safe-area-inset-top,0px) + 12vh);height:min(68vh,620px);border-radius:14px;overflow:hidden;background:#232833}
+.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);transition:opacity 1.4s var(--ease),transform 3s var(--ease)}
+.media img.on{opacity:1;transform:none}
+
+/* ---------- Since 1968: a horizontal walk through one family's years ---------- */
+.since{position:relative;height:520vh;background:var(--paper);color:var(--ink)}
+.rail{position:sticky;top:calc(var(--band) + env(safe-area-inset-top,0px));height:var(--vh);overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.rhead{padding-left:calc(var(--m) + env(safe-area-inset-left,0px));padding-right:var(--gut-r);display:flex;align-items:baseline;gap:24px}
+.rhead .cap{color:var(--gold-3)}
+.track{display:flex;gap:0;margin-top:clamp(28px,5vh,56px);padding-left:calc(var(--m) + env(safe-area-inset-left,0px));will-change:transform}
+.panel{flex:none;width:min(38vw,520px);padding-right:clamp(40px,6vw,96px);position:relative}
+.panel .y{font:400 clamp(52px,6vw,92px)/.86 var(--f-disp);letter-spacing:-.03em;color:var(--ink)}
+.panel .y.g{color:var(--gold-3)}
+.panel h3{margin-top:20px;font:400 clamp(20px,1.6vw,26px)/1.15 var(--f-disp);max-width:13em;text-wrap:balance}
+.panel p{margin-top:14px;font:300 16px/1.6 var(--f-sans);color:#51483D;max-width:24em}
+.tick{position:relative;height:1px;margin:clamp(28px,5vh,52px) calc(var(--m) + env(safe-area-inset-right,0px)) 0 calc(var(--m) + env(safe-area-inset-left,0px));background:rgba(20,18,23,.14)}
+.tick i{position:absolute;inset:0 auto 0 0;width:0;background:var(--gold-3)}
+
+/* ---------- Reach ---------- */
+.reach{background:var(--ink)}
+.rgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:clamp(36px,5vw,90px);align-items:center}
+.miles{margin-top:32px}
+.miles b{display:block;font:400 clamp(58px,6.4vw,100px)/.86 var(--f-disp);font-variant-numeric:tabular-nums lining-nums}
+.miles .cap{display:block;margin-top:14px;color:var(--gold-2)}
+.langs{margin-top:34px;padding-top:22px;border-top:1px solid var(--hair);display:flex;gap:26px;flex-wrap:wrap;font:400 22px/1 var(--f-disp);color:var(--cream)}
+.langs span:nth-child(n+2){color:var(--muted)}
+.map{width:100%;height:auto;overflow:visible;margin-top:clamp(0px,4vh,40px)}
+.map .grat{stroke:rgba(240,216,172,.09);stroke-width:1;fill:none}
+.map .arc{stroke:var(--gold-2);stroke-width:1.6;fill:none;stroke-linecap:round}
+.map .arcg{stroke:rgba(240,216,172,.16);stroke-width:1;fill:none;stroke-dasharray:2 7}
+.map circle{fill:var(--gold-2)}
+.map .pulse{fill:none;stroke:var(--gold-2);stroke-width:1;transform-box:fill-box;transform-origin:center;animation:pulse 3s var(--ease) infinite}
+.map text{fill:var(--cream);font:500 22px var(--f-sans);font-stretch:125%;letter-spacing:.24em;text-transform:uppercase}
+.map text.s{fill:var(--muted);font:400 36px var(--f-disp);letter-spacing:0;text-transform:none}
+
+/* ---------- Rear shot + contact ---------- */
+.arrive{position:relative;background:var(--ink)}
+.last{position:relative;height:min(86vh,840px);min-height:460px;overflow:hidden}
+.last img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;transform:scale(1.1);transition:transform 4s var(--ease)}
+.last.in img{transform:scale(1)}
+.last::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,23,0) 52%,var(--ink) 100%)}
+.last .big{position:absolute;z-index:2;right:calc(var(--m) + env(safe-area-inset-right,0px));top:clamp(48px,9vh,100px);color:var(--ink);text-align:right;text-shadow:none}
+.contact{padding-block:clamp(8px,2vh,24px) clamp(80px,11vh,120px);padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.cgrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:end}
+.tel{font:400 clamp(26px,2.2vw,34px)/1.15 var(--f-disp);font-variant-numeric:lining-nums;user-select:text}
+.addr{margin-top:12px;font:300 16px/1.5 var(--f-sans);color:var(--muted);user-select:text}
+.cbtn{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+footer{padding-left:var(--gut-l);padding-right:var(--gut-r);padding-block:26px calc(26px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(240,216,172,.12);background:var(--ink)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:rgba(251,245,234,.5)}
+
+.pre{opacity:0;transform:translateY(30px);filter:blur(6px)}
+.rv{transition:opacity 1.8s var(--ease),transform 1.8s var(--ease),filter 1.8s var(--ease)}
+
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-7%,4%)}40%{transform:translate(5%,-6%)}60%{transform:translate(-4%,-3%)}80%{transform:translate(6%,5%)}100%{transform:translate(0,0)}}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes halo{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+@keyframes pulse{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.2);opacity:0}}
+
+/* ---------- Phone: centred ---------- */
+@media (max-width:760px){
+  :root{--pw:min(24vh,44vw);--ph:min(34vh,62vw);--pr:min(11vh,20vw)}
+  .flight{height:844vh}
+  .film{object-position:50% 50%}
+  .top{justify-content:center;height:64px}
+  .links{gap:22px;font-size:13px;letter-spacing:.24em}
+  .links a{margin-right:-.24em}
+  .sslot{width:36px;margin-right:16px}
+  .mark{flex-direction:column;gap:9px}
+  .mark b{font-size:12px;letter-spacing:.3em;text-indent:.3em}
+  .mark i{border-left:0;padding-left:0;font-size:17px}
+  .ch-hero{left:20px;right:20px;font-size:clamp(36px,10.4vw,46px)}
+  h1{font-size:clamp(38px,10.4vw,46px)}
+  .low{left:20px;right:20px;text-align:center;bottom:calc(36px + env(safe-area-inset-bottom,0px))}
+  .big{font-size:clamp(32px,9vw,40px)}
+  .glass{left:16px;right:16px;width:auto;bottom:calc(16px + env(safe-area-inset-bottom,0px));text-align:center}
+  .glass h2{font-size:28px}
+  .stats b{font-size:22px}
+  .wrap{padding:0 4px;text-align:center}
+  .lede{margin-left:auto;margin-right:auto}
+  .cabin{height:400vh}
+  .ctitle{left:20px;right:20px;text-align:center;top:44px}
+  .spot b{font-size:38px}
+  .range{height:640vh}
+  .gview{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);align-content:start;padding-top:28px;text-align:center;gap:0}
+  .dest{display:none}
+  .gread{left:0;right:0;text-align:center;bottom:22px}
+  .lgrid{grid-template-columns:minmax(0,1fr)}
+  .lnum div{grid-template-columns:minmax(0,1fr);gap:10px;justify-items:center;text-align:center}
+  .lnum b{min-width:0}
+  .eng{margin-left:auto;margin-right:auto}
+  .fkey{flex-direction:column;align-items:center;gap:10px}
+  .field{position:relative;top:auto}
+  .tri{grid-template-columns:1fr 1fr;gap:10px}
+  .tri figure:nth-child(2){margin-bottom:0}
+  .tri figure:nth-child(3){grid-column:1/-1;aspect-ratio:16/10}
+  .dline{grid-template-columns:minmax(0,1fr);justify-items:center;gap:16px}
+  .dline .cap{text-align:center}
+  .hhead{flex-direction:column;align-items:center;gap:10px}
+  .lrow{grid-template-columns:minmax(0,1fr);gap:12px;padding:26px 0;justify-items:center;text-align:center}
+  .lrow.hd{display:none}
+  .lrow .axis{width:min(260px,80%)}
+  .sn{text-align:center}
+  .lrow.wanted:hover{padding-left:0}
+  .split{grid-template-columns:minmax(0,1fr);gap:0;margin-top:32px}
+  .media{order:-1;top:calc(var(--band) + env(safe-area-inset-top,0px) + 8px);height:36vh;z-index:2;box-shadow:0 18px 30px -12px rgba(18,20,26,.9)}
+  .svc li{flex-direction:column;justify-content:center;gap:10px;min-height:30vh}
+  .svc li span{width:auto}
+  .svc li.on b{transform:none}
+  .since{height:600vh}
+  .rhead{justify-content:center;padding-left:var(--gut-l);text-align:center;flex-direction:column;align-items:center;gap:12px}
+  .rhead h2.t{font-size:36px}
+  .track{padding-left:7vw}
+  .panel{width:86vw;padding-right:9vw;text-align:center}
+  .panel h3,.panel p{margin-left:auto;margin-right:auto}
+  .panel .y{font-size:72px}
+  .rgrid{grid-template-columns:minmax(0,1fr)}
+  .langs{justify-content:center}
+  .map text{font-size:34px}
+  .map text.s{font-size:50px}
+  .last{height:66vh;min-height:400px}
+  .last img{object-position:64% 50%}
+  .last .big{left:20px;right:20px;text-align:center}
+  .cgrid{grid-template-columns:minmax(0,1fr)}
+  .cbtn{justify-content:center}
+  .cbtn .btn{flex:1 1 100%}
+  footer .wrap{justify-content:center;text-align:center}
+}
+/* Sound: a quiet control that stays in the corner on every section */
+.snd{position:fixed;z-index:30;left:0;top:0;opacity:0;visibility:hidden;transition:opacity 1.6s var(--ease),visibility 0s 1.6s}
+body.hello .snd{opacity:1;visibility:visible;transition:opacity 1.6s var(--ease),transform 1.4s var(--ease)}
+.snd .ib{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;border:0;cursor:pointer;color:var(--cream);background:rgba(20,18,23,.34);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px rgba(255,240,214,.22);transition:background .5s,box-shadow .5s;-webkit-tap-highlight-color:transparent}
+.snd .ib:hover,.snd .ib[aria-expanded="true"]{background:rgba(20,18,23,.5);box-shadow:inset 0 0 0 1px rgba(255,240,214,.45)}
+.snd.sky .ib{color:var(--ink);background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:inset 0 0 0 1px rgba(20,18,23,.22)}
+.snd.sky .ib:hover,.snd.sky .ib[aria-expanded="true"]{background:rgba(255,250,240,.28);box-shadow:inset 0 0 0 1px rgba(20,18,23,.4)}
+.snd .ib:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.snd svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.snd .x{display:none}.snd.mute .w{display:none}.snd.mute .x{display:inline}.snd.lo .w2{display:none}
+.snd.on .w1{animation:wv 2.6s ease-in-out infinite}.snd.on .w2{animation:wv 2.6s ease-in-out .35s infinite}
+@keyframes wv{0%,100%{opacity:.3}50%{opacity:1}}
+.volp{position:absolute;left:0;top:calc(100% + 10px);width:232px;padding:18px 20px 20px;display:grid;gap:14px;border-radius:16px;color:var(--cream);background:rgba(20,18,23,.82);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 0 0 1px rgba(255,240,214,.16),0 24px 60px rgba(0,0,0,.4);opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .4s var(--ease),transform .55s var(--ease)}
+.volp.open{opacity:1;transform:none;pointer-events:auto}
+.volp .hd{display:flex;justify-content:space-between;align-items:baseline;font:500 12px/1 var(--f-sans);font-stretch:118%;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-2)}
+.volp output{font:400 13px/1 var(--f-sans);letter-spacing:0;color:var(--cream);font-variant-numeric:tabular-nums}
+.volp input{-webkit-appearance:none;appearance:none;display:block;width:100%;height:22px;margin:0;background:transparent;cursor:pointer;--v:60%}
+.volp input:focus{outline:0}
+.volp input::-webkit-slider-runnable-track{height:2px;border-radius:2px;background:linear-gradient(90deg,var(--gold-2) var(--v),rgba(255,240,214,.2) var(--v))}
+.volp input::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-6px;border-radius:50%;background:var(--gold-2)}
+.volp input::-moz-range-track{height:2px;background:rgba(255,240,214,.2)}
+.volp input::-moz-range-progress{height:2px;background:var(--gold-2)}
+.volp input::-moz-range-thumb{width:14px;height:14px;border:0;border-radius:50%;background:var(--gold-2)}
+/* Landing version: only the flight */
+html.landing .flight~section,html.landing footer{display:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .pre{opacity:1;transform:none;filter:none}
+}
+</style>
+
+<script>document.documentElement.classList.add('landing');window.AAS_FULL='https://abramsdesign.studio/americanaircraftsales'</script>
+<a id="ads-credit" href="https://abramsdesign.studio" target="_blank" rel="noopener"><span>Concept by Abrams Design Studio</span></a>
+
+<section class="flight" id="flight" data-band="sky" aria-label="American Aircraft Sales">
+  <div class="cockpit">
+    <div class="bezel" aria-hidden="true"></div>
+    <div class="port">
+      <video class="film" muted playsinline preload="auto" poster="poster.webp" aria-hidden="true"></video>
+      <div class="lift"></div>
+      <div class="floor" data-a=".27" data-b=".31" data-c=".85" data-d=".89"></div>
+      <div class="vign"></div>
+      <div class="grain" aria-hidden="true"></div>
+    </div>
+    <div class="entry" aria-hidden="true"><img class="esky" src="e-sky.webp" alt="" width="2240" height="1494"><img class="epane" src="e-window.webp" alt="" width="2752" height="1536"></div>
+    <div class="rmark"><img class="lm" src="aas-mark-ink.png" alt="" width="275" height="246"><img class="lw" src="aas-word-ink.png" alt="American Aircraft Sales" width="1408" height="57"></div>
+
+    <header class="top">
+      <span class="sslot" aria-hidden="true"></span>
+      <nav class="links"><a href="#cabin">Aircraft</a><a href="#services">Services</a><a href="#contact">Contact</a></nav>
+    </header>
+
+    <div class="ch ch-hero">
+      <h1><span class="ln"><span>The calm side</span></span><span class="ln"><span>of owning the sky.</span></span></h1>
+    </div>
+    <div class="cue cap">Scroll<span></span></div>
+
+    <div class="ch low" data-a=".3" data-b=".34" data-c=".44" data-d=".48">
+      <div class="big">Since 1968,<br>one family.</div>
+    </div>
+    <div class="ch fin" data-a=".925" data-b=".945" data-c=".962" data-d=".975">
+      <div class="big">Thousands of aircraft,<br>sold worldwide.</div>
+    </div>
+    <div class="ch tcall" data-a=".975" data-b=".992" data-c="2" data-d="3">
+      <h2>Speak with <span class="g">the Tolberts.</span></h2>
+      <p class="tel">+1 (561) 790-4060</p>
+      <p class="addr">1300 N. Federal Hwy., Suite 105, Boca Raton, Florida 33432</p>
+      <div class="cbtn">
+        <a class="btn p" href="tel:+15617904060">Call the office<svg viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a>
+        <a class="btn g" href="https://www.google.com/maps/search/?api=1&amp;query=1300+N+Federal+Hwy+Suite+105+Boca+Raton+FL+33432" target="_blank" rel="noopener">Get directions</a>
+      </div>
+    </div>
+
+    <aside class="ch glass" data-a=".67" data-b=".7" data-c=".8" data-d=".84">
+      <div class="k cap"><span>Featured</span><span>S/N 5338</span></div>
+      <h2>2011 Gulfstream <span class="g">G550</span></h2>
+      <div class="stats">
+        <div><b>3,085</b>Hours since new</div>
+        <div><b>18</b>Passengers</div>
+        <div><b>2022</b>Paint and interior</div>
+      </div>
+      <a class="btn p" href="#cabin">Step inside<svg viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a>
+    </aside>
+  </div>
+</section>
+
+<section class="cabin" id="cabin" data-band="umber" aria-label="Inside the G550">
+  <div class="cview">
+    <div class="stage">
+      <img src="tour.webp" alt="The long ivory cabin of a Gulfstream, evening light in every window">
+      <div class="spot dn sky" data-x="640" data-y="34" style="left:50%;top:4.76%"><span class="ring"></span><div class="tag"><b>Starlink</b><small class="cap">Connected at altitude</small></div></div>
+      <div class="spot" data-x="176" data-y="452" style="left:13.75%;top:63.2%"><span class="ring"></span><div class="tag"><b>2022</b><small class="cap">Interior by Duncan Aviation</small></div></div>
+      <div class="spot" data-x="838" data-y="300" style="left:65.5%;top:42%"><span class="ring"></span><div class="tag"><b>18</b><small class="cap">Passengers</small></div></div>
+    </div>
+    <div class="ctitle">
+      <div class="cap">2011 Gulfstream G550</div>
+      <h2>Inside<br><span class="g">S/N 5338.</span></h2>
+    </div>
+  </div>
+</section>
+
+<section class="sec log" id="log" data-band="ink">
+  <div class="wrap lgrid">
+    <div>
+      <h2 class="t rv">Read the <span class="g">logbook.</span></h2>
+      <div class="lnum">
+        <div class="rv"><b data-count="3085">3,085</b><span><span class="cap">Hours</span>since new, in 2011</span></div>
+        <div class="rv"><b data-count="128">128</b><span><span class="cap">Days</span>aloft, end to end</span></div>
+        <div class="rv"><b data-count="1059">1,059</b><span><span class="cap">Landings</span>one mark each</span></div>
+      </div>
+      <p class="eng rv">Rolls-Royce <b>BR700-710C4-11</b> engines, enrolled on <b>CorporateCare</b>.</p>
+    </div>
+    <div class="field rv">
+      <canvas id="dots" aria-label="1,059 marks, one for every landing of this G550, and one open mark for the next" role="img"></canvas>
+      <div class="fkey"><span class="cap">The next one is yours</span><span class="n" id="dn">0</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec detail" id="detail" data-band="paper">
+  <div class="wrap">
+    <div class="tri">
+      <figure class="rv"><img src="x-seat.webp" alt="An ivory leather seat against walnut" loading="lazy" data-par=".06"></figure>
+      <figure class="rv"><img src="x-nose.webp" alt="The black nose and cockpit glass at sunset" loading="lazy" data-par=".12"></figure>
+      <figure class="rv"><img src="x-windows.webp" alt="Two cabin windows above the clouds, a blanket folded on an ivory seat" loading="lazy" data-par=".04"></figure>
+    </div>
+    <div class="dline">
+      <h2 class="rv">Black, with a <span style="color:var(--gold-3);white-space:nowrap">carbon-fiber</span> pattern tail.</h2>
+      <div class="cap rv">New paint and interior<br>Duncan Aviation, 08/2022</div>
+    </div>
+  </div>
+</section>
+
+<section class="range" id="range" data-band="ink" aria-label="Nonstop from Boca Raton">
+  <div class="gview">
+    <div class="ghead">
+      <span class="cap">2011 Gulfstream G550</span>
+      <h2 class="t">Nonstop <span class="g">from Boca Raton.</span></h2>
+      <ol class="dest">
+        <li data-i="0"><b>6,750</b><span>Published range, nautical miles</span></li>
+        <li data-i="1"><b>Los Angeles</b><span>2,026 nm</span></li>
+        <li data-i="2"><b>São Paulo</b><span>3,572 nm</span></li>
+        <li data-i="3"><b>London</b><span>3,808 nm</span></li>
+        <li data-i="4"><b>Geneva</b><span>4,132 nm</span></li>
+        <li data-i="5"><b>Istanbul</b><span>5,145 nm</span></li>
+        <li data-i="6"><b>Tokyo</b><span>6,455 nm</span></li>
+      </ol>
+    </div>
+    <div class="gwrap">
+      <canvas id="globe" role="img" aria-label="A turning globe: great-circle routes from Boca Raton to Los Angeles, São Paulo, London, Geneva, Istanbul and Tokyo, inside the G550's 6,750 nautical mile range"></canvas>
+      <div class="gread"><b id="gnum">0</b><span class="cap" id="gcity">Nautical miles</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec hangar" id="hangar" data-band="ink">
+  <div class="wrap">
+    <div class="hhead">
+      <h2 class="t rv">In the <span class="g">hangar.</span></h2>
+      <div class="count rv" aria-label="Seven aircraft">07</div>
+    </div>
+    <div class="ledger">
+      <div class="lrow hd"><span class="cap">Year</span><span class="cap">Aircraft</span><div class="axis"><span>1968</span><span>2026</span></div><span class="cap" style="text-align:right">Serial</span></div>
+      <div class="lrow rv" data-y="2011"><div class="yr">2011</div><div class="ac">Gulfstream G550</div><div class="axis"><i></i></div><div class="sn">S/N 5338</div></div>
+      <div class="lrow rv" data-y="1991"><div class="yr">1991</div><div class="ac">Falcon 50</div><div class="axis"><i></i></div><div class="sn">S/N 223</div></div>
+      <div class="lrow rv" data-y="2011"><div class="yr">2011</div><div class="ac">Learjet 60XR</div><div class="axis"><i></i></div><div class="sn">S/N 397</div></div>
+      <div class="lrow rv" data-y="2009"><div class="yr">2009</div><div class="ac">Learjet 45XR</div><div class="axis"><i></i></div><div class="sn">S/N 398</div></div>
+      <div class="lrow rv" data-y="2001"><div class="yr">2001</div><div class="ac">Citation Encore</div><div class="axis"><i></i></div><div class="sn">S/N 560-0552</div></div>
+      <div class="lrow rv" data-y="1998"><div class="yr">1998</div><div class="ac">Citation Bravo</div><div class="axis"><i></i></div><div class="sn">S/N 550-0849</div></div>
+      <div class="lrow rv" data-y="2018"><div class="yr">2018</div><div class="ac">Bell 505 Jet Ranger X</div><div class="axis"><i></i></div><div class="sn">S/N 65155</div></div>
+      <a class="lrow wanted rv" href="#contact"><div class="yr">Wanted</div><div class="ac">Gulfstream G650ER</div><div class="axis" style="border-color:rgba(240,216,172,.4)"></div><div class="sn">Selling one? →</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec svc-sec" id="services" data-band="slate">
+  <div class="wrap">
+    <h2 class="t rv">Six ways <span class="g">to fly with us.</span></h2>
+    <div class="split">
+      <ul class="svc">
+        <li data-i="0"><span class="cap">01</span><b>Sell aircraft</b></li>
+        <li data-i="1"><span class="cap">02</span><b>Acquisition</b></li>
+        <li data-i="2"><span class="cap">03</span><b>Technical oversight</b></li>
+        <li data-i="3"><span class="cap">04</span><b>Leasing</b></li>
+        <li data-i="4"><span class="cap">05</span><b>Consulting</b></li>
+        <li data-i="5"><span class="cap">06</span><b>Appraisals</b></li>
+      </ul>
+      <div class="media" aria-hidden="true">
+        <img src="profile.webp" alt="" class="on">
+        <img src="headon.webp" alt="" loading="lazy">
+        <img src="s-cockpit.webp" alt="" loading="lazy">
+        <img src="s-door.webp" alt="" loading="lazy">
+        <img src="s-aisle.webp" alt="" loading="lazy">
+        <img src="nose.webp" alt="" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="since" id="since" data-band="paper" aria-label="Since 1968">
+  <div class="rail">
+    <div class="rhead"><h2 class="t">One family, <span style="color:var(--gold-3)">two generations.</span></h2></div>
+    <div class="track">
+      <div class="panel"><div class="y">1968</div><h3>Charlie Tolbert opens the doors.</h3><p>A World War II veteran who built a network before computers and email.</p></div>
+      <div class="panel"><div class="y">1980</div><h3>Doie Tolbert joins.</h3><p>Chief Operating Officer today.</p></div>
+      <div class="panel"><div class="y">1988</div><h3>Jonnie Williams buys a first Learjet.</h3><p>Bought from Charlie Tolbert.</p></div>
+      <div class="panel"><div class="y g">Today</div><h3>Jet Tolbert leads the second generation.</h3><p>President and CEO, and an instrument-rated pilot.</p></div>
+      <div class="panel"><div class="y" style="font-size:clamp(46px,5.2vw,80px)">2 or 3</div><h3>Perhaps the only companies worldwide with the same name and ownership since private jets began.</h3><p>American Aircraft Sales is one of them.</p></div>
+    </div>
+    <div class="tick"><i></i></div>
+  </div>
+</section>
+
+<section class="sec reach" id="reach" data-band="ink">
+  <div class="wrap rgrid">
+    <div>
+      <h2 class="t rv">Boca Raton <span class="g">to Baar.</span></h2>
+      <p class="lede rv">Offices in the US and abroad, with affiliate JETCO Aviation in Baar, Switzerland.</p>
+      <div class="miles rv"><b id="mi">0</b><span class="cap">Miles, great circle</span></div>
+      <div class="langs rv"><span>English</span><span>Español</span><span>Português</span></div>
+    </div>
+    <svg class="map rv" id="map" viewBox="0 0 1000 440" role="img" aria-label="A great-circle route from Boca Raton, Florida to Baar, Switzerland"></svg>
+  </div>
+</section>
+
+<section class="arrive" id="contact" data-band="ink">
+  <div class="last" id="last">
+    <img src="rear.webp" alt="A black Gulfstream with the American Aircraft Sales mark on its tail, climbing over a golden coastline" loading="lazy">
+    <div class="big rv">Wherever you're<br>headed next.</div>
+  </div>
+  <div class="contact">
+    <div class="wrap cgrid">
+      <h2 class="t rv">Speak with <span class="g">the Tolberts.</span></h2>
+      <div class="rv">
+        <p class="tel">+1 (561) 790-4060</p>
+        <p class="addr">1300 N. Federal Hwy., Suite 105, Boca Raton, Florida 33432</p>
+        <div class="cbtn">
+          <a class="btn p" href="tel:+15617904060">Call the office<svg viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a>
+          <a class="btn g" href="https://www.google.com/maps/search/?api=1&amp;query=1300+N+Federal+Hwy+Suite+105+Boca+Raton+FL+33432" target="_blank" rel="noopener">Get directions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer data-band="ink">
+  <div class="wrap cap"><span>American Aircraft Sales, Inc.</span><span>Boca Raton, Florida</span></div>
+</footer>
+
+<div class="snd mute" id="snd">
+  <div class="volp" id="volP"><div class="hd"><span>Sound</span><output id="volO">60</output></div><input type="range" id="volR" min="0" max="100" step="1" value="60" aria-label="Sound volume"></div>
+  <button class="ib" id="sndB" type="button" aria-label="Sound" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.2L11.5 6v12l-4.3-3.5H4z"/><path class="w w1" d="M15 9.2a4 4 0 0 1 0 5.6"/><path class="w w2" d="M17.8 6.5a7.8 7.8 0 0 1 0 11"/><path class="x" d="m15.5 9.5 5 5M20.5 9.5l-5 5"/></svg></button>
+</div>
+
+<script>
+(function(){
+  var d=document, root=d.documentElement, body=d.body;
+  /* Landing: the flight alone, ending at "Speak with the Tolberts." The rest of the site lives at the full-site address. */
+  var LAND=root.classList.contains('landing');
+  if(LAND)[].forEach.call(d.querySelectorAll('.links a'),function(a){var h=a.getAttribute('href');
+    if(h==='#contact')a.addEventListener('click',function(e){e.preventDefault();scrollTo({top:d.documentElement.scrollHeight,behavior:reduce?'auto':'smooth'})});
+    else if(window.AAS_FULL){a.href=window.AAS_FULL;a.target='_blank';a.rel='noopener'}});
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function clamp(x){return Math.min(1,Math.max(0,x))}
+  function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2}
+  function ss(x){x=clamp(x);return x*x*(3-2*x)}
+  function prog(el,vh){var r=el.getBoundingClientRect(),span=r.height-(vh||innerHeight);return clamp(-r.top/span)}
+
+  /* Entry: a cabin window in the dark, then it opens into the sky */
+  var opened=false;
+  function open(){if(opened)return;opened=true;body.classList.add('on','open');setTimeout(function(){body.classList.add('hello')},reduce?0:1500)}
+  if(reduce){body.classList.add('on','open','hello');opened=true}
+  else{
+    requestAnimationFrame(function(){requestAnimationFrame(function(){body.classList.add('on')})});
+    setTimeout(open,2300);
+    addEventListener('wheel',open,{passive:true,once:true});
+    addEventListener('touchmove',open,{passive:true,once:true});
+    addEventListener('keydown',open,{once:true});
+  }
+
+  /* Film: load whole, then scrub by scroll */
+  var v=d.querySelector('.film'), flight=d.getElementById('flight'), dur=0, cur=0, ready=false;
+  function arm(src){v.src=src;v.addEventListener('loadedmetadata',function(){dur=v.duration||25.58;ready=true;var p=v.play();if(p&&p.then)p.then(function(){v.pause()}).catch(function(){})},{once:true})}
+  var FILM=Math.min(screen.width,screen.height)*(devicePixelRatio||1)>=1000&&innerWidth>=900?'film.mp4':'film-720.mp4';
+  fetch(FILM).then(function(r){if(!r.ok)throw 0;return r.blob()}).then(function(b){arm(URL.createObjectURL(b))}).catch(function(){arm(FILM)});
+  var chs=[].slice.call(d.querySelectorAll('[data-a]')), hero=d.querySelector('.ch-hero'), cue=d.querySelector('.cue'), rmark=d.querySelector('.rmark'), topb=d.querySelector('.top'), finEl=d.querySelector(".tcall");
+  function vis(el,p){var a=+el.dataset.a,b=+el.dataset.b,c=+el.dataset.c,e=+el.dataset.d;if(p<=a||p>=e)return 0;if(p<b)return (p-a)/(b-a);if(p<=c)return 1;return 1-(p-c)/(e-c)}
+
+  /* Speaker: seated left of Aircraft; stays there once the header has gone */
+  var sslot=d.querySelector('.sslot'), slinks=d.querySelector('.links'), sndEl=d.getElementById('snd'), sx=-1, sy=-1, rx=-1, sk=null, spos='';
+  function seat(){var fr=flight.getBoundingClientRect();
+    if(fr.bottom>=innerHeight-1||sy<0){var r=sslot.getBoundingClientRect(),ck=sslot.closest('.cockpit'),oy=fr.bottom>=innerHeight-1?0:parseFloat(getComputedStyle(ck).top)-ck.getBoundingClientRect().top;sx=Math.round(r.left);sy=Math.round(r.top+oy+(r.height-40)/2);rx=Math.round(slinks.getBoundingClientRect().right-40)}
+    var sky=fr.bottom>sy+60, pos=(sky?sx:rx)+','+sy;
+    if(sky!==sk){sk=sky;sndEl.classList.toggle('sky',sky)}
+    if(pos!==spos){spos=pos;sndEl.style.transform='translate3d('+(sky?sx:rx)+'px,'+sy+'px,0)'}}
+
+  /* Cabin: the still is pinned and gently explored, one detail at a time */
+  var cab=d.getElementById('cabin'), cview=cab.querySelector('.cview'), stage=cab.querySelector('.stage'), spots=[].slice.call(stage.querySelectorAll('.spot'));
+  var cfx=null, cfy=0, cs=null, lastK=-2;
+  function cabin(){
+    var W=cview.clientWidth,H=cview.clientHeight,p=prog(cab,H);
+    var k=p<.16?-1:Math.min(spots.length-1,Math.floor((p-.16)/.27));
+    if(k!==lastK){lastK=k;spots.forEach(function(s,i){s.classList.toggle('on',i===k)});cab.classList.toggle('go',k>=0)}
+    var c0=Math.max(W/1280,H/715), s=c0*(k>=0?(W<760?2.1:1.9):1.02);
+    var fx=k>=0?+spots[k].dataset.x:640, fy=k>=0?+spots[k].dataset.y:357;
+    if(cs===null){cs=s;cfx=fx;cfy=fy}
+    var e=reduce?1:.045; cs+=(s-cs)*e; cfx+=(fx-cfx)*e; cfy+=(fy-cfy)*e;
+    var cx=W/2-cfx*cs, cy=H*.6-cfy*cs;
+    cx=Math.min(0,Math.max(W-1280*cs,cx)); cy=Math.min(0,Math.max(H-715*cs,cy));
+    stage.style.transform='translate3d('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px,0) scale('+cs.toFixed(4)+')';
+    stage.style.setProperty('--inv',(1/cs).toFixed(4));
+  }
+
+  /* Logbook: one mark per landing. After a beat they stream in, each settling with a soft glow; a slow light passes over the book. */
+  var lsec=d.getElementById('log'), cv=d.getElementById('dots'), ctx=cv.getContext('2d'), dn=d.getElementById('dn'), N=1059, cols=53, dpr=1, lgN=0, lgShown=-1, lgBorn=new Float64Array(N);
+  function sizeDots(){
+    dpr=Math.min(2,devicePixelRatio||1);
+    cols=cv.parentNode.clientWidth<520?27:34;
+    var rows=Math.ceil((N+1)/cols), w=cv.parentNode.clientWidth, cell=w/cols;
+    cv.width=Math.round(w*dpr); cv.height=Math.round(rows*cell*dpr); cv.style.height=(rows*cell)+'px';
+  }
+  function lgBack(t){t-=1;return 1+2.7*t*t*t+1.7*t*t}
+  function dots(){
+    var r=lsec.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight)return;
+    var p=clamp((innerHeight*.7-r.top)/(r.height*.72)), now=performance.now()/1000;
+    var target=reduce?N:Math.round(ss(clamp((p-.14)/.86))*N);
+    if(reduce)lgN=target;else{var dl=target-lgN,st=Math.min(Math.abs(dl),Math.max(1.6,Math.abs(dl)*.05));lgN+=dl<0?-st:st}
+    var n=Math.round(lgN);
+    for(var i=0;i<N;i++){if(i<n){if(!lgBorn[i])lgBorn[i]=now-(reduce?9:0)}else lgBorn[i]=0}
+    if(n!==lgShown){lgShown=n;dn.textContent=Math.min(n,N).toLocaleString('en-US')}
+    var w=cv.width, cell=w/cols, rad=Math.max(1.1*dpr,cell*.17), rows=Math.ceil((N+1)/cols), sweep=reduce?-1:(now*.11)%1.7-.35;
+    ctx.clearRect(0,0,w,cv.height);
+    for(var i=0;i<=N;i++){
+      var gx=i%cols, gy=Math.floor(i/cols), x=(gx+.5)*cell, y=(gy+.5)*cell;
+      if(i===N){
+        var done=n>=N;
+        ctx.beginPath();ctx.arc(x,y,rad*1.5,0,6.283);ctx.strokeStyle=done?'#F0D8AC':'rgba(240,216,172,.25)';ctx.lineWidth=dpr;ctx.stroke();
+        if(done&&!reduce){var t2=(now/2.6)%1;ctx.beginPath();ctx.arc(x,y,rad*(1.5+3.2*t2),0,6.283);ctx.strokeStyle='rgba(240,216,172,'+(.55*(1-t2)).toFixed(3)+')';ctx.stroke()}
+        continue}
+      var b=lgBorn[i];
+      if(!b){ctx.beginPath();ctx.arc(x,y,rad,0,6.283);ctx.fillStyle='rgba(240,216,172,.08)';ctx.fill();continue}
+      var a=now-b, sc=a<.6?Math.max(0,lgBack(a/.6)):1, fresh=clamp(1-a/1.8);
+      if(a<1.4){ctx.beginPath();ctx.arc(x,y,rad*(1.4+2.6*a/1.4),0,6.283);ctx.fillStyle='rgba(247,230,196,'+(.22*(1-a/1.4)).toFixed(3)+')';ctx.fill()}
+      var dg=gx/cols*.72+gy/rows*.28, sw=Math.max(0,1-Math.abs(sweep-dg)/.07), al=.72+.1*Math.sin(now*.7+i*2.39);
+      ctx.beginPath();ctx.arc(x,y,rad*sc,0,6.283);ctx.fillStyle='rgba(212,176,122,'+al.toFixed(3)+')';ctx.fill();
+      var hi=Math.max(fresh,sw*.75);
+      if(hi>.01){ctx.fillStyle='rgba(250,236,206,'+hi.toFixed(3)+')';ctx.fill()}
+    }
+  }
+  sizeDots();addEventListener('resize',sizeDots);
+
+  /* Count-up numerals */
+  var counts=[].slice.call(d.querySelectorAll('[data-count]'));
+  counts.forEach(function(el){el.textContent='0'});
+  var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;cio.unobserve(e.target);var el=e.target,to=+el.dataset.count,t0=performance.now(),T=reduce?1:2600;
+    (function run(t){var q=ease(clamp((t-t0)/T));el.textContent=Math.round(to*q).toLocaleString('en-US');if(q<1)requestAnimationFrame(run)})(t0)})},{threshold:.6});
+  counts.forEach(function(el){cio.observe(el)});
+
+  /* Detail parallax */
+  var pars=[].slice.call(d.querySelectorAll('[data-par]'));
+  function par(){pars.forEach(function(im){var r=im.parentNode.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;var q=(r.top+r.height/2-innerHeight/2)/innerHeight;im.style.transform='translate3d(0,'+(q*+im.dataset.par*-100).toFixed(2)+'%,0)'})}
+
+  /* Hangar: each aircraft placed on the line from 1968 to today */
+  var rows=[].slice.call(d.querySelectorAll('.lrow[data-y]'));
+  var hio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;hio.unobserve(e.target);var y=+e.target.dataset.y,i=e.target.querySelector('.axis i'),ax=i.parentNode,f=(y-1968)/(2026-1968);
+    setTimeout(function(){i.style.left=(f*100).toFixed(2)+'%';i.style.setProperty('--span',(f*ax.clientWidth).toFixed(0)+'px')},300)})},{threshold:.5});
+  rows.forEach(function(r){hio.observe(r)});
+
+  /* Services: the image answers the name in view */
+  var lis=[].slice.call(d.querySelectorAll('.svc li')), imgs=[].slice.call(d.querySelectorAll('.media img'));
+  function svc(){
+    var mid=innerWidth<760?innerHeight*.66:innerHeight*.5, best=0, bd=1e9;
+    lis.forEach(function(li,i){var r=li.getBoundingClientRect(),c=r.top+r.height/2,dd=Math.abs(c-mid);if(dd<bd){bd=dd;best=i}});
+    lis.forEach(function(li,i){li.classList.toggle('on',i===best)});
+    imgs.forEach(function(im,i){im.classList.toggle('on',i===best)});
+  }
+
+  /* Since 1968: a horizontal walk */
+  var since=d.getElementById('since'), rail=since.querySelector('.rail'), track=since.querySelector('.track'), tick=since.querySelector('.tick i');
+  function walk(){
+    var p=prog(since,rail.clientHeight), max=track.scrollWidth-rail.clientWidth;
+    track.style.transform='translate3d('+(-ss(p*1.04)*Math.max(0,max)).toFixed(1)+'px,0,0)';
+    tick.style.width=(p*100).toFixed(2)+'%';
+  }
+
+  /* Reach: the great circle from Boca Raton to Baar, drawn by scroll */
+  var map=d.getElementById('map'), mi=d.getElementById('mi'), arc, alen=0, NS='http://www.w3.org/2000/svg';
+  (function(){
+    var L0=-96,L1=26,B0=14,B1=64, W=1000, sx=W/(L1-L0), H=(B1-B0)*sx*1.08;
+    map.setAttribute('viewBox','0 0 1000 '+Math.round(H));
+    function P(lon,lat){return [(lon-L0)*sx,(B1-lat)*sx*1.08]}
+    function el(n,a){var e=d.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);map.appendChild(e);return e}
+    var g='';
+    for(var lo=-90;lo<=20;lo+=10){var a=P(lo,B0),b=P(lo,B1);g+='M'+a[0].toFixed(1)+' '+a[1].toFixed(1)+'V'+b[1].toFixed(1)}
+    for(var la=20;la<=60;la+=10){var a2=P(L0,la),b2=P(L1,la);g+='M'+a2[0].toFixed(1)+' '+a2[1].toFixed(1)+'H'+b2[0].toFixed(1)}
+    el('path',{d:g,'class':'grat'});
+    var A=[26.3683,-80.1289],Bp=[47.1963,8.5295],rad=Math.PI/180;
+    function v3(p){var la=p[0]*rad,lo=p[1]*rad;return [Math.cos(la)*Math.cos(lo),Math.cos(la)*Math.sin(lo),Math.sin(la)]}
+    var a3=v3(A),b3=v3(Bp),dot=a3[0]*b3[0]+a3[1]*b3[1]+a3[2]*b3[2],om=Math.acos(dot),pts=[];
+    for(var i=0;i<=120;i++){var t=i/120,k1=Math.sin((1-t)*om)/Math.sin(om),k2=Math.sin(t*om)/Math.sin(om),x=k1*a3[0]+k2*b3[0],y=k1*a3[1]+k2*b3[1],z=k1*a3[2]+k2*b3[2];
+      pts.push(P(Math.atan2(y,x)/rad,Math.atan2(z,Math.sqrt(x*x+y*y))/rad))}
+    var dd='M'+pts.map(function(q){return q[0].toFixed(1)+' '+q[1].toFixed(1)}).join('L');
+    el('path',{d:dd,'class':'arcg'});
+    arc=el('path',{d:dd,'class':'arc'});
+    alen=arc.getTotalLength();arc.style.strokeDasharray=alen;arc.style.strokeDashoffset=alen;
+    var pa=pts[0],pb=pts[pts.length-1];
+    [pa,pb].forEach(function(q){el('circle',{cx:q[0],cy:q[1],r:4});el('circle',{cx:q[0],cy:q[1],r:9,'class':'pulse'})});
+    el('text',{x:pa[0]+22,y:pa[1]+36}).textContent='Boca Raton';
+    el('text',{x:pa[0]+22,y:pa[1]+78,'class':'s'}).textContent='26.37° N';
+    var tb=el('text',{x:pb[0],y:pb[1]+48,'text-anchor':'middle'});tb.textContent='Baar';
+    el('text',{x:pb[0],y:pb[1]+90,'text-anchor':'middle','class':'s'}).textContent='47.20° N';
+  })();
+  var rsec=d.getElementById('reach');
+  function reach(){
+    var r=map.getBoundingClientRect(), p=ss((innerHeight*.9-r.top)/(innerHeight*.75));
+    arc.style.strokeDashoffset=(alen*(1-p)).toFixed(1);
+    mi.textContent=Math.round(4843*p).toLocaleString('en-US');
+  }
+
+
+  /* Range: the globe turns to each route and draws it from Boca Raton */
+  (function(){
+    var sec=d.getElementById('range'), cv=d.getElementById('globe'), g=cv.getContext('2d'), num=d.getElementById('gnum'), city=d.getElementById('gcity'), lis=[].slice.call(sec.querySelectorAll('.dest li'));
+    var RAD=Math.PI/180, raw=atob("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aAB3AGgAiQBoAJsAaACuAGgAwABoANIAaADkAGgA9wBoAAkBaAAbAWgALgFoAEABaABSAWgAZAFoAHcBaACJAWgAmwFoAK0BaADAAWgA0gFoAOQBaAD3AWgACQNoABsDaAAbBGgALQRoAOQEegCm/HoAuPx6AGP/egB2/3oAiP96AJr/egCt/3oAv/96ANL/egDk/3oA9/96AAkAegAcAHoALgB6AEEAegBTAHoAZgB6AHgAegCKAHoAnQB6AK8AegDCAHoA1AB6AOcAegD5AHoADAF6AB4BegAxAXoAQwF6AFYBegBoAXoAegF6AI0BegCfAXoAsgF6AP4CegARA3oA3AN6AAEEegATBHoAJgR6ADgEegDeBIwAc/yMAIX8jACY/IwAqvyMAL38jABZ/4wAbP+MAH7/jACR/4wAo/+MALb/jADI/4wA2/+MAO3/jAAAAIwAEwCMACUAjAA4AIwASgCMAF0AjABvAIwAggCMAJQAjACnAIwAugCMAMwAjADfAIwA8QCMAAQBjAAWAYwAKQGMADsBjABOAYwAYQGMAHMBjACGAYwAmAGMAL0BjADQAYwA4gGMAPkCjAALA4wAHgOMANgDjADqA4wA/QOMAA8EjAAiBIwANASMALYEjADJBJ4AafyeAHz8ngCi/J4AtPyeAGr/ngB9/54AkP+eAKL/ngC1/54AyP+eANr/ngDt/54AAACeABMAngAmAJ4AOACeAEsAngBeAJ4AcACeAIMAngCWAJ4AqQCeALwAngDOAJ4A4QCeAPQAngAGAZ4AGQGeACwBngA/AZ4AUgGeAGQBngB3AZ4AigGeAK8BngDCAZ4A1QGeAOgBngD6AZ4A7gKeAAEDngAUA54A4gOeAPQDngAHBJ4AGgSeAC0EngCwBLAAEPywACL8sAA1/LAASPywAFv8sABu/LAAgfywAGD/sABz/7AAhf+wAJj/sACr/7AAvv+wANH/sADk/7AA9/+wAAkAsAAcALAALwCwAEIAsABVALAAaACwAHsAsACNALAAoACwALMAsADGALAA2QCwAOwAsAD+ALAAEQGwACQBsAA3AbAASgGwAF0BsABwAbAAggGwAKgBsAC7AbAAzgGwAOEBsADzAbAABgKwABkCsADpArAA+wKwAA4DsAAhA7AANAOwALgDsADLA7AA3gOwAPADsAADBLAAFgSwACkEsADABMIA8PnCAPL7wgAF/MIAGPzCACv8wgB3/MIAivzCADb9wgBe/8IAcf/CAIT/wgCX/8IAqv/CAL3/wgDQ/8IA4//CAPb/wgAKAMIAHQDCADAAwgBDAMIAVgDCAGkAwgB8AMIAjwDCAKIAwgC1AMIAyADCANsAwgDuAMIAAQHCABQBwgAnAcIAOgHCAE0BwgBgAcIAcwHCAJoBwgCtAcIAwAHCANMBwgDmAcIA+QHCAAwCwgAfAsIAMgLCAN0CwgDwAsIAAwPCABYDwgAqA8IAPQPCAFADwgCvA8IAwgPCANUDwgDoA8IA+wPCAA4EwgAhBMIARwTUAOv71AD++9QAEvzUACX81ACG/NQAmfzUAPr81ABl/9QAef/UAIz/1ACf/9QAs//UAMb/1ADZ/9QA7f/UAAAA1AATANQAJwDUADoA1ABNANQAYQDUAHQA1ACHANQAmwDUAK4A1ADCANQA1QDUAOgA1AD8ANQADwHUACIB1AA2AdQASQHUAFwB1ABwAdQAlgHUAKoB1AC9AdQA0QHUAOQB1AD3AdQACwLUAB4C1AAxAtQARQLUAMwC1ADfAtQA8wLUAAYD1AAaA9QALQPUAEAD1ABUA9QAoQPUALQD1ADIA9QA2wPUAO4D1AACBNQAFQTUACkE1ABPBOYA3/vmAPP75gAH/OYAGvzmAC785gDK/OYA3vzmAGP/5gB3/+YAi//mAJ7/5gCy/+YAxf/mANn/5gDs/+YAAADmABQA5gAnAOYAOwDmAE4A5gBiAOYAdQDmAIkA5gCdAOYAsADmAMQA5gDXAOYA6wDmAP4A5gASAeYAJQHmADkB5gBNAeYAYAHmAIcB5gCbAeYArgHmAMIB5gDWAeYA6QHmAP0B5gAQAuYAJALmADcC5gBLAuYA1ALmAOcC5gD7AuYADwPmACID5gA2A+YASQPmAF0D5gBwA+YAhAPmAJgD5gCrA+YAvwPmANID5gDmA+YA+QPmAA0E5gAhBOYANATmAEgE5gBbBOYAbwTmAIIE5gC9BPgArPv4ANT7+ADo+/gA+/v4AA/8+AAj/PgAdv/4AIn/+ACd//gAsf/4AMX/+ADY//gA7P/4AAAA+AAUAPgAKAD4ADsA+ABPAPgAYwD4AHcA+ACKAPgAngD4ALIA+ADGAPgA2gD4AO0A+AABAfgAFQH4ACkB+AA8AfgAUAH4AHgB+ACMAfgAnwH4ALMB+ADHAfgA2wH4AO8B+AACAvgAKgL4AKEC+AC0AvgAyAL4ANwC+ADwAvgAAwP4ABcD+AArA/gAPwP4AFMD+ABmA/gAegP4AI4D+ACiA/gAtQP4AMkD+ADdA/gA8QP4AAUE+AAYBPgALAT4AEAE+ABUBPgAZwT4AHsE+ACPBAoBpPsKAcz7CgHg+woB9PsKAQj8CgEc/AoBMfwKAdH8CgH6/AoBff8KAZH/CgGl/woBuv8KAc7/CgHi/woB9v8KAQoACgEeAAoBMgAKAUYACgFbAAoBbwAKAYMACgGXAAoBqwAKAb8ACgHTAAoB5wAKAfsACgEQAQoBJAEKATgBCgFMAQoBdAEKAYgBCgGcAQoBsAEKAcUBCgHZAQoB7QEKASkCCgE9AgoBUQIKAWUCCgF6AgoBjgIKAaICCgG2AgoBygIKAd4CCgHyAgoBBgMKARoDCgEvAwoBQwMKAVcDCgFrAwoBfwMKAZMDCgGnAwoBuwMKAc8DCgHkAwoB+AMKAQwECgEgBAoBNAQKAUgECgFcBAoBcAQKAYQECgGZBAoBrQQcAa/7HAHE+xwB2PscAe37HAEB/BwBFvwcASr8HAHO/BwBXP8cAZr/HAGu/xwBw/8cAdf/HAHs/xwBAAAcARQAHAEpABwBPQAcAVIAHAFmABwBewAcAY8AHAGkABwBuAAcAc0AHAHhABwB9QAcAQoBHAEeARwBMwEcAUcBHAFcARwBcAEcAYUBHAGZARwBrgEcAcIBHAHWARwBFAIcASgCHAE9AhwBUQIcAWYCHAF6AhwBjwIcAaMCHAG3AhwBzAIcAeACHAH1AhwBCQMcAR4DHAEyAxwBRwMcAVsDHAFwAxwBhAMcAZgDHAGtAxwBwQMcAdYDHAHqAxwB/wMcARMEHAEoBBwBPAQcAVEEHAFlBBwBeQQcAY4EHAGiBBwBtwQuAX37LgGn+y4BvPsuAdD7LgHl+y4B+vsuAQ/8LgEk/C4BOPwuAU38LgFi/C4Bd/wuAYz8LgG1/C4ByvwuAaL/LgG3/y4BzP8uAeH/LgH2/y4BCgAuAR8ALgE0AC4BSQAuAV4ALgFyAC4BhwAuAZwALgGxAC4BxgAuAdoALgHvAC4BBAEuARkBLgEuAS4BQwEuAVcBLgFsAS4BgQEuAZYBLgGrAS4BvwEuAdQBLgHpAS4B/gEuARMCLgEnAi4BPAIuAVECLgFmAi4BewIuAY8CLgGkAi4BuQIuAc4CLgHjAi4B+AIuAQwDLgEhAy4BNgMuAUsDLgFgAy4BdAMuAYkDLgGeAy4BswMuAcgDLgHcAy4B8QMuAQYELgEbBC4BMAQuAUQELgFZBC4BbgQuAYMELgGYBC4BrQRAAXP7QAGI+0ABnvtAAbP7QAHI+0AB3ftAAfL7QAEI/EABHfxAATL8QAFH/EABXPxAAXH8QAGH/EABnPxAAbH8QAHG/EABq/9AAcD/QAHW/0AB6/9AAQAAQAEVAEABKgBAAUAAQAFVAEABagBAAX8AQAGUAEAB1ABAAekAQAFoAUABfQFAAZIBQAGoAUABvQFAAdIBQAHnAUAB/AFAARECQAEnAkABPAJAAVECQAFmAkABewJAAZACQAGmAkABuwJAAdACQAHlAkAB+gJAARADQAElA0ABOgNAAU8DQAFkA0ABeQNAAY8DQAGkA0ABuQNAAc4DQAHjA0AB+ANAAQ4EQAEjBEABOARAAU0EQAFiBEABeARAAY0EQAGiBEABIQVSAW37UgGD+1IBmPtSAa77UgHE+1IB2ftSAe/7UgEF/FIBGvxSATD8UgFG/FIBW/xSAXH8UgGH/FIBnfxSAbL8UgHI/FIB3vxSAb//UgHV/1IB6v9SAQAAUgEWAFIBKwBSAUEAUgFXAFIBbABSAXEBUgGGAVIBnAFSAbIBUgHHAVIB3QFSAfMBUgEIAlIBHgJSATQCUgFKAlIBXwJSAXUCUgGLAlIBoAJSAbYCUgHMAlIB4QJSAfcCUgENA1IBIgNSATgDUgFOA1IBYwNSAXkDUgGPA1IBpQNSAboDUgHQA1IB5gNSAfsDUgERBFIBJwRSATwEUgFSBFIBaARSAX0EUgGTBFIBqQRSAUEFZAFM+2QBYvtkAXj7ZAGP+2QBpftkAbv7ZAHR+2QB5/tkAf37ZAET/GQBKfxkAT/8ZAFV/GQBa/xkAYL8ZAGY/GQBrvxkAcT8ZAHa/GQB8PxkAQb9ZAHJ/2QB9f9kAQsAZAEhAGQBNwBkAU0AZAFjAGQBbAFkAYMBZAGZAWQBrwFkAcUBZAHbAWQB8QFkAQcCZAEdAmQBMwJkAUkCZAFfAmQBdQJkAYwCZAGiAmQBuAJkAc4CZAHkAmQB+gJkARADZAEmA2QBPANkAVIDZAFoA2QBfgNkAZUDZAGrA2QBwQNkAdcDZAHtA2QBAwRkARkEZAEvBGQBRQRkAVsEZAFxBGQBiARkAZ4EZAH2BGQBDAVkAWQFZAF6BXYBRft2AVv7dgFy+3YBift2AZ/7dgG2+3YBzft2AeP7dgH6+3YBEPx2ASf8dgE+/HYBVPx2AWv8dgGC/HYBmPx2Aa/8dgHG/HYB3Px2AfP8dgEK/XYBsf92Acf/dgHe/3YBkwB2ARsBdgEyAXYBSAF2AV8BdgF2AXYBjAF2AaMBdgG6AXYB0AF2AecBdgH9AXYBFAJ2ASsCdgFBAnYBWAJ2AW8CdgGFAnYBnAJ2AbMCdgHJAnYB4AJ2AfYCdgENA3YBJAN2AToDdgFRA3YBaAN2AX4DdgGVA3YBrAN2AcIDdgHZA3YB8AN2AQYEdgEdBHYBMwR2AUoEdgFhBHYBdwR2AY4EdgGlBHYBuwR2Af8EdgFaBXYBcAWIAT37iAFU+4gBa/uIAYL7iAGa+4gBsfuIAcj7iAHf+4gB9vuIAQ78iAEl/IgBPPyIAVP8iAFr/IgBgvyIAZn8iAGw/IgBx/yIAd/8iAH2/IgBDf2IAa//iAHG/4gB3f+IAfT/iAHdAIgBIgGIAToBiAFRAYgBaAGIAX8BiAGWAYgBrgGIAcUBiAHcAYgB8wGIAQsCiAEiAogBOQKIAVACiAFnAogBfwKIAZYCiAGtAogBxAKIAdwCiAHzAogBCgOIASEDiAE5A4gBUAOIAWcDiAF+A4gBlQOIAa0DiAHEA4gB2wOIAfIDiAEKBIgBIQSIATgEiAFPBIgBZgSIAX4EiAGVBIgBwwSIAfIEiAF9BZoBNPuaAUz7mgFk+5oBfPuaAZT7mgGr+5oBw/uaAdv7mgHz+5oBC/yaASP8mgE6/JoBUvyaAWr8mgGC/JoBmvyaAbL8mgHJ/JoB4fyaAfn8mgER/ZoBrf+aAcT/mgHc/5oB9P+aAZsAmgHLAJoB4gCaAfoAmgESAZoBKgGaAUIBmgFaAZoBcgGaAYkBmgGhAZoBuQGaAdEBmgHpAZoBAQKaARgCmgEwApoBSAKaAWACmgF4ApoBkAKaAacCmgG/ApoB1wKaAe8CmgEHA5oBHwOaATcDmgFOA5oBZgOaAX4DmgGWA5oBrgOaAcYDmgHdA5oB9QOaAQ0EmgElBJoBPQSaAVUEmgFsBJoBhASaAZwEmgG0BJoBzASaAeQEmgH7BKwBK/usAUT7rAFc+6wBdfusAY37rAGm+6wBvvusAdf7rAHv+6wBCPysASD8rAE5/KwBUfysAWr8rAGC/KwBm/ysAbP8rAHM/KwB5PysAf38rAEV/awBLv2sAar/rAHD/6wB2/+sAfT/rAEMAKwBbgCsAYcArAG4AKwB0ACsAekArAEBAawBrQGsAcUBrAHeAawB9gGsAQ8CrAEnAqwBQAKsAVgCrAFwAqwBiQKsAaECrAG6AqwB0gKsAesCrAEDA6wBHAOsATQDrAFNA6wBZQOsAX4DrAGWA6wBrwOsAccDrAHgA6wB+AOsAREErAEpBKwBQgSsAVoErAFzBKwBiwSsAaQErAG8BKwB1QSsAe0ErAEGBawBHgWsATcFrAGABawBmQW+AT/7vgFY+74Bcvu+AYv7vgGl+74Bvvu+Adf7vgHx+74BCvy+ASP8vgE9/L4BVvy+AW/8vgGJ/L4Bovy+Abv8vgHV/L4B7vy+AQf9vgEh/b4BOv2+AVP9vgFt/b4BAAC+ARkAvgEzAL4BTAC+AWUAvgGYAL4BsQC+AcsAvgHkAL4B/gC+ARcBvgF8Ab4BlgG+Aa8BvgHIAb4B4gG+AfsBvgEUAr4BLgK+AUcCvgFgAr4BegK+AZMCvgGtAr4BxgK+Ad8CvgH5Ar4BEgO+ASsDvgFFA74BXgO+AXcDvgGRA74BqgO+AcMDvgHdA74B9gO+AQ8EvgEpBL4BQgS+AVsEvgF1BL4BjgS+AagEvgHBBL4B2gS+AfQEvgENBb4BJgW+AUAFvgGMBb4BvgXQATb70AFQ+9ABavvQAYT70AGe+9ABuPvQAdL70AHt+9ABB/zQASH80AE7/NABVfzQAW/80AGJ/NABo/zQAb380AHX/NAB8fzQAQv90AEm/dABQP3QAVr90AF0/dABjv3QAQAA0AEaANABNADQAU4A0AFoANABggDQAZ0A0AG3ANAB0QDQAesA0AEFAdABHwHQAVMB0AGHAdABoQHQAbsB0AHWAdAB8AHQAQoC0AEkAtABPgLQAVgC0AFyAtABjALQAaYC0AHAAtAB2gLQAfUC0AEPA9ABKQPQAUMD0AFdA9ABdwPQAZED0AGrA9ABxQPQAd8D0AH5A9ABEwTQAS4E0AFIBNABYgTQAXwE0AGWBNABsATQAcoE0AHkBNAB/gTQARgF0AEyBdABTQXQAZsF4gFL++IBZ/viAYL74gGd++IBuPviAdP74gHu++IBCfziAST84gE//OIBWvziAXX84gGQ/OIBq/ziAcb84gHi/OIB/fziARj94gEz/eIBTv3iAWn94gG6/eIB1f3iAdf/4gHy/+IBDgDiASkA4gFEAOIBXwDiAXoA4gGVAOIBsADiAcsA4gHmAOIBAQHiARwB4gE3AeIBUgHiAW0B4gGIAeIBpAHiAb8B4gHaAeIB9QHiARAC4gErAuIBRgLiAWEC4gF8AuIBlwLiAbIC4gHNAuIB6ALiAQMD4gEeA+IBOgPiAVUD4gFwA+IBiwPiAaYD4gHBA+IB3APiAfcD4gESBOIBLQTiAUgE4gFjBOIBfgTiAZkE4gG1BOIB0ATiAesE4gEGBeIBIQXiATwF4gFXBeIBcgX0AQr79AEm+/QBQvv0AV779AF6+/QBlvv0AbL79AHO+/QB6fv0AQX89AEh/PQBPfz0AVn89AF1/PQBkfz0Aa389AHJ/PQB5fz0AQH99AEc/fQBOP30AVT99AHE/fQBDgD0ASoA9AFGAPQBYgD0AX4A9AGZAPQBtQD0AdEA9AHtAPQBCQH0ASUB9AFBAfQBXQH0AXkB9AGVAfQBsQH0AcwB9AHoAfQBBAL0ASAC9AE8AvQBWAL0AXQC9AGQAvQBrAL0AcgC9AHkAvQB/wL0ARsD9AE3A/QBUwP0AW8D9AGLA/QBpwP0AcMD9AHfA/QB+wP0ARcE9AEyBPQBTgT0AWoE9AGGBPQBogT0Ab4E9AHaBPQB9gT0ARIF9AEuBfQBSQX0AWUF9AGdBQYCA/sGAiD7BgI9+wYCWvsGAnf7BgKU+wYCsfsGAs77BgLr+wYCCPwGAiX8BgJC/AYCX/wGAnz8BgKZ/AYCtvwGAtP8BgLw/AYCDf0GAir9BgJH/QYCZP0GAoH9BgKe/QYCu/0GAqn/BgLj/wYCAAAGAjoABgJXAAYCdAAGApEABgKuAAYCywAGAugABgIFAQYCIgEGAj8BBgJcAQYCeQEGApYBBgKzAQYC0QEGAu4BBgILAgYCKAIGAkUCBgJiAgYCfwIGApwCBgK5AgYC1gIGAvMCBgIQAwYCLQMGAkoDBgJnAwYChAMGAqEDBgK+AwYC2wMGAvgDBgIVBAYCMgQGAk8EBgJsBAYCiQQGAqYEBgLDBAYC4AQGAv0EBgIaBQYCNwUGAlUFBgJyBQYCjwUGAiAGGAL6+hgCGfsYAjf7GAJV+xgCc/sYApL7GAKw+xgCzvsYAuz7GAIL/BgCKfwYAkf8GAJl/BgChPwYAqL8GALA/BgC/fwYAhv9GAI5/RgCV/0YAnb9GAKU/RgCsv0YArT/GALx/xgCTAAYAmoAGAKIABgCpgAYAsUAGALjABgCAQEYAh8BGAI+ARgCXAEYAnoBGAKYARgCtwEYAtUBGALzARgCEQIYAjACGAJOAhgCbAIYAooCGAKpAhgCxwIYAuUCGAIDAxgCIgMYAkADGAJeAxgCfAMYApsDGAK5AxgC1wMYAvUDGAIUBBgCMgQYAlAEGAJuBBgCjQQYAqsEGALJBBgC5wQYAgYFGAIkBRgCQgUYAjQGKgLS+ioC8foqAhH7KgIw+yoCUPsqAnD7KgKP+yoCr/sqAs77KgLu+yoCDfwqAi38KgJN/CoCbPwqAoz8KgIK/SoCKv0qAkn9KgJp/SoCiP0qAuD/KgJfACoC3QAqAv0AKgIcASoCPAEqAlsBKgJ7ASoCmwEqAroBKgLaASoC+QEqAhkCKgI4AioCWAIqAngCKgKXAioCtwIqAtYCKgL2AioCFQMqAjUDKgJVAyoCdAMqApQDKgKzAyoC0wMqAvMDKgISBCoCMgQqAlEEKgJxBCoCkAQqArAEKgLQBCoC7wQqAg8FKgIuBSoCTgUqAisGKgJLBjwC4fk8AgP6PALL+jwC7Po8Ag37PAIv+zwCUPs8AnH7PAKT+zwCtPs8AtX7PAL3+zwCGPw8Ajn8PAJb/DwCI/08AkT9PAJl/TwCh/08At//PAJkADwChQA8AgsBPAIsATwCTQE8Am8BPAKQATwCsQE8AtMBPAL0ATwCFQI8AjcCPAJYAjwCeQI8ApsCPAK8AjwC3QI8Av8CPAIgAzwCQQM8AmMDPAKEAzwCpQM8AscDPALoAzwCCQQ8AisEPAJMBDwCbQQ8Ao8EPAKwBDwC0QQ8AvMEPAIUBTwCNQU8AlcFPAJABk4CyvlOAu35TgKb+k4CvvpOAuH6TgIE+04CJ/tOAkr7TgJt+04CkPtOArP7TgLW+04C+ftOAhz8TgI//E4CEf1OAjP9TgJ5/U4CVwBOAnoATgKdAE4C4wBOAgYBTgIpAU4CTAFOAm8BTgKSAU4CtQFOAtgBTgL7AU4CHgJOAkECTgJkAk4ChwJOAqoCTgLNAk4C7wJOAhIDTgI1A04CWANOAnsDTgKeA04CwQNOAuQDTgIHBE4CKgROAk0ETgJwBE4CkwROArYETgLZBE4C/AROAh8FTgJCBU4CZQVOAogFTgLwBU4CWQZgArD5YALU+WAC+flgAh76YAJn+mACjPpgArH6YALW+mAC+vpgAh/7YAJE+2ACaPtgAo37YAKy+2AC1/tgAvv7YAIg/GACRfxgAv38YAIh/WACRv1gAkf+YAJJAGACbgBgApMAYALcAGACAQFgAiYBYAJLAWACbwFgApQBYAK5AWAC3gFgAgICYAInAmACTAJgAnACYAKVAmACugJgAt8CYAIDA2ACKANgAk0DYAJyA2AClgNgArsDYALgA2ACBQRgAikEYAJOBGACcwRgApgEYAK8BGAC4QRgAgYFYAIqBWACTwVgAnQFYAKZBWACvQVgAuIFYAIHBmACdQZgApoGcgKV+XICvPlyAuP5cgIK+nICMfpyAlj6cgJ/+nICpvpyAs76cgL1+nICHPtyAkP7cgJq+3ICkftyArj7cgLf+3ICB/xyAi78cgJV/HICyvxyAkD9cgIq/nICUv5yAk4AcgJ1AHICnQByAusAcgISAXICOQFyAmABcgKHAXICrgFyAtYBcgL9AXICJAJyAksCcgJyAnICmQJyAsACcgLnAnICDwNyAjYDcgJdA3IChANyAqsDcgLSA3IC+QNyAiEEcgJIBHICbwRyApYEcgK9BHIC5ARyAgsFcgIyBXICWgVyAoEFcgKoBXICzwVyAvYFcgIdBnICRAZyApMGcgK6BnIC4QaEAsn5hALz+YQCHfqEAkf6hAJx+oQCm/qEAsT6hALu+oQCGPuEAkL7hAJs+4QClvuEAsD7hALp+4QCE/yEAj38hAJn/IQCkfyEArv8hAI4/YQCYv2EAgr+hAI0/oQCXf6EAi//hAJZ/4QCfgCEAqcAhALRAIQC+wCEAiUBhAJPAYQCowGEAswBhAL2AYQCIAKEAkoChAJ0AoQCngKEAsgChALxAoQCGwOEAkUDhAJvA4QCmQOEAsMDhALtA4QCFwSEAkAEhAJqBIQClASEAr4EhALoBIQCEgWEAjwFhAJlBYQCjwWEArkFhALjBYQCDQaEAjcGhAJhBoQCigaEArQGhALeBpYC+PiWAiT5lgJR+ZYC1vmWAgP6lgIv+pYCXPqWAoj6lgK0+pYC4fqWAg37lgI6+5YCZvuWApP7lgK/+5YC7PuWAhj8lgJE/JYCcfyWAp38lgIj/ZYCT/2WAnz9lgIB/pYCLf6WAlr+lgJk/5YCnACWAsgAlgL0AJYCIQGWAk0BlgJ6AZYCpgGWAtMBlgL/AZYCLAKWAlgClgKEApYCsQKWAt0ClgIKA5YCNgOWAmMDlgKPA5YCvAOWAugDlgIUBJYCQQSWAm0ElgKaBJYCxgSWAvMElgIfBZYCTAWWAngFlgKkBZYC0QWWAv0FlgIqBpYCVgaWAoMGlgKvBpYC3AaoAvj4qAK4+agC6PmoAhj6qAJI+qgCePqoAqj6qALY+qgCCPuoAjj7qAJo+6gCKPyoAlj8qAKI/KgCuPyoAhj9qAJI/agCeP2oAgj+qAI4/qgCaP6oApj+qAKoAKgC2ACoAggBqAI4AagCaAGoAsgBqAL4AagCKAKoAlgCqAKIAqgCuAKoAhgDqAJIA6gCeAOoAqgDqALYA6gCCASoAjgEqAJoBKgCmASoAsgEqAL4BKgCKAWoAlgFqAKIBagCuAWoAugFqAIYBqgCSAaoAngGqAKoBqgC2Aa6Asn5ugL9+boCMfq6AmX6ugIC+7oCNvu6Ap77ugLS+7oCB/y6Atf8ugIL/boCQP26Atz9ugIQ/roCRf66Ann+ugKt/roC4f66AhX/ugLrALoCHwG6AlgCugLAAroC9QK6AikDugJdA7oCkQO6AsUDugL5A7oCLgS6AmIEugKWBLoCygS6Av4EugIyBboCZwW6ApsFugLPBboCAwa6AjcGugLUBswCM/vMAm37zAKm+8wC3/vMAlH8zAKK/MwCw/zMAv38zALh/cwCGv7MAlP+zAKN/swCxv7MAv/+zAIfAswCygLMAgMDzAI9A8wCdgPMAq8DzALoA8wCIQTMAloEzAKTBMwCzQTMAgYFzAJ4BcwCsQXeAjD73gJw+94CLfzeAmz83gLr/N4C5/3eAib+3gJl/t4Cpf7eAuT+3gIj/94CVQPeApQD3gLTA94CEgTeAlEE3gKQBN4CjQXwAnP78AK6+/ACR/zwAo788ALU/PAC7/3wAjX+8AJ8/vACwv7wAgn/8AJYAvACuQPwAgAE8AJGBPACYAXwAqcFAgN4+wIDuPwCA1j9AgOo/QID+P0CA0j+AgOY/gID6P4CAzj/FAOT/BQD7/wUA0z9FAOo/RQDBP4UA2H+FAO9/hQDGf8UA4oA"), LAND=[];
+    for(var i=0;i<raw.length;i+=4){var a=(raw.charCodeAt(i)|raw.charCodeAt(i+1)<<8),b=(raw.charCodeAt(i+2)|raw.charCodeAt(i+3)<<8);if(a>32767)a-=65536;if(b>32767)b-=65536;LAND.push(v3(a/10,b/10))}
+    var HOME=[26.3683,-80.1289];
+    var DEST=[['Los Angeles',33.94,-118.41,2026],['São Paulo',-23.43,-46.47,3572],['London',51.47,-.45,3808],['Geneva',46.24,6.11,4132],['Istanbul',41.26,28.74,5145],['Tokyo',35.55,139.78,6455]];
+    function v3(la,lo){la*=RAD;lo*=RAD;return [Math.cos(la)*Math.cos(lo),Math.cos(la)*Math.sin(lo),Math.sin(la)]}
+    function ll(v){return [Math.atan2(v[2],Math.sqrt(v[0]*v[0]+v[1]*v[1]))/RAD,Math.atan2(v[1],v[0])/RAD]}
+    function slerp(a,b,t){var dt=Math.max(-1,Math.min(1,a[0]*b[0]+a[1]*b[1]+a[2]*b[2])),om=Math.acos(dt),s0=Math.sin(om);if(s0<1e-6)return a;var k1=Math.sin((1-t)*om)/s0,k2=Math.sin(t*om)/s0;return [k1*a[0]+k2*b[0],k1*a[1]+k2*b[1],k1*a[2]+k2*b[2]]}
+    var H3=v3(HOME[0],HOME[1]);
+    var ROUTES=DEST.map(function(c){var b=v3(c[1],c[2]),pts=[];for(var i=0;i<=90;i++)pts.push(slerp(H3,b,i/90));var m=ll(slerp(H3,b,.5));return {pts:pts,b:b,mid:[Math.max(-25,Math.min(48,m[0]*.75+8)),m[1]],nm:c[3],name:c[0]}});
+    /* the ring a full tank reaches: 6,750 nm around home */
+    var RING=[], th=6750/3440.065, up=[0,0,1], e1=norm(cross(up,H3)), e2=cross(H3,e1);
+    function cross(a,b){return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]}
+    function norm(a){var l=Math.hypot(a[0],a[1],a[2]);return [a[0]/l,a[1]/l,a[2]/l]}
+    for(var k=0;k<=180;k++){var ang=k/180*2*Math.PI,ct=Math.cos(th),st=Math.sin(th);RING.push([H3[0]*ct+st*(Math.cos(ang)*e1[0]+Math.sin(ang)*e2[0]),H3[1]*ct+st*(Math.cos(ang)*e1[1]+Math.sin(ang)*e2[1]),H3[2]*ct+st*(Math.cos(ang)*e1[2]+Math.sin(ang)*e2[2])])}
+    var dpr=1,Wd=0,Hd=0,cx=0,cy=0,Rg=0, rot=[20,-62], cur=null;
+    function size(){dpr=Math.min(2,devicePixelRatio||1);Wd=cv.clientWidth;Hd=cv.clientHeight;cv.width=Math.round(Wd*dpr);cv.height=Math.round(Hd*dpr);Rg=Math.min(Wd,Hd)*.42;cx=Wd/2;cy=Hd/2}
+    size();addEventListener('resize',size);
+    var sp0,cp0,sl0,cl0;
+    function setRot(la,lo){var a=la*RAD,b=lo*RAD;sp0=Math.sin(a);cp0=Math.cos(a);sl0=Math.sin(b);cl0=Math.cos(b)}
+    function P(v,lift){ /* rotate so (la0,lo0) faces the viewer */
+      var x=v[0]*cl0+v[1]*sl0, y=-v[0]*sl0+v[1]*cl0, z=v[2];
+      var X=y, Y=z*cp0-x*sp0, Zd=x*cp0+z*sp0, f=1+(lift||0);
+      return [cx+X*Rg*f, cy-Y*Rg*f, Zd]}
+    function lerpA(a,b,t){var dl=((b-a+540)%360)-180;return a+dl*t}
+    var last=-1;
+    function draw(p){
+      /* timeline: ring 0-.12, then six routes */
+      var seg=p<.12?-1:Math.min(5,Math.floor((p-.12)/(.88/6))), sp=seg<0?0:clamp(((p-.12)-seg*(.88/6))/(.88/6));
+      var target=seg<0?[22,-64]:ROUTES[seg].mid;
+      if(!cur)cur=target.slice();
+      cur[0]+=(target[0]-cur[0])*(reduce?1:.05); cur[1]=lerpA(cur[1],target[1],reduce?1:.05);
+      setRot(cur[0],cur[1]);
+      var c=g; c.setTransform(dpr,0,0,dpr,0,0); c.clearRect(0,0,Wd,Hd);
+      /* halo and sphere */
+      var hal=c.createRadialGradient(cx,cy,Rg*.9,cx,cy,Rg*1.35);hal.addColorStop(0,'rgba(240,206,150,.16)');hal.addColorStop(1,'rgba(240,206,150,0)');c.fillStyle=hal;c.beginPath();c.arc(cx,cy,Rg*1.35,0,6.283);c.fill();
+      var sph=c.createRadialGradient(cx-Rg*.35,cy-Rg*.4,Rg*.1,cx,cy,Rg);sph.addColorStop(0,'#2A2530');sph.addColorStop(1,'#121016');c.fillStyle=sph;c.beginPath();c.arc(cx,cy,Rg,0,6.283);c.fill();
+      c.strokeStyle='rgba(240,216,172,.22)';c.lineWidth=1;c.stroke();
+      /* land, one dot per patch of ground */
+      var ds=Math.max(1.1,Rg/190);
+      for(var i=0;i<LAND.length;i++){var q=P(LAND[i]);if(q[2]<=0)continue;c.fillStyle='rgba(222,190,138,'+(0.12+0.58*q[2]).toFixed(2)+')';c.fillRect(q[0]-ds/2,q[1]-ds/2,ds,ds)}
+      /* range ring */
+      var rr=seg<0?ss(p/.1):1;
+      /* the ring lies mostly over the horizon, so its far side shows through, fainter */
+      c.setLineDash([2,6]);c.lineWidth=1.2;
+      for(var side=0;side<2;side++){c.strokeStyle='rgba(240,216,172,'+((side?0.7:0.22)*rr).toFixed(2)+')';c.beginPath();var pen=false;
+        for(var k=0;k<RING.length;k++){var v=slerp(H3,RING[k],rr),q2=P(v,.004),f=q2[2]>0;if(f===!!side){pen?c.lineTo(q2[0],q2[1]):c.moveTo(q2[0],q2[1]);pen=true}else pen=false}
+        c.stroke()}
+      c.setLineDash([]);
+      /* routes */
+      for(var r=0;r<ROUTES.length;r++){
+        var rt=ROUTES[r], prog=r<seg?1:(r===seg?ss((sp-.18)/.62):0);
+        if(prog<=0)continue;
+        var n=Math.max(1,Math.round(prog*90)), pen2=false, hd=null;
+        c.strokeStyle=r===seg?'#F0D8AC':'rgba(240,216,172,.42)';c.lineWidth=r===seg?2:1.2;c.beginPath();
+        for(var j=0;j<=n;j++){var lift=Math.sin(Math.PI*j/90)*.08,q3=P(rt.pts[j],lift);if(q3[2]>-.08){pen2?c.lineTo(q3[0],q3[1]):c.moveTo(q3[0],q3[1]);pen2=true;hd=q3}else pen2=false}
+        c.stroke();
+        if(r===seg&&hd&&prog<1){c.fillStyle='#FFF1D6';c.beginPath();c.arc(hd[0],hd[1],3.2,0,6.283);c.fill();var gl=c.createRadialGradient(hd[0],hd[1],0,hd[0],hd[1],18);gl.addColorStop(0,'rgba(255,226,170,.55)');gl.addColorStop(1,'rgba(255,226,170,0)');c.fillStyle=gl;c.beginPath();c.arc(hd[0],hd[1],18,0,6.283);c.fill()}
+        var qb=P(rt.b);if(prog>=1&&qb[2]>0){c.fillStyle='#F0D8AC';c.beginPath();c.arc(qb[0],qb[1],2.6,0,6.283);c.fill()}
+      }
+      /* home */
+      var hq=P(H3);if(hq[2]>0){c.fillStyle='#FFF1D6';c.beginPath();c.arc(hq[0],hq[1],3.6,0,6.283);c.fill();var t2=(performance.now()/2600)%1;c.strokeStyle='rgba(240,216,172,'+(0.8*(1-t2)).toFixed(2)+')';c.lineWidth=1;c.beginPath();c.arc(hq[0],hq[1],4+16*t2,0,6.283);c.stroke()}
+      /* readout */
+      var val=seg<0?Math.round(6750*rr):Math.round(ROUTES[seg].nm*ss((sp-.18)/.62));
+      num.textContent=val.toLocaleString('en-US');
+      var key=seg;if(key!==last){last=key;city.textContent=seg<0?'Nautical miles, one tank':ROUTES[seg].name+', nautical miles';lis.forEach(function(li,i){li.classList.toggle('on',i===seg+1);li.classList.toggle('done',i<seg+1)})}
+    }
+    window.__globe=function(){var r=sec.getBoundingClientRect();if(r.bottom<-50||r.top>innerHeight+50)return;var gv=sec.querySelector('.gview');draw(prog(sec,gv.clientHeight))};
+  })();
+
+  /* Band colours follow what sits beneath the band */
+  var bands={night:['#2E2723','#D6C4A2'],sky:['#E3D6BD','#6A5A42'],umber:['#3A2F27','#E4CFA8'],ink:['#2A262C','#CDBE9F'],slate:['#2C313C','#D3C7AE'],paper:['#FBF8F2','#7D6A4C']};
+  var secs=[].slice.call(d.querySelectorAll('[data-band]')), lastBand='';
+  function band(){var y=30,k='sky';for(var i=0;i<secs.length;i++){var r=secs[i].getBoundingClientRect();if(r.top<=y&&r.bottom>y){k=secs[i].dataset.band;break}}
+    if(k==='sky'&&!opened)k='night';
+    if(k!==lastBand){lastBand=k;root.style.setProperty('--band-bg',bands[k][0]);root.style.setProperty('--band-fg',bands[k][1])}}
+
+  /* Entry: start on the cabin wall, push in a straight line through the middle window, then the clouds clear.
+     Geometry of the window glass in e-window.webp (px). Swap the image for a video later by keeping these numbers. */
+  var esky=d.querySelector('.esky'), epane=d.querySelector('.epane'), EW=2752, EH=1536, GX=960.5, GY=611, GA=180.5, GB=247, SW=2240, SH=1494;
+  function entry(p){
+    var ck=flight.firstElementChild, w=ck.clientWidth, h=ck.clientHeight;
+    var c0=Math.max(w/EW,h/EH), ox=Math.min(0,Math.max(w-EW*c0,w/2-GX*c0)), oy=Math.min(0,Math.max(h-EH*c0,h/2-GY*c0));
+    var g0x=ox+GX*c0, g0y=oy+GY*c0, zx=w/2/(GA*c0), zy=h/2/(GB*c0), Zm=Math.pow(Math.pow(zx,3)+Math.pow(zy,3),1/3)*1.18;
+    var z=reduce?(p>.01?1:0):ss(p/.09), Z=Math.pow(Zm,z), s=c0*Z, ax=g0x+(w/2-g0x)*z, ay=g0y+(h/2-g0y)*z;
+    epane.style.transform='translate3d('+(ax-GX*s).toFixed(1)+'px,'+(ay-GY*s).toFixed(1)+'px,0) scale('+s.toFixed(4)+')';
+    epane.style.opacity=(1-ss((z-.9)/.1)).toFixed(3);epane.style.visibility=z>=1?'hidden':'visible';
+    var gone=ss((p-.218)/.05), k=Math.max(w/SW,h/SH)*(1+.14*z+.3*gone), sx=(w-SW*k)/2, sy=(h-SH*k)/2;
+    esky.style.transform='translate3d('+sx.toFixed(1)+'px,'+sy.toFixed(1)+'px,0) scale('+k.toFixed(4)+')';
+    esky.style.opacity=(1-gone).toFixed(3);esky.style.filter=gone>.005?'blur('+(gone*14).toFixed(1)+'px)':'none';esky.style.visibility=gone>=1?'hidden':'visible';
+  }
+  function frame(){
+    var p=prog(flight);
+    if(p>.002)open();
+    var P0=.24, F0=60/614, q=p<P0?p/P0*F0:F0+(p-P0)/(1-P0)*(1-F0);
+    entry(p);
+    var hin=ss((p-.068)/.03), h=hin*(1-ss((p-.128)/.024)), lg=ss((p-.158)/.026)*(1-ss((p-.2)/.022));
+    hero.style.opacity=h.toFixed(3);hero.style.transform='translate3d(0,'+((1-hin)*10+(hin-h)*-14).toFixed(1)+'px,0)';hero.style.filter=h>.995?'none':'blur('+((1-h)*9).toFixed(1)+'px)';
+    if(body.classList.contains('hello'))topb.style.opacity=(1-ss((q-.901)/.028)).toFixed(3);
+    rmark.style.opacity=lg.toFixed(3);rmark.style.transform='translate(-50%,calc(-50% + '+((1-lg)*12).toFixed(1)+'px))';rmark.style.filter=lg>.995?'none':'blur('+((1-lg)*6).toFixed(1)+'px)';
+    cue.style.visibility=p>.03?'hidden':'visible';
+    var fr=flight.getBoundingClientRect();if(window.__air)window.__air(fr.bottom>innerHeight*.3?Math.max(1-ss((q-.12)/.14),ss((q-.86)/.08)):0,fr.bottom>innerHeight*.5);
+    chs.forEach(function(el){var o=ease(vis(el,q));el.style.opacity=o.toFixed(3);if(el.classList.contains('ch')){el.style.transform=el===finEl?'translate3d(0,calc(-50% + '+((1-o)*22).toFixed(1)+'px),0)':'translate3d(0,'+((1-o)*22).toFixed(1)+'px,0)';el.classList.toggle('live',o>.5)}});
+    if(ready&&dur){var t=Math.min(dur-.05,q*dur);cur+=(t-cur)*(reduce?1:.14);if(Math.abs(v.currentTime-cur)>1/30&&!v.seeking)v.currentTime=cur}
+    seat();if(!LAND){cabin();dots();par();window.__globe();svc();walk();reach()}band();
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  /* Sound: a slow airy bed, cabin air underneath, wind that rises in the clouds. Starts on the first tap. */
+  (function(){
+    var sw=d.getElementById('snd'), sb=d.getElementById('sndB'), vp=d.getElementById('volP'), vr=d.getElementById('volR'), vo=d.getElementById('volO');
+    var V=.6;try{var sv=localStorage.getItem('aas:volume');if(sv!==null)V=Math.max(0,Math.min(1,+sv))}catch(e){}
+    var A={ctx:null,vol:V,muted:V===0,started:false,air:0,out:1};
+    function live(){return A.ctx&&!A.muted&&A.ctx.state==='running'}
+    function rnd(a,b){return a+Math.random()*(b-a)}
+    function mt(m){return 440*Math.pow(2,(m-69)/12)}
+    function start(){
+      if(A.ctx)return;var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+      var c=A.ctx=new AC();A.master=c.createGain();A.master.gain.value=0;A.master.connect(c.destination);
+      A.master.gain.setTargetAtTime(A.vol*.9,c.currentTime,1.2);
+      var len=c.sampleRate*3.4,ir=c.createBuffer(2,len,c.sampleRate);
+      for(var k=0;k<2;k++){var dd=ir.getChannelData(k);for(var i=0;i<len;i++)dd[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.6)}
+      var rev=c.createConvolver();rev.buffer=ir;var rg=c.createGain();rg.gain.value=.5;rev.connect(rg);rg.connect(A.master);
+      var nb=c.createBuffer(1,c.sampleRate*6,c.sampleRate),nd=nb.getChannelData(0),last=0;
+      for(var j=0;j<nd.length;j++){last=(last+.02*(Math.random()*2-1))/1.02;nd[j]=last*3.2}
+      var air=c.createBufferSource();air.buffer=nb;air.loop=true;
+      var lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=360;var hp=c.createBiquadFilter();hp.type='highpass';hp.frequency.value=55;
+      A.sky=c.createGain();A.sky.gain.value=.3;A.sky.connect(A.master);A.sky.connect(rev);var ag=c.createGain();ag.gain.value=.16;air.connect(hp);hp.connect(lp);lp.connect(ag);ag.connect(A.sky);
+      var wn=c.createBufferSource();wn.buffer=nb;wn.loop=true;wn.playbackRate.value=2.4;
+      var bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=700;bp.Q.value=.5;
+      A.wind=c.createGain();A.wind.gain.value=0;wn.connect(bp);bp.connect(A.wind);A.wind.connect(A.sky);
+      var lfo=c.createOscillator(),lg=c.createGain();lfo.frequency.value=.07;lg.gain.value=240;lfo.connect(lg);lg.connect(bp.frequency);
+      air.start();wn.start();lfo.start();
+      var bus=c.createGain(),blp=c.createBiquadFilter();bus.gain.value=.5;blp.type='lowpass';blp.frequency.value=1100;bus.connect(blp);blp.connect(A.master);blp.connect(rev);
+      var CH=[[40,47,54,56,63],[37,44,51,56,61],[45,52,56,59,64],[42,49,56,59,66]], SC=[64,66,68,71,73,76,78];
+      function voice(m,t,a,att,dur){[[1,0,'sine'],[1,4,'sine'],[2,-3,'triangle']].forEach(function(o,i){
+        var os=c.createOscillator(),g=c.createGain();os.type=o[2];os.frequency.value=mt(m)*o[0];os.detune.value=o[1];
+        var amp=a*(i===2?.18:.5);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(amp,t+att);g.gain.setTargetAtTime(0,t+dur-att,att*.6);
+        os.connect(g);g.connect(bus);os.start(t);os.stop(t+dur+att*3)})}
+      function bell(m,t,a){[[1,a],[2,a*.22],[3,a*.05]].forEach(function(o){var os=c.createOscillator(),g=c.createGain();os.type='sine';os.frequency.value=mt(m)*o[0];
+        g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(o[1],t+.05);g.gain.exponentialRampToValueAtTime(.0001,t+6);os.connect(g);g.connect(bus);os.start(t);os.stop(t+6.2)})}
+      var nextC=c.currentTime+.4,ci=0,nextB=c.currentTime+5;
+      setInterval(function(){if(A.muted||c.state!=='running')return;
+        while(nextC<c.currentTime+1){CH[ci%CH.length].forEach(function(m,i){voice(m,nextC+i*.12,i?.022:.03,4.5,15)});ci++;nextC+=12}
+        while(nextB<c.currentTime+1){bell(SC[Math.floor(Math.random()*SC.length)],nextB,rnd(.012,.02));nextB+=rnd(5,9)}
+      },300);
+      c.onstatechange=ui;ui();
+    }
+    window.__air=function(v,out){if(!A.ctx)return;var o=out?1:0;if(o!==A.out){A.out=o;A.sky.gain.setTargetAtTime(o*.3,A.ctx.currentTime,o?.8:.35)}if(Math.abs(v-A.air)<.02)return;A.air=v;A.wind.gain.setTargetAtTime(v*.09,A.ctx.currentTime,.6)};
+    function ui(){var on=live(),p=Math.round(A.vol*100);sw.classList.toggle('on',!!on);sw.classList.toggle('mute',A.muted||!A.ctx);sw.classList.toggle('lo',!A.muted&&A.vol<.45);
+      vr.value=p;vr.style.setProperty('--v',p+'%');vo.textContent=A.muted?'Off':p;sb.setAttribute('aria-label',A.muted||!A.ctx?'Sound off':'Sound on')}
+    function setVol(v){v=Math.max(0,Math.min(1,v));A.vol=v;A.muted=v===0;try{localStorage.setItem('aas:volume',String(v))}catch(e){}
+      if(A.ctx){A.master.gain.setTargetAtTime(v*.9,A.ctx.currentTime,.1);if(v>0)A.ctx.resume()}else if(v>0){A.started=true;start()}ui()}
+    function first(){if(A.started)return;A.started=true;if(!A.muted){start();if(A.ctx&&A.ctx.state==='suspended')A.ctx.resume()}ui()}
+    addEventListener('pointerdown',first,{capture:true});addEventListener('keydown',first,{capture:true});addEventListener('touchend',first,{capture:true});
+    function pop(o){vp.classList.toggle('open',o);sb.setAttribute('aria-expanded',String(o))}
+    sb.addEventListener('click',function(e){e.stopPropagation();pop(!vp.classList.contains('open'))});
+    vr.addEventListener('input',function(e){setVol(+e.target.value/100)});
+    addEventListener('click',function(e){if(!e.target.closest('#snd'))pop(false)});
+    addEventListener('keydown',function(e){if(e.key==='Escape')pop(false)});
+    ui();
+  })();
+
+  /* Unhurried entrances for what starts below the fold */
+  var rv=[].slice.call(d.querySelectorAll('.rv'));
+  rv.forEach(function(el){if(el.getBoundingClientRect().top>innerHeight)el.classList.add('pre')});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var el=e.target,sib=[].indexOf.call(el.parentNode.children,el);el.style.transitionDelay=Math.min(sib,7)*110+'ms';el.classList.remove('pre');io.unobserve(el)}})},{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+  rv.forEach(function(el){io.observe(el)});
+
+  var last=d.getElementById('last');
+  new IntersectionObserver(function(es,o){if(es[0].isIntersecting){last.classList.add('in');o.disconnect()}},{threshold:.25}).observe(last);
+})();
+</script>
+
+</body></html>
