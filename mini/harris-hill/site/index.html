@@ -247,6 +247,10 @@ html:not(.js) .track,html:not(.js) .ft{display:none}
 .pg .facts li:last-child{border-bottom:1px solid var(--line)}
 .pg .facts b{font-size:22px}
 .pg .facts span{margin-top:0;font-size:12px;letter-spacing:.14em;line-height:1.5}
+@media (max-width:760px),(max-aspect-ratio:4/5){
+  /* she rides larger across the foot of the opening, so Skip intro sits in the sky, between the lockup and the tree line */
+  .skip{top:var(--sk,auto);bottom:auto;transform:translate(-50%,-50%);color:var(--navy);text-shadow:none}
+}
 @media (max-width:440px){.snd b{display:none}.mark .wrap{gap:12px}}
 @media (max-width:374px){.wm b{letter-spacing:.14em}.wm span{letter-spacing:.22em}.hr{gap:16px}}
 @media (prefers-reduced-motion:reduce){
@@ -530,8 +534,9 @@ var cv=$('stage'),cx=cv.getContext('2d'),W,H,DPR,U,ppm,gy,hx,DX,DY;
 var imgs={bg:new Image(),f:[]};imgs.bg.src=SRC.bg;SRC.f.forEach(function(s){var im=new Image();im.src=s;imgs.f.push(im)});
 function size(){DPR=Math.min(2,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);
   var port=W<=760||W/H<.8;
-  U=port?Math.min(W*1.1,H*.52):clamp(H*.8,380,820);
-  ppm=(.30*U)/2.55;gy=H*(port?.9:.86);hx=W*.3;DX=.046*U;DY=.052*U;
+  /* on phones the ride is drawn closer: she, the gates and the ring photograph come forward together, so she reads as the subject */
+  U=port?Math.min(W*1.5,H*.78):clamp(H*.8,380,820);
+  ppm=(.30*U)/2.55;gy=H*(port?.92:.86);hx=W*.3;DX=.046*U;DY=.052*U;BZ=port?1.32:1;
   ilayout();iapply();
   if(rm)draw()}
 /* ---------- the opening: the twin lockup is measured against the header's own roundel and wordmark every frame it moves,
@@ -540,7 +545,10 @@ var IN=document.querySelector('.intro'),ir=IN.querySelector('.ir'),iw=IN.querySe
     hR=document.querySelector('.mark .roundel'),hW=document.querySelector('.mark .wm'),ip=0,R0=200,ipt=false,HZ=1;
 function itarget(){return clamp(window.scrollY/innerHeight,0,1)}
 /* the horizon: the top of the tree line in the ring photograph (row 420 of 776), wherever the stage's scaling puts it */
-function horizon(){return 420*Math.max((gy+DY*.2)/(776*.86),H/776)}
+var BZ=1;
+/* the ring photograph's scale and top edge; on phones it is enlarged about the line she rides on, so the hedge and the house grow with her */
+function bgFit(){var a=gy+DY*.2,b=Math.max(a/(776*.86),H/776)*BZ;return [b,BZ>1?a-776*.86*b:0]}
+function horizon(){var f=bgFit();return f[1]+420*f[0]}
 function ilayout(){
   var port=W<=760||W/H<.8,cb=getComputedStyle(hW.querySelector('b')),cs=getComputedStyle(hW.querySelector('span')),cw=getComputedStyle(hW);
   var K=Math.min(port?1.9:2.7,(W*(port?.8:.6))/hW.offsetWidth);
@@ -550,7 +558,8 @@ function ilayout(){
     iw.style.gap=(parseFloat(cw.rowGap)||6)*K+'px';ir.style.width=ir.style.height=R0+'px'}
   set();
   /* on short screens the lockup scales down so it keeps clear air above and below it */
-  var bh=R0*1.2+iw.offsetHeight,room=horizon()*.74;if(bh>room){var f=room/bh;K*=f;R0*=f;set()}
+  var bh=R0*1.2+iw.offsetHeight,room=horizon()*(port?.66:.74);if(bh>room){var f=room/bh;K*=f;R0*=f;set()}
+  if(port){var hz=horizon(),lb=(hz+R0*1.2+iw.offsetHeight)/2;root.style.setProperty('--sk',Math.round((lb+hz)/2)+'px')}
   ipt=port}
 function lerp(a,b,u){return a+(b-a)*u}
 function iapply(){
@@ -660,8 +669,8 @@ function horse(){
 function draw(){
   cx.setTransform(DPR,0,0,DPR,0,0);
   var bg=imgs.bg;
-  if(bg.complete&&bg.width){var bs=Math.max((gy+DY*.2)/(776*.86),H/bg.height),bw=bg.width*bs,bh=bg.height*bs,off=-((st.wx*ppm*.3)%(bw*2));
-    for(var x=off,k=0;x<W;x+=bw,k++){if(x+bw<0)continue;if(k%2){cx.save();cx.translate(x+bw,0);cx.scale(-1,1);cx.drawImage(bg,0,0,bw,bh);cx.restore()}else cx.drawImage(bg,x,0,bw,bh)}}
+  if(bg.complete&&bg.width){var bf=bgFit(),bs=bf[0],by=bf[1],bw=bg.width*bs,bh=bg.height*bs,off=-((st.wx*ppm*.3)%(bw*2));
+    for(var x=off,k=0;x<W;x+=bw,k++){if(x+bw<0)continue;if(k%2){cx.save();cx.translate(x+bw,by);cx.scale(-1,1);cx.drawImage(bg,0,0,bw,bh);cx.restore()}else cx.drawImage(bg,x,by,bw,bh)}}
   else{cx.fillStyle='#E9E1D2';cx.fillRect(0,0,W,H)}
   var top=gy-DY*1.6,gr=cx.createLinearGradient(0,top,0,H);gr.addColorStop(0,'rgba(140,138,40,0)');gr.addColorStop(.12,'rgb(138,136,38)');gr.addColorStop(1,'rgb(104,112,36)');
   cx.fillStyle=gr;cx.fillRect(-10,top,W+20,H-top+10);
