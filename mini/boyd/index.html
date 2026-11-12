@@ -1,0 +1,689 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+
+
+
+<title>Boyd Nurseries</title>
+<script>
+/* Pacing: nothing rushes. Every finite entrance (0.5 to 4s) plays at 0.7 speed, staggers included,
+   so each section gets its moment when you arrive. Ambient loops and quick hover feedback are left as they are. */
+(function(){try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;}catch(e){}
+var R=.7;function slow(e){var t=e.target;if(!t||!t.getAnimations)return;
+t.getAnimations().forEach(function(a){if(a._paced)return;var m=a.effect&&a.effect.getTiming?a.effect.getTiming():null;if(!m)return;
+var d=+m.duration||0;if(m.iterations===Infinity||d<500||d>4000)return;if(e.type==='transitionrun'&&t.matches&&t.matches(':hover'))return;
+a._paced=1;a.playbackRate=R;});}
+document.addEventListener('animationstart',slow,true);document.addEventListener('transitionrun',slow,true);})();
+</script>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&display=swap">
+<style>
+/* Boyd Nurseries concept. You open standing in Boyd's own shade house, with leaves falling and the nearest
+   fronds drifting in and out of focus in front of the lens. After that the site stays in the daylight of the yard:
+   shade-cloth white, deep leaf green, and the lime of a golden hahnii's edge as the one bright. Single look by design. */
+:root{
+  color-scheme:light;
+  --day:#F2F1EA;--day-2:#E8E7DD;--cloth:#FBFAF5;
+  --ink:#10201A;--ink-2:#4A5A51;--ink-3:#7C8A81;
+  --leaf:#1E4A2E;--deep:#0B1711;
+  --lime:#C9D85B;--lime-ink:#5C6B12;
+  --line:rgba(16,32,26,.14);
+  --serif:"Instrument Serif","Times New Roman",Georgia,serif;
+  --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --gl:max(16px,env(safe-area-inset-left,0px));--gr:max(16px,env(safe-area-inset-right,0px));
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--day);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit}
+img{display:block;max-width:100%}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--lime-ink);outline-offset:3px}
+.wrap{max-width:1360px;margin:0 auto;padding-left:max(28px,var(--gl));padding-right:max(28px,var(--gr))}
+.k{font-family:var(--sans);font-size:11.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase}
+h1,h2,h3{margin:0;font-family:var(--serif);font-weight:400;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(44px,6vw,92px);line-height:.95}
+h2 em,h1 em{font-style:italic}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:50px;padding:0 24px;font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid currentColor;background:none;color:inherit;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.btn{border-radius:12px}
+.btn-lime{background:var(--lime);border-color:var(--lime);color:var(--deep)}
+.btn-lime:hover{background:#D9E57A;border-color:#D9E57A}
+.btn-ink{background:var(--ink);border-color:var(--ink);color:var(--cloth)}
+.btn-ink:hover{background:var(--leaf);border-color:var(--leaf)}
+
+.concept{background:var(--deep);color:rgba(242,241,234,.6);font-size:11.5px;letter-spacing:.04em;position:relative;z-index:31}
+.concept .wrap{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding-block:8px;text-align:center}
+.concept b{color:rgba(242,241,234,.86);font-weight:600;letter-spacing:.2em}
+
+/* header floats over the walk, then turns solid in the yard */
+header{position:fixed;left:0;right:0;top:0;z-index:30;color:#F2F1EA;padding-top:env(safe-area-inset-top,0px);transition:background .4s,color .4s,border-color .4s;border-bottom:1px solid transparent}
+header.solid{background:rgba(242,241,234,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--ink);border-color:var(--line)}
+header .wrap{display:flex;align-items:center;gap:36px;min-height:72px}
+/* their own logo as it is on boydnursery.com: reversed to cream over the walk, original ink once the header turns solid */
+.logo{display:block;line-height:0;position:relative}
+.logo img{height:48px;width:auto;transition:opacity .4s}
+.logo .ink{position:absolute;left:0;top:0;opacity:0}
+header.solid .logo .ink{opacity:1}
+header.solid .logo .rev{opacity:0}
+header nav{margin-left:auto;display:flex;gap:30px}
+header nav a{font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;opacity:.78}
+header nav a:hover{opacity:1}
+header .btn{min-height:42px;padding:0 18px;font-size:11.5px}
+@media (max-width:900px){header nav{display:none}header .btn{margin-left:auto}.logo img{height:40px}}
+@media (max-width:560px){header .wrap{gap:12px}.logo img{height:34px}header .btn{white-space:nowrap;padding:0 12px;font-size:10.5px;letter-spacing:.1em;min-height:38px}}
+
+/* ---------- the walk ---------- */
+.walk{position:relative;background:var(--deep)}
+.stage{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:var(--deep)}
+#leaves{position:absolute;inset:0;width:100%;height:100%;display:block}
+.stage::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(90deg,rgba(4,10,6,.5),rgba(4,10,6,0) 52%),radial-gradient(120% 90% at 50% 46%,transparent 52%,rgba(4,9,6,.6) 100%)}
+.grain{position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.09;mix-blend-mode:overlay;background-size:220px 220px}
+.ch{position:absolute;inset:0;display:flex;align-items:flex-end;pointer-events:none;color:#F4F3EC;opacity:0;z-index:2}
+.ch .wrap{width:100%;padding-bottom:clamp(64px,12vh,130px)}
+.ch .k{color:var(--lime);margin:0 0 22px;text-shadow:0 1px 14px rgba(0,0,0,.5)}
+.ch h1,.ch h2{text-shadow:0 2px 40px rgba(0,0,0,.35)}
+.ch h1{font-size:clamp(64px,min(11.5vw,20vh),200px);line-height:.86;letter-spacing:-.02em}
+.ch h2{font-size:clamp(46px,min(7.4vw,13vh),128px);line-height:.9;max-width:12ch}
+.ch p{max-width:30em;margin:26px 0 0;font-size:clamp(16px,1.35vw,19px);color:rgba(244,243,236,.86);text-shadow:0 1px 18px rgba(0,0,0,.6)}
+.ch.c0{opacity:1}
+.ch.c0 .k{opacity:0;animation:fade 1s .5s forwards}.ch.c0 .addr,.ch.c0 .ask{opacity:0;animation:fade 1.2s .9s forwards}
+@keyframes fade{to{opacity:1}}
+.ch.center{align-items:center;text-align:center}
+.ch.center .wrap{padding-bottom:0}
+.ch.center h2,.ch.center h1{margin:0 auto;max-width:none}
+.ch h1.welcome{font-size:clamp(56px,min(9vw,16vh),150px);line-height:.92}
+.ch.center p{margin-left:auto;margin-right:auto}
+.ch .addr{font-family:var(--serif);font-size:clamp(22px,2.2vw,30px);color:#F4F3EC}
+.ln{display:block;overflow:hidden;padding-bottom:.06em}
+.ln>span{display:block;transform:translateY(105%);animation:rise 1.3s cubic-bezier(.2,.75,.1,1) forwards}
+.ln:nth-child(2)>span{animation-delay:.12s}
+@keyframes rise{to{transform:none}}
+.cue{position:absolute;left:50%;bottom:clamp(20px,4vh,36px);transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(244,243,236,.7);transition:opacity .4s}
+.cue i{width:1px;height:42px;background:linear-gradient(rgba(244,243,236,0),rgba(244,243,236,.8));animation:drip 2.2s ease-in-out infinite;transform-origin:top}
+@keyframes drip{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+@media (max-width:700px){.cue{display:none}}
+
+/* ---------- the yard ---------- */
+section{position:relative}
+.glance{background:var(--day);padding-block:clamp(64px,8vw,120px) clamp(56px,6vw,96px)}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
+.glance .lead{grid-column:1/8;font-family:var(--serif);font-size:clamp(30px,3.4vw,52px);line-height:1.08;margin:0;text-wrap:balance}
+.glance .lead em{font-style:italic;color:var(--leaf)}
+.glance .side{grid-column:9/13;align-self:end;color:var(--ink-2);margin:0}
+.facts{grid-column:1/-1;display:grid;grid-template-columns:subgrid;margin:clamp(48px,6vw,88px) 0 0}
+.facts div{grid-column:span 3;border-top:1px solid var(--ink);padding-top:18px;min-width:0}
+.facts b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(40px,4.4vw,68px);line-height:1;letter-spacing:-.01em}
+.facts span{display:block;margin-top:12px;font-size:14.5px;color:var(--ink-2)}
+@supports not (grid-template-columns:subgrid){.facts{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:24px}}
+@media (max-width:900px){.glance .lead,.glance .side{grid-column:1/-1}.glance .side{margin-top:24px}.facts{grid-template-columns:1fr 1fr;row-gap:32px;column-gap:20px}.facts div{grid-column:auto}}
+
+/* what we grow: a pinned bench you walk past. Vertical scroll moves it sideways. */
+.grown{background:var(--deep);color:#F2F1EA}
+.grown-pin{position:relative;height:var(--pin,400vh)}
+.grown-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.grown-stage>.wrap{width:100%}
+.grown-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-top:96px;margin-bottom:clamp(20px,3vh,36px)}
+.grown-head h2{font-size:clamp(40px,5vw,76px)}
+.grown-head .k{color:var(--lime);margin:0 0 14px}
+.grown-head .count{font-family:var(--serif);font-size:28px;color:rgba(242,241,234,.6);font-variant-numeric:tabular-nums;white-space:nowrap}
+.grown-head .count b{color:#F2F1EA;font-weight:400}
+.track{display:flex;gap:24px;will-change:transform;padding-left:max(28px,var(--gl),calc((100vw - 1360px) / 2 + 28px))}
+.bench{flex:0 0 min(78vw,1080px);height:min(62vh,600px);display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:24px;min-width:0}
+.bench .ph{position:relative;overflow:hidden;background:#13241A}
+.bench .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.4s cubic-bezier(.2,.7,.1,1)}
+.bench .ph.inset{position:absolute;right:16px;bottom:16px;width:38%;aspect-ratio:3/2;height:auto;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.bench.on .ph img{transform:scale(1)}
+.bench .txt{display:flex;flex-direction:column;min-width:0;border-top:1px solid rgba(242,241,234,.24);padding-top:18px}
+.bench .no{display:flex;justify-content:space-between;color:rgba(242,241,234,.6)}
+.bench h3{font-size:clamp(46px,4.6vw,78px);line-height:.92;margin:clamp(18px,3vh,40px) 0 18px}
+.bench p{margin:0;color:rgba(242,241,234,.74);font-size:15.5px;max-width:30em}
+.bench ul{list-style:none;margin:auto 0 0;padding:0;border-top:1px solid rgba(242,241,234,.14)}
+.bench li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(242,241,234,.14);font-size:14.5px}
+.bench li i{font-style:normal;color:var(--lime);font-size:11px;letter-spacing:.18em;text-transform:uppercase;align-self:center}
+.bench .frond{position:absolute;inset:0;width:100%;height:100%}
+.bench .credit{position:absolute;left:14px;bottom:12px;font-size:11px;letter-spacing:.08em;color:rgba(255,255,255,.78);text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.prog{height:1px;background:rgba(242,241,234,.16);margin-top:clamp(20px,3vh,36px);position:relative}
+.prog i{position:absolute;inset:0;background:var(--lime);transform-origin:left;transform:scaleX(0)}
+@media (max-width:900px){
+  .grown-pin{height:auto}.grown-stage{position:static;height:auto;display:block;padding-block:72px}
+  .grown-head{padding-top:0}.track{display:grid;gap:56px;transform:none!important;padding-left:max(28px,var(--gl));padding-right:max(28px,var(--gr))}
+  .bench{height:auto;grid-template-columns:1fr;flex:none}.bench .ph{aspect-ratio:4/3}.bench ul{margin-top:24px}.prog{display:none}.grown-head .count{display:none}
+}
+
+/* availability lists */
+.lists{background:var(--day);padding-block:clamp(72px,9vw,140px)}
+.lists .top{grid-column:1/8}
+.lists .top .k{color:var(--lime-ink);margin:0 0 18px}
+.lists .top p{color:var(--ink-2);max-width:34em;margin:24px 0 0}
+.cards{grid-column:1/-1;display:grid;grid-template-columns:subgrid;margin-top:clamp(40px,5vw,72px)}
+.card{grid-column:span 4;background:var(--cloth);border:1px solid var(--line);padding:24px 24px 26px;display:flex;flex-direction:column;gap:18px;min-width:0;position:relative;overflow:hidden;transition:transform .5s cubic-bezier(.2,.7,.1,1),box-shadow .5s}
+.card:hover{transform:translateY(-4px);box-shadow:0 24px 50px -24px rgba(16,32,26,.35)}
+.card .top2{display:flex;justify-content:space-between;align-items:center;color:var(--ink-3)}
+.card .lock{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime-ink)}
+.card .lock svg{width:12px;height:12px}
+.card h3{font-size:clamp(36px,3vw,48px);line-height:1}
+.card p{margin:0;color:var(--ink-2);font-size:15px}
+.card svg.reach{width:100%;height:auto;margin-top:auto}
+.card .btn{align-self:flex-start;min-height:44px;font-size:11.5px}
+@supports not (grid-template-columns:subgrid){.cards{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}}
+@media (max-width:900px){.lists .top{grid-column:1/-1}.cards{grid-template-columns:1fr;row-gap:20px}.card{grid-column:auto}}
+
+/* contact */
+.visit{background:var(--deep);color:#F2F1EA;padding-block:clamp(72px,9vw,140px);overflow:hidden}
+.visit .ph{grid-column:1/7;position:relative;aspect-ratio:3/2;max-width:100%;overflow:hidden}
+.visit .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.visit .ph .credit{position:absolute;left:14px;bottom:12px;font-size:11px;letter-spacing:.08em;color:rgba(255,255,255,.8);text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.vcopy{grid-column:8/13;display:flex;flex-direction:column;gap:22px;min-width:0}
+.vcopy .k{color:var(--lime);margin:0;line-height:1}
+.vcopy .addr{font-family:var(--serif);font-size:clamp(26px,2.4vw,34px);line-height:1.2;margin:0}
+.vcopy dl{display:grid;grid-template-columns:auto 1fr;gap:10px 24px;margin:0;padding:20px 0;border-block:1px solid rgba(242,241,234,.18);font-size:15px}
+.vcopy dt{color:rgba(242,241,234,.56);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;align-self:center}
+.vcopy dd{margin:0}
+form{display:grid;gap:12px}
+form label{display:grid;gap:6px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,241,234,.6)}
+input,select{font:inherit;font-size:15px;letter-spacing:0;text-transform:none;color:#F2F1EA;background:rgba(242,241,234,.06);border:1px solid rgba(242,241,234,.2);padding:12px 14px;width:100%;border-radius:0}
+form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+form .note{font-size:12.5px;color:rgba(242,241,234,.56);margin:0}
+form .sent{color:var(--lime);font-size:14px;margin:0}
+@media (max-width:900px){.visit .ph,.vcopy{grid-column:1/-1}.vcopy{margin-top:40px}form .row{grid-template-columns:1fr}}
+
+footer{background:var(--deep);color:rgba(242,241,234,.56);font-size:13px;border-top:1px solid rgba(242,241,234,.12)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;padding-block:28px 36px}
+footer .flogo{display:flex;align-items:center;gap:18px}footer .flogo img{height:40px;width:auto;opacity:.92}
+
+.ask{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:34px}
+.ask span{font-size:13px;letter-spacing:.04em;color:rgba(244,243,236,.72)}
+.ch .ask{justify-content:center}
+.ch.live a{pointer-events:auto}
+.ask-ink{grid-column:1/-1;margin-top:clamp(32px,4vw,48px);padding-top:28px;border-top:1px solid var(--line)}
+.ask-ink span{color:var(--ink-2)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.2,.7,.1,1),transform 1s cubic-bezier(.2,.7,.1,1)}
+.reveal.in{opacity:1;transform:none}
+/* Boyd Landing hero: one centre axis for eyebrow, both headline lines, button and Scroll.
+   Each line is centred on its ink, not its text box: the trailing letter-spacing and the italic's side bearings
+   are balanced with offsets measured from the font files (in em, so they hold at every size). */
+.ch.c0 .k{font-size:12px;text-indent:.26em;margin-bottom:8px}
+/* option A: eyebrow in semibold (600); ink offset at 600 measures the same as 500 (-.130em), so the .26em indent still centres it */
+.ch.c0 .k{font-weight:600}
+/* tight group: about 20px of clear air from the eyebrow to the cap tops and from the y's tail to the button */
+.ch.c0 .ask{margin-top:20px}
+/* nav links centred on the page axis, logo stays left; +1.3px balances the last link's trailing letter-spacing on the ink.
+   Narrowest desktop (901px) still leaves 39px between logo and nav; below 900 the nav hides as before */
+header .wrap{position:relative}
+header nav{position:absolute;left:50%;transform:translateX(calc(-50% + 1.3px));margin:0}
+header:not(.solid) nav a{color:#FFFFFF;opacity:1}
+/* one line, sized to fit the phone width; the whole line is nudged by its measured ink offset */
+.ch h1.welcome{font-size:calc(.65 * min(clamp(56px,min(9vw,16vh),150px),calc((100vw - 56px) / 5.75)))}
+.ch h1.welcome .ln>span{white-space:nowrap;position:relative;left:.0495em}
+.ch .ask .btn{padding-left:calc(24px + .11em)}
+.cue{font-size:12px}.cue span{text-indent:.214em}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.ln>span{animation:none;transform:none}.cue i{animation:none}.ch.c0 .k,.ch.c0 .addr,.ch.c0 .ask{animation:none;opacity:1}}
+</style>
+
+<!-- ADS credit: one quiet line along the very top, the same size, place and type on every concept; only its two colours follow this page -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@500&display=swap">
+<style>
+:root{--adsc:26px}
+#ads-credit{position:sticky;top:0;z-index:31;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;height:calc(var(--adsc) + env(safe-area-inset-top,0px));margin:calc(-1 * env(safe-area-inset-top,0px)) 0 0;padding:env(safe-area-inset-top,0px) 16px 0;background:#0B1711;color:#F2F1EA;font:500 10px/1 "Figtree","Helvetica Neue",Arial,sans-serif;letter-spacing:.24em;text-indent:.24em;text-transform:uppercase;text-decoration:none;white-space:nowrap;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;transition:background-color 1s}
+#ads-credit span{display:block;color:inherit;opacity:.78;transition:opacity .5s ease}
+#ads-credit:hover span,#ads-credit:focus-visible span{opacity:1}
+#ads-credit:focus-visible{outline:1px solid currentColor;outline-offset:-5px}
+#hdr{translate:0 var(--adsc)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--adsc))}
+</style>
+<a id="ads-credit" href="https://abramsdesign.studio" target="_blank" rel="noopener"><span>Concept by Abrams Design Studio</span></a>
+<script>
+(() => {
+  /* the line stays pinned to the top at all times; headers sit right under it */
+  const b = document.getElementById('ads-credit');
+  const sky = b.dataset.sky && document.querySelector(b.dataset.sky);
+  if (sky) { const c = () => b.style.setProperty('--ads-sky', getComputedStyle(sky).getPropertyValue('--skyt').trim() || '#1B3358'); new MutationObserver(c).observe(sky, { attributes: true, attributeFilter: ['style'] }); }
+})();
+</script>
+<div class="concept" hidden><div class="wrap"><b>CONCEPT</b><span>An independent redesign study by Abrams Design Studio. Not affiliated with or commissioned by Boyd Nurseries.</span></div></div>
+
+<header id="hdr">
+  <div class="wrap">
+    <a class="logo" href="#top"><img class="rev" src="img/boyd-logo-cream.png" width="171" height="48" alt="Boyd Nurseries, Inc. Since 1979"><img class="ink" src="img/boyd-logo-ink.png" width="171" height="48" alt=""></a>
+    <nav aria-label="Main">
+      <a href="#grown">What we grow</a>
+      <a href="#lists">Availability</a>
+      <a href="#visit">Contact</a>
+      <a href="#lists">Sign in</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="walk" id="walk">
+    <div class="stage" id="stage">
+      <canvas id="leaves" aria-hidden="true"></canvas>
+      <div class="grain" id="grain" aria-hidden="true"></div>
+
+      <div class="ch c0 center live">
+        <div class="wrap">
+          <p class="k">Wholesale tropical foliage</p>
+          <h1 class="welcome"><span class="ln"><span>Welcome to <em>Boyd.</em></span></span></h1>
+          <div class="ask"><a class="btn btn-lime" href="#visit">Request availability</a></div>
+        </div>
+      </div>
+
+      <div class="cue k" id="cue"><span>Scroll</span><i></i></div>
+    </div>
+  </div>
+
+  <section hidden class="glance" aria-label="At a glance">
+    <div class="wrap g12">
+      <p class="lead reveal">Since 1979 the Boyd family has grown tropical foliage in Loxahatchee and <em>sent it north</em>, by the truckload, to the trade.</p>
+      <p class="side reveal">Sansevieria by the greenhouse, dracaena and palms under shade cloth, flowering trees in the field rows.</p>
+      <div class="facts">
+        <div class="reveal"><b>1979</b><span>Family owned and operated since</span></div>
+        <div class="reveal"><b>Trade</b><span>Wholesale to the trade only</span></div>
+        <div class="reveal"><b>U.S. &amp; CA</b><span>Shipped throughout the U.S. and Canada</span></div>
+        <div class="reveal"><b>7:30–4</b><span>Monday to Friday at the yard</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section hidden class="grown" id="grown" aria-labelledby="grown-h">
+    <div class="grown-pin" id="gpin">
+      <div class="grown-stage">
+        <div class="wrap grown-head">
+          <div><p class="k">What we grow</p><h2 id="grown-h">Down the <em>benches.</em></h2></div>
+          <p class="count" aria-hidden="true"><b id="gnow">01</b> / 04</p>
+        </div>
+        <div class="track" id="track">
+          <article class="bench">
+            <div class="ph"><img src="img/golden-hahnii.jpg" alt="Golden hahnii sansevieria, leaves striped green and gold, in black nursery pots" loading="lazy"><div class="ph inset"><img src="img/greenhouse.jpg" alt="A Boyd greenhouse filled edge to edge with sansevieria" loading="lazy"></div><span class="credit">Photos: Boyd Nurseries</span></div>
+            <div class="txt">
+              <div class="no k"><span>01 / Foliage</span><span>By the greenhouse</span></div>
+              <h3>Sansevieria</h3>
+              <p>Snake plants in seven named kinds, from compact bird's nest forms to tall laurentii.</p>
+              <ul>
+                <li>Hahnii<i>Compact</i></li>
+                <li>Golden hahnii<i>Compact</i></li>
+                <li>Hahnii ‘Hunny Bunny’<i>Compact</i></li>
+                <li>Jade<i>Compact</i></li>
+                <li>Laurentii<i>Upright</i></li>
+                <li>Moonshine laurentii<i>Upright</i></li>
+                <li>Zeylanica<i>Upright</i></li>
+              </ul>
+            </div>
+          </article>
+          <article class="bench">
+            <div class="ph"><img src="img/dracaena-song.jpg" alt="Dracaena reflexa Song of India, green leaves edged in yellow, wet with dew" loading="lazy"><span class="credit">Photo: Boyd Nurseries</span></div>
+            <div class="txt">
+              <div class="no k"><span>02 / Foliage</span><span>Under shade cloth</span></div>
+              <h3>Dracaena</h3>
+              <p>Dracaena reflexa ‘Song of India’, the gold-edged pleomele, grown for interiors and landscapes.</p>
+              <ul>
+                <li>Dracaena reflexa ‘Song of India’<i>Foliage</i></li>
+              </ul>
+            </div>
+          </article>
+          <article class="bench">
+            <div class="ph"><canvas class="frond" id="frond" aria-hidden="true"></canvas><span class="credit">Drawn study. A live site would use the nursery's own palm photography.</span></div>
+            <div class="txt">
+              <div class="no k"><span>03 / Foliage</span><span>Under shade cloth</span></div>
+              <h3>Palms</h3>
+              <p>One of the nursery's four product lines, shipped on the same trucks as the foliage.</p>
+              <ul>
+                <li>Palms<i>See availability</i></li>
+              </ul>
+            </div>
+          </article>
+          <article class="bench">
+            <div class="ph"><img src="img/field-trees.jpg" alt="Rows of young flowering trees in black containers on a grass field" loading="lazy"><div class="ph inset"><img src="img/jatropha.jpg" alt="Jatropha in bloom, a cluster of pink-red flowers" loading="lazy"></div><span class="credit">Photos: Boyd Nurseries</span></div>
+            <div class="txt">
+              <div class="no k"><span>04 / Landscape</span><span>In the field rows</span></div>
+              <h3>Flowering trees</h3>
+              <p>Grown in the field rows for local landscape customers.</p>
+              <ul>
+                <li>Jatropha<i>Bush and tree</i></li>
+                <li>Dwarf poinciana<i>Japanese fern tree</i></li>
+              </ul>
+            </div>
+          </article>
+        </div>
+        <div class="wrap"><div class="prog"><i id="gprog"></i></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section hidden class="lists" id="lists" aria-labelledby="lists-h">
+    <div class="wrap g12">
+      <div class="top reveal">
+        <p class="k">Availability &amp; pricing</p>
+        <h2 id="lists-h">Three lists, <em>one login.</em></h2>
+        <p>Availability is kept on three lists, by where the plants are going. Return customers sign in to see them and download an order form.</p>
+      </div>
+      <div class="cards">
+        <article class="card reveal">
+          <div class="top2 k"><span>List 01</span><span class="lock"><svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>Trade login</span></div>
+          <h3>Foliage</h3>
+          <p>For customers across the U.S. and Canada, California excluded.</p>
+          <svg class="reach" viewBox="0 0 300 120" aria-hidden="true"><use href="#reach-us"/></svg>
+        </article>
+        <article class="card reveal">
+          <div class="top2 k"><span>List 02</span><span class="lock"><svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>Trade login</span></div>
+          <h3>California</h3>
+          <p>A separate list for California customers.</p>
+          <svg class="reach" viewBox="0 0 300 120" aria-hidden="true"><use href="#reach-ca"/></svg>
+        </article>
+        <article class="card reveal">
+          <div class="top2 k"><span>List 03</span><span class="lock"><svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="5.5" width="8" height="5.5" fill="currentColor"/><path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>Trade login</span></div>
+          <h3>Landscape</h3>
+          <p>For local landscape customers in South Florida.</p>
+          <svg class="reach" viewBox="0 0 300 120" aria-hidden="true"><use href="#reach-fl"/></svg>
+        </article>
+      </div>
+      <div class="ask ask-ink reveal"><a class="btn btn-ink" href="#visit">Request availability</a><span>New trade customers start here. Return customers sign in for current pricing.</span></div>
+    </div>
+  </section>
+
+  <section hidden class="visit" id="visit" aria-labelledby="visit-h">
+    <div class="wrap g12">
+      <figure class="ph reveal" style="margin:0"><img src="img/aisle.jpg" alt="An aisle under Boyd's shade cloth, lined on both sides with potted trees" loading="lazy"><span class="credit">Photo: Boyd Nurseries</span></figure>
+      <div class="vcopy reveal">
+        <p class="k">Contact</p>
+        <h2 id="visit-h">Start a <em>trade account.</em></h2>
+        <p class="addr">1535 B Road<br>Loxahatchee, Florida 33470</p>
+        <dl>
+          <dt>Phone</dt><dd>(561) 795-7773 · (561) 795-7785</dd>
+          <dt>Email</dt><dd>info@boydnursery.com</dd>
+          <dt>Hours</dt><dd>Monday to Friday, 7:30 am to 4:00 pm</dd>
+        </dl>
+        <form id="form" novalidate>
+          <div class="row"><label>Company<input name="co" autocomplete="organization"></label><label>Ship to<select name="ship"><option>U.S. (excluding California)</option><option>California</option><option>Canada</option><option>Local landscape</option></select></label></div>
+          <button class="btn btn-lime" type="submit">Request availability</button>
+          <p class="note">Concept preview. Requests aren't sent anywhere.</p>
+          <p class="sent" id="sent" hidden>This is a concept, so nothing was sent.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer hidden>
+  <div class="wrap">
+    <span class="flogo"><img src="img/boyd-logo-cream.png" width="143" height="40" alt="Boyd Nurseries, Inc. Since 1979"><span>1535 B Road, Loxahatchee, Florida</span></span>
+    <span>Concept by Abrams Design Studio</span>
+  </div>
+</footer>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- schematic reach lines, not maps: a dot for Loxahatchee and the arcs each list covers -->
+    <g id="reach-us" fill="none" stroke-linecap="round">
+      <path d="M8 104H292" stroke="rgba(16,32,26,.18)"/>
+      <path d="M232 98C200 40 120 22 40 40M232 98C214 52 180 26 120 18M232 98C230 60 240 34 270 16M232 98C206 70 150 64 80 74" stroke="#1E4A2E" stroke-width="1.3" class="arc"/>
+      <circle cx="232" cy="98" r="4.5" fill="#C9D85B" stroke="#1E4A2E"/>
+      <circle cx="40" cy="40" r="2.5" fill="#1E4A2E" stroke="none"/><circle cx="120" cy="18" r="2.5" fill="#1E4A2E" stroke="none"/><circle cx="270" cy="16" r="2.5" fill="#1E4A2E" stroke="none"/><circle cx="80" cy="74" r="2.5" fill="#1E4A2E" stroke="none"/>
+    </g>
+    <g id="reach-ca" fill="none" stroke-linecap="round">
+      <path d="M8 104H292" stroke="rgba(16,32,26,.18)"/>
+      <path d="M262 98C200 20 90 20 28 52" stroke="#1E4A2E" stroke-width="1.3" class="arc"/>
+      <circle cx="262" cy="98" r="4.5" fill="#C9D85B" stroke="#1E4A2E"/>
+      <circle cx="28" cy="52" r="2.5" fill="#1E4A2E" stroke="none"/>
+    </g>
+    <g id="reach-fl" fill="none" stroke-linecap="round">
+      <path d="M8 104H292" stroke="rgba(16,32,26,.18)"/>
+      <circle cx="150" cy="70" r="40" stroke="rgba(30,74,46,.35)" stroke-dasharray="2 5"/>
+      <path d="M150 70C164 56 176 52 186 46M150 70C138 58 124 54 114 50M150 70C158 82 168 88 182 92" stroke="#1E4A2E" stroke-width="1.3" class="arc"/>
+      <circle cx="150" cy="70" r="4.5" fill="#C9D85B" stroke="#1E4A2E"/>
+    </g>
+  </defs>
+</svg>
+
+<script>
+(()=>{
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp=(v,a,b)=>v<a?a:v>b?b:v, lerp=(a,b,t)=>a+(b-a)*t;
+const ss=(a,b,v)=>{const t=clamp((v-a)/(b-a),0,1);return t*t*(3-2*t)};
+let seed=1979;const R=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const mk=(w,h)=>{const c=document.createElement('canvas');c.width=Math.max(1,w|0);c.height=Math.max(1,h|0);return c};
+
+/* ---------- leaf sprites: stem at the left middle, tip pointing right ---------- */
+const PAL={
+  sil:  {a:'#030805',b:'#07140B',c:'#0F2717',rib:'rgba(120,160,95,.22)',vein:'rgba(130,170,105,.07)',rim:'rgba(170,215,120,.22)',tip:0},
+  shade:{a:'#08180E',b:'#16391F',c:'#2B5F31',rib:'#517F46',vein:'rgba(150,190,120,.11)',rim:'rgba(0,8,2,.30)',tip:.05,gloss:.10},
+  mid:  {a:'#123519',b:'#2A6A2D',c:'#5AA044',rib:'#A9D173',vein:'rgba(205,238,150,.15)',rim:'rgba(0,14,2,.26)',tip:.10,gloss:.16},
+  lit:  {a:'#3B7621',b:'#7DB436',c:'#CBE265',rib:'#5B8B25',vein:'rgba(48,88,18,.30)',rim:'rgba(250,255,195,.30)',tip:.22,gloss:.12}
+};
+const KINDS=['sil','shade','mid','lit'];
+const PAD=18;
+function blade(g,pts){g.beginPath();g.moveTo(pts[0],pts[1]);for(let i=2;i<pts.length;i+=6)g.bezierCurveTo(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5]);g.closePath()}
+/* paint inside the current path: cross light, darker base, light toward the tip, then an inner rim (dark, or glowing when backlit) */
+function body(g,p,x0,x1,cy,hw){
+  g.save();g.clip();
+  const q=g.createLinearGradient(0,cy-hw,0,cy+hw);q.addColorStop(0,p.c);q.addColorStop(.47,p.b);q.addColorStop(.53,p.a);q.addColorStop(1,p.b);g.fillStyle=q;g.fillRect(0,0,g.canvas.width,g.canvas.height);
+  const l=g.createLinearGradient(x0,0,x1,0);l.addColorStop(0,'rgba(0,6,2,.42)');l.addColorStop(.35,'rgba(0,6,2,0)');l.addColorStop(.75,'rgba(255,255,210,0)');l.addColorStop(1,'rgba(255,255,210,'+p.tip+')');g.fillStyle=l;g.fillRect(0,0,g.canvas.width,g.canvas.height);
+  if(p.gloss){g.save();g.translate(x0+(x1-x0)*.42,cy-hw*.42);g.scale(1,.22);const h=g.createRadialGradient(0,0,0,0,0,(x1-x0)*.42);h.addColorStop(0,'rgba(255,255,235,'+p.gloss+')');h.addColorStop(1,'rgba(255,255,235,0)');g.fillStyle=h;g.fillRect(-(x1-x0),-(x1-x0),(x1-x0)*2,(x1-x0)*2);g.restore()}
+  g.restore()}
+function rim(g,p,w){g.save();g.clip();g.strokeStyle=p.rim;g.lineWidth=w;g.stroke();g.restore()}
+function lat(g,p,x0,x1,cy,hw,step,curl){ // lateral veins
+  g.save();g.clip();g.strokeStyle=p.vein;g.lineWidth=1.1;
+  for(let x=x0;x<x1;x+=step){for(const s of[-1,1]){g.beginPath();g.moveTo(x,cy);g.quadraticCurveTo(x+curl*.5,cy+s*hw*.35,x+curl,cy+s*hw*1.05);g.stroke()}}
+  g.restore()}
+
+function paddle(p){ // banana / heliconia paddle, torn by the wind
+  const L=430,Wd=150,c=mk(L+PAD*2,Wd+PAD*2),g=c.getContext('2d'),cy=c.height/2,x0=PAD;
+  g.lineCap='round';g.strokeStyle=p.a;g.lineWidth=7;g.beginPath();g.moveTo(x0,cy);g.lineTo(x0+70,cy-1);g.stroke();
+  const s=x0+60,e=x0+L,pts=[s,cy, s+50,cy-Wd*.56, e-150,cy-Wd*.52, e,cy-3, e-140,cy+Wd*.5, s+60,cy+Wd*.52, s,cy];
+  blade(g,pts);body(g,p,s,e,cy,Wd/2);blade(g,pts);lat(g,p,s+12,e-24,cy,Wd/2,6,40);blade(g,pts);rim(g,p,10);
+  g.strokeStyle=p.rib;g.lineWidth=3.4;g.beginPath();g.moveTo(s,cy);g.quadraticCurveTo((s+e)/2,cy-4,e-6,cy-3);g.stroke();
+  g.globalCompositeOperation='destination-out';g.lineWidth=1.8;
+  for(let i=0;i<6;i++){const x=s+70+R()*(L-170),up=R()<.5?-1:1;g.beginPath();g.moveTo(x+38,cy+up*Wd*.62);g.lineTo(x+3,cy+up*(6+R()*14));g.stroke()}
+  g.globalCompositeOperation='source-over';return c}
+
+function alocasia(p){ // elephant ear, pale veins
+  const L=380,Wd=300,c=mk(L+PAD*2,Wd+PAD*2),g=c.getContext('2d'),cy=c.height/2,x0=PAD;
+  g.lineCap='round';g.strokeStyle=p.a;g.lineWidth=8;g.beginPath();g.moveTo(x0,cy);g.lineTo(x0+96,cy);g.stroke();
+  const n=x0+92,e=x0+L,pts=[n,cy, n-30,cy-40, n-70,cy-Wd*.42, n-40,cy-Wd*.47, n+80,cy-Wd*.52, e-60,cy-Wd*.2, e,cy, e-60,cy+Wd*.2, n+80,cy+Wd*.52, n-40,cy+Wd*.47, n-70,cy+Wd*.42, n-30,cy+40, n,cy];
+  blade(g,pts);body(g,p,n-70,e,cy,Wd/2);blade(g,pts);rim(g,p,14);
+  blade(g,pts);g.save();g.clip();g.strokeStyle=p.rib;g.globalAlpha=.8;g.lineWidth=2.6;g.beginPath();g.moveTo(n,cy);g.lineTo(e-8,cy);g.stroke();
+  g.lineWidth=1.7;for(let i=1;i<=5;i++){const x=n+i*(L-120)/6;for(const s of[-1,1]){g.beginPath();g.moveTo(x,cy);g.quadraticCurveTo(x+40,cy+s*Wd*.18,x+64+i*4,cy+s*Wd*(.46-i*.05));g.stroke()}}
+  for(const s of[-1,1]){g.beginPath();g.moveTo(n,cy);g.quadraticCurveTo(n-30,cy+s*60,n-58,cy+s*Wd*.43);g.stroke()}
+  g.restore();return c}
+
+function monstera(p){ // broad, with clean slits running out from the midrib and a row of windows
+  const L=400,Wd=330,c=mk(L+PAD*2,Wd+PAD*2),g=c.getContext('2d'),cy=c.height/2,x0=PAD;
+  g.lineCap='round';g.strokeStyle=p.a;g.lineWidth=8;g.beginPath();g.moveTo(x0,cy);g.lineTo(x0+74,cy);g.stroke();
+  const n=x0+70,e=x0+L,pts=[n,cy, n-30,cy-52, n-18,cy-Wd*.48, n+100,cy-Wd*.5, e-30,cy-Wd*.38, e,cy-30, e,cy, e,cy+30, e-30,cy+Wd*.38, n+100,cy+Wd*.5, n-18,cy+Wd*.48, n-30,cy+52, n,cy];
+  blade(g,pts);body(g,p,n-30,e,cy,Wd/2);blade(g,pts);lat(g,p,n+8,e-30,cy,Wd/2,34,70);blade(g,pts);rim(g,p,14);
+  g.strokeStyle=p.rib;g.lineWidth=3.2;g.beginPath();g.moveTo(n,cy);g.quadraticCurveTo((n+e)/2,cy-5,e-12,cy-3);g.stroke();
+  g.globalCompositeOperation='destination-out';g.fillStyle='#000';
+  const N=6;
+  for(let i=0;i<N;i++){const t=.1+i*(.8/(N-1)),mx=n+t*(e-n-30);
+    for(const s of[-1,1]){const ang=(.95-t*.35),dx=Math.cos(ang),dy=Math.sin(ang)*s,nx=-dy,ny=dx,r0=Wd*.17+R()*8,r1=Wd*.85;
+      const ax=mx+dx*r0,ay=cy+dy*r0,bx=mx+dx*r1,by=cy+dy*r1,w0=1.2,w1=7+R()*2;
+      g.beginPath();g.moveTo(ax+nx*w0,ay+ny*w0);g.lineTo(bx+nx*w1,by+ny*w1);g.lineTo(bx-nx*w1,by-ny*w1);g.lineTo(ax-nx*w0,ay-ny*w0);g.closePath();g.fill();
+      if(i<N-1&&R()<.85){const t2=t+.4/(N-1),hx=n+t2*(e-n-30)+Math.cos(ang)*Wd*.12,hy=cy+s*Math.sin(ang)*Wd*.12;g.beginPath();g.ellipse(hx,hy,8+R()*4,3+R()*1.5,s*ang,0,6.2832);g.fill()}}}
+  g.globalCompositeOperation='source-over';return c}
+
+function palm(p){ // pinnate frond: arching rachis, drooping leaflets
+  const L=440,H=300,c=mk(L+PAD*2,H+PAD*2),g=c.getContext('2d'),cy=c.height/2-30,x0=PAD;
+  const P=t=>[x0+t*L,cy+Math.pow(t,1.7)*70];
+  g.lineCap='round';g.strokeStyle=p.a;g.lineWidth=5;g.beginPath();for(let t=0;t<=1.001;t+=.02){const[x,y]=P(t);t?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();
+  for(let t=.1;t<.99;t+=.026){const[x,y]=P(t),[x2,y2]=P(t+.01),ang=Math.atan2(y2-y,x2-x),len=150*Math.pow(Math.sin(Math.PI*(t*.86+.08)),.7);
+    for(const s of[-1,1]){const a=ang+s*(1.0-t*.55),dx=Math.cos(a),dy=Math.sin(a),ex=x+dx*len,ey=y+dy*len+len*.32,mx=x+dx*len*.5,my=y+dy*len*.5+4,nx=-dy*6,ny=dx*6;
+      const q=g.createLinearGradient(x,y,ex,ey);q.addColorStop(0,p.a);q.addColorStop(.55,s<0?p.c:p.b);q.addColorStop(1,s<0?p.c:p.b);g.fillStyle=q;
+      g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(mx+nx,my+ny,ex,ey);g.quadraticCurveTo(mx-nx,my-ny,x,y);g.fill();
+      g.strokeStyle=p.rib;g.globalAlpha=.35;g.lineWidth=.9;g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(mx,my,ex,ey);g.stroke();g.globalAlpha=1}}
+  return c}
+
+function strap(p,gold){ // dracaena 'Song of India' / sansevieria: long blade, gold margin
+  const L=420,Wd=52,c=mk(L+PAD*2,Wd+PAD*2+40),g=c.getContext('2d'),cy=c.height/2-14,x0=PAD;
+  const pts=[x0,cy, x0+120,cy-Wd*.5, L-80,cy-Wd*.3+22, x0+L,cy+30, L-90,cy+Wd*.3+28, x0+120,cy+Wd*.5, x0,cy];
+  blade(g,pts);g.fillStyle=gold?'#C8BC4E':p.c;g.fill();
+  g.beginPath();g.moveTo(x0+6,cy);g.bezierCurveTo(x0+120,cy-Wd*.34,L-80,cy-Wd*.17+22,x0+L-14,cy+29);g.bezierCurveTo(L-90,cy+Wd*.17+28,x0+120,cy+Wd*.34,x0+6,cy);g.closePath();
+  body(g,p,x0,x0+L,cy,Wd/2);
+  g.strokeStyle=p.rib;g.globalAlpha=.5;g.lineWidth=1.4;g.beginPath();g.moveTo(x0+4,cy);g.bezierCurveTo(x0+130,cy-4,L-90,cy+18,x0+L-8,cy+29);g.stroke();g.globalAlpha=1;
+  return c}
+
+/* blur levels: halve repeatedly, then one 2x smoothing pass. Drawn scaled back up, which is the blur. */
+function levels(src){const out=[src];let cur=src;for(let l=1;l<=5;l++){const h=mk(cur.width/2,cur.height/2);h.getContext('2d').drawImage(cur,0,0,h.width,h.height);cur=h;const up=mk(h.width*2,h.height*2),ug=up.getContext('2d');ug.imageSmoothingQuality='high';ug.drawImage(h,0,0,up.width,up.height);out.push(up)}return out}
+
+const TYPES=['paddle','alocasia','monstera','palm','strap','gold'];
+const SP={};
+function buildSprites(){for(const t of TYPES)for(const k of KINDS){const p=PAL[k];seed=7+TYPES.indexOf(t)*13;const s=t==='paddle'?paddle(p):t==='alocasia'?alocasia(p):t==='monstera'?monstera(p):t==='palm'?palm(p):strap(p,t==='gold');SP[t+'_'+k]=levels(s)}}
+
+/* ---------- the scene ---------- */
+const cv=document.getElementById('leaves'),ctx=cv.getContext('2d');
+const walk=document.getElementById('walk'),stage=document.getElementById('stage');
+let W=0,H=0,DPR=1,F=1,narrow=false;
+const ZEND=34,DEND=1.7,FOCUS=3.2;
+const items=[],falls=[],motes=[];
+function plant(){
+  items.length=0;seed=1979;
+  const pick=()=>{const r=R();return r<.26?'paddle':r<.44?'alocasia':r<.62?'monstera':r<.8?'palm':r<.92?'strap':'gold'};
+  const tone=y=>y<-.35?(R()<.75?'lit':'mid'):y>.55?(R()<.7?'shade':'mid'):(R()<.55?'mid':R()<.5?'lit':'shade');
+  for(let z=.8;z<ZEND-1.6;z+=narrow?.66:.5){
+    for(const side of[-1,1]){
+      const n=1+(R()<.3?1:0);
+      for(let i=0;i<n;i++){
+        const t=pick(),big=t==='paddle'||t==='palm'||t==='monstera'||t==='alocasia';
+        const Y=lerp(-1.45,1.3,R()),X=side*lerp(1,2.15,R());
+        const droop=Y<-.45?lerp(.25,.6,R()):Y>.6?-lerp(.3,.7,R()):lerp(-.3,.3,R());
+        // keep a path down the middle: the tip stops short of the centre line
+        const reach=(Math.abs(X)-.32)/Math.max(.35,Math.cos(droop));
+        items.push({t,x:X,y:Y,z:z+R()*.3,side,len:Math.min(reach,big?lerp(1.15,1.8,R()):lerp(1,1.5,R())),a:droop,ph:R()*6.28,fl:R()<.5,k:tone(Y)});
+      }
+    }
+    // a broad leaf that reaches across the path, overhead: you walk under it
+    if(R()<.2){const side=R()<.5?-1:1;items.push({t:R()<.55?'paddle':'monstera',x:side*lerp(.5,.85,R()),y:lerp(-1.15,-.55,R()),z:z+.2,side,len:lerp(1.5,2.1,R()),a:lerp(.15,.45,R()),ph:R()*6.28,fl:R()<.5,k:'lit',cross:1})}
+    if(R()<.45){const side=R()<.5?-1:1;items.push({t:R()<.5?'strap':'gold',x:side*lerp(.35,1.2,R()),y:lerp(1.2,1.65,R()),z:z+.1,side,len:lerp(.9,1.4,R()),a:-lerp(.9,1.3,R()),ph:R()*6.28,fl:R()<.5,k:'shade',floor:1})}
+  }
+  // the doorway: denser leaves framing the photo at the end
+  for(let i=0;i<14;i++){const side=i%2?1:-1,Y=lerp(-1.2,1.2,R());const X=side*lerp(1,1.55,R());items.push({t:['paddle','monstera','palm','alocasia'][i%4],x:X,y:Y,z:ZEND-lerp(.05,.45,R()),side,len:Math.min(lerp(.8,1.2,R()),Math.abs(X)-.55),a:lerp(-.35,.35,R()),ph:R()*6.28,fl:R()<.5,k:Y<0?'lit':'mid'})}
+  motes.length=0;for(let i=0;i<(narrow?40:90);i++)motes.push({x:lerp(-1.6,1.6,R()),y:lerp(-1.2,1.2,R()),z:R()*ZEND,s:lerp(.6,1.6,R()),ph:R()*6.28});
+}
+function resize(){
+  const r=stage.getBoundingClientRect();W=r.width;H=r.height;narrow=W<700;
+  DPR=Math.min(1.5,devicePixelRatio||1);cv.width=W*DPR|0;cv.height=H*DPR|0;
+  F=Math.max(W*.62,H*.95);plant();fog=null;
+}
+let fog=null,glow=null;
+const CY=.46;
+function fogFill(){const g=ctx.createRadialGradient(W/2,H*CY,0,W/2,H*CY,Math.hypot(W,H)*.6);g.addColorStop(0,'rgb(236,240,196)');g.addColorStop(.07,'rgb(170,200,110)');g.addColorStop(.26,'rgb(54,92,46)');g.addColorStop(.6,'rgb(14,32,20)');g.addColorStop(1,'rgb(5,11,8)');return g}
+let photo=new Image(),soft=null;photo.src='img/aisle.jpg';
+photo.onload=()=>{const w=photo.naturalWidth,h=photo.naturalHeight;soft=mk(w,h);const g=soft.getContext('2d');g.drawImage(photo,0,0);g.globalCompositeOperation='destination-in';g.setTransform(1,0,0,h/w,0,0);const q=g.createRadialGradient(w/2,w*.47,0,w/2,w*.47,w*.5);q.addColorStop(0,'#000');q.addColorStop(.45,'#000');q.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=q;g.fillRect(0,0,w,w)};
+
+function spawnFall(burst){
+  const d=lerp(1.4,burst?6:10,R()),half=H/2/F*d;
+  falls.push({x:lerp(-1.3,1.3,R())*d*.45,y:-half-lerp(.2,1.4,R()),dz:d,vy:lerp(.3,.55,R()),vz:lerp(.05,.2,R()),sw:lerp(.25,.6,R()),w:lerp(1.2,2.4,R()),ph:R()*6.28,spin:lerp(-1,1,R()),
+    t:R()<.35?'strap':R()<.45?'gold':R()<.6?'paddle':'palm',len:lerp(.32,.62,R()),k:R()<.6?'lit':'mid',age:0});
+}
+
+const T0=performance.now();let camZ=0,camX=0,camY=0,tx=0,ty=0,last=performance.now(),tt=0,prog=0,started=0;
+function put(lv,sc,sx,sy,ang,flipY,a,d,coc,fx=1,fy=1){
+  const base=lv[0],sb=coc/Math.max(sc,.001),L=clamp(Math.round(Math.log2(Math.max(1,sb))),0,5),spr=lv[L];
+  ctx.save();ctx.translate(sx,sy);ctx.rotate(ang);ctx.scale(sc*fx,sc*flipY*fy);ctx.globalAlpha=a;
+  ctx.drawImage(spr,-PAD,-base.height/2,base.width,base.height);ctx.restore()}
+function draw(now){
+  const dt=Math.min(.05,(now-last)/1000);last=now;tt+=RM?0:dt;
+  const r=walk.getBoundingClientRect();prog=1;
+  const target=(ZEND-DEND)-(RM?0:(1-ss(0,4.2,(now-T0)/1000))*.6)+clamp(-r.top/H,0,1)*.6+(RM?0:Math.sin(tt*.35)*.06);
+  if(!camZ)camZ=target;camZ=lerp(camZ,target,RM?1:1-Math.pow(.0009,dt));
+  camX=lerp(camX,tx*.22+(RM?0:Math.sin(tt*.27)*.04),1-Math.pow(.02,dt));camY=lerp(camY,ty*.14+(RM?0:Math.sin(tt*.41)*.025),1-Math.pow(.02,dt));
+  if(r.bottom<0||r.top>innerHeight){requestAnimationFrame(draw);return}
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  if(!fog)fog=fogFill();
+  ctx.globalAlpha=1;ctx.fillStyle=fog;ctx.fillRect(0,0,W,H);
+  const cx=W/2,cy=H*CY;
+  // the real shade house at the end of the aisle
+  const dP=ZEND-camZ,dPh=Math.min(Math.max(dP,DEND),DEND*1.16); // the photo never shrinks past cover
+  if(soft){const cover=Math.max(W/photo.naturalWidth,H/photo.naturalHeight)*1.16,s=cover*DEND/dPh,pw=photo.naturalWidth*s,ph=photo.naturalHeight*s,px=cx-pw/2-camX*F/dP*.3,py=cy-ph*.47-camY*F/dP*.3;
+    ctx.globalAlpha=.55+.45*ss(24,8,dP);ctx.drawImage(soft,px,py,pw,ph);
+    const full=ss(5,DEND+.25,dP);if(full>0){ctx.globalAlpha=full;ctx.drawImage(photo,px,py,pw,ph);
+      // settle the photo down behind the welcome so the type stays crisp
+      const q=ctx.createRadialGradient(cx,H*.52,0,cx,H*.52,Math.max(W,H)*.6);q.addColorStop(0,'rgba(5,12,8,.62)');q.addColorStop(.55,'rgba(5,12,8,.38)');q.addColorStop(1,'rgba(5,12,8,.2)');ctx.fillStyle=q;ctx.fillRect(0,0,W,H)}ctx.globalAlpha=1}
+  // daylight at the end of the row
+  ctx.globalCompositeOperation='lighter';const gr=Math.min(W,H)*(.32+.25*ss(10,2,dP)),gl=ctx.createRadialGradient(cx,cy,0,cx,cy,gr);
+  gl.addColorStop(0,'rgba(255,250,215,'+(.42*(1-ss(6,DEND+.2,dP)))+')');gl.addColorStop(.35,'rgba(255,250,215,'+(.14*(1-ss(6,DEND+.2,dP)))+')');gl.addColorStop(1,'rgba(255,250,215,0)');ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);ctx.globalCompositeOperation='source-over';
+  // leaves, far to near, with a veil of air between depth bands
+  const vis=[];
+  for(const it of items){const d=it.z-camZ;if(d>.12&&d<ZEND)vis.push([d,it,0])}
+  for(const f of falls)vis.push([f.dz,f,1]);
+  vis.sort((a,b)=>b[0]-a[0]);
+  const bands=[30,24,19,15,11.5,8.5,6,4.2,2.8];let bi=0;
+  const veil=()=>{ctx.globalAlpha=.15;ctx.fillStyle=fog;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1};
+  while(bi<bands.length&&bands[bi]>=dP)bi++; // bands beyond the photo don't veil it
+  for(const[d,it,isF]of vis){
+    while(bi<bands.length&&d<bands[bi]){veil();bi++}
+    const s=F/d,sx=cx+(it.x-camX)*s,sy=cy+(it.y-camY)*s;
+    const lv=SP[it.t+'_'+it.k];if(!lv)continue;
+    const base=lv[0],sc=it.len*s/(base.width-PAD*2);
+    if(sc*base.height<2)continue;
+    const coc=.08*F*Math.abs(1/d-1/FOCUS);
+    let a=isF?ss(.25,.6,d):ss(.3,.85,d);if(!isF&&it.cross)a*=ss(.2,.8,d);
+    if(a<=.01)continue;
+    let ang,flipY;
+    if(isF){ang=it.ph+tt*it.spin;flipY=Math.cos(it.age*it.w+it.ph)}
+    else{const sway=RM?0:Math.sin(tt*.9+it.ph)*.035;ang=(it.side<0?0:Math.PI)+(it.side<0?it.a:-it.a)+sway;flipY=(it.side<0?1:-1)*(it.fl?-1:1)}
+    // each leaf turned a little toward or away from you, so no two read the same
+    const fx=isF?1:.74+.26*((it.ph*7.3)%1),fy=isF?1:.84+.26*((it.ph*13.1)%1);
+    put(lv,sc,sx,sy,ang,flipY,a,d,coc,fx,fy);
+    // close to the eye a leaf goes to silhouette against the light
+    const k=isF?0:ss(2.4,1.2,d);
+    if(k>.01){const sl=SP[it.t+'_sil'];if(sl)put(sl,sc,sx,sy,ang,flipY,a*k,d,coc,fx,fy)}
+  }
+  // shafts of light through the canopy
+  if(!narrow){ctx.globalCompositeOperation='lighter';for(let i=0;i<2;i++){const x=W*(.5+i*.16)+Math.sin(tt*.18+i*2)*24,g=ctx.createLinearGradient(x,0,x-W*.1,H);g.addColorStop(0,'rgba(235,245,180,.05)');g.addColorStop(.7,'rgba(235,245,180,0)');ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(x-26,0);ctx.lineTo(x+26,0);ctx.lineTo(x-W*.1+90,H);ctx.lineTo(x-W*.1-50,H);ctx.closePath();ctx.fill()}ctx.globalCompositeOperation='source-over'}
+  // pollen in the air
+  ctx.globalCompositeOperation='lighter';
+  for(const m of motes){let d=m.z-camZ;if(d<.3)d+=ZEND;if(d>14)continue;const s=F/d,x=cx+(m.x+Math.sin(tt*.3+m.ph)*.08-camX)*s,y=cy+(m.y+Math.cos(tt*.25+m.ph)*.06-camY)*s,rad=m.s*s*.005;
+    ctx.fillStyle='rgba(240,248,200,'+(.42*ss(14,6,d)*ss(.3,1.2,d))+')';ctx.beginPath();ctx.arc(x,y,Math.max(.6,rad),0,6.283);ctx.fill()}
+  ctx.globalCompositeOperation='source-over';
+  // falling leaves
+  if(!RM){for(const f of falls){f.age+=dt;f.y+=f.vy*dt;f.dz-=f.vz*dt;f.x+=Math.sin(f.age*f.sw*3+f.ph)*f.sw*dt}
+    for(let i=falls.length-1;i>=0;i--){const f=falls[i];if(f.dz<.3||f.y>H/2/F*f.dz+.8)falls.splice(i,1)}
+    started+=dt;const rate=started<3.2?6:.75;if(R()<rate*dt&&falls.length<50)spawnFall(started<3.2)}
+  chapters();
+  requestAnimationFrame(draw);
+}
+const cue=document.getElementById('cue'),hdr=document.getElementById('hdr');
+function chapters(){cue.style.opacity=(1-ss(10,90,scrollY)).toFixed(3)}
+addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2},{passive:true});
+addEventListener('resize',()=>{resize()});
+buildSprites();resize();
+{const n=mk(220,220),g=n.getContext('2d'),d=g.createImageData(220,220);for(let i=0;i<d.data.length;i+=4){const v=Math.random()*255|0;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}g.putImageData(d,0,0);document.getElementById('grain').style.backgroundImage='url('+n.toDataURL()+')'}
+if(!RM)for(let i=0;i<16;i++)spawnFall(true);
+requestAnimationFrame(t=>{last=t;requestAnimationFrame(draw)});
+
+/* header turns solid once you're out of the walk */
+const cbar=document.querySelector('.concept');const solid=()=>{hdr.classList.toggle('solid',walk.getBoundingClientRect().bottom<80);hdr.style.top=Math.max(0,cbar.offsetHeight-scrollY)+'px'};addEventListener('scroll',solid,{passive:true});solid();
+
+/* ---------- the bench track ---------- */
+const gpin=document.getElementById('gpin'),track=document.getElementById('track'),benches=[...track.children],gnow=document.getElementById('gnow'),gprog=document.getElementById('gprog');
+function sizeTrack(){if(innerWidth<=900){gpin.style.removeProperty('--pin');return}const over=track.scrollWidth-innerWidth+Math.max(28,(innerWidth-1360)/2+28);gpin.style.setProperty('--pin',(innerHeight+over*1.6)+'px');gpin.dataset.over=over}
+function moveTrack(){
+  if(innerWidth<=900){benches.forEach(b=>{const r=b.getBoundingClientRect();if(r.top<innerHeight*.8)b.classList.add('on')});return}
+  const r=gpin.getBoundingClientRect(),span=r.height-innerHeight,p=clamp(-r.top/span,0,1),over=+gpin.dataset.over||0;
+  track.style.transform='translate3d('+(-over*p).toFixed(1)+'px,0,0)';gprog.style.transform='scaleX('+p.toFixed(3)+')';
+  const i=Math.min(benches.length-1,Math.round(p*(benches.length-1)));gnow.textContent=String(i+1).padStart(2,'0');
+  benches.forEach((b,j)=>{const br=b.getBoundingClientRect();if(br.left<innerWidth*.72)b.classList.add('on')});
+}
+addEventListener('scroll',moveTrack,{passive:true});addEventListener('resize',()=>{sizeTrack();moveTrack()});
+addEventListener('load',()=>{sizeTrack();moveTrack()});sizeTrack();moveTrack();
+
+/* palm study for the palms bench, drawn from the same frond as the walk */
+const fr=document.getElementById('frond');
+function drawFrond(){const r=fr.getBoundingClientRect();if(!r.width)return;const d=Math.min(2,devicePixelRatio||1);fr.width=r.width*d;fr.height=r.height*d;const g=fr.getContext('2d');g.setTransform(d,0,0,d,0,0);
+  const bg=g.createLinearGradient(0,0,0,r.height);bg.addColorStop(0,'#1A3A22');bg.addColorStop(1,'#0B1711');g.fillStyle=bg;g.fillRect(0,0,r.width,r.height);
+  const lv=SP.palm_lit,sp=lv[0],s=r.width*1.05/(sp.width-PAD*2);g.save();g.translate(r.width*.02,r.height*.3);g.rotate(.12);g.scale(s,s);g.drawImage(sp,-PAD,-sp.height/2);g.restore();
+  const m=SP.palm_mid[2];g.save();g.globalAlpha=.9;g.translate(r.width*1.02,r.height*.86);g.rotate(Math.PI+.35);g.scale(s*.9,-s*.9);g.drawImage(m,-PAD,-sp.height/2,sp.width,sp.height);g.restore();
+  const sh=SP.palm_shade[4];g.save();g.translate(-r.width*.1,r.height*1.05);g.rotate(-.5);g.scale(s*1.2,s*1.2);g.drawImage(sh,-PAD,-sp.height/2,sp.width,sp.height);g.restore()}
+drawFrond();addEventListener('resize',drawFrond);
+
+/* reveals */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.38,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();document.getElementById('sent').hidden=false});
+})();
+</script>
+
+
+
+</body></html>

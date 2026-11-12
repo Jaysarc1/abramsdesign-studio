@@ -1,0 +1,979 @@
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+
+
+
+<!--
+ALIGNMENT NOTES
+Grid: 12 columns, max content width 1240px, 24px column gutter, outer side padding max(16px, safe-area) on every band.
+Below 960px every grid collapses to one column on the same left edge.
+Layout follows a court brief: a margin rail (columns 1-3) carries section marks (§ 1, § 2 ...), the body (columns 4-12) carries the text.
+Shared edges: logo, hero headline, every § mark and the footer start on column 1. Every section body starts on column 4.
+Logo: the firm's real B&R logo (their file) replaces the typeset wordmark. Its left edge (the monogram box's outer rule) sits on column 1, the same line as the hero headline and every § mark; it is centred in the 74px header, 46px tall (= the header CTA's height, so the two-line lockup reads), 36px on phones.
+Intentional offsets:
+1. Hero: statement spans columns 1-6; the file (folder + papers) lives in columns 7-12 and is allowed to bleed past the right edge of its stage because it is a 3D object lying on a "desk" plane, not a block of text.
+2. Hero statement is vertically centred on the stage, so the headline and the file read as one composition.
+3. Facts strip: four equal cells of 3 columns each, ignoring the rail, because it is a ledger of dates that runs the full measure.
+4. Table of counsel: dot leaders run from each name all the way to its year, set flush right like a table of contents; the credential sits flush right under the year on purpose.
+5. Oxblood is used three times only: the underline drawn on the brief's cover, the rule above the table of counsel, and focused form fields. The clerk's FILED stamp on the motion is a muted navy ink (--stamp), and the transcript's highlight is a soft marker yellow, both inside the papers only.
+6. Header: logo flush left on column 1, nav flush right on column 12's right edge (header phone and button removed Nov 3). Document tabs under the file removed Nov 3; pages still turn by tap, drag, swipe and arrow keys. Concept by line pinned to the top in a lighter tint of the paper.
+7. A tossed page keeps its momentum, slows to a stop where it lands (with a few degrees of natural turn) and stays there; its slide is scaled so its centre comes to rest inside the stage, so its body may sit under the statement column (the text always stays on top). About 7 s after the last touch, every loose page glides back onto the pile (1.1 s ease, 70 ms apart).
+8. A turned page swings over the binding (its left edge) and dissolves as it lands, so the open file never covers the statement column at rest. The folder cover does the same on opening.
+9. The pile is four documents, each squared on itself and set a hair off the one beneath (up to 5px and 1.4deg) so their edges read as separate documents; the folder's back panel is 22px wider than the papers on the binding side (the fold and its score lines) and carries a 1/3-cut tab on the right edge, opposite the fold, as a real folder lies when opened like a book.
+10. The firm's logo is printed on the folder cover, unchanged (its white made transparent so the manila shows through, every ink kept), 246px wide, centred on the cover's width and set in its upper half.
+PACING (unhurried, per the 17:46Z rule): the hero file intro waits until the stage is ~30% on screen (at once on desktop and phone), then plays once in ~3.3s: the folder is set down (0-0.64s), the cover lifts from 1.15s (0.9s up, 0.44s fall, open by 2.5s), the papers square into their pile 1.7-3.0s (30ms apart), the oxblood underline draws 2.45-3.25s and its bracket fades 2.75-3.35s. Headline and CTA are static, readable at once. It lands straight on the open file with reduced motion, on print, or if the page sits idle 9s before the stage is reached. The edge-lift invitation (0.9s up, 1.0s down, every 5.2s) runs at most three times, only while the file is on screen and nobody has touched it. Page turns, drags and tosses keep their 0.52-0.9s feel. No other section animates.
+-->
+<!--
+SELLS
+Buyer: a trial lawyer, or a party, who just lost at trial or has a case headed to appeal.
+Fear: that the loss below is final.
+Outcome wanted: a second, expert look at the record, and a path to reversal.
+Proof: board certification in Appellate Practice (Burlington 1994, Rockenbach 1995, Segal 2014), firm since 2004, roughly 100 appellate cases a year in state and federal courts.
+Hero hook: the page opens on a closed manila file with the firm's own logo printed on it; it opens on their work (a brief, the record, an opinion, a motion) carrying their proof, and the last page of the file is the way in: (561) 721-0400, Request a case review.
+One primary CTA: "Request a case review" (header, hero, after the record (§ 1), after counsel (§ 3), closing band with the inquiry form). Phone is the quiet secondary.
+-->
+<title>Burlington &amp; Rockenbach</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout concept: a court brief. Margin rail for section marks, a ruled body measure, and a record that squares itself up. */
+:root{
+  color-scheme: light;
+  --paper:#F4F4F1;
+  --sheet:#FFFFFF;
+  --ink:#121A27;
+  --ink-2:#3B4454;
+  --ink-3:#6A7282;
+  --rule:rgba(18,26,39,.14);
+  --rule-2:rgba(18,26,39,.28);
+  --ox:#6E1F28;
+  --stamp:#24427A;
+  --manila:#E3CB93;
+  --manila-hi:#EBD7AA;
+  --manila-lo:#D7BC80;
+  --grain:none; /* a paper-fibre bitmap, painted once by the script */
+  --serif:"Newsreader", "Iowan Old Style", "Times New Roman", Georgia, serif;
+  --sans:"Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --max:1240px;
+  --gut:24px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--paper);scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.band{padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:var(--max);margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gut)}
+.serif{font-family:var(--serif)}
+.mark{grid-column:1 / span 3;font-family:var(--serif);font-size:17px;color:var(--ink-3);padding-top:14px;font-variation-settings:"opsz" 16}
+.mark b{display:block;font-weight:400;font-size:22px;color:var(--ink);font-style:italic}
+.body{grid-column:4 / span 9}
+h2{font-family:var(--serif);font-weight:300;font-size:clamp(40px,4.6vw,64px);line-height:1.04;letter-spacing:-.018em;font-variation-settings:"opsz" 72;max-width:16ch}
+h2 em{font-style:italic}
+.lede{font-size:20px;color:var(--ink-2);margin-top:22px;max-width:52ch}
+.smallcaps{font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ribbon + header */
+.ribbon{border-bottom:1px solid var(--rule);padding-block:7px;font-size:12px;letter-spacing:.06em;color:var(--ink-3)}
+.ribbon .wrap{display:flex;justify-content:space-between;gap:16px}
+header.top{position:sticky;top:calc(env(safe-area-inset-top, 0px) + var(--adsc, 0px));z-index:30;background:rgba(244,244,241,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:74px;gap:24px}
+/* the firm's own logo, as published on flappellatelaw.com; outer white knocked out so it sits on the paper, monogram box untouched */
+.logo{display:block;flex:none;line-height:0;text-decoration:none}
+.logo img{display:block;height:46px;width:auto}
+nav.links{display:flex;gap:34px;font-size:15px;color:var(--ink-2)}
+nav.links a{text-decoration:none;padding-block:4px;border-bottom:1px solid transparent;transition:border-color .2s}
+nav.links a:hover{border-color:var(--ink)}
+.top .ph{font-size:16px;font-weight:600;text-decoration:none;letter-spacing:.01em}
+.hcta{display:flex;align-items:center;gap:22px}
+.btn.sm{padding:11px 18px;font-size:15px}
+.cta-row{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:56px;padding-top:26px;border-top:1px solid var(--rule)}
+.cta-row p{font-family:var(--serif);font-size:24px;line-height:1.3;max-width:34ch;font-variation-settings:"opsz" 36}
+.cta-row p span{display:block;font-family:var(--sans);font-size:15px;color:var(--ink-3);margin-top:6px}
+.thanks{font-family:var(--serif);font-size:26px;line-height:1.3;font-variation-settings:"opsz" 36}
+.thanks span{display:block;font-family:var(--sans);font-size:15px;color:var(--ink-3);margin-top:10px}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--ink);color:var(--paper);font-weight:600;font-size:16px;padding:16px 26px;text-decoration:none;border:0;border-radius:12px;cursor:pointer;font-family:var(--sans);transition:background .2s}
+.btn:hover{background:#26324A}
+.btn svg{transition:transform .25s}
+.btn:hover svg{transform:translateX(3px)}
+
+/* hero */
+.hero{padding-block:40px 56px;border-bottom:1px solid var(--rule);overflow:hidden}
+.hero .grid{align-items:center;min-height:clamp(600px, calc(calc(100svh - var(--adsc,0px)) - 204px), 820px)}
+.hero .say{grid-column:1 / span 6;padding-bottom:6px;position:relative;z-index:2}
+.hero .kicker{display:flex;gap:14px;align-items:center}
+.hero .kicker i{display:block;width:40px;height:1px;background:var(--ink)}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(64px,10vw,156px);line-height:.9;letter-spacing:-.035em;font-variation-settings:"opsz" 72;margin-top:0}
+.hero h1 em{font-style:italic;font-weight:300}
+.hero .sub{font-size:20px;color:var(--ink-2);margin-top:30px;max-width:40ch}
+.hero .act{display:flex;align-items:center;gap:28px;margin-top:36px;flex-wrap:wrap}
+.hero .act a.tel{font-size:17px;text-decoration:none;border-bottom:1px solid var(--rule-2);padding-bottom:2px}
+
+.stage{grid-column:7 / span 6;position:relative;align-self:stretch;min-height:620px;outline:none}
+.stage:focus-visible{outline:none}
+.stage:focus-visible .deck-ui .tabs{outline:2px solid var(--ink);outline-offset:6px}
+.desk{position:absolute;inset:-40px -80px -40px -40px;perspective:2200px;perspective-origin:50% 30%}
+.plane{--pl:53%;--ps:1.22;position:absolute;left:var(--pl);top:50%;width:0;height:0;transform-style:preserve-3d;transform:rotateX(46deg) rotateZ(-30deg) scale(var(--ps)) translateZ(var(--drop,0px))}
+.pg{position:absolute;left:-160px;top:-207px;width:320px;height:414px;transform-style:preserve-3d;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
+.pg.held{cursor:grabbing}
+/* a loose page's own contact shadow: only shown while it is off the pile */
+.psh{position:absolute;inset:-12px -12px -14px -12px;background:var(--psh) center / 100% 100% no-repeat;opacity:0;visibility:hidden;pointer-events:none}
+.leaf,.seg{position:absolute;top:0;height:100%;transform-style:preserve-3d;transform-origin:0 50%}
+.leaf{left:0;width:100%}
+.seg{width:160px}
+.seg.a{left:0}
+.seg.b{left:160px}
+.face{position:absolute;inset:0;background:var(--sheet);backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.face.d-record{background:#FCFBF7}
+.face.d-motion{background:#FDFDFB}
+.seg.a > .face{box-shadow:inset 1px 0 0 rgba(18,26,39,.12), inset 0 1px 0 rgba(18,26,39,.10), inset 0 -1px 0 rgba(18,26,39,.16)}
+.seg.b > .face{box-shadow:inset -1px 0 0 rgba(18,26,39,.16), inset 0 1px 0 rgba(18,26,39,.10), inset 0 -1px 0 rgba(18,26,39,.16)}
+.face.bk{transform:rotateY(180deg);background:#FBFBF9}
+.face.bk .ct{opacity:.07;transform:scaleX(-1);transform-origin:80px 50%}
+.seg.b > .face.bk .ct{transform-origin:240px 50%}
+.face .sh,.face .lt{position:absolute;inset:0;pointer-events:none;opacity:0}
+.seg.a > .face .sh{background:linear-gradient(90deg, rgba(18,26,39,.34), rgba(18,26,39,.12))}
+.seg.b > .face .sh{background:linear-gradient(90deg, rgba(18,26,39,.12), rgba(18,26,39,0))}
+.face .lt{background:rgba(18,26,39,.22)}
+.ct{position:absolute;top:0;left:0;width:320px;height:414px;padding:30px 30px 26px 34px;font-family:var(--serif);color:var(--ink)}
+.ct.cv{display:flex;flex-direction:column;padding:28px 32px 24px}
+.ct.cv .say{margin:14px 0 12px}
+.ct.cv .dr{margin:9px 0}
+.seg.b .ct{left:-160px}
+.ct .rn{position:absolute;right:22px;bottom:16px;font-family:var(--sans);font-size:10px;letter-spacing:.12em;color:var(--ink-3)}
+.ct .rn.c{left:0;right:0;text-align:center}
+.ct .ln{height:5px;background:#DCDEE2;margin-top:9px;border-radius:1px}
+.ct .dbl .ln{margin-top:15px}
+.ct .tight .ln{margin-top:6px;height:4px}
+.ct .bar{display:inline-block;height:5px;background:#D3D6DB;border-radius:1px;vertical-align:middle}
+.ct .hd{font-size:10px;letter-spacing:.16em;text-align:center;color:var(--ink-2);line-height:1.5;font-family:var(--sans);font-weight:600}
+.ct .rule{height:1px;background:var(--rule-2);margin:16px 0 8px}
+.ct .dr{height:4px;border-top:1px solid var(--ink-2);border-bottom:.75px solid var(--ink-2);margin:12px 0}
+.ct .num{position:absolute;left:12px;top:30px;bottom:30px;width:12px;display:flex;flex-direction:column;justify-content:space-between;font-family:var(--sans);font-size:7px;color:#B5B9C0;text-align:right}
+.ct .say{position:relative;font-size:21px;line-height:1.22;margin:16px 0 10px;font-variation-settings:"opsz" 24;letter-spacing:-.005em}
+.ct .say.it{font-style:italic}
+.ct .say.big{font-size:31px;font-weight:300;letter-spacing:-.01em;font-variation-settings:"opsz" 60}
+.ct .fine{font-family:var(--sans);font-size:11px;line-height:1.5;color:var(--ink-2);letter-spacing:.02em}
+.ct .ox{position:absolute;left:0;bottom:-5px;height:1.5px;background:var(--ox);width:100%;transform-origin:left}
+.ct .br{position:absolute;left:-14px;top:2px;bottom:-4px;width:5px;border-left:1.5px solid var(--ox);border-top:1.5px solid var(--ox);border-bottom:1.5px solid var(--ox)}
+/* document furniture: court captions, counsel blocks, index, transcript, stamp */
+.ct .crt{font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:.15em;line-height:1.7;text-align:center;color:var(--ink-2)}
+.ct .crt.l{text-align:left;letter-spacing:.12em}
+.ct .cno{font-family:var(--sans);font-size:8.5px;letter-spacing:.08em;color:var(--ink-2);text-align:center;margin-top:10px}
+.ct .cap{font-family:var(--sans);font-size:8px;letter-spacing:.06em;color:var(--ink-3);text-align:center;line-height:1.45;margin-top:10px}
+.ct .cap p+p{margin-top:3px}
+.ct .cap .bar{margin-bottom:2px}
+.ct .dt{font-size:19px;line-height:1.15;text-align:center;font-style:italic;font-variation-settings:"opsz" 24}
+.ct .dt.sc{font-style:normal;font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.2em;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:.75px;margin-top:16px}
+.ct .vol{font-family:var(--sans);font-size:8.5px;font-weight:600;letter-spacing:.24em;text-align:center;color:var(--ink-3);margin-top:6px}
+.ct .cl{font-family:var(--sans);font-size:8px;line-height:1.6;letter-spacing:.05em;color:var(--ink-2)}
+.ct .cl b{font-weight:600;letter-spacing:.1em;color:var(--ink)}
+.ct .cl i{font-family:var(--serif);font-size:10px;letter-spacing:0}
+.ct .lbl{font-family:var(--sans);font-size:7.5px;font-weight:600;letter-spacing:.16em;color:var(--ink-3)}
+.ct .c{text-align:center}
+.ct .op{font-size:10px;line-height:1.45;color:var(--ink-2);margin-top:8px;font-variation-settings:"opsz" 12}
+.ct .op.i{font-style:italic}
+.ct .idx{margin-top:10px;font-family:var(--sans);font-size:8.5px;color:var(--ink-2);letter-spacing:.02em}
+.ct .idx p{display:flex;align-items:baseline;gap:6px;padding:4px 0}
+.ct .idx i{flex:1;border-bottom:1px dotted rgba(18,26,39,.3);transform:translateY(-2px)}
+.ct .idx b{font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink)}
+.ct .bates{position:absolute;right:22px;bottom:15px;font-family:"Courier Prime","Courier New",Courier,monospace;font-size:9.5px;letter-spacing:.04em;color:var(--ink-2)}
+.ct .tx{position:absolute;left:44px;right:26px;top:30px;bottom:40px;border-left:.75px solid #C7CBD1;box-shadow:-3px 0 0 -2px #C7CBD1;padding:0 0 0 12px;display:flex;flex-direction:column;justify-content:space-between}
+.ct .tx .r{display:flex;align-items:center;gap:7px;height:9px;font-family:var(--sans);font-size:7.5px;font-weight:600;letter-spacing:.06em;color:var(--ink-3)}
+.ct .tx .r .ln{flex:1;margin:0;height:4px}
+.ct .tnum{position:absolute;left:22px;top:30px;bottom:40px;display:flex;flex-direction:column;justify-content:space-between;font-family:var(--sans);font-size:6.5px;color:#B5B9C0;text-align:right;width:14px}
+.ct .tnum span{height:9px;line-height:9px}
+.ct .tx .say{margin:2px 0;font-size:17px;line-height:1.3}
+.ct .hl{background:linear-gradient(176deg, rgba(244,219,104,0) 6%, rgba(244,219,104,.62) 9%, rgba(240,212,88,.56) 88%, rgba(244,219,104,0) 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 3px;margin:0 -3px}
+.ct .mcap{display:grid;grid-template-columns:1fr auto;column-gap:14px;margin-top:14px;font-family:var(--sans);font-size:8px;line-height:1.75;letter-spacing:.05em;color:var(--ink-3)}
+.ct .mcap .bar{width:96px}
+.ct .mcap > div:first-child{border-bottom:.75px solid var(--ink-3);padding-bottom:4px}
+.ct .stamp{position:absolute;right:20px;top:98px;transform:rotate(-8deg);border:1.6px solid var(--stamp);outline:.75px solid var(--stamp);outline-offset:2px;padding:5px 10px 4px;text-align:center;color:var(--stamp);font-family:var(--sans);opacity:.84}
+.ct .stamp b{display:block;font-size:17px;font-weight:600;letter-spacing:.3em;margin-right:-.3em;line-height:1.05}
+.ct .stamp span{display:block;height:4px;width:58px;margin:4px auto 3px;background:var(--stamp);opacity:.45;border-radius:1px}
+.ct .stamp em{display:block;font-style:normal;font-size:6px;font-weight:600;letter-spacing:.14em}
+.ct .sig{font-size:11px;font-style:italic;color:var(--ink-2);margin-top:10px;display:flex;align-items:center;gap:6px}
+.shadow{position:absolute;left:-196px;top:-226px;width:400px;height:470px;background:rgba(18,26,39,.30);filter:blur(28px);transform:translate3d(18px,22px,-3px);pointer-events:none}
+
+/* the file folder: manila stock, a right-hand tab, the firm's logo printed on the cover */
+.folder{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d;pointer-events:none}
+.fback{position:absolute;left:-182px;top:-221px;width:356px;height:442px;transform:translateZ(-1.5px);border-radius:1px 2px 2px 1px;
+  background:var(--grain), linear-gradient(90deg, rgba(120,88,36,.14), rgba(120,88,36,0) 24px), linear-gradient(90deg, rgba(150,112,48,0) 92%, rgba(150,112,48,.20)), linear-gradient(122deg, #EDDAAE 0%, var(--manila) 52%, #D9BF84 100%);
+  background-size:180px 180px, auto, auto, auto;box-shadow:inset 0 0 0 .75px rgba(110,80,32,.45)}
+.fback::before{content:"";position:absolute;top:0;bottom:0;left:9px;width:7px;border-left:1px solid rgba(255,244,214,.5);border-right:1px solid rgba(110,80,32,.22);box-shadow:-1px 0 0 rgba(110,80,32,.2)}
+/* the 1/3-cut tab: same stock, a shade darker along its reinforced edge */
+.ftab{position:absolute;left:calc(100% - 1px);top:40px;width:23px;height:159px;clip-path:path('M0 0 L15 10 Q23 15 23 23 V136 Q23 144 15 149 L0 159 Z');
+  background:var(--grain), linear-gradient(90deg, #D4B677, #C8A866 80%, #B8975A);background-size:180px 180px, auto}
+.fcover{position:absolute;left:-182px;top:-221px;width:352px;height:442px;transform-origin:0 50%;transform-style:preserve-3d}
+.fface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;border-radius:1px 3px 3px 1px;
+  background:var(--grain), linear-gradient(90deg, rgba(120,88,36,.16), rgba(120,88,36,0) 26px), linear-gradient(118deg, var(--manila-hi) 0%, var(--manila) 48%, var(--manila-lo) 100%);
+  background-size:180px 180px, auto, auto;
+  box-shadow:inset 0 0 0 .75px rgba(110,80,32,.42), inset -1px 0 0 rgba(255,246,220,.35)}
+.fface::before{content:"";position:absolute;top:0;bottom:0;left:9px;width:7px;border-left:1px solid rgba(255,244,214,.45);border-right:1px solid rgba(110,80,32,.20);box-shadow:-1px 0 0 rgba(110,80,32,.18)}
+.fface.in{transform:rotateY(180deg);background:var(--grain), linear-gradient(270deg, rgba(120,88,36,.12), rgba(120,88,36,0) 26px), linear-gradient(118deg, #EEDDB4 0%, var(--manila-hi) 55%, var(--manila) 100%);background-size:180px 180px, auto, auto}
+.fface.in::before{left:auto;right:9px}
+.fface .dim{position:absolute;inset:0;background:#2A1F0E;opacity:0}
+.flogo{position:absolute;left:53px;top:150px;width:246px;height:auto;opacity:.95}
+.fspine{position:absolute;left:-182px;top:-221px;width:42px;height:442px;transform-origin:0 50%;transform:rotateY(-90deg);background:linear-gradient(90deg, #C9AD70, #D9BF84 40%, #CFB277);box-shadow:inset 0 0 0 .75px rgba(110,80,32,.4)}
+.deck-ui{position:absolute;left:0;right:0;bottom:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.deck-ui button{font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--ink-3);background:none;border:0;cursor:pointer;padding:8px 0}
+.deck-ui button:hover{color:var(--ink)}
+.deck-ui .tabs{display:flex;align-items:center;gap:22px}
+.deck-ui .tabs button{position:relative;padding:8px 0 6px;transition:color .25s}
+.deck-ui .tabs button::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.6,0,.2,1)}
+.deck-ui .tabs button[aria-current="true"]{color:var(--ink)}
+.deck-ui .tabs button[aria-current="true"]::after{transform:scaleX(1)}
+.deck-ui .hint{font-weight:500;letter-spacing:.12em;text-align:right;white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (pointer:coarse){ .pg{touch-action:pan-y} }
+
+/* facts ledger */
+.ledger{border-bottom:1px solid var(--rule)}
+.ledger .grid > div{grid-column:span 3;padding-block:34px 36px;border-left:1px solid var(--rule);padding-left:22px}
+.ledger .grid > div:first-child{border-left:0;padding-left:0}
+.ledger b{display:block;font-family:var(--serif);font-weight:300;font-size:56px;line-height:1;letter-spacing:-.02em;font-variation-settings:"opsz" 72}
+.ledger span{display:block;margin-top:12px;font-size:16px;color:var(--ink-2);line-height:1.45}
+
+section.s{padding-block:128px;border-bottom:1px solid var(--rule)}
+
+/* § 1 appeal */
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gut);margin-top:64px;border-top:1px solid var(--rule-2)}
+.three > div{padding-top:22px;padding-right:12px}
+.three .rn{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ink-3)}
+.three h3{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.15;margin-top:10px;font-variation-settings:"opsz" 36}
+.three p{color:var(--ink-2);margin-top:12px;font-size:17px}
+
+/* § 2 practice */
+.practice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--gut);margin-top:64px}
+.practice > div{border-top:1px solid var(--ink);padding-top:22px}
+.practice .k{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink-3)}
+.practice h3{font-family:var(--serif);font-weight:400;font-size:36px;line-height:1.1;margin-top:6px;letter-spacing:-.01em;font-variation-settings:"opsz" 48}
+.practice p{color:var(--ink-2);margin-top:16px;max-width:46ch}
+.areas{list-style:none;margin-top:26px;border-top:1px solid var(--rule);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--gut)}
+.areas li{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--rule);font-size:17px}
+.areas li span{color:var(--ink-3);font-size:14px;font-variant-numeric:tabular-nums}
+.pull{margin-top:26px;font-family:var(--serif);font-style:italic;font-size:24px;line-height:1.3;color:var(--ink);font-variation-settings:"opsz" 36;max-width:26ch}
+
+/* § 3 counsel */
+.toc{margin-top:64px;border-top:1.5px solid var(--ox)}
+.toc .row{display:grid;grid-template-columns:minmax(0,1fr);row-gap:6px;padding:26px 0;border-bottom:1px solid var(--rule)}
+.toc .nm{display:flex;align-items:baseline;gap:12px;min-width:0}
+.toc .nm b{font-family:var(--serif);font-weight:400;font-size:clamp(26px,2.6vw,34px);letter-spacing:-.01em;white-space:nowrap;font-variation-settings:"opsz" 48}
+.toc .nm i{flex:1;border-bottom:2px dotted var(--rule-2);transform:translateY(-6px);min-width:24px}
+.toc .cr{text-align:right;font-size:16px;color:var(--ink-2);line-height:1.45}
+.toc .nm .yr{font-family:var(--serif);font-weight:400;font-size:26px;color:var(--ink);font-variant-numeric:lining-nums;font-variation-settings:"opsz" 36;white-space:nowrap}
+.toc-note{margin-top:22px;font-size:15px;color:var(--ink-3)}
+
+/* § 4 contact */
+.contact-grid{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));column-gap:var(--gut);margin-top:64px}
+.addr{grid-column:1 / span 4}
+.addr .big{font-family:var(--serif);font-weight:300;font-size:clamp(34px,3.4vw,46px);line-height:1.15;letter-spacing:-.01em;font-variation-settings:"opsz" 72}
+.addr .big a{text-decoration:none}
+.addr dl{margin-top:30px;border-top:1px solid var(--rule)}
+.addr dl div{display:grid;grid-template-columns:90px 1fr;padding:12px 0;border-bottom:1px solid var(--rule);font-size:17px}
+.addr dt{color:var(--ink-3);font-size:14px;letter-spacing:.12em;text-transform:uppercase;padding-top:2px}
+form.f{grid-column:6 / span 4;display:grid;row-gap:24px}
+.f label{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.f input,.f textarea,.f select{display:block;width:100%;margin-top:8px;background:transparent;border:0;border-bottom:1px solid var(--rule-2);font:inherit;font-size:18px;color:var(--ink);padding:8px 0 10px;border-radius:0;outline:none;transition:border-color .2s}
+.f input:focus,.f textarea:focus,.f select:focus{border-color:var(--ox)}
+.f textarea{resize:vertical;min-height:90px}
+.f .note{font-size:15px;color:var(--ink);font-style:italic;font-family:var(--serif);font-size:18px}
+.f .fine{font-size:14px;color:var(--ink-3)}
+
+footer{padding-block:36px;font-size:14px;color:var(--ink-3)}
+footer .grid > div:first-child{grid-column:1 / span 6}
+footer .grid > div:last-child{grid-column:7 / span 6;text-align:right}
+
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+@media (max-width:1100px){ nav.links{display:none} }
+@media (max-width:760px){ .hcta .ph{display:none} .hcta .btn{display:inline-flex} }
+@media (min-width:961px) and (max-width:1200px){ .plane{--pl:50%;--ps:.98} .deck-ui .hint{display:none} }
+@media (max-width:960px){
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .grid > *{grid-column:1 / -1 !important}
+  .mark{padding-top:0;margin-bottom:20px}
+  .hero .grid{min-height:0}
+  .stage{min-height:440px;margin-top:24px;order:2}
+  .ledger .grid > div{border-left:0;padding-left:0;border-top:1px solid var(--rule);padding-block:24px}
+  .ledger .grid > div:first-child{border-top:0}
+  section.s{padding-block:88px}
+  .three,.practice{grid-template-columns:minmax(0,1fr);row-gap:40px}
+  .contact-grid{grid-template-columns:minmax(0,1fr);row-gap:48px}
+  .addr,form.f{grid-column:1 !important}
+  footer .grid > div:last-child{text-align:left;margin-top:8px}
+}
+@media (max-width:600px){
+  body{font-size:17px}
+  .logo img{height:36px}
+  .top .ph{font-size:15px}
+  .hcta .btn{display:none}
+  .hcta .ph{display:inline}
+  .cta-row p{font-size:21px}
+  .hero{padding-block:40px 48px}
+  .hero .sub{font-size:18px}
+  .desk{inset:-20px -60px -10px -60px}
+  .plane{--pl:62%;--ps:.74}
+  .stage{min-height:420px}
+  .deck-ui{flex-wrap:wrap;row-gap:2px}
+  .deck-ui .hint{order:3;width:100%;font-size:11px;text-align:left}
+  .toc .row{row-gap:8px}
+  .toc .nm i{display:none}
+  .toc .cr{text-align:left}
+  .ledger b{font-size:42px}
+  .ledger .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ledger .grid > div{grid-column:auto !important;padding-right:12px}
+  .ledger .grid > div:nth-child(2){border-top:0}
+  .ledger span{font-size:15px}
+  .ribbon .r2{display:none}
+  .hero .kicker i{display:none}
+  .lede{font-size:18px}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+
+<!-- ADS credit: one quiet line along the very top, the same size, place and type on every concept; only its two colours follow this page -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@500&display=swap">
+<style>
+:root{--adsc:26px}
+#ads-credit{position:sticky;top:env(safe-area-inset-top,0px);z-index:31;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;height:var(--adsc);margin:0;padding:0 16px;background:#FBFBF8;color:#121A27;font:500 10px/1 "Figtree","Helvetica Neue",Arial,sans-serif;letter-spacing:.24em;text-indent:.24em;text-transform:uppercase;text-decoration:none;white-space:nowrap;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;transition:background-color 1s}
+#ads-credit span{display:block;color:#3B4454;opacity:1;transition:opacity .5s ease}
+#ads-credit:hover span,#ads-credit:focus-visible span{opacity:1}
+#ads-credit:focus-visible{outline:1px solid currentColor;outline-offset:-5px}
+
+</style>
+<a id="ads-credit" href="https://abramsdesign.studio" target="_blank" rel="noopener"><span>Concept by Abrams Design Studio</span></a>
+<script>
+(() => {
+  /* headers pinned to the window start under the line, then settle to the top as it scrolls away */
+  const b = document.getElementById('ads-credit'), R = document.documentElement;
+  const y = () => R.style.setProperty('--adsy', Math.max(0, b.offsetHeight - scrollY) + 'px');
+  y(); addEventListener('scroll', y, { passive: true }); addEventListener('resize', y);
+  const sky = b.dataset.sky && document.querySelector(b.dataset.sky);
+  if (sky) { const c = () => b.style.setProperty('--ads-sky', getComputedStyle(sky).getPropertyValue('--skyt').trim() || '#1B3358'); new MutationObserver(c).observe(sky, { attributes: true, attributeFilter: ['style'] }); }
+})();
+</script>
+<header class="top band">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Burlington &amp; Rockenbach, P.A., home"><img src="data:image/png;base64,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" alt="Burlington &amp; Rockenbach" width="226" height="46"></a>
+    <nav class="links" aria-label="Sections">
+      <a href="#appeal">The appeal</a><a href="#practice">Practice</a><a href="#counsel">Counsel</a><a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero band">
+  <div class="wrap grid">
+    <div class="say">
+      <h1>The <em>second</em><br>look.</h1>
+      <p class="sub">Lost at trial? Lawyers board certified in Appellate Practice will give your case a second look.</p>
+      <div class="act">
+        <a class="btn" href="#contact">Request a case review <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true"><path d="M0 5h14M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></a>
+        <a class="tel" href="tel:5617210400">(561) 721-0400</a>
+      </div>
+    </div>
+    <div class="stage" id="stage" tabindex="0" role="group" aria-roledescription="file" aria-label="The file: a brief, the record, an opinion and a motion. Use the left and right arrow keys to turn pages.">
+      <div class="desk" aria-hidden="true"><div class="plane" id="plane"><div class="shadow" id="shadow"></div>
+        <div class="folder" id="folder">
+          <div class="fback"><i class="ftab"></i></div>
+          <div class="fspine" id="fspine"></div>
+          <div class="fcover" id="fcover">
+            <div class="fface fr"><img class="flogo" id="flogo" alt=""><i class="dim"></i></div>
+            <div class="fface in"><i class="dim"></i></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="deck-ui">
+      </div>
+      <p class="sr" id="live" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<div hidden class="ledger band">
+  <div class="wrap grid">
+    <div><b>1994</b><span>Philip M. Burlington, board certified in Appellate Practice</span></div>
+    <div><b>1995</b><span>Bard D. Rockenbach, board certified in Appellate Practice</span></div>
+    <div><b>2004</b><span>The firm opens its doors in West Palm Beach</span></div>
+    <div><b>~100</b><span>Appellate cases a year in state and federal courts</span></div>
+  </div>
+</div>
+
+<section hidden class="s band" id="appeal">
+  <div class="wrap grid">
+    <p class="mark">§ 1<b>The appeal</b></p>
+    <div class="body">
+      <h2>An appeal is not a <em>second trial.</em></h2>
+      <p class="lede">It is a careful reading of what already happened, by judges looking for legal error that changed the outcome.</p>
+      <div class="three">
+        <div><span class="rn">i.</span><h3>The record</h3><p>Transcripts, exhibits and rulings from below. No new witnesses, no new evidence.</p></div>
+        <div><span class="rn">ii.</span><h3>The brief</h3><p>The case is argued in writing. Every point must be preserved and cited to the record.</p></div>
+        <div><span class="rn">iii.</span><h3>The decision</h3><p>A panel decides whether the error mattered, sometimes after oral argument.</p></div>
+      </div>
+      <div class="cta-row"><p>A loss at trial is not always the last word.<span>Roughly 100 appellate cases a year, in state and federal courts.</span></p><a class="btn" href="#contact">Request a case review</a></div>
+    </div>
+  </div>
+</section>
+
+<section hidden class="s band" id="practice">
+  <div class="wrap grid">
+    <p class="mark">§ 2<b>Practice</b></p>
+    <div class="body">
+      <h2>Your partner in <em>civil litigation.</em></h2>
+      <p class="lede">Engaged early, we help shape trial strategy and prepare the record for a possible appeal.</p>
+      <div class="practice">
+        <div>
+          <p class="k">A.</p>
+          <h3>Appeals</h3>
+          <p>Civil appeals in state and federal courts, producing dozens of appellate decisions each year.</p>
+          <ul class="areas">
+            <li>Torts</li><li>Medical negligence</li><li>Insurer bad faith</li><li>Insurance coverage</li><li>Commercial disputes</li><li>Family law</li><li>Probate</li><li>Engle progeny tobacco claims</li>
+          </ul>
+        </div>
+        <div>
+          <p class="k">B.</p>
+          <h3>Trial court support</h3>
+          <p>We appear in trial courts to research and argue dispositive motions, discovery disputes and other issues before, during and after trial.</p>
+          <p class="pull">A resource for boutique trial firms and solo practitioners.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section hidden class="s band" id="counsel">
+  <div class="wrap grid">
+    <p class="mark">§ 3<b>Counsel</b></p>
+    <div class="body">
+      <h2>Table of <em>counsel.</em></h2>
+      <div class="toc">
+        <div class="row"><div class="nm"><b>Philip M. Burlington</b><i></i><span class="yr">1994</span></div><div class="cr">Board certified, Appellate Practice</div></div>
+        <div class="row"><div class="nm"><b>Bard D. Rockenbach</b><i></i><span class="yr">1995</span></div><div class="cr">Board certified, Appellate Practice</div></div>
+        <div class="row"><div class="nm"><b>Nichole J. Segal</b><i></i><span class="yr">2014</span></div><div class="cr">Board certified, Appellate Practice</div></div>
+        <div class="row"><div class="nm"><b>Adam J. Richardson</b><i></i><span class="yr">2012</span></div><div class="cr">The Florida Bar · U.S. Court of Appeals, Eleventh Circuit</div></div>
+        <div class="row"><div class="nm"><b>Jeffrey V. Mansell</b><i></i><span class="yr">2012</span></div><div class="cr">The Florida Bar · U.S. Court of Appeals, Eleventh Circuit</div></div>
+      </div>
+      <p class="toc-note">Board certification by The Florida Bar, year first certified. Bar admissions, year admitted.</p>
+      <div class="cta-row"><p>Three lawyers board certified in Appellate Practice.<span>Philip M. Burlington since 1994 · Bard D. Rockenbach since 1995 · Nichole J. Segal since 2014</span></p><a class="btn" href="#contact">Request a case review</a></div>
+    </div>
+  </div>
+</section>
+
+<section hidden class="s band" id="contact">
+  <div class="wrap grid">
+    <p class="mark">§ 4<b>Contact</b></p>
+    <div class="body">
+      <h2>Request a <em>case review.</em></h2>
+      <p class="lede">Tell us what happened below. Board certified appellate lawyers will read it with fresh eyes.</p>
+      <div class="contact-grid">
+        <div class="addr">
+          <p class="big"><a href="tel:5617210400">(561) 721-0400</a></p>
+          <dl>
+            <div><dt>Office</dt><dd>1601 Forum Place, Suite 600<br>West Palm Beach, FL 33401</dd></div>
+            <div><dt>Phone</dt><dd>(561) 721-0400</dd></div>
+            <div><dt>Fax</dt><dd>(561) 721-0465</dd></div>
+          </dl>
+        </div>
+        <form class="f" id="form" novalidate>
+          <div><label for="fn">Name</label><input id="fn" autocomplete="name"></div>
+          <div><label for="fe">Email or phone</label><input id="fe" autocomplete="email"></div>
+          <div><label for="fr">I am</label><select id="fr"><option>A trial lawyer seeking appellate support</option><option>A party considering an appeal</option><option>Other</option></select></div>
+          <div><label for="fm">What happened at trial?</label><textarea id="fm" rows="3"></textarea></div>
+          <div><button class="btn" type="submit">Request a case review</button></div>
+          <p class="note" id="fnote" role="status"></p>
+          <p class="fine">Sending this form does not create an attorney-client relationship.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer hidden class="band">
+  <div class="wrap grid">
+    <div>Burlington &amp; Rockenbach, P.A. · 1601 Forum Place, Suite 600, West Palm Beach, FL 33401</div>
+    <div>Concept by Abrams Design Studio</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+const plane = document.getElementById('plane');
+const stage = document.getElementById('stage');
+const desk = plane.parentNode;
+const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- ARRIVAL: a section's animation waits until ~30% of it is on screen, then plays once.
+   It always lands: with no observer, on print, or when the page sits idle 9s before it is reached, it jumps to its final state. ---------- */
+const ARR=[];
+function arrive(el, play, land, frac){
+  const it={done:false}, F=frac||.3; ARR.push(it);
+  if(!('IntersectionObserver' in window)){ it.done=true; land(); return; }
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting && (e.intersectionRatio>=F || (e.rootBounds && e.intersectionRect.height>=e.rootBounds.height*F))) it.go(play);
+  }),{threshold:[0,.1,.2,.3,.4,.5,.75,1],rootMargin:'0px 0px -8% 0px'});
+  it.go=f=>{ if(it.done) return; it.done=true; io.disconnect(); f(); };
+  it.land=()=>it.go(land);
+  io.observe(el);
+}
+const landAll=()=>ARR.forEach(it=>it.land&&it.land());
+let idleT0=0;
+const nudge=()=>{ clearTimeout(idleT0); if(ARR.some(it=>!it.done)) idleT0=setTimeout(landAll,9000); };
+['scroll','wheel','pointermove','pointerdown','touchstart','keydown'].forEach(ev=>window.addEventListener(ev,nudge,{passive:true}));
+window.addEventListener('beforeprint',landAll);
+
+/* ---------- bitmaps painted once: paper fibre for the manila, a soft shadow for loose pages ---------- */
+(function(){
+  try{
+    const g=document.createElement('canvas'); g.width=g.height=180; const c=g.getContext('2d'); const im=c.createImageData(180,180);
+    let seed=7; const rnd=()=>{ seed=(seed*16807)%2147483647; return seed/2147483647; };
+    for(let i=0;i<im.data.length;i+=4){ const v=rnd(); im.data[i]=102; im.data[i+1]=74; im.data[i+2]=28; im.data[i+3]=Math.round(Math.pow(v,2.2)*46); }
+    c.putImageData(im,0,0);
+    // a few long fibres
+    c.lineWidth=.6; for(let i=0;i<70;i++){ const x=rnd()*180, y=rnd()*180, a=(rnd()-.5)*.9, l=6+rnd()*16; c.strokeStyle='rgba('+(rnd()<.5?'255,246,222,.22':'110,80,32,.13')+')'; c.beginPath(); c.moveTo(x,y); c.lineTo(x+Math.cos(a)*l,y+Math.sin(a)*l); c.stroke(); }
+    const u=g.toDataURL(); document.documentElement.style.setProperty('--grain','url('+u+')');
+    const s=document.createElement('canvas'); s.width=88; s.height=112; const sc=s.getContext('2d');
+    sc.filter='blur(7px)'; sc.fillStyle='rgba(18,26,39,.42)'; sc.fillRect(12,13,64,86);
+    document.documentElement.style.setProperty('--psh','url('+s.toDataURL()+')');
+  }catch(_){}
+})();
+
+/* ---------- the file: four documents, two pages each, on six plain record pages ---------- */
+function lines(n, widths){ let h=''; for(let i=0;i<n;i++){ const w = widths? widths[i%widths.length] : (i%6===5? 62 : 100); h+='<div class="ln" style="width:'+w+'%"></div>'; } return h; }
+const B = w => '<i class="bar" style="width:'+w+'px"></i>';
+const NUMS = '<div class="num">'+Array.from({length:12},(_,k)=>'<span>'+(k+1)+'</span>').join('')+'</div>';
+const TNUM = '<div class="tnum">'+Array.from({length:25},(_,k)=>'<span>'+(k+1)+'</span>').join('')+'</div>';
+const DCA = 'IN THE DISTRICT COURT OF APPEAL<br>OF THE STATE OF FLORIDA<br>FOURTH DISTRICT';
+const FIRM = '<b>BURLINGTON &amp; ROCKENBACH, P.A.</b><br>1601 Forum Place, Suite 600<br>West Palm Beach, Florida 33401';
+function txRow(lbl, w){ return '<div class="r">'+(lbl?'<span>'+lbl+'</span>':'')+'<div class="ln" style="max-width:'+w+'%"></div></div>'; }
+const DOCS = ['Brief','Record','Opinion','Motion'];
+const DOCLONG = ['Initial Brief of Appellant','Record on Appeal, Volume II','Opinion of the Fourth District','Motion for New Trial'];
+const CONTENT = [
+  // Brief, cover
+  {doc:0, cv:true, live:'Board certified in Appellate Practice since 1994.', html:()=>
+    '<p class="crt">'+DCA+'</p><p class="cno">Case No. '+B(70)+'</p>'+
+    '<div class="cap"><p>'+B(116)+'<br>Appellant,</p><p>v.</p><p>'+B(100)+'<br>Appellee.</p></div>'+
+    '<div class="dr" style="margin-top:14px"></div><p class="dt">Initial Brief of Appellant</p><div class="dr"></div>'+
+    '<p class="say">Board certified in Appellate Practice since 1994.<span class="ox"></span><span class="br"></span></p>'+
+    '<p class="cl" style="margin-top:auto">'+FIRM+'<br>(561) 721-0400<br><i>Counsel for Appellant</i></p>'},
+  // Brief, summary of argument
+  {doc:0, live:'Appellate representation for trial attorneys and their clients, since 2004.', html:()=>
+    NUMS+'<p class="hd">SUMMARY OF ARGUMENT</p><div class="rule"></div><div class="dbl">'+lines(3,[100,100,64])+'</div>'+
+    '<p class="say">Appellate representation for trial attorneys and their clients, since 2004.</p>'+
+    '<div class="dbl">'+lines(6,[100,96,100,100,88,46])+'</div><span class="rn c">2</span>'},
+  // Record, index
+  {doc:1, rec:true, live:'Roughly 100 appeals a year, in state and federal courts.', html:()=>
+    '<p class="crt">IN THE DISTRICT COURT OF APPEAL OF THE<br>STATE OF FLORIDA, FOURTH DISTRICT</p>'+
+    '<p class="dt" style="margin-top:16px">Record on Appeal</p><p class="vol">VOLUME II</p><div class="rule" style="margin:14px 0 6px"></div>'+
+    '<p class="lbl">INDEX</p><div class="idx">'+
+    [['Transcript of trial proceedings','1043'],['Trial exhibits','1187'],['Charge conference','1246'],['Verdict','1281'],['Final judgment','1302'],['Notice of appeal','1310']]
+      .map(r=>'<p><span>'+r[0]+'</span><i></i><b>'+r[1]+'</b></p>').join('')+'</div>'+
+    '<p class="say it" style="margin-top:14px">Roughly 100 appeals a year, in state and federal courts.</p><span class="bates">R. 1040</span>'},
+  // Record, trial transcript with a highlighted passage
+  {doc:1, rec:true, live:'Torts, medical negligence, insurer bad faith, insurance coverage.', html:()=>
+    TNUM+'<div class="tx">'+txRow('Q.',92)+txRow('',100)+txRow('A.',74)+txRow('Q.',100)+txRow('',58)+txRow('THE COURT:',100)+txRow('',100)+txRow('',40)+
+    '<p class="say it"><span class="hl">Torts · Medical negligence · Insurer bad faith · Insurance coverage</span></p>'+
+    txRow('Q.',100)+txRow('',86)+txRow('A.',100)+txRow('',100)+txRow('',62)+txRow('COUNSEL:',100)+txRow('',94)+txRow('',30)+'</div><span class="bates">R. 1044</span>'},
+  // Opinion, first page
+  {doc:2, live:'Commercial disputes, family law, probate, Engle progeny tobacco claims.', html:()=>
+    '<p class="crt">DISTRICT COURT OF APPEAL<br>OF THE STATE OF FLORIDA<br>FOURTH DISTRICT</p>'+
+    '<div class="cap" style="margin-top:10px"><p>'+B(108)+', Appellant,</p><p>v.</p><p>'+B(92)+', Appellee.</p></div>'+
+    '<p class="cno">No. 4D'+B(58)+'</p><p class="cno" style="margin-top:4px">['+B(64)+']</p><div class="rule" style="margin:12px 0 4px"></div>'+
+    '<p class="op i">Appeal from the Circuit Court for the Fifteenth Judicial Circuit, Palm Beach County.</p>'+
+    '<p class="op">'+B(64)+' of Burlington &amp; Rockenbach, P.A., West Palm Beach, for appellant.</p>'+
+    '<p class="lbl" style="margin-top:12px">PER CURIAM.</p>'+
+    '<p class="say it" style="margin-top:8px">Commercial disputes · Family law · Probate · Engle progeny tobacco claims</p>'+
+    '<div class="tight">'+lines(4,[100,100,92,56])+'</div><span class="rn c">2</span>'},
+  // Opinion, last page
+  {doc:2, live:'A resource for boutique trial firms and solo practitioners.', html:()=>
+    '<div class="tight">'+lines(9,[100,100,97,100,100,84,100,100,52])+'</div>'+
+    '<p class="say" style="margin-top:20px">A resource for boutique trial firms and solo practitioners.</p>'+
+    '<div class="tight">'+lines(3,[100,100,38])+'</div>'+
+    '<p class="op c" style="margin-top:18px">'+B(40)+', '+B(44)+' and '+B(36)+', JJ., concur.</p>'+
+    '<p class="op c" style="margin-top:14px;letter-spacing:.4em">* * *</p>'+
+    '<p class="op c i" style="margin-top:14px">Not final until disposition of timely filed motion for rehearing.</p><span class="rn c">3</span>'},
+  // Motion, filed and stamped
+  {doc:3, mot:true, live:'Trial court support: dispositive motions, discovery disputes and the record, before, during and after trial.', html:()=>
+    '<p class="crt l">IN THE CIRCUIT COURT OF THE FIFTEENTH<br>JUDICIAL CIRCUIT IN AND FOR<br>PALM BEACH COUNTY, FLORIDA</p>'+
+    '<div class="mcap"><div>'+B(96)+'<br>Plaintiff,<br>v.<br>'+B(84)+'<br>Defendant.</div><div>CASE NO.: '+B(50)+'</div></div>'+
+    '<p class="dt sc c">MOTION FOR NEW TRIAL</p><div class="dbl">'+lines(2,[100,72])+'</div>'+
+    '<p class="say">Dispositive motions, discovery disputes and the record, before, during and after trial.</p>'+
+    '<div class="dbl">'+lines(3,[100,100,60])+'</div>'+
+    '<div class="stamp"><b>FILED</b><span></span><em>CLERK OF THE CIRCUIT COURT</em></div><span class="rn c">1</span>'},
+  // Motion, signature page: the way in
+  {doc:3, mot:true, contact:true, live:'Request a case review: (561) 721-0400, 1601 Forum Place, Suite 600, West Palm Beach.', html:()=>
+    '<div class="dbl" style="margin-top:-6px">'+lines(3,[100,100,44])+'</div>'+
+    '<p class="op" style="margin-top:22px">Respectfully submitted,</p>'+
+    '<p class="cl" style="margin-top:8px">'+FIRM+'</p>'+
+    '<p class="say big" style="margin:10px 0 4px">(561) 721-0400</p><p class="fine">REQUEST A CASE REVIEW</p>'+
+    '<p class="sig">/s/ '+B(96)+'</p>'+
+    '<p class="lbl c" style="margin-top:18px">CERTIFICATE OF SERVICE</p><div class="tight">'+lines(4,[100,100,90,48])+'</div><span class="rn c">2</span>'}
+];
+function fillerHTML(h){ return lines(20,[100,100,100,88,100,100,64])+'<span class="bates">R. '+String(1040-(6-h)*3).padStart(4,'0')+'</span>'; }
+function face(cls, ct, cv){ return '<div class="face '+cls+'"><div class="ct'+(cv?' cv':'')+'">'+ct+'</div><i class="sh"></i><i class="lt"></i></div>'; }
+const NC = CONTENT.length, NF = 6, N = NC+NF;
+/* each document is squared on itself, and sits a hair off the one beneath it, so the pile reads as four documents */
+const DOFF = [{x:0,y:0,r:0},{x:-4,y:3,r:-1.4},{x:3,y:-2,r:1.0},{x:-2,y:5,r:-0.6}];
+const pages = [];
+for(let h=0; h<N; h++){
+  // home order bottom -> top: fillers, then content 8..1
+  const k = h<NF ? -1 : (N-1-h);
+  const c = k<0 ? null : CONTENT[k];
+  const ct = c ? c.html() : fillerHTML(h);
+  const cls = c ? (c.rec?' d-record':c.mot?' d-motion':'') : ' d-record';
+  const cv = c && c.cv;
+  const el = document.createElement('div'); el.className='pg';
+  el.innerHTML = '<i class="psh"></i><div class="leaf"><div class="seg a">'+face('fr'+cls,ct,cv)+face('bk'+cls,ct,cv)+'<div class="seg b">'+face('fr'+cls,ct,cv)+face('bk'+cls,ct,cv)+'</div></div></div>';
+  plane.appendChild(el);
+  const j=((h*37)%7-3)*0.35, off=(N-1-h)*0.55, dO = c ? DOFF[c.doc] : {x:1,y:2,r:0.4};
+  const P = {el, h, k, leaf:el.querySelector('.leaf'), segB:el.querySelector('.seg.b'), psh:el.firstChild,
+    sh:[...el.querySelectorAll('.face.fr .sh')], lt:[...el.querySelectorAll('.face .lt')],
+    hx:off+dO.x, hy:off*1.4+dO.y, hr:(c? (k%2)*0.25 : j)+dO.r, x:0, y:0, rot:0, th:0, cu:0, curlDir:1, zo:0, za:0, lift:0, shade:0, loose:0,
+    vx:0, vy:0, vr:0, free:false, held:false, tw:null, rank:h};
+  Object.assign(P,{x:P.hx,y:P.hy,rot:P.hr});
+  el._p = P; pages.push(P);
+}
+let turned = 0;            // number of content pages turned onto the left pile
+let rankSeq = 100;
+const byK = k => pages.find(p=>p.k===k);
+function homeOf(p){ const t = p.k>=0 && p.k<turned; return {x:p.hx, y:p.hy, rot:p.hr + (t? -0.8 : 0), th: t? -180 : 0}; }
+function homeRank(p){ return (p.k>=0 && p.k<turned) ? 50 + p.k : p.h; }
+
+/* ---------- geometry: desk plane <-> screen ---------- */
+const RX = 46*Math.PI/180, CA=Math.cos(RX), SA=Math.sin(RX), CZ=Math.cos(Math.PI/6), SZ=Math.sin(Math.PI/6), D=2200;
+let G = null;
+function measure(){
+  const r = desk.getBoundingClientRect(), cs = getComputedStyle(plane);
+  const pl = parseFloat(cs.getPropertyValue('--pl'))/100 || .53, ps = parseFloat(cs.getPropertyValue('--ps')) || 1.22;
+  const st = stage.getBoundingClientRect(), ui = stage.querySelector('.deck-ui').getBoundingClientRect();
+  const narrow = window.innerWidth <= 960;
+  G = {ox:r.left + r.width*pl, oy:r.top + r.height*.5, px:r.left+r.width*.5, py:r.top+r.height*.3, s:ps,
+       // where a loose page's centre may come to rest (screen space): generous, so a toss lands where it lands
+       L: st.left + (narrow? 70*ps : -140), R: Math.min(window.innerWidth, st.right) - (narrow? 70*ps : 150), T: st.top + 120*ps, B: ui.top - (narrow? 70 : 150)*ps};
+}
+function fwd(x,y){ const x1=G.s*(x*CZ + y*SZ), y1=G.s*(-x*SZ + y*CZ); const y2=y1*CA, z2=y1*SA;
+  const Px=G.ox+x1, Py=G.oy+y2, f=D/(D-z2); return [G.px+(Px-G.px)*f, G.py+(Py-G.py)*f]; }
+function linInv(dx,dy){ const x1=dx, y1=dy/CA; return [(x1*CZ - y1*SZ)/G.s, (x1*SZ + y1*CZ)/G.s]; }
+function inv(sx,sy){ let [x,y]=linInv(sx-G.ox, sy-G.oy); for(let i=0;i<3;i++){ const f=fwd(x,y); const d=linInv(sx-f[0], sy-f[1]); x+=d[0]; y+=d[1]; } return [x,y]; }
+function inBounds(x,y){ const s=fwd(x,y); return s[0]>=G.L && s[0]<=G.R && s[1]>=G.T && s[1]<=G.B; }
+
+/* ---------- easing + tweens ---------- */
+function bez(x1,y1,x2,y2){ return t=>{ let u=t; for(let i=0;i<6;i++){ const a=3*x1*u*(1-u)*(1-u)+3*x2*u*u*(1-u)+u*u*u-t; const d=3*x1*(1-u)*(1-u)+6*(x2-x1)*u*(1-u)+3*(1-x2)*u*u; if(Math.abs(d)<1e-6) break; u-=a/d; u=Math.max(0,Math.min(1,u)); } return 3*y1*u*(1-u)*(1-u)+3*y2*u*u*(1-u)+u*u*u; }; }
+const EIO = bez(.65,0,.2,1), EOUT = bez(.2,.7,.2,1), EFLIP = bez(.45,.05,.25,1), EHOME = bez(.42,0,.18,1), ECOV = bez(.55,.02,.3,1);
+function unfd(p){ if(!p.fd) return; const r=p.rot*Math.PI/180; p.x+=320*Math.cos(r); p.y+=320*Math.sin(r); p.fd=false; p.th=-180; }
+function tween(p, to, dur, delay, ease, done, arc){
+  unfd(p);
+  p.tw = {t0:performance.now()+(delay||0), dur, ease:ease||EIO, done, arc:arc||0,
+    from:{x:p.x,y:p.y,rot:p.rot,th:p.th,zo:p.zo}, to:Object.assign({x:p.x,y:p.y,rot:p.rot,th:p.th,zo:0}, to)};
+  p.vx=p.vy=p.vr=0; wake();
+}
+
+/* ---------- render loop ---------- */
+let running=false, last=0;
+let ZK = RM ? 1 : 0.42;   // layer spacing: the papers lie flatter while the folder is shut
+function wake(){ if(!running){ running=true; last=performance.now(); requestAnimationFrame(loop); } }
+function zOrder(){ const o=[...pages].sort((a,b)=>a.rank-b.rank); o.forEach((p,i)=>p.z=i*2.6); }
+// re-stack without a jump: every page keeps its height on screen and eases to its new layer
+function restack(){ const old=pages.map(p=>p.z); zOrder(); pages.forEach((p,i)=>{ p.zo += old[i]-p.z; if(p.tw) p.tw.from.zo += old[i]-p.z; }); wake(); }
+zOrder();
+function render(p){
+  const lz = p.lift + p.za + Math.abs(Math.sin(p.th*Math.PI/180))*6;
+  p.el.style.transform='translate3d('+p.x.toFixed(2)+'px,'+p.y.toFixed(2)+'px,'+(p.z*ZK+p.zo+lz).toFixed(2)+'px) rotateZ('+p.rot.toFixed(2)+'deg)';
+  if(p.fd){ p.leaf.style.transformOrigin='50% 50%'; p.leaf.style.transform='rotateY(180deg)'; }
+  else { p.leaf.style.transformOrigin='0 50%'; p.leaf.style.transform='rotateY('+p.th.toFixed(2)+'deg)'; }
+  p.segB.style.transform='rotateY('+p.cu.toFixed(2)+'deg)';
+  const s = Math.abs(Math.sin(p.th*Math.PI/180));
+  const op = p.free ? 1 : Math.max(0, Math.min(1, (180-Math.abs(p.th))/34)) * (p.fade==null?1:p.fade);
+  const os = op.toFixed(3); if(p._op!==os){ p.el.style.opacity=os; p.el.style.visibility = op<0.01?'hidden':'visible'; p._op=os; }
+  const lt = (Math.pow(s,1.6)*0.6).toFixed(3); if(p._lt!==lt){ p.lt.forEach(e=>e.style.opacity=lt); p._lt=lt; }
+  const sh = p.shade.toFixed(3); if(p._sh!==sh){ p.sh.forEach(e=>e.style.opacity=sh); p._sh=sh; }
+  // contact shadow of a loose page: it widens and softens as the page rises
+  const h = p.lift + p.za, ps = (p.loose * (0.62 + Math.min(.25, h*.012))).toFixed(3);
+  if(p._ps!==ps || p.loose>0){ p.psh.style.opacity=ps; p.psh.style.visibility = p.loose>0.005?'visible':'hidden'; p.psh.style.transform='translate3d('+(5+h*.55).toFixed(1)+'px,'+(7+h*.8).toFixed(1)+'px,'+(-1.6-h).toFixed(1)+'px) scale('+(1+h*.006).toFixed(3)+')'; p._ps=ps; }
+}
+const K = 3.1, KR = 3.6;   // friction of a sliding page (per second): position, rotation
+function loop(now){
+  const dt = Math.min(0.033, (now-last)/1000); last = now;
+  let active = false;
+  if(!G) measure();
+  // cast shadow from a turning leaf onto the page beneath it
+  let flipping = null; pages.forEach(p=>{ if(p.th<-0.5 && p.th>-179.5 && !p.free) flipping=p; p.shade=0; });
+  if(flipping){ const under = topStack(flipping); if(under) under.shade = Math.sin(Math.abs(flipping.th)*Math.PI/180)*0.85*(1-Math.abs(flipping.th)/180); }
+  for(const p of pages){
+    p.za = 0;
+    if(p.tw){
+      const t=p.tw, k=Math.max(0,Math.min(1,(now-t.t0)/t.dur)), e=t.ease(k);
+      if(now>=t.t0){ for(const key in t.to){ p[key]=t.from[key]+(t.to[key]-t.from[key])*e; } if(t.arc) p.za = Math.sin(Math.PI*e)*t.arc; }
+      const dTh = t.to.th - t.from.th;
+      if(dTh!==0){ p.curlDir = dTh<0?1:-1; }
+      if(k>=1){ p.tw=null; if(t.done) t.done(); }
+      active = true;
+    } else {
+      if(p.free && !p.held){
+        // a released page slides on, slows smoothly and stops where it stops: no spring, no snap
+        p.x += p.vx*dt; p.y += p.vy*dt; p.rot += p.vr*dt;
+        const fr = Math.exp(-K*dt); p.vx*=fr; p.vy*=fr; p.vr*=Math.exp(-KR*dt);
+        const sp = Math.hypot(p.vx,p.vy);
+        p.lift += (Math.min(9, sp/110) - p.lift)*Math.min(1,dt*5);
+        if(sp>1.2 || Math.abs(p.vr)>0.4 || p.lift>0.04) active = true; else { p.vx=p.vy=p.vr=0; p.lift=0; }
+      }
+      if(Math.abs(p.zo)>0.02){ p.zo *= Math.exp(-9*dt); active = true; } else p.zo = 0;
+    }
+    if(p.held){ p.lift += (16-p.lift)*Math.min(1,dt*10); if(drag && drag.mode==='toss' && Math.abs(p.th)>0.05){ p.th *= Math.exp(-14*dt); } active = true; }
+    else if(!p.free && p.lift>0.05){ p.lift *= Math.exp(-8*dt); active = true; }
+    // loose-page shadow fades in as the page leaves the pile and out as it lands home
+    const lt = p.free ? 1 : 0; if(Math.abs((p.loose||0)-lt)>0.01){ p.loose = (p.loose||0) + (lt-(p.loose||0))*Math.min(1,dt*(p.free?10:3.2)); active=true; } else p.loose = lt;
+    const s = Math.sin(Math.abs(p.th)*Math.PI/180);
+    p.cu = p.curlDir * 24 * s * s * (p.held||p.tw ? 1 : 0.4);
+    render(p);
+  }
+  if(stepFolder(now)) active = true;
+  // safety net: no page is ever left part-way through a turn; anything off its rest angle eases home
+  if(!active && !drag){ pages.forEach(p=>{ if(p.free || p.held || p.tw) return; const h=homeOf(p); if(Math.abs(p.th-h.th)>0.5){ tween(p, h, 600, 0, EOUT, ()=>{ p.rank=homeRank(p); restack(); }); active=true; } }); }
+  if(active || drag) requestAnimationFrame(loop); else running=false;
+}
+function topStack(except){ let best=null; pages.forEach(p=>{ if(p!==except && !p.free && p.th>-90 && (!best || p.rank>best.rank)) best=p; }); return best; }
+
+/* ---------- page turning + documents ---------- */
+const live=document.getElementById('live'), tabs=[...document.querySelectorAll('#tabs button')];
+function curK(){ return Math.min(turned, NC-1); }
+function ui(say){ const k=curK(), d=CONTENT[k].doc;
+  tabs.forEach((b,i)=>b.setAttribute('aria-current', i===d ? 'true':'false'));
+  if(say) live.textContent = DOCLONG[d]+', page '+(k%2+1)+' of 2: '+CONTENT[k].live; }
+function fadeSwap(p, apply){ p.fade=0; render(p); setTimeout(()=>{ apply(); p.fade=1; render(p); },160); }
+function next(){ if(turned>=NC-1) return false; const p=byK(turned); turned++; p.free=false; p.rank=50+p.k; restack();
+  if(RM){ fadeSwap(p,()=>{ Object.assign(p,homeOf(p)); }); } else tween(p, homeOf(p), 900, 0, EFLIP);
+  ui(true); poke(); return true; }
+function prev(){ if(turned<=0) return false; turned--; const p=byK(turned); p.free=false; p.rank=rankSeq++; restack();
+  if(RM){ fadeSwap(p,()=>{ Object.assign(p,homeOf(p)); p.rank=homeRank(p); zOrder(); }); }
+  else tween(p, homeOf(p), 900, 0, EFLIP, ()=>{ p.rank=homeRank(p); restack(); });
+  ui(true); poke(); return true; }
+/* loose pages glide back into a neat pile, one after another */
+function regroup(){
+  const loose = pages.filter(p=>p.free);
+  if(!loose.length) return;
+  loose.forEach(p=>{ p.free=false; p.rank=homeRank(p); });
+  restack();
+  if(RM){ loose.forEach(p=>{ Object.assign(p,homeOf(p)); p.zo=0; p.lift=0; render(p); }); return; }
+  loose.sort((a,b)=>a.rank-b.rank).forEach((p,i)=>{
+    const tgt = homeOf(p); let dr = tgt.rot - p.rot; dr = ((dr+540)%360)-180; tgt.rot = p.rot + dr;
+    tween(p, tgt, 1100, i*70, EHOME, null, 10);
+  });
+}
+let jumping=false;
+function goDoc(d){
+  regroup();
+  const target = d*2; if(target===turned || jumping) return;
+  jumping=true; const steps = Math.abs(target-turned), fwdDir = target>turned;
+  for(let i=0;i<steps;i++) setTimeout(()=>{ fwdDir? next() : prev(); if(i===steps-1) jumping=false; }, i*150);
+}
+tabs.forEach(b=>b.addEventListener('click',()=>{ if(!ready) return; goDoc(+b.dataset.doc); }));
+stage.addEventListener('keydown',e=>{ if(e.target!==stage || !ready) return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){ e.preventDefault(); next(); }
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ e.preventDefault(); prev(); } });
+
+/* ---------- idle: about 7 seconds after the last touch, loose pages come back together ---------- */
+let idleT=null, touched=false;
+const IDLE = 7000;
+function poke(){ touched=true; clearTimeout(idleT); idleT=setTimeout(()=>{ if(drag){ poke(); return; } regroup(); }, IDLE); }
+
+/* ---------- pointer: turn or toss ---------- */
+let drag=null, ready=false;
+plane.addEventListener('pointerdown',e=>{
+  const el = e.target.closest('.pg'); if(!el || drag || !ready) return;
+  const p = el._p;
+  // a page already turning is never caught mid-turn (that froze it half-open): a press on it turns the next page instead
+  if(p.tw && !p.free && Math.abs(p.tw.to.th - p.tw.from.th) > 30){ next(); poke(); return; }
+  if(p.tw && !RM){ p.tw=null; p.za=0; }   // catch a loose page mid-glide, right where it is
+  measure();
+  const L = inv(e.clientX, e.clientY);
+  // where on the page was it grabbed? outer edge = turn, binding edge = pull back, body = toss
+  const rel = (L[0]-p.x)*Math.cos(p.rot*Math.PI/180) + (L[1]-p.y)*Math.sin(p.rot*Math.PI/180) + 160;
+  const zone = rel > 205 ? 'edge' : (rel < 95 ? 'spine' : 'body');
+  drag = {p, zone, id:e.pointerId, sx:e.clientX, sy:e.clientY, lx:L[0], ly:L[1], mode:null, hist:[[performance.now(),p.x,p.y,p.rot]], th0:p.th};
+  try{ el.setPointerCapture(e.pointerId); }catch(_){}
+  poke();
+});
+function startToss(d){
+  const p=d.p; p.free=true; p.held=true; p.el.classList.add('held'); p.rank=rankSeq++; restack();
+  // offset of the grab point from the page centre, in desk space
+  d.gx = d.lx - p.x; d.gy = d.ly - p.y; d.len = Math.hypot(d.gx,d.gy);
+  // a face-down leaf is re-hinged on its own centre so it swings true; a half-lifted leaf eases flat in the loop
+  if(p.th<-90){ const r=p.rot*Math.PI/180; p.x-=320*Math.cos(r); p.y-=320*Math.sin(r); p.th=0; p.fd=true; d.gx = d.lx - p.x; d.gy = d.ly - p.y; d.len=Math.hypot(d.gx,d.gy); }
+}
+window.addEventListener('pointermove',e=>{
+  if(!drag || e.pointerId!==drag.id) return;
+  const d=drag, L=inv(e.clientX,e.clientY); let p=d.p;
+  if(!d.mode){
+    if(Math.hypot(e.clientX-d.sx, e.clientY-d.sy) < 7) return;
+    const dx=L[0]-d.lx, dy=L[1]-d.ly;
+    const isTop = !p.free && p.k===turned && turned<NC-1 && p.th>-30;
+    const onStack = !p.free && p.th>-30 && p.k>=0 && p.k===turned;
+    if(RM) d.mode='swipe';
+    else if(isTop && d.zone==='edge' && dx<0 && Math.abs(dx)>Math.abs(dy)*0.6) { d.mode='turn'; d.gx = d.lx - (p.x-160); p.rank=rankSeq++; restack(); }
+    else if(onStack && turned>0 && d.zone==='spine' && dx>0 && Math.abs(dx)>Math.abs(dy)*0.6) {
+      // pull the previous page back over from the binding
+      const q = byK(turned-1); unfd(q); q.free=false; q.tw=null; turned--; d.p=q; d.mode='unturn'; d.ux=d.lx; q.rank=rankSeq++; restack(); }
+    else { d.mode='toss'; startToss(d); }
+  }
+  p=d.p; const now=performance.now();
+  if(d.mode==='unturn'){
+    const k = Math.max(0, Math.min(1, (L[0]-d.ux)/300));
+    const th = -180 + 180*Math.sin(k*Math.PI/2); p.curlDir = -1; p.th = th; p.held=true;
+  } else if(d.mode==='turn'){
+    // the grabbed point travels with the pointer; the leaf hinges on the left edge (the binding)
+    const spine = p.x-160, g = Math.max(80, Math.abs(d.gx));
+    const c = Math.max(-1, Math.min(1, (L[0]-spine)/g));
+    const th = -Math.acos(c)*180/Math.PI;
+    p.curlDir = th < p.th ? 1 : -1; p.th = th; p.held=true;
+  } else if(d.mode==='toss'){
+    // drag by the grabbed point: the page trails behind it and swings around it
+    const gx = p.x + d.gx, gy = p.y + d.gy;           // grab point before move
+    const cx0 = p.x - gx, cy0 = p.y - gy;               // grab -> centre
+    if(d.len>8){
+      const rgx = (p.x + (L[0]-gx)) - L[0], rgy = (p.y + (L[1]-gy)) - L[1];    // rigid
+      const tl = Math.hypot(p.x-L[0], p.y-L[1])||1, tgx=(p.x-L[0])/tl*d.len, tgy=(p.y-L[1])/tl*d.len; // trailer
+      let nx = rgx*0.78 + tgx*0.22, ny = rgy*0.78 + tgy*0.22; const nl=Math.hypot(nx,ny)||1; nx=nx/nl*d.len; ny=ny/nl*d.len;
+      const da = Math.atan2(ny,nx) - Math.atan2(cy0,cx0);
+      p.rot += ((da+Math.PI*3)%(Math.PI*2)-Math.PI)*180/Math.PI;
+      p.x = L[0]+nx; p.y = L[1]+ny; d.gx = -nx; d.gy = -ny;
+    } else { p.x += L[0]-gx; p.y += L[1]-gy; }
+    d.hist.push([now,p.x,p.y,p.rot]); if(d.hist.length>12) d.hist.shift();
+  } else if(d.mode==='swipe'){ d.ex=L[0]-d.lx; }
+  poke(); wake();
+});
+function release(d){
+  // velocity from the last ~90ms of the drag
+  const p=d.p, h=d.hist, b=h[h.length-1], now=performance.now();
+  let a=b; for(let i=h.length-1;i>=0;i--){ a=h[i]; if(b[0]-h[i][0]>=90) break; }
+  const dt=Math.max(0.016,(b[0]-a[0])/1000);
+  let vx=(b[1]-a[1])/dt, vy=(b[2]-a[2])/dt, vr=(b[3]-a[3])/dt;
+  if(now-b[0]>80 || h.length<2){ vx=vy=vr=0; }
+  const sp=Math.hypot(vx,vy), cap=2400; if(sp>cap){ vx*=cap/sp; vy*=cap/sp; }
+  // a little natural spin: a page flung by its corner turns about its centre
+  const gx=d.gx||0, gy=d.gy||0, spin = (gx*vy - gy*vx)/(gx*gx+gy*gy+160*160)*57.3*0.55;
+  vr = vr*0.5 + spin; const maxTurn = 7;   // degrees of extra turn after release, at most vr = Math.max(-maxTurn*KR, Math.min(maxTurn*KR, vr));
+  // keep the resting point on the desk: scale the slide so it comes to rest inside the stage
+  measure();
+  if(inBounds(p.x,p.y)){ let s=1; while(s>0.04 && !inBounds(p.x+vx*s/K, p.y+vy*s/K)) s*=0.86; if(s<=0.04) s=0; vx*=s; vy*=s; }
+  else { vx*=0.25; vy*=0.25; }
+  p.vx=vx; p.vy=vy; p.vr=vr;
+}
+function endDrag(e, cancel){
+  if(!drag || (e && e.pointerId!==drag.id)) return;
+  const d=drag, p=d.p; drag=null; p.held=false; p.el.classList.remove('held');
+  if(!d.mode){ // a tap
+    if(!cancel){ if(!p.free && (p.k===turned || (p.k>=0 && p.k===turned-1 && p.th>-179))) next(); else if(!p.free && Math.abs(p.th-homeOf(p).th)>0.5){ tween(p, homeOf(p), 600, 0, EOUT, ()=>{ p.rank=homeRank(p); restack(); }); } }
+  } else if(d.mode==='turn' || d.mode==='unturn'){
+    // past the vertical the leaf lands on the left pile, otherwise it falls back onto the stack
+    if(p.th < -90) turned++;
+    const target = homeOf(p);
+    p.rank = rankSeq++; restack();
+    tween(p, target, 520, 0, EOUT, ()=>{ p.rank=homeRank(p); restack(); });
+    ui(true);
+  } else if(d.mode==='toss'){
+    release(d);
+  } else if(d.mode==='swipe'){
+    if((d.ex||0) < -40) next(); else if((d.ex||0) > 40) prev();
+  }
+  poke(); wake();
+}
+window.addEventListener('pointerup',e=>endDrag(e,false));
+window.addEventListener('pointercancel',e=>endDrag(e,true));
+window.addEventListener('resize',()=>{ G=null; });
+window.addEventListener('scroll',()=>{ G=null; },{passive:true});
+
+/* ---------- intro: a closed manila folder; the cover swings open on the papers, which settle ---------- */
+const folder=document.getElementById('folder'), cover=document.getElementById('fcover'), spine=document.getElementById('fspine');
+const dims=[...cover.querySelectorAll('.dim')];
+const flogo=document.getElementById('flogo');
+(function(){ const src=document.querySelector('.logo img').src; const img=new Image();
+  img.onload=()=>{ try{ const c=document.createElement('canvas'); c.width=img.naturalWidth; c.height=img.naturalHeight; const x=c.getContext('2d'); x.drawImage(img,0,0);
+      const d=x.getImageData(0,0,c.width,c.height), a=d.data;
+      // colour-to-alpha against white: paper shows through where the logo is white, every ink keeps its exact colour
+      for(let i=0;i<a.length;i+=4){ const r=a[i],g=a[i+1],b=a[i+2]; const al=Math.max(255-r,255-g,255-b)/255; if(al<=0){ a[i+3]=0; continue; }
+        a[i]=Math.round(255-(255-r)/al); a[i+1]=Math.round(255-(255-g)/al); a[i+2]=Math.round(255-(255-b)/al); a[i+3]=Math.round(a[i+3]*al); }
+      x.putImageData(d,0,0); flogo.src=c.toDataURL(); }catch(_){ flogo.src=src; } };
+  img.src=src; })();
+const CZTOP = N*2.6*0.42 + 4;   // the cover rests just above the top page
+const F = {t0:0, ang:0, drop:26, fo:0, done:false};
+const fcf=[...cover.querySelectorAll('.fface')];
+function drawFolder(){
+  cover.style.transform='translateZ('+CZTOP.toFixed(2)+'px) rotateY('+F.ang.toFixed(2)+'deg)';
+  // opacity goes on each face, never on the 3D cover itself (that would flatten it)
+  const a=Math.abs(F.ang), op = Math.max(0, Math.min(1, (177-a)/44)), os=op.toFixed(3);
+  fcf.forEach(f=>f.style.opacity=os); cover.style.visibility = op<0.01?'hidden':'visible';
+  // the cover darkens as it stands up, then its inside catches the light
+  dims[0].style.opacity=(Math.sin(Math.min(90,a)*Math.PI/180)*0.2).toFixed(3);
+  dims[1].style.opacity=(a>90? Math.sin((180-a)*Math.PI/180)*0.14 : 0).toFixed(3);
+  spine.style.transform='rotateY(-90deg) scaleX('+(CZTOP/42).toFixed(3)+')';
+  spine.style.opacity=Math.max(0,1-a/60).toFixed(3);
+  plane.style.setProperty('--drop', F.drop.toFixed(2)+'px'); desk.style.opacity = F.fo>=1? '' : F.fo.toFixed(3);
+}
+const T_OPEN = 1150, T_UP = 900, T_FALL = 440, EUP = bez(.42,0,.32,1), ESQ = bez(.5,0,.25,1);
+function stepFolder(now){
+  if(F.done) return false;
+  const t = now - F.t0;
+  // 0-640ms: the folder is set down on the desk
+  const d = Math.max(0, Math.min(1, t/640)); const e = 1-Math.pow(1-d,3);
+  F.drop = (1-e)*26; F.fo = Math.min(1, d*1.6);
+  // from 1.15s: the cover is lifted to just past upright, then falls open over the binding
+  const t1 = t - T_OPEN;
+  if(t1<=0) F.ang = 0;
+  else if(t1<T_UP) F.ang = -96*EUP(t1/T_UP);
+  else { const f=Math.min(1,(t1-T_UP)/T_FALL); F.ang = -96 - 84*f*f; }
+  // the papers, pressed flat under the cover, loosen into their pile as it opens
+  ZK = 0.42 + 0.58*ESQ(Math.max(0, Math.min(1, (t-1700)/1000)));
+  drawFolder();
+  if(t1 >= T_UP+T_FALL && t > 2700){ F.done=true; ZK=1; cover.style.display='none'; spine.style.display='none'; return false; }
+  return true;
+}
+const oxs=[...plane.querySelectorAll('.ox')], brs=[...plane.querySelectorAll('.br')];
+function settle(p){ // where a page sits inside the closed folder: a little loose
+  const r=((p.h*53)%11-5)/5, q=((p.h*29)%7-3)/3;
+  return {x:p.hx + r*5, y:p.hy + q*6, rot:p.hr + r*2.2 - q*0.8};
+}
+if(RM){
+  F.done=true; cover.style.display='none'; spine.style.display='none';
+  pages.forEach(render); ready=true;
+} else {
+  // armed: the file waits, unseen, until the stage is ~30% on screen; then the intro plays once
+  F.t0 = performance.now(); drawFolder();
+  pages.forEach(p=>{ Object.assign(p, settle(p)); render(p); });
+  const intro=()=>{
+    F.t0 = performance.now(); drawFolder();
+    // as the cover passes the vertical, the papers lift a touch and square into a neat pile, top pages first
+    pages.forEach((p,i)=>{ tween(p, {x:p.hx,y:p.hy,rot:p.hr,th:0,zo:0}, 950, 1700 + (N-1-i)*30, EIO, null, 6); });
+    oxs.forEach(o=>o.animate([{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:800,delay:2450,easing:'cubic-bezier(.6,0,.2,1)',fill:'backwards'}));
+    brs.forEach(o=>o.animate([{opacity:0},{opacity:1}],{duration:600,delay:2750,easing:'ease-out',fill:'backwards'}));
+    setTimeout(()=>{ ready=true; }, 2500);
+    wake();
+  };
+  // final state straight away: the folder open and gone, the papers squared in their pile
+  const land=()=>{ F.done=true; ZK=1; cover.style.display='none'; spine.style.display='none'; plane.style.setProperty('--drop','0px'); desk.style.opacity='';
+    pages.forEach(p=>{ p.tw=null; Object.assign(p,{x:p.hx,y:p.hy,rot:p.hr,th:0,zo:0}); render(p); }); ready=true; };
+  arrive(stage, intro, land);
+  nudge();
+  // an invitation: until someone touches the file, the top page lifts its edge now and then (three times at most, only while it is on screen)
+  let invites=0, onStage=true;
+  if('IntersectionObserver' in window) new IntersectionObserver(es=>{ onStage=es[es.length-1].isIntersecting; },{threshold:.3}).observe(stage);
+  const invite=setInterval(()=>{ if(touched || drag || !ready || !onStage) return; const p=byK(turned); if(!p||p.tw||p.free) return;
+    tween(p,{th:-24},900,0,EIO,()=>tween(p,{th:0},1000,100,EIO)); if(++invites>=3) clearInterval(invite); }, 5200);
+}
+ui(false);
+if(RM){ const h=stage.querySelector('.hint'); if(h) h.textContent='Swipe or use the tabs to move through the file'; }
+
+document.getElementById('form').addEventListener('submit',e=>{ e.preventDefault(); const f=e.currentTarget; f.innerHTML='<p class="thanks" role="status">Thank you. Your request for a case review is with us.<span>Concept preview: messages aren\'t sent. To reach the firm today, call (561) 721-0400.</span></p>'; });
+})();
+</script>
+
+
+
+</body></html>

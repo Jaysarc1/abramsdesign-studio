@@ -765,6 +765,13 @@ body.books-open>.hero,body.books-open>main,body.books-open>.foot-wall{display:no
   .kind4{grid-template-columns:1fr 1fr}
 }
 
+/* tab bar centred on the page at every width, as on Chlo's */
+.bk-tabs .tabs{justify-self:center}
+@media (max-width:760px){
+  .bk-tabs-in{grid-template-columns:1fr;justify-items:center;gap:12px;padding-block:14px}
+  .bk-brand,.bk-tabs .bk-sample{justify-self:center}
+  .bk-tabs .tabs{grid-column:auto;grid-row:auto;justify-self:stretch;width:100%}
+}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
   .pre{opacity:1;transform:none}
