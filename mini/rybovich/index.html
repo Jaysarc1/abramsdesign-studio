@@ -87,6 +87,7 @@ h2{text-wrap:balance}
 .js .hero.on .ol span{opacity:1;transform:none;transition:opacity 1.6s var(--ease) 1.4s,transform 1.8s var(--ease) 1.4s}
 .js .hero.on .ol em{opacity:1;transform:none;transition:opacity 1.6s var(--ease) 2.3s,transform 1.8s var(--ease) 2.3s,color 1s}
 .js .hero.on .ol{opacity:0;transition:opacity 1.6s ease 6s,color 1s}
+.js:not(.fr) .hero.on .ol span,.js:not(.fr) .hero.on .ol em{opacity:0;transform:translateY(12px);transition:none}
 .tfs{position:absolute;left:0;right:0;top:var(--tfy,72%);z-index:3;margin:0;transform:translateY(-50%);text-align:center;pointer-events:none;color:rgb(var(--ivory-rgb)/.78);font:600 11px/1 var(--f-text);letter-spacing:.32em;text-indent:.32em;text-transform:uppercase}
 .js .tfs{opacity:0}
 .js .hero.on .tfs{animation:tfs 6.6s ease .5s both}
@@ -514,10 +515,10 @@ button.cta{border:0;cursor:pointer;justify-self:start;margin-top:8px;font-family
     var nar=W<=860,sx=S.sx*W,sy=hz-S.sh*hz,sr=(nar?44:Math.max(52,74*u0))*(1+.25*cl01(1-S.sh*2.2));
     /* the one-liner sits low in the sky and steps clear of the sun or moon; its ink follows the sky behind it: navy and brass on a bright sky, ivory and gold on a deep one */
     if(olE){olN=(olN+1)%45;if(olN==1||!olB){var r1=olE.firstElementChild.getBoundingClientRect(),r2=olE.lastElementChild.getBoundingClientRect();olB=[Math.max(r1.right,r2.right)-Math.min(r1.left,r2.left),Math.max(r1.bottom,r2.bottom)-Math.min(r1.top,r2.top)]}
-      var ow=olB[0]/2+18,oh=olB[1]/2+18,oy=hz*(nar?.72:.8),bod=[];if(sy-sr<hz)bod.push([sx,sy,sr*1.25]);if(S.moon>.01)bod.push([W*.78,hz*.26,24*Math.max(.8,u0)*1.4]);
+      var ow=olB[0]/2+18,oh=olB[1]/2+18,oy=hz*(nar?.72:.8),bod=[];/* step clear of where the sun is headed, not where it is while it eases in, so the line holds its place */var tsh=TG.sh,tsy=hz-tsh*hz,tsr=(nar?44:Math.max(52,74*u0))*(1+.25*cl01(1-tsh*2.2));if(tsy-tsr<hz)bod.push([TG.sx*W,tsy,tsr*1.25]);if(S.moon>.01)bod.push([W*.78,hz*.26,24*Math.max(.8,u0)*1.4]);
       for(var bi=0;bi<bod.length;bi++){var bb=bod[bi];if(Math.abs(bb[0]-W/2)<ow+bb[2]&&Math.abs(bb[1]-oy)<oh+bb[2]){var dn=bb[1]+bb[2]+oh,up=bb[1]-bb[2]-oh;oy=dn+oh<=hz-10?dn:up-oh>=12?up:oy}}
       var of=oy/H,oc=of<=.32?mix(S.t,S.m,of/.32):mix(S.m,S.h,(of-.32)/Math.max(.01,HZF-.32)),lum=(.2126*oc[0]+.7152*oc[1]+.0722*oc[2])/255,lt=lum>.62;
-      var ok2=(lt?1:0)+'|'+Math.round(oy/4)+'|'+Math.round(S.g[0]/6)+Math.round(S.g[1]/6);if(ok2!=olK){olK=ok2;olE.style.setProperty('--oly',(parseFloat(hero.style.getPropertyValue('--hh'))||0)+oy+'px');olE.style.setProperty('--olc',lt?'#13233F':'#F6F1E7');olE.style.setProperty('--ola',lt?'#9C7524':rgb(S.g))}}
+      olY=olY==null?oy:olY+(oy-olY)*.06;var oyP=((parseFloat(hero.style.getPropertyValue('--hh'))||0)+olY).toFixed(1);if(oyP!=olP){olP=oyP;olE.style.setProperty('--oly',oyP+'px')}var ok2=(lt?1:0)+'|'+Math.round(S.g[0]/6)+Math.round(S.g[1]/6);if(ok2!=olK){olK=ok2;olE.style.setProperty('--olc',lt?'#13233F':'#F6F1E7');olE.style.setProperty('--ola',lt?'#9C7524':rgb(S.g))}}
     if(S.gl>.01){var r=ctx.createRadialGradient(sx,sy,0,sx,sy,Math.max(W,H)*.6);r.addColorStop(0,rgb(S.g,.3*S.gl));r.addColorStop(1,rgb(S.g,0));ctx.fillStyle=r;ctx.fillRect(0,0,W,H)}
     /* a pool of shade behind the name so it reads in every light; it follows the boat */
     var pcx=cxN||W/2,py=(wyN||hz)-(WL-106)*s,pr=Math.max(220,560*s);
@@ -778,7 +779,7 @@ button.cta{border:0;cursor:pointer;justify-self:start;margin-top:8px;font-family
   function occl(ctx,W,H){ctx.save();if(!wyN)return;ctx.beginPath();ctx.rect(0,0,W,H);
     for(var i=0;i<HULL.length;i++){var x=cxN+(HULL[i][0]-NX)*s,y=wyN+(HULL[i][1]-WL)*s;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
     ctx.closePath();ctx.clip('evenodd')}
-  var olE=document.getElementById('ol'),olK='',olN=0,olB=null;
+  var olE=document.getElementById('ol'),olK='',olN=0,olB=null,olY=null,olP='';
   function size(){
     var hh=hd.getBoundingClientRect().height;hero.style.setProperty('--hh',hh+'px');tp=0;
     var W=hero.clientWidth,bw=W<=860?W*.86:Math.min(W*.6,1000);s=bw/VW;
@@ -789,7 +790,8 @@ button.cta{border:0;cursor:pointer;justify-self:start;margin-top:8px;font-family
   var tfsE=document.getElementById('tfs');
   function tfsAt(){if(!tfsE)return;var hr=hero.getBoundingClientRect(),mb=mk.getBoundingClientRect().bottom,ft=hero.querySelector('.foot').getBoundingClientRect().top;tfsE.style.setProperty('--tfy',((mb+ft)/2-hr.top)+'px')}
   size();sea.build();sea.start();
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();sea.build()});
+  function frOn(){olY=null;document.documentElement.classList.add('fr')}
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){size();sea.build();requestAnimationFrame(frOn)});setTimeout(frOn,2500)}else frOn();
 
   /* sound: built in the browser, quiet, off until asked for. Sea wash always; wind, rain, fog horn, gulls by day, a bell buoy at night. */
   var snd=null,hv=true,sb=hero.querySelector('.snd'),sw=hero.querySelector('.sndw'),vr=hero.querySelector('.vol');
