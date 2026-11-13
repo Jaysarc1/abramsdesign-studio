@@ -234,6 +234,23 @@ html:not(.js) .track,html:not(.js) .ft{display:none}
   .skip{font-size:10.5px}
   .ft{font-size:11px}.ft .wrap{flex-direction:column;gap:4px;align-items:flex-start}
 }
+/* phones: a section that would run past the tree line is told over more than one scroll.
+   Its pages share one place in the sky; the one before lifts away, the next rises in. */
+.pgs{display:grid}
+.pg{grid-area:1/1;min-width:0;transition:opacity .5s var(--ease)}
+.pg:not(.cur){opacity:0;visibility:hidden;pointer-events:none;transition:opacity .4s var(--ease),visibility 0s linear .4s}
+.js .pan.on .pg:not(.cur) .rv{opacity:0;transform:translateY(18px);transition:opacity .4s var(--ease),transform .45s var(--ease);transition-delay:0s}
+.js .pan.on .pg.past .rv{transform:translateY(-14px)}
+.paged .aside{display:none}
+.pg .facts{display:block;margin:18px 0 0;padding:0}
+.pg .facts li,.pg .facts li:first-child{display:grid;grid-template-columns:minmax(0,6em) minmax(0,1fr);gap:16px;align-items:baseline;margin:0;border:0;border-top:1px solid var(--line);padding:12px 0 13px}
+.pg .facts li:last-child{border-bottom:1px solid var(--line)}
+.pg .facts b{font-size:22px}
+.pg .facts span{margin-top:0;font-size:12px;letter-spacing:.14em;line-height:1.5}
+@media (max-width:760px),(max-aspect-ratio:4/5){
+  /* she rides larger across the foot of the opening, so Skip intro sits in the sky, between the lockup and the tree line */
+  .skip{top:var(--sk,auto);bottom:auto;transform:translate(-50%,-50%);color:var(--navy);text-shadow:none}
+}
 @media (max-width:440px){.snd b{display:none}.mark .wrap{gap:12px}}
 @media (max-width:374px){.wm b{letter-spacing:.14em}.wm span{letter-spacing:.22em}.hr{gap:16px}}
 @media (prefers-reduced-motion:reduce){
@@ -349,7 +366,7 @@ html:not(.js) .track,html:not(.js) .ft{display:none}
   <div class="lead">
     <p class="proof rv" style="--d:.1">The farm</p>
     <h2 class="ttl" id="t4"><span class="ln rv" style="--d:.35">Minutes from</span><span class="ln rv" style="--d:.6"><em>the show ring.</em></span></h2>
-    <p class="body rv" style="--d:.9">Year&#8209;round in Palm Beach Point, a few minutes from Wellington International. Ample turnout, state&#8209;of&#8209;the&#8209;art footing and a knowledgeable team, kept small so every horse and rider gets the detail.</p>
+    <p class="body rv" style="--d:.9">Year&#8209;round in Palm Beach Point. Ample turnout, state&#8209;of&#8209;the&#8209;art footing and a knowledgeable team, kept small so every horse and rider gets the detail.</p>
     <p class="more rv" style="--d:1.15"><a class="tl" href="boarding.html">Boarding<i></i></a></p>
   </div>
   <div class="aside"><ul class="facts">
@@ -409,10 +426,61 @@ function eo(u){u=clamp(u,0,1);return 1-Math.pow(1-u,3)}
 /* ---------- sections ---------- */
 var pans=[].slice.call(document.querySelectorAll('.pan')),N=pans.length,cur=-2,course=pans[N-1];
 /* -1 is the opening: the lockup alone over the ride. The hero only comes in once the lockup has landed. */
-function active(){return clamp(Math.floor((window.scrollY+innerHeight*.5)/innerHeight)-1,-1,N-1)}
-function want(){var i=active();return i===0&&ip<.9?-1:i}
+/* on phones a section can take more than one scroll (see paginate); steps maps each scroll to its section and page */
+var steps=[],wp=0;
+function active(){return clamp(Math.floor((window.scrollY+innerHeight*.5)/innerHeight)-1,-1,(steps.length||N)-1)}
+function want(){var j=active(),s=j<0?{k:-1,p:0}:(steps[j]||{k:j,p:0});wp=s.p;return s.k===0&&ip<.9?-1:s.k}
+function setPage(i,p){if(i<0)return;var pan=pans[i];if(!pan.classList.contains('paged')||pan._p===p)return;pan._p=p;
+  [].forEach.call(pan.querySelectorAll('.pg'),function(d,k){var on=k===p;d.classList.toggle('cur',on);d.classList.toggle('past',k<p);if(on)d.removeAttribute('inert');else d.setAttribute('inert','')})}
+/* ---------- phones: every line is written in the sky. A section whose copy would run past the tree line, onto the grass
+   she rides on, is split into pages, each its own scroll, held under the section's label ---------- */
+var PHQ=window.matchMedia?matchMedia('(max-width:760px),(max-aspect-ratio:4/5)'):{matches:false},moved=[],pgKey='';
+function blocksOf(pan){
+  var L=pan.querySelector('.lead'),b=[];
+  if(pan.classList.contains('hero')){['.ttl','.body','.tw .round'].forEach(function(q){var e=L.querySelector(q);if(e)b.push(e)});return b}
+  [].forEach.call(L.children,function(e){if(!e.classList.contains('proof'))b.push(e)});
+  var c=pan.querySelector('.cta');if(c)b.push(c);
+  var u=pan.querySelector('.aside ul.facts');if(u)[].forEach.call(u.children,function(li){b.push(li)});
+  return b}
+function mt(e){return parseFloat(getComputedStyle(e).marginTop)||0}
+function fill(d,arr,cls,retime){var ul=null,t=.15;
+  arr.forEach(function(e){if(e.tagName==='LI'){if(!ul){ul=document.createElement('ul');ul.className=cls;d.appendChild(ul)}ul.appendChild(e)}else{ul=null;d.appendChild(e)}
+    if(retime)(e.classList.contains('rv')?[e]:[].slice.call(e.querySelectorAll('.rv'))).forEach(function(r){
+      if(!r.hasAttribute('data-d0'))r.setAttribute('data-d0',r.style.getPropertyValue('--d'));r.style.setProperty('--d',t.toFixed(2));t+=.2})})}
+function pagePan(pan){
+  var bl=blocksOf(pan),pr=pan.querySelector('.proof');if(!bl.length||!pr)return 1;
+  var u=pan.querySelector('.aside ul.facts'),cls=u?u.className:'facts';
+  var box=document.createElement('div');box.className='pgs';pr.parentNode.insertBefore(box,pr.nextSibling);pan.classList.add('paged');
+  var one=document.createElement('div');one.className='pg cur';box.appendChild(one);
+  bl.forEach(function(e){moved.push({e:e,p:e.parentNode,n:e.nextSibling})});
+  fill(one,bl,cls,false);
+  /* the room is the sky between the label and the tree line, with a little air above the trees */
+  var room=horizon()-20-box.getBoundingClientRect().top,UM=18,units=[],lis=[];
+  bl.forEach(function(e){if(e.tagName==='LI')lis.push(e);else units.push({e:[e],h:e.offsetHeight+mt(e)})});
+  if(lis.length){var all=UM;lis.forEach(function(li){all+=li.offsetHeight});
+    if(all<=room)units.push({e:lis,h:all,li:1});else lis.forEach(function(li){units.push({e:[li],h:li.offsetHeight+UM,li:1})})}
+  var pages=[],used=0;
+  units.forEach(function(un){var pg=pages[pages.length-1],h=un.h;
+    if(pg&&un.li&&pg.li&&un.e.length===1)h-=UM;
+    if(!pg||used+h>room){pages.push(pg={e:[],li:0});used=un.h}else used+=h;
+    pg.e=pg.e.concat(un.e);pg.li=un.li?1:0});
+  pages.forEach(function(pg,p){var d=document.createElement('div');d.className='pg'+(p?'':' cur');if(p)d.setAttribute('inert','');box.appendChild(d);fill(d,pg.e,cls,p>0)});
+  box.removeChild(one);pan._p=0;
+  return pages.length}
+function unpage(){
+  for(var k=moved.length-1;k>=0;k--){var m=moved[k];m.p.insertBefore(m.e,m.n)}
+  moved=[];
+  [].forEach.call(document.querySelectorAll('.pgs,.beat.xb'),function(x){x.parentNode.removeChild(x)});
+  [].forEach.call(document.querySelectorAll('[data-d0]'),function(e){var d=e.getAttribute('data-d0');if(d)e.style.setProperty('--d',d);else e.style.removeProperty('--d');e.removeAttribute('data-d0')});
+  pans.forEach(function(p){p.classList.remove('paged');p._p=-1})}
+function paginate(){
+  unpage();steps=[];
+  pans.forEach(function(pan,k){var n=PHQ.matches&&!pan.classList.contains('contact')?pagePan(pan):1;
+    for(var p=0;p<n;p++)steps.push({k:k,p:p});
+    var b=$('s'+k);for(p=1;p<n;p++){var x=document.createElement('div');x.className='beat xb';b.parentNode.insertBefore(x,b.nextSibling);b=x}});
+  pgKey=innerWidth+'x'+Math.round(innerHeight/120)+(PHQ.matches?'p':'d')}
 function setActive(i,quiet){
-  if(i===cur)return;var prev=cur;cur=i;body.setAttribute('data-s',i);
+  setPage(i,wp);if(i===cur)return;var prev=cur;cur=i;body.setAttribute('data-s',i);
   pans.forEach(function(p,k){var on=k===i;p.classList.toggle('on',on);p.setAttribute('aria-hidden',on?'false':'true');if(on)p.removeAttribute('inert');else p.setAttribute('inert','')});
   if(i!==N-1)course.classList.remove('open');
   if(!quiet&&prev>-2&&i>=1)gate(i);
@@ -466,8 +534,9 @@ var cv=$('stage'),cx=cv.getContext('2d'),W,H,DPR,U,ppm,gy,hx,DX,DY;
 var imgs={bg:new Image(),f:[]};imgs.bg.src=SRC.bg;SRC.f.forEach(function(s){var im=new Image();im.src=s;imgs.f.push(im)});
 function size(){DPR=Math.min(2,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);
   var port=W<=760||W/H<.8;
-  U=port?Math.min(W*1.1,H*.52):clamp(H*.8,380,820);
-  ppm=(.30*U)/2.55;gy=H*(port?.9:.86);hx=W*.3;DX=.046*U;DY=.052*U;
+  /* on phones the ride is drawn closer: she, the gates and the ring photograph come forward together, so she reads as the subject */
+  U=port?Math.min(W*1.5,H*.78):clamp(H*.8,380,820);
+  ppm=(.30*U)/2.55;gy=H*(port?.92:.86);hx=W*.3;DX=.046*U;DY=.052*U;BZ=port?1.32:1;
   ilayout();iapply();
   if(rm)draw()}
 /* ---------- the opening: the twin lockup is measured against the header's own roundel and wordmark every frame it moves,
@@ -476,7 +545,10 @@ var IN=document.querySelector('.intro'),ir=IN.querySelector('.ir'),iw=IN.querySe
     hR=document.querySelector('.mark .roundel'),hW=document.querySelector('.mark .wm'),ip=0,R0=200,ipt=false,HZ=1;
 function itarget(){return clamp(window.scrollY/innerHeight,0,1)}
 /* the horizon: the top of the tree line in the ring photograph (row 420 of 776), wherever the stage's scaling puts it */
-function horizon(){return 420*Math.max((gy+DY*.2)/(776*.86),H/776)}
+var BZ=1;
+/* the ring photograph's scale and top edge; on phones it is enlarged about the line she rides on, so the hedge and the house grow with her */
+function bgFit(){var a=gy+DY*.2,b=Math.max(a/(776*.86),H/776)*BZ;return [b,BZ>1?a-776*.86*b:0]}
+function horizon(){var f=bgFit();return f[1]+420*f[0]}
 function ilayout(){
   var port=W<=760||W/H<.8,cb=getComputedStyle(hW.querySelector('b')),cs=getComputedStyle(hW.querySelector('span')),cw=getComputedStyle(hW);
   var K=Math.min(port?1.9:2.7,(W*(port?.8:.6))/hW.offsetWidth);
@@ -486,7 +558,8 @@ function ilayout(){
     iw.style.gap=(parseFloat(cw.rowGap)||6)*K+'px';ir.style.width=ir.style.height=R0+'px'}
   set();
   /* on short screens the lockup scales down so it keeps clear air above and below it */
-  var bh=R0*1.2+iw.offsetHeight,room=horizon()*.74;if(bh>room){var f=room/bh;K*=f;R0*=f;set()}
+  var bh=R0*1.2+iw.offsetHeight,room=horizon()*(port?.66:.74);if(bh>room){var f=room/bh;K*=f;R0*=f;set()}
+  if(port){var hz=horizon(),lb=(hz+R0*1.2+iw.offsetHeight)/2;root.style.setProperty('--sk',Math.round((lb+hz)/2)+'px')}
   ipt=port}
 function lerp(a,b,u){return a+(b-a)*u}
 function iapply(){
@@ -596,8 +669,8 @@ function horse(){
 function draw(){
   cx.setTransform(DPR,0,0,DPR,0,0);
   var bg=imgs.bg;
-  if(bg.complete&&bg.width){var bs=Math.max((gy+DY*.2)/(776*.86),H/bg.height),bw=bg.width*bs,bh=bg.height*bs,off=-((st.wx*ppm*.3)%(bw*2));
-    for(var x=off,k=0;x<W;x+=bw,k++){if(x+bw<0)continue;if(k%2){cx.save();cx.translate(x+bw,0);cx.scale(-1,1);cx.drawImage(bg,0,0,bw,bh);cx.restore()}else cx.drawImage(bg,x,0,bw,bh)}}
+  if(bg.complete&&bg.width){var bf=bgFit(),bs=bf[0],by=bf[1],bw=bg.width*bs,bh=bg.height*bs,off=-((st.wx*ppm*.3)%(bw*2));
+    for(var x=off,k=0;x<W;x+=bw,k++){if(x+bw<0)continue;if(k%2){cx.save();cx.translate(x+bw,by);cx.scale(-1,1);cx.drawImage(bg,0,0,bw,bh);cx.restore()}else cx.drawImage(bg,x,by,bw,bh)}}
   else{cx.fillStyle='#E9E1D2';cx.fillRect(0,0,W,H)}
   var top=gy-DY*1.6,gr=cx.createLinearGradient(0,top,0,H);gr.addColorStop(0,'rgba(140,138,40,0)');gr.addColorStop(.12,'rgb(138,136,38)');gr.addColorStop(1,'rgb(104,112,36)');
   cx.fillStyle=gr;cx.fillRect(-10,top,W+20,H-top+10);
@@ -616,8 +689,10 @@ function draw(){
 var last=null;
 function loop(t){if(last===null)last=t;var dt=Math.min(1/30,(t-last)/1000);last=t;itick(dt);setActive(want());step(dt);draw();requestAnimationFrame(loop)}
 addEventListener('resize',size);
-function start(){ip=itarget();size();setActive(want(),true);requestAnimationFrame(function(){document.querySelector('.mark').classList.add('ready');IN.classList.add('ready')});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){ilayout();iapply()});
+/* phone toolbars resize the window as they slide, so only re-page when the width or the height truly changes */
+var pgT=0;addEventListener('resize',function(){clearTimeout(pgT);pgT=setTimeout(function(){if(innerWidth+'x'+Math.round(innerHeight/120)+(PHQ.matches?'p':'d')===pgKey)return;paginate();cur=-2;setActive(want(),true)},180)});
+function start(){ip=itarget();size();paginate();setActive(want(),true);requestAnimationFrame(function(){document.querySelector('.mark').classList.add('ready');IN.classList.add('ready')});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){ilayout();iapply();paginate();cur=-2;setActive(want(),true)});
   if(rm){draw();imgs.bg.onload=imgs.f[0].onload=draw}else requestAnimationFrame(loop)}
 start();
 window.__HS={st:st,step:step,draw:draw,setActive:setActive,gate:gate,size:size,iapply:iapply,get cur(){return cur},get ip(){return ip},set ip(v){ip=v}};
