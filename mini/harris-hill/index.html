@@ -218,9 +218,9 @@ body{background:var(--room)}
   document.fonts && document.fonts.ready.then(slide);
   let h = ''; try { h = (location.hash || '').slice(1); } catch(e){}
   seg.classList.add('still');
-  show(SRC[h] ? h : 'office');
-  // the site loads quietly behind the office, ready for the first switch
-  if (current !== 'site') setTimeout(() => { if (!frames.site){ const ifr = document.createElement('iframe'); ifr.src = SRC.site; ifr.title = 'Harris Hill Farm, site'; ifr.setAttribute('allow','fullscreen; autoplay'); stage.appendChild(ifr); frames.site = ifr; } }, 1800);
+  show(SRC[h] ? h : 'site');
+  // the office loads quietly behind the site, so an inquiry sent on the site is waiting there
+  if (current !== 'office') setTimeout(() => { if (!frames.office){ const ifr = document.createElement('iframe'); ifr.src = SRC.office; ifr.title = 'Harris Hill Farm, office'; ifr.setAttribute('allow','fullscreen; autoplay'); stage.insertBefore(ifr, stage.firstChild); frames.office = ifr; } }, 1800);
   requestAnimationFrame(() => requestAnimationFrame(() => seg.classList.remove('still')));
 })();
 </script>
