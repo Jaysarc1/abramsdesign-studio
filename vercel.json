@@ -54,19 +54,19 @@
  "rewrites": [
   {
    "source": "/americanaircraftsalesfullsite/",
-   "destination": "/mini/americanaircraftsales/"
+   "destination": "/mini/americanaircraftsales-live/"
   },
   {
    "source": "/americanaircraftsalesfullsite/:f*",
-   "destination": "/mini/americanaircraftsales/:f*"
+   "destination": "/mini/americanaircraftsales-live/:f*"
   },
   {
    "source": "/americanaircraftsales/",
-   "destination": "/mini/americanaircraftsales/landing.html"
+   "destination": "/mini/americanaircraftsales-live/landing.html"
   },
   {
    "source": "/americanaircraftsales/:f*",
-   "destination": "/mini/americanaircraftsales/:f*"
+   "destination": "/mini/americanaircraftsales-live/:f*"
   },
   {
    "source": "/handalfullsite/",

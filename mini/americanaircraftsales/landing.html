@@ -69,7 +69,7 @@ body.open .port{clip-path:inset(0 0 0 0 round 0)}
 .entry{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none}
 html.intro{overflow:hidden;overscroll-behavior:none}
 .evid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;transform-origin:50% 45%;background:#14100D;will-change:transform}
-.ecloud{position:absolute;inset:0;z-index:3;width:100%;height:100%;pointer-events:none}
+.ecv{position:absolute;inset:0;width:100%;height:100%;transform-origin:50% 45%;opacity:0;will-change:transform}
 .esplit .tapsnd{position:absolute;left:50%;bottom:calc(30px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);color:rgba(250,240,222,.86);font-weight:600;white-space:nowrap;opacity:0;transition:opacity 1.8s var(--ease)}
 .esplit .tapsnd.on{opacity:1}
 /* Opening: the scene closed as a split, the line across the seam; the halves part onto the cabin film */
@@ -94,7 +94,6 @@ html.intro{overflow:hidden;overscroll-behavior:none}
 .ch-hero h1 .ln span{transform:none;transition:none}
 .film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:56% 50%;background:#b7a58c url(poster.webp) center/cover;transform:scale(1.16);transition:transform 3.2s var(--glide)}
 body.open .film{transform:scale(1)}
-.dusk{position:absolute;inset:0;pointer-events:none;opacity:0;mix-blend-mode:multiply;background:linear-gradient(180deg,#ECC298 0%,#F0E2D2 30%,#C8C2C0 65%,#A29C9E 100%)}
 .lift{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(242,232,214,.34) 0%,rgba(242,232,214,0) 36%)}
 .floor{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(0deg,rgba(14,10,8,.66) 0%,rgba(14,10,8,.22) 30%,rgba(14,10,8,0) 52%)}
 .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 55% 52%,rgba(0,0,0,0) 58%,rgba(16,10,8,.32) 100%)}
@@ -184,7 +183,7 @@ h2.t{font:400 clamp(32px,3.5vw,56px)/1.02 var(--f-disp);letter-spacing:-.008em;t
 .spot{position:absolute;z-index:2;width:0;height:0;transform:scale(var(--inv,1))}
 .spot .ring{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;border:1px solid var(--gold-2);background:rgba(240,216,172,.22);opacity:0;transform:scale(.4);transition:opacity .9s var(--ease),transform 1.2s var(--ease)}
 .spot .ring::after{content:"";position:absolute;inset:-10px;border-radius:50%;border:1px solid rgba(240,216,172,.5);animation:halo 2.8s var(--ease) infinite}
-.spot .tag{position:absolute;left:0;bottom:22px;width:300px;margin-left:-150px;text-align:center;background:radial-gradient(closest-side,rgba(18,12,8,.42),rgba(18,12,8,0));padding-top:18px;opacity:0;transform:translateY(16px);transition:opacity 1.2s var(--ease),transform 1.4s var(--ease)}
+.spot .tag{position:absolute;left:0;bottom:22px;width:300px;margin-left:calc(-150px + var(--dx,0px));text-align:center;background:radial-gradient(closest-side,rgba(18,12,8,.42),rgba(18,12,8,0));padding-top:18px;opacity:0;transform:translateY(16px);transition:opacity 1.2s var(--ease),transform 1.4s var(--ease)}
 .spot .tag::after{content:"";display:block;width:1px;height:56px;margin:18px auto 0;background:linear-gradient(rgba(240,216,172,0),var(--gold-2));transform:scaleY(0);transform-origin:bottom;transition:transform 1.2s var(--ease) .2s}
 .spot.dn .tag{bottom:auto;top:22px;display:flex;flex-direction:column-reverse}
 .spot.dn .tag::after{margin:0 auto 18px;}
@@ -325,6 +324,7 @@ h2.t{font:400 clamp(32px,3.5vw,56px)/1.02 var(--f-disp);letter-spacing:-.008em;t
 .cbtn{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
 footer{padding-left:var(--gut-l);padding-right:var(--gut-r);padding-block:26px calc(26px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(240,216,172,.12);background:var(--ink)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:rgba(251,245,234,.5)}
+footer .cap{font:500 15px/1.2 var(--f-nav);font-stretch:normal;letter-spacing:.32em}
 
 .pre{opacity:0;transform:translateY(30px);filter:blur(6px)}
 .rv{transition:opacity 1.8s var(--ease),transform 1.8s var(--ease),filter 1.8s var(--ease)}
@@ -359,6 +359,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   .cabin{height:400vh}
   .ctitle{left:20px;right:20px;text-align:center;top:44px}
   .spot b{font-size:38px}
+  .spot .tag::after{display:none}
   .range{height:640vh}
   .gview{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);align-content:start;padding-top:28px;text-align:center;gap:0}
   .dest{display:none}
@@ -403,6 +404,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   .cbtn{justify-content:center}
   .cbtn .btn{flex:1 1 100%}
   footer .wrap{justify-content:center;text-align:center}
+  footer .cap{font-size:13px;letter-spacing:.24em}
 }
 /* Sound: a quiet control that stays in the corner on every section */
 .snd{position:fixed;z-index:30;left:0;top:0;opacity:0;visibility:hidden;transition:opacity 1.6s var(--ease),visibility 0s 1.6s}
@@ -436,7 +438,7 @@ html.landing .flight~section,html.landing footer{display:none}
 }
 </style>
 
-<script>document.documentElement.classList.add('landing');window.AAS_FULL='https://abramsdesign.studio/americanaircraftsalesfullsite/'</script>
+<script>document.documentElement.classList.add('landing');window.AAS_FULL='/mini/americanaircraftsales/'</script>
 <a id="ads-credit" href="https://abramsdesign.studio" target="_blank" rel="noopener"><span>Concept by Abrams Design Studio</span></a>
 
 <section class="flight" id="flight" data-band="sky" aria-label="American Aircraft Sales">
@@ -444,13 +446,12 @@ html.landing .flight~section,html.landing footer{display:none}
     <div class="bezel" aria-hidden="true"></div>
     <div class="port">
       <video class="film" muted playsinline preload="auto" poster="poster.webp" aria-hidden="true"></video>
-      <div class="dusk" aria-hidden="true"></div>
       <div class="lift"></div>
       <div class="floor" data-a=".27" data-b=".31" data-c=".85" data-d=".89"></div>
       <div class="vign"></div>
       <div class="grain" aria-hidden="true"></div>
     </div>
-    <div class="entry" aria-hidden="true"><video class="evid" muted playsinline preload="auto" poster="e-cabin-poster.webp"></video></div>
+    <div class="entry" aria-hidden="true"><video class="evid" muted playsinline preload="auto" poster="e-cabin-poster.webp"></video><canvas class="ecv"></canvas></div>
     <div class="rmark"><img class="lm" src="aas-mark-deep.png" alt="" width="275" height="246"><img class="lw" src="aas-word-deep.png" alt="American Aircraft Sales" width="1408" height="57"></div>
     <div class="esplit" aria-hidden="true"><div class="eh et"><div class="ew"><span>The calm side</span></div></div><div class="eh eb"><div class="ew"><span>of owning the sky.</span></div></div><div class="tapsnd cap">Tap for sound</div></div>
     <button class="eskip" type="button">Skip intro</button><div class="eveil" aria-hidden="true"></div>
@@ -463,7 +464,6 @@ html.landing .flight~section,html.landing footer{display:none}
     <div class="ch ch-hero">
       <h1><span class="ln"><span>The calm side</span></span><span class="ln"><span>of owning the sky.</span></span></h1>
     </div>
-    <canvas class="ecloud" aria-hidden="true"></canvas>
     <div class="cue cap">Scroll<span></span></div>
 
     <div class="ch low" data-a=".3" data-b=".34" data-c=".44" data-d=".48">
@@ -475,7 +475,6 @@ html.landing .flight~section,html.landing footer{display:none}
     <div class="ch tcall" data-a=".975" data-b=".992" data-c="2" data-d="3">
       <h2>Speak with <span class="g">the Tolberts.</span></h2>
       <p class="tel">+1 (561) 790-4060</p>
-      <p class="addr">1300 N. Federal Hwy., Suite 105, Boca Raton, Florida 33432</p>
       <div class="cbtn">
         <a class="btn p" href="tel:+15617904060">Call the office<svg viewBox="0 0 16 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a>
         <a class="btn g" href="https://www.google.com/maps/search/?api=1&amp;query=1300+N+Federal+Hwy+Suite+105+Boca+Raton+FL+33432" target="_blank" rel="noopener">Get directions</a>
@@ -695,7 +694,7 @@ html.landing .flight~section,html.landing footer{display:none}
   var FILM=Math.min(screen.width,screen.height)*(devicePixelRatio||1)>=1000&&innerWidth>=900?'film.mp4':'film-720.mp4';
   /* the film waits until the opening frames are in, so they arrive first */
   var filmOn=false;function loadFilm(){if(filmOn)return;filmOn=true;fetch(FILM).then(function(r){if(!r.ok)throw 0;return r.blob()}).then(function(b){arm(URL.createObjectURL(b))}).catch(function(){arm(FILM)})}
-  if(reduce)loadFilm();else setTimeout(loadFilm,9000);
+  loadFilm();
   var chs=[].slice.call(d.querySelectorAll('[data-a]')), hero=d.querySelector('.ch-hero'), cue=d.querySelector('.cue'), rmark=d.querySelector('.rmark'), topb=d.querySelector('.top'), finEl=d.querySelector(".tcall");
   function vis(el,p){var a=+el.dataset.a,b=+el.dataset.b,c=+el.dataset.c,e=+el.dataset.d;if(p<=a||p>=e)return 0;if(p<b)return (p-a)/(b-a);if(p<=c)return 1;return 1-(p-c)/(e-c)}
 
@@ -709,19 +708,20 @@ html.landing .flight~section,html.landing footer{display:none}
 
   /* Cabin: the still is pinned and gently explored, one detail at a time */
   var cab=d.getElementById('cabin'), cview=cab.querySelector('.cview'), stage=cab.querySelector('.stage'), spots=[].slice.call(stage.querySelectorAll('.spot'));
-  var cfx=null, cfy=0, cs=null, lastK=-2;
+  var lastK=-2, lastCs=0, lastCx=0, lastCy=0;
   function cabin(){
     var W=cview.clientWidth,H=cview.clientHeight,p=prog(cab,H);
     var k=p<.16?-1:Math.min(spots.length-1,Math.floor((p-.16)/.27));
     if(k!==lastK){lastK=k;spots.forEach(function(s,i){s.classList.toggle('on',i===k)});cab.classList.toggle('go',k>=0)}
-    var c0=Math.max(W/1280,H/715), s=c0*(k>=0?(W<760?2.1:1.9):1.02);
-    var fx=k>=0?+spots[k].dataset.x:640, fy=k>=0?+spots[k].dataset.y:357;
-    if(cs===null){cs=s;cfx=fx;cfy=fy}
-    var e=reduce?1:.045; cs+=(s-cs)*e; cfx+=(fx-cfx)*e; cfy+=(fy-cfy)*e;
-    var cx=W/2-cfx*cs, cy=H*.6-cfy*cs;
-    cx=Math.min(0,Math.max(W-1280*cs,cx)); cy=Math.min(0,Math.max(H-715*cs,cy));
-    stage.style.transform='translate3d('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px,0) scale('+cs.toFixed(4)+')';
-    stage.style.setProperty('--inv',(1/cs).toFixed(4));
+    /* a still camera: the whole cabin in frame; on phones it is sized so all three points sit in view */
+    var cs,cx,cy;
+    if(W<760){cs=W/780;cx=W/2-507*cs;cy=(H-715*cs)/2}
+    else{cs=Math.max(W/1280,H/715)*1.02;cx=Math.min(0,Math.max(W-1280*cs,W/2-640*cs));cy=Math.min(0,Math.max(H-715*cs,H*.6-357*cs))}
+    if(cs!==lastCs||cx!==lastCx||cy!==lastCy){lastCs=cs;lastCx=cx;lastCy=cy;
+      stage.style.transform='translate3d('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px,0) scale('+cs.toFixed(4)+')';
+      stage.style.setProperty('--inv',(1/cs).toFixed(4));
+      /* on phones each line of copy sits centred on screen, whatever its point */
+      spots.forEach(function(sp){sp.style.setProperty('--dx',W<760?(W/2-(cx+ +sp.dataset.x*cs)).toFixed(1)+'px':'0px')})}
   }
 
   /* Logbook: one mark per landing. After a beat they stream in, each settling with a soft glow; a slow light passes over the book. */
@@ -912,45 +912,15 @@ html.landing .flight~section,html.landing footer{display:none}
 
   /* Entry: a dark cabin, shot in bracketed exposures, brightens as the camera moves in a straight line through the middle window.
      Glass geometry of e-cab*.webp in px (keep these numbers for a later video swap). */
-  var evid=d.querySelector('.evid'), ent=d.querySelector('.entry'), tap=d.querySelector('.tapsnd'), ecv=d.querySelector('.ecloud'), esp=d.querySelector('.esplit'), eh=[].slice.call(esp.querySelectorAll('.eh')), ews=[].slice.call(esp.querySelectorAll('.ew span')), skip=d.querySelector('.eskip'), veil=d.querySelector('.eveil'),
-      VD=10, vFail=false, T0=performance.now();
+  var evid=d.querySelector('.evid'), ent=d.querySelector('.entry'), tap=d.querySelector('.tapsnd'), esp=d.querySelector('.esplit'), eh=[].slice.call(esp.querySelectorAll('.eh')), ews=[].slice.call(esp.querySelectorAll('.ew span')), skip=d.querySelector('.eskip'), veil=d.querySelector('.eveil'),
+      VD=16.375, vFail=false, T0=performance.now();
   /* the cabin film: same size rule as the flight film */
   evid.src=FILM==='film.mp4'?'e-cabin.mp4':'e-cabin-720.mp4';
-  /* Live clouds, toned to the plane film's own clouds: they roll in over the logo as it fades, and hand over to the plane. */
-  var CL=(function(){
-    if(reduce||!ecv)return null;var g=null;try{g=ecv.getContext('webgl',{alpha:true,premultipliedAlpha:true,antialias:false})}catch(e){}if(!g)return null;
-    var FS=['#ifdef GL_FRAGMENT_PRECISION_HIGH','precision highp float;','#else','precision mediump float;','#endif',
-    'uniform vec2 R;uniform float T,C,H,Z;',
-    'float hh(vec3 p){p=fract(p*.3183099+.1);p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}',
-    'float nn(vec3 x){vec3 i=floor(x),f=fract(x);f=f*f*(3.-2.*f);return mix(mix(mix(hh(i),hh(i+vec3(1,0,0)),f.x),mix(hh(i+vec3(0,1,0)),hh(i+vec3(1,1,0)),f.x),f.y),mix(mix(hh(i+vec3(0,0,1)),hh(i+vec3(1,0,1)),f.x),mix(hh(i+vec3(0,1,1)),hh(i+vec3(1,1,1)),f.x),f.y),f.z);}',
-    'float fb(vec3 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*nn(p);p=p*2.02+vec3(1.7,9.2,3.1);a*=.5;}return v;}',
-    'float f3(vec3 p){float v=0.,a=.5;for(int i=0;i<3;i++){v+=a*nn(p);p=p*2.02+vec3(4.1,2.3,7.7);a*=.5;}return v;}',
-    'void main(){vec2 uv=(gl_FragCoord.xy-.5*R)/R.y;',
-    ' vec3 q=vec3(uv*2.3/Z+vec2(T*.03,T*.007),T*.05);',
-    ' vec2 w=vec2(f3(q),f3(q+vec3(5.2,1.3,2.8)))-.5;vec3 r=q+vec3(w*.3,0.);',
-    ' float d=fb(r),d2=fb(r+vec3(-.06,.07,.02));',
-    ' float th=mix(.8,.06,C),a=smoothstep(th,th+.24,d);',
-    ' float e=uv.y+(d-.5)*.34+(f3(q*.55+vec3(3.1,7.4,1.9))-.5)*.1;a*=1.-smoothstep(H-.07,H+.05,e);',
-    ' float sh=clamp(.55+(d-d2)*5.,0.,1.);',
-    ' vec3 c=mix(vec3(.70,.645,.59),vec3(.965,.945,.915),sh)*mix(1.02,.92,smoothstep(th+.15,th+.5,d))*(.86+.18*smoothstep(.32,.78,d));',
-    ' c=mix(c,c*vec3(1.03,.88,.72),.32*smoothstep(.42,.68,f3(q*.38+vec3(8.3,2.1,5.6))));',
-    ' gl_FragColor=vec4(c*a,a);}'].join('\n');
-    function sh(t,src){var o=g.createShader(t);g.shaderSource(o,src);g.compileShader(o);return g.getShaderParameter(o,g.COMPILE_STATUS)?o:null}
-    var v=sh(g.VERTEX_SHADER,'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}'), fr=sh(g.FRAGMENT_SHADER,FS);if(!v||!fr)return null;
-    var pr=g.createProgram();g.attachShader(pr,v);g.attachShader(pr,fr);g.linkProgram(pr);if(!g.getProgramParameter(pr,g.LINK_STATUS))return null;g.useProgram(pr);
-    var bf=g.createBuffer();g.bindBuffer(g.ARRAY_BUFFER,bf);g.bufferData(g.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),g.STATIC_DRAW);
-    var al=g.getAttribLocation(pr,'a');g.enableVertexAttribArray(al);g.vertexAttribPointer(al,2,g.FLOAT,false,0,0);
-    var U={};['R','T','C','H','Z'].forEach(function(k){U[k]=g.getUniformLocation(pr,k)});g.clearColor(0,0,0,0);
-    return function(t,C,H,Z){var w=Math.max(2,Math.round(ecv.clientWidth*.5)),h=Math.max(2,Math.round(ecv.clientHeight*.5));
-      if(ecv.width!==w||ecv.height!==h){ecv.width=w;ecv.height=h;g.viewport(0,0,w,h)}
-      g.uniform2f(U.R,w,h);g.uniform1f(U.T,t);g.uniform1f(U.C,C);g.uniform1f(U.H,H);g.uniform1f(U.Z,Z);g.clear(g.COLOR_BUFFER_BIT);g.drawArrays(g.TRIANGLES,0,3)};
-  })();
-  if(!CL&&ecv)ecv.style.display='none';
   /* Intro: plays on its own (no scrolling). The closed split with the line and "Tap for sound"; the split opens and the cabin film
      starts at once, so the camera is always moving; outside, the logo rises in from mid-screen. Scrolling opens from there.
      A wheel, swipe or key plays it out faster; "Skip intro" goes straight to the logo.
      IK = [seconds, entry progress]. From 3.6s to 13.6s the timeline follows the film's own clock, so the two never drift. */
-  var IK=[[0,0],[3.6,0],[7,.008],[13.6,.092],[19.6,.165],[20.3,.172]], itT=0, itLast=0, itSpd=1, itOn=!reduce, itReady=false, unlockP=-1, unlockAt=0, vTried=false;
+  var IK=[[0,0],[3.6,0],[7,.008],[14.4,.092],[19.975,.212]], itT=0, itLast=0, itSpd=1, itOn=!reduce, itReady=false, unlockP=-1, unlockAt=0, vTried=false;
   if(itOn){root.classList.add('intro');try{history.scrollRestoration='manual'}catch(e){}scrollTo(0,0);
     var itGo=function(){if(!itReady){itReady=true;itLast=performance.now();esp.classList.add('in');setTimeout(loadFilm,800);setTimeout(function(){if(itOn&&itT<3.4)tap.classList.add('on')},1600)}};
     /* wait for the cabin film, so it plays the moment the split opens */
@@ -961,15 +931,15 @@ html.landing .flight~section,html.landing footer{display:none}
     addEventListener('keydown',function(e){if(itOn&&/^(ArrowDown|PageDown| |Spacebar|End)$/.test(e.key)){itFF();e.preventDefault()}});
     addEventListener('pointerdown',function(){tap.classList.remove('on')},{once:true});
     skip.addEventListener('click',function(){if(!itOn||skip.dataset.done)return;skip.dataset.done=1;skip.classList.remove('on');veil.classList.add('on');
-      setTimeout(function(){evid.pause();itT=19;itSpd=1;itLast=performance.now();setTimeout(function(){veil.style.transition='opacity 1.4s var(--ease)';veil.classList.remove('on')},120)},820)});
+      setTimeout(function(){itT=15.8;itSpd=1;itLast=performance.now();try{evid.currentTime=12.2}catch(e){}if(vTried){var pr=evid.play();if(pr&&pr.catch)pr.catch(function(){})}setTimeout(function(){veil.style.transition='opacity 1.4s var(--ease)';veil.classList.remove('on')},120)},820)});
   }else{skip.style.display='none';esp.classList.add('in')}
   function vLive(){return itOn&&!vFail&&!evid.paused&&!evid.ended}
   function introP(){
     if(!itReady)return 0;var now=performance.now(),dt=Math.min(.1,(now-itLast)/1000)*itSpd;itLast=now;
-    if(itT>=3.6&&itT<13.6&&!vFail){
+    if(itT>=3.6&&itT<3.6+VD&&!vFail){
       if(!vTried){vTried=true;try{evid.currentTime=0}catch(e){}var pr=evid.play();if(pr&&pr.catch)pr.catch(function(){vFail=true})}
       evid.playbackRate=itSpd;
-      if(evid.ended)itT=13.6;else if(!evid.paused)itT=Math.max(itT,3.6+evid.currentTime);else itT+=dt;
+      if(evid.ended)itT=3.6+VD;else if(!evid.paused)itT=Math.max(itT,3.6+evid.currentTime);else itT+=dt;
     }else itT+=dt;
     for(var i=1;i<IK.length;i++)if(itT<IK[i][0])return IK[i-1][1]+(IK[i][1]-IK[i-1][1])*(itT-IK[i-1][0])/(IK[i][0]-IK[i-1][0]);
     return -1;
@@ -979,7 +949,51 @@ html.landing .flight~section,html.landing footer{display:none}
     root.classList.remove('intro');scrollTo(0,Math.round(top+end*span));unlockP=prog(flight);unlockAt=performance.now();
     tap.classList.remove('on');skip.classList.remove('on');loadFilm();open();body.classList.add('hello');
   }
-  var lgY=0, dusk=d.querySelector('.dusk');
+  var lgY=0;
+  /* The way out of the clouds: drawn from the cloud film itself. Thin, bright vapour goes first, opening from the gap
+     ahead of the camera; the rest breaks apart along its own shapes and thins away, so the plane is simply there. */
+  var ecv=ent.querySelector('.ecv'), G=null;
+  (function(){try{
+    var gl=ecv.getContext('webgl',{premultipliedAlpha:true,alpha:true,antialias:false});if(!gl)return;
+    var vs='attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+    var fs=['precision highp float;uniform sampler2D T;uniform vec2 R,V;uniform float r;',
+      'float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
+      'float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+1.),f.x),f.y);}',
+      'float fb(vec2 p){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return s;}',
+      'vec2 cv(vec2 q){float s=max(R.x/V.x,R.y/V.y);vec2 dd=V*s,o=(R-dd)*vec2(.5,.45);return (q-o)/dd;}',
+      'float L(vec3 c){return dot(c,vec3(.299,.587,.114));}',
+      'void main(){vec2 q=vec2(gl_FragCoord.x,R.y-gl_FragCoord.y);vec2 uv=cv(q);',
+      'vec2 c=vec2(.5,.44);vec2 d=uv-c;d.x*=V.x/V.y;float dl=length(d);',
+      /* density from the film: a soft average of the clouds around this point */
+      'vec3 bl=vec3(0.);float rr=.022;for(int i=0;i<8;i++){float a=float(i)*.785;bl+=texture2D(T,uv+vec2(cos(a),sin(a))*rr*vec2(V.y/V.x,1.)).rgb;}bl/=8.;',
+      'float dn=L(bl);',
+      /* the break-up field drifts outward as the camera flies on */
+      'vec2 np=d/(1.+.7*r)*3.2;np+=vec2(fb(np*.8+3.),fb(np*.8+7.))*1.1;float nz=fb(np+r*.6);',
+      'float o=.42*nz+.30*clamp(dl/.8,0.,1.)+.28*(1.-dn);o=(o-.22)/.62;',
+      'float w=.11,th=-w+r*(1.+2.*w);float al=smoothstep(th-w,th+w,o);',
+      'float e=1.-abs(al*2.-1.);e*=e;',
+      /* at the breaking edge the vapour stretches outward, softens and catches the light; thin vapour takes the warm light of the scene behind */
+      'vec2 du=normalize(d+1e-4)*e*.03*r*vec2(V.y/V.x,1.);vec3 col=texture2D(T,uv+du).rgb;',
+      'col=mix(col,bl,e*.55);col+=(1.-col)*vec3(.12,.095,.06)*e;col=mix(col,clamp(L(col)*vec3(1.1,1.,.84),0.,1.),(1.-al)*.75);',
+      'gl_FragColor=vec4(col*al,al);}'].join('\n');
+    function sh(t,src){var o=gl.createShader(t);gl.shaderSource(o,src);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(o);return o}
+    var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);
+    if(!gl.getProgramParameter(pr,gl.LINK_STATUS))return;gl.useProgram(pr);
+    var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+    var al=gl.getAttribLocation(pr,'a');gl.enableVertexAttribArray(al);gl.vertexAttribPointer(al,2,gl.FLOAT,false,0,0);
+    var tx=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tx);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    var uR=gl.getUniformLocation(pr,'R'),uV=gl.getUniformLocation(pr,'V'),ur=gl.getUniformLocation(pr,'r');
+    G={draw:function(r){
+      var dpr=Math.min(1.5,devicePixelRatio||1),W=Math.round(ent.clientWidth*dpr),H=Math.round(ent.clientHeight*dpr);
+      if(W>2200){H=Math.round(H*2200/W);W=2200}
+      if(ecv.width!==W||ecv.height!==H){ecv.width=W;ecv.height=H}
+      if(evid.readyState<2||!evid.videoWidth)return false;
+      try{gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,evid)}catch(e){G=null;return false}
+      gl.viewport(0,0,W,H);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform2f(uR,W,H);gl.uniform2f(uV,evid.videoWidth,evid.videoHeight);gl.uniform1f(ur,r);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);return true}};
+  }catch(e){G=null}})();
   function entry(p){
     var h=flight.firstElementChild.clientHeight;
     /* the split parts, and the line goes with it */
@@ -988,19 +1002,17 @@ html.landing .flight~section,html.landing footer{display:none}
     skip.classList.toggle('on',itOn&&itReady&&p>=.0076&&!skip.dataset.done);
     if(itOn&&p>.0004)tap.classList.remove('on');
     /* the cabin film plays through the intro; afterwards scrolling scrubs it */
-    if(!vLive()){var vt=Math.min(VD-.04,p<.008?p/.008*3.4:3.4+clamp((p-.008)/.084)*6.6);
+    if(!vLive()){var vt=p<.008?p/.008*3.4:VD;if(p>=.008)for(var j=2;j<IK.length;j++)if(p<=IK[j][1]){vt=IK[j-1][0]+(IK[j][0]-IK[j-1][0])*(p-IK[j-1][1])/(IK[j][1]-IK[j-1][1])-3.6;break}vt=Math.min(VD-.04,vt);
       if(evid.readyState>=1&&!evid.seeking&&Math.abs(evid.currentTime-vt)>.05)try{evid.currentTime=vt}catch(e){}}
     /* never still: a slow push on top of the camera's own move, carrying on past the film's last frame */
-    var cut=ss((p-.2)/.006), k=1+.05*ss(p/.092)+.12*ss((p-.08)/.12)+.04*cut;
-    evid.style.transform='scale('+k.toFixed(4)+')';ent.style.opacity=(1-cut).toFixed(3);ent.style.visibility=cut>=1?'hidden':'visible';
+    var cut=ss((p-.1716)/.0389), k=1+.05*ss(p/.092)+.12*ss((p-.08)/.12)+.06*cut, kt='scale('+k.toFixed(4)+')';
+    evid.style.transform=kt;ent.style.visibility=cut>=1?'hidden':'visible';
+    /* the clouds break up and thin away over the plane; without WebGL, a plain dissolve */
+    var gd=cut>0&&cut<1&&G&&G.draw(cut);
+    if(gd){ecv.style.transform=kt;ecv.style.opacity='1';evid.style.opacity='0';ent.style.opacity='1'}
+    else{ecv.style.opacity='0';evid.style.opacity='1';ent.style.opacity=(1-cut).toFixed(3)}
     /* outside, the logo rises in from mid-screen; on scroll the clouds roll in over it as it fades, then the cut to the plane */
-    lgY=.14*h*(1-ss((p-.094)/.06));
-    if(CL){
-      var B=-.66+1.9*ss((p-.172)/.03),
-          C=.85+.15*ss((p-.172)/.03), t=(performance.now()-T0)/1000, ZZ=1+.18*ss((p-.172)/.04), on=p<.212&&p>.168;
-      ecv.style.visibility=on?'visible':'hidden';ecv.style.opacity=(1-cut).toFixed(3);ecv.style.filter='none';
-      if(on)CL(t,C,B,ZZ);
-    }
+    lgY=-.1*h*(1-ss((p-.0784)/.06));
     return 0;
   }
   function frame(){
@@ -1008,13 +1020,11 @@ html.landing .flight~section,html.landing footer{display:none}
     if(itOn){if(scrollY>1)scrollTo(0,0);var ip=introP();if(ip<0){endIntro();p=prog(flight)}else p=ip}
     if(p>.002)open();
     /* the cut lands where the clouds break and the plane comes into view (frame 96), skipping the film's white-out */
-    var P0=.21, F0=96/614, q=p<P0?F0:F0+(p-P0)/(1-P0)*(1-F0);
+    var P0=.21, F0=130/614, q=p<P0?F0:F0+(p-P0)/(1-P0)*(1-F0);
     entry(p);
-    /* the closing clouds take on the sunset grade of the clouds before them */
-    var du=ss((q-.905)/.03);dusk.style.opacity=du.toFixed(3);var b1=1-.473*du;v.style.filter=du>0?'brightness('+b1.toFixed(3)+') contrast('+(1+1.6*du).toFixed(3)+') brightness('+(1/b1).toFixed(3)+') saturate('+(1+.3*du).toFixed(3)+')':'';
     /* the logo rises in once outside and fades as the clouds roll over it */
-    var h=0, lg=ss((p-.094)/.045)*(1-ss((p-.178)/.022));
-    var hs=1.035-.035*ss((p-.1)/.03), ls=1.03-.03*ss((p-.12)/.05);
+    var h=0, lg=ss((p-.0784)/.0308)*(1-ss((p-.1394)/.0279));
+    var hs=1.035-.035*ss((p-.1)/.03), ls=1.03-.03*ss((p-.1044)/.05);
     hero.style.opacity=h;hero.style.transform='scale('+hs.toFixed(4)+')';hero.style.filter='none';
     if(body.classList.contains('hello'))topb.style.opacity=(1-ss((q-.901)/.028)).toFixed(3);
     rmark.style.opacity=lg;rmark.style.transform='translate(-50%,calc(-50% + '+lgY.toFixed(1)+'px)) scale('+ls.toFixed(4)+')';rmark.style.filter='none';
