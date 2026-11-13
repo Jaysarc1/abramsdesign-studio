@@ -78,11 +78,11 @@
   },
   {
    "source": "/harris-hillfullsite/",
-   "destination": "/mini/harris-hill/"
+   "destination": "/mini/harris-hill-fullsite/"
   },
   {
    "source": "/harris-hillfullsite/:f*",
-   "destination": "/mini/harris-hill/:f*"
+   "destination": "/mini/harris-hill-fullsite/:f*"
   },
   {
    "source": "/rybovichfullsite/",
