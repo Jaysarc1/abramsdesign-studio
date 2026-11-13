@@ -14,9 +14,100 @@
    "source": "/destany/books",
    "destination": "/destany/books/",
    "permanent": false
+  },
+  {
+   "source": "/americanaircraftsalesfullsite",
+   "destination": "/americanaircraftsalesfullsite/",
+   "permanent": false
+  },
+  {
+   "source": "/americanaircraftsales",
+   "destination": "/americanaircraftsales/",
+   "permanent": false
+  },
+  {
+   "source": "/handalfullsite",
+   "destination": "/handalfullsite/",
+   "permanent": false
+  },
+  {
+   "source": "/harris-hillfullsite",
+   "destination": "/harris-hillfullsite/",
+   "permanent": false
+  },
+  {
+   "source": "/rybovichfullsite",
+   "destination": "/rybovichfullsite/",
+   "permanent": false
+  },
+  {
+   "source": "/destanyfullsite",
+   "destination": "/destanyfullsite/",
+   "permanent": false
+  },
+  {
+   "source": "/bohemiafullsite",
+   "destination": "/bohemiafullsite/",
+   "permanent": false
   }
  ],
  "rewrites": [
+  {
+   "source": "/americanaircraftsalesfullsite/",
+   "destination": "/mini/americanaircraftsales/"
+  },
+  {
+   "source": "/americanaircraftsalesfullsite/:f*",
+   "destination": "/mini/americanaircraftsales/:f*"
+  },
+  {
+   "source": "/americanaircraftsales/",
+   "destination": "/mini/americanaircraftsales/landing.html"
+  },
+  {
+   "source": "/americanaircraftsales/:f*",
+   "destination": "/mini/americanaircraftsales/:f*"
+  },
+  {
+   "source": "/handalfullsite/",
+   "destination": "/mini/handal/"
+  },
+  {
+   "source": "/handalfullsite/:f*",
+   "destination": "/mini/handal/:f*"
+  },
+  {
+   "source": "/harris-hillfullsite/",
+   "destination": "/mini/harris-hill-fullsite/"
+  },
+  {
+   "source": "/harris-hillfullsite/:f*",
+   "destination": "/mini/harris-hill-fullsite/:f*"
+  },
+  {
+   "source": "/rybovichfullsite/",
+   "destination": "/mini/rybovich/"
+  },
+  {
+   "source": "/rybovichfullsite/:f*",
+   "destination": "/mini/rybovich/:f*"
+  },
+  {
+   "source": "/destanyfullsite/",
+   "destination": "/mini/destany/"
+  },
+  {
+   "source": "/destanyfullsite/:f*",
+   "destination": "/mini/destany/:f*"
+  },
+  {
+   "source": "/bohemiafullsite/",
+   "destination": "/mini/bohemia/"
+  },
+  {
+   "source": "/bohemiafullsite/:f*",
+   "destination": "/mini/bohemia/:f*"
+  },
   {
    "source": "/((?!(?:b|img|play|mini|cards|api/(?:desk|up|unpack|cards|stats))(?:/|$)).+)",
    "destination": "https://ads-view-phi.vercel.app/$1"
@@ -34,6 +125,132 @@
   },
   {
    "source": "/mini",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/americanaircraftsalesfullsite/(.*)",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/americanaircraftsalesfullsite/",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/americanaircraftsales/(.*)",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/americanaircraftsales/",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/handalfullsite/(.*)",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/handalfullsite/",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/harris-hillfullsite/(.*)",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/harris-hillfullsite/",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/rybovichfullsite/(.*)",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/rybovichfullsite/",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/destanyfullsite/(.*)",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/destanyfullsite/",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/bohemiafullsite/(.*)",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/bohemiafullsite/",
    "headers": [
     {
      "key": "X-Robots-Tag",

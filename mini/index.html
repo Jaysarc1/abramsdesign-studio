@@ -120,13 +120,16 @@ a{text-decoration:none}
       {s:'harris-hill',t:'Harris Hill Farm'},
       {s:'rybovich',t:'Michael Rybovich & Sons'},
       {s:'destany',t:'Baila con Destany'},
-      {s:'bohemia',t:'Bohemia by Chlo'}
+      {s:'bohemia',t:'Bohemia by Chlo'},
+      {s:'americanaircraftsales',t:'American Aircraft Sales'},
+      {s:'abrams-places',t:'Abrams Places, church land'}
     ],
     land:[
       {s:'boyd',t:'Boyd Nurseries'},
       {s:'gil-walsh',t:'Gil Walsh Interiors'},
       {s:'burlington',t:'Burlington & Rockenbach'},
-      {s:'steiger',t:'Steiger Facial Plastic Surgery'}
+      {s:'steiger',t:'Steiger Facial Plastic Surgery'},
+      {s:'americanaircraftsales-landing',t:'American Aircraft Sales',u:'americanaircraftsales/landing.html'}
     ]
   };
   var rail=document.getElementById('rail'),frame=document.getElementById('frame'),
@@ -151,7 +154,7 @@ a{text-decoration:none}
     for(var k in frames)frames[k].classList.remove('on');
     var f=frames[slug];frame.classList.toggle('ready',!!(f&&f._ready));
     if(!f){
-      f=document.createElement('iframe');f.title=find(slug).t;f.src=slug+'/';
+      f=document.createElement('iframe');f.title=find(slug).t;f.src=find(slug).u||slug+'/';
       f.setAttribute('allow','fullscreen; autoplay; clipboard-write');
       f.onload=function(){f._ready=true;if(cur===slug){frame.classList.add('ready');f.classList.add('on')}};
       frames[slug]=f;frame.appendChild(f);
@@ -161,7 +164,7 @@ a{text-decoration:none}
   function show(slug,user){
     var it=find(slug);if(!it)return;
     cur=slug;side=sideOf(slug);
-    open.href=vopen.href=slug+'/';vname.textContent=it.t;
+    open.href=vopen.href=it.u||slug+'/';vname.textContent=it.t;
     renderRail();load(slug);
     if(user&&location.hash!=='#'+slug)history.replaceState(null,'','#'+slug);
     if(phone.matches&&user)document.body.classList.add('viewing');
