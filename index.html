@@ -1511,8 +1511,8 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
   .ow-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:28px auto 0}
   .ow-tabs button{flex:none;border:0;border-radius:12px;padding:11px 18px;background:var(--tan);color:var(--pencil);font-family:var(--mono);font-size:12.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .4s,color .4s}
   .ow-tabs button[aria-selected="true"]{background:var(--graphite);color:var(--plaster)}
-  .ow-band .ow-p:not(.on){display:none!important}
-  .ow-band .ow-p.on.sw{animation:owIn 1s cubic-bezier(.2,.7,.1,1) both}
+  .ow-band .ow-pj:not(.ow-on){display:none!important}
+  .ow-band .ow-pj.ow-on.ow-sw{animation:owIn 1s cubic-bezier(.2,.7,.1,1) both}
   .ow-band.ow-tb .ex-nm{display:none}
 }
 /* Nov 13: offer cards keep their own height, no dead space under the shorter lists */
@@ -2277,8 +2277,8 @@ header nav a.opt:hover{color:var(--graphite)}
       ['ow-flagship',[['#riot','Soft Riot'],['#live','Luna\u2019s'],['#arden','Arden']]]];
     B.forEach(function(b){var d=document.getElementById(b[0]),hd=d&&d.querySelector('.ow-hd');if(!hd)return;var its=b[1].map(function(x){return d.querySelector(x[0]);});if(its.some(function(x){return !x;}))return;
       var nav=document.createElement('div');nav.className='ow-tabs';nav.setAttribute('role','tablist');nav.setAttribute('aria-label',b[0].slice(3)+' projects');
-      its.forEach(function(it,i){it.classList.add('ow-p');if(!i)it.classList.add('on');var bt=document.createElement('button');bt.type='button';bt.setAttribute('role','tab');bt.setAttribute('aria-selected',i?'false':'true');bt.textContent=b[1][i][1];
-        bt.addEventListener('click',function(){if(it.classList.contains('on'))return;its.forEach(function(x,j){x.classList.toggle('on',j===i);x.classList.toggle('sw',j===i);nav.children[j].setAttribute('aria-selected',j===i?'true':'false');});});nav.appendChild(bt);});
+      its.forEach(function(it,i){it.classList.add('ow-pj');if(!i)it.classList.add('ow-on');var bt=document.createElement('button');bt.type='button';bt.setAttribute('role','tab');bt.setAttribute('aria-selected',i?'false':'true');bt.textContent=b[1][i][1];
+        bt.addEventListener('click',function(){if(it.classList.contains('ow-on'))return;its.forEach(function(x,j){x.classList.toggle('ow-on',j===i);x.classList.toggle('ow-sw',j===i);nav.children[j].setAttribute('aria-selected',j===i?'true':'false');});});nav.appendChild(bt);});
       hd.after(nav);d.classList.add('ow-tb');
     });
   })();
