@@ -1,11 +1,10 @@
-<!doctype html><html><head>
-<meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Abrams Places</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Beautiful, attainable homes on church land in Palm Beach County">
 <script>try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){var h=document.documentElement;h.classList.add("intro");setTimeout(function(){h.classList.add("placed","s-nav","s-head","s-sub","s-cue");h.classList.remove("intro")},11000)}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
 <style>
 /* One 1240px measure, one left edge on desktop, centered on phones.
    Limestone paper and live-oak dark alternate, the two grounds the buildings sit on. */
@@ -110,6 +109,7 @@ html.intro:not(.s-cue) .cue{opacity:0}
 .scene .mod{transform:translateY(-320px);opacity:0;transition:transform 1.5s var(--ease),opacity .9s var(--ease);transition-delay:calc(var(--i)*.16s)}
 .scene .sprout{transform:scale(0);transform-box:fill-box;transform-origin:50% 100%;transition:transform 1.2s var(--ease);transition-delay:calc(var(--i,0)*.12s)}
 .scene .flow{fill:none;stroke:var(--glow);stroke-width:6;stroke-linecap:round;stroke-dasharray:.1 22;opacity:0;transition:opacity 1s var(--ease)}
+.scene .ap-m{display:none}
 .scene .flow.thin{stroke:var(--line);stroke-width:1.4;stroke-dasharray:none}
 .scene .node{fill:var(--glow);transform:scale(0);transform-box:fill-box;transform-origin:center;transition:transform 1s var(--ease)}
 .scene .hall{transform:scaleY(0);transform-box:fill-box;transform-origin:50% 100%;transition:transform 1.6s var(--ease)}
@@ -142,14 +142,26 @@ html.intro:not(.s-cue) .cue{opacity:0}
 
 /* ---------------- homes */
 .homes .head{max-width:760px}
-.homes .lede{margin-top:20px}
-.units{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2vw,28px);margin-top:clamp(40px,5vw,64px);align-items:end}
+.homes .lede{margin-top:8px}
+.units{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2vw,28px);margin-top:clamp(28px,3.6vw,46px);align-items:end}
 .unit .box{display:flex;align-items:flex-end;min-height:116px}
 .unit .box svg{width:100%;height:auto;display:block}
-.unit h3{font-size:26px;margin-top:18px}
+.unit h3{font-size:26px;margin-top:30px}
 .unit .rent{font-size:44px;line-height:1;margin-top:10px}
 .unit .rent small{font:500 14px/1 var(--text);letter-spacing:0;color:var(--on-dark-2);margin-left:6px}
-.unit .sf{margin-top:12px;font:600 12px/1 var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--on-dark-2)}
+.unit .box{position:relative;container-type:inline-size}
+.unit .box{padding-top:34px}
+.unit .dim{position:absolute;left:calc(.5 / 41 * 100cqw);width:calc(var(--len) / 41 * 100cqw);bottom:calc((8.4 * var(--k) - .2) / 41 * 100cqw + 8px);height:9px;border-left:1px solid var(--on-dark-2);border-right:1px solid var(--on-dark-2)}
+.unit .dim::before{content:"";position:absolute;left:0;right:0;top:4px;border-top:1px solid var(--on-dark-2)}
+.unit .dim b{position:absolute;left:50%;bottom:100%;margin-bottom:6px;transform:translateX(-50%);font:600 12px/1 var(--text);letter-spacing:.06em;color:var(--on-dark);white-space:nowrap}
+.od{display:inline-block;line-height:1;white-space:nowrap}
+.od .dg{display:inline-block;vertical-align:top;height:1em;overflow:hidden}
+.od .st{display:flex;flex-direction:column;transform:translateY(calc(var(--n) * -1em));transition:transform 2.6s cubic-bezier(.2,.75,.15,1);transition-delay:calc(.35s + var(--k) * .14s)}
+.od .st i{display:block;height:1em;font-style:normal}
+.rv-ready .unit:not(.in) .od .st{transform:none;transition:none}
+.limnote{margin-top:clamp(36px,calc(6vw - 12px),68px);font-size:12px;line-height:1.6;color:var(--on-dark-2)}
+.limnote span{display:block;margin-top:8px;font-size:13px;color:var(--on-dark-2)}
+.unit .sf{margin-left:4px;font:600 14px/1 var(--text);letter-spacing:.06em;color:var(--on-dark-2);white-space:nowrap}
 .made{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr) 40px minmax(0,1fr);align-items:center;gap:clamp(8px,1.4vw,18px);margin-top:clamp(64px,8vw,112px);padding-top:clamp(40px,5vw,56px);border-top:1px solid var(--line-dark)}
 .made h3{grid-column:1/-1;margin-bottom:clamp(20px,3vw,36px)}
 .panel svg{display:block;width:100%;height:auto}
@@ -177,10 +189,11 @@ html.intro:not(.s-cue) .cue{opacity:0}
 .dark .sl p:not(.mix){color:var(--on-dark-2)}
 .opts .meter{max-width:260px}
 .plans{margin-top:clamp(64px,8vw,112px);padding-top:clamp(40px,5vw,56px);border-top:1px solid var(--line-dark)}
+.plans h3{font-size:clamp(28px,2.6vw,38px);line-height:1.05}
 .pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,28px);margin-top:clamp(28px,3.4vw,40px)}
 .pcard{display:flex;flex-direction:column;gap:clamp(20px,2.4vw,32px);padding:clamp(22px,3vw,40px);border-radius:var(--r);background:var(--paper);color:var(--ink)}
 .pc-head .lbl{display:block;font:600 12px/1.3 var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--sage-deep)}
-.pc-head b{display:block;margin-top:8px;font:400 clamp(28px,2.6vw,38px)/1.05 var(--display);letter-spacing:-.01em}
+.pc-head b{display:block;margin-top:8px;font:400 clamp(23px,2.1vw,28px)/1.15 var(--display);letter-spacing:-.01em}
 .fp{display:block;width:100%;max-width:420px;height:auto;margin-inline:auto}
 .fp .sh{fill:none;stroke:var(--ink);stroke-width:6;stroke-linejoin:miter}
 .fp .pw2{stroke:var(--ink);stroke-width:6}
@@ -237,6 +250,23 @@ html.intro:not(.s-cue) .cue{opacity:0}
 .owners .c{background:var(--moss);color:var(--on-dark)}
 .owners .a{background:var(--paper-2);border:1px solid var(--line)}
 .rv-ready .money:not(.in) .track i{width:0 !important}
+.money .eg{margin-top:14px;font:600 12px/1.2 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--sage-deep)}
+.lane .loanbar{background:var(--sage-deep)}
+.lane .bldbar{background:var(--timber)}
+.lane .checkbar{background:var(--glow)}
+.flowbox .w-cost{width:40%}.flowbox .w-hl{width:30%}.flowbox .w-pr{width:30%}.flowbox .w-bl{width:55%}.flowbox .w-ck{width:45%}
+.flowbox[data-p="1"] .w-hl,.flowbox[data-p="1"] .w-bl{width:0%}.flowbox[data-p="1"] .w-pr{width:60%}.flowbox[data-p="1"] .w-ck{width:100%}
+.fork + .lane{margin-top:28px}
+.money .c-bl{width:0%}.money .c-ck{width:100%}
+.money[data-c="1"] .c-bl{width:55%}.money[data-c="1"] .c-ck{width:45%}
+.money:not([data-c="1"]) .c-key,.money:not([data-c="1"]) .c-note{display:none}
+.key{list-style:none;display:flex;flex-wrap:wrap;gap:10px 24px;margin:14px 0 0;padding:0;font:500 14px/1.3 var(--text);color:var(--ink-2)}
+.key li{display:flex;align-items:center;gap:8px}
+.key i{width:14px;height:14px;border-radius:4px;flex:none}
+.key b{font-size:20px;line-height:1;color:var(--ink)}
+.key .k-cost{background:repeating-linear-gradient(135deg,var(--paper-2) 0 3px,#C4CBBB 3px 5px);box-shadow:inset 0 0 0 1px var(--line)}
+.key .k-loan{background:var(--sage-deep)}.key .k-pr{background:var(--glow)}.key .k-bld{background:var(--timber)}
+.legal{flex-basis:100%;margin:8px 0 0;padding-top:24px;border-top:1px solid var(--line-dark);font:400 13px/1.6 var(--text);color:var(--on-dark-2);max-width:none}
 .figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:clamp(40px,5vw,64px) 0 0;border-top:1px solid var(--line)}
 .fig{padding:26px 24px 0 0}
 .fig+.fig{padding-left:24px;border-left:1px solid var(--line)}
@@ -251,6 +281,9 @@ html.intro:not(.s-cue) .cue{opacity:0}
 .asks li{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line-dark)}
 .asks li:first-child{border-top:0;padding-top:0}
 .asks li svg{width:22px;height:22px;margin-top:2px}
+.lawsec{padding-bottom:0}
+.lawsec .law{margin-top:0}
+.dark .asks{background:var(--moss-2)}
 
 /* ---------------- the church */
 .church .intro{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,4vw,64px);align-items:end}
@@ -302,12 +335,9 @@ html.intro:not(.s-cue) .cue{opacity:0}
 .ages span{display:block;margin-top:4px;font-size:15px;color:var(--ink-2)}
 .stack{grid-column:1/-1;height:300vh;position:relative}
 .stick{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:clamp(20px,3vw,48px);align-items:center}
-.frames{position:relative;height:min(76vh,620px)}
-.frames .ph{position:absolute;inset:0;height:auto;clip-path:inset(0 0 0 100% round var(--r));transition:clip-path 1.8s var(--ease)}
-.frames .ph:first-child,.frames .ph.on{clip-path:inset(0 0 0 0 round var(--r))}
-.frames .wipe{position:absolute;top:0;bottom:0;left:0;width:2px;margin-left:-1px;background:var(--ink);z-index:20;opacity:0;pointer-events:none}
-.frames img{transform:scale(1.08);transition:transform 2.6s var(--ease)}
-.frames .ph.on img{transform:none}
+.frames{position:relative;height:min(76vh,620px);border-radius:var(--r);overflow:hidden;background:var(--moss-2)}
+.frames .ph{position:absolute;inset:0;height:auto;border-radius:0;visibility:hidden}
+.frames .ph:first-child,.frames .ph.on{visibility:visible}
 .sl{list-style:none;margin:0;padding:0;display:grid;gap:28px}
 .sl li{display:flex;gap:18px;opacity:.3;transition:opacity 1s var(--ease)}
 .sl li.on{opacity:1}
@@ -350,9 +380,32 @@ html.intro:not(.s-cue) .cue{opacity:0}
 .concept{margin-top:clamp(48px,6vw,80px);font:400 13px/1.5 var(--text);color:var(--on-dark-2)}
 
 /* ---------------- close */
+.about{background:var(--paper-2)}
+.about .ab{display:grid;grid-template-columns:minmax(0,3.2fr) minmax(0,4fr) minmax(0,4.8fr);column-gap:clamp(24px,3vw,40px);align-items:stretch}
+.ab-h{grid-column:1/-1;white-space:nowrap;margin-bottom:clamp(28px,3.4vw,44px)}
+.ab-h em{font-style:italic}
+.about .lede{grid-column:2;grid-row:2;margin:0;max-width:none;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.ab-pic{grid-column:1;grid-row:2/4}
+.ab-pic img{position:absolute;inset:0;object-position:50% 30%}
+.built{grid-column:3;grid-row:2/4}
+.ab-n{grid-column:2;grid-row:3;display:flex;justify-content:center;gap:clamp(40px,5vw,72px);text-align:center;margin-top:clamp(28px,3.4vw,40px);padding-top:clamp(24px,3vw,32px);border-top:1px solid var(--line)}
+.ab-n b{display:block;font-size:clamp(56px,6vw,84px);line-height:.9}
+.ab-n span{display:block;margin-top:10px;font:600 12px/1.3 var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--sage-deep)}
+.built{position:relative;min-height:0;border-radius:var(--r);overflow:hidden;background:var(--moss-2);cursor:pointer}
+.built img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity 1.4s var(--ease),transform 2.4s var(--ease)}
+.built img.on{opacity:1;transform:none}
+.built .prog{position:absolute;left:18px;right:18px;bottom:18px;display:flex;gap:6px;z-index:1}
+.built .prog i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden}
+.built .prog i::after{content:"";display:block;height:100%;background:#fff;transform:scaleX(var(--f,0));transform-origin:left;transition:transform var(--t,0s) linear}
+.ab-work{list-style:none;margin:0;padding:0}
+.ab-work li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.ab-work b{font:400 clamp(20px,1.8vw,24px)/1.2 var(--display)}
+.ab-work span{font-size:14px;color:var(--ink-2);text-align:right}
 .close h2{font-size:clamp(46px,7vw,100px);line-height:.98;letter-spacing:-.02em}
 .close .lede{margin-top:24px;font-family:var(--display);font-size:clamp(24px,2.4vw,32px);line-height:1.3;color:var(--ink);max-width:46ch;text-wrap:balance}
 .close .also{margin-top:18px;color:var(--ink-2);max-width:56ch}
+.close .walk{margin-top:32px;background:var(--moss);color:var(--on-dark)}
+.close .walk:hover{background:var(--ink)}
 footer{background:var(--moss);color:var(--on-dark);padding-block:clamp(48px,6vw,72px) calc(36px + env(safe-area-inset-bottom,0px))}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
 footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:uppercase;color:var(--timber)}
@@ -366,7 +419,8 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
 .rv-ready .ph[data-rv].in img{transform:none}
 @media (prefers-reduced-motion:reduce){
   .rv-ready [data-rv],.rv-ready .ph[data-rv]{opacity:1;transform:none;clip-path:none;transition:none}
-  .frames .ph{transition:none}.stack{height:auto}.stick{position:static;height:auto}
+  .od .st{transition:none}
+  .stack{height:auto}.stick{position:static;height:auto}
   .rv-ready .ph[data-rv] img{transform:none}
   .hero img{animation:none;transform:none}
   .cue i::after{animation:none}
@@ -378,6 +432,9 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
 @media (max-width:1080px){
   .units{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:48px}
   .nbrs{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:0}
+  .about .ab{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
+  .ab-pic{grid-column:1;grid-row:2/4}
+  .built{grid-column:1/-1;grid-row:4;aspect-ratio:3/2;min-height:0;margin-top:clamp(32px,4vw,48px)}
 }
 /* ---------------- phone: centered */
 @media (max-width:760px){
@@ -404,12 +461,15 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
   .units{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px;row-gap:40px}
   .unit{text-align:center}
   .unit .box{justify-content:center;min-height:0}
-  .unit h3{font-size:22px;margin-top:12px}
+  .unit h3{font-size:22px;margin-top:24px}
   .unit .rent{font-size:34px}
   .unit .rent small{display:block;margin:6px 0 0}
-  .unit .sf{font-size:12px;letter-spacing:.06em;line-height:1.4}
-  .tags .tap{left:auto !important;right:0;top:28% !important;transform:translateY(-50%)}
-  .tags .t6{left:40% !important;top:72% !important}
+  .unit .sf{font-size:12px;margin-left:2px}
+  .limnote{text-align:center;margin-inline:auto}
+  .tags .tap{left:87.1% !important;top:42.3% !important}
+  .scene .ap-d{display:none}.scene .ap-m{display:inline}
+  .tags .t6{left:44% !important;top:72% !important}
+  .tags .tch{left:0 !important;top:20% !important}
   .tags span{font-size:12px}
   .fork{width:100% !important}
   .split2{justify-content:center}
@@ -430,11 +490,24 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
   .fig,.fig+.fig{padding:24px 0 0;border-left:0}
   .fig+.fig{border-top:1px solid var(--line);margin-top:24px}
   .fine{text-align:center}
+  .money .eg{text-align:center}
+  #newch button{padding:12px}
+  .key{justify-content:center}
+  .legal{text-align:center}
   .asks li{text-align:left}
   .picker{text-align:center}
   .picker .seg{max-width:100%;overflow-x:auto}
   .views,.flyover{aspect-ratio:4/5}
   .pinfo{flex-direction:column;justify-content:center;text-align:center}
+  .about .ab{grid-template-columns:minmax(0,1fr);text-align:center}
+  .ab-h,.about .lede,.ab-pic,.built,.ab-n{grid-column:1;grid-row:auto}
+  .ab-h{font-size:clamp(26px,8.2vw,40px)}
+  .about .lede{text-align:justify;text-align-last:center;margin-top:24px}
+  .ab-pic{width:min(62%,260px);aspect-ratio:4/5;justify-self:center}
+  .ab-n{gap:40px;margin-bottom:40px}
+  .built{min-height:0;aspect-ratio:3/2}
+  .ab-work li{flex-direction:column;align-items:center;gap:4px}
+  .ab-work span{text-align:center}
   .chips{justify-content:center}
   .opts-head{flex-direction:column;align-items:center;text-align:center;gap:14px}
   .opts .stack{height:420vh}
@@ -471,6 +544,21 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
   .close .lede,.close .also{margin-inline:auto}
   footer .wrap{flex-direction:column;justify-content:center;text-align:center}
 }
+.nm{font-style:italic}
+
+/* round 5: pinned scenes hug their content (no dead space above or below), quiet tab rail, tighter footer */
+.stick{height:auto;top:calc((100vh - min(76vh,620px)) / 2)}
+.picker .seg{scrollbar-width:none}
+.picker .seg::-webkit-scrollbar{display:none}
+footer{padding-block:clamp(40px,4.5vw,56px) calc(28px + env(safe-area-inset-bottom,0px))}
+.legal{margin-top:0;padding-top:20px}
+.paid svg{width:clamp(204px,18vw,220px)}
+@media (max-width:760px){
+  .unit:first-child .box svg,.unit:first-child .dim{translate:calc(10 / 41 * 100cqw) 0}
+  .stick{top:40px}
+  footer .wrap{gap:18px}
+}
+@media (prefers-reduced-motion:reduce){.stick{position:static}}
 </style>
 
 <header class="top">
@@ -542,10 +630,10 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
     </div>
     <div class="story">
       <div class="stage" data-s="1" aria-hidden="true">
-        <svg class="scene" viewBox="0 0 1200 520">
-          <rect class="land" x="452" y="236" width="730" height="244" rx="10"/>
+        <svg class="scene" viewBox="0 0 1400 520">
+          <rect class="land" x="806" y="236" width="584" height="244" rx="10"/>
           <!-- the church today -->
-          <g>
+          <g transform="translate(100 0)">
             <path class="bld" d="M54 382h172v98H54z"/>
             <path class="bld" d="M42 386L140 300l98 86z"/>
             <path class="bld" d="M124 252h32v72h-32z"/>
@@ -556,54 +644,65 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
           </g>
           <!-- the new hall, step five -->
           <g class="hall">
-            <!-- glass pavilion wing under a hip roof -->
-            <path class="dk" d="M244 420L262 394H284L302 420Z"/>
-            <rect class="wd" x="248" y="420" width="50" height="4"/>
-            <rect class="glass" x="252" y="424" width="44" height="56"/>
-            <path class="mul" d="M263 424v56M274 424v56M285 424v56M252 446h44"/>
-            <path class="col" d="M250 424v56M298 424v56"/>
-            <!-- the hall: clerestory band over a long porch -->
-            <rect class="sg" x="330" y="356" width="140" height="48"/>
-            <rect class="sg" x="306" y="404" width="168" height="76"/>
-            <path class="bt" d="M336 358v44M343 358v44M350 358v44M357 358v44M364 358v44M371 358v44M378 358v44M385 358v44M392 358v44M399 358v44M406 358v44M413 358v44M420 358v44M427 358v44M434 358v44M441 358v44M448 358v44M455 358v44M462 358v44M316 417v61M323 417v61M330 417v61M337 417v61M344 417v61M351 417v61M358 417v61M365 417v61M372 417v61M379 417v61M452 417v61M459 417v61M466 417v61"/>
-            <rect class="dk" x="326" y="350" width="148" height="6"/>
-            <rect class="glass" x="345" y="368" width="26" height="14"/><rect class="glass" x="387" y="368" width="26" height="14"/><rect class="glass" x="429" y="368" width="26" height="14"/>
-            <path class="mul" d="M358 368v14M400 368v14M442 368v14"/>
-            <rect class="wd" x="386" y="415" width="60" height="65"/>
-            <rect class="glass" x="392" y="440" width="20" height="40"/><rect class="glass" x="420" y="440" width="20" height="40"/>
-            <path class="mul" d="M402 440v40M430 440v40"/>
-            <rect class="xc" x="330" y="424" width="4" height="40"/><rect class="xc" x="322" y="434" width="20" height="4"/>
-            <rect class="glass" x="348" y="436" width="26" height="26"/><path class="mul" d="M361 436v26"/>
-            <rect class="dk" x="302" y="404" width="176" height="7"/>
-            <rect class="wd" x="306" y="411" width="168" height="4"/>
-            <path class="pst" d="M311 415v65M381 415v65M451 415v65M471 415v65"/>
+            <!-- the hall: clerestory volume over a long porch, about twice the width of the old church -->
+            <rect class="sg" x="408" y="308" width="390" height="76"/>
+            <path class="bt" d="M414 311v70M422 311v70M430 311v70M438 311v70M446 311v70M454 311v70M462 311v70M470 311v70M478 311v70M486 311v70M494 311v70M502 311v70M510 311v70M518 311v70M526 311v70M534 311v70M542 311v70M550 311v70M558 311v70M566 311v70M574 311v70M582 311v70M590 311v70M598 311v70M606 311v70M614 311v70M622 311v70M630 311v70M638 311v70M646 311v70M654 311v70M662 311v70M670 311v70M678 311v70M686 311v70M694 311v70M702 311v70M710 311v70M718 311v70M726 311v70M734 311v70M742 311v70M750 311v70M758 311v70M766 311v70M774 311v70M782 311v70M790 311v70"/>
+            <rect class="dk" x="402" y="300" width="402" height="8"/>
+            <rect class="glass" x="450" y="330" width="64" height="20"/><rect class="glass" x="571" y="330" width="64" height="20"/><rect class="glass" x="692" y="330" width="64" height="20"/>
+            <path class="mul" d="M466 330v20M482 330v20M498 330v20M587 330v20M603 330v20M619 330v20M708 330v20M724 330v20M740 330v20"/>
+            <rect class="sg" x="412" y="384" width="382" height="96"/>
+            <path class="bt" d="M418 400v78M426 400v78M434 400v78M442 400v78M450 400v78M458 400v78M466 400v78M474 400v78M538 400v78M546 400v78M666 400v78M730 400v78"/>
+            <rect class="wd" x="550" y="400" width="106" height="80"/>
+            <rect class="glass" x="562" y="428" width="36" height="52"/><rect class="glass" x="608" y="428" width="36" height="52"/>
+            <path class="mul" d="M580 428v52M626 428v52"/>
+            <rect class="xc" x="438" y="408" width="5" height="54"/><rect class="xc" x="424" y="422" width="33" height="5"/>
+            <rect class="glass" x="486" y="420" width="44" height="36"/><rect class="glass" x="676" y="420" width="44" height="36"/><rect class="glass" x="742" y="420" width="44" height="36"/>
+            <path class="mul" d="M508 420v36M698 420v36M764 420v36"/>
+            <rect class="dk" x="394" y="384" width="418" height="8"/>
+            <rect class="wd" x="402" y="392" width="402" height="5"/>
+            <path class="pst" d="M406 397v83M474 397v83M542 397v83M664 397v83M732 397v83M800 397v83"/>
           </g>
           <!-- homes: two modules each -->
           <g id="homes3"></g>
-          <path class="ground" d="M0 480h1200"/>
+          <path class="ground" d="M0 480h1400"/>
           <!-- profit flow -->
-          <path class="flow thin" d="M600 402C600 300 760 220 800 150M840 402C840 300 820 220 806 150M1080 402C1080 300 860 220 812 150"/>
-          <path class="flow" d="M600 402C600 300 760 220 800 150"/>
-          <path class="flow" d="M840 402C840 300 820 220 806 150"/>
-          <path class="flow" d="M1080 402C1080 300 860 220 812 150"/>
-          <path class="flow thin f-hall" d="M790 120C620 96 420 150 350 296"/>
-          <path class="flow thin f-own" d="M790 120C560 92 260 110 176 300"/>
-          <path class="flow thin" d="M830 120C960 96 1080 90 1150 96"/>
-          <path class="flow f-hall" d="M790 120C620 96 420 150 350 296"/>
-          <path class="flow f-own" d="M790 120C560 92 260 110 176 300"/>
-          <path class="flow" d="M830 120C960 96 1080 90 1150 96"/>
-          <circle class="node" cx="810" cy="126" r="26"/>
+          <path class="flow thin" d="M914 402C914 300 1060 220 1096 152M1102 402C1102 300 1102 220 1102 152M1290 402C1290 300 1144 220 1108 152"/>
+          <path class="flow" d="M914 402C914 300 1060 220 1096 152"/>
+          <path class="flow" d="M1102 402C1102 300 1102 220 1102 152"/>
+          <path class="flow" d="M1290 402C1290 300 1144 220 1108 152"/>
+          <path class="flow thin f-hall" d="M1082 120C900 96 680 150 603 296"/>
+          <path class="flow thin f-own" d="M1082 120C800 92 370 110 276 300"/>
+          <path class="flow thin ap-d" d="M1124 114C1240 88 1290 120 1290 194"/><path class="flow thin ap-m" d="M1124 114C1196 92 1220 128 1220 168"/>
+          <path class="flow f-hall" d="M1082 120C900 96 680 150 603 296"/>
+          <path class="flow f-own" d="M1082 120C800 92 370 110 276 300"/>
+          <path class="flow ap-d" d="M1124 114C1240 88 1290 120 1290 194"/><path class="flow ap-m" d="M1124 114C1196 92 1220 128 1220 168"/>
+          <circle class="node" cx="1102" cy="126" r="26"/>
         </svg>
-        <div class="tags"><span class="t1" style="left:67.7%;top:40%">Open land</span><span class="t4" style="left:67.5%;top:12%">Shared profit</span><span class="t4" style="left:24%;top:30%">The church</span><span class="t4 tap" style="left:92%;top:11%">Abrams Places</span><span class="t5" style="left:29.2%;top:50%">New church</span><span class="t6" style="left:29.2%;top:72%">Profits to the church</span></div>
+        <div class="tags"><span class="t1" style="left:78.4%;top:40%">Open land</span><span class="t4" style="left:78.7%;top:8.5%">Shared profit</span><span class="t4 tch" style="left:0;top:66%;transform:translateY(-50%)">The church</span><span class="t4 tap" style="left:92.1%;top:42.3%"><i class="nm">Abrams Places</i></span><span class="t5" style="left:43.1%;top:43%">New church</span><span class="t6" style="left:34%;top:66%">Profits to the church</span></div>
       </div>
       <ol class="beats" style="list-style:none;margin:0;padding:0">
         <li class="beat on"><span class="n">01</span><h3>Start with the land.</h3><p>Most church campuses have open land they don't use.</p></li>
         <li class="beat"><span class="n">02</span><h3>We build the homes.</h3><p>Steel modules, finished in our Florida yard and set on your land.</p></li>
         <li class="beat"><span class="n">03</span><h3>Neighbors move in.</h3><p>Teachers, nurses, first responders and retirees, at rents they can afford.</p></li>
-        <li class="beat"><span class="n">04</span><h3>The profit is shared.</h3><p>After costs, the church and Abrams Places share what the homes earn, as owners.</p></li>
+        <li class="beat"><span class="n">04</span><h3>The profit is shared.</h3><p>After costs, the church and <i class="nm">Abrams Places</i> share what the homes earn, as owners.</p></li>
         <li class="beat"><span class="n">05</span><h3>Your share builds your church.</h3><p>A new church, a renewed sanctuary, or both.</p></li>
         <li class="beat"><span class="n or">or</span><h3>Your share comes to you.</h3><p>Keep the profits instead. Each agreement sets the choice.</p></li>
       </ol>
+    </div>
+  </div>
+</section>
+
+<section class="lawsec dark" id="law">
+  <div class="wrap">
+    <div class="law">
+      <div data-rv>
+        <h2 style="font-size:clamp(30px,3.6vw,46px);line-height:1.1">Florida law opens the door.</h2>
+        <p class="lede">The Live Local Act lets a church build homes on its own land, with no rezoning. In Boynton Beach, 100 homes are already approved on church land.</p>
+      </div>
+      <div class="asks" data-rv style="--d:.15s">
+        <h3>What the law asks</h3>
+        <ol id="asks"></ol>
+      </div>
     </div>
   </div>
 </section>
@@ -612,9 +711,10 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
   <div class="wrap">
     <div class="head">
       <h2 data-rv>Four homes, one module.</h2>
-      <p class="lede" data-rv style="--d:.15s">Every home is built from the same steel module, and every rent sits below Florida's limit for workforce housing.</p>
+      <p class="lede" data-rv style="--d:.15s">Below are Palm Beach County's 2026 rent limits. Ours will be below them.</p>
     </div>
     <div class="units" id="units"></div>
+    <p class="limnote" data-rv>Florida's Live Local Act requires at least 40% of homes at or under these limits.<br>Limits at 120% of area median income, Florida Housing Finance Corporation, 2026.</p>
     <div class="made">
       <h3 data-rv>How a home comes together.</h3>
       <div class="panel" data-rv>
@@ -757,49 +857,39 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
     </div>
     <div class="brings">
       <div class="bring church" data-rv><span class="who">The church brings</span><p>The land, and its place in the neighborhood.</p></div>
-      <div class="bring ap" data-rv style="--d:.15s"><span class="who">Abrams Places brings</span><p>The know-how, the design and the build.</p></div>
+      <div class="bring ap" data-rv style="--d:.15s"><span class="who"><i class="nm">Abrams Places</i> brings</span><p>The know-how, the design and the build.</p></div>
     </div>
 
-    <div class="money" data-rv>
+    <div class="money" data-rv data-c="0">
       <div class="row">
-        <h3>Where the rent goes, each year.</h3>
-        <div class="seg" id="scale" role="group" aria-label="Community size">
-          <button type="button" data-s="50" aria-pressed="false">50 homes</button>
-          <button type="button" data-s="100" aria-pressed="true">100 homes</button>
-          <button type="button" data-s="120" aria-pressed="false">120 homes</button>
+        <h3>Where the rent goes, each month.</h3>
+        <div class="seg" id="newch" role="group" aria-label="New church">
+          <button type="button" data-c="0" aria-pressed="true">Without a new church</button>
+          <button type="button" data-c="1" aria-pressed="false">With a new church</button>
         </div>
       </div>
-      <div class="flowbox">
+      <p class="eg">A hypothetical example: 50 homes</p>
+      <div class="flowbox" id="wf" data-p="0">
         <div class="lane">
-          <div class="lab"><span>Rent collected</span><span class="num" id="vRent">$0</span></div>
+          <div class="lab"><span>Rent comes in</span><span class="num">$100,000</span></div>
           <div class="track"><i class="rentbar" style="width:100%"></i></div>
         </div>
         <div class="lane">
-          <div class="lab"><span>Upkeep, staff, insurance and reserves</span><span class="num" id="vCost">$0</span></div>
-          <div class="track"><i class="costbar" id="bCost" style="width:42%"></i><i class="profitbar" id="bProfit" style="width:58%"></i></div>
-          <div class="split2"><span></span><span>Profit to share <b class="num" id="vProfit" style="font-size:22px;color:var(--ink)">$0</b></span></div>
+          <div class="lab"><span>Costs and the housing loan come out first</span></div>
+          <div class="track"><i class="costbar w-cost"></i><i class="loanbar w-hl"></i><i class="profitbar w-pr"></i></div>
+          <ul class="key"><li><i class="k-cost"></i>Running the homes <b class="num">$40,000</b></li><li><i class="k-loan"></i>Housing loan payment <b class="num">$30,000</b></li><li><i class="k-pr"></i>Profit <b class="num">$30,000</b></li></ul>
         </div>
-        <div class="fork" id="fork" style="width:58%">
+        <div class="fork w-pr">
           <svg viewBox="0 0 100 64" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0V22M50 22C50 40 25 40 25 64M50 22C50 40 75 40 75 64"/></svg>
-          <div class="owners"><div class="c">The church</div><div class="a">Abrams Places</div></div>
+          <div class="owners"><div class="c">The church</div><div class="a"><i class="nm">Abrams Places</i></div></div>
+        </div>
+        <div class="lane">
+          <div class="lab"><span>The church's monthly check</span><span class="num" id="vCheck">$15,000</span></div>
+          <div class="track"><i class="bldbar c-bl"></i><i class="checkbar c-ck"></i></div>
+          <ul class="key c-key"><li><i class="k-bld"></i>Church building loan <b class="num">$8,250</b></li><li><i class="k-pr"></i>The church's check <b class="num">$6,750</b></li></ul>
         </div>
       </div>
-      <dl class="figs">
-        <div class="fig"><dt>Profit to share over 30 years</dt><dd class="num" id="v30">$0</dd></div>
-        <div class="fig"><dt>Value created to share</dt><dd class="num" id="vVal">$0</dd></div>
-      </dl>
-      <p class="fine">Before loan payments, at today's rents. The church's share is set together once the final numbers are in.</p>
-    </div>
-
-    <div class="law">
-      <div data-rv>
-        <h2 style="font-size:clamp(30px,3.6vw,46px);line-height:1.1">Florida law opens the door.</h2>
-        <p class="lede">The Live Local Act lets a church build homes on its own land, with no rezoning. In Boynton Beach, 100 homes are already approved on church land.</p>
-      </div>
-      <div class="asks" data-rv style="--d:.15s">
-        <h3>What the law asks</h3>
-        <ol id="asks"></ol>
-      </div>
+      <p class="fine c-note">The check returns to $15,000 once the building loan is paid off.</p>
     </div>
   </div>
 </section>
@@ -821,7 +911,7 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
         <img src="img/gable.jpg" alt="The Gable Hall: an olive gable church with a covered entry" loading="lazy" decoding="async">
         <img src="img/tower.jpg" alt="The Tower Church: a two-story church with a lantern tower" loading="lazy" decoding="async">
       </div>
-      <div class="pinfo" aria-live="polite"><h3 id="pName">The Long Porch</h3><div class="chips" id="pSpec"></div></div>
+      <div class="pinfo" aria-live="polite"><h3 id="pName">The Long Porch</h3></div>
     </div>
     <div class="paid" data-rv>
       <svg viewBox="0 0 220 120" aria-hidden="true">
@@ -853,48 +943,6 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
     </div>
 
     <div class="chap">
-      <div class="say" data-rv><h3>Celebrations</h3><p>Weddings and events, rented out for income.</p></div>
-      <figure class="ph w7" data-rv><img src="img/wedding.jpg" alt="A bride walking down the aisle at a wedding ceremony" loading="lazy" decoding="async"></figure>
-      <figure class="ph w5" data-rv style="--d:.15s"><img src="img/reception.jpg" alt="A wedding reception with a first dance under string lights" loading="lazy" decoding="async"></figure>
-      <div class="facts">
-        <div class="fact" data-rv>
-          <svg class="plan" viewBox="0 0 240 150" aria-hidden="true"><rect x="2" y="2" width="236" height="146" rx="10" class="pl-wall"/><rect x="96" y="12" width="48" height="10" rx="3" class="pl-hi"/><path d="M120 30v108" class="pl-aisle"/>
-            <g class="pl-rows"><rect x="18" y="36" width="8" height="7" rx="2"/><rect x="29" y="36" width="8" height="7" rx="2"/><rect x="40" y="36" width="8" height="7" rx="2"/><rect x="51" y="36" width="8" height="7" rx="2"/><rect x="62" y="36" width="8" height="7" rx="2"/><rect x="73" y="36" width="8" height="7" rx="2"/><rect x="84" y="36" width="8" height="7" rx="2"/><rect x="95" y="36" width="8" height="7" rx="2"/><rect x="106" y="36" width="8" height="7" rx="2"/><rect x="134" y="36" width="8" height="7" rx="2"/><rect x="145" y="36" width="8" height="7" rx="2"/><rect x="156" y="36" width="8" height="7" rx="2"/><rect x="167" y="36" width="8" height="7" rx="2"/><rect x="178" y="36" width="8" height="7" rx="2"/><rect x="189" y="36" width="8" height="7" rx="2"/><rect x="200" y="36" width="8" height="7" rx="2"/><rect x="211" y="36" width="8" height="7" rx="2"/><rect x="222" y="36" width="8" height="7" rx="2"/><rect x="18" y="48" width="8" height="7" rx="2"/><rect x="29" y="48" width="8" height="7" rx="2"/><rect x="40" y="48" width="8" height="7" rx="2"/><rect x="51" y="48" width="8" height="7" rx="2"/><rect x="62" y="48" width="8" height="7" rx="2"/><rect x="73" y="48" width="8" height="7" rx="2"/><rect x="84" y="48" width="8" height="7" rx="2"/><rect x="95" y="48" width="8" height="7" rx="2"/><rect x="106" y="48" width="8" height="7" rx="2"/><rect x="134" y="48" width="8" height="7" rx="2"/><rect x="145" y="48" width="8" height="7" rx="2"/><rect x="156" y="48" width="8" height="7" rx="2"/><rect x="167" y="48" width="8" height="7" rx="2"/><rect x="178" y="48" width="8" height="7" rx="2"/><rect x="189" y="48" width="8" height="7" rx="2"/><rect x="200" y="48" width="8" height="7" rx="2"/><rect x="211" y="48" width="8" height="7" rx="2"/><rect x="222" y="48" width="8" height="7" rx="2"/><rect x="18" y="60" width="8" height="7" rx="2"/><rect x="29" y="60" width="8" height="7" rx="2"/><rect x="40" y="60" width="8" height="7" rx="2"/><rect x="51" y="60" width="8" height="7" rx="2"/><rect x="62" y="60" width="8" height="7" rx="2"/><rect x="73" y="60" width="8" height="7" rx="2"/><rect x="84" y="60" width="8" height="7" rx="2"/><rect x="95" y="60" width="8" height="7" rx="2"/><rect x="106" y="60" width="8" height="7" rx="2"/><rect x="134" y="60" width="8" height="7" rx="2"/><rect x="145" y="60" width="8" height="7" rx="2"/><rect x="156" y="60" width="8" height="7" rx="2"/><rect x="167" y="60" width="8" height="7" rx="2"/><rect x="178" y="60" width="8" height="7" rx="2"/><rect x="189" y="60" width="8" height="7" rx="2"/><rect x="200" y="60" width="8" height="7" rx="2"/><rect x="211" y="60" width="8" height="7" rx="2"/><rect x="222" y="60" width="8" height="7" rx="2"/><rect x="18" y="72" width="8" height="7" rx="2"/><rect x="29" y="72" width="8" height="7" rx="2"/><rect x="40" y="72" width="8" height="7" rx="2"/><rect x="51" y="72" width="8" height="7" rx="2"/><rect x="62" y="72" width="8" height="7" rx="2"/><rect x="73" y="72" width="8" height="7" rx="2"/><rect x="84" y="72" width="8" height="7" rx="2"/><rect x="95" y="72" width="8" height="7" rx="2"/><rect x="106" y="72" width="8" height="7" rx="2"/><rect x="134" y="72" width="8" height="7" rx="2"/><rect x="145" y="72" width="8" height="7" rx="2"/><rect x="156" y="72" width="8" height="7" rx="2"/><rect x="167" y="72" width="8" height="7" rx="2"/><rect x="178" y="72" width="8" height="7" rx="2"/><rect x="189" y="72" width="8" height="7" rx="2"/><rect x="200" y="72" width="8" height="7" rx="2"/><rect x="211" y="72" width="8" height="7" rx="2"/><rect x="222" y="72" width="8" height="7" rx="2"/><rect x="18" y="84" width="8" height="7" rx="2"/><rect x="29" y="84" width="8" height="7" rx="2"/><rect x="40" y="84" width="8" height="7" rx="2"/><rect x="51" y="84" width="8" height="7" rx="2"/><rect x="62" y="84" width="8" height="7" rx="2"/><rect x="73" y="84" width="8" height="7" rx="2"/><rect x="84" y="84" width="8" height="7" rx="2"/><rect x="95" y="84" width="8" height="7" rx="2"/><rect x="106" y="84" width="8" height="7" rx="2"/><rect x="134" y="84" width="8" height="7" rx="2"/><rect x="145" y="84" width="8" height="7" rx="2"/><rect x="156" y="84" width="8" height="7" rx="2"/><rect x="167" y="84" width="8" height="7" rx="2"/><rect x="178" y="84" width="8" height="7" rx="2"/><rect x="189" y="84" width="8" height="7" rx="2"/><rect x="200" y="84" width="8" height="7" rx="2"/><rect x="211" y="84" width="8" height="7" rx="2"/><rect x="222" y="84" width="8" height="7" rx="2"/><rect x="18" y="96" width="8" height="7" rx="2"/><rect x="29" y="96" width="8" height="7" rx="2"/><rect x="40" y="96" width="8" height="7" rx="2"/><rect x="51" y="96" width="8" height="7" rx="2"/><rect x="62" y="96" width="8" height="7" rx="2"/><rect x="73" y="96" width="8" height="7" rx="2"/><rect x="84" y="96" width="8" height="7" rx="2"/><rect x="95" y="96" width="8" height="7" rx="2"/><rect x="106" y="96" width="8" height="7" rx="2"/><rect x="134" y="96" width="8" height="7" rx="2"/><rect x="145" y="96" width="8" height="7" rx="2"/><rect x="156" y="96" width="8" height="7" rx="2"/><rect x="167" y="96" width="8" height="7" rx="2"/><rect x="178" y="96" width="8" height="7" rx="2"/><rect x="189" y="96" width="8" height="7" rx="2"/><rect x="200" y="96" width="8" height="7" rx="2"/><rect x="211" y="96" width="8" height="7" rx="2"/><rect x="222" y="96" width="8" height="7" rx="2"/><rect x="18" y="108" width="8" height="7" rx="2"/><rect x="29" y="108" width="8" height="7" rx="2"/><rect x="40" y="108" width="8" height="7" rx="2"/><rect x="51" y="108" width="8" height="7" rx="2"/><rect x="62" y="108" width="8" height="7" rx="2"/><rect x="73" y="108" width="8" height="7" rx="2"/><rect x="84" y="108" width="8" height="7" rx="2"/><rect x="95" y="108" width="8" height="7" rx="2"/><rect x="106" y="108" width="8" height="7" rx="2"/><rect x="134" y="108" width="8" height="7" rx="2"/><rect x="145" y="108" width="8" height="7" rx="2"/><rect x="156" y="108" width="8" height="7" rx="2"/><rect x="167" y="108" width="8" height="7" rx="2"/><rect x="178" y="108" width="8" height="7" rx="2"/><rect x="189" y="108" width="8" height="7" rx="2"/><rect x="200" y="108" width="8" height="7" rx="2"/><rect x="211" y="108" width="8" height="7" rx="2"/><rect x="222" y="108" width="8" height="7" rx="2"/><rect x="18" y="120" width="8" height="7" rx="2"/><rect x="29" y="120" width="8" height="7" rx="2"/><rect x="40" y="120" width="8" height="7" rx="2"/><rect x="51" y="120" width="8" height="7" rx="2"/><rect x="62" y="120" width="8" height="7" rx="2"/><rect x="73" y="120" width="8" height="7" rx="2"/><rect x="84" y="120" width="8" height="7" rx="2"/><rect x="95" y="120" width="8" height="7" rx="2"/><rect x="106" y="120" width="8" height="7" rx="2"/><rect x="134" y="120" width="8" height="7" rx="2"/><rect x="145" y="120" width="8" height="7" rx="2"/><rect x="156" y="120" width="8" height="7" rx="2"/><rect x="167" y="120" width="8" height="7" rx="2"/><rect x="178" y="120" width="8" height="7" rx="2"/><rect x="189" y="120" width="8" height="7" rx="2"/><rect x="200" y="120" width="8" height="7" rx="2"/><rect x="211" y="120" width="8" height="7" rx="2"/><rect x="222" y="120" width="8" height="7" rx="2"/><rect x="18" y="132" width="8" height="7" rx="2"/><rect x="29" y="132" width="8" height="7" rx="2"/><rect x="40" y="132" width="8" height="7" rx="2"/><rect x="51" y="132" width="8" height="7" rx="2"/><rect x="62" y="132" width="8" height="7" rx="2"/><rect x="73" y="132" width="8" height="7" rx="2"/><rect x="84" y="132" width="8" height="7" rx="2"/><rect x="95" y="132" width="8" height="7" rx="2"/><rect x="106" y="132" width="8" height="7" rx="2"/><rect x="134" y="132" width="8" height="7" rx="2"/><rect x="145" y="132" width="8" height="7" rx="2"/><rect x="156" y="132" width="8" height="7" rx="2"/><rect x="167" y="132" width="8" height="7" rx="2"/><rect x="178" y="132" width="8" height="7" rx="2"/><rect x="189" y="132" width="8" height="7" rx="2"/><rect x="200" y="132" width="8" height="7" rx="2"/><rect x="211" y="132" width="8" height="7" rx="2"/><rect x="222" y="132" width="8" height="7" rx="2"/></g></svg>
-          <div><span class="lbl">Ceremony</span><b class="num">220 seats</b><p>Rows face the front, with a center aisle.</p></div>
-        </div>
-        <div class="fact" data-rv style="--d:.15s">
-          <svg class="plan" viewBox="0 0 240 150" aria-hidden="true"><rect x="2" y="2" width="236" height="146" rx="10" class="pl-wall"/><rect x="84" y="56" width="72" height="38" rx="4" class="pl-floor"/><circle cx="36" cy="34" r="10" class="pl-t"/><circle cx="51.0" cy="34.0" r="2.6" class="pl-c"/><circle cx="46.6" cy="44.6" r="2.6" class="pl-c"/><circle cx="36.0" cy="49.0" r="2.6" class="pl-c"/><circle cx="25.4" cy="44.6" r="2.6" class="pl-c"/><circle cx="21.0" cy="34.0" r="2.6" class="pl-c"/><circle cx="25.4" cy="23.4" r="2.6" class="pl-c"/><circle cx="36.0" cy="19.0" r="2.6" class="pl-c"/><circle cx="46.6" cy="23.4" r="2.6" class="pl-c"/><circle cx="84" cy="30" r="10" class="pl-t"/><circle cx="99.0" cy="30.0" r="2.6" class="pl-c"/><circle cx="94.6" cy="40.6" r="2.6" class="pl-c"/><circle cx="84.0" cy="45.0" r="2.6" class="pl-c"/><circle cx="73.4" cy="40.6" r="2.6" class="pl-c"/><circle cx="69.0" cy="30.0" r="2.6" class="pl-c"/><circle cx="73.4" cy="19.4" r="2.6" class="pl-c"/><circle cx="84.0" cy="15.0" r="2.6" class="pl-c"/><circle cx="94.6" cy="19.4" r="2.6" class="pl-c"/><circle cx="156" cy="30" r="10" class="pl-t"/><circle cx="171.0" cy="30.0" r="2.6" class="pl-c"/><circle cx="166.6" cy="40.6" r="2.6" class="pl-c"/><circle cx="156.0" cy="45.0" r="2.6" class="pl-c"/><circle cx="145.4" cy="40.6" r="2.6" class="pl-c"/><circle cx="141.0" cy="30.0" r="2.6" class="pl-c"/><circle cx="145.4" cy="19.4" r="2.6" class="pl-c"/><circle cx="156.0" cy="15.0" r="2.6" class="pl-c"/><circle cx="166.6" cy="19.4" r="2.6" class="pl-c"/><circle cx="204" cy="34" r="10" class="pl-t"/><circle cx="219.0" cy="34.0" r="2.6" class="pl-c"/><circle cx="214.6" cy="44.6" r="2.6" class="pl-c"/><circle cx="204.0" cy="49.0" r="2.6" class="pl-c"/><circle cx="193.4" cy="44.6" r="2.6" class="pl-c"/><circle cx="189.0" cy="34.0" r="2.6" class="pl-c"/><circle cx="193.4" cy="23.4" r="2.6" class="pl-c"/><circle cx="204.0" cy="19.0" r="2.6" class="pl-c"/><circle cx="214.6" cy="23.4" r="2.6" class="pl-c"/><circle cx="30" cy="80" r="10" class="pl-t"/><circle cx="45.0" cy="80.0" r="2.6" class="pl-c"/><circle cx="40.6" cy="90.6" r="2.6" class="pl-c"/><circle cx="30.0" cy="95.0" r="2.6" class="pl-c"/><circle cx="19.4" cy="90.6" r="2.6" class="pl-c"/><circle cx="15.0" cy="80.0" r="2.6" class="pl-c"/><circle cx="19.4" cy="69.4" r="2.6" class="pl-c"/><circle cx="30.0" cy="65.0" r="2.6" class="pl-c"/><circle cx="40.6" cy="69.4" r="2.6" class="pl-c"/><circle cx="210" cy="80" r="10" class="pl-t"/><circle cx="225.0" cy="80.0" r="2.6" class="pl-c"/><circle cx="220.6" cy="90.6" r="2.6" class="pl-c"/><circle cx="210.0" cy="95.0" r="2.6" class="pl-c"/><circle cx="199.4" cy="90.6" r="2.6" class="pl-c"/><circle cx="195.0" cy="80.0" r="2.6" class="pl-c"/><circle cx="199.4" cy="69.4" r="2.6" class="pl-c"/><circle cx="210.0" cy="65.0" r="2.6" class="pl-c"/><circle cx="220.6" cy="69.4" r="2.6" class="pl-c"/><circle cx="36" cy="124" r="10" class="pl-t"/><circle cx="51.0" cy="124.0" r="2.6" class="pl-c"/><circle cx="46.6" cy="134.6" r="2.6" class="pl-c"/><circle cx="36.0" cy="139.0" r="2.6" class="pl-c"/><circle cx="25.4" cy="134.6" r="2.6" class="pl-c"/><circle cx="21.0" cy="124.0" r="2.6" class="pl-c"/><circle cx="25.4" cy="113.4" r="2.6" class="pl-c"/><circle cx="36.0" cy="109.0" r="2.6" class="pl-c"/><circle cx="46.6" cy="113.4" r="2.6" class="pl-c"/><circle cx="84" cy="128" r="10" class="pl-t"/><circle cx="99.0" cy="128.0" r="2.6" class="pl-c"/><circle cx="94.6" cy="138.6" r="2.6" class="pl-c"/><circle cx="84.0" cy="143.0" r="2.6" class="pl-c"/><circle cx="73.4" cy="138.6" r="2.6" class="pl-c"/><circle cx="69.0" cy="128.0" r="2.6" class="pl-c"/><circle cx="73.4" cy="117.4" r="2.6" class="pl-c"/><circle cx="84.0" cy="113.0" r="2.6" class="pl-c"/><circle cx="94.6" cy="117.4" r="2.6" class="pl-c"/><circle cx="156" cy="128" r="10" class="pl-t"/><circle cx="171.0" cy="128.0" r="2.6" class="pl-c"/><circle cx="166.6" cy="138.6" r="2.6" class="pl-c"/><circle cx="156.0" cy="143.0" r="2.6" class="pl-c"/><circle cx="145.4" cy="138.6" r="2.6" class="pl-c"/><circle cx="141.0" cy="128.0" r="2.6" class="pl-c"/><circle cx="145.4" cy="117.4" r="2.6" class="pl-c"/><circle cx="156.0" cy="113.0" r="2.6" class="pl-c"/><circle cx="166.6" cy="117.4" r="2.6" class="pl-c"/><circle cx="204" cy="124" r="10" class="pl-t"/><circle cx="219.0" cy="124.0" r="2.6" class="pl-c"/><circle cx="214.6" cy="134.6" r="2.6" class="pl-c"/><circle cx="204.0" cy="139.0" r="2.6" class="pl-c"/><circle cx="193.4" cy="134.6" r="2.6" class="pl-c"/><circle cx="189.0" cy="124.0" r="2.6" class="pl-c"/><circle cx="193.4" cy="113.4" r="2.6" class="pl-c"/><circle cx="204.0" cy="109.0" r="2.6" class="pl-c"/><circle cx="214.6" cy="113.4" r="2.6" class="pl-c"/></svg>
-          <div><span class="lbl">Reception</span><b class="num">130 at tables</b><p>Round tables around a dance floor.</p></div>
-        </div>
-        <div class="fact note" data-rv style="--d:.3s">
-          <div class="cal" aria-hidden="true"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="b"></i><i class="b"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="b"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="b"></i><i class="b"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="b"></i><i class="b"></i></div>
-          <div><span class="lbl">Rented by the day</span><b class="num">Income</b><p>Families and groups book the hall, and the fees help carry the building.</p></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="chap">
-      <div class="say" data-rv><h3>Youth and kids</h3><p>Rooms of their own in every design.</p></div>
-      <figure class="ph w7" data-rv><img src="img/playroom.jpg" alt="Children playing with blocks in a bright playroom" loading="lazy" decoding="async"></figure>
-      <figure class="ph w5" data-rv style="--d:.15s"><img src="img/gameroom.jpg" alt="A youth game room with a ping-pong table" loading="lazy" decoding="async"></figure>
-      <div class="facts youth">
-        <div class="fact" data-rv>
-          <svg class="plan" viewBox="0 0 240 110" aria-hidden="true"><rect x="2" y="40" width="236" height="56" rx="6" class="pl-wall"/><rect x="2" y="34" width="236" height="7" rx="2" class="pl-porch"/><rect x="176" y="40" width="62" height="56" rx="6" class="pl-y"/><path d="M176 40v56" class="pl-line"/></svg>
-          <div><span class="lbl">Long Porch</span><b class="num">A youth room</b><p>Off the sanctuary, open on Sundays and weeknights.</p></div>
-        </div>
-        <div class="fact" data-rv style="--d:.15s">
-          <svg class="plan" viewBox="0 0 240 110" aria-hidden="true"><rect x="62" y="6" width="116" height="100" rx="6" class="pl-wall"/><rect x="62" y="70" width="58" height="36" rx="6" class="pl-y"/><rect x="120" y="70" width="58" height="36" rx="6" class="pl-y"/><path d="M62 70h116M120 70v36" class="pl-line"/></svg>
-          <div><span class="lbl">Gable Hall</span><b class="num">Youth rooms</b><p>Separate rooms for little ones and teens.</p></div>
-        </div>
-        <div class="fact" data-rv style="--d:.3s">
-          <svg class="plan" viewBox="0 0 240 110" aria-hidden="true"><rect x="52" y="6" width="136" height="48" rx="6" class="pl-y"/><rect x="52" y="58" width="136" height="48" rx="6" class="pl-wall"/><path d="M60 54h120" class="pl-line"/></svg>
-          <div><span class="lbl">Tower Church</span><b class="num">A youth floor</b><p>A whole floor of their own, upstairs.</p></div>
-        </div>
-      </div>
-      <ul class="ages" data-rv><li><b>Nursery</b><span>During services</span></li><li><b>Kids</b><span>Sunday school and play</span></li><li><b>Teens</b><span>Game nights and study</span></li><li><b>Families</b><span>Parents' groups and events</span></li></ul>
-    </div>
-
-    <div class="chap">
       <div class="say" data-rv><h3>Community</h3><p>Meals, workshops and conferences between Sundays.</p></div>
       <div class="stack">
         <div class="stick">
@@ -910,20 +958,7 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
           </ol>
         </div>
       </div>
-      <div class="cap" data-rv>
-        <h4>Seats in the hall</h4>
-        <div class="bar"><span>Long Porch</span><i style="--w:33.3%"></i><b class="num">About 100</b></div>
-        <div class="bar"><span>Gable Hall</span><i style="--w:60%"></i><b class="num">About 180</b></div>
-        <div class="bar"><span>Tower Church</span><i style="--w:100%"></i><b class="num">About 300</b></div>
-      </div>
-      <div class="week" data-rv style="--d:.15s">
-        <h4>A week in the building</h4>
-        <div class="wk">
-          <span></span><em>Mon</em><em>Tue</em><em>Wed</em><em>Thu</em><em>Fri</em><em>Sat</em><em>Sun</em>
-          <span>Worship</span><i></i><i></i><i class="w" style="--i:2"></i><i></i><i></i><i></i><i class="w" style="--i:6"></i><span>Meals</span><i></i><i class="m" style="--i:1"></i><i></i><i class="m" style="--i:3"></i><i></i><i></i><i></i><span>Youth</span><i></i><i></i><i class="y" style="--i:2"></i><i></i><i class="y" style="--i:4"></i><i></i><i></i><span>Workshops</span><i class="ws" style="--i:0"></i><i></i><i></i><i></i><i></i><i class="ws" style="--i:5"></i><i></i><span>Events</span><i></i><i></i><i></i><i></i><i class="e" style="--i:4"></i><i class="e" style="--i:5"></i><i></i>
-        </div>
-      </div>
-    </div>
+          </div>
   </div>
 </section>
 
@@ -958,15 +993,31 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
   </div>
 </section>
 
+<section class="about" id="about">
+  <div class="wrap ab">
+    <h2 class="ab-h" data-rv>A designer from <em>here</em>.</h2>
+      <figure class="ph ab-pic" data-rv style="--d:.1s"><img src="img/jason.jpg" alt="Jason Abrams" loading="lazy" decoding="async"></figure>
+      <p class="lede" lang="en" data-rv style="--d:.15s">Jason Abrams was raised in West Palm Beach. He spent twenty years designing and building homes, from custom residences in New York City to charming cottages throughout Palm Beach County. <i class="nm">Abrams Places</i> brings an eye for beauty and modern construction to neighborhoods people are proud to live in.</p>
+      <div class="ab-n" data-rv style="--d:.25s"><div><b class="num">20</b><span>Years designing and building</span></div><div><b class="num">USF</b><span>Master's, School of Architecture</span></div></div>
+    <div class="built" data-rv style="--d:.2s" aria-label="Homes by Jason Abrams">
+      <img class="on" src="img/built-314.jpg" alt="A white cottage with a pink door, timber steps and potted rosemary" decoding="async">
+      <img src="img/built-kitchen.jpg" alt="A white kitchen with a marble island and oak upper cabinets" loading="lazy" decoding="async">
+      <img src="img/built-living.jpg" alt="A bright living room with white board walls and a timber beam" loading="lazy" decoding="async">
+      <div class="prog" aria-hidden="true"><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</section>
+
 <section class="close">
   <div class="wrap">
     <h2 data-rv>Let's walk your land.</h2>
     <p class="lede" data-rv>Worship goes on as it always has, and the church keeps a share of everything we build.</p>
     <p class="also" data-rv>Bring your board and your questions. We'll bring the drawings.</p>
+    <a class="btn walk" data-rv style="--d:.15s" href="mailto:Jabrams@carbn.net?subject=Walk%20our%20land">Walk your land with us</a>
   </div>
 </section>
 </main>
-<footer><div class="wrap"><a class="logo" href="#top" aria-label="Abrams Places"><svg viewBox="-250 -360 500 490" aria-hidden="true"><path d="M0.0 -37.6Q31.5 -191.5 0.0 -342.0Q-31.5 -191.5 0.0 -37.6ZM-17.1 -29.5Q-62.1 -155.0 -155.0 -268.0Q-111.5 -126.5 -17.1 -29.5ZM-21.1 -21.1Q-89.9 -113.7 -192.0 -192.0Q-125.2 -78.3 -21.1 -21.1ZM-25.5 -10.6Q-121.1 -61.2 -232.0 -96.0Q-138.8 -18.5 -25.5 -10.6ZM17.6 -29.9Q114.6 -128.0 160.0 -272.0Q64.6 -157.4 17.6 -29.9ZM21.6 -21.6Q127.8 -80.0 196.0 -196.0Q91.7 -116.0 21.6 -21.6ZM25.5 -10.1Q138.4 -16.3 232.0 -92.0Q121.5 -58.9 25.5 -10.1ZM-2.4 -42L2.4 -42L1.8 122L-1.8 122Z" fill="currentColor"/></svg><b>ABRAMS PLACES</b></a><span class="tag">A thoughtful approach to neighborhoods</span></div></footer>
+<footer><div class="wrap"><a class="logo" href="#top" aria-label="Abrams Places"><svg viewBox="-250 -360 500 490" aria-hidden="true"><path d="M0.0 -37.6Q31.5 -191.5 0.0 -342.0Q-31.5 -191.5 0.0 -37.6ZM-17.1 -29.5Q-62.1 -155.0 -155.0 -268.0Q-111.5 -126.5 -17.1 -29.5ZM-21.1 -21.1Q-89.9 -113.7 -192.0 -192.0Q-125.2 -78.3 -21.1 -21.1ZM-25.5 -10.6Q-121.1 -61.2 -232.0 -96.0Q-138.8 -18.5 -25.5 -10.6ZM17.6 -29.9Q114.6 -128.0 160.0 -272.0Q64.6 -157.4 17.6 -29.9ZM21.6 -21.6Q127.8 -80.0 196.0 -196.0Q91.7 -116.0 21.6 -21.6ZM25.5 -10.1Q138.4 -16.3 232.0 -92.0Q121.5 -58.9 25.5 -10.1ZM-2.4 -42L2.4 -42L1.8 122L-1.8 122Z" fill="currentColor"/></svg><b>ABRAMS PLACES</b></a><span class="tag">A thoughtful approach to neighborhoods</span><p class="legal">All numbers, proportions and examples are illustrative only. Every possibility must be verified before numbers are final.</p></div></footer>
 
 <script>
 (() => {
@@ -981,13 +1032,13 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
 
   // ---------------- story: three duplexes, two modules each
   let homes = '';
-  [500, 740, 980].forEach((x, b) => {
+  [830, 1018, 1206].forEach((x, b) => {
     for (let k = 0; k < 2; k++) {
-      const mx = x + k * 100, i = b * 2 + k;
-      homes += `<g class="mod" style="--i:${i}">${mod(mx, 414, 100, 66)}<rect class="win h" x="${mx + 22}" y="${430}" width="18" height="30"/><rect class="win h" x="${mx + 60}" y="${430}" width="18" height="30"/></g>`;
+      const mx = x + k * 84, i = b * 2 + k;
+      homes += `<g class="mod" style="--i:${i}">${mod(mx, 414, 84, 66)}<rect class="win h" x="${mx + 18}" y="${430}" width="16" height="30"/><rect class="win h" x="${mx + 50}" y="${430}" width="16" height="30"/></g>`;
     }
-    homes += `<g class="mod" style="--i:${b * 2 + 1.6}"><rect class="porch" x="${x - 10}" y="406" width="220" height="8"/><path class="post" d="M${x - 2} 414v66M${x + 202} 414v66"/></g>`;
-    homes += `<circle class="tree sprout" style="--i:${b}" cx="${x + 222}" cy="452" r="18"/><circle class="tree sprout" style="--i:${b + .5}" cx="${x - 22}" cy="460" r="12"/>`;
+    homes += `<g class="mod" style="--i:${b * 2 + 1.6}"><rect class="porch" x="${x - 4}" y="406" width="176" height="8"/><path class="post" d="M${x + 2} 414v66M${x + 166} 414v66"/></g>`;
+    homes += `<circle class="tree sprout" style="--i:${b}" cx="${x + 179}" cy="470" r="9"/>`;
   });
   $('#homes3').innerHTML = homes;
 
@@ -999,10 +1050,10 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
 
   // ---------------- four homes from one module
   const SIZES = [
-    { n: 'Studio', len: 20, boxes: 1, sf: 160, rent: 1400 },
-    { n: '1-bed', len: 40, boxes: 1, sf: 320, rent: 1800 },
-    { n: '2-bed', len: 40, boxes: 2, sf: 640, rent: 2400 },
-    { n: '3-bed', len: 40, boxes: 3, sf: 960, rent: 3200 },
+    { n: 'Studio', len: 20, boxes: 1, sf: 160, lim: 2700 },
+    { n: '1-bed', len: 40, boxes: 1, sf: 320, lim: 2892 },
+    { n: '2-bed', len: 40, boxes: 2, sf: 640, lim: 3471 },
+    { n: '3-bed', len: 40, boxes: 3, sf: 960, lim: 4009 },
   ];
   const boxSVG = (len, k) => {
     const W = 41, H = 3 * 8.4 + .6; let s = `<svg viewBox="-.5 -.5 ${W} ${H}" aria-hidden="true">`;
@@ -1014,11 +1065,12 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
     }
     return s + '</svg>';
   };
+  // rolling figures: each digit spins through a full turn before it settles
+  const roll = v => { let k = 0; return [...v.toLocaleString('en-US')].map(c => c === ',' ? '<span class="cm">,</span>' : `<span class="dg" style="--n:${10 + +c};--k:${k++}"><span class="st">${'01234567890123456789'.split('').map(x => `<i>${x}</i>`).join('')}</span></span>`).join(''); };
   $('#units').innerHTML = SIZES.map((u, i) => `<div class="unit" data-rv style="--d:${(i * .12).toFixed(2)}s">
-    <div class="box">${boxSVG(u.len, u.boxes)}</div>
-    <h3>${u.n}</h3>
-    <div class="rent num">$${u.rent.toLocaleString('en-US')}<small>a month</small></div>
-    <div class="sf">${u.sf} sf · ${u.boxes === 1 && u.len === 20 ? 'One 20 ft module' : (['One', 'Two', 'Three'][u.boxes - 1] + ' 40 ft module' + (u.boxes > 1 ? 's' : ''))}</div>
+    <div class="box">${boxSVG(u.len, u.boxes)}<span class="dim" style="--len:${u.len};--k:${u.boxes}" aria-hidden="true"><b>${u.len}'</b></span></div>
+    <h3>${u.n} <span class="sf">· ${u.sf} SF</span></h3>
+    <div class="rent num" aria-label="$${u.lim.toLocaleString('en-US')} a month"><span class="od" aria-hidden="true">$${roll(u.lim)}</span><small>a month</small></div>
   </div>`).join('');
 
   // ---------------- how a home comes together
@@ -1045,23 +1097,13 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
     'At least 40% of the homes rent as affordable for 30 years.',
   ].map(t => `<li>${tick}<span>${t}</span></li>`).join('');
 
-  // ---------------- where the rent goes
-  const N = {
-    50: { gross: 1382400, noi: 803544, made: 4521000 },
-    100: { gross: 2736000, noi: 1589576, made: 8887000 },
-    120: { gross: 3024000, noi: 1765496, made: 10090000 },
-  };
-  const M = v => v >= 1e6 ? '$' + (v / 1e6).toFixed(2) + 'M' : '$' + Math.round(v / 1e3).toLocaleString('en-US') + 'k';
-  let scale = 100;
-  function paint() {
-    const n = N[scale], cost = n.gross - n.noi, p = n.noi / n.gross * 100;
-    $('#vRent').textContent = M(n.gross); $('#vCost').textContent = M(cost); $('#vProfit').textContent = M(n.noi);
-    $('#v30').textContent = M(n.noi * 30); $('#vVal').textContent = M(n.made);
-    $('#bCost').style.width = (100 - p).toFixed(1) + '%'; $('#bProfit').style.width = p.toFixed(1) + '%'; $('#fork').style.width = p.toFixed(1) + '%';
-    document.querySelectorAll('#scale button').forEach(b => b.setAttribute('aria-pressed', b.dataset.s == scale));
-  }
-  $('#scale').addEventListener('click', e => { const b = e.target.closest('button[data-s]'); if (b) { scale = +b.dataset.s; paint(); } });
-  paint();
+  // ---------------- where the rent goes: with or without a new church
+  $('#newch').addEventListener('click', e => {
+    const b = e.target.closest('button[data-c]'); if (!b) return;
+    $('.money').dataset.c = b.dataset.c;
+    document.querySelectorAll('#newch button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    $('#vCheck').textContent = b.dataset.c === '1' ? '$6,750' : '$15,000';
+  });
 
   // ---------------- three church designs
   const P = [
@@ -1073,7 +1115,7 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
   const pick = k => {
     views.forEach((v, i) => v.classList.toggle('on', i === k));
     document.querySelectorAll('#pick button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.k === k));
-    $('#pName').textContent = P[k][0]; $('#pSpec').innerHTML = P[k][1].map(s => `<span>${s}</span>`).join('');
+    $('#pName').textContent = P[k][0];
   };
   $('#pick').addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b) pick(+b.dataset.k); });
   pick(0);
@@ -1102,22 +1144,40 @@ footer .tag{font:500 13px/1.4 var(--text);letter-spacing:.22em;text-transform:up
   document.querySelectorAll('.stack').forEach(st => {
     const F = [...st.querySelectorAll('.frames .ph')], L = [...st.querySelectorAll('.sl li')], fr = st.querySelector('.frames');
     F.forEach((f, i) => f.style.zIndex = i + 1);
-    const line = document.createElement('i'); line.className = 'wipe'; line.setAttribute('aria-hidden', 'true'); fr.appendChild(line);
-    let cur = 0, q = 0;
+    let cur = 0, q = 0, run = [];
     const set = () => {
       q = 0; const r = st.getBoundingClientRect(), span = r.height - innerHeight;
       const p = span > 0 ? Math.min(.999, Math.max(0, -r.top / span)) : 0, k = Math.floor(p * F.length);
-      if (k === cur) return; const fwd = k > cur; cur = k;
-      F.forEach((f, i) => f.classList.toggle('on', i <= k)); L.forEach((l, i) => l.classList.toggle('on', i === k));
-      if (!still && line.animate) {
-        const a = fwd ? '100%' : '0%', b = fwd ? '0%' : '100%';
-        line.getAnimations().forEach(x => x.cancel());
-        line.animate([{ left: a, opacity: 1 }, { left: b, opacity: 1, offset: .96 }, { left: b, opacity: 0 }], { duration: 1800, easing: 'cubic-bezier(.2,.7,.2,1)' });
-      }
+      if (k === cur) return; const fwd = k > cur, cur0 = cur; cur = k;
+      const from = fwd ? null : F[cur0];
+      run.forEach(x => x.cancel()); run = [];
+      F.forEach((f, i) => f.classList.toggle('on', i <= k || (!fwd && f === from))); L.forEach((l, i) => l.classList.toggle('on', i === k));
+      if (still || !fr.animate) { if (from) from.classList.remove('on'); return; }
+      const T = { duration: 1800, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' };
+      const top = fwd ? F[k] : from, A = 'inset(0 0 0 100%)', Z = 'inset(0 0 0 0%)';
+      const im = top.animate([{ clipPath: fwd ? A : Z }, { clipPath: fwd ? Z : A }], T);
+      run = [im];
+      im.onfinish = () => { if (!fwd && from && F.indexOf(from) > cur) from.classList.remove('on'); im.cancel(); };
     };
     addEventListener('scroll', () => { if (!q) q = requestAnimationFrame(set); }, { passive: true });
     addEventListener('resize', set); set();
   });
+
+  // ---------------- built homes: one at a time, a timer bar for each
+  const bw = $('.built');
+  if (bw) {
+    const imgs = [...bw.querySelectorAll('img')], bars = [...bw.querySelectorAll('.prog i')], DUR = 5000;
+    let k = 0, t = 0;
+    const show = n => {
+      k = n; imgs.forEach((m, i) => m.classList.toggle('on', i === k));
+      bars.forEach((b, i) => { b.style.setProperty('--t', '0s'); b.style.setProperty('--f', i < k ? 1 : 0); });
+      void bw.offsetWidth;
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) { bars[k].style.setProperty('--t', DUR / 1000 + 's'); bars[k].style.setProperty('--f', 1); }
+      clearTimeout(t); t = setTimeout(() => show((k + 1) % imgs.length), DUR);
+    };
+    bw.addEventListener('click', () => show((k + 1) % imgs.length));
+    show(0);
+  }
 
   // ---------------- unhurried reveals, checked on scroll so nothing stays hidden
   const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
