@@ -1508,9 +1508,9 @@ header .mark svg{height:19px;width:calc(19px*2.994);overflow:visible;stroke:curr
 .ow-tabs{display:none}
 @keyframes owIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (max-width:760px){
-  .ow-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:24px auto 20px}
-  .ow-tb .ow-pj.st{margin-top:0}
-  .ow-tabs button{flex:none;border:0;border-radius:12px;padding:11px 18px;background:var(--tan);color:var(--pencil);font-family:var(--mono);font-size:12.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .4s,color .4s}
+  .ow-tabs{display:flex;flex-wrap:nowrap;gap:4px;margin:24px 0 20px;padding:4px;border-radius:12px;background:var(--tan)}
+  .ow-tb .ow-pj.st,#ow-flagship .ow-pj.st{margin-top:0}
+  .ow-tabs button{flex:1 1 0;min-width:0;border:0;border-radius:8px;padding:11px 4px;background:none;color:var(--pencil);font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;transition:background .4s,color .4s}
   .ow-tabs button[aria-selected="true"]{background:var(--graphite);color:var(--plaster)}
   .ow-band .ow-pj:not(.ow-on){display:none!important}
   .ow-band .ow-pj.ow-on.ow-sw{animation:owIn 1s cubic-bezier(.2,.7,.1,1) both}
@@ -2274,7 +2274,7 @@ header nav a.opt:hover{color:var(--graphite)}
   })();
   /* Nov 13: on phones each offer shows one lead project; the others sit behind tabs (desktop shows them all) */
   (function(){var B=[['ow-refresh',[['.tile[data-site="b/unique-places/index.html"]','Unique Places'],['.tile[data-site="b/meridian-refresh/index.html"]','Meridian']]],
-      ['ow-signature',[['.tile[data-site="b/jay/index.html"]','jayabrams'],['.tile[data-site="b/stadler/index.html"]','Stadler'],['.tile[data-site="b/vela/index.html"]','Vela'],['.tile[data-site="b/bascule2/index.html"]','Bascule']]],
+      ['ow-signature',[['.tile[data-site="b/jay/index.html"]','Jay'],['.tile[data-site="b/stadler/index.html"]','Stadler'],['.tile[data-site="b/vela/index.html"]','Vela'],['.tile[data-site="b/bascule2/index.html"]','Bascule']]],
       ['ow-flagship',[['#riot','Soft Riot'],['#live','Luna\u2019s'],['#arden','Arden']]]];
     B.forEach(function(b){var d=document.getElementById(b[0]),hd=d&&d.querySelector('.ow-hd');if(!hd)return;var its=b[1].map(function(x){return d.querySelector(x[0]);});if(its.some(function(x){return !x;}))return;
       var nav=document.createElement('div');nav.className='ow-tabs';nav.setAttribute('role','tablist');nav.setAttribute('aria-label',b[0].slice(3)+' projects');
