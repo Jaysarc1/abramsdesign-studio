@@ -356,6 +356,8 @@ details[open] summary i::after{transform:translate(-50%,-50%) rotate(0)}
 .foot-wall{background:var(--rosa);color:var(--blanco);text-align:center;overflow:hidden}
 .foot-wall .picado{--ph:clamp(64px,7vw,92px);--fw:clamp(38px,4.4vw,56px)}
 .fin{padding-block:30px 56px;display:grid;gap:18px;justify-items:center}
+/* the italic V leans away from "con", so pull it in to match the other word gaps */
+.kv{margin-left:-.12em}
 .fin .big{font-family:var(--display);font-style:italic;font-size:clamp(48px,7vw,92px);line-height:.95;letter-spacing:-.03em}
 .fin p{font-size:16px;color:#FFE3EF}
 .fin nav{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 28px}
@@ -1063,7 +1065,7 @@ body.books-open>.hero,body.books-open>main,body.books-open>.foot-wall{display:no
 <footer class="foot-wall">
   <div class="picado" id="picadoBottom" aria-hidden="true"></div>
   <div class="wrap fin">
-    <span class="big">Baila con Vanessa</span>
+    <span class="big">Baila con <span class="kv">Vanessa</span></span>
     <p>Banda · Cumbia · Salsa &nbsp;·&nbsp; Buena Park &amp; Laguna Hills, California</p>
     <nav aria-label="Footer">
       <a href="#classes">Classes</a><a href="#learn">Learn the step</a><a href="#story">Banda</a><a href="#reserve">Save your spot</a><a href="#faq">FAQ</a>
@@ -1075,7 +1077,7 @@ body.books-open>.hero,body.books-open>main,body.books-open>.foot-wall{display:no
 <div class="books" id="books" hidden>
   <nav class="bk-tabs" aria-label="Vanessa's books">
     <div class="wrap bk-tabs-in">
-      <a class="bk-brand" href="#top">Baila <i>con</i> Vanessa</a>
+      <a class="bk-brand" href="#top">Baila <i>con</i> <span class="kv">Vanessa</span></a>
       <div class="tabs" role="tablist">
         <a class="tab" role="tab" href="#top" aria-selected="false">Her site</a>
         <a class="tab" role="tab" href="#cuentas" data-v="cuentas" aria-selected="true">Her UMB</a>
