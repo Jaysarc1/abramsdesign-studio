@@ -70,9 +70,11 @@ p{margin:0}
 .hero .picado{margin-top:18px;--ph:clamp(78px,9vw,118px);--fw:clamp(44px,5.4vw,70px)}
 .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;align-items:end;gap:24px;position:relative}
 .hero-copy{padding-block:clamp(16px,3vw,40px) clamp(64px,8vw,112px);position:relative;z-index:2}
-.hero h1{font-size:clamp(76px,12.4vw,182px);line-height:.84;font-style:italic;font-weight:500;letter-spacing:-.035em}
+.hero h1{font-size:clamp(76px,12.4vw,164px);line-height:.84;font-style:italic;font-weight:500;letter-spacing:-.035em}
 .hero h1 span{display:block}
-.hero h1 .l2{color:var(--cacao);padding-left:.42em}
+.hero h1 .l2{color:var(--cacao);padding-left:.2em}
+/* "con" rides small at the end of the first line so "Destany." keeps the stagger and fits the copy column */
+.hero h1 .con{font-size:.3em;letter-spacing:0}
 .hero-sub{margin-top:30px;max-width:30em;font-size:19px;line-height:1.55;color:var(--blanco)}
 .hero-sub strong{font-weight:700}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
@@ -567,7 +569,7 @@ body.books-open>.hero,body.books-open>main,body.books-open>.foot-wall{display:no
 
 <header class="hero" id="top">
   <div class="wrap top">
-    <a class="mark" href="#top">Baila con Destany<b>Baile · Dance</b></a>
+    <a class="mark" href="#top">Vale Dance Studio<b>Baile · Dance</b></a>
     <nav class="nav" aria-label="Main">
       <a>Classes</a>
       <a>Learn the step</a>
@@ -579,7 +581,7 @@ body.books-open>.hero,body.books-open>main,body.books-open>.foot-wall{display:no
   <div class="picado" id="picadoTop" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <h1><span class="ld" style="--d:.35s">Baila</span><span class="l2 ld" style="--d:.6s">banda.</span></h1>
+      <h1><span class="ld" style="--d:.35s">Baila <i class="con">con</i></span><span class="l2 ld" style="--d:.6s">Destany.</span></h1>
       <p class="hero-sub ld" style="--d:.95s">Banda, cumbia and salsa classes with Destany in Buena Park and Laguna Hills. <strong>Beginner friendly. No experience needed.</strong></p>
       <div class="cta ld" style="--d:1.2s">
         <a class="btn b1">See November classes</a>
