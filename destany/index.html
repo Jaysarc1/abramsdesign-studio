@@ -363,7 +363,7 @@ details[open] summary i::after{transform:translate(-50%,-50%) rotate(0)}
   /* her name in the hero serif, letters drawn tight so they join, the y's tail runs on as a signed underline */
   .m-con{display:block;position:absolute;left:0;right:0;bottom:calc(var(--cut) + var(--sz) * .34);z-index:3;text-align:center;--sz:clamp(62px,21vw,96px);pointer-events:none;color:var(--blanco)}
   .m-con .sig{position:relative;display:inline-block;font-family:var(--display);font-style:italic;font-weight:500;font-size:var(--sz);line-height:.9;letter-spacing:-.075em;white-space:nowrap;text-shadow:0 6px 24px rgba(42,18,22,.38)}
-  .m-con i{position:absolute;left:26%;top:calc(var(--sz) * .04);font-size:.32em;letter-spacing:0;line-height:1}
+  .m-con i{position:absolute;left:26%;top:calc(var(--sz) * -.05);font-size:.32em;letter-spacing:0;line-height:1}
   .m-con .swash{position:absolute;left:4%;width:78%;top:calc(100% - .06em);height:.3em;overflow:visible;fill:none;stroke:var(--blanco);stroke-width:2.2;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 -3px 8px rgba(42,18,22,.35));transform:scaleY(-1)}
   /* blocks sized and placed in units of her height (--sh), like the desktop composition, so they grow with her and keep their spacing */
   .stairs{left:calc(-1 * max(20px,env(safe-area-inset-left,0px)) - var(--dx));width:calc(100% + 2 * max(20px,env(safe-area-inset-left,0px)) + 2 * var(--dx))}
