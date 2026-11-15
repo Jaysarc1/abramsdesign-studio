@@ -370,6 +370,12 @@ details[open] summary i::after{transform:translate(-50%,-50%) rotate(0)}
 .mute .bars i{width:3px;background:var(--cempa);border-radius:1px;animation:eq .9s ease-in-out infinite alternate}
 .mute .bars i:nth-child(2){animation-delay:.2s}.mute .bars i:nth-child(3){animation-delay:.45s}
 .mute.off .bars i{animation:none;height:3px!important;background:#9C7A80}
+/* back to top rides beside the sound button as one pair */
+.fabs{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;display:flex;align-items:center;gap:8px}
+.fabs .mute{position:static}
+.totop{width:44px;height:44px;display:grid;place-items:center;padding:0;border:0;border-radius:var(--r);background:var(--cacao);color:var(--cempa);cursor:pointer;box-shadow:0 10px 26px -10px rgba(0,0,0,.5);transition:opacity .4s,transform .4s var(--ease),visibility .4s}
+.totop svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.totop:not(.on){opacity:0;visibility:hidden;transform:translateY(10px);pointer-events:none}
 @keyframes eq{from{height:3px}to{height:14px}}
 
 /* tablet */
@@ -1279,7 +1285,7 @@ body.books-open>.hero,body.books-open>main,body.books-open>.foot-wall{display:no
   <footer class="bk-foot"><a href="#top">Back to Baila con Vanessa</a></footer>
 </div>
 
-<button class="mute" id="mute" type="button" hidden aria-pressed="false"><span class="bars"><i></i><i></i><i></i></span><span id="muteLbl">Sound on</span></button>
+<div class="fabs"><button class="totop" id="totop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg></button><button class="mute" id="mute" type="button" hidden aria-pressed="false"><span class="bars"><i></i><i></i><i></i></span><span id="muteLbl">Sound on</span></button></div>
 
 <script>
 (()=>{
@@ -1460,6 +1466,12 @@ const A=(()=>{
   return{start,setMute,hit,setStyle,get style(){return style},get ctx(){return ctx},get playing(){return playing},set bpm(v){bpm=v},get bpm(){return bpm},on:f=>subs.add(f),off:f=>subs.delete(f),get muted(){return muted}};
 })();
 const muteBtn=$('#mute');
+/* back to top shows once she's scrolled past the hero, then glides home */
+(()=>{const t=$('#totop');if(!t)return;
+  const past=()=>{const h=document.querySelector('.hero');const lim=(h&&h.offsetHeight)||innerHeight;return scrollY>lim*.85;};
+  const upd=()=>t.classList.toggle('on',past());
+  addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+  t.addEventListener('click',()=>scrollTo({top:0,behavior:reduce?'auto':'smooth'}));})();
 let pageStyle=(CLASSES.find(c=>c.next)||CLASSES[CLASSES.length-1]).kind;A.setStyle(pageStyle);
 function pickStyle(k){if(!k)return;pageStyle=k;if(!G.run)A.setStyle(k);}
 $('#picks').addEventListener('change',e=>{const c=CLASSES.find(x=>x.id===e.target.value);if(c){audioOn();pickStyle(c.kind);}});
