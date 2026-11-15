@@ -214,10 +214,10 @@ p{margin:0}
 .story{background:var(--cal)}
 .story .head h2{color:var(--buganvilia)}
 .timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;position:relative}
-.timeline::before{content:"";position:absolute;left:0;right:0;top:34px;height:2px;background:var(--rosa-soft)}
 .era{position:relative;display:grid;gap:12px;align-content:start;min-width:0}
-.era .yr{font-family:var(--display);font-weight:700;font-size:40px;line-height:1;color:var(--rosa);background:var(--cal);justify-self:start;padding-right:14px;position:relative}
-.era .yr::after{content:"";position:absolute;right:-2px;top:28px;width:10px;height:10px;border-radius:50%;background:var(--rosa)}
+.era .yr{font-family:var(--display);font-weight:700;font-size:40px;line-height:1;color:var(--rosa);justify-self:start;position:relative}
+/* each date gets its own dot, hung just left of it like a bullet, so the dates stay aligned with the text under them */
+.era .yr::before{content:"";position:absolute;right:calc(100% + 10px);top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--rosa)}
 .era h3{font-size:22px;font-style:italic;line-height:1.15}
 .era p{font-size:16px;color:#4A2A30}
 .band{margin-top:clamp(44px,5vw,64px);display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;border-top:1.5px solid var(--rosa-soft);padding-top:28px}
@@ -332,7 +332,6 @@ details[open] summary i::after{transform:translate(-50%,-50%) rotate(0)}
   .inst{grid-template-columns:repeat(3,minmax(0,1fr))}
   .band{grid-template-columns:1fr}
   .timeline{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:40px}
-  .timeline::before{display:none}
 }
 /* phone: centred by default */
 @media (max-width:760px){
@@ -373,7 +372,6 @@ details[open] summary i::after{transform:translate(-50%,-50%) rotate(0)}
   .hero-sub{margin-top:0}
   /* the band under her reads as its own section: black, with one pink button that fills white */
   .hero-copy::before{content:"";position:absolute;top:var(--band-top,0px);bottom:0;left:-100vw;right:-100vw;background:var(--cacao);z-index:-1}
-  .cta .b2{display:none}
   .cta .b1{background:var(--rosa);color:var(--blanco);border-color:var(--rosa)}
   .cta .b1:hover,.cta .b1:active,.cta .b1:focus-visible{background:var(--blanco);color:var(--rosa);border-color:var(--blanco)}
   .sun{width:min(86%,360px);top:4%}
@@ -393,8 +391,7 @@ details[open] summary i::after{transform:translate(-50%,-50%) rotate(0)}
   .counts span{width:32px;height:32px;font-size:16px}
   .timeline{grid-template-columns:1fr;justify-items:center;text-align:center;max-width:420px;margin-inline:auto}
   .era{justify-items:center}
-  .era .yr{justify-self:center;padding:0 14px}
-  .era .yr::after{display:none}
+  .era .yr{justify-self:center}
   .band{justify-items:center;text-align:center}
   .inst{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;max-width:420px}
   .inst button{justify-items:center;text-align:center}
@@ -612,7 +609,6 @@ body.books-open>.hero,body.books-open>main,body.books-open>.foot-wall{display:no
       <p class="hero-sub ld" style="--d:.95s">Banda, cumbia and salsa classes with Destany in Buena Park and Laguna Hills. <strong>Beginner friendly. No experience needed.</strong></p>
       <div class="cta ld" style="--d:1.2s">
         <a class="btn b1">See November classes</a>
-        <a class="btn b2">Learn the basic step</a>
       </div>
     </div>
     <div class="stage" aria-hidden="false">
