@@ -394,13 +394,15 @@ details[open] summary i::after{transform:translate(-50%,-50%) rotate(0)}
   .hero-sub{margin-inline:auto;font-size:17px;margin-top:22px}
   .cta{justify-content:center;margin-top:26px}
   .cta .btn{flex:1 1 100%;max-width:340px}
-  .stage{--sh:430px;--sh:clamp(430px,min(calc((100svh - 112px) / .94),calc((50vw - 14px) / .31)),900px);--cut:calc(.06 * var(--sh));height:var(--sh);width:100%;margin-bottom:calc(-1 * var(--cut));overflow-x:visible;overflow-y:clip}
+  .stage{--sh:430px;--sh:clamp(430px,calc((100svh - 100px) / .94),900px);--dx:max(0px,calc(.31 * var(--sh) - 50vw + 14px));transform:translateX(var(--dx));--cut:calc(.06 * var(--sh));height:var(--sh);width:100%;margin-bottom:calc(-1 * var(--cut));overflow-x:visible;overflow-y:clip}
   /* phone hero: the BAILA flags + "con Destany." are the wordmark; she stands in front of the flags so she's on the first screen */
   .hero .picado{z-index:1}
   .hero-grid{display:flex;flex-direction:column;align-items:stretch}
   .stage{order:-1;margin-top:calc(var(--ph,78px) * -.85);z-index:auto}
   .stage .sun,.stage .stairs,.stage .wallv{z-index:0}
   .stage .photo{z-index:2}
+  /* on tall phones she grows to fill the screen; if her hand would leave the left edge, she and her set shift right together */
+  .stage .photo,.stage .sun,.stage .stairs,.stage .wallv{margin-left:var(--dx)}
   .hero h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   /* her name in the hero serif, letters drawn tight so they join, the y's tail runs on as a signed underline */
   .m-con{display:block;position:absolute;left:0;right:0;bottom:calc(var(--cut) + var(--sz) * .34);z-index:3;text-align:center;--sz:clamp(62px,21vw,96px);pointer-events:none;color:var(--blanco)}
@@ -408,7 +410,7 @@ details[open] summary i::after{transform:translate(-50%,-50%) rotate(0)}
   .m-con i{display:block;font-size:.32em;letter-spacing:0;line-height:1;margin-bottom:.02em}
   .m-con .swash{position:absolute;left:4%;width:78%;top:calc(100% - .06em);height:.3em;overflow:visible;fill:none;stroke:var(--blanco);stroke-width:2.2;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 3px 8px rgba(42,18,22,.35))}
   /* blocks sized and placed in units of her height (--sh), like the desktop composition, so they grow with her and keep their spacing */
-  .stairs{left:calc(-1 * max(20px,env(safe-area-inset-left,0px)));width:calc(100% + 2 * max(20px,env(safe-area-inset-left,0px)))}
+  .stairs{left:calc(-1 * max(20px,env(safe-area-inset-left,0px)) - var(--dx));width:calc(100% + 2 * max(20px,env(safe-area-inset-left,0px)) + 2 * var(--dx))}
   .wallv{left:calc(50% + .2296*var(--sh));right:auto;width:calc(.213*var(--sh));clip-path:none}
   .wallv .shd{left:calc(-.5481*var(--sh))}
   .hero-copy{padding-top:38px}
