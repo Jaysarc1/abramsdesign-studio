@@ -49,6 +49,11 @@
    "source": "/bohemiafullsite",
    "destination": "/bohemiafullsite/",
    "permanent": false
+  },
+  {
+   "source": "/destany-impuestos",
+   "destination": "/destany-impuestos/",
+   "permanent": false
   }
  ],
  "rewrites": [
@@ -251,6 +256,24 @@
   },
   {
    "source": "/bohemiafullsite/",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/destany-impuestos/(.*)",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow, noarchive"
+    }
+   ]
+  },
+  {
+   "source": "/destany-impuestos/",
    "headers": [
     {
      "key": "X-Robots-Tag",
