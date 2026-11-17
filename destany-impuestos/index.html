@@ -811,7 +811,7 @@ body.books-open>.hero,body.books-open>main,body.books-open>.foot-wall{display:no
 html.locked,html.locked body,html.sheet-open,html.sheet-open body{overflow:hidden}
 .lk{position:fixed;inset:0;z-index:300;background:radial-gradient(ellipse 95% 62% at 50% 40%,#E6448F 0%,var(--rosa) 60%,#C3156A 100%);color:var(--blanco)}
 .lk[hidden]{display:none}
-.lk-sc{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
+.lk-sc{height:100%;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
 .lk::after{content:"";position:absolute;left:0;right:0;top:100%;height:16px;background:radial-gradient(circle at 12px 0,#C3156A 11.5px,transparent 12px) 0 0/24px 16px repeat-x;pointer-events:none}
 .lk.gone{transform:translateY(calc(-100% - 18px));transition:transform 1s cubic-bezier(.72,0,.18,1)}
 .lk .picado{--ph:clamp(66px,9vh,104px);--fw:clamp(40px,5.2vw,60px);margin-top:env(safe-area-inset-top,0px)}
