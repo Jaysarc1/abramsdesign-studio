@@ -841,7 +841,9 @@ html.locked,html.locked body,html.sheet-open,html.sheet-open body{overflow:hidde
 .lk-btn{min-height:52px;padding:0 20px;border-radius:var(--r);border:1.5px solid rgba(255,249,246,.6);background:transparent;color:var(--blanco);font-weight:700;font-size:15px;letter-spacing:.04em;cursor:pointer;transition:transform .3s var(--ease)}
 .lk-btn:hover{transform:translateY(-2px)}
 .lk-btn.pri{background:var(--blanco);color:var(--rosa);border-color:var(--blanco)}
-.lk-btn.warn{background:var(--rosa-ink);border-color:var(--rosa-ink)}
+.lk-btn[disabled]{opacity:.7;cursor:default;transform:none}
+.lk-msg{font-size:14px;line-height:1.5;min-height:1.5em;margin-top:-4px}
+.lk-msg:empty{display:none}
 .lk[data-step="offer"] #lkOffer,.lk[data-step="forgot"] #lkReset{display:grid}
 .lk[data-step="offer"] :is(.lk-label,.lk-dots,.lk-pad),.lk[data-step="forgot"] :is(.lk-label,.lk-dots,.lk-pad){display:none}
 .lk-foot{display:flex;justify-content:center;align-items:center;gap:14px;padding:6px 24px calc(18px + env(safe-area-inset-bottom,0px))}
@@ -951,12 +953,13 @@ html.locked,html.locked body,html.sheet-open,html.sheet-open body{overflow:hidde
       <div class="lk-btns"><button type="button" class="lk-btn pri" id="lkMine">Choose my passcode</button><button type="button" class="lk-btn" id="lkLater">Not now</button></div>
     </div>
     <div class="lk-choice" id="lkReset">
-      <p><b>Start fresh?</b>This erases every number saved on this device and sets the passcode back to 0000. A back up file brings them back.</p>
-      <div class="lk-btns"><button type="button" class="lk-btn warn" id="lkWipe">Erase and start fresh</button><button type="button" class="lk-btn" id="lkKeep">Cancel</button></div>
+      <p><b>No worries.</b>We’ll email a code to d••••••@gmail.com.</p>
+      <div class="lk-btns"><button type="button" class="lk-btn pri" id="lkSend">Email my code</button><button type="button" class="lk-btn" id="lkKeep">Cancel</button></div>
+      <p class="lk-msg" id="lkMsg" role="status"></p>
     </div>
   </div>
   <div class="lk-foot">
-    <button type="button" class="lk-link" id="lkForgot">Forgot it?</button>
+    <button type="button" class="lk-link" id="lkForgot">Forgot password?</button>
     <button type="button" class="lk-snd" id="lkSnd" aria-pressed="true" aria-label="Sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="w" d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/><path class="x" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
   </div>
 </div></div>
@@ -1589,7 +1592,7 @@ dataMsg.addEventListener('click',e=>{const b=e.target.closest('[data-restore]');
 
 /* ---------- lock ---------- */
 const LK='dz-lock-v1', SND='dz-lock-sound', lockEl=$('#lock'), html=document.documentElement;
-let lkStep='enter', lkPin='', lkNew='', lkFrom='', lkBusy=false, lkOpen=true, hiddenAt=0, sndOn=store.get(SND,true)!==false;
+let lkStep='enter', lkPin='', lkNew='', lkTok=null, lkFrom='', lkBusy=false, lkOpen=true, hiddenAt=0, sndOn=store.get(SND,true)!==false;
 const canHash=()=>!!(window.crypto&&crypto.subtle&&window.TextEncoder);
 const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 async function pinHash(pin,salt,it){const te=new TextEncoder(),k=await crypto.subtle.importKey('raw',te.encode(pin),'PBKDF2',false,['deriveBits']);return hex(await crypto.subtle.deriveBits({name:'PBKDF2',salt:te.encode(salt),iterations:it,hash:'SHA-256'},k,256));}
@@ -1617,14 +1620,17 @@ const syncSnd=()=>sndBtn.setAttribute('aria-pressed',String(sndOn));
 sndBtn.addEventListener('click',()=>{sndOn=!sndOn;store.set(SND,sndOn);syncSnd();if(sndOn)sfx.tap();});
 syncSnd();
 
-const LABEL={enter:'Your passcode',new:'Choose a new passcode',confirm:'Once more'};
-function setDots(){$$('#lkDots i').forEach((d,i)=>d.classList.toggle('on',i<lkPin.length));}
+const LABEL={enter:'Your passcode',new:'Choose a new passcode',confirm:'Once more',code:'Code from your email'};
+const RESET_API='/api/destany-reset';
+const need=()=>lkStep==='code'?6:4;
+function setDots(){const box=$('#lkDots'),n=need();if(box.children.length!==n){const one=box.children[0].outerHTML.replace(' class="on"','');box.innerHTML=one.repeat(n);}$$('#lkDots i').forEach((d,i)=>d.classList.toggle('on',i<lkPin.length));}
 function setStep(st,label){
   lkStep=st;lockEl.dataset.step=st;lkPin='';setDots();
   $('#lkLabel').textContent=label||LABEL[st]||'';
-  const f=$('#lkForgot');f.hidden=st==='offer'||st==='forgot';f.textContent=st==='enter'?'Forgot it?':lkFrom==='offer'?'Not now':'Cancel';
+  const f=$('#lkForgot');f.hidden=st==='offer'||st==='forgot';f.textContent=st==='enter'?'Forgot password?':lkFrom==='offer'?'Not now':'Cancel';
+  if(st==='forgot'){$('#lkMsg').textContent='';const b=$('#lkSend');b.disabled=false;b.textContent='Email my code';}
   if(st==='offer')setTimeout(()=>$('#lkMine').focus(),50);
-  if(st==='forgot')setTimeout(()=>$('#lkKeep').focus(),50);
+  if(st==='forgot')setTimeout(()=>$('#lkSend').focus(),50);
 }
 function hideApp(){booksEl.inert=true;booksEl.setAttribute('aria-hidden','true');html.classList.add('locked');}
 function showApp(){
@@ -1648,12 +1654,20 @@ function lock(from){
 }
 function closeQuiet(){lockEl.hidden=true;lkOpen=false;lkFrom='';showApp();$('#bkPass').focus();}
 async function press(k){
-  if(lkBusy||!['enter','new','confirm'].includes(lkStep))return;
+  if(lkBusy||!['enter','new','confirm','code'].includes(lkStep))return;
   if(k==='del'){lkPin=lkPin.slice(0,-1);setDots();return;}
-  if(lkPin.length>=4)return;
+  if(lkPin.length>=need())return;
   lkPin+=k;setDots();
-  if(lkPin.length<4){sfx.tap();return;}
+  if(lkPin.length<need()){sfx.tap();return;}
   const pin=lkPin;
+  if(lkStep==='code'){
+    lkBusy=true;let r=null;
+    try{const res=await fetch(RESET_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({a:'verify',code:pin,token:lkTok&&lkTok.token,exp:lkTok&&lkTok.exp})});r=await res.json().catch(()=>null);}catch(e){}
+    lkBusy=false;
+    if(r&&r.ok){sfx.tap();lkTok=null;lkFrom='reset';setTimeout(()=>setStep('new'),280);return;}
+    if(r&&r.why==='expired'){wrong('That code expired.');setTimeout(()=>setStep('forgot'),900);return;}
+    wrong(r?'Not quite. Check your email.':'No connection. Try again.');return;
+  }
   if(lkStep==='enter'){
     lkBusy=true;const ok=await pinOk(pin);lkBusy=false;
     if(!ok){wrong('Not quite. Try again.');return;}
@@ -1673,18 +1687,26 @@ document.addEventListener('keydown',e=>{
   if(lockEl.hidden||e.metaKey||e.ctrlKey||e.altKey)return;
   if(/^[0-9]$/.test(e.key)){e.preventDefault();const b=$(`#lkPad [data-k="${e.key}"]`);if(b){b.classList.add('hit');setTimeout(()=>b.classList.remove('hit'),140);}press(e.key);}
   else if(e.key==='Backspace'){e.preventDefault();press('del');}
-  else if(e.key==='Escape'&&lkStep==='forgot')setStep('enter');
+  else if(e.key==='Escape'&&(lkStep==='forgot'||lkStep==='code')){lkFrom='';setStep('enter');}
 });
 $('#lkForgot').addEventListener('click',()=>{
   if(lkStep==='enter')setStep('forgot');
   else if(lkFrom==='offer')unlock();
   else if(lkFrom==='footer')closeQuiet();
-  else setStep('enter');
+  else{lkFrom='';lkTok=null;setStep('enter');}
 });
 $('#lkMine').addEventListener('click',()=>setStep('new'));
 $('#lkLater').addEventListener('click',()=>{lkFrom='';unlock();});
 $('#lkKeep').addEventListener('click',()=>setStep('enter'));
-$('#lkWipe').addEventListener('click',()=>{[BK.entries,TX.store,BK.sample,LK].forEach(k=>{try{localStorage.removeItem(k);}catch(e){}});location.reload();});
+$('#lkSend').addEventListener('click',async()=>{
+  const b=$('#lkSend'),m=$('#lkMsg');if(b.disabled)return;
+  b.disabled=true;b.textContent='Sending…';m.textContent='';sfx.tap();
+  let r=null,st=0;
+  try{const res=await fetch(RESET_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({a:'send'})});st=res.status;r=await res.json().catch(()=>null);}catch(e){}
+  if(r&&r.ok&&r.token){lkTok={token:r.token,exp:r.exp};setStep('code');return;}
+  b.disabled=false;b.textContent='Email my code';
+  m.textContent=st===503?'Email reset isn’t switched on yet. Ask Jason.':st===429?'Too many tries. Wait a bit, then try again.':'That didn’t send. Try again.';
+});
 $('#bkLock').addEventListener('click',()=>lock());
 $('#bkPass').addEventListener('click',()=>lock('footer'));
 if(!canHash())$('#bkPass').hidden=true;
