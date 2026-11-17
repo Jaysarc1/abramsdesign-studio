@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>html,body{margin:0;padding:0}</style>
-<title>Impuestos 2.0</title>
+<title>La Plata</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -976,7 +976,7 @@ html.locked,html.locked body,html.sheet-open,html.sheet-open body{overflow:hidde
       <a class="bk-brand" href="/destany">Baila <i>con</i> <span class="kv">Vanessa</span></a>
       <div class="tabs" role="tablist">
         <a class="tab" role="tab" href="#cuentas" data-v="cuentas" aria-selected="true">UMB</a>
-        <a class="tab" role="tab" href="#impuestos" data-v="impuestos" aria-selected="false">Impuestos</a>
+        <a class="tab" role="tab" href="#impuestos" data-v="impuestos" aria-selected="false">La Plata</a>
       </div>
       <button class="bk-sample" id="bkSample" type="button" aria-pressed="true"><i></i>Example numbers</button>
     </div>
@@ -1066,7 +1066,7 @@ html.locked,html.locked body,html.sheet-open,html.sheet-open body{overflow:hidde
   <div class="bk-view" id="bv-impuestos">
     <header class="tx-top">
       <div class="wrap tx-head">
-        <div><span class="label">Your UMB · the tax side</span><h1>Impuestos<span>.</span></h1></div>
+        <div><span class="label">Your UMB · the tax side</span><h1>La Plata<span>.</span></h1></div>
         <p><b>Tax year 2026</b>Every 1099, W-2, receipt and mile a dance teacher files, kept as you go.</p>
       </div>
     </header>
@@ -1315,7 +1315,7 @@ sampleBtn.addEventListener('click',()=>setSample(!showSample));
 $('#bkExOff').addEventListener('click',()=>setSample(false));
 /* ---------- books: tabs, side by side, impuestos ---------- */
 const BVIEWS=['cuentas','impuestos'];
-const BV_TITLE={cuentas:'Impuestos 2.0',impuestos:'Impuestos 2.0'};
+const BV_TITLE={cuentas:'La Plata',impuestos:'La Plata'};
 let curView='cuentas';
 function showView(v){
   if(!BVIEWS.includes(v))v='cuentas';
@@ -1511,10 +1511,10 @@ function ownRows(){
     else{const k=BOOK2DED[e.cat]||'other';R.push({date:e.date,tab:'UMB',type:'Expense',cat:DEDN[k]+(DEDN[k]!==e.cat?` (${e.cat})`:''),line:DEDLINE[k],cls:clsName(e.cls),amt:e.amt,note:e.note});}
   });
   tx.items.forEach(i=>{
-    if(i.kind==='pay')R.push({date:i.date,tab:'Impuestos',type:'Income',cat:'Studio pay',line:'Line 1',payer:payerName(i.payer),form:'1099-NEC',amt:i.amt,note:i.note});
-    else if(i.kind==='cost')R.push({date:i.date,tab:'Impuestos',type:'Expense',cat:DEDN[i.cat]||i.cat,line:DEDLINE[i.cat]||'',amt:i.amt,note:i.note});
-    else if(i.kind==='miles')R.push({date:i.date,tab:'Impuestos',type:'Mileage',cat:'Car mileage',line:'Line 9',amt:Math.round(i.miles*tx.rate*100)/100,miles:i.miles,rate:tx.rate,note:i.note});
-    else if(i.kind==='est')R.push({date:i.date,tab:'Impuestos',type:'Estimated tax',cat:i.ag==='ca'?'California estimated payment':'Federal estimated payment',payer:i.ag==='ca'?'Franchise Tax Board':'IRS',form:i.ag==='ca'?'540-ES':'1040-ES',amt:i.amt,note:i.note});
+    if(i.kind==='pay')R.push({date:i.date,tab:'La Plata',type:'Income',cat:'Studio pay',line:'Line 1',payer:payerName(i.payer),form:'1099-NEC',amt:i.amt,note:i.note});
+    else if(i.kind==='cost')R.push({date:i.date,tab:'La Plata',type:'Expense',cat:DEDN[i.cat]||i.cat,line:DEDLINE[i.cat]||'',amt:i.amt,note:i.note});
+    else if(i.kind==='miles')R.push({date:i.date,tab:'La Plata',type:'Mileage',cat:'Car mileage',line:'Line 9',amt:Math.round(i.miles*tx.rate*100)/100,miles:i.miles,rate:tx.rate,note:i.note});
+    else if(i.kind==='est')R.push({date:i.date,tab:'La Plata',type:'Estimated tax',cat:i.ag==='ca'?'California estimated payment':'Federal estimated payment',payer:i.ag==='ca'?'Franchise Tax Board':'IRS',form:i.ag==='ca'?'540-ES':'1040-ES',amt:i.amt,note:i.note});
   });
   return R.sort((a,b)=>a.date.localeCompare(b.date));
 }
@@ -1566,7 +1566,7 @@ $('#bkCsv').addEventListener('click',()=>{if(!hasOwnNumbers()){say(NONE_YET);ret
 $('#bkSheet').addEventListener('click',()=>{if(!hasOwnNumbers()){say(NONE_YET);return;}openSheet();});
 $('#bkBackup').addEventListener('click',()=>{
   const data={};DATA_KEYS.forEach(k=>{const v=store.get(k,null);if(v!=null)data[k]=v;});
-  download(`impuestos-backup-${today()}.json`,JSON.stringify({app:'Impuestos 2.0',version:1,saved:new Date().toISOString(),data},null,1),'application/json');
+  download(`la-plata-backup-${today()}.json`,JSON.stringify({app:'La Plata',version:1,saved:new Date().toISOString(),data},null,1),'application/json');
   say('Back up saved. Keep the file somewhere safe, like your email or cloud drive.');
 });
 $('#bkRestore').addEventListener('click',()=>{$('#bkFile').value='';$('#bkFile').click();});
@@ -1575,7 +1575,7 @@ $('#bkFile').addEventListener('change',async()=>{
   const f=$('#bkFile').files[0];if(!f)return;
   let j=null;try{j=JSON.parse(await f.text());}catch(e){}
   const d=j&&j.data;
-  if(!d||typeof d!=='object'||(d[BK.entries]!=null&&!Array.isArray(d[BK.entries]))||(d[TX.store]!=null&&typeof d[TX.store]!=='object')||!(d[BK.entries]||d[TX.store])){say('That file isn’t an Impuestos back up.');return;}
+  if(!d||typeof d!=='object'||(d[BK.entries]!=null&&!Array.isArray(d[BK.entries]))||(d[TX.store]!=null&&typeof d[TX.store]!=='object')||!(d[BK.entries]||d[TX.store])){say('That file isn’t a La Plata back up.');return;}
   pending=d;const when=j.saved&&!isNaN(new Date(j.saved))?fmtD(toIso(new Date(j.saved))):'an earlier day';
   say(`Replace what’s on this device with your back up from ${when}?<span class="row"><button type="button" class="pri" data-restore="yes">Replace</button><button type="button" data-restore="no">Cancel</button></span>`,true);
 });

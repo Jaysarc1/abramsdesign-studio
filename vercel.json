@@ -51,8 +51,18 @@
    "permanent": false
   },
   {
+   "source": "/destany-laplata",
+   "destination": "/destany-laplata/",
+   "permanent": false
+  },
+  {
    "source": "/destany-impuestos",
-   "destination": "/destany-impuestos/",
+   "destination": "/destany-laplata/",
+   "permanent": false
+  },
+  {
+   "source": "/destany-impuestos/:f*",
+   "destination": "/destany-laplata/",
    "permanent": false
   }
  ],
@@ -264,7 +274,7 @@
    ]
   },
   {
-   "source": "/destany-impuestos/(.*)",
+   "source": "/destany-laplata/(.*)",
    "headers": [
     {
      "key": "X-Robots-Tag",
@@ -273,7 +283,7 @@
    ]
   },
   {
-   "source": "/destany-impuestos/",
+   "source": "/destany-laplata/",
    "headers": [
     {
      "key": "X-Robots-Tag",

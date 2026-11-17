@@ -1,10 +1,10 @@
-// Impuestos 2.0 passcode reset: emails a 6-digit code to Vanessa's own address only.
+// La Plata passcode reset: emails a 6-digit code to Vanessa's own address only.
 // No database: the code is checked with a signed token that expires in 15 minutes.
 // Needs RESEND_API_KEY in the Vercel project; until then it answers 503 not_ready.
 const crypto = require('crypto');
 
 const TO = 'destanyvz@gmail.com';
-const FROM = process.env.RESET_FROM || 'Impuestos <reset@abramsdesign.studio>';
+const FROM = process.env.RESET_FROM || 'La Plata <reset@abramsdesign.studio>';
 const TTL = 15 * 60 * 1000;
 const hits = new Map();
 
@@ -57,7 +57,7 @@ module.exports = async (req, res) => {
         body: JSON.stringify({
           from: FROM,
           to: [TO],
-          subject: 'Your Impuestos code: ' + code,
+          subject: 'Your La Plata code: ' + code,
           html: emailHtml(code),
           text: `Hola, Vanessa. Your code to set a new passcode is ${code}. It works for 15 minutes. Your numbers stay just as they are. Didn't ask for this? You can ignore it.`
         })
