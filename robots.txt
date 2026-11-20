@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /$
 Allow: /img/
+Allow: /sitemap.xml$
 Disallow: /
+
+Sitemap: https://abramsdesign.studio/sitemap.xml
