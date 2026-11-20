@@ -124,7 +124,7 @@
    "destination": "/mini/bohemia/:f*"
   },
   {
-   "source": "/((?!(?:b|img|play|mini|cards|api/(?:desk|up|unpack|cards|stats))(?:/|$)).+)",
+   "source": "/((?!(?:b|img|play|mini|cards|robots\\.txt|api/(?:desk|up|unpack|cards|stats))(?:/|$)).+)",
    "destination": "https://ads-view-phi.vercel.app/$1"
   }
  ],
